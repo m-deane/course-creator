@@ -6,6 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **Claude Code project template** - a reusable starting point for new projects optimized for Claude Code workflows. It includes pre-configured slash commands, specialized agents, workflow templates, and directory structure conventions.
 
+### Course Creation Specialization
+
+This template includes comprehensive support for creating **university-level advanced courses**:
+
+- **Written Guides** - Structured conceptual explanations with multiple learning approaches
+- **Interactive Notebooks** - Jupyter notebooks with auto-graded exercises
+- **Assessment Materials** - Quizzes, rubrics, peer review templates, capstone projects
+- **Supporting Resources** - Glossaries, cheat sheets, additional readings
+
+See `.claude_prompts/course_creator.md` for the full course creation framework.
+
 ## Repository Structure
 
 ```
@@ -38,6 +49,7 @@ tests/                      # Test files placeholder
 | `/dependency-update` | Check/update dependencies |
 | `/architecture-review` | Review architecture patterns |
 | `/create-architecture-documentation` | Generate architecture docs |
+| `/create-course [topic]` | Create course materials with notebooks and assessments |
 
 ## Key Agents
 
@@ -50,6 +62,9 @@ tests/                      # Test files placeholder
 | `test-engineer` | Test strategy, coverage |
 | `code-reviewer` | Code quality, security |
 | `debugger` | Error investigation |
+| `course-developer` | Educational content, course structure |
+| `notebook-author` | Jupyter notebooks, interactive tutorials |
+| `assessment-designer` | Quizzes, rubrics, capstone projects |
 
 ## Template Customization Workflow
 

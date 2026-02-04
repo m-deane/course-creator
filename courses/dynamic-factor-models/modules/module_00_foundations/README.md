@@ -1,97 +1,97 @@
-# Module 0: Foundations & Prerequisites
+# Module 00: State Space Models & Kalman Filter
 
 ## Overview
 
-This module reviews the mathematical and statistical foundations required for dynamic factor models. Complete the diagnostic assessment to identify areas needing review, then work through the refresher materials as needed.
+Master the foundational framework for dynamic factor models by building working state space models from scratch. In 2 hours, you'll implement a Kalman filter, visualize hidden states, and understand why this approach dominates modern time series econometrics.
 
-**Estimated Time:** 4-6 hours (varies based on background)
-**Prerequisites:** Undergraduate linear algebra, probability, basic statistics
+**Time Commitment:** 2 hours
+**Difficulty:** Intermediate
+**Prerequisites:** Linear algebra, Python basics, time series fundamentals
+
+## Why This Matters
+
+State space models are the engine behind:
+- Central bank nowcasting systems (Fed, ECB, BoE)
+- High-frequency trading algorithms
+- Macroeconomic forecasting platforms
+- Sensor fusion in robotics (yes, same math!)
+
+The Kalman filter is arguably the most important algorithm in applied time series analysis. You'll implement it from first principles.
 
 ## Learning Objectives
 
-By completing this module, you will be able to:
+By the end of this module, you will:
 
-1. **Perform** matrix operations essential for factor analysis (eigendecomposition, SVD)
-2. **Explain** time series concepts including stationarity and autocovariance
-3. **Apply** Principal Component Analysis and interpret results
-4. **Set up** the development environment for the course
+1. **Build** a state space model for any time series problem
+2. **Implement** the Kalman filter in < 50 lines of NumPy
+3. **Visualize** how hidden states emerge from noisy observations
+4. **Diagnose** model fit using innovation statistics
+5. **Extend** to multivariate systems
 
 ## Module Contents
 
-### Diagnostic Assessment
-- `assessments/diagnostic_quiz.md` - Self-assessment to identify gaps
+### Guides (Read First)
+1. **[State Space Models](guides/01_state_space_models.md)** - The unifying framework (20 min)
+2. **[Kalman Filter](guides/02_kalman_filter.md)** - Optimal filtering in linear systems (25 min)
+3. **[Cheatsheet](guides/cheatsheet.md)** - Quick reference for formulas and code patterns
 
-### Review Guides
-1. `guides/01_matrix_algebra_review.md` - Eigendecomposition, SVD, positive definiteness
-2. `guides/02_time_series_basics.md` - Stationarity, autocovariance, AR processes
-3. `guides/03_pca_refresher.md` - PCA derivation, interpretation, implementation
+### Notebooks (Hands-On)
+1. **[State Space Introduction](notebooks/01_state_space_intro.ipynb)** - Build your first state space model (15 min)
+2. **[Kalman Filter Visualization](notebooks/02_kalman_filter_visual.ipynb)** - Interactive filtering demo (15 min)
 
-### Interactive Notebook
-- `notebooks/01_foundations_review.ipynb` - Hands-on review with exercises
+### Practice
+- **[Self-Check Exercises](exercises/exercises.py)** - Test your understanding (ungraded)
 
-## Diagnostic Assessment
+### Resources
+- **[Additional Readings](resources/additional_readings.md)** - Papers, books, and tutorials
+- **[Figures](resources/figures/)** - Visual assets and diagrams
 
-Before starting the review materials, complete the diagnostic quiz to identify which topics need attention:
+## Recommended Path
 
-| Score | Recommendation |
-|-------|----------------|
-| 90%+ | Skip to Module 1 |
-| 70-89% | Review flagged topics only |
-| Below 70% | Complete full module |
+### Fast Track (1 hour)
+1. Skim [State Space Models guide](guides/01_state_space_models.md)
+2. Run [State Space Introduction notebook](notebooks/01_state_space_intro.ipynb)
+3. Run [Kalman Filter Visualization notebook](notebooks/02_kalman_filter_visual.ipynb)
+4. Check [Cheatsheet](guides/cheatsheet.md)
+
+### Deep Dive (2-3 hours)
+1. Read both guides thoroughly
+2. Work through both notebooks, modifying parameters
+3. Complete self-check exercises
+4. Read 2-3 additional resources
+5. Implement Kalman filter from scratch without looking at code
+
+### Portfolio Extension
+Build a nowcasting system for GDP using state space models (see Module 03).
 
 ## Key Concepts
 
-### Matrix Algebra
-- **Eigendecomposition:** $A = V \Lambda V^{-1}$ for symmetric matrices
-- **SVD:** $X = U \Sigma V'$ - fundamental for PCA
-- **Positive definiteness:** Covariance matrices must be positive semi-definite
+- **State Space Representation** - Latent dynamics + observation mapping
+- **Kalman Filter** - Recursive Bayesian estimation for linear Gaussian systems
+- **Innovations** - One-step-ahead forecast errors (white noise if model is correct)
+- **Filtering vs Smoothing** - Real-time vs retrospective estimation
 
-### Time Series
-- **Stationarity:** Constant mean, variance, and autocovariance structure
-- **Autocovariance:** $\gamma(h) = \text{Cov}(y_t, y_{t-h})$
-- **AR(1) process:** $y_t = \phi y_{t-1} + \varepsilon_t$
+## Common Questions
 
-### Principal Components
-- **Objective:** Find directions of maximum variance
-- **Solution:** Eigenvectors of covariance matrix
-- **Scores:** Projections onto principal directions
+**Q: Why not just use ARIMA?**
+A: State space models handle missing data naturally, accommodate mixed frequencies, and extend to multivariate systems more elegantly. They're also the foundation for dynamic factor models.
 
-## Connection to Factor Models
+**Q: Is the Kalman filter hard to implement?**
+A: No! The core algorithm is ~40 lines of NumPy. The math looks intimidating but the code is straightforward.
 
-Everything in this module directly supports factor model understanding:
-
-| Foundation | Factor Model Application |
-|------------|-------------------------|
-| Eigendecomposition | Factor extraction via PCA |
-| SVD | Efficient computation for large panels |
-| Stationarity | Required for consistent estimation |
-| Autocovariance | Dynamic factor specification |
-| PCA | Primary estimation method |
-
-## How to Use This Module
-
-1. **Start with diagnostic** - Don't skip areas you think you know
-2. **Focus on weak areas** - Time is valuable; prioritize gaps
-3. **Complete the notebook** - Hands-on practice cements understanding
-4. **Move on when ready** - Perfect scores not required; 80%+ is sufficient
-
-## Resources
-
-### Quick References
-- Matrix cookbook: [matrixcookbook.com](https://www.matrixcookbook.com)
-- Time series cheat sheet: Module resources folder
-
-### Textbook References
-- Strang, G. (2016). *Introduction to Linear Algebra*. Chapters 6-7.
-- Hamilton, J.D. (1994). *Time Series Analysis*. Chapters 2-3.
+**Q: Do I need to understand Bayesian statistics?**
+A: Not yet. The Kalman filter can be derived from classical or Bayesian perspectives. We focus on the algorithmic implementation first.
 
 ## Next Steps
 
 After completing this module:
-1. Verify environment setup works (`resources/environment_setup.md`)
-2. Ensure diagnostic score is 80%+
-3. Proceed to Module 1: Static Factor Models
+- **Module 01:** Learn how dynamic factor models extend state space models to high-dimensional data
+- **Module 02:** Estimate DFM parameters using maximum likelihood and EM algorithm
+- **Project 1:** Build a real-time nowcasting dashboard
 
----
+## Getting Help
 
-*Don't rush through foundations. Time invested here pays dividends throughout the course.*
+- Check [Common Pitfalls](guides/01_state_space_models.md#common-pitfalls) sections in guides
+- Review [Cheatsheet](guides/cheatsheet.md) for quick debugging
+- Compare your results to notebook solutions
+- Consult [Additional Readings](resources/additional_readings.md) for deeper explanations

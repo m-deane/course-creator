@@ -401,11 +401,53 @@ print(f"Retrieval accuracy: {results['accuracy']:.2%}")
 
 ## Anti-Patterns to Avoid
 
-**DO NOT create:**
-- `quiz.md` - No formal quizzes
+**Prohibited Directories (NEVER create these):**
+- `assessments/` - No assessment directories in modules
+- `syllabus/` - No academic syllabus folders
+- `capstone/` - Use `projects/` instead (no graded capstones)
+- `grading/` - No grading-related folders
+- `exams/` - No exam folders
+
+**Prohibited Files (NEVER create these):**
+- `quiz.md` or `quiz_*.md` - No formal quizzes
 - `grading_rubric.md` - No grading rubrics
 - `assignment_submission.md` - No assignment submissions
 - `final_exam.md` - No exams
+- `*_assessment.md` - No assessment files
+- Any file with "passing score", "points", or "grade weight"
+
+**Prohibited Patterns:**
 - 90-minute notebooks - Break into 15-min pieces
 - Theory-first content - Always start with working code
 - Synthetic/mock data - Always use real datasets
+- Point-based grading language (e.g., "10 points", "70% to pass")
+- Academic course weight percentages (e.g., "30% of course grade")
+
+## Post-Creation Validation Checklist
+
+**After creating a course, verify ALL of the following:**
+
+### Structure Validation
+- [ ] No `assessments/`, `syllabus/`, `capstone/`, `grading/`, or `exams/` directories exist
+- [ ] Every module has: `guides/`, `notebooks/`, `exercises/`, `resources/`
+- [ ] Every module has: `guides/cheatsheet.md`, `resources/additional_readings.md`, `resources/figures/`
+- [ ] Quick-starts have 3-5 notebooks starting with `00_`
+- [ ] Projects use `project_N_level/` naming (beginner/intermediate/advanced)
+
+### Content Validation
+- [ ] No files contain "passing score", "points", "grade", or percentage-based assessment language
+- [ ] All notebooks are 15 minutes or less (roughly 200-300 lines max)
+- [ ] All code examples are < 20 lines
+- [ ] Every notebook has Colab badge at top
+- [ ] Every guide has visual explanation (ASCII diagram or image reference)
+
+### README Validation
+- [ ] Course README.md references ACTUAL file names (not placeholder names)
+- [ ] All quick-start links point to existing files
+- [ ] All template links point to existing files
+- [ ] Module list matches actual module directories
+
+### Cleanup Validation
+- [ ] No orphan files in course root (except README.md)
+- [ ] No duplicate/conflicting module structures
+- [ ] No leftover planning/audit files (move to `.claude_plans/`)

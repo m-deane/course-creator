@@ -66,11 +66,18 @@ course-name/
 ├── concepts/                    # Visual guides + optional deep-dives
 │   ├── visual_guides/           # 1-page visual summaries per concept
 │   └── deep_dives/              # Optional theory (for curious learners)
-├── modules/                     # Structured learning path (OPTIONAL)
+├── modules/                     # Structured learning path (REQUIRED for full courses)
 │   ├── module_00_foundations/
-│   │   ├── README.md
+│   │   ├── README.md            # Module overview + learning objectives
+│   │   ├── guides/              # Detailed concept guides (REQUIRED)
+│   │   │   ├── 01_concept_guide.md
+│   │   │   ├── 02_theory_deep_dive.md
+│   │   │   └── cheatsheet.md
 │   │   ├── notebooks/           # 15-min micro-notebooks
-│   │   └── exercises/           # Self-check exercises (ungraded)
+│   │   ├── exercises/           # Self-check exercises (ungraded)
+│   │   └── resources/           # Per-module supporting materials
+│   │       ├── additional_readings.md
+│   │       └── figures/
 │   └── module_N_[topic]/
 ├── projects/                    # Portfolio projects (NOT graded capstones)
 │   ├── project_1_beginner/      # Build something real
@@ -86,17 +93,26 @@ course-name/
 1. `quick-starts/` - New learners start here
 2. `templates/` - Practitioners grab production code
 3. `recipes/` - Developers copy specific patterns
-4. `modules/` - Structured learners follow the path
+4. `modules/` - Structured learners follow the path (with full guides and resources)
+
+**Full Course Requirements:**
+When creating a complete course, ALL of the following are REQUIRED:
+- `quick-starts/` with 3-5 working examples
+- `modules/` with guides, notebooks, exercises, and resources per module
+- `concepts/` with visual guides and optional deep-dives
+- `projects/` with at least one portfolio project
+- `resources/` with glossary, setup, and cheat sheet
 
 ## Key Slash Commands
 
 | Command | Usage |
 |---------|-------|
-| `/create-course [topic]` | Initialize new course with practical-first structure |
+| `/create-course [topic]` | Initialize new course with full structure (modules + guides + resources) |
 | `/create-course --quick-start [topic]` | Create a 5-min quick-start notebook |
 | `/create-course --template [type]` | Create production-ready template |
 | `/create-course --recipe [pattern]` | Create copy-paste code recipe |
-| `/create-course --module [name]` | Create single module with micro-notebooks |
+| `/create-course --module [name]` | Create single module with guides, notebooks, exercises, resources |
+| `/create-course --guide [concept]` | Create detailed concept guide for a module |
 | `/create-course --notebook [topic]` | Create 15-min micro-notebook |
 | `/create-course --project [level]` | Create portfolio project (beginner/intermediate/advanced) |
 | `/create-course --visual [concept]` | Create 60-second visual concept card |
@@ -201,6 +217,63 @@ Only create when learners explicitly want theory:
 - **Formal Definition** - For reference (collapsible)
 - **When to Use** - Decision criteria
 - **When NOT to Use** - Anti-patterns
+
+### Module Guides (REQUIRED for each module)
+Every module MUST include a `guides/` directory with detailed concept explanations:
+
+**Structure:**
+```
+modules/module_NN_topic/
+├── guides/
+│   ├── 01_[concept]_guide.md      # Main concept explanation
+│   ├── 02_[concept]_deep_dive.md  # Theory and formal details
+│   ├── 03_[concept]_guide.md      # Additional concepts as needed
+│   └── cheatsheet.md              # Quick reference for module
+└── resources/
+    ├── additional_readings.md     # Papers, books, links
+    └── figures/                   # Diagrams and visual assets
+```
+
+**Guide Template (each concept guide MUST include):**
+```markdown
+# [Concept Name]
+
+## In Brief
+[1-2 sentence summary - what it is and why it matters]
+
+## Key Insight
+[The core idea in plain language]
+
+## Visual Explanation
+[Diagram or flowchart - ALWAYS include]
+
+## Formal Definition
+[Precise technical definition with notation]
+
+## Intuitive Explanation
+[Analogy for intuition building: "It's like..."]
+
+## Code Implementation
+```python
+# Minimal working example (< 20 lines)
+```
+
+## Common Pitfalls
+- [Pitfall 1]: Why it happens and how to avoid
+- [Pitfall 2]: Explanation
+
+## Connections
+- **Builds on:** [Prerequisite concepts]
+- **Leads to:** [Advanced concepts this enables]
+
+## Practice Problems
+1. [Conceptual question]
+2. [Implementation challenge]
+```
+
+**Per-Module Resources (REQUIRED):**
+- `additional_readings.md` - Curated papers, books, and external resources
+- `figures/` - All diagrams and visual assets for the module
 
 ### Quality Standards
 - **No mocks or stubs** - Complete working implementations only

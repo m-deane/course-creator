@@ -117,6 +117,8 @@ def decide_action(messages: list, tools: list) -> dict:
 Run the selected tool and capture the result.
 
 ```python
+import json
+
 def execute_tool(tool_name: str, tool_input: dict, tool_registry: dict) -> str:
     """Execute a tool and return the result."""
 

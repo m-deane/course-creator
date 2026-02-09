@@ -54,6 +54,7 @@ Memory isn't just storage - it's a living system with three core operators: **Fo
 ### Implementation Pattern
 
 ```python
+import math
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional

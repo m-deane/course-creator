@@ -1,83 +1,157 @@
-# Regret Theory for Multi-Armed Bandits
+# Deep Dive: Regret Theory
 
 ## TL;DR
-
-Regret measures how much worse your bandit strategy performed compared to always pulling the best arm. The best algorithms achieve logarithmic regret — O(ln T) — meaning the penalty for learning grows very slowly over time.
+Regret measures how much reward you lost by not knowing the best arm from the start. Optimal policies achieve O(log T) regret — logarithmic growth means you learn quickly and waste less over time. Linear regret O(T) means you never learned.
 
 ## Visual Explanation
 
 ```
-Cumulative Regret Over Time
+REGRET OVER TIME
 
-Regret │
-       │   Random (linear)
-  500  │   ╱
-       │  ╱
-       │ ╱      ε-greedy (linear but slower)
-  250  │╱       ╱─────────────────────
-       │      ╱
-       │    ╱     UCB / Thompson (logarithmic)
-       │  ╱      ╭─────────────────────
-       │╱      ╭─╯
-       │─────╭─╯
-    0  └────────────────────────────────► Time
-       0    500   1000  1500  2000
+Cumulative Reward:
+  ┌───────────────────────────────────┐
+  │                                   │
+  │    Optimal (oracle knows best)    │
+  │   ╱──────────────────────────     │
+  │  ╱                                │
+  │ ╱    ← Regret = this gap          │
+  │╱                                  │
+  │      Thompson Sampling            │
+  │     ╱─────────────────            │
+  │    ╱                              │
+  │   ╱  Random (no learning)         │
+  │  ╱  ╱──────────                   │
+  │ ╱  ╱                              │
+  │╱  ╱                               │
+  └───────────────────────────────────┘
+   0              Rounds (T)         →
 
-Key insight: Logarithmic regret means the "cost of learning"
-grows slower and slower. After 1000 rounds, you're barely
-accumulating any additional regret.
+Random: R(T) = O(T) — grows linearly
+Thompson: R(T) = O(log T) — flattens out
+Optimal: R(T) = 0
 ```
-
-## Intuitive Analogy
-
-Think of regret as the "tuition you pay" while learning which restaurant in a new city is best. A naive approach (trying random restaurants forever) keeps paying full tuition. A smart approach (Thompson Sampling) pays most of its tuition in the first few weeks, then rarely picks a bad meal again.
 
 ## Formal Definition
 
-**Pseudo-regret** after T rounds:
-
-$$\bar{R}_T = T \cdot \mu^* - \sum_{t=1}^{T} \mu_{A_t}$$
+**Cumulative Regret:**
+```
+R(T) = Σₜ₌₁ᵀ (μ* - μₐₜ)
 
 Where:
-- $\mu^* = \max_a \mu_a$ is the mean reward of the best arm
-- $A_t$ is the arm selected at time $t$
-- $\mu_{A_t}$ is the expected reward of the selected arm
+  μ* = mean reward of best arm
+  μₐₜ = mean reward of arm played at round t
+  R(T) = total reward lost vs oracle
+```
 
-**Per-arm gap**: $\Delta_a = \mu^* - \mu_a$
+**Per-Arm Regret:**
+```
+R(T) = Σᵢ E[nᵢ(T)] · Δᵢ
 
-**Lai-Robbins Lower Bound** (1985):
+Where:
+  nᵢ(T) = times arm i was pulled
+  Δᵢ = μ* - μᵢ (gap from best)
+```
 
-For any consistent policy:
+**Lai-Robbins Lower Bound:**
+Any consistent policy must have:
+```
+R(T) ≥ Σᵢ:Δᵢ>0 (log T / KL(μᵢ, μ*)) · Δᵢ
+```
 
-$$\liminf_{T \to \infty} \frac{\bar{R}_T}{\ln T} \geq \sum_{a: \Delta_a > 0} \frac{\Delta_a}{\text{KL}(\mu_a, \mu^*)}$$
+Where KL = Kullback-Leibler divergence. This is Ω(log T).
 
-This says no algorithm can do better than logarithmic regret asymptotically.
+**UCB Regret Bound:**
+```
+R(T) ≤ Σᵢ:Δᵢ>0 (8 log T / Δᵢ) + (1 + π²/3) · Σᵢ Δᵢ
+     = O(log T)
+```
 
-**UCB1 Upper Bound** (Auer et al., 2002):
+UCB achieves the optimal rate up to constants.
 
-$$\bar{R}_T \leq 8 \sum_{a: \Delta_a > 0} \frac{\ln T}{\Delta_a} + \left(1 + \frac{\pi^2}{3}\right) \sum_{a=1}^{K} \Delta_a$$
+## Intuitive Explanation
 
-**Thompson Sampling**: Achieves the Lai-Robbins bound asymptotically (Kaufmann et al., 2012).
+**Analogy:** Job candidates
+
+You're hiring and have 3 candidates. You can interview them repeatedly (with some randomness each time).
+
+- **Random hiring:** R(T) = O(T)
+  - You pick randomly forever → never learn → lose Δ every round
+  - After 1000 hires, you've wasted ~500 on suboptimal candidates
+
+- **Smart hiring (UCB/Thompson):** R(T) = O(log T)
+  - First 10 hires: Try everyone, learn quickly
+  - Next 90 hires: Mostly pick best, occasionally verify others
+  - After 100 hires: 95% confident in best, rarely pick others
+  - After 1000 hires: Total mistakes ≈ 20 (not 500!)
+
+**The logarithm appears because:** 
+- Confidence grows as √n
+- Need n doublings to gain each bit of certainty
+- Doublings: 1, 2, 4, 8, 16, ... → log₂(T) doublings
+- Total regret across doublings: O(log T)
 
 ## When Regret Analysis Matters in Practice
 
-Regret analysis is most useful when:
+**Regret is THE metric when:**
+1. **You can't pause operations** (commodity trading, content publishing)
+2. **Exploration is expensive** (each sub-optimal choice costs real money)
+3. **Many rounds** (enough data for logarithmic advantage to matter)
+4. **Stationarity** (reward distributions don't change wildly)
 
-1. **Comparing algorithms**: UCB and Thompson both achieve O(ln T), but Thompson often has smaller constants
-2. **Setting expectations**: If your best arm has reward 0.06 and second-best has 0.04, the gap Δ = 0.02 means regret accumulates slowly (problem is "easy")
-3. **Detecting problems**: If your regret is growing linearly, something is wrong (non-stationarity, implementation bug, wrong model)
+**Example: Commodity allocator over 1 year (52 weeks)**
+- Random allocation: Regret ≈ 15% (linear growth)
+- Thompson Sampling: Regret ≈ 3% (logarithmic, learns quickly)
+- Difference: 12% of portfolio value = $12K on $100K portfolio
+
+**Regret is LESS important when:**
+1. **One-shot decision** (pick best after fixed exploration, then stop)
+2. **Need p-values** (A/B testing with statistical inference)
+3. **Non-stationary** (rewards change faster than you can learn)
+
+## Connections
+
+**Builds on:**
+- Information theory: Optimal learning requires log(1/ε) samples
+- Concentration inequalities: Confidence bounds grow as √(log T / n)
+
+**Leads to:**
+- Algorithm design: UCB, Thompson Sampling designed to minimize regret
+- Bayesian optimization: Regret bounds for continuous optimization
+- Online learning: Adversarial bandits, expert algorithms
+
+**Appears in:**
+- Recommendation systems (minimize regret of showing bad content)
+- Clinical trials (minimize harm from inferior treatments)
+- Online advertising (minimize revenue lost to exploration)
 
 ## Commodity Context
 
-For a commodity allocator:
-- **T** = number of weekly allocation decisions (52/year)
-- **μ\*** = return of always picking the best commodity sector
-- **Regret** = how much less you earned while learning which sector was best
+**What regret means for a commodity allocator:**
 
-With T=52 and 5 arms, a good algorithm might accumulate total regret equivalent to ~10 weeks of sub-optimal allocation in year 1, but only ~2 additional weeks in year 2. The "learning cost" is front-loaded.
+Over 1 year, you make 52 weekly allocation decisions.
 
-## Key References
+**Scenario 1: Pure equal-weight (no learning)**
+- Return: 8% (average of all commodities)
+- Regret: 8% (vs best single commodity at 16%)
 
-- Lai, T.L. and Robbins, H. (1985). "Asymptotically efficient adaptive allocation rules." *Advances in Applied Mathematics*.
-- Auer, P., Cesa-Bianchi, N., and Fischer, P. (2002). "Finite-time analysis of the multiarmed bandit problem." *Machine Learning*.
-- Kaufmann, E., Korda, N., and Munos, R. (2012). "Thompson Sampling: An Asymptotically Optimal Finite-Time Analysis." *ALT*.
+**Scenario 2: Two-wallet bandit (Thompson Sampling)**
+- Return: 12% (tilts toward winners)
+- Regret: 4% (vs best single at 16%)
+- Improvement: 4% = $4K on $100K portfolio
+
+**Logarithmic regret means:**
+- Most learning happens in first 10-15 weeks
+- By week 30, allocation is ~90% optimal
+- Weeks 30-52 have minimal additional regret
+- Total regret stays bounded, doesn't grow linearly
+
+**Practical implication:**
+After 6 months of bandit learning, you've:
+- Found the better commodities (Gold, Copper)
+- Reduced exposure to worse ones (NatGas if weak)
+- Regret ≈ 3-5% (acceptable for adaptive learning)
+- Vs A/B test that takes 12 weeks just to declare a winner
+
+---
+
+**Remember:** Logarithmic regret is the signature of learning. Linear regret means you never learned. Optimal is O(log T) — you can't do better asymptotically.

@@ -115,9 +115,9 @@ These aren't toy problems—they're the actual decisions commodity traders face 
 ## What's Next?
 
 After mastering core algorithms, you'll move to:
-- **Module 2: Contextual Bandits** - Incorporate market features (volatility, correlation, sentiment)
-- **Module 3: Thompson Sampling** - Bayesian approach to exploration
-- **Module 4: A/B Testing** - Apply bandits to controlled experiments
+- **Module 2: Bayesian Bandits** - Thompson Sampling and posterior updating for smarter exploration
+- **Module 3: Contextual Bandits** - Incorporate market features (volatility, correlation, sentiment)
+- **Module 4: Content & Growth Optimization** - Apply bandits to content strategy and conversion testing
 
 ## Get Started
 

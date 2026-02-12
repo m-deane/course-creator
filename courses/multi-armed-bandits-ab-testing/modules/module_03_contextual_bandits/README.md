@@ -67,6 +67,7 @@ The difference is transformative. A regime-aware commodity allocator can switch 
 
 Before starting this module, you should:
 - Understand basic bandit algorithms (Module 1: epsilon-greedy, UCB)
+- Understand Bayesian bandits and Thompson Sampling (Module 2)
 - Be comfortable with linear regression and ridge regression
 - Have basic feature engineering intuition (scaling, normalization)
 - Understand the explore-exploit tradeoff

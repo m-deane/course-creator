@@ -110,8 +110,8 @@ You've mastered this module when you can:
 ## Prerequisite Knowledge
 
 Required:
-- Module 1: Thompson Sampling basics
-- Module 2: Regret analysis
+- Module 1: Core bandit algorithms (epsilon-greedy, UCB)
+- Module 2: Thompson Sampling basics
 - Module 3: Contextual bandits
 
 Recommended:

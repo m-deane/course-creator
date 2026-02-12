@@ -58,14 +58,17 @@ You're ready to deploy your first production bandit system when you can:
 
 ## What's Next?
 
-Congratulations! You've completed the Multi-Armed Bandits & A/B Testing course. You now have:
+You've completed the core Multi-Armed Bandits & A/B Testing course. You now have:
 
 - **Theoretical foundation** in exploration-exploitation tradeoffs and regret minimization
 - **Practical algorithms** from epsilon-greedy to Thompson Sampling to LinUCB
 - **Domain expertise** in commodity trading applications
 - **Production skills** to deploy and monitor real bandit systems
 
-**Recommended next steps:**
+**Continue to:**
+- **Module 8: Bandits for LLM Prompt Routing** — Apply bandits to adaptively route LLM prompts for commodity research and trading signal systems. Eliminate the "bad prompt tax" by learning which prompt strategies work best for different task types.
+
+**Or explore on your own:**
 1. Deploy the commodity allocation system with your own data
 2. Contribute to open-source bandit libraries (Vowpal Wabbit, Ray, etc.)
 3. Read the advanced papers in the additional readings

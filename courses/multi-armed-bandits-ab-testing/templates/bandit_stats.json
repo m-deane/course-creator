@@ -1,0 +1,26 @@
+{
+  "option_a": {
+    "name": "option_a",
+    "pulls": 13,
+    "total_reward": 4.0,
+    "mean_reward": 0.3076923076923077,
+    "successes": 4,
+    "failures": 9
+  },
+  "option_b": {
+    "name": "option_b",
+    "pulls": 15,
+    "total_reward": 6.0,
+    "mean_reward": 0.4,
+    "successes": 6,
+    "failures": 9
+  },
+  "option_c": {
+    "name": "option_c",
+    "pulls": 72,
+    "total_reward": 47.0,
+    "mean_reward": 0.6527777777777778,
+    "successes": 47,
+    "failures": 25
+  }
+}

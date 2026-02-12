@@ -68,17 +68,17 @@ def test_exercise_1():
     """Test the sample size calculation."""
     # Test case 1: Standard example (5% → 8% conversion)
     n = calculate_ab_sample_size(0.05, 0.08)
-    assert 1800 <= n <= 2100, f"Expected ~1954, got {n}"
+    assert 1000 <= n <= 1150, f"Expected ~1061, got {n}"
 
     # Test case 2: Larger effect (5% → 10%)
     n_large = calculate_ab_sample_size(0.05, 0.10)
     assert n_large < n, "Larger effect should need smaller sample size"
-    assert 400 <= n_large <= 600, f"Expected ~487, got {n_large}"
+    assert 400 <= n_large <= 500, f"Expected ~436, got {n_large}"
 
     # Test case 3: Smaller effect (5% → 6%)
     n_small = calculate_ab_sample_size(0.05, 0.06)
     assert n_small > n, "Smaller effect should need larger sample size"
-    assert 15000 <= n_small <= 20000, f"Expected ~17415, got {n_small}"
+    assert 7500 <= n_small <= 9000, f"Expected ~8159, got {n_small}"
 
     print("✓ Exercise 1 tests passed!")
 

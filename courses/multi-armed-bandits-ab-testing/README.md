@@ -8,7 +8,7 @@ Classical A/B testing asks you to freeze the world while you learn. Bandits acce
 
 **Level:** Intermediate to Advanced
 **Prerequisites:** Python, basic probability/statistics, familiarity with commodity markets (helpful but not required)
-**Duration:** 8 modules (8-10 weeks)
+**Duration:** 9 modules (10-12 weeks)
 **Estimated Effort:** 6-8 hours per week
 
 ## Why Multi-Armed Bandits?
@@ -32,6 +32,7 @@ By completing this course, you will be able to:
 5. **Design** bandit systems for commodity portfolio allocation — the "two-wallet" framework with guardrails
 6. **Deploy** production bandit systems with monitoring, guardrails, and non-stationarity detection
 7. **Evaluate** bandit performance using regret analysis, policy comparison, and proper backtesting
+8. **Route** LLM prompts adaptively — eliminate the "bad prompt tax" in commodity research and trading signal systems
 
 ## Course Structure
 
@@ -45,6 +46,7 @@ By completing this course, you will be able to:
 | 5 | Bandits for Commodity Trading | Portfolio tilting, regime adaptation, accumulator playbook |
 | 6 | Advanced Topics | Non-stationary bandits, restless bandits, adversarial settings |
 | 7 | Production Systems | Deployment, monitoring, guardrails, A/B-to-bandit migration |
+| 8 | Bandits for LLM Prompt Routing | Prompt arms, reward design for LLMs, contextual routing, bad prompt tax |
 
 ## Start Here
 

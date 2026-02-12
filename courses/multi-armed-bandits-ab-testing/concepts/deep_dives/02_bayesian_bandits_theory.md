@@ -1,112 +1,265 @@
-# Bayesian Bandits: Theory and Optimality
+# Deep Dive: Bayesian Bandits Theory
 
 ## TL;DR
+Bayesian bandits maintain probability distributions (beliefs) over each arm's reward, update via Bayes' rule, and make decisions that balance expected reward and information gain. Thompson Sampling is the practical approximation of the theoretically optimal Gittins index policy.
 
-The Bayesian approach to bandits maintains a full probability distribution (belief) over each arm's reward. Thompson Sampling is the practical algorithm; the Gittins Index is the theoretically optimal solution. Thompson Sampling approximates Gittins well in practice while being far simpler to implement.
+## Key Insight
+
+Classical bandits (UCB) use frequentist statistics: estimate means, compute confidence bounds.
+
+Bayesian bandits use probability: maintain distributions over unknown parameters, sample from posteriors.
+
+**Why Bayesian?**
+1. Natural uncertainty quantification (posterior width = exploration need)
+2. Incorporates prior knowledge (if you have it)
+3. Optimal for finite horizons (Gittins index)
+4. Empirically excellent (Thompson Sampling)
 
 ## Visual Explanation
 
 ```
-Bayesian Bandit Decision Framework
+BAYESIAN UPDATING CYCLE
 
-                  ┌──────────────────┐
-                  │   PRIOR BELIEFS  │
-                  │  P(θ_a) for each │
-                  │      arm a       │
-                  └────────┬─────────┘
-                           │
-                  ┌────────▼─────────┐
-                  │  SELECT ACTION   │
-                  │                  │
-                  │  Thompson: sample│
-                  │  from posteriors │
-                  │  pick highest    │
-                  └────────┬─────────┘
-                           │
-                  ┌────────▼─────────┐
-                  │ OBSERVE REWARD   │
-                  │    r_t ~ P(r|θ)  │
-                  └────────┬─────────┘
-                           │
-                  ┌────────▼─────────┐
-                  │ UPDATE BELIEFS   │
-                  │                  │
-                  │ P(θ|data) ∝      │
-                  │ P(data|θ)·P(θ)   │
-                  └────────┬─────────┘
-                           │
-                           ▼
-                      REPEAT ───►
+Prior Belief          Observe Data           Posterior Belief
+(Before seeing)    →  (Evidence)          →  (After seeing)
+
+Beta(1,1)             Success!               Beta(2,1)
+ Uniform              ───────→               Shifted right
+  |█████|                                     |░███░|
+
+Beta(2,1)             Failure                Beta(2,2)
+ Optimistic           ───────→               Centered
+  |░███░|                                     |░░█░░|
+
+Beta(2,2)             Success!               Beta(3,2)
+ Uncertain            ───────→               Learning
+  |░░█░░|                                     | ░██░|
+
+After 100 observations:
+Beta(55,46) → |███| (confident, ~54% success rate)
 ```
 
-## Intuitive Analogy
+## Formal Framework
 
-Imagine you're a commodity trader evaluating 5 different trading signals. For each signal, you have a "confidence meter" — wide and uncertain at first, then narrowing as you see more data. Thompson Sampling asks each signal to "audition" by drawing from its confidence meter. Uncertain signals sometimes give impressive auditions (and get tested). Confident losers rarely impress. Over time, the best signal wins most auditions.
+**Bayesian Bandit Model:**
 
-## The Gittins Index
+For each arm i:
+- True parameter: θᵢ (unknown)
+- Prior belief: p(θᵢ) (before data)
+- Likelihood: p(r | θᵢ) (reward given parameter)
+- Posterior: p(θᵢ | data) ∝ p(data | θᵢ) · p(θᵢ)
 
-The **Gittins Index** (1979) provides the theoretically optimal solution to the discounted multi-armed bandit problem.
+**Update Rule (Bayes' Theorem):**
+```
+p(θᵢ | r₁,...,rₜ) = p(r₁,...,rₜ | θᵢ) · p(θᵢ) / p(r₁,...,rₜ)
+```
 
-**Setup**: Each arm has an unknown reward distribution. You want to maximize discounted total reward:
+**Conjugate Pairs (easy updating):**
 
-$$\max \mathbb{E}\left[\sum_{t=0}^{\infty} \gamma^t r_t\right]$$
+1. **Beta-Bernoulli** (binary rewards)
+   ```
+   Prior: θ ~ Beta(α, β)
+   Likelihood: r ~ Bernoulli(θ)
+   Posterior: θ | r ~ Beta(α+r, β+(1-r))
+   ```
 
-where $\gamma \in (0,1)$ is the discount factor.
+2. **Normal-Normal** (continuous rewards, known variance)
+   ```
+   Prior: μ ~ N(μ₀, σ₀²)
+   Likelihood: r ~ N(μ, σ²)
+   Posterior: μ | r ~ N((σ²μ₀ + σ₀²r)/(σ² + σ₀²), ...)
+   ```
 
-**Gittins' Theorem**: The optimal policy computes an "index" for each arm based solely on that arm's state (posterior), and always pulls the arm with the highest index.
+3. **Gamma-Poisson** (count data)
+   ```
+   Prior: λ ~ Gamma(α, β)
+   Likelihood: r ~ Poisson(λ)
+   Posterior: λ | r ~ Gamma(α+r, β+1)
+   ```
 
-$$\nu_a(s) = \sup_{\tau > 0} \frac{\mathbb{E}\left[\sum_{t=0}^{\tau-1} \gamma^t r_t \mid s\right]}{\mathbb{E}\left[\sum_{t=0}^{\tau-1} \gamma^t \mid s\right]}$$
+**Thompson Sampling Decision Rule:**
+```
+For each arm i:
+  Sample θ̂ᵢ ~ p(θᵢ | data)
+Pick arm i* = argmaxᵢ θ̂ᵢ
+```
 
-**Why it's impractical**: Computing the Gittins index requires solving a stopping problem for each arm state — computationally expensive and doesn't extend easily to contextual or restless settings.
+This is probability matching: allocate trials proportional to P(arm i is best).
 
-## Why Thompson Sampling Works
+## Gittins Index: The Optimal Solution
 
-Thompson Sampling approximates the Bayesian optimal solution through a simple mechanism:
+**Gittins Index Theorem (1979):**
 
-1. **Probability matching**: Thompson Sampling selects each arm with probability equal to the posterior probability that the arm is optimal
-2. **Automatic exploration**: Arms with high uncertainty get wide posterior samples, giving them a chance to "prove themselves"
-3. **Convergence**: As data accumulates, posteriors concentrate around the true parameters, and sampling naturally converges to exploitation
+For infinite-horizon discounted bandits, there exists an index Gᵢ(state) for each arm such that the optimal policy is:
+```
+Always pull arm i* = argmaxᵢ Gᵢ
+```
 
-**Key result** (Russo & Van Roy, 2014): Thompson Sampling satisfies:
+**What is the Gittins index?**
+For a given arm in state s (posterior):
+```
+G(s) = sup {λ : E[Σₜ γᵗ rₜ | continue] ≥ E[Σₜ γᵗ λ | stop]}
+```
 
-$$\text{BayesRegret}(T) \leq O(\sqrt{KT \ln T})$$
+Interpretation: The fair price at which you'd be indifferent between:
+- Continuing to pull this arm
+- Switching to a known-reward alternative paying λ forever
 
-And for structured problems, it can achieve much better bounds by exploiting the problem structure.
+**Why we don't use it:**
+- Hard to compute (dynamic programming over continuous state space)
+- Requires discount factor γ
+- Infinite-horizon assumption
 
-## Conjugate Prior Families
+**Why Thompson Sampling works:**
+Thompson Sampling approximates Gittins index under certain conditions. Empirically matches its performance in most cases.
 
-| Reward Type | Likelihood | Prior | Posterior |
-|------------|-----------|-------|-----------|
-| Binary (click/no-click) | Bernoulli | Beta(α,β) | Beta(α+s, β+f) |
-| Continuous (returns) | Normal(μ,σ²) | Normal(μ₀,σ₀²) | Normal(μ_n, σ_n²) |
-| Count (arrivals) | Poisson(λ) | Gamma(α,β) | Gamma(α+Σx, β+n) |
-| Duration (holding time) | Exponential(λ) | Gamma(α,β) | Gamma(α+n, β+Σx) |
+## Connection to Bayesian Decision Theory
 
-## Connection to Bayesian Commodity Forecasting
+**Bayesian approach to bandits:**
 
-This course's Bayesian bandit module connects directly to the Bayesian Commodity Forecasting course:
+Goal: Maximize expected cumulative reward under posterior beliefs.
 
-- **Shared foundation**: Both use posterior updating as the core mechanism
-- **Priors encode domain knowledge**: In commodity forecasting, priors encode seasonal patterns and fundamental relationships. In bandits, priors encode initial beliefs about strategy effectiveness.
-- **Uncertainty quantification**: Both produce full distributions, not point estimates — critical for risk management
-- **Sequential decision making**: Bayesian commodity forecasts inform trading decisions; bandits optimize which forecasts/strategies to act on
+```
+π* = argmaxπ Eₚ(θ|data) [Σₜ r(aₜ, θ)]
+```
 
-The natural workflow: Bayesian forecasting models generate signals → bandit algorithms decide which signals to allocate capital toward.
+**Information value:**
+Pulling an arm gives reward r but also information I about θ.
 
-## When to Prefer Bayesian vs. Frequentist Bandits
+Bayesian bandits implicitly balance:
+- **Exploitation:** E[r | current beliefs]
+- **Exploration:** E[future value from info | current beliefs]
 
-| Criterion | Bayesian (Thompson) | Frequentist (UCB) |
-|-----------|-------------------|-------------------|
-| Prior knowledge available | Strong advantage | No mechanism |
-| Delayed feedback | Handles naturally | Requires modification |
-| Batched updates | Straightforward | Harder to adapt |
-| Theoretical guarantees | Asymptotic | Finite-time |
-| Implementation | Simple | Simple |
-| Non-stationarity | Discounted priors | Sliding windows |
+This is called **information-directed sampling**.
 
-## Key References
+**Theoretical result (Russo & Van Roy):**
+Thompson Sampling performs near-optimal information-directed sampling.
 
-- Gittins, J.C. (1979). "Bandit Processes and Dynamic Allocation Indices." *Journal of the Royal Statistical Society*.
-- Russo, D. and Van Roy, B. (2014). "Learning to Optimize via Posterior Sampling." *Mathematics of Operations Research*.
-- Chapelle, O. and Li, L. (2011). "An Empirical Evaluation of Thompson Sampling." *NeurIPS*.
-- Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2018). "A Tutorial on Thompson Sampling." *Foundations and Trends in Machine Learning*.
+## Intuitive Explanation
+
+**Analogy: Job candidate evaluation (Bayesian view)**
+
+You have 3 candidates. Each has true ability θᵢ (unknown).
+
+- **Prior:** Before interviews, assume all are equally skilled (Beta(1,1) = uniform)
+- **Interview = Pull:** Each interview reveals noisy evidence about θᵢ
+- **Update:** After each interview, update your belief about that candidate
+- **Decision:** Sample from beliefs ("If this candidate is as good as I think, pick them")
+- **Posterior width = uncertainty:** 
+  - Wide posterior (2 interviews) → frequently re-test
+  - Narrow posterior (20 interviews) → rarely re-test
+
+**Bayesian vs Frequentist:**
+- Frequentist (UCB): "Candidate has mean score μ̂ ± confidence interval"
+- Bayesian (Thompson): "I believe candidate's score is θ ~ Beta(α, β)"
+
+Same information, different language. Bayesian is more natural for sequential decisions.
+
+## Why Thompson Sampling Works So Well
+
+**Theoretical properties:**
+1. **Optimal for 2 arms:** Matches Gittins index exactly
+2. **Optimal asymptotically:** Achieves O(log T) regret
+3. **Information-directed:** Near-optimal info/reward tradeoff
+4. **Finite-horizon aware:** Adjusts exploration based on remaining time
+
+**Practical advantages:**
+1. **No parameter tuning:** Just choose priors (often uniform is fine)
+2. **Easy to implement:** 5 lines of code for Beta-Bernoulli
+3. **Handles delayed rewards:** Bayesian updating works with batches
+4. **Extends naturally:** Contextual, non-stationary, structured bandits
+
+**Empirical observation:**
+In practice, Thompson Sampling often beats UCB and other methods, especially:
+- Early in learning (finite horizon)
+- Non-stationary environments
+- Structured reward models
+
+## Connection to the Bayesian Commodity Forecasting Course
+
+**Commodity forecasting is Bayesian modeling:**
+- Prior: Belief about commodity returns, volatility, regime
+- Data: Observed prices, fundamentals
+- Posterior: Updated beliefs about future returns
+
+**Bandit connects forecasting to action:**
+- Forecast: p(return | data) for each commodity
+- Bandit: How to allocate capital given forecasts
+- Thompson Sampling: Sample from forecast distributions, pick best
+
+**Example workflow:**
+1. **Bayesian forecast:** "WTI return ~ N(0.5%, 3%)" (posterior)
+2. **Thompson Sampling:** Sample from this distribution
+3. **Decision:** If WTI sample > others → allocate more to WTI
+4. **Observe:** Actual return
+5. **Update forecast:** Bayesian update on commodity model
+6. **Repeat:** Next week
+
+**Key insight:**
+If you're already doing Bayesian commodity modeling, Thompson Sampling is the natural way to turn forecasts into decisions.
+
+## When Bayesian Bandits Excel
+
+**Use Bayesian bandits when:**
+1. You have meaningful priors (domain knowledge)
+2. Rewards have natural probabilistic interpretation
+3. Want automatic exploration tuning
+4. Working with non-stationary rewards (discounting is natural in Bayesian framework)
+5. Need to explain decisions to stakeholders ("We believe Gold has 70% chance of outperforming")
+
+**Classical bandits (UCB) might be better when:**
+1. Need worst-case guarantees (minimax regret)
+2. Adversarial environments (rewards chosen to hurt you)
+3. Want to avoid Bayesian assumptions
+
+**In commodity trading:**
+Bayesian bandits are natural because:
+- Commodity returns have distributional structure (not adversarial)
+- Prior knowledge exists (historical volatility, correlations)
+- Non-stationarity is common (regimes change)
+- Stakeholders understand "confidence" language
+
+## Practice: Bayesian Updating
+
+**Exercise:** Commodity win rates
+
+You're tracking 3 commodity strategies. Each generates weekly wins/losses.
+
+Week 1: All go 1-0 (one win each)
+```
+Prior: Beta(1,1)
+After 1 win: Beta(2,1)
+Mean = 2/3 ≈ 67% (optimistic, but uncertain)
+```
+
+Week 5: Strategy A is 4-1, B is 2-3, C is 3-2
+```
+A: Beta(5,2) → mean 5/7 ≈ 71%
+B: Beta(3,4) → mean 3/7 ≈ 43%
+C: Beta(4,3) → mean 4/7 ≈ 57%
+```
+
+Thompson Sampling:
+```python
+samples = [beta.rvs(5,2), beta.rvs(3,4), beta.rvs(4,3)]
+# samples ≈ [0.75, 0.38, 0.61]
+# Pick A (highest sample)
+```
+
+After 50 weeks: A is 32-18, B is 19-31, C is 25-25
+```
+A: Beta(33,19) → mean 63%, std 7% (confident)
+B: Beta(20,32) → mean 38%, std 7% (confident loser)
+C: Beta(26,26) → mean 50%, std 7% (coin flip, but confident it's mediocre)
+
+Thompson Sampling now picks:
+  A: ~95% of the time
+  C: ~5% of the time
+  B: ~0% of the time (clearly inferior)
+```
+
+**Notice:** Exploration decays naturally as posteriors tighten.
+
+---
+
+**Remember:** Bayesian bandits are about maintaining beliefs and sampling decisions from those beliefs. Thompson Sampling is the practical way to do this optimally.

@@ -289,13 +289,16 @@ def exercise_4_feature_importance():
     def run_simulation(feature_mask: np.ndarray) -> float:
         """Run bandit simulation with selected features."""
         # True reward structure: r = 0.5*f1 + 0.3*f2 + 0.1*f3 for arm 0
-        true_weights = np.array([
+        true_weights_full = np.array([
             [0.5, 0.3, 0.1],  # Arm 0
             [0.1, 0.5, 0.3],  # Arm 1
             [0.3, 0.1, 0.5]   # Arm 2
         ])
 
-        n_features = len(feature_mask)
+        # Mask weights to match selected features
+        true_weights = true_weights_full[:, feature_mask]
+
+        n_features = feature_mask.sum()
         bandit = LinUCB(n_arms=3, context_dim=n_features, alpha=1.0)
 
         cumulative_reward = 0
@@ -307,8 +310,8 @@ def exercise_4_feature_importance():
             # Choose arm
             arm = bandit.choose_arm(context)
 
-            # Get reward (from full context)
-            true_reward = full_context @ true_weights[arm]
+            # Get reward (from masked context and weights)
+            true_reward = context @ true_weights[arm]
             reward = true_reward + np.random.normal(0, 0.1)
             cumulative_reward += reward
 

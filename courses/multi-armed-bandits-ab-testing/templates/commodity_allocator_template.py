@@ -10,10 +10,17 @@ Strategy: Core-Satellite with Bandit Sleeve
 
 import numpy as np
 import pandas as pd
-import yfinance as yf
 from typing import Dict, List, Literal
 from datetime import datetime, timedelta
 import logging
+
+# Try to import yfinance, fallback to synthetic data if not available
+try:
+    import yfinance as yf
+    HAS_YFINANCE = True
+except ImportError:
+    HAS_YFINANCE = False
+    print("Note: yfinance not installed. Using synthetic data. Install with: pip install yfinance")
 
 # ============================================================================
 # CUSTOMIZE THESE
@@ -69,6 +76,11 @@ class CommodityAllocator:
     def load_data(self) -> pd.DataFrame:
         """Load price data from yfinance"""
         self.logger.info(f"Loading data for {self.tickers}")
+
+        if not HAS_YFINANCE:
+            self.logger.info("Using synthetic data (yfinance not available)")
+            return self._generate_synthetic_data()
+
         try:
             data = yf.download(
                 self.tickers,

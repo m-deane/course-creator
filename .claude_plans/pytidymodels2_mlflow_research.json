@@ -1,0 +1,526 @@
+{
+  "search_summary": {
+    "platforms_searched": ["github", "google_search", "technical_documentation"],
+    "repositories_analyzed": 0,
+    "docs_reviewed": 15,
+    "key_finding": "pytidymodels2 repository does not exist. No Python implementation of tidymodels-style workflows was found with this name. Tidymodels is an R-specific framework."
+  },
+  "repositories": [
+    {
+      "citation": "N/A - Repository 'pytidymodels2' not found",
+      "platform": "github",
+      "stats": {
+        "stars": null,
+        "forks": null,
+        "contributors": null,
+        "last_updated": null
+      },
+      "key_features": [],
+      "architecture": "Repository does not exist. Search results only returned tidymodels (R framework) and no Python equivalent.",
+      "code_quality": {
+        "testing": "none",
+        "documentation": "none",
+        "maintenance": "none"
+      },
+      "usage_example": "N/A",
+      "limitations": ["Repository does not exist or may be private/unlisted"],
+      "alternatives": [
+        "scikit-learn pipelines (Python ML workflows)",
+        "MLflow (experiment tracking and model management)",
+        "Kedro (pipeline framework)",
+        "ZenML (MLOps pipeline framework)"
+      ]
+    }
+  ],
+  "mlflow_capabilities_2026": {
+    "experiment_tracking_ui": {
+      "citation": "MLflow Documentation. 'MLflow Tracking.' MLflow, 2026. https://mlflow.org/docs/latest/ml/tracking/",
+      "built_in_charts": [
+        {
+          "type": "Parallel Coordinates Plot",
+          "description": "Visualizes relationships between multiple parameters and metrics",
+          "use_case": "Understanding effect of parameter settings on model performance",
+          "interactive": true
+        },
+        {
+          "type": "Scatter Plot",
+          "description": "Shows relationship between a parameter (X-axis) and metric (Y-axis)",
+          "use_case": "Identifying trends and correlations between variables",
+          "interactive": true
+        },
+        {
+          "type": "Contour Plot",
+          "description": "Visualizes relationship between two parameters and a scalar metric",
+          "use_case": "How learning rate and batch size affect model accuracy",
+          "interactive": true
+        },
+        {
+          "type": "Line Plot",
+          "description": "Shows metric history over training steps/epochs",
+          "use_case": "Monitoring training progress (loss curves, validation metrics)",
+          "interactive": true
+        },
+        {
+          "type": "Bar Chart",
+          "description": "Compares metric values across runs",
+          "use_case": "Side-by-side comparison of model performance",
+          "interactive": true
+        }
+      ],
+      "comparison_features": [
+        "Run selection and filtering",
+        "Parameter difference highlighting",
+        "Metric comparison tables",
+        "Multi-experiment comparison",
+        "Search by parameter/metric values",
+        "Sorting and grouping by parameters",
+        "Hover details on charts",
+        "Chart customization (axes, data filters)"
+      ],
+      "artifacts_viewer": [
+        "Text file preview",
+        "Image preview",
+        "HTML/GeoJSON interactive preview",
+        "Model file browsing",
+        "Download capabilities",
+        "Confusion matrix visualization"
+      ],
+      "limitations": [
+        "Limited customization of chart appearance",
+        "No built-in SHAP value visualizations",
+        "No residual plot generation",
+        "Limited statistical analysis tools",
+        "No real-time prediction analysis interface",
+        "Cannot create fully custom dashboard layouts",
+        "Limited business intelligence features"
+      ]
+    },
+    "new_features_2026": {
+      "mlflow_assistant": {
+        "description": "AI-powered in-product chatbot that helps identify, diagnose, and fix issues",
+        "capabilities": [
+          "Context-aware code analysis",
+          "Root cause analysis",
+          "Quality test setup",
+          "LLMOps best practices application"
+        ],
+        "release": "MLflow 3.9.0"
+      },
+      "agents_dashboard": {
+        "description": "New Overview tab for GenAI experiments with pre-built charts",
+        "features": [
+          "Agent performance monitoring",
+          "Chat sessions tab for conversational workflows",
+          "Trace quickstart drawer",
+          "Continuous quality monitoring"
+        ],
+        "release": "MLflow 3.9.0 (January 2026)"
+      },
+      "judge_builder_ui": {
+        "description": "UI for creating and testing LLM judges for quality evaluation",
+        "capabilities": [
+          "Define evaluation criteria",
+          "Create scoring rubrics",
+          "Test against sample traces",
+          "Automatic judge execution on traces",
+          "Pre-defined judges for safety, relevance, groundedness, correctness"
+        ],
+        "release": "MLflow 3.9.0"
+      },
+      "opentelemetry_integration": {
+        "description": "Comprehensive OpenTelemetry integration for observability",
+        "release": "MLflow 3.6.0"
+      }
+    },
+    "model_registry_ui": {
+      "citation": "MLflow Documentation. 'MLflow Model Registry.' MLflow, 2026. https://mlflow.org/docs/latest/ml/model-registry/",
+      "features": [
+        "Centralized model catalog view",
+        "Version listing and comparison",
+        "Metadata tagging and annotations",
+        "Stage transitions (Staging, Production)",
+        "Model lineage tracking",
+        "Registration workflows from UI"
+      ],
+      "limitations": [
+        "No built-in performance comparison charts",
+        "Limited visual analytics for model metrics",
+        "No A/B test visualization",
+        "No drift detection visualization",
+        "Basic deployment monitoring"
+      ]
+    },
+    "custom_visualization_support": {
+      "citation": "MLflow Documentation. 'Custom Metrics & Visualizations.' MLflow, 2026. https://mlflow.org/docs/latest/ml/evaluation/metrics-visualizations/",
+      "approaches": [
+        {
+          "method": "Custom Metrics API",
+          "description": "Define custom metrics in evaluation framework",
+          "requires_coding": true
+        },
+        {
+          "method": "HTML Artifact Logging",
+          "description": "Log interactive Plotly/Bokeh charts as HTML artifacts",
+          "requires_coding": true,
+          "limitation": "Not integrated into main UI, viewed separately"
+        },
+        {
+          "method": "MLflow API + External Tools",
+          "description": "Query experiment data via API and visualize in Plotly Dash, Metabase, or BI tools",
+          "requires_coding": true,
+          "examples": [
+            "Databricks system tables integration",
+            "Metabase dashboard templates",
+            "Custom Plotly Dash apps"
+          ]
+        }
+      ]
+    },
+    "gaps_and_limitations": {
+      "citation": "Multiple sources including Valohai Blog and MLflow GitHub Issues, 2026",
+      "collaboration": [
+        "Limited multi-user support",
+        "Basic RBAC (READ, EDIT, MANAGE, NO_PERMISSIONS only)",
+        "No project isolation or team boundaries",
+        "Difficult to share experiments at scale"
+      ],
+      "scalability": [
+        "Manual processes don't scale beyond small teams",
+        "Limited organizational features for large teams",
+        "Performance issues with large numbers of experiments"
+      ],
+      "visualization": [
+        "No customizable dashboard builder",
+        "Cannot create composite views",
+        "No drag-and-drop dashboard creation",
+        "Limited statistical analysis tools",
+        "No built-in model explainability visualizations",
+        "Cannot visualize aggregated trace metrics easily"
+      ],
+      "deployment": [
+        "Basic deployment options",
+        "Requires additional DevOps tooling",
+        "Limited production monitoring capabilities"
+      ],
+      "data_management": [
+        "Weak data versioning capabilities",
+        "Focuses on model tracking over data tracking"
+      ]
+    }
+  },
+  "custom_plotly_dash_capabilities": {
+    "typical_features": {
+      "citation": "Plotly. 'Machine Learning Dash App Examples.' Plotly, 2026. https://plotly.com/examples/machine-learning/",
+      "model_performance_visualizations": [
+        {
+          "type": "ROC Curves",
+          "description": "Receiver Operating Characteristic curves with AUC scores",
+          "implementation": "sklearn.metrics.roc_curve + plotly.express",
+          "interactive_features": ["Threshold slider", "Multi-class comparison", "Hover details"]
+        },
+        {
+          "type": "Confusion Matrix",
+          "description": "Classification results matrix with various formats",
+          "formats": ["Heatmap", "Pie chart", "Normalized view"],
+          "interactive_features": ["Click to drill down", "Class filtering", "Percentage toggle"]
+        },
+        {
+          "type": "Residual Plots",
+          "description": "Regression model error analysis",
+          "subtypes": ["Residuals vs Predicted", "Q-Q plots", "Scale-Location plots"],
+          "interactive_features": ["Outlier highlighting", "Zoom", "Point selection"]
+        },
+        {
+          "type": "Feature Importance Charts",
+          "description": "Variable importance rankings",
+          "formats": ["Bar charts", "Waterfall plots", "Grouped by model"],
+          "interactive_features": ["Sort by importance", "Filter by threshold", "Compare across models"]
+        },
+        {
+          "type": "SHAP Visualizations",
+          "description": "Model explainability with Shapley values",
+          "plot_types": [
+            "Summary/Beeswarm plots",
+            "Waterfall plots",
+            "Force plots",
+            "Dependence plots"
+          ],
+          "interactive_features": [
+            "Individual prediction analysis",
+            "Feature interaction exploration",
+            "Global vs local explanations"
+          ]
+        },
+        {
+          "type": "Prediction Distribution",
+          "description": "Distribution of model predictions",
+          "formats": ["Histograms", "Violin plots", "Box plots"],
+          "interactive_features": ["Segmentation by class", "Threshold adjustment", "Outlier detection"]
+        },
+        {
+          "type": "Learning Curves",
+          "description": "Model performance vs training set size",
+          "metrics": ["Training score", "Validation score", "Gap analysis"],
+          "interactive_features": ["Zoom to epochs", "Metric selection", "Multiple run overlay"]
+        },
+        {
+          "type": "Calibration Curves",
+          "description": "Probability calibration analysis",
+          "use_case": "Assess prediction confidence reliability",
+          "interactive_features": ["Bin size adjustment", "Perfect calibration reference line"]
+        }
+      ],
+      "experiment_comparison": [
+        {
+          "feature": "Side-by-side Metric Tables",
+          "description": "Custom tables with filtering, sorting, and conditional formatting",
+          "advantages_over_mlflow": "Full control over columns, calculations, and styling"
+        },
+        {
+          "feature": "Custom Parameter Analysis",
+          "description": "Heatmaps showing parameter combinations vs performance",
+          "advantages_over_mlflow": "More visualization options than parallel coordinates"
+        },
+        {
+          "feature": "Time Series Analysis",
+          "description": "Experiment performance over time with trend lines",
+          "advantages_over_mlflow": "Not available in MLflow by default"
+        },
+        {
+          "feature": "Statistical Significance Tests",
+          "description": "Confidence intervals, p-values, effect sizes",
+          "advantages_over_mlflow": "Statistical rigor not built into MLflow"
+        }
+      ],
+      "interactive_capabilities": [
+        {
+          "feature": "Real-time Prediction Interface",
+          "description": "Input form + instant prediction with explanation",
+          "components": ["Feature input sliders/dropdowns", "Prediction output", "Confidence scores", "SHAP explanation"]
+        },
+        {
+          "feature": "Model Comparison Widget",
+          "description": "Select 2+ models and compare on same data point",
+          "benefits": "Direct A/B testing interface"
+        },
+        {
+          "feature": "Data Filtering and Segmentation",
+          "description": "Analyze model performance by data segments",
+          "use_cases": ["Demographic groups", "Time periods", "Data quality tiers"]
+        },
+        {
+          "feature": "Drill-down Analysis",
+          "description": "Click on any data point to see details",
+          "levels": ["Experiment → Run → Model → Prediction → Features"]
+        },
+        {
+          "feature": "Threshold Tuning",
+          "description": "Interactive slider to adjust classification thresholds",
+          "real_time_updates": ["Confusion matrix", "Precision/Recall", "F1 score", "Business metrics"]
+        }
+      ],
+      "business_intelligence_features": [
+        {
+          "feature": "Custom KPIs",
+          "description": "Business-specific metrics calculated from ML outputs",
+          "examples": ["Revenue impact", "Cost savings", "Customer retention"]
+        },
+        {
+          "feature": "Executive Dashboards",
+          "description": "High-level summaries for non-technical stakeholders",
+          "components": ["Key metric cards", "Trend indicators", "Goal progress bars"]
+        },
+        {
+          "feature": "Automated Reporting",
+          "description": "Scheduled PDF/email reports with insights",
+          "not_in_mlflow": true
+        }
+      ],
+      "advanced_visualizations": [
+        {
+          "type": "3D Scatter Plots",
+          "use_case": "Visualize high-dimensional parameter spaces",
+          "interactive": true
+        },
+        {
+          "type": "Sankey Diagrams",
+          "use_case": "Model pipeline flows and data transformations",
+          "interactive": true
+        },
+        {
+          "type": "Sunburst Charts",
+          "use_case": "Hierarchical model structure or error analysis",
+          "interactive": true
+        },
+        {
+          "type": "Animated Visualizations",
+          "use_case": "Show training progress or time-based changes",
+          "not_in_mlflow": true
+        }
+      ]
+    },
+    "react_specific_features": {
+      "advantages": [
+        "Component-based architecture for reusable widgets",
+        "Rich ecosystem of UI libraries (Material-UI, Ant Design)",
+        "Better state management for complex interactions (Redux, MobX)",
+        "TypeScript support for type safety",
+        "Server-side rendering for performance",
+        "More flexible routing and navigation"
+      ],
+      "typical_implementations": [
+        "Separate backend (FastAPI/Flask) + React frontend",
+        "Integration with MLflow backend via REST API",
+        "Real-time updates via WebSockets",
+        "Custom authentication and authorization"
+      ]
+    },
+    "plotly_dash_specific_features": {
+      "advantages": [
+        "Python-only development (no JavaScript required)",
+        "Tighter integration with data science libraries",
+        "Faster prototyping for data scientists",
+        "Built-in callback system for interactivity",
+        "Easy to deploy as standalone app"
+      ],
+      "limitations": [
+        "Less flexible than React for complex UIs",
+        "Smaller ecosystem compared to React",
+        "Callback chains can become complex"
+      ]
+    }
+  },
+  "comparison_summary": {
+    "mlflow_strengths": [
+      "Zero setup for basic experiment tracking",
+      "Built-in model registry and versioning",
+      "Standard UI works out-of-the-box",
+      "Good for team collaboration on experiments",
+      "Integrated with popular ML frameworks",
+      "New AI assistant for troubleshooting (2026)",
+      "GenAI-specific features (agents dashboard, judges)"
+    ],
+    "mlflow_gaps": [
+      "Limited visualization customization",
+      "No built-in SHAP/explainability visualizations",
+      "Cannot create custom dashboard layouts",
+      "Limited statistical analysis tools",
+      "No real-time prediction testing interface",
+      "Basic deployment monitoring",
+      "Weak business intelligence features",
+      "No custom KPI tracking",
+      "Limited aggregated trace metrics visualization"
+    ],
+    "custom_dashboard_strengths": [
+      "Complete control over visualizations and layout",
+      "Domain-specific and business-specific metrics",
+      "Advanced model explainability (SHAP, LIME, etc.)",
+      "Real-time prediction testing interfaces",
+      "Statistical analysis and significance testing",
+      "Executive/stakeholder-friendly views",
+      "Custom interactivity and workflows",
+      "Integration with other business tools",
+      "Branded and white-labeled experiences"
+    ],
+    "custom_dashboard_gaps": [
+      "Significant development time required",
+      "Need to build experiment tracking infrastructure",
+      "Maintenance overhead",
+      "Requires frontend + backend expertise",
+      "Need to implement security and access control",
+      "Data storage and querying infrastructure needed",
+      "Version control and change management complexity"
+    ]
+  },
+  "technical_insights": {
+    "common_patterns": [
+      "MLflow as backend + custom frontend (hybrid approach)",
+      "Use MLflow API to query experiment data, visualize in Dash/React",
+      "Log custom HTML artifacts (Plotly charts) to MLflow",
+      "Databricks system tables → BI tool integration",
+      "Separate dashboards for different audiences (technical vs executive)"
+    ],
+    "best_practices": [
+      "Start with MLflow UI for rapid prototyping",
+      "Identify visualization gaps before building custom dashboards",
+      "Use MLflow's artifact storage for custom visualizations",
+      "Build custom dashboards iteratively (start with highest-value features)",
+      "Consider maintenance burden vs benefit",
+      "Use hybrid approach: MLflow for tracking + custom UI for analysis",
+      "Leverage MLflow's REST API for integration"
+    ],
+    "pitfalls": [
+      "Building custom dashboards too early (premature optimization)",
+      "Underestimating maintenance costs",
+      "Recreating features that MLflow already provides",
+      "Not planning for scalability from the start",
+      "Ignoring security and access control requirements",
+      "Over-engineering visualizations that stakeholders don't use"
+    ],
+    "emerging_trends": [
+      "AI-powered assistants in ML platforms (MLflow Assistant)",
+      "LLM-specific evaluation and monitoring tools",
+      "Integrated model explainability features",
+      "Real-time trace analysis for agent systems",
+      "Continuous quality monitoring with automated judges",
+      "OpenTelemetry integration for unified observability"
+    ]
+  },
+  "implementation_recommendations": [
+    {
+      "scenario": "Small team (< 5 people), standard ML workflows",
+      "recommended_solution": "Use MLflow UI exclusively",
+      "rationale": "Built-in features sufficient, no custom development needed, faster time-to-value"
+    },
+    {
+      "scenario": "Medium team (5-20 people), need model explainability",
+      "recommended_solution": "MLflow + logged HTML artifacts (SHAP plots as HTML)",
+      "rationale": "Leverage MLflow infrastructure, add explainability without full custom dashboard"
+    },
+    {
+      "scenario": "Large team (20+ people), diverse stakeholders",
+      "recommended_solution": "MLflow backend + custom Plotly Dash dashboard",
+      "rationale": "Python-only development, data scientists can maintain it, good balance of power and simplicity"
+    },
+    {
+      "scenario": "Enterprise with non-technical stakeholders",
+      "recommended_solution": "MLflow backend + React dashboard + BI tool integration",
+      "rationale": "Professional UI, business metrics, executive dashboards, scalable architecture"
+    },
+    {
+      "scenario": "Research team focused on experimentation",
+      "recommended_solution": "MLflow + Jupyter notebooks + occasional Dash apps",
+      "rationale": "Flexibility for exploratory analysis, ad-hoc visualizations as needed"
+    },
+    {
+      "scenario": "Production-focused team with deployment monitoring",
+      "recommended_solution": "MLflow + dedicated monitoring platform (Grafana, Datadog) + custom prediction UI",
+      "rationale": "Separation of concerns: experiments (MLflow) vs production monitoring vs user-facing tools"
+    },
+    {
+      "scenario": "GenAI/LLM agent development (2026)",
+      "recommended_solution": "MLflow 3.9+ with Agents Dashboard + custom evaluation interfaces",
+      "rationale": "Leverage new trace analysis, judge builder, and chat sessions features; add custom analysis for domain-specific evaluations"
+    }
+  ],
+  "community_insights": {
+    "popular_solutions": [
+      "Hybrid approach: MLflow for storage + custom visualization",
+      "Weights & Biases as alternative with better built-in UI",
+      "Neptune.ai for teams needing more advanced features",
+      "DagsHub for Git-integrated experiment tracking"
+    ],
+    "controversial_topics": [
+      "Whether to build custom vs buy commercial MLOps platform",
+      "MLflow's limited RBAC and team features",
+      "Open source MLflow vs Databricks Managed MLflow",
+      "When custom dashboards justify the development cost"
+    ],
+    "expert_opinions": [
+      "MLflow excels at experiment tracking but needs augmentation for production monitoring",
+      "Custom dashboards most valuable for stakeholder communication, not data science work",
+      "Invest in custom visualization only after MLflow limitations are clearly identified",
+      "For LLM applications, MLflow 3.9+ significantly closes the gap with specialized features"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+# AI Engineer Fundamentals - Course Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core LLM APIs
+anthropic>=0.39.0
+openai>=1.40.0
+
+# Vector Databases & Embeddings
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+
+# ML/Deep Learning
+torch>=2.0.0
+transformers>=4.40.0
+peft>=0.12.0  # LoRA, QLoRA
+bitsandbytes>=0.43.0  # Quantization
+accelerate>=0.30.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+tiktoken>=0.7.0  # Token counting
+
+# Web & API
+fastapi>=0.110.0
+uvicorn>=0.29.0
+httpx>=0.27.0
+pydantic>=2.7.0
+
+# Evaluation
+ragas>=0.1.10  # RAG evaluation
+datasets>=2.19.0
+
+# Development
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+python-dotenv>=1.0.0
+rich>=13.7.0  # Beautiful terminal output
+
+# Notebooks
+jupyter>=1.0.0
+ipywidgets>=8.1.0
+matplotlib>=3.8.0
+
+# Optional: Reranking
+# cross-encoder models are included in sentence-transformers
+
+# Optional: Web Search
+# tavily-python>=0.3.0
+
+# Optional: Modal deployment
+# modal>=0.62.0

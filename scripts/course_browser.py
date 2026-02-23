@@ -696,7 +696,40 @@ class CourseBrowserHandler(BaseHTTPRequestHandler):
             self._send_404()
             return
 
-        content = full.read_bytes()
+        html = full.read_text(encoding="utf-8", errors="replace")
+
+        # Marp's bespoke-marp sets body{background:#000}, which shows as
+        # letterbox bars when the viewport aspect ratio doesn't match 16:9.
+        # Inject CSS to default to the course navy, then JS to dynamically
+        # sync the body background to each active slide's background color.
+        _SLIDE_INJECT = """<style>
+html,body{background:#1a365d!important}
+</style>
+<script>
+(function(){
+  var SLIDE_W=1280,SLIDE_H=720;
+  function syncBg(){
+    var s=document.querySelector('section.bespoke-marp-active');
+    if(!s)return;
+    var cs=getComputedStyle(s);
+    var bi=cs.backgroundImage;
+    var bc=cs.backgroundColor;
+    var fill=(bi&&bi!=='none')?bi+','+bc:bc;
+    if(fill&&fill.indexOf('rgba(0, 0, 0, 0)')<0){
+      document.documentElement.style.background=fill;
+      document.body.style.background=fill;
+    }
+  }
+  // Sync on load and after bespoke initialises
+  [100,300,600,1200].forEach(function(t){setTimeout(syncBg,t)});
+  // Sync on every navigation gesture
+  document.addEventListener('keydown',function(){setTimeout(syncBg,30)});
+  document.addEventListener('click',function(){setTimeout(syncBg,30)});
+})();
+</script>"""
+        html = html.replace('</head>', _SLIDE_INJECT + '</head>', 1)
+
+        content = html.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(content)))

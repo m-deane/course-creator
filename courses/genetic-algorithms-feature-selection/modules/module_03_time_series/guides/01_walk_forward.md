@@ -4,9 +4,7 @@
 
 Walk-forward validation evaluates time series models by training on past data and testing on future data in a rolling manner, mimicking real-world deployment where you can only predict forward in time. This respects temporal ordering and prevents data leakage that would occur with random cross-validation.
 
-## Key Insight
-
-Standard k-fold cross-validation is invalid for time series because it trains on future data to predict the past, creating unrealistic optimistic performance estimates. Walk-forward validation prevents this temporal leakage and provides realistic estimates of how the model will perform on unseen future data.
+> 💡 **Key Insight:** Standard k-fold cross-validation is invalid for time series because it trains on future data to predict the past, creating unrealistic optimistic performance estimates. Walk-forward validation prevents this temporal leakage and provides realistic estimates of how the model will perform on unseen future data.
 
 ## Formal Definition
 

@@ -4,9 +4,7 @@
 
 Custom model wrappers extend Dataiku's LLM Mesh to add preprocessing, postprocessing, routing logic, or integration with custom endpoints. They enable advanced patterns like retry logic, response parsing, multi-model ensembles, and specialized prompt templates while maintaining compatibility with Dataiku's standard LLM interfaces.
 
-## Key Insight
-
-Production LLM applications require more than just API calls—they need error handling, response validation, cost optimization, and domain-specific logic. Custom wrappers provide a clean abstraction layer that encapsulates this complexity, making advanced LLM patterns reusable across projects without duplicating code.
+> 💡 **Key Insight:** Production LLM applications require more than just API calls—they need error handling, response validation, cost optimization, and domain-specific logic. Custom wrappers provide a clean abstraction layer that encapsulates this complexity, making advanced LLM patterns reusable across projects without duplicating code.
 
 ## Formal Definition
 

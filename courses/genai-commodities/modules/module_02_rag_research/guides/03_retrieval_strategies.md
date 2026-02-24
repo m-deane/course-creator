@@ -4,9 +4,7 @@
 
 Retrieval strategies for commodity analysis combine semantic search with temporal, geographical, and commodity-specific filters to ensure LLMs receive contextually appropriate information—preventing the mixing of outdated data, wrong geographies, or unrelated commodities that would lead to hallucinated analysis.
 
-## Key Insight
-
-Standard RAG retrieval fails for commodities because semantic similarity alone can't distinguish between "crude oil storage was high in January 2024" and "crude oil storage was high in January 2020"—both are semantically identical but lead to opposite trading conclusions. Effective commodity retrieval requires **multi-dimensional filtering** that respects time, space, and domain boundaries.
+> 💡 **Key Insight:** Standard RAG retrieval fails for commodities because semantic similarity alone can't distinguish between "crude oil storage was high in January 2024" and "crude oil storage was high in January 2020"—both are semantically identical but lead to opposite trading conclusions. Effective commodity retrieval requires **multi-dimensional filtering** that respects time, space, and domain boundaries.
 
 ## Formal Definition
 

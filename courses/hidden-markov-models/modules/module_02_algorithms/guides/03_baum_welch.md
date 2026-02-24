@@ -4,9 +4,7 @@
 
 The Baum-Welch algorithm learns HMM parameters (transition probabilities, emission distributions, initial state distribution) from observed data using the Expectation-Maximization (EM) framework. It iteratively improves parameter estimates to maximize the likelihood of observed sequences.
 
-## Key Insight
-
-We can't directly count transitions between hidden states (they're hidden!), but we can compute expected counts using current parameter estimates. EM alternates between computing these expected counts (E-step) and updating parameters to maximize likelihood (M-step).
+> 💡 **Key Insight:** We can't directly count transitions between hidden states (they're hidden!), but we can compute expected counts using current parameter estimates. EM alternates between computing these expected counts (E-step) and updating parameters to maximize likelihood (M-step).
 
 ## Formal Definition
 

@@ -4,9 +4,7 @@
 
 Mixed-frequency data requires understanding how variables aggregate over time—monthly industrial production and quarterly GDP follow different temporal aggregation rules. This guide covers stock versus flow variables and the constraints that preserve consistency across frequencies.
 
-## Key Insight
-
-The relationship between high-frequency and low-frequency observations is not arbitrary: flow variables (GDP, consumption) sum over periods while stock variables (unemployment rate, inventory levels) reflect point-in-time values. Ignoring these aggregation constraints leads to misspecified models and biased forecasts.
+> 💡 **Key Insight:** The relationship between high-frequency and low-frequency observations is not arbitrary: flow variables (GDP, consumption) sum over periods while stock variables (unemployment rate, inventory levels) reflect point-in-time values. Ignoring these aggregation constraints leads to misspecified models and biased forecasts.
 
 ---
 

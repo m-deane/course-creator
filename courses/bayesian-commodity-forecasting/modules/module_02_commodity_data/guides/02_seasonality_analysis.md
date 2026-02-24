@@ -4,9 +4,7 @@
 
 Seasonality refers to predictable, recurring patterns in commodity prices tied to calendar periods (months, quarters, seasons). Identifying and modeling these patterns is crucial for accurate forecasting and distinguishing fundamental cycles from random noise.
 
-## Key Insight
-
-Many commodities exhibit strong seasonal patterns driven by predictable demand cycles (heating oil in winter, gasoline in summer) or supply cycles (agricultural harvest seasons). Failing to account for seasonality leads to systematic forecast errors and missed trading opportunities.
+> 💡 **Key Insight:** Many commodities exhibit strong seasonal patterns driven by predictable demand cycles (heating oil in winter, gasoline in summer) or supply cycles (agricultural harvest seasons). Failing to account for seasonality leads to systematic forecast errors and missed trading opportunities.
 
 ## Formal Definition
 

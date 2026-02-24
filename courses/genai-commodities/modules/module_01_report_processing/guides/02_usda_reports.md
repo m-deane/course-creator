@@ -4,9 +4,7 @@
 
 The US Department of Agriculture publishes critical supply/demand data for agricultural commodities. This guide covers automated extraction from WASDE reports, crop progress updates, and export sales using LLMs to convert complex tables and narrative text into tradeable data.
 
-## Key Insight
-
-USDA reports drive agricultural commodity markets but are published as PDFs with inconsistent table formats. LLMs excel at flexible table parsing and context extraction where traditional parsers fail, enabling automated processing of monthly WASDE updates and weekly crop reports.
+> 💡 **Key Insight:** USDA reports drive agricultural commodity markets but are published as PDFs with inconsistent table formats. LLMs excel at flexible table parsing and context extraction where traditional parsers fail, enabling automated processing of monthly WASDE updates and weekly crop reports.
 
 ## Formal Definition
 

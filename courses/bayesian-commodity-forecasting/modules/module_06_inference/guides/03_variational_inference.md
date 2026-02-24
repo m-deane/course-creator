@@ -4,9 +4,7 @@
 
 Variational Inference (VI) approximates intractable posterior distributions by transforming Bayesian inference into an optimization problem. Instead of sampling (MCMC), VI finds the best approximation from a simpler family of distributions by maximizing the Evidence Lower Bound (ELBO).
 
-## Key Insight
-
-MCMC explores the posterior through random sampling—accurate but slow. VI turns inference into optimization: find the distribution in a tractable family (e.g., Gaussians) that is closest to the true posterior. Trade exactness for speed—VI can be 100x faster than MCMC, enabling models with millions of parameters.
+> 💡 **Key Insight:** MCMC explores the posterior through random sampling—accurate but slow. VI turns inference into optimization: find the distribution in a tractable family (e.g., Gaussians) that is closest to the true posterior. Trade exactness for speed—VI can be 100x faster than MCMC, enabling models with millions of parameters.
 
 ## Formal Definition
 

@@ -4,9 +4,7 @@
 
 Dataiku LLM Mesh is an abstraction layer that provides unified access to multiple Large Language Model providers through a single, governed interface. It centralizes configuration, cost tracking, access control, and monitoring while allowing seamless switching between providers without code changes.
 
-## Key Insight
-
-**The core value proposition:** LLM Mesh transforms enterprise LLM usage from fragmented, ungoverned API calls scattered across projects into a centralized, auditable, cost-managed platform that enables experimentation while maintaining control.
+> 💡 **Key Insight:** **The core value proposition:** LLM Mesh transforms enterprise LLM usage from fragmented, ungoverned API calls scattered across projects into a centralized, auditable, cost-managed platform that enables experimentation while maintaining control.
 
 Think of LLM Mesh as a "router" sitting between your applications and multiple LLM providers—it handles authentication, load balancing, fallback, cost tracking, and compliance while presenting a simple, unified API to developers.
 
@@ -26,6 +24,8 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 ## Intuitive Explanation
 
 ### The Problem Without LLM Mesh
+
+> ⚠️ **Without LLM Mesh:**
 
 Imagine an organization where:
 - Team A uses OpenAI directly, hardcoding API keys in scripts

@@ -4,9 +4,7 @@
 
 Sparse approximations reduce the computational cost of Gaussian Process inference from O(n^3) to O(nm^2), where m << n is the number of inducing points. These methods enable GP modeling of large datasets (n > 10,000) by approximating the full covariance matrix with a lower-rank representation.
 
-## Key Insight
-
-Standard GP inference requires inverting an n×n covariance matrix, which becomes intractable for large datasets. Sparse methods select m representative "inducing points" and approximate the full GP through these points, achieving a controlled trade-off between computational efficiency and model fidelity.
+> 💡 **Key Insight:** Standard GP inference requires inverting an n×n covariance matrix, which becomes intractable for large datasets. Sparse methods select m representative "inducing points" and approximate the full GP through these points, achieving a controlled trade-off between computational efficiency and model fidelity.
 
 ## Formal Definition
 

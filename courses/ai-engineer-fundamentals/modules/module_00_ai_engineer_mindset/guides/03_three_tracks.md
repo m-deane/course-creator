@@ -4,9 +4,7 @@
 
 AI Engineering divides into three complementary tracks: Model & Training Core (understanding and modifying the engine), Alignment & Safety (shaping behavior), and Agent Systems (connecting to reality). Mastering all three makes you a complete AI Engineer.
 
-## Key Insight
-
-**You don't need to be a researcher to be an AI Engineer, but you need to understand enough of each track to make good architectural decisions.**
+> 💡 **Key Insight:** You don't need to be a researcher to be an AI Engineer, but you need to understand enough of each track to make good architectural decisions.
 
 ## Visual Explanation
 

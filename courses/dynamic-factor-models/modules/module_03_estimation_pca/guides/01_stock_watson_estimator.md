@@ -4,9 +4,7 @@
 
 The Stock-Watson two-step estimator provides a computationally efficient method for estimating dynamic factor models: first extract factors via principal components analysis, then estimate factor dynamics via OLS regression. This approach avoids the computational burden of joint maximum likelihood while maintaining consistency under large N and T asymptotics.
 
-## Key Insight
-
-Instead of estimating factors and loadings jointly (which requires iterative optimization), we leverage the observation that PCA consistently estimates the factor space when N and T are large. Once we have factor estimates, the dynamics reduce to a standard VAR that can be estimated by OLS. This decomposition transforms a difficult high-dimensional problem into two simple steps.
+> 💡 **Key Insight:** Instead of estimating factors and loadings jointly (which requires iterative optimization), we leverage the observation that PCA consistently estimates the factor space when N and T are large. Once we have factor estimates, the dynamics reduce to a standard VAR that can be estimated by OLS. This decomposition transforms a difficult high-dimensional problem into two simple steps.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributions by simulating Hamiltonian dynamics—treating parameters as positions and introducing auxiliary momentum variables. This enables efficient exploration of complex commodity forecasting models that defeat traditional MCMC.
 
-## Key Insight
-
-**Random walk MCMC is drunk; HMC is a guided missile.** Traditional Metropolis walks randomly and wastes time revisiting the same regions. HMC uses gradient information to cruise through parameter space along high-probability contours, achieving better mixing with fewer samples.
+> 💡 **Key Insight:** **Random walk MCMC is drunk; HMC is a guided missile.** Traditional Metropolis walks randomly and wastes time revisiting the same regions. HMC uses gradient information to cruise through parameter space along high-probability contours, achieving better mixing with fewer samples.
 
 ---
 

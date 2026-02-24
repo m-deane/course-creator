@@ -4,9 +4,7 @@
 
 Binary and integer encoding schemes transform the feature selection problem into a representation suitable for genetic algorithm manipulation. Binary encoding maps each feature to a bit (0=excluded, 1=included), while integer encoding stores indices of selected features.
 
-## Key Insight
-
-The choice of encoding determines what genetic operators can do. Binary encoding enables standard crossover/mutation operators and naturally handles variable-length feature sets, while integer encoding can be more compact but requires specialized operators to maintain validity.
+> 💡 **Key Insight:** The choice of encoding determines what genetic operators can do. Binary encoding enables standard crossover/mutation operators and naturally handles variable-length feature sets, while integer encoding can be more compact but requires specialized operators to maintain validity.
 
 ## Formal Definition
 

@@ -4,9 +4,7 @@
 
 Non-stationary bandits handle environments where reward distributions change over time — the best option today might not be best tomorrow. In commodity trading, regime shifts (seasonal patterns, supply shocks, macro changes) make non-stationarity the norm, not the exception.
 
-## Key Insight
-
-**Standard bandits assume stationarity:** The expected reward of an arm doesn't change over time. But when WTI crude's risk/return profile shifted dramatically in 2020, or when natural gas volatility spiked in 2022, algorithms that weighted 2019 data equally with 2022 data made poor decisions.
+> 💡 **Key Insight:** **Standard bandits assume stationarity:** The expected reward of an arm doesn't change over time. But when WTI crude's risk/return profile shifted dramatically in 2020, or when natural gas volatility spiked in 2022, algorithms that weighted 2019 data equally with 2022 data made poor decisions.
 
 **The fix:** Weight recent observations more heavily. Either forget old data explicitly (sliding windows) or discount it exponentially (decay factors).
 

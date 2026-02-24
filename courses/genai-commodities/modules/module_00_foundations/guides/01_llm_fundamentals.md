@@ -10,7 +10,7 @@ Large Language Models are neural networks trained to predict text that can be re
 
 ## Introduction
 
-Large Language Models (LLMs) transform how we process unstructured commodity market data. This guide covers the fundamentals needed to apply LLMs effectively in commodity trading and analysis.
+Large Language Models (LLMs) transform how we process unstructured commodity market data. By the end of this guide, you will extract structured commodity intelligence from unstructured market reports using an LLM API.
 
 ## Why LLMs for Commodities?
 

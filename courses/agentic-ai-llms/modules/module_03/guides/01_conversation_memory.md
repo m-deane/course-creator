@@ -4,9 +4,7 @@
 
 LLMs process each request independently—they don't remember previous conversations. Conversation memory systems maintain history, manage context window limits, and preserve continuity across interactions.
 
-## Key Insight
-
-**Context windows are finite; conversations are not.** The art of conversation memory is deciding what to keep, what to summarize, and what to discard while maintaining coherent, contextual responses.
+> 💡 **Key Insight:** **Context windows are finite; conversations are not.** The art of conversation memory is deciding what to keep, what to summarize, and what to discard while maintaining coherent, contextual responses.
 
 ---
 

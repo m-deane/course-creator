@@ -4,9 +4,7 @@
 
 Dynamic factor models extend static factor models by allowing factors to evolve over time according to autoregressive processes. This temporal structure captures persistence, co-movement dynamics, and enables optimal forecasting of both factors and observed variables.
 
-## Key Insight
-
-Real-world factors don't jump randomly from one value to another—they evolve smoothly with persistence. A recession today predicts weaker activity tomorrow; high inflation tends to persist. By modeling factor dynamics explicitly, we gain three capabilities: better factor estimation (using time-series information), forecasting (propagating factor dynamics forward), and structural interpretation (understanding shock propagation).
+> 💡 **Key Insight:** Real-world factors don't jump randomly from one value to another—they evolve smoothly with persistence. A recession today predicts weaker activity tomorrow; high inflation tends to persist. By modeling factor dynamics explicitly, we gain three capabilities: better factor estimation (using time-series information), forecasting (propagating factor dynamics forward), and structural interpretation (understanding shock propagation).
 
 ---
 

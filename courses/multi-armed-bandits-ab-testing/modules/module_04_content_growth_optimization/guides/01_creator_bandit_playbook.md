@@ -6,9 +6,7 @@ The **Creator Bandit Playbook** treats content publishing as a multi-armed bandi
 
 **Why it matters:** Most creators either follow their gut (emotional, inconsistent) or their vanity metrics (views optimize for clickbait). Bandits give you the calm, systematic version: learn what works, double down on it, but stay curious about what might work better.
 
-## Key Insight
-
-**Content creation is inherently sequential and non-stationary.** Your audience evolves. Trends shift. New formats emerge. What worked last quarter might not work next quarter. The bandit framework gives you a systematic way to adapt:
+> 💡 **Key Insight:** **Content creation is inherently sequential and non-stationary.** Your audience evolves. Trends shift. New formats emerge. What worked last quarter might not work next quarter. The bandit framework gives you a systematic way to adapt:
 
 1. **Arms = repeatable content types** (topic×format, not individual posts)
 2. **Rewards = engagement quality** (read ratio, shares, actionable response — NOT views)

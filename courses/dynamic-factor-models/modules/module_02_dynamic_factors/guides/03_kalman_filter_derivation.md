@@ -4,9 +4,7 @@
 
 The Kalman filter is the optimal recursive algorithm for estimating the state of a linear Gaussian state-space model. It produces minimum mean squared error estimates by combining model predictions with new observations, updating both state estimates and their uncertainty at each time step.
 
-## Key Insight
-
-The Kalman filter is Bayesian updating in action. At each time step, you have two sources of information: (1) where the model predicts the state should be, and (2) where the new observations suggest it is. The Kalman filter optimally weights these two sources based on their relative uncertainties, producing filtered state estimates and a likelihood for the parameters. It's not just a clever algorithm—it's provably optimal under Gaussian assumptions, and the foundation for all modern dynamic factor model estimation.
+> 💡 **Key Insight:** The Kalman filter is Bayesian updating in action. At each time step, you have two sources of information: (1) where the model predicts the state should be, and (2) where the new observations suggest it is. The Kalman filter optimally weights these two sources based on their relative uncertainties, producing filtered state estimates and a likelihood for the parameters. It's not just a clever algorithm—it's provably optimal under Gaussian assumptions, and the foundation for all modern dynamic factor model estimation.
 
 ---
 

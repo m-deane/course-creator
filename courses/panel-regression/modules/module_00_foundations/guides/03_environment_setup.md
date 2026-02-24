@@ -4,9 +4,7 @@
 
 Proper environment setup ensures reproducible panel data analysis with the right tools and versions. This guide covers installation of Python packages (linearmodels, statsmodels) and R packages (plm, lmtest) needed for panel regression.
 
-## Key Insight
-
-Panel data econometrics requires specialized libraries beyond standard data science tools. While pandas handles data manipulation, you need **linearmodels** (Python) or **plm** (R) for proper panel regression estimation. Setting up a dedicated virtual environment prevents version conflicts and ensures reproducibility.
+> 💡 **Key Insight:** Panel data econometrics requires specialized libraries beyond standard data science tools. While pandas handles data manipulation, you need **linearmodels** (Python) or **plm** (R) for proper panel regression estimation. Setting up a dedicated virtual environment prevents version conflicts and ensures reproducibility.
 
 ## Prerequisites
 

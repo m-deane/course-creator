@@ -4,9 +4,7 @@
 
 Economic structure evolves—the relationship between factors and observables changes with policy regimes, technological innovation, and structural transformations. Time-varying parameter dynamic factor models (TVP-DFM) allow factor loadings and dynamics to drift smoothly or shift discretely, capturing phenomena like the Great Moderation and evolving industry structures.
 
-## Key Insight
-
-Static parameters assume stable economic relationships indefinitely. Reality shows the factor structure governing GDP, inflation, and financial markets has changed substantially over decades. TVP-DFMs nest constant-parameter models as special cases while providing flexibility to detect and model structural evolution—critical for robust long-horizon forecasting and policy analysis.
+> 💡 **Key Insight:** Static parameters assume stable economic relationships indefinitely. Reality shows the factor structure governing GDP, inflation, and financial markets has changed substantially over decades. TVP-DFMs nest constant-parameter models as special cases while providing flexibility to detect and model structural evolution—critical for robust long-horizon forecasting and policy analysis.
 
 ---
 
@@ -57,7 +55,7 @@ $$\theta_t = \omega + A \cdot s_{t-1} + B \cdot \theta_{t-1}$$
 
 where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_t$ is scaling matrix.
 
-Score-driven models are adaptive: parameters update based on how surprising recent data is.
+> 💡 **Key Insight:** Score-driven models are adaptive: parameters update based on how surprising recent data is.
 
 ### Choosing the Right Approach
 

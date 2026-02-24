@@ -4,9 +4,7 @@
 
 Safety guardrails are systematic controls that prevent AI agents from producing harmful outputs or taking dangerous actions. They operate at multiple layers—input validation, output filtering, action verification, and behavior constraints—to ensure agents remain helpful, harmless, and honest.
 
-## Key Insight
-
-Agents are more dangerous than static LLMs because they can act in the world. A language model might generate a harmful response; an agent might execute a harmful action. Guardrails must therefore protect not just what agents say, but what they do.
+> 💡 **Key Insight:** Agents are more dangerous than static LLMs because they can act in the world. A language model might generate a harmful response; an agent might execute a harmful action. Guardrails must therefore protect not just what agents say, but what they do.
 
 ## Formal Definition
 

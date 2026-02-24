@@ -4,9 +4,7 @@
 
 Adaptive operators automatically adjust GA parameters (mutation rate, crossover probability, population diversity) during evolution based on search progress, eliminating manual tuning and improving robustness. Fixed parameters work well for specific problems but fail across diverse landscapes. Self-adaptive GAs evolve their own parameters alongside solutions, with successful parameter settings propagating through the population via natural selection, achieving performance comparable to expert-tuned parameters without human intervention.
 
-## Key Insight
-
-Optimal GA parameters change during search: early exploration needs high mutation/diversity, late exploitation needs low mutation/focused search. Fixed parameters are either too exploratory (slow convergence) or too exploitative (premature convergence). Adaptive operators measure population state (diversity, fitness improvement, convergence rate) and dynamically adjust parameters. Self-adaptive operators encode parameters in chromosomes, allowing evolution to discover optimal settings for the current search phase.
+> 💡 **Key Insight:** Optimal GA parameters change during search: early exploration needs high mutation/diversity, late exploitation needs low mutation/focused search. Fixed parameters are either too exploratory (slow convergence) or too exploitative (premature convergence). Adaptive operators measure population state (diversity, fitness improvement, convergence rate) and dynamically adjust parameters. Self-adaptive operators encode parameters in chromosomes, allowing evolution to discover optimal settings for the current search phase.
 
 ## Formal Definition
 

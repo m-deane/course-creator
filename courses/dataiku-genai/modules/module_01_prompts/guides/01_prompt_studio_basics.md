@@ -4,9 +4,7 @@
 
 Prompt Studios is Dataiku's visual interface for designing, testing, and versioning prompts without writing code. It provides a structured environment for prompt development with built-in testing, variable templating, and one-click deployment to production recipes.
 
-## Key Insight
-
-The fastest way to iterate on prompts is through visual testing with immediate feedback. Prompt Studios eliminates the code-test-debug cycle by providing inline execution, variable substitution, and version comparison—reducing prompt development time from hours to minutes.
+> 💡 **Key Insight:** The fastest way to iterate on prompts is through visual testing with immediate feedback. Prompt Studios eliminates the code-test-debug cycle by providing inline execution, variable substitution, and version comparison—reducing prompt development time from hours to minutes.
 
 ## Formal Definition
 

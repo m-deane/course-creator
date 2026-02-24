@@ -4,9 +4,7 @@
 
 Signal generation frameworks systematically transform LLM outputs (sentiment, events, fundamental analysis) into actionable trading signals with quantified conviction levels. These frameworks combine narrative intelligence with quantitative rigor, converting qualitative insights into systematic position sizing, risk management, and portfolio decisions.
 
-## Key Insight
-
-LLMs excel at understanding context but don't naturally output tradeable signals. A signal framework bridges this gap by: (1) structuring LLM outputs into standardized formats, (2) mapping narrative conviction to position sizes, (3) combining multiple signals with conflict resolution, (4) tracking signal performance for continuous improvement. The goal: transform "OPEC cuts seem bullish" into "Long 100 contracts WTI with 2% stop loss."
+> 💡 **Key Insight:** LLMs excel at understanding context but don't naturally output tradeable signals. A signal framework bridges this gap by: (1) structuring LLM outputs into standardized formats, (2) mapping narrative conviction to position sizes, (3) combining multiple signals with conflict resolution, (4) tracking signal performance for continuous improvement. The goal: transform "OPEC cuts seem bullish" into "Long 100 contracts WTI with 2% stop loss."
 
 ## Formal Definition
 

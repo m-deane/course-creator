@@ -4,9 +4,7 @@
 
 Convergence diagnostics assess whether MCMC chains have reached their stationary distribution (the true posterior). Key metrics include $\hat{R}$ (comparing between-chain to within-chain variance), effective sample size (accounting for autocorrelation), and trace plots showing mixing behavior.
 
-## Key Insight
-
-MCMC provides samples from the posterior—but only after the chain has converged. Running MCMC without checking convergence is like leaving bread in the oven without setting a timer: you might get perfect results or a charred mess. Diagnostics tell you when the chain has "burned in" and is providing valid posterior samples.
+> 💡 **Key Insight:** MCMC provides samples from the posterior—but only after the chain has converged. Running MCMC without checking convergence is like leaving bread in the oven without setting a timer: you might get perfect results or a charred mess. Diagnostics tell you when the chain has "burned in" and is providing valid posterior samples.
 
 ## Formal Definition
 

@@ -4,9 +4,7 @@
 
 Multi-agent systems divide complex tasks among specialized agents. Different orchestration patterns suit different problems—supervisor patterns for delegation, peer-to-peer for collaboration, hierarchical for scale.
 
-## Key Insight
-
-**The right architecture matches problem structure.** Supervisor patterns work for clear delegation. Peer networks suit collaborative exploration. Choose based on your task decomposition, not technology preferences.
+> 💡 **Key Insight:** **The right architecture matches problem structure.** Supervisor patterns work for clear delegation. Peer networks suit collaborative exploration. Choose based on your task decomposition, not technology preferences.
 
 ---
 

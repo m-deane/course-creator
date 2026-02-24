@@ -4,9 +4,7 @@
 
 Posterior updating is how Bayesian methods learn from data: combine your prior belief with new evidence using Bayes' rule to produce a posterior belief. With conjugate priors, this update has a closed-form solution — no MCMC needed. For Thompson Sampling, conjugate priors make posterior updates instant and exact.
 
-## Key Insight
-
-**Bayes' rule:** Posterior ∝ Likelihood × Prior
+> 💡 **Key Insight:** **Bayes' rule:** Posterior ∝ Likelihood × Prior
 
 With conjugate priors, the posterior has the same functional form as the prior, just with updated parameters. This means learning is as simple as incrementing counters.
 

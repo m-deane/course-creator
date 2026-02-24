@@ -4,9 +4,7 @@
 
 Market regimes change. A bandit optimized for trending markets fails in mean-reverting regimes. Contextual bandits solve this by conditioning allocation on observable regime features, learning separate strategies for different market states.
 
-## Key Insight
-
-**Market regimes are contexts. Contextual bandits learn regime-dependent strategies.**
+> 💡 **Key Insight:** Market regimes are contexts. Contextual bandits learn regime-dependent strategies.
 
 Instead of one universal allocation policy, learn:
 - Allocation for high-volatility regimes

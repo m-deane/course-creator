@@ -4,9 +4,7 @@
 
 Diffusion index forecasting uses extracted factors from large datasets to predict target variables, leveraging information from hundreds of economic indicators without directly estimating high-dimensional models. This approach, pioneered by Stock and Watson, provides robust forecasts by aggregating signals across many variables while quantifying prediction uncertainty.
 
-## Key Insight
-
-Instead of choosing which predictors to include in a forecasting model, diffusion index methods extract common factors from all available predictors and use these factors as regressors. This transforms a high-dimensional forecasting problem ($N$ predictors) into a low-dimensional one ($r$ factors), combining information optimally while avoiding overfitting.
+> 💡 **Key Insight:** Instead of choosing which predictors to include in a forecasting model, diffusion index methods extract common factors from all available predictors and use these factors as regressors. This transforms a high-dimensional forecasting problem ($N$ predictors) into a low-dimensional one ($r$ factors), combining information optimally while avoiding overfitting.
 
 ---
 

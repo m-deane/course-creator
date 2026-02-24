@@ -4,9 +4,7 @@
 
 Tools fail. APIs timeout, data is malformed, permissions are denied. Robust agents don't crash on errors—they understand failures, communicate clearly, and either recover automatically or guide users to resolution.
 
-## Key Insight
-
-**Errors are information, not just failures.** A well-structured error message helps the LLM understand what went wrong and what to try next. Turn errors into actionable context.
+> 💡 **Key Insight:** **Errors are information, not just failures.** A well-structured error message helps the LLM understand what went wrong and what to try next. Turn errors into actionable context.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Essential probability concepts for HMMs: conditional probability, Bayes' theorem, probability distributions, and the law of total probability. These form the mathematical foundation for understanding how hidden states generate observable sequences.
 
-## Key Insight
-
-HMMs are fundamentally about computing conditional probabilities of hidden states given observations. Bayes' theorem lets us invert relationships: from knowing P(observation|state) to inferring P(state|observation).
+> 💡 **Key Insight:** HMMs are fundamentally about computing conditional probabilities of hidden states given observations. Bayes' theorem lets us invert relationships: from knowing P(observation|state) to inferring P(state|observation).
 
 ## Formal Definition
 

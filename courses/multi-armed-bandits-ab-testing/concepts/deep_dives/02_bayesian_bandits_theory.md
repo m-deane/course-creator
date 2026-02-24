@@ -3,9 +3,7 @@
 ## TL;DR
 Bayesian bandits maintain probability distributions (beliefs) over each arm's reward, update via Bayes' rule, and make decisions that balance expected reward and information gain. Thompson Sampling is the practical approximation of the theoretically optimal Gittins index policy.
 
-## Key Insight
-
-Classical bandits (UCB) use frequentist statistics: estimate means, compute confidence bounds.
+> 💡 **Key Insight:** Classical bandits (UCB) use frequentist statistics: estimate means, compute confidence bounds.
 
 Bayesian bandits use probability: maintain distributions over unknown parameters, sample from posteriors.
 

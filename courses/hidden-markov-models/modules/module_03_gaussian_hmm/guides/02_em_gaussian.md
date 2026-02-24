@@ -4,9 +4,7 @@
 
 Gaussian Hidden Markov Models extend HMMs to continuous observations by using Gaussian (normal) emission distributions. The EM algorithm adapts naturally: the E-step computes state occupation probabilities, and the M-step updates means and covariances using weighted maximum likelihood estimation.
 
-## Key Insight
-
-For continuous observations (like financial returns), we can't count "how many times we saw value X in state i" because each observation is unique. Instead, we use probability densities and compute weighted statistics where weights are the probabilities of being in each state.
+> 💡 **Key Insight:** For continuous observations (like financial returns), we can't count "how many times we saw value X in state i" because each observation is unique. Instead, we use probability densities and compute weighted statistics where weights are the probabilities of being in each state.
 
 ## Formal Definition
 

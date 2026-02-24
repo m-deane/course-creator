@@ -4,9 +4,7 @@
 
 Systematic prompt testing and iteration transforms prompt engineering from trial-and-error into an engineering discipline. By measuring outputs against success criteria, tracking metrics across versions, and applying structured improvement methods, you can reliably build prompts that perform well in production.
 
-## Key Insight
-
-The best prompt is rarely the first prompt. Systematic iteration—test, measure, hypothesize improvement, implement, retest—yields 2-3x better results than ad-hoc experimentation. The key is defining clear success criteria upfront and measuring every change against them.
+> 💡 **Key Insight:** The best prompt is rarely the first prompt. Systematic iteration—test, measure, hypothesize improvement, implement, retest—yields 2-3x better results than ad-hoc experimentation. The key is defining clear success criteria upfront and measuring every change against them.
 
 ## Formal Definition
 

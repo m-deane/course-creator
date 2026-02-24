@@ -4,9 +4,7 @@
 
 Structural identification in FAVARs recovers economically meaningful shocks from reduced-form innovations by imposing theory-based restrictions. This enables causal analysis of policy interventions, business cycle shocks, and financial disturbances across hundreds of economic variables, revealing transmission mechanisms invisible in small VARs.
 
-## Key Insight
-
-Reduced-form FAVAR residuals are linear combinations of structural shocks. Without restrictions, infinitely many structural interpretations exist. Identification schemes—recursive orderings, sign restrictions, external instruments, or high-frequency surprises—use economic theory to isolate specific shocks and trace their propagation through the entire economy via factor responses.
+> 💡 **Key Insight:** Reduced-form FAVAR residuals are linear combinations of structural shocks. Without restrictions, infinitely many structural interpretations exist. Identification schemes—recursive orderings, sign restrictions, external instruments, or high-frequency surprises—use economic theory to isolate specific shocks and trace their propagation through the entire economy via factor responses.
 
 ---
 

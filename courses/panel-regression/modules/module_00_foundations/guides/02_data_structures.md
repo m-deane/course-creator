@@ -4,9 +4,7 @@
 
 Panel data combines cross-sectional and time-series dimensions, tracking multiple entities over time. Proper organization—whether "long" or "wide" format—is critical for analysis and determines which estimation methods are accessible.
 
-## Key Insight
-
-The same panel dataset can be represented in multiple formats. Long format (one row per entity-time observation) is preferred for most panel regression methods, while wide format (one row per entity, multiple time columns) is useful for visualization and certain calculations. Understanding how to transform between them is essential.
+> 💡 **Key Insight:** The same panel dataset can be represented in multiple formats. Long format (one row per entity-time observation) is preferred for most panel regression methods, while wide format (one row per entity, multiple time columns) is useful for visualization and certain calculations. Understanding how to transform between them is essential.
 
 ## Formal Definition
 

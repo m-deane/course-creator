@@ -4,9 +4,7 @@
 
 Multi-objective feature selection explicitly optimizes multiple conflicting goals simultaneously (e.g., prediction accuracy vs. feature count vs. computational cost) rather than combining them into a single weighted objective. This produces a Pareto frontier of non-dominated solutions, giving decision-makers flexibility to choose the final tradeoff.
 
-## Key Insight
-
-There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
+> 💡 **Key Insight:** There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
 
 ## Formal Definition
 

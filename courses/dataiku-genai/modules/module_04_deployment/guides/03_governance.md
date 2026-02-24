@@ -4,9 +4,7 @@
 
 Deployment governance ensures Gen AI applications run reliably, securely, and cost-effectively in production. It encompasses deployment pipelines, monitoring, cost management, access control, compliance tracking, and incident response—transforming experimental LLM prototypes into enterprise-grade production systems.
 
-## Key Insight
-
-Production Gen AI requires treating LLM applications with the same rigor as traditional software: version control, automated testing, staged deployments, monitoring, alerting, and rollback capabilities. The difference is that Gen AI governance also includes unique concerns like prompt versioning, token budgets, model drift, and output quality monitoring.
+> 💡 **Key Insight:** Production Gen AI requires treating LLM applications with the same rigor as traditional software: version control, automated testing, staged deployments, monitoring, alerting, and rollback capabilities. The difference is that Gen AI governance also includes unique concerns like prompt versioning, token budgets, model drift, and output quality monitoring.
 
 ## Formal Definition
 

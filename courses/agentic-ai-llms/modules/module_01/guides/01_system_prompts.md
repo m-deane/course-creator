@@ -4,9 +4,7 @@
 
 The system prompt defines who your agent is, what it can do, and how it should behave. A well-crafted system prompt is the difference between a generic chatbot and a reliable, specialized agent.
 
-## Key Insight
-
-**System prompts are not suggestions—they are instructions.** Treat them like code: precise, tested, and version-controlled. Vague prompts produce vague behavior.
+> 💡 **Key Insight:** **System prompts are not suggestions—they are instructions.** Treat them like code: precise, tested, and version-controlled. Vague prompts produce vague behavior.
 
 ---
 

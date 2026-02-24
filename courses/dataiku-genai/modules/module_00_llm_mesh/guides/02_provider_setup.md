@@ -4,9 +4,7 @@
 
 Provider setup in Dataiku LLM Mesh involves configuring connections to external LLM APIs (Anthropic, OpenAI, Azure, etc.) with proper authentication, model selection, and operational parameters. Each provider connection becomes a managed resource that can be used across all projects with centralized governance.
 
-## Key Insight
-
-**The power of provider abstraction:** Configure once, use everywhere. A well-configured provider connection eliminates the need for developers to manage API keys, handle rate limits, or implement retry logic—all of this becomes infrastructure managed by the platform.
+> 💡 **Key Insight:** **The power of provider abstraction:** Configure once, use everywhere. A well-configured provider connection eliminates the need for developers to manage API keys, handle rate limits, or implement retry logic—all of this becomes infrastructure managed by the platform.
 
 ## Formal Definition
 

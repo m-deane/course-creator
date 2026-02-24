@@ -4,9 +4,7 @@
 
 A practical 6-step system for applying multi-armed bandits to commodity portfolio allocation. Separates stable core holdings from an adaptive "bandit sleeve" that tilts toward better-performing assets while maintaining safety guardrails.
 
-## Key Insight
-
-Don't use bandits to predict prices. Use them to **allocate contributions under uncertainty**.
+> 💡 **Key Insight:** Don't use bandits to predict prices. Use them to **allocate contributions under uncertainty**.
 
 The two-wallet framework:
 - **Core wallet (80%)**: Boring, stable, long-term allocation

@@ -4,9 +4,7 @@
 
 Tool calling (also called function calling) lets LLMs decide when to invoke external functions and with what arguments. The model generates a structured tool call, your code executes it, and the result is fed back for the model to use.
 
-## Key Insight
-
-**The model doesn't execute tools—it generates instructions for you to execute.** Tool calling is a structured output format that your code interprets. This separation is crucial for security, control, and integration.
+> 💡 **Key Insight:** **The model doesn't execute tools—it generates instructions for you to execute.** Tool calling is a structured output format that your code interprets. This separation is crucial for security, control, and integration.
 
 ---
 

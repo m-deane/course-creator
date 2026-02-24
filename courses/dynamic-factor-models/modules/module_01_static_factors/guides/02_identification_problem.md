@@ -4,9 +4,7 @@
 
 Factor models are not uniquely identified: any invertible transformation of factors and loadings produces observationally equivalent models. This means estimated factors and loadings can be rotated, scaled, or reordered arbitrarily without changing the model's predictions. Identification requires imposing normalization constraints.
 
-## Key Insight
-
-If you multiply factors by a matrix H and loadings by H^(-1), you get a different but statistically indistinguishable model. This is the **rotational indeterminacy** problem. Without constraints, there are infinitely many equally valid factor representations. Interpretation requires choosing a specific normalization, and different normalizations give different factors.
+> 💡 **Key Insight:** If you multiply factors by a matrix H and loadings by H^(-1), you get a different but statistically indistinguishable model. This is the **rotational indeterminacy** problem. Without constraints, there are infinitely many equally valid factor representations. Interpretation requires choosing a specific normalization, and different normalizations give different factors.
 
 ---
 

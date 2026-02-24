@@ -4,9 +4,7 @@
 
 Dataiku webapps provide a framework for building interactive user interfaces that integrate LLM capabilities. By combining Dataiku's visual webapp builder with LLM Mesh, you create production-ready Gen AI applications with authentication, governance, and monitoring built-in—without managing infrastructure.
 
-## Key Insight
-
-The best Gen AI applications hide complexity from users. A well-designed webapp transforms complex LLM interactions into simple, intuitive interfaces that non-technical users can leverage. Dataiku webapps handle the infrastructure, security, and deployment so you can focus on user experience and business logic.
+> 💡 **Key Insight:** The best Gen AI applications hide complexity from users. A well-designed webapp transforms complex LLM interactions into simple, intuitive interfaces that non-technical users can leverage. Dataiku webapps handle the infrastructure, security, and deployment so you can focus on user experience and business logic.
 
 ## Formal Definition
 

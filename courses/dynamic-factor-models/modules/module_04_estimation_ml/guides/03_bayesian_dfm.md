@@ -4,9 +4,7 @@
 
 Bayesian estimation treats DFM parameters as random variables with prior distributions, combining prior information with data likelihood to obtain posterior distributions. Inference proceeds via Markov Chain Monte Carlo (MCMC), typically using a Gibbs sampler that iteratively draws factors and parameters from their conditional distributions. This provides full uncertainty quantification and naturally handles identification through informative priors.
 
-## Key Insight
-
-Frequentist MLE gives point estimates. Bayesian estimation gives distributions representing uncertainty. This matters enormously for policy: instead of "the loading is 0.8," we get "the loading is between 0.6 and 1.0 with 95% probability." Priors regularize estimates (like ridge regression), prevent overfitting, and incorporate economic theory. The posterior distribution fully characterizes what we know about parameters given the data.
+> 💡 **Key Insight:** Frequentist MLE gives point estimates. Bayesian estimation gives distributions representing uncertainty. This matters enormously for policy: instead of "the loading is 0.8," we get "the loading is between 0.6 and 1.0 with 95% probability." Priors regularize estimates (like ridge regression), prevent overfitting, and incorporate economic theory. The posterior distribution fully characterizes what we know about parameters given the data.
 
 ---
 

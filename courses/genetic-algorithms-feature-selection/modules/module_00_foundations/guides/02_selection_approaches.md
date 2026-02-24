@@ -4,9 +4,7 @@
 
 Feature selection methods fall into three main categories: **filter methods** (statistical tests independent of models), **wrapper methods** (model-based evaluation), and **embedded methods** (selection built into model training). Each approach offers different tradeoffs between computational cost, model dependency, and optimization quality.
 
-## Key Insight
-
-The choice of feature selection approach determines both what you optimize (statistical relevance vs. prediction accuracy) and how you search (independent evaluation vs. model-guided search). Filters are fast but ignore model interactions; wrappers are accurate but computationally expensive; embedded methods balance both but are model-specific.
+> 💡 **Key Insight:** The choice of feature selection approach determines both what you optimize (statistical relevance vs. prediction accuracy) and how you search (independent evaluation vs. model-guided search). Filters are fast but ignore model interactions; wrappers are accurate but computationally expensive; embedded methods balance both but are model-specific.
 
 ## Formal Definition
 

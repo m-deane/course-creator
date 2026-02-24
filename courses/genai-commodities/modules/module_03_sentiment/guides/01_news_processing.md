@@ -4,9 +4,7 @@
 
 Commodity news processing involves acquiring real-time news from multiple sources (RSS feeds, Twitter, Bloomberg terminals), filtering for relevance, extracting key information (commodities mentioned, price movements, supply/demand indicators), and preparing text for sentiment analysis while handling market-specific language and time-critical information flow.
 
-## Key Insight
-
-Commodity news is fundamentally different from general financial news—a single word change ("higher" vs "lower" production forecast) can move markets billions of dollars. Processing must be low-latency (sub-minute for algorithmic trading), handle domain-specific jargon ("contango", "crack spread"), and distinguish between analysis and reporting of facts.
+> 💡 **Key Insight:** Commodity news is fundamentally different from general financial news—a single word change ("higher" vs "lower" production forecast) can move markets billions of dollars. Processing must be low-latency (sub-minute for algorithmic trading), handle domain-specific jargon ("contango", "crack spread"), and distinguish between analysis and reporting of facts.
 
 ## Formal Definition
 

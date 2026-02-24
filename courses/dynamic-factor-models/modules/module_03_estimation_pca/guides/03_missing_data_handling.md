@@ -4,9 +4,7 @@
 
 Economic datasets commonly have missing observations due to publication lags, survey non-response, or ragged edges in real-time forecasting. The Expectation-Maximization (EM) algorithm adapts PCA to incomplete panels by iteratively imputing missing values and re-estimating factors, leveraging cross-sectional information to produce more efficient estimates than naive deletion or mean imputation.
 
-## Key Insight
-
-The key insight of EM-PCA: if we had the factors, we could impute missing values using the factor model; if we had complete data, we could extract factors using PCA. EM alternates between these two steps, starting from an initial guess and iterating until convergence. Under MAR (missing at random) assumptions, this produces consistent and efficient factor estimates even with substantial missingness.
+> 💡 **Key Insight:** The key insight of EM-PCA: if we had the factors, we could impute missing values using the factor model; if we had complete data, we could extract factors using PCA. EM alternates between these two steps, starting from an initial guess and iterating until convergence. Under MAR (missing at random) assumptions, this produces consistent and efficient factor estimates even with substantial missingness.
 
 ---
 

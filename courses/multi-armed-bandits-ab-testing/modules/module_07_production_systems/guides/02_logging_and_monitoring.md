@@ -4,9 +4,7 @@
 
 Production bandit systems require comprehensive logging of every decision (arm, context, reward, metadata) and real-time monitoring of key metrics (regret estimates, arm selection distribution, reward trends) to detect failures before they cause significant losses.
 
-## Key Insight
-
-The difference between a research notebook and a production system is observability. When your bandit starts losing money, you need to answer: Which arm is underperforming? Did the context features change? Is the policy stuck on one arm? Did we violate position limits? Without structured logging and monitoring, you're flying blind.
+> 💡 **Key Insight:** The difference between a research notebook and a production system is observability. When your bandit starts losing money, you need to answer: Which arm is underperforming? Did the context features change? Is the policy stuck on one arm? Did we violate position limits? Without structured logging and monitoring, you're flying blind.
 
 ## Visual Explanation
 

@@ -4,9 +4,7 @@
 
 The Kalman filter is a recursive algorithm that optimally estimates the hidden state of a linear dynamical system from noisy observations. It's the Bayesian solution to state estimation when both the system dynamics and observations are linear with Gaussian noise.
 
-## Key Insight
-
-The Kalman filter answers: "Given all observations up to now, what's my best estimate of the current hidden state, and how confident am I?" It does this by alternating between **prediction** (using system dynamics) and **update** (incorporating new observations).
+> 💡 **Key Insight:** The Kalman filter answers: "Given all observations up to now, what's my best estimate of the current hidden state, and how confident am I?" It does this by alternating between **prediction** (using system dynamics) and **update** (incorporating new observations).
 
 Think of it as GPS navigation: Your car's speedometer predicts where you are (prediction step), but GPS measurements correct this estimate (update step). The Kalman filter optimally combines these two sources of information.
 

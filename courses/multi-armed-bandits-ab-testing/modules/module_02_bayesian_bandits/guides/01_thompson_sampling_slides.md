@@ -24,9 +24,7 @@ Thompson Sampling maintains a **probability distribution** (belief) over each ar
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
 ---
 
-## Key Insight
-
-Instead of deterministically choosing (like UCB), Thompson Sampling asks:
+> 💡 **Key Insight:** Instead of deterministically choosing (like UCB), Thompson Sampling asks:
 
 > "Given what I know, what **could** each arm's true reward be?"
 

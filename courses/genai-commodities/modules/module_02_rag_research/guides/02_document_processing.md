@@ -4,9 +4,7 @@
 
 Commodity document processing transforms heterogeneous reports (PDFs, HTML tables, time-series data) into LLM-ready formats while preserving critical metadata (timestamps, units, geographies) and handling commodity-specific challenges like seasonal adjustments and data revisions.
 
-## Key Insight
-
-The value of commodity documents isn't just in the text—it's in the structured data they contain. A crude oil inventory number without its date, unit, and geography is meaningless. Processing pipelines must extract, validate, and enrich data while maintaining traceability to source documents.
+> 💡 **Key Insight:** The value of commodity documents isn't just in the text—it's in the structured data they contain. A crude oil inventory number without its date, unit, and geography is meaningless. Processing pipelines must extract, validate, and enrich data while maintaining traceability to source documents.
 
 ## Formal Definition
 

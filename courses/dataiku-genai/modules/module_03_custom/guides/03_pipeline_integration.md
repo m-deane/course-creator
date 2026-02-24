@@ -4,9 +4,7 @@
 
 LLM integration into Dataiku data pipelines transforms unstructured text into structured, actionable data at scale. By embedding LLM processing steps alongside traditional ETL operations, you create end-to-end workflows that combine data engineering and generative AI capabilities in a unified, governed environment.
 
-## Key Insight
-
-The real power of LLMs in data pipelines comes from treating them as transformation steps—not standalone applications. When LLMs process data as it flows through pipelines, you gain automatic dependency tracking, version control, scheduling, monitoring, and governance that would require extensive custom engineering otherwise.
+> 💡 **Key Insight:** The real power of LLMs in data pipelines comes from treating them as transformation steps—not standalone applications. When LLMs process data as it flows through pipelines, you gain automatic dependency tracking, version control, scheduling, monitoring, and governance that would require extensive custom engineering otherwise.
 
 ## Formal Definition
 

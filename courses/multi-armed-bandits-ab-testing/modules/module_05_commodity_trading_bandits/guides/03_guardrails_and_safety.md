@@ -4,9 +4,7 @@
 
 Bandit algorithms without constraints become dangerous optimization machines. Guardrails are hard limits that prevent concentration risk, overtrading, and regime-blind allocation. They're not weakness—they're the difference between a learning system and self-sabotage.
 
-## Key Insight
-
-**"Without guardrails, bandit investing becomes a dopamine machine."**
+> 💡 **Key Insight:** "Without guardrails, bandit investing becomes a dopamine machine."
 
 A pure bandit will:
 - Concentrate entirely in the recent winner (concentration risk)

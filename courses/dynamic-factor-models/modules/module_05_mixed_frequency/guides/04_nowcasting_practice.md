@@ -4,9 +4,7 @@
 
 Nowcasting GDP and other key economic indicators requires careful handling of real-time data flows, publication lags, and data revisions. This guide covers practical implementation including ragged-edge handling, real-time forecast evaluation using Root Mean Squared Forecast Error (RMSFE), and operational considerations for production nowcasting systems.
 
-## Key Insight
-
-The fundamental challenge in real-time nowcasting is not model specification but data management: tracking what information was actually available at each historical forecast origin, accounting for publication lags and revisions, and evaluating forecasts using the vintage of data that would have been used in practice. Ignoring this leads to misleading backtests that overstate actual forecast performance.
+> 💡 **Key Insight:** The fundamental challenge in real-time nowcasting is not model specification but data management: tracking what information was actually available at each historical forecast origin, accounting for publication lags and revisions, and evaluating forecasts using the vintage of data that would have been used in practice. Ignoring this leads to misleading backtests that overstate actual forecast performance.
 
 ---
 

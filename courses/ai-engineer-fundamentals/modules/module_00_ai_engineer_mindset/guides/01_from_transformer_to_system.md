@@ -4,9 +4,7 @@
 
 The Transformer architecture is a breakthrough in sequence modeling, but it's only the engine of a modern LLM system. Production applications require alignment, memory, tools, protocols, and evaluation—the model alone is insufficient.
 
-## Key Insight
-
-**The Transformer gives you text generation. A system gives you reliable task completion.**
+> 💡 **Key Insight:** The Transformer gives you text generation. A system gives you reliable task completion.
 
 When you fine-tune a model, ship a chatbot, connect it to a database, your "LLM project" becomes a messy systems problem:
 - Hallucinations that look confident
@@ -66,7 +64,7 @@ When you fine-tune a model, ship a chatbot, connect it to a database, your "LLM 
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-## The Transformer's Three Structural Limitations
+## Why the Transformer Alone Will Fail You: Three Structural Limits
 
 Understanding these limitations is crucial for system design:
 

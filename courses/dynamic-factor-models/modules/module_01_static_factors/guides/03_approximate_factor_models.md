@@ -4,9 +4,7 @@
 
 Approximate factor models relax the strict assumption that idiosyncratic errors are uncorrelated. Instead, they allow weak cross-sectional dependence in idiosyncratic components while maintaining that common factors explain the dominant covariation. This makes factor models realistic for large macroeconomic and financial panels where some residual correlation is inevitable.
 
-## Key Insight
-
-In exact factor models, ALL correlation comes through factors. But real data has local correlations (e.g., oil prices and gas prices) that aren't purely factor-driven. Approximate factor models say: "Factors capture the PERVASIVE covariation, while weak local dependencies are allowed but don't dominate." As $N \to \infty$, weak dependencies average out, making PCA consistent for factor estimation.
+> 💡 **Key Insight:** In exact factor models, ALL correlation comes through factors. But real data has local correlations (e.g., oil prices and gas prices) that aren't purely factor-driven. Approximate factor models say: "Factors capture the PERVASIVE covariation, while weak local dependencies are allowed but don't dominate." As $N \to \infty$, weak dependencies average out, making PCA consistent for factor estimation.
 
 ---
 

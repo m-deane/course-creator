@@ -4,9 +4,7 @@
 
 The static factor model posits that a large number of observed variables are driven by a small number of latent common factors plus variable-specific idiosyncratic components. This decomposition captures the idea that macroeconomic and financial variables move together because they respond to common underlying shocks.
 
-## Key Insight
-
-When many variables co-move, there's likely a common cause. Factor models formalize this: instead of modeling $N$ separate series with $N(N-1)/2$ pairwise correlations, we model $r \ll N$ factors that generate all the co-movement. This is both dimensionality reduction and a structural hypothesis about how the world works.
+> 💡 **Key Insight:** When many variables co-move, there's likely a common cause. Factor models formalize this: instead of modeling $N$ separate series with $N(N-1)/2$ pairwise correlations, we model $r \ll N$ factors that generate all the co-movement. This is both dimensionality reduction and a structural hypothesis about how the world works.
 
 ---
 

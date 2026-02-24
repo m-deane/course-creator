@@ -4,9 +4,7 @@
 
 Knowledge base design for commodity markets involves structuring unstructured commodity data (EIA reports, weather forecasts, corporate filings) into retrievable chunks optimized for LLM context windows while preserving temporal, geographical, and commodity-specific relationships.
 
-## Key Insight
-
-Commodity data requires time-aware chunking strategies because the same concept (e.g., "crude oil inventory") has drastically different interpretations based on date, location, and market context. A knowledge base that loses temporal ordering produces hallucinated or outdated analysis.
+> 💡 **Key Insight:** Commodity data requires time-aware chunking strategies because the same concept (e.g., "crude oil inventory") has drastically different interpretations based on date, location, and market context. A knowledge base that loses temporal ordering produces hallucinated or outdated analysis.
 
 ## Formal Definition
 

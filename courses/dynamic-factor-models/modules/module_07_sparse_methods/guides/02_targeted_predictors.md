@@ -4,9 +4,7 @@
 
 Targeted predictors, developed by Bai and Ng (2008), improve forecasting by extracting factors specifically designed to predict a target variable, rather than merely summarizing variation in the predictor panel. This approach combines principal components analysis with variable selection, using soft or hard thresholding to identify predictors most relevant for forecasting the target.
 
-## Key Insight
-
-Standard PCA extracts factors that explain maximum variance in predictors $X$, but this doesn't guarantee good prediction of target $y$. Targeted factor methods first screen predictors based on their individual correlation with $y$, then extract factors from this reduced set. This focuses factor extraction on predictors that matter for the forecasting task, often dramatically improving forecast accuracy.
+> 💡 **Key Insight:** Standard PCA extracts factors that explain maximum variance in predictors $X$, but this doesn't guarantee good prediction of target $y$. Targeted factor methods first screen predictors based on their individual correlation with $y$, then extract factors from this reduced set. This focuses factor extraction on predictors that matter for the forecasting task, often dramatically improving forecast accuracy.
 
 ---
 

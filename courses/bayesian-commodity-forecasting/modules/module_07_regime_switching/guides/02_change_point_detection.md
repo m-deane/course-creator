@@ -4,9 +4,7 @@
 
 Change point detection identifies moments when a time series undergoes structural shifts in mean, variance, or dynamics. Bayesian methods provide full posterior distributions over change point locations and parameters, enabling uncertainty quantification critical for commodity market regime identification.
 
-## Key Insight
-
-**Structural breaks announce themselves after they happen.** The shale revolution didn't ring a bell in 2010—it became obvious years later. Bayesian change point detection quantifies "how sure are we a regime changed?" and "when did it happen?", preventing false alarms while catching real shifts.
+> 💡 **Key Insight:** **Structural breaks announce themselves after they happen.** The shale revolution didn't ring a bell in 2010—it became obvious years later. Bayesian change point detection quantifies "how sure are we a regime changed?" and "when did it happen?", preventing false alarms while catching real shifts.
 
 ---
 

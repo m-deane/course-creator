@@ -4,9 +4,7 @@
 
 Term structure analysis examines the relationship between futures contracts of different maturities, revealing market expectations about future price levels, storage costs, and convenience yield. LLMs enhance this analysis by extracting narrative context from news, reports, and commentary to explain term structure shapes (contango vs backwardation) and predict structural shifts.
 
-## Key Insight
-
-The futures curve shape tells a story: contango suggests plentiful supply (willing to pay storage), backwardation signals scarcity (immediate need outweighs future value). LLMs read this story in reverse—analyzing news, inventories, and market commentary to predict whether the curve will steepen, flatten, or invert. This combines quantitative curve modeling with qualitative fundamental understanding.
+> 💡 **Key Insight:** The futures curve shape tells a story: contango suggests plentiful supply (willing to pay storage), backwardation signals scarcity (immediate need outweighs future value). LLMs read this story in reverse—analyzing news, inventories, and market commentary to predict whether the curve will steepen, flatten, or invert. This combines quantitative curve modeling with qualitative fundamental understanding.
 
 ## Formal Definition
 

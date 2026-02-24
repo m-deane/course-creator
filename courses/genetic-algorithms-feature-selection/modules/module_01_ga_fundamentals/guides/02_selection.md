@@ -4,9 +4,7 @@
 
 Selection operators determine which individuals from the current population reproduce to create the next generation. Tournament, roulette wheel, and rank selection represent different strategies for balancing exploitation of good solutions with exploration of the search space.
 
-## Key Insight
-
-Selection pressure controls the trade-off between convergence speed and population diversity. High pressure (large tournaments, steep rank weighting) accelerates convergence but risks premature convergence to local optima. Low pressure maintains diversity but may converge too slowly.
+> 💡 **Key Insight:** Selection pressure controls the trade-off between convergence speed and population diversity. High pressure (large tournaments, steep rank weighting) accelerates convergence but risks premature convergence to local optima. Low pressure maintains diversity but may converge too slowly.
 
 ## Formal Definition
 

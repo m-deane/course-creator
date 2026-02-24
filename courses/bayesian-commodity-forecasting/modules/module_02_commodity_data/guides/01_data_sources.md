@@ -4,9 +4,7 @@
 
 Quality commodity forecasting requires reliable data on prices, fundamentals, and positioning. This guide maps the data landscape and provides practical retrieval strategies.
 
-## Key Insight
-
-**Free, official data often beats expensive commercial feeds for fundamentals.** EIA, USDA, and CFTC provide authoritative data that moves markets. Commercial data adds value primarily for higher frequency or alternative datasets.
+> 💡 **Key Insight:** **Free, official data often beats expensive commercial feeds for fundamentals.** EIA, USDA, and CFTC provide authoritative data that moves markets. Commercial data adds value primarily for higher frequency or alternative datasets.
 
 ---
 

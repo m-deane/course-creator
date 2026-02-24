@@ -4,9 +4,7 @@
 
 Panel data quality issues—missing observations, unbalanced panels, and outliers—directly affect estimation consistency and inference validity. Missing data creates unbalanced panels where entities have different numbers of observations, requiring careful handling to avoid selection bias. Outliers distort fixed effects estimates more severely than cross-sectional data because they affect multiple time periods for the same entity.
 
-## Key Insight
-
-Panel data quality problems interact with estimation methods. Fixed effects estimation is robust to some missing data patterns (missing completely at random) but biased under others (missing related to unobservables). Outliers in panel data have "leverage across time"—one bad observation for an entity affects all estimated fixed effects. The solution: detect patterns of missingness, test for selection bias, and use robust estimation or outlier-resistant transformations.
+> 💡 **Key Insight:** Panel data quality problems interact with estimation methods. Fixed effects estimation is robust to some missing data patterns (missing completely at random) but biased under others (missing related to unobservables). Outliers in panel data have "leverage across time"—one bad observation for an entity affects all estimated fixed effects. The solution: detect patterns of missingness, test for selection bias, and use robust estimation or outlier-resistant transformations.
 
 ## Formal Definition
 

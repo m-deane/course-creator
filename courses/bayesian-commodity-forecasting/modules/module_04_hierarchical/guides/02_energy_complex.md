@@ -4,9 +4,7 @@
 
 Energy markets are interconnected through refining, transportation, and substitution. Hierarchical models pool information across crude grades, refined products, and geographic regions while respecting their structural relationships, improving forecasts for thinly-traded markets.
 
-## Key Insight
-
-**Borrow strength across related markets.** WTI and Brent prices are highly correlated but not identical. A hierarchical model learns the common "oil market" dynamics while preserving spread relationships, preventing overfitting on individual time series.
+> 💡 **Key Insight:** **Borrow strength across related markets.** WTI and Brent prices are highly correlated but not identical. A hierarchical model learns the common "oil market" dynamics while preserving spread relationships, preventing overfitting on individual time series.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Chain-of-thought (CoT) prompting makes LLMs show their reasoning process before giving answers. This simple technique dramatically improves performance on complex tasks—reasoning, math, logic, and multi-step problems.
 
-## Key Insight
-
-**When models think out loud, they think better.** Autoregressive generation means each token builds on previous tokens. By generating reasoning steps, the model creates useful context for its final answer. The reasoning isn't just explanation—it's computation.
+> 💡 **Key Insight:** **When models think out loud, they think better.** Autoregressive generation means each token builds on previous tokens. By generating reasoning steps, the model creates useful context for its final answer. The reasoning isn't just explanation—it's computation.
 
 ---
 

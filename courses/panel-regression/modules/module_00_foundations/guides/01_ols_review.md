@@ -4,9 +4,7 @@
 
 Ordinary Least Squares (OLS) in matrix notation provides the foundation for understanding panel data estimators. The matrix formulation reveals the geometric interpretation of regression and enables efficient computation for large datasets.
 
-## Key Insight
-
-OLS finds the linear combination of predictors that minimizes the sum of squared residuals. In matrix form, this optimization has a closed-form solution: $\hat{\beta} = (X'X)^{-1}X'y$, which represents the projection of $y$ onto the column space of $X$.
+> 💡 **Key Insight:** OLS finds the linear combination of predictors that minimizes the sum of squared residuals. In matrix form, this optimization has a closed-form solution: $\hat{\beta} = (X'X)^{-1}X'y$, which represents the projection of $y$ onto the column space of $X$.
 
 ## Formal Definition
 

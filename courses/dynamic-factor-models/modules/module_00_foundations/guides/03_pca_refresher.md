@@ -4,9 +4,7 @@
 
 Principal Component Analysis (PCA) is the workhorse method for factor extraction. It finds orthogonal directions that maximize variance in the data, providing a natural way to reduce dimensionality while preserving the most important variation.
 
-## Key Insight
-
-PCA answers: "What are the most important directions of variation in my data?" The first principal component captures the most variance, the second captures the most remaining variance orthogonal to the first, and so on. In factor models, these directions approximate the latent factors driving co-movement.
+> 💡 **Key Insight:** PCA answers: "What are the most important directions of variation in my data?" The first principal component captures the most variance, the second captures the most remaining variance orthogonal to the first, and so on. In factor models, these directions approximate the latent factors driving co-movement.
 
 ---
 

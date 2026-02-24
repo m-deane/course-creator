@@ -4,9 +4,7 @@
 
 The closed loop is the core mental model for building production LLM systems. It describes how an AI system receives goals, builds context, generates plans, takes actions, observes results, updates memory, and evaluates progress—repeatedly until the goal is achieved.
 
-## Key Insight
-
-**A chatbot answers questions. A system achieves goals.**
+> 💡 **Key Insight:** A chatbot answers questions. A system achieves goals.
 
 The difference is the loop: generating → observing → learning → improving → generating again.
 

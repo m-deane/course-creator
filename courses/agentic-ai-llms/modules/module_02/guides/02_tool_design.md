@@ -4,9 +4,7 @@
 
 Well-designed tools are the difference between agents that work reliably and agents that confuse, fail, or misbehave. This guide covers principles for creating tools that LLMs can understand and use correctly.
 
-## Key Insight
-
-**Your tool descriptions are prompts.** The LLM reads your tool name, description, and parameter definitions to decide when and how to use each tool. Invest the same care in tool design as you would in system prompts.
+> 💡 **Key Insight:** **Your tool descriptions are prompts.** The LLM reads your tool name, description, and parameter definitions to decide when and how to use each tool. Invest the same care in tool design as you would in system prompts.
 
 ---
 

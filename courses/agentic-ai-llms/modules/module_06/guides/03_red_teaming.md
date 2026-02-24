@@ -4,9 +4,7 @@
 
 Red teaming is the practice of systematically attempting to break, manipulate, or extract harmful behavior from AI agents to identify vulnerabilities before malicious actors do. It's offensive security for AI—proactively finding weaknesses so they can be fixed.
 
-## Key Insight
-
-Agents fail in surprising ways. A prompt that seems harmless might reveal system prompts, bypass safety guardrails, or cause unintended actions. Red teaming discovers these failure modes through adversarial creativity—thinking like an attacker to defend better.
+> 💡 **Key Insight:** Agents fail in surprising ways. A prompt that seems harmless might reveal system prompts, bypass safety guardrails, or cause unintended actions. Red teaming discovers these failure modes through adversarial creativity—thinking like an attacker to defend better.
 
 ## Formal Definition
 

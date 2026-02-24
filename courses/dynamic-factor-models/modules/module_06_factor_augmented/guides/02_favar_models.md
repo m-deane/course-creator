@@ -4,9 +4,7 @@
 
 Factor-Augmented VAR (FAVAR) models extend standard VARs by augmenting a small set of observed variables with latent factors extracted from a large information set. This framework captures richer dynamics than pure diffusion index forecasting while remaining computationally tractable, making it ideal for policy analysis and structural identification.
 
-## Key Insight
-
-Traditional VARs use 5-10 variables due to degrees-of-freedom constraints, forcing researchers to choose which information to include. FAVAR solves this by extracting factors from hundreds of variables and modeling joint dynamics of factors plus key observables. This combines VAR's structural modeling with factor models' information aggregation.
+> 💡 **Key Insight:** Traditional VARs use 5-10 variables due to degrees-of-freedom constraints, forcing researchers to choose which information to include. FAVAR solves this by extracting factors from hundreds of variables and modeling joint dynamics of factors plus key observables. This combines VAR's structural modeling with factor models' information aggregation.
 
 ---
 

@@ -4,9 +4,7 @@
 
 One prompt cannot serve all requests. A prompt optimized for extracting inventory numbers from EIA reports will fail at generating fundamental analysis for corn markets. Contextual bandits solve this by routing based on request features — task type, commodity sector, data availability, urgency — to select the best prompt for each specific context. This is the same contextual bandit framework from Module 3, applied to prompt selection.
 
-## Key Insight
-
-**The optimal prompt depends on context.**
+> 💡 **Key Insight:** The optimal prompt depends on context.
 
 - **Task type:** Data extraction needs structured prompts; fundamental analysis needs quantitative prompts
 - **Commodity sector:** Energy markets have different data characteristics than agriculture

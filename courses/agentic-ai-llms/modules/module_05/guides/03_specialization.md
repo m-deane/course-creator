@@ -4,9 +4,7 @@
 
 Agent specialization is the practice of designing focused agents with well-defined roles and capabilities, rather than monolithic general-purpose agents. Specialized agents collaborate more effectively, produce higher-quality outputs, and are easier to maintain and debug.
 
-## Key Insight
-
-Just as human teams succeed through role differentiation (researcher, engineer, reviewer), agent teams excel when each agent has a clear domain of expertise and responsibility. A specialized "research agent" produces better summaries than a generic "do everything" agent asked to research.
+> 💡 **Key Insight:** Just as human teams succeed through role differentiation (researcher, engineer, reviewer), agent teams excel when each agent has a clear domain of expertise and responsibility. A specialized "research agent" produces better summaries than a generic "do everything" agent asked to research.
 
 ## Formal Definition
 

@@ -4,9 +4,7 @@
 
 Evaluation transforms intuition about agent quality into measurable metrics. Without rigorous evaluation, you can't know if changes improve or degrade your system. This guide covers frameworks for assessing agent performance systematically.
 
-## Key Insight
-
-**What you don't measure, you can't improve.** Agents fail in subtle ways—wrong tool choices, flawed reasoning, off-topic responses. Comprehensive evaluation surfaces these issues before users do.
+> 💡 **Key Insight:** **What you don't measure, you can't improve.** Agents fail in subtle ways—wrong tool choices, flawed reasoning, off-topic responses. Comprehensive evaluation surfaces these issues before users do.
 
 ---
 

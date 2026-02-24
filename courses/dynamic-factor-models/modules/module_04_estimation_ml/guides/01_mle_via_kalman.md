@@ -4,9 +4,7 @@
 
 Maximum likelihood estimation of dynamic factor models uses the Kalman filter to construct the likelihood function via prediction error decomposition. The likelihood is computed recursively by evaluating one-step-ahead prediction errors and their variances at each time point, providing an exact likelihood evaluation even with latent factors.
 
-## Key Insight
-
-The genius of the Kalman filter approach is that it transforms an intractable likelihood (marginalizing over all latent factor paths) into a tractable sequential computation. Each observation contributes its prediction error - the surprise relative to what the model expected - and the likelihood measures how well the model predicts the data one step ahead.
+> 💡 **Key Insight:** The genius of the Kalman filter approach is that it transforms an intractable likelihood (marginalizing over all latent factor paths) into a tractable sequential computation. Each observation contributes its prediction error - the surprise relative to what the model expected - and the likelihood measures how well the model predicts the data one step ahead.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Prompt engineering is the practice of crafting inputs that reliably produce desired outputs from LLMs. Good prompts are clear, structured, and provide appropriate context. This guide covers foundational techniques you'll build upon throughout the course.
 
-## Key Insight
-
-**Prompts are programming.** Unlike traditional code, prompts use natural language, but they require the same rigor: clear specifications, explicit edge case handling, and systematic testing. Treat prompt development like software development.
+> 💡 **Key Insight:** **Prompts are programming.** Unlike traditional code, prompts use natural language, but they require the same rigor: clear specifications, explicit edge case handling, and systematic testing. Treat prompt development like software development.
 
 ---
 

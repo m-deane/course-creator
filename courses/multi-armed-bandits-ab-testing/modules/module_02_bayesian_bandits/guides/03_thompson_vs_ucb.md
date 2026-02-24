@@ -4,9 +4,7 @@
 
 Thompson Sampling (TS) and Upper Confidence Bound (UCB) are the two leading bandit algorithms. Both achieve logarithmic regret, but they explore differently: UCB uses deterministic optimism ("pick the arm with highest plausible value"), while Thompson Sampling uses randomized probability matching ("pick arms proportionally to their probability of being best"). In practice, Thompson Sampling often outperforms UCB in non-stationary, delayed-feedback, and batched-update settings.
 
-## Key Insight
-
-**UCB's philosophy:** Always pick the arm with the highest upper confidence bound. Exploration happens because uncertain arms have wide bounds.
+> 💡 **Key Insight:** **UCB's philosophy:** Always pick the arm with the highest upper confidence bound. Exploration happens because uncertain arms have wide bounds.
 
 **Thompson Sampling's philosophy:** Maintain beliefs about each arm, sample from those beliefs, act on samples. Exploration happens because uncertain beliefs produce diverse samples.
 

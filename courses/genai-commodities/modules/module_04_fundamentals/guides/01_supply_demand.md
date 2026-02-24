@@ -4,9 +4,7 @@
 
 Supply/demand modeling with LLMs combines traditional fundamental analysis (production data, inventory levels, consumption patterns) with LLM-powered synthesis of unstructured information (geopolitical events, weather impacts, policy changes) to build comprehensive supply/demand balances that inform commodity price forecasts.
 
-## Key Insight
-
-Traditional supply/demand models rely on structured data (EIA inventories, USDA production estimates) but miss critical context from unstructured sources—a surprise OPEC announcement, drought in the Midwest, or refinery outage. LLMs excel at extracting and reasoning over this unstructured information, allowing quantitative models to incorporate qualitative factors that actually move markets.
+> 💡 **Key Insight:** Traditional supply/demand models rely on structured data (EIA inventories, USDA production estimates) but miss critical context from unstructured sources—a surprise OPEC announcement, drought in the Midwest, or refinery outage. LLMs excel at extracting and reasoning over this unstructured information, allowing quantitative models to incorporate qualitative factors that actually move markets.
 
 ## Formal Definition
 

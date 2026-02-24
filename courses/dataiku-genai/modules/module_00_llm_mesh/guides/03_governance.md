@@ -4,9 +4,7 @@
 
 LLM Mesh governance enables centralized control over LLM access, cost tracking, and usage policies across your organization. It provides visibility into who uses LLMs, how much they cost, and ensures compliance with security policies.
 
-## Key Insight
-
-Enterprise Gen AI requires governance layer that balances innovation with control. LLM Mesh provides this through connection-level access control, project-based quotas, and comprehensive audit trails without requiring changes to application code.
+> 💡 **Key Insight:** Enterprise Gen AI requires governance layer that balances innovation with control. LLM Mesh provides this through connection-level access control, project-based quotas, and comprehensive audit trails without requiring changes to application code.
 
 ## Formal Definition
 

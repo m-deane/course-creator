@@ -4,9 +4,7 @@
 
 A Gaussian Process (GP) defines a probability distribution over functions. Instead of parameterizing a specific functional form, GPs specify properties of functions (smoothness, periodicity) through a kernel, letting data determine the actual shape.
 
-## Key Insight
-
-**Think of a GP as placing a prior directly on the space of functions.** Just as a Normal prior on a parameter expresses beliefs about where the parameter lies, a GP prior expresses beliefs about what functions are plausible.
+> 💡 **Key Insight:** **Think of a GP as placing a prior directly on the space of functions.** Just as a Normal prior on a parameter expresses beliefs about where the parameter lies, a GP prior expresses beliefs about what functions are plausible.
 
 ---
 

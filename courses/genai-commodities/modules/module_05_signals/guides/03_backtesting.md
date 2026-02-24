@@ -4,9 +4,7 @@
 
 Backtesting validates whether LLM-generated trading signals would have been profitable historically, accounting for transaction costs, slippage, and realistic execution constraints. Unlike traditional backtesting, LLM backtests require special handling of information leakage, prompt stability, and computational cost since LLM calls cannot be cheaply replicated millions of times.
 
-## Key Insight
-
-LLM backtesting faces unique challenges: (1) LLM outputs are non-deterministic even with the same prompt, (2) computational cost limits exhaustive testing, (3) the LLM's training data may include information from your backtest period (data leakage), (4) prompts must remain stable across years despite changing market conditions. The solution: cache LLM responses, use walk-forward validation, detect temporal data leakage, and measure prompt robustness.
+> 💡 **Key Insight:** LLM backtesting faces unique challenges: (1) LLM outputs are non-deterministic even with the same prompt, (2) computational cost limits exhaustive testing, (3) the LLM's training data may include information from your backtest period (data leakage), (4) prompts must remain stable across years despite changing market conditions. The solution: cache LLM responses, use walk-forward validation, detect temporal data leakage, and measure prompt robustness.
 
 ## Formal Definition
 

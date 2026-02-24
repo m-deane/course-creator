@@ -26,9 +26,7 @@ For Thompson Sampling, conjugate priors make posterior updates **instant and exa
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
 ---
 
-## Key Insight
-
-$$\text{Posterior} \propto \text{Likelihood} \times \text{Prior}$$
+> 💡 **Key Insight:** $$\text{Posterior} \propto \text{Likelihood} \times \text{Prior}$$
 
 **Beta-Bernoulli example:**
 - Prior: $\text{Beta}(\alpha, \beta)$

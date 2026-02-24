@@ -4,9 +4,7 @@
 
 Bayes' theorem provides a principled way to update beliefs in light of new evidence. It forms the mathematical foundation for all probabilistic machine learning and is essential for building forecasting models that quantify uncertainty.
 
-## Key Insight
-
-**Bayesian inference inverts the usual probability question.** Instead of asking "What's the probability of seeing this data given a parameter?" we ask "What's the probability of a parameter given this data?" This inversion is exactly what we need for forecasting.
+> 💡 **Key Insight:** **Bayesian inference inverts the usual probability question.** Instead of asking "What's the probability of seeing this data given a parameter?" we ask "What's the probability of a parameter given this data?" This inversion is exactly what we need for forecasting.
 
 ## Formal Definition
 

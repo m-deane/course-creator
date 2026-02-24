@@ -4,9 +4,7 @@
 
 The reward function is the MOST IMPORTANT design decision in prompt routing bandits. A poorly designed reward trains your system to produce confident hallucinations, verbose garbage, or technically-correct-but-useless responses. The key is to use composite rewards: one primary metric (does it solve the task?) plus multiple guardrails (is it factual? is it efficient? does it follow format?).
 
-## Key Insight
-
-**Bad rewards produce bad behavior — but in subtle ways.**
+> 💡 **Key Insight:** Bad rewards produce bad behavior — but in subtle ways.
 
 If you reward only user satisfaction, you train a system that tells users what they want to hear (even if it's wrong).
 If you reward only brevity, you train a system that gives shallow, incomplete answers.

@@ -4,9 +4,7 @@
 
 Feature selection is the process of identifying the most relevant subset of features from a larger feature space to improve model performance, reduce overfitting, and enhance interpretability. In time series forecasting with many potential features and limited observations, this becomes critical for generalization.
 
-## Key Insight
-
-The feature selection problem grows exponentially with the number of features: with $p$ features, there are $2^p$ possible subsets to evaluate. For even moderate feature sets (p=30), exhaustive search requires evaluating over 1 billion combinations, making intelligent search strategies essential.
+> 💡 **Key Insight:** The feature selection problem grows exponentially with the number of features: with $p$ features, there are $2^p$ possible subsets to evaluate. For even moderate feature sets (p=30), exhaustive search requires evaluating over 1 billion combinations, making intelligent search strategies essential.
 
 ## Formal Definition
 

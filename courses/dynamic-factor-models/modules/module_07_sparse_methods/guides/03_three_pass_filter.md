@@ -4,9 +4,7 @@
 
 The three-pass regression filter (3PRF), developed by Kelly and Pruitt (2015), is a sophisticated method for forecasting with many predictors that combines variable selection, factor extraction, and forecast aggregation. Unlike standard diffusion indices or targeted predictors, 3PRF explicitly accounts for the relationship between predictors and the target variable at each stage, providing a unified framework that often outperforms alternative methods.
 
-## Key Insight
-
-Standard factor methods extract factors from predictors $X$ without using target information, then regress $y$ on these factors. This two-step approach can miss predictors that matter for $y$ but don't load heavily on dominant factors. The three-pass filter innovates by using $y$ in all three passes: (1) identify predictors correlated with $y$, (2) extract latent factors from these relationships, (3) forecast using both factors and individual predictors, selecting the best combination.
+> 💡 **Key Insight:** Standard factor methods extract factors from predictors $X$ without using target information, then regress $y$ on these factors. This two-step approach can miss predictors that matter for $y$ but don't load heavily on dominant factors. The three-pass filter innovates by using $y$ in all three passes: (1) identify predictors correlated with $y$, (2) extract latent factors from these relationships, (3) forecast using both factors and individual predictors, selecting the best combination.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Observability is the practice of making agent systems transparent and debuggable through comprehensive logging, metrics, and tracing. While traditional software observability focuses on requests and errors, agent observability must capture reasoning traces, tool usage, and decision-making processes.
 
-## Key Insight
-
-You can't fix what you can't see. Agents make complex multi-step decisions involving reasoning, tool calls, and data retrieval. Without observability, debugging agent failures is like troubleshooting a black box—you see the wrong output but have no insight into why it occurred.
+> 💡 **Key Insight:** You can't fix what you can't see. Agents make complex multi-step decisions involving reasoning, tool calls, and data retrieval. Without observability, debugging agent failures is like troubleshooting a black box—you see the wrong output but have no insight into why it occurred.
 
 Good observability answers:
 - **What** did the agent do?

@@ -4,9 +4,7 @@
 
 Fixed effects regression controls for all time-invariant differences between entities—whether observed or not. It answers: "Within an entity, how does Y change when X changes?" This eliminates omitted variable bias from time-invariant confounders.
 
-## Key Insight
-
-**Fixed effects uses each entity as its own control.** By comparing an entity to itself over time, we eliminate all stable differences between entities—observable and unobservable alike.
+> 💡 **Key Insight:** **Fixed effects uses each entity as its own control.** By comparing an entity to itself over time, we eliminate all stable differences between entities—observable and unobservable alike.
 
 ---
 

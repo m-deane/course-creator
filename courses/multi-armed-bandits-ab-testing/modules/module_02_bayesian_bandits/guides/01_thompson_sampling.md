@@ -4,9 +4,7 @@
 
 Thompson Sampling is a Bayesian bandit algorithm that maintains a probability distribution (belief) over each arm's true reward, samples a plausible reward from each distribution, and selects the arm with the highest sample. It naturally balances exploration (wide sampling when uncertain) and exploitation (concentrated sampling when confident) through posterior-guided randomness.
 
-## Key Insight
-
-Instead of deterministically choosing based on estimates (like UCB), Thompson Sampling asks: "Given what I know, what could each arm's true reward be?" It samples one possibility from each belief distribution, then acts as if that possibility were true. Over time, beliefs narrow around truth, and exploration naturally decreases.
+> 💡 **Key Insight:** Instead of deterministically choosing based on estimates (like UCB), Thompson Sampling asks: "Given what I know, what could each arm's true reward be?" It samples one possibility from each belief distribution, then acts as if that possibility were true. Over time, beliefs narrow around truth, and exploration naturally decreases.
 
 The magic: exploration happens automatically without tuning parameters. Arms with uncertain beliefs get diverse samples (high exploration); arms with concentrated beliefs give consistent samples (low exploration unless they're truly best).
 

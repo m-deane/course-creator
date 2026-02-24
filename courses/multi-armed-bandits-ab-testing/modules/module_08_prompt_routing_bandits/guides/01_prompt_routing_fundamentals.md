@@ -18,6 +18,8 @@ The traditional approach — manually A/B test prompts for weeks — is exactly 
 
 Every production LLM system pays a hidden tax:
 
+> ⚠️ **Warning: The Bad Prompt Tax**
+
 **Time tax:** Weeks spent manually iterating on prompts instead of shipping features
 **Cost tax:** Thousands of dollars in wasted tokens on prompts that produce verbose or low-quality outputs
 **Trust tax:** User frustration from inconsistent quality, hallucinations, or off-target responses

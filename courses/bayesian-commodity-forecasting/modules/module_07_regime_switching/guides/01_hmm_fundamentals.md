@@ -4,9 +4,7 @@
 
 A Hidden Markov Model (HMM) describes a system that transitions between discrete hidden states over time, with each state generating observations according to a state-specific distribution. For commodities, states represent market regimes, and observations are prices or returns.
 
-## Key Insight
-
-**HMMs separate "what regime are we in?" from "what do we observe?"** The regime is latent (unobserved) but influences the distribution of prices. By modeling this two-layer structure, we can infer regimes from prices and make regime-dependent forecasts.
+> 💡 **Key Insight:** **HMMs separate "what regime are we in?" from "what do we observe?"** The regime is latent (unobserved) but influences the distribution of prices. By modeling this two-layer structure, we can infer regimes from prices and make regime-dependent forecasts.
 
 ---
 

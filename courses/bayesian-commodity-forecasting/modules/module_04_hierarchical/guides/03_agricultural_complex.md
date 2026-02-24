@@ -4,9 +4,7 @@
 
 Agricultural markets form interconnected networks through crop rotation, feed demand, and land allocation decisions. Hierarchical models capture these structural relationships—pooling information across crops, regions, and time scales to improve forecasts while respecting biological and economic constraints.
 
-## Key Insight
-
-**Corn doesn't exist in isolation.** When corn prices spike, farmers plant more corn (less soybeans). When corn is cheap, livestock producers expand herds (increasing feed demand). A hierarchical model for the agricultural complex jointly models these substitution and complementarity relationships, preventing forecast inconsistencies.
+> 💡 **Key Insight:** **Corn doesn't exist in isolation.** When corn prices spike, farmers plant more corn (less soybeans). When corn is cheap, livestock producers expand herds (increasing feed demand). A hierarchical model for the agricultural complex jointly models these substitution and complementarity relationships, preventing forecast inconsistencies.
 
 ---
 

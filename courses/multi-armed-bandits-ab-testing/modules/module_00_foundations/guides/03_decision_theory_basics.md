@@ -4,9 +4,7 @@
 
 Decision theory provides the mathematical foundation for choosing actions under uncertainty. For bandits and commodity trading, the key concepts are: expected value (what you'll earn on average), utility (how you value different outcomes), sequential decision making (your choices now affect future information), and regret minimization (comparing your strategy to the best possible strategy in hindsight).
 
-## Key Insight
-
-**Decision theory formalizes intuition.** When a trader says "I'm not touching volatility trades right now," they're implicitly doing expected utility calculations with risk aversion. When they say "I'll try a small position to see how it performs," they're valuing information acquisition. Decision theory makes these tradeoffs explicit and mathematically tractable.
+> 💡 **Key Insight:** **Decision theory formalizes intuition.** When a trader says "I'm not touching volatility trades right now," they're implicitly doing expected utility calculations with risk aversion. When they say "I'll try a small position to see how it performs," they're valuing information acquisition. Decision theory makes these tradeoffs explicit and mathematically tractable.
 
 ## Expected Value and Utility
 

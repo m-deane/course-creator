@@ -4,9 +4,7 @@
 
 MIDAS (Mixed Data Sampling) regression provides a parsimonious approach to forecasting low-frequency variables using high-frequency predictors through parametric lag weighting schemes. Unlike traditional distributed lag models, MIDAS uses beta or exponential Almon polynomials to reduce parameter dimensionality while capturing rich lag dynamics.
 
-## Key Insight
-
-The key innovation of MIDAS is replacing potentially hundreds of lag coefficients with just 2-3 hyperparameters that control a smooth weighting function. This achieves both parsimony and flexibility—you can incorporate 60 days of data with 3 parameters instead of 60.
+> 💡 **Key Insight:** The key innovation of MIDAS is replacing potentially hundreds of lag coefficients with just 2-3 hyperparameters that control a smooth weighting function. This achieves both parsimony and flexibility—you can incorporate 60 days of data with 3 parameters instead of 60.
 
 ---
 

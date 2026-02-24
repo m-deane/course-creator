@@ -4,9 +4,7 @@
 
 Factor models rely heavily on matrix decompositions—particularly eigendecomposition and SVD—to extract latent structure from high-dimensional data. This guide reviews the essential linear algebra you'll use throughout the course.
 
-## Key Insight
-
-The core operation in factor analysis is decomposing a covariance matrix into components that separate "signal" (common factors) from "noise" (idiosyncratic variation). Eigendecomposition provides this separation directly.
+> 💡 **Key Insight:** The core operation in factor analysis is decomposing a covariance matrix into components that separate "signal" (common factors) from "noise" (idiosyncratic variation). Eigendecomposition provides this separation directly.
 
 ---
 
@@ -33,10 +31,7 @@ where:
 
 ### Intuitive Explanation
 
-Think of eigendecomposition as finding the "natural axes" of a transformation. For a covariance matrix:
-- **Eigenvectors** point in directions of maximum/minimum variance
-- **Eigenvalues** measure the variance in each direction
-- The largest eigenvalues capture the most important variation
+> 💡 **Intuition:** Think of eigendecomposition as finding the "natural axes" of a transformation. For a covariance matrix, eigenvectors point in directions of maximum/minimum variance, eigenvalues measure the variance in each direction, and the largest eigenvalues capture the most important variation.
 
 ### Code Implementation
 

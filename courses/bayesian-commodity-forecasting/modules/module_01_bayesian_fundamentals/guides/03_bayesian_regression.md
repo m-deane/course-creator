@@ -4,9 +4,7 @@
 
 Bayesian regression treats regression coefficients as random variables with distributions, rather than fixed unknown values. This provides full uncertainty quantification for predictions and naturally handles regularization through priors.
 
-## Key Insight
-
-In frequentist regression, we get point estimates: β̂ = 2.5. In Bayesian regression, we get distributions: β ~ Normal(2.5, 0.3), telling us both the most likely value AND our uncertainty about it.
+> 💡 **Key Insight:** In frequentist regression, we get point estimates: β̂ = 2.5. In Bayesian regression, we get distributions: β ~ Normal(2.5, 0.3), telling us both the most likely value AND our uncertainty about it.
 
 ## Formal Definition
 

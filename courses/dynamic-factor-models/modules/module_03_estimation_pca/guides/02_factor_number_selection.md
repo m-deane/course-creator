@@ -4,9 +4,7 @@
 
 Choosing the number of factors $r$ is critical in factor model estimation. Too few factors underfit the common variation; too many overfit idiosyncratic noise. Information criteria like Bai-Ng penalize model complexity while rewarding fit, providing data-driven factor selection. Visual diagnostics like scree plots and eigenvalue ratios complement formal criteria.
 
-## Key Insight
-
-The core trade-off: adding factors always reduces in-sample fit (smaller residuals), but additional factors may capture noise rather than signal. Information criteria formalize this trade-off by penalizing parameters. The key innovation of Bai-Ng criteria is designing penalties that reflect the large-$N$-large-$T$ asymptotics of factor models, unlike AIC/BIC which assume fixed dimension.
+> 💡 **Key Insight:** The core trade-off: adding factors always reduces in-sample fit (smaller residuals), but additional factors may capture noise rather than signal. Information criteria formalize this trade-off by penalizing parameters. The key innovation of Bai-Ng criteria is designing penalties that reflect the large-$N$-large-$T$ asymptotics of factor models, unlike AIC/BIC which assume fixed dimension.
 
 ---
 

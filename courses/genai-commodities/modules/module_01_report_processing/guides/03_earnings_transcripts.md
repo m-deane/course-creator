@@ -4,9 +4,7 @@
 
 Corporate earnings calls contain valuable forward-looking commodity information from producers, refiners, and industrial consumers. LLMs can extract commodity-specific mentions, production guidance, and demand indicators from lengthy transcripts, providing unique insight unavailable in public reports.
 
-## Key Insight
-
-Companies directly involved in commodity production or consumption often discuss supply/demand factors weeks or months before they appear in official statistics. An oil major's capex guidance signals future production; a chemical company's margin commentary reveals refining economics. LLMs can extract these signals from unstructured transcripts at scale.
+> 💡 **Key Insight:** Companies directly involved in commodity production or consumption often discuss supply/demand factors weeks or months before they appear in official statistics. An oil major's capex guidance signals future production; a chemical company's margin commentary reveals refining economics. LLMs can extract these signals from unstructured transcripts at scale.
 
 ## Formal Definition
 

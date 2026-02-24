@@ -4,9 +4,7 @@
 
 Lag features capture temporal dependencies by including past values of variables as predictors. Genetic algorithms for lag feature selection must balance autocorrelation benefits against multicollinearity risks while respecting the temporal ordering constraint that predictions cannot use future information.
 
-## Key Insight
-
-Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
+> 💡 **Key Insight:** Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
 
 ## Formal Definition
 

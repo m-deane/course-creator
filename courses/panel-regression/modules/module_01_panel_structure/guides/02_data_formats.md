@@ -4,9 +4,7 @@
 
 Panel data can be stored in two formats: **long format** (stacked, one row per observation) or **wide format** (matrix, one row per entity). Long format is preferred for regression analysis and modern panel libraries, while wide format suits time series operations and visualization. Efficient panel analysis requires mastery of format conversion, multi-index DataFrames, and reshaping operations.
 
-## Key Insight
-
-Format choice affects memory usage, computation speed, and code clarity. Long format enables straightforward filtering and grouping but creates sparse storage for unbalanced panels. Wide format enables vectorized time series operations but struggles with varying entity attributes. The solution: store in long format with multi-index (entity, time), convert to wide for specific operations, leverage pandas' hierarchical indexing.
+> 💡 **Key Insight:** Format choice affects memory usage, computation speed, and code clarity. Long format enables straightforward filtering and grouping but creates sparse storage for unbalanced panels. Wide format enables vectorized time series operations but struggles with varying entity attributes. The solution: store in long format with multi-index (entity, time), convert to wide for specific operations, leverage pandas' hierarchical indexing.
 
 ## Formal Definition
 

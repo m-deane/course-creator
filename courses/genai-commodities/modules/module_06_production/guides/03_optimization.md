@@ -4,9 +4,7 @@
 
 Production LLM systems face the triple constraint of cost, latency, and quality. Cost optimization reduces API expenses through prompt compression, smaller models, and intelligent caching. Latency reduction ensures signals arrive before market moves through parallel processing, streaming, and precomputation. The goal: maintain signal quality while reducing cost per signal from $0.05 to $0.005 and latency from 3s to 300ms.
 
-## Key Insight
-
-LLM costs follow a power law: 80% of queries are repetitive (cacheable), 15% can use smaller/faster models, and only 5% require the full frontier model. Latency has three components—network (100-200ms), inference (1-2s), and processing (0.5s)—each optimizable independently. The optimization strategy: cache aggressively, route intelligently, compress ruthlessly, and parallelize everything.
+> 💡 **Key Insight:** LLM costs follow a power law: 80% of queries are repetitive (cacheable), 15% can use smaller/faster models, and only 5% require the full frontier model. Latency has three components—network (100-200ms), inference (1-2s), and processing (0.5s)—each optimizable independently. The optimization strategy: cache aggressively, route intelligently, compress ruthlessly, and parallelize everything.
 
 ## Formal Definition
 

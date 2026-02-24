@@ -4,9 +4,7 @@
 
 The Expectation-Maximization (EM) algorithm provides an iterative approach to maximum likelihood estimation that treats the latent factors as missing data. It alternates between computing expected sufficient statistics given current parameters (E-step via Kalman smoother) and maximizing the expected complete-data log-likelihood (M-step with closed-form updates).
 
-## Key Insight
-
-Direct maximization of the likelihood is challenging because factors are latent. The EM algorithm's brilliance is treating factors as "missing data" - if we knew the factors, ML estimation would be trivial (just regression). So we iterate: (1) pretend we know the factors by using their conditional expectations, (2) update parameters as if those expectations were true, (3) repeat until convergence. Each iteration is guaranteed to increase the likelihood.
+> 💡 **Key Insight:** Direct maximization of the likelihood is challenging because factors are latent. The EM algorithm's brilliance is treating factors as "missing data" - if we knew the factors, ML estimation would be trivial (just regression). So we iterate: (1) pretend we know the factors by using their conditional expectations, (2) update parameters as if those expectations were true, (3) repeat until convergence. Each iteration is guaranteed to increase the likelihood.
 
 ---
 

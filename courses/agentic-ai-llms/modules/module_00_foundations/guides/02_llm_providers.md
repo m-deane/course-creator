@@ -4,9 +4,7 @@
 
 Different LLM providers offer distinct trade-offs in capability, cost, latency, and features. Understanding these differences helps you select the right model for your agent system and build provider-agnostic architectures.
 
-## Key Insight
-
-**No single model is best for everything.** Claude excels at reasoning and instruction-following, GPT-4 at broad knowledge, and open-source models at cost-efficiency and privacy. Production agents often use multiple models strategically.
+> 💡 **Key Insight:** **No single model is best for everything.** Claude excels at reasoning and instruction-following, GPT-4 at broad knowledge, and open-source models at cost-efficiency and privacy. Production agents often use multiple models strategically.
 
 ---
 

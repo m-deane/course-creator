@@ -55,9 +55,7 @@ You've mastered this module when you can:
 - [ ] Build a backtest comparing contextual vs non-contextual bandits
 - [ ] Articulate the bias-variance tradeoff in contextual bandit feature engineering
 
-## Key Insight
-
-**Standard bandits ask:** "Which arm is best on average?"
+> 💡 **Key Insight:** **Standard bandits ask:** "Which arm is best on average?"
 
 **Contextual bandits ask:** "Which arm is best *in this situation*?"
 

@@ -4,9 +4,7 @@
 
 State space models decompose observed time series into unobserved (latent) components that evolve according to known dynamics. This framework provides a unified approach to trend extraction, forecasting, and uncertainty quantification.
 
-## Key Insight
-
-**Think of state space as a hidden story.** We observe the outcome (prices) but not the underlying drivers (trend, momentum, sentiment). State space models infer these hidden states from observable data.
+> 💡 **Key Insight:** **Think of state space as a hidden story.** We observe the outcome (prices) but not the underlying drivers (trend, momentum, sentiment). State space models infer these hidden states from observable data.
 
 ## Formal Definition
 

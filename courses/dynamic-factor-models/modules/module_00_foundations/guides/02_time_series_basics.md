@@ -4,9 +4,7 @@
 
 Dynamic factor models extend static factors by allowing factors to evolve over time following autoregressive dynamics. This guide reviews the time series concepts—stationarity, autocovariance, and AR processes—essential for understanding factor dynamics.
 
-## Key Insight
-
-Stationarity ensures that statistical properties remain constant over time, which is necessary for consistent estimation. Factor models assume factors follow stationary (or trend-stationary) processes, allowing us to estimate dynamics from historical data.
+> 💡 **Key Insight:** Stationarity ensures that statistical properties remain constant over time, which is necessary for consistent estimation. Factor models assume factors follow stationary (or trend-stationary) processes, allowing us to estimate dynamics from historical data.
 
 ---
 

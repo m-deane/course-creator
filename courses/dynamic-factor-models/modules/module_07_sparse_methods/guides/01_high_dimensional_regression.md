@@ -4,9 +4,7 @@
 
 High-dimensional regression addresses the challenge of estimating models when the number of predictors exceeds or approaches the number of observations. LASSO (Least Absolute Shrinkage and Selection Operator) and elastic net use penalized regression to perform simultaneous variable selection and coefficient estimation, providing sparse solutions that identify the most relevant predictors while avoiding overfitting.
 
-## Key Insight
-
-When you have more predictors than observations (or comparable numbers), ordinary least squares fails. LASSO adds an L1 penalty that shrinks some coefficients exactly to zero, automatically selecting variables. Elastic net combines L1 and L2 penalties to handle correlated predictors better than LASSO alone, making it ideal for factor models where predictors often move together.
+> 💡 **Key Insight:** When you have more predictors than observations (or comparable numbers), ordinary least squares fails. LASSO adds an L1 penalty that shrinks some coefficients exactly to zero, automatically selecting variables. Elastic net combines L1 and L2 penalties to handle correlated predictors better than LASSO alone, making it ideal for factor models where predictors often move together.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Self-reflection enables agents to critique their own outputs, identify errors, and improve. Instead of accepting first attempts, reflective agents evaluate their work and iterate toward better solutions.
 
-## Key Insight
-
-**The first answer is rarely the best.** Reflection adds a meta-cognitive layer—the agent asks "Is this good? What could be better?" This catches errors, improves reasoning, and produces more reliable outputs.
+> 💡 **Key Insight:** **The first answer is rarely the best.** Reflection adds a meta-cognitive layer—the agent asks "Is this good? What could be better?" This catches errors, improves reasoning, and produces more reliable outputs.
 
 ---
 

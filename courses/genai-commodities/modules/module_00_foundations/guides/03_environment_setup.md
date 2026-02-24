@@ -4,9 +4,7 @@
 
 Setting up the development environment for applying generative AI to commodity markets requires API access to both LLM providers and commodity data sources, along with Python libraries for data processing and machine learning.
 
-## Key Insight
-
-Successful Gen AI commodities work requires three layers: (1) data access to market information, (2) LLM infrastructure for processing unstructured content, and (3) analytical tools for signal generation. Most failures stem from inadequate API setup or missing dependencies.
+> 💡 **Key Insight:** Successful Gen AI commodities work requires three layers: (1) data access to market information, (2) LLM infrastructure for processing unstructured content, and (3) analytical tools for signal generation. Most failures stem from inadequate API setup or missing dependencies.
 
 ## Required Components
 

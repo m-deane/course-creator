@@ -4,9 +4,7 @@
 
 The state-space form provides a unified framework for dynamic factor models, expressing them as two equations: a measurement equation linking observables to latent states, and a transition equation governing state evolution. This representation enables the Kalman filter for optimal factor estimation and likelihood computation.
 
-## Key Insight
-
-Every dynamic factor model can be written in state-space form, which separates what we observe from what we don't. The "state" contains all the information needed to predict the future—current and lagged factors. The state-space formulation is not just mathematical convenience; it's the gateway to optimal estimation via the Kalman filter, handling missing data, forecasting, and computing likelihoods for parameter estimation.
+> 💡 **Key Insight:** Every dynamic factor model can be written in state-space form, which separates what we observe from what we don't. The "state" contains all the information needed to predict the future—current and lagged factors. The state-space formulation is not just mathematical convenience; it's the gateway to optimal estimation via the Kalman filter, handling missing data, forecasting, and computing likelihoods for parameter estimation.
 
 ---
 

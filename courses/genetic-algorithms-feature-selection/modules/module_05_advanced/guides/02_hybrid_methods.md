@@ -4,9 +4,7 @@
 
 Hybrid methods combine genetic algorithms' global exploration with local search's exploitation, achieving faster convergence and better solutions than either method alone. Pure GAs explore broadly but converge slowly near optima. Pure local search (hill climbing, gradient descent) converges quickly but gets stuck in local optima. Memetic algorithms—GAs with local search refinement—inherit both strengths: global exploration from evolution, rapid local improvement from search.
 
-## Key Insight
-
-GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5× fewer evaluations to reach same quality, or better final solutions with same budget.
+> 💡 **Key Insight:** GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5× fewer evaluations to reach same quality, or better final solutions with same budget.
 
 ## Formal Definition
 

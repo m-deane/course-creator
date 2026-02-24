@@ -75,9 +75,7 @@ This module covers bandit applications for:
 - Alert threshold optimization (which alerts generate profitable trades)
 - Client communication channels (email vs SMS vs dashboard for different signal types)
 
-## Key Insight
-
-The **Creator Bandit Playbook** solves a problem traditional A/B testing can't: how to continuously adapt your content strategy as your audience evolves, trends shift, and new formats emerge. Instead of "test for 4 weeks then freeze," you get "publish, learn, tilt, prune, repeat."
+> 💡 **Key Insight:** The **Creator Bandit Playbook** solves a problem traditional A/B testing can't: how to continuously adapt your content strategy as your audience evolves, trends shift, and new formats emerge. Instead of "test for 4 weeks then freeze," you get "publish, learn, tilt, prune, repeat."
 
 For commodity traders building data products: bandits answer "which research format gets the most actionable use?" not "which gets the most opens?" Optimizing for the wrong metric trains you to produce increasingly irrelevant content.
 

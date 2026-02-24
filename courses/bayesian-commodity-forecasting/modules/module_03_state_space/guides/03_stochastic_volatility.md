@@ -4,9 +4,7 @@
 
 Stochastic volatility (SV) models treat volatility as a latent time-varying process rather than a deterministic function. This captures the clustering and persistence of volatility observed in commodity markets while providing probabilistic forecasts of future risk.
 
-## Key Insight
-
-**Volatility has memory.** High volatility periods cluster together (calm markets follow calm markets, chaotic markets follow chaotic markets). Stochastic volatility models this persistence through a latent AR(1) process on log-variance, enabling both backward inference (what was the volatility?) and forward prediction (what will it be?).
+> 💡 **Key Insight:** **Volatility has memory.** High volatility periods cluster together (calm markets follow calm markets, chaotic markets follow chaotic markets). Stochastic volatility models this persistence through a latent AR(1) process on log-variance, enabling both backward inference (what was the volatility?) and forward prediction (what will it be?).
 
 ## Formal Definition
 

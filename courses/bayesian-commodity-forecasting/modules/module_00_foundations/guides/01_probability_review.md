@@ -72,6 +72,8 @@ $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad x \in [0,1]
 
 ### Student-t Distribution
 
+Commodity prices routinely produce extreme moves that the Normal distribution treats as nearly impossible — crude oil can spike 10% overnight on a supply disruption, and agricultural markets shift sharply on a single USDA crop report. The Student-t's heavier tails assign meaningful probability to these regime changes, which makes it a far more honest likelihood for commodity return models than the Gaussian.
+
 $$X \sim t_\nu(\mu, \sigma^2)$$
 
 **Properties:**

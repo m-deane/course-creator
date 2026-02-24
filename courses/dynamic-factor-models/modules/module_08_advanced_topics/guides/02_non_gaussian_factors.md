@@ -4,9 +4,7 @@
 
 Financial returns exhibit fat tails, asymmetry, and occasional extreme outliers—phenomena inconsistent with Gaussian assumptions. Non-Gaussian factor models use heavy-tailed distributions (Student-t, mixture of Gaussians) and robust estimation to capture realistic data-generating processes, improving both parameter estimates and risk assessment.
 
-## Key Insight
-
-Gaussian factor models minimize squared residuals, giving extreme observations enormous influence. A single outlier can distort all loadings. Non-Gaussian models downweight outliers automatically through likelihood-based mechanisms, producing stable estimates. Student-t distributions with low degrees of freedom accommodate fat tails while maintaining tractable inference via EM algorithms.
+> 💡 **Key Insight:** Gaussian factor models minimize squared residuals, giving extreme observations enormous influence. A single outlier can distort all loadings. Non-Gaussian models downweight outliers automatically through likelihood-based mechanisms, producing stable estimates. Student-t distributions with low degrees of freedom accommodate fat tails while maintaining tractable inference via EM algorithms.
 
 ---
 

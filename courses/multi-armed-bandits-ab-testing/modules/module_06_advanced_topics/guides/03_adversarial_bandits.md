@@ -4,9 +4,7 @@
 
 Adversarial bandits assume rewards are chosen by an adversary who knows your algorithm and tries to minimize your payoff. Unlike stochastic bandits (rewards drawn from fixed distributions), adversarial settings require game-theoretic approaches that randomize arm selection to avoid exploitation.
 
-## Key Insight
-
-**Stochastic assumption:** Each arm has a fixed (or slowly drifting) reward distribution. Your job is to learn which is best.
+> 💡 **Key Insight:** **Stochastic assumption:** Each arm has a fixed (or slowly drifting) reward distribution. Your job is to learn which is best.
 
 **Adversarial reality:** Rewards can be chosen arbitrarily each round. If your algorithm is predictable, an adversary (or adaptive market) can exploit it.
 

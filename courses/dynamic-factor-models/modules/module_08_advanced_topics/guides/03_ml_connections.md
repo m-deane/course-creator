@@ -4,9 +4,7 @@
 
 Linear autoencoders with tied weights are mathematically equivalent to PCA—both seek low-dimensional representations minimizing reconstruction error. Deep neural networks generalize this to nonlinear factor structures, while variational autoencoders add probabilistic interpretations. Understanding these connections reveals when to use traditional econometric methods versus modern machine learning, and how to combine both.
 
-## Key Insight
-
-Factor models and neural networks solve the same fundamental problem: find low-dimensional structure in high-dimensional data. Traditional factor models assume linearity and provide statistical theory (standard errors, hypothesis tests). Deep learning relaxes linearity but sacrifices interpretability and theory. The frontier lies in hybrid approaches that preserve economic interpretability while leveraging neural network flexibility.
+> 💡 **Key Insight:** Factor models and neural networks solve the same fundamental problem: find low-dimensional structure in high-dimensional data. Traditional factor models assume linearity and provide statistical theory (standard errors, hypothesis tests). Deep learning relaxes linearity but sacrifices interpretability and theory. The frontier lies in hybrid approaches that preserve economic interpretability while leveraging neural network flexibility.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Vector stores are databases optimized for similarity search over embeddings. They enable RAG systems to find semantically relevant documents from millions of entries in milliseconds.
 
-## Key Insight
-
-**Vector search finds meaning, not keywords.** Traditional databases match exact terms. Vector stores find documents with similar meaning—"automobile" finds "car," "vehicle," and "transportation."
+> 💡 **Key Insight:** **Vector search finds meaning, not keywords.** Traditional databases match exact terms. Vector stores find documents with similar meaning—"automobile" finds "car," "vehicle," and "transportation."
 
 ---
 

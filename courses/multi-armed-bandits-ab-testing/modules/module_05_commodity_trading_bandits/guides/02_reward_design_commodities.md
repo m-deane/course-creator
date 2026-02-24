@@ -4,9 +4,7 @@
 
 Your reward function is the most important decision in bandit-based trading. It defines what "success" means and shapes every allocation decision. Choose poorly and you train a system that sabotages your real goals.
 
-## Key Insight
-
-**Your reward function IS your trading strategy.**
+> 💡 **Key Insight:** Your reward function IS your trading strategy.
 
 A bandit maximizes whatever you tell it to maximize. If you say "maximize weekly returns," it will trend-chase and blow up. If you say "maximize risk-adjusted returns with drawdown protection," it will build a stable allocator.
 

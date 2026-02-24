@@ -4,9 +4,7 @@
 
 Offline evaluation lets you test new bandit policies on historical data without deploying them to production, using techniques like inverse propensity scoring and doubly-robust estimation to correct for the bias in logged decisions.
 
-## Key Insight
-
-You can't just replay logged decisions with a new policy and compare rewards — the historical policy chose those arms for a reason (they looked good at the time). This creates selection bias. If your old policy never tried arm X, you have no data about its rewards. Offline evaluation methods mathematically correct for this bias using the probabilities of the original policy's choices.
+> 💡 **Key Insight:** You can't just replay logged decisions with a new policy and compare rewards — the historical policy chose those arms for a reason (they looked good at the time). This creates selection bias. If your old policy never tried arm X, you have no data about its rewards. Offline evaluation methods mathematically correct for this bias using the probabilities of the original policy's choices.
 
 ## Visual Explanation
 

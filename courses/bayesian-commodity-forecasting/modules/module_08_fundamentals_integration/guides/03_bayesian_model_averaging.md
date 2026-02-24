@@ -4,9 +4,7 @@
 
 Bayesian Model Averaging (BMA) combines predictions from multiple models weighted by their posterior model probabilities. Instead of selecting a single "best" model, BMA accounts for model uncertainty by averaging over all candidate models, yielding forecasts that are often more robust and better-calibrated than any individual model.
 
-## Key Insight
-
-Model selection (choosing one model) discards information and understates uncertainty. If Model A has 60% posterior probability and Model B has 40%, why use only Model A? BMA uses both, weighted by their probabilities, capturing both parameter uncertainty (within models) and model uncertainty (across models). For commodity forecasting with competing fundamental specifications, BMA prevents overfitting to any single structural assumption.
+> 💡 **Key Insight:** Model selection (choosing one model) discards information and understates uncertainty. If Model A has 60% posterior probability and Model B has 40%, why use only Model A? BMA uses both, weighted by their probabilities, capturing both parameter uncertainty (within models) and model uncertainty (across models). For commodity forecasting with competing fundamental specifications, BMA prevents overfitting to any single structural assumption.
 
 ## Formal Definition
 

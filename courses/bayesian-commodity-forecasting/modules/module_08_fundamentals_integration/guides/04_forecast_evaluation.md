@@ -4,9 +4,7 @@
 
 Forecast evaluation assesses prediction quality using both point forecast accuracy (MAE, RMSE) and probabilistic calibration (coverage, sharpness, proper scoring rules). Bayesian models provide full predictive distributions, enabling evaluation beyond simple point forecasts to measure whether uncertainty quantification is accurate.
 
-## Key Insight
-
-A forecast is not just a number—it's a probability distribution. Evaluating only the mean (MAE, RMSE) ignores uncertainty quantification. A good Bayesian forecast has: (1) accurate central tendency (low MAE), (2) well-calibrated uncertainty (95% intervals contain 95% of outcomes), (3) sharp distributions (not overly conservative). Proper scoring rules like CRPS evaluate the entire predictive distribution.
+> 💡 **Key Insight:** A forecast is not just a number—it's a probability distribution. Evaluating only the mean (MAE, RMSE) ignores uncertainty quantification. A good Bayesian forecast has: (1) accurate central tendency (low MAE), (2) well-calibrated uncertainty (95% intervals contain 95% of outcomes), (3) sharp distributions (not overly conservative). Proper scoring rules like CRPS evaluate the entire predictive distribution.
 
 ## Formal Definition
 

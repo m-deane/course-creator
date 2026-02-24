@@ -4,9 +4,7 @@
 
 Complex goals require breaking down into manageable subtasks. Goal decomposition transforms an ambitious objective like "build a data pipeline" into a sequence of concrete, achievable steps that an agent can execute systematically.
 
-## Key Insight
-
-**Complex tasks fail when attempted atomically.** Decomposition makes the implicit explicit—surfacing dependencies, enabling parallel execution, and creating natural checkpoints for validation and course correction.
+> 💡 **Key Insight:** **Complex tasks fail when attempted atomically.** Decomposition makes the implicit explicit—surfacing dependencies, enabling parallel execution, and creating natural checkpoints for validation and course correction.
 
 ---
 

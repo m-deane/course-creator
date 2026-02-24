@@ -4,9 +4,7 @@
 
 Mixed-frequency dynamic factor models in state-space form use the Kalman filter to optimally combine monthly and quarterly data, handling the "ragged edge" problem where high-frequency data extend beyond the latest low-frequency observation. This framework unifies factor extraction, nowcasting, and forecasting in a single coherent system.
 
-## Key Insight
-
-The key insight is treating low-frequency observations as "missing data" in months without quarterly releases. The Kalman filter automatically handles this by skipping the update step when observations are unavailable, allowing seamless integration of all available information at any point in time.
+> 💡 **Key Insight:** The key insight is treating low-frequency observations as "missing data" in months without quarterly releases. The Kalman filter automatically handles this by skipping the update step when observations are unavailable, allowing seamless integration of all available information at any point in time.
 
 ---
 

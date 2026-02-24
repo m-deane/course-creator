@@ -4,9 +4,7 @@
 
 Commodity markets trade physical goods—energy, metals, and agricultural products. Understanding their structure is essential for building meaningful forecasting models.
 
-## Key Insight
-
-Commodity prices are driven by **physical fundamentals** (supply, demand, storage) overlaid with **financial dynamics** (speculation, hedging, risk premia). Effective forecasting models must capture both.
+> 💡 **Key Insight:** Commodity prices are driven by **physical fundamentals** (supply, demand, storage) overlaid with **financial dynamics** (speculation, hedging, risk premia). Effective forecasting models must capture both.
 
 ---
 

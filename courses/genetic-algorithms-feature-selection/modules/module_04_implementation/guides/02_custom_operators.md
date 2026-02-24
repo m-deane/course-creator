@@ -4,9 +4,7 @@
 
 Custom genetic operators adapt the GA to problem-specific structure, improving convergence speed and solution quality. Standard operators (uniform crossover, bit-flip mutation, tournament selection) work broadly but ignore domain knowledge. Custom operators encode problem constraints, exploit feature relationships, and bias search toward promising regions while maintaining population diversity.
 
-## Key Insight
-
-Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5× faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
+> 💡 **Key Insight:** Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5× faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
 
 ## Formal Definition
 

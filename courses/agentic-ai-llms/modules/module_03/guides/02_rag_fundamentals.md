@@ -4,9 +4,7 @@
 
 RAG grounds LLM responses in external knowledge by retrieving relevant documents before generation. This reduces hallucinations, enables access to private data, and keeps responses current beyond training cutoffs.
 
-## Key Insight
-
-**RAG separates what the model knows from what it can access.** Instead of cramming all knowledge into model weights, RAG fetches relevant information at runtime—making knowledge updatable, verifiable, and scalable.
+> 💡 **Key Insight:** **RAG separates what the model knows from what it can access.** Instead of cramming all knowledge into model weights, RAG fetches relevant information at runtime—making knowledge updatable, verifiable, and scalable.
 
 ---
 

@@ -4,9 +4,7 @@
 
 Transformers are the neural network architecture behind all modern LLMs. Understanding how they process and generate text helps you write better prompts, debug agent behavior, and make informed design decisions.
 
-## Key Insight
-
-**Transformers process all tokens simultaneously through attention, but generate output one token at a time.** This means the model "sees" your entire prompt at once but must commit to each output token sequentially—once generated, tokens can't be revised.
+> 💡 **Key Insight:** Transformers process all tokens simultaneously through attention, but generate output one token at a time. This means the model "sees" your entire prompt at once but must commit to each output token sequentially—once generated, tokens can't be revised.
 
 ---
 

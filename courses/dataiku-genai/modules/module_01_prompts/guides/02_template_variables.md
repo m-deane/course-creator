@@ -4,9 +4,7 @@
 
 Template variables enable dynamic content injection into prompts using `{{variable_name}}` syntax. They transform single-purpose prompts into reusable templates that can process thousands of inputs without code modification.
 
-## Key Insight
-
-The power of production LLM applications comes from separating prompt logic (the template) from prompt data (the variables). This separation enables batch processing, A/B testing, and maintainability—turning prompts from one-off scripts into engineered software components.
+> 💡 **Key Insight:** The power of production LLM applications comes from separating prompt logic (the template) from prompt data (the variables). This separation enables batch processing, A/B testing, and maintainability—turning prompts from one-off scripts into engineered software components.
 
 ## Formal Definition
 

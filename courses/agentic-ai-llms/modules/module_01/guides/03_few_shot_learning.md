@@ -4,9 +4,7 @@
 
 Few-shot learning provides LLMs with examples of desired input-output pairs before the actual task. This technique dramatically improves consistency, accuracy, and format adherence—especially for tasks where verbal instructions are insufficient.
 
-## Key Insight
-
-**Show, don't just tell.** A single well-chosen example often conveys more than paragraphs of instructions. Examples demonstrate format, tone, edge case handling, and implicit rules that are hard to describe but easy to recognize.
+> 💡 **Key Insight:** **Show, don't just tell.** A single well-chosen example often conveys more than paragraphs of instructions. Examples demonstrate format, tone, edge case handling, and implicit rules that are hard to describe but easy to recognize.
 
 ---
 

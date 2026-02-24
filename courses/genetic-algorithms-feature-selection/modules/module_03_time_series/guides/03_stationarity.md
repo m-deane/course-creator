@@ -4,9 +4,7 @@
 
 Stationarity means that a time series' statistical properties (mean, variance, autocorrelation) do not change over time. For genetic algorithm feature selection, non-stationary data can cause selected features to perform well during training but fail on future data when the underlying relationships shift.
 
-## Key Insight
-
-Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
+> 💡 **Key Insight:** Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
 
 ## Formal Definition
 

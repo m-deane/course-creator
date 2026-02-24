@@ -4,9 +4,7 @@
 
 Production monitoring tracks LLM performance in real-time to detect when model behavior degrades, prompts become stale, or market conditions invalidate historical calibrations. Drift detection identifies when the statistical properties of inputs or outputs change, triggering model retraining, prompt updates, or manual intervention before financial losses accumulate.
 
-## Key Insight
-
-LLMs fail silently—they always return plausible-sounding text even when wrong. Unlike traditional ML where accuracy metrics drop visibly, LLM degradation manifests as subtle shifts: slightly lower conviction, different reasoning patterns, or increased uncertainty. Production monitoring must measure semantic drift (meaning changes), performance drift (accuracy decline), and input drift (market regime changes) across multiple timescales to catch failures early.
+> 💡 **Key Insight:** LLMs fail silently—they always return plausible-sounding text even when wrong. Unlike traditional ML where accuracy metrics drop visibly, LLM degradation manifests as subtle shifts: slightly lower conviction, different reasoning patterns, or increased uncertainty. Production monitoring must measure semantic drift (meaning changes), performance drift (accuracy decline), and input drift (market regime changes) across multiple timescales to catch failures early.
 
 ## Formal Definition
 

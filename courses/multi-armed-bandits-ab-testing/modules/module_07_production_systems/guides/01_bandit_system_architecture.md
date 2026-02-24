@@ -4,9 +4,7 @@
 
 A production bandit system separates policy logic (how to select arms), data management (tracking rewards and contexts), and business logic (guardrails and overrides) into distinct components that can be developed, tested, and monitored independently.
 
-## Key Insight
-
-The biggest mistake in production bandit systems is coupling the machine learning policy too tightly with business logic. When your Thompson Sampling algorithm is tangled with position limits, stop-loss checks, and data validation, you can't update one without breaking the other. Clean architecture with clear interfaces enables safe iteration and reliable monitoring.
+> 💡 **Key Insight:** The biggest mistake in production bandit systems is coupling the machine learning policy too tightly with business logic. When your Thompson Sampling algorithm is tangled with position limits, stop-loss checks, and data validation, you can't update one without breaking the other. Clean architecture with clear interfaces enables safe iteration and reliable monitoring.
 
 ## Visual Explanation
 

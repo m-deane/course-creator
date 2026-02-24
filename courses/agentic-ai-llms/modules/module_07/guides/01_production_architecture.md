@@ -4,9 +4,7 @@
 
 Production agents face challenges prototypes never see: high load, network failures, malicious inputs, and cost constraints. This guide covers architectural patterns that make agents reliable, observable, and maintainable at scale.
 
-## Key Insight
-
-**Production readiness is about failure handling.** Assume everything will fail—APIs timeout, models hallucinate, users send garbage. Build systems that fail gracefully and recover automatically.
+> 💡 **Key Insight:** **Production readiness is about failure handling.** Assume everything will fail—APIs timeout, models hallucinate, users send garbage. Build systems that fail gracefully and recover automatically.
 
 ---
 
@@ -49,6 +47,8 @@ Production agents face challenges prototypes never see: high load, network failu
 ```
 
 ### Implementation
+
+`ProductionAgent` wraps the core agent loop with input validation, caching, structured error handling, and metrics collection—solving the gap between a working prototype and a system that can handle real load, malformed inputs, and partial failures without crashing. It uses `AgentConfig` to centralise all tunable parameters so deployment settings never live inside business logic.
 
 ```python
 from dataclasses import dataclass

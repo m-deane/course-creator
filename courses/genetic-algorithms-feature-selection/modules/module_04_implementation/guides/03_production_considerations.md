@@ -4,9 +4,7 @@
 
 Production genetic algorithms require careful attention to computational efficiency, reproducibility, and system integration. Naive GA implementations are prohibitively slow for high-dimensional feature spaces (hours for 1000 features), non-reproducible due to random seeds, and difficult to integrate with ML pipelines. Production-ready GAs use parallel fitness evaluation, efficient caching, deterministic execution, and standard ML interfaces.
 
-## Key Insight
-
-The fitness function is the bottleneck—evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that's 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100× speedup while maintaining determinism through careful random state management.
+> 💡 **Key Insight:** The fitness function is the bottleneck—evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that's 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100× speedup while maintaining determinism through careful random state management.
 
 ## Formal Definition
 

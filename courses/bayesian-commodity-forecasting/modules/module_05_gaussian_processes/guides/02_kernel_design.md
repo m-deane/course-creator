@@ -4,9 +4,7 @@
 
 The kernel function defines what "similarity" means in Gaussian Process models. Commodity time series exhibit trends, seasonality, cycles, and discontinuities—each requiring specific kernel choices. This guide provides a practical framework for designing and combining kernels for commodity forecasting.
 
-## Key Insight
-
-**Kernels encode assumptions about function smoothness and structure.** A smooth exponential kernel assumes gradual price changes (fine for stable markets), while a Matérn-1/2 kernel allows sudden jumps (better for supply shocks). Choosing the wrong kernel is like wearing the wrong glasses—everything is blurry.
+> 💡 **Key Insight:** **Kernels encode assumptions about function smoothness and structure.** A smooth exponential kernel assumes gradual price changes (fine for stable markets), while a Matérn-1/2 kernel allows sudden jumps (better for supply shocks). Choosing the wrong kernel is like wearing the wrong glasses—everything is blurry.
 
 ---
 

@@ -4,9 +4,7 @@
 
 ReAct (Reasoning and Acting) interleaves thinking with action-taking. Instead of generating a complete plan upfront, ReAct agents alternate between reasoning about what to do next and executing actions, adapting based on observations.
 
-## Key Insight
-
-**Think before you act, observe after you act.** ReAct makes the agent's decision process explicit through "Thought" traces, enabling debugging, transparency, and better reasoning through intermediate steps.
+> 💡 **Key Insight:** **Think before you act, observe after you act.** ReAct makes the agent's decision process explicit through "Thought" traces, enabling debugging, transparency, and better reasoning through intermediate steps.
 
 ---
 

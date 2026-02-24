@@ -4,9 +4,7 @@
 
 Optimization for AI agents means reducing cost and latency while maintaining output quality. Cost optimization minimizes token usage and API calls; latency optimization reduces response time through caching, parallelization, and model selection. Both require measurement-driven trade-offs between speed, cost, and quality.
 
-## Key Insight
-
-Agent systems are fundamentally expensive and slow—LLM calls cost money, tools take time, and complex reasoning requires multiple steps. The goal isn't to make them free or instant, but to eliminate waste: unnecessary tokens, redundant calls, sequential operations that could be parallel, and expensive models for simple tasks.
+> 💡 **Key Insight:** Agent systems are fundamentally expensive and slow—LLM calls cost money, tools take time, and complex reasoning requires multiple steps. The goal isn't to make them free or instant, but to eliminate waste: unnecessary tokens, redundant calls, sequential operations that could be parallel, and expensive models for simple tasks.
 
 **The Optimization Hierarchy:**
 1. **Eliminate:** Remove unnecessary work entirely (caching, deduplication)

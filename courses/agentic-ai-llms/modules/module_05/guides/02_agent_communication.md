@@ -4,9 +4,7 @@
 
 Multi-agent systems require structured communication. This guide covers message formats, communication protocols, and patterns for agents to share information, delegate tasks, and coordinate actions.
 
-## Key Insight
-
-**Clear protocols prevent chaos.** Without structured communication, agents talk past each other, duplicate work, or create deadlocks. Define message formats and interaction patterns explicitly.
+> 💡 **Key Insight:** **Clear protocols prevent chaos.** Without structured communication, agents talk past each other, duplicate work, or create deadlocks. Define message formats and interaction patterns explicitly.
 
 ---
 

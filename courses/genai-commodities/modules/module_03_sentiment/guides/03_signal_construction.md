@@ -4,9 +4,7 @@
 
 Signal construction transforms sentiment analysis into actionable trading recommendations by combining sentiment strength, confidence levels, historical validation, and risk management rules to produce position sizing, entry/exit timing, and stop-loss levels for commodity trades.
 
-## Key Insight
-
-Sentiment is not a signal—it's a signal ingredient. "Bullish sentiment" alone doesn't tell you whether to buy now, how much to buy, or when to exit. Effective signal construction requires combining sentiment with price action confirmation, position sizing based on confidence, and historical backtesting to validate that sentiment actually predicts price moves.
+> 💡 **Key Insight:** Sentiment is not a signal—it's a signal ingredient. "Bullish sentiment" alone doesn't tell you whether to buy now, how much to buy, or when to exit. Effective signal construction requires combining sentiment with price action confirmation, position sizing based on confidence, and historical backtesting to validate that sentiment actually predicts price moves.
 
 ## Formal Definition
 

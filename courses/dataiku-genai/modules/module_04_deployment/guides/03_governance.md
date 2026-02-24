@@ -71,6 +71,8 @@ Think of deployment governance like air traffic control for Gen AI applications.
 
 ### Deployment Configuration
 
+The `DeploymentConfig` dataclass centralizes all environment-specific settings — token limits, monitoring flags, cost budgets — so the same codebase can run safely in dev, staging, and production without hardcoded values scattered across the application.
+
 ```python
 # deployment_config.py
 from typing import Dict, Any

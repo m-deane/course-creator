@@ -51,6 +51,8 @@ Moving from prototype to production requires addressing reliability, cost, laten
 
 ### Retry with Exponential Backoff
 
+LLM APIs fail transiently — rate limits, timeouts, and overloaded endpoints are routine in production. The retry decorator below handles these failures automatically: it waits longer after each attempt (exponential backoff) and adds randomness (jitter) to prevent simultaneous retries from a fleet of workers all hitting the API at once.
+
 ```python
 import time
 import random

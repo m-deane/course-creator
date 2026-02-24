@@ -81,6 +81,15 @@ $$X \sim t_\nu(\mu, \sigma^2)$$
 
 **In commodities:** Better fits for returns with fat tails; robust inference.
 
+### Quick Reference: Distributions in Commodity Forecasting
+
+| Distribution | Support | Typical Use in Commodities | Conjugate For |
+|---|---|---|---|
+| Normal $\mathcal{N}(\mu, \sigma^2)$ | $(-\infty, \infty)$ | Log returns, forecast errors | Normal likelihood |
+| Gamma $\text{Gamma}(\alpha, \beta)$ | $(0, \infty)$ | Volatility, rates, durations | Poisson rate, Normal precision |
+| Beta $\text{Beta}(\alpha, \beta)$ | $[0, 1]$ | Proportions, regime weights | Binomial probability |
+| Student-t $t_\nu(\mu, \sigma^2)$ | $(-\infty, \infty)$ | Fat-tailed returns, robust regression | — |
+
 ---
 
 ## 3. Joint, Marginal, and Conditional Probability

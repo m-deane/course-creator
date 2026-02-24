@@ -59,6 +59,15 @@ where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_
 
 Score-driven models are adaptive: parameters update based on how surprising recent data is.
 
+### Choosing the Right Approach
+
+| Approach | Parameters Evolve... | Best When | Computational Cost |
+|---|---|---|---|
+| Discrete Regime Switching | In sudden jumps between $K$ states | Clear structural breaks (GFC, policy change) | Medium (EM or MCMC) |
+| Random Walk | Smoothly, permanently | Slow structural drift, no mean reversion | Low (Kalman filter) |
+| Stationary AR(1) | Smoothly, around a long-run mean | Cyclical parameter variation | Low (Kalman filter) |
+| Score-Driven | Based on prediction surprise | Unknown dynamics; robust to misspecification | Medium |
+
 ### Code Implementation
 
 ```python

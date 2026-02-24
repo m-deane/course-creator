@@ -1,5 +1,13 @@
 # Dynamic Panel Models
 
+## In Brief
+
+Dynamic panels add lagged dependent variables to the standard panel model, capturing state dependence — the idea that today's outcome depends on yesterday's. This creates a critical problem: fixed effects estimation produces severely biased coefficients (Nickell bias) that grows worse as the time dimension shrinks. The solution is instrumental variable estimation via the Arellano-Bond or Blundell-Bond GMM estimators.
+
+## Key Insight
+
+> 💡 **Never apply standard fixed effects to a dynamic panel.** The bias from Nickell (1981) is not a rounding error — it can be as large as the true coefficient itself when $T$ is small. Use GMM estimators designed for this setting.
+
 ## The Dynamic Panel Framework
 
 Dynamic panels include lagged dependent variables:
@@ -35,7 +43,7 @@ $$\text{plim}(\hat{\rho}_{FE} - \rho) = -\frac{1 + \rho}{T - 1} + O(T^{-2})$$
 For $\rho = 0.5$ and $T = 5$:
 $$\text{Bias} \approx -\frac{1.5}{4} = -0.375$$
 
-This is severe negative bias!
+> ⚠️ **Warning:** This is severe negative bias — applying FE to a dynamic panel with $T=5$ can bias $\hat{\rho}$ by as much as -0.375, nearly as large as the true coefficient itself. Never apply standard FE to a dynamic panel without checking for Nickell bias first.
 
 ```python
 import numpy as np

@@ -65,6 +65,8 @@ For time series with $n$ observations and $p$ features:
 **Overfitting Risk:**
 $$\text{Risk} \propto \frac{p}{n}$$
 
+> ⚠️ **Warning:** When $p \approx n$ or $p > n$, most models will overfit — training error decreases while test error explodes. A ratio of $p/n > 0.2$ is a serious red flag requiring aggressive feature selection.
+
 When $p \approx n$ or $p > n$, most models will overfit:
 - Training error decreases
 - Test error increases

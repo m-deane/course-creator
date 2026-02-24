@@ -1,5 +1,13 @@
 # LLM Fundamentals for Commodities
 
+## In Brief
+
+Large Language Models are neural networks trained to predict text that can be repurposed as general-purpose document understanding engines. For commodity trading, this means a single model can read EIA inventory reports, parse earnings call transcripts, and extract price signals from news — tasks that previously required separate, hand-built parsers for each document type.
+
+## Key Insight
+
+> 💡 **LLMs are document understanding engines, not chatbots.** In commodity markets, the value is in extracting structured signals from unstructured text at scale — not in conversation. Every EIA report, USDA crop condition update, and analyst note is a structured signal waiting to be unlocked.
+
 ## Introduction
 
 Large Language Models (LLMs) transform how we process unstructured commodity market data. This guide covers the fundamentals needed to apply LLMs effectively in commodity trading and analysis.

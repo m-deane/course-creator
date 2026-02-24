@@ -1,6 +1,6 @@
 # Panel Data Concepts and Structure
 
-## What is Panel Data?
+## Why Panel Data Lets You See What Cross-Sections Cannot
 
 Panel data (also called longitudinal or cross-sectional time series data) combines cross-sectional and time series dimensions:
 

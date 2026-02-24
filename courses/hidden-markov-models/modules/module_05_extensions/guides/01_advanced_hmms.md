@@ -1,5 +1,13 @@
 # Advanced HMM Variants
 
+## In Brief
+
+Standard HMMs assume all states transition with equal probability regardless of how long the model has been in a state. Advanced variants relax this assumption: Sticky HMMs stay in the current state longer, Input-Output HMMs condition transitions on external signals, and Hierarchical HMMs nest multiple levels of state structure. Each variant exists to model a real failure mode of the basic HMM.
+
+## Key Insight
+
+> 💡 **Every advanced HMM variant solves a specific failure mode of the standard model.** Before reaching for a more complex variant, identify which assumption the standard HMM violates in your data — then choose the extension that fixes exactly that assumption.
+
 ## Sticky HMM
 
 Standard HMMs may switch states too frequently. Sticky HMMs increase self-transition probability:

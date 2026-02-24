@@ -43,7 +43,8 @@ Where:
 - Benefit of holding physical commodity vs. futures
 - High when supply is tight (need physical now)
 - Low when supply is ample (no urgency)
-- **This is the key variable for forecasting**
+
+> 💡 **Key variable:** Convenience yield $y$ is the single most important input for fundamentals-based forecasting. When you cannot observe it directly, it must be inferred from the spot-futures spread — making it a latent variable that Bayesian methods are ideally suited to estimate.
 
 ---
 

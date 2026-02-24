@@ -8,7 +8,7 @@ A Markov chain is a stochastic process where future states depend only on the cu
 
 $$P(X_{t+1} | X_t, X_{t-1}, ..., X_1) = P(X_{t+1} | X_t)$$
 
-"The future is independent of the past, given the present."
+> 💡 **Key Insight:** "The future is independent of the past, given the present." This memorylessness property is what makes Markov chains tractable — you only need to track the current state, not the entire history.
 
 ## Formal Definition
 
@@ -31,7 +31,7 @@ Constraints:
 - $a_{ij} \geq 0$ (non-negative)
 - $\sum_{j=1}^K a_{ij} = 1$ (rows sum to 1)
 
-## Implementation
+## How to Build a Markov Chain in Python
 
 ### Basic Markov Chain Class
 

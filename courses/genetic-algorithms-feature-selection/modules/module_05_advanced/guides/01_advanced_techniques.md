@@ -4,6 +4,8 @@
 
 ### NSGA-II for Feature Selection
 
+NSGA-II (Non-dominated Sorting Genetic Algorithm II) solves feature selection as a two-objective problem: minimize prediction error while simultaneously minimizing the number of features. The Pareto front it produces gives you a set of non-dominated trade-off solutions, letting you choose how much accuracy to trade for simplicity.
+
 ```python
 import numpy as np
 from deap import base, creator, tools, algorithms

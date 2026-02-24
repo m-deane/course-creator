@@ -6,7 +6,7 @@ A/B testing allocates traffic evenly between options until statistical significa
 
 ## Key Insight
 
-**A/B testing is a snapshot; bandits are a steering wheel.** Traditional A/B tests prioritize certainty over efficiency — they minimize false positives but maximize opportunity cost. In dynamic environments like commodity markets, you need to learn AND earn simultaneously, not wait for perfect statistical confidence before acting.
+> 💡 **A/B testing is a snapshot; bandits are a steering wheel.** Traditional A/B tests prioritize certainty over efficiency — they minimize false positives but maximize opportunity cost. In dynamic environments like commodity markets, you need to learn AND earn simultaneously, not wait for perfect statistical confidence before acting.
 
 ## Visual Explanation
 

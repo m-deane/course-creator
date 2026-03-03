@@ -140,6 +140,63 @@ $$\hat{\theta}_{DML2} = \frac{\sum_i \tilde{D}_i\tilde{Y}_i}{\sum_i \tilde{D}_i^
 
 ---
 
+## Commodity Context: Oil Spread Estimation
+
+**Scenario:** Estimate the effect of OPEC announcements on WTI calendar spreads with 50 market controls.
+
+Without cross-fitting:
+- Random forest memorises spread patterns in the training data
+- Treatment residuals are artificially small → $\hat{\theta}$ inflated by 20-30%
+
+With cross-fitting:
+- All spread predictions are out-of-sample
+- $\hat{\theta}$ is centred on the true effect
+- CI achieves nominal 95% coverage
+
+> In commodity applications with flexible ML models, cross-fitting is mandatory.
+
+<!-- Speaker notes: This slide grounds the cross-fitting discussion in a concrete commodity example. When you estimate the effect of OPEC announcements on calendar spreads using random forests with 200 trees, the in-sample predictions are almost perfect — the forest has memorised the training data. The treatment residuals become near-zero, and the treatment effect estimate blows up. Cross-fitting prevents this by ensuring each prediction is from a model that never saw that observation. The bias reduction is dramatic: from 20-30% inflation to approximately zero. -->
+
+---
+
+## Repeated Cross-Fitting for Stability
+
+Results can vary with the random fold assignment. **Repeated cross-fitting** averages over $R$ random fold splits:
+
+$$\hat{\theta}_{RCF} = \frac{1}{R}\sum_{r=1}^R \hat{\theta}^{(r)}$$
+
+| Approach | Variability | Cost |
+|----------|:-----------:|:----:|
+| Single cross-fitting | Moderate | 1x |
+| Repeated ($R=5$) | Low | 5x |
+| Repeated ($R=10$) | Very low | 10x |
+
+> Use $R=5$ to 10 in production. Report median and IQR for robustness.
+
+<!-- Speaker notes: A single cross-fitting run depends on the random fold assignment. Different random seeds produce slightly different estimates. Repeated cross-fitting runs the full DML algorithm R times with different fold assignments and averages the results. This is computationally expensive but reduces the variability from fold assignment to negligible levels. In production, R equals 5 to 10 is a good default. Report the median estimate and interquartile range rather than just a single run. -->
+
+---
+
+## Complete DML Algorithm Summary
+
+```mermaid
+flowchart TD
+    Data["Data: Y, D, X"] --> Split["Split into K folds"]
+    Split --> Loop["For each fold k:"]
+    Loop --> Train["Train ML on folds ≠ k"]
+    Train --> Predict["Predict on fold k"]
+    Predict --> Resid["Compute residuals"]
+    Resid --> Pool["Pool all residuals"]
+    Pool --> Theta["θ̂ = Σ(D̃·Ỹ) / Σ(D̃²)"]
+    Theta --> SE["Robust SE"]
+    SE --> CI["95% CI"]
+    style CI fill:#6f6,color:#fff
+```
+
+<!-- Speaker notes: This diagram summarises the complete DML algorithm that we have built over Modules 02-04. Start with data, split into K folds, for each fold train the ML models on the other folds and predict on the held-out fold, compute residuals, pool all residuals, and compute the treatment effect. The standard error uses the heteroskedasticity-robust formula. This is exactly what the doubleml library implements internally, which we will use starting in Module 05. -->
+
+---
+
 ## Connections
 
 <div class="columns">

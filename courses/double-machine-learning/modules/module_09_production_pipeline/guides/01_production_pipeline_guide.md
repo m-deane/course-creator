@@ -22,6 +22,8 @@ Data → Validate → Select Models → Estimate → Sensitivity → Report
 
 ## How to Build a Production Pipeline Class
 
+The pipeline below is designed for commodity market causal analysis — estimating effects like carbon price changes on generation mix, sanctions on freight rates, or inventory surprises on futures spreads. It handles the full workflow from raw data to stakeholder-ready reports.
+
 ```python
 import numpy as np
 import pandas as pd

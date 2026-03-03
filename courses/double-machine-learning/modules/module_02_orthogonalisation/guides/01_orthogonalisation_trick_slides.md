@@ -179,6 +179,22 @@ because $V = D - m_0(X)$ is orthogonal to functions of $X$.
 
 ---
 
+## When Does DML Outperform OLS Most?
+
+| Scenario | OLS | DML | Advantage |
+|----------|-----|-----|-----------|
+| Linear confounding, $p < 20$ | Good | Good | None |
+| Nonlinear confounding | Biased | Unbiased | **DML wins** |
+| $p/n > 0.2$ | Noisy | Stable | **DML wins** |
+| Interactions in controls | Misses them | Captures them | **DML wins** |
+| Commodity markets (typical) | Often biased | Robust | **DML wins** |
+
+> Use DML whenever you suspect nonlinear confounding or have many controls.
+
+<!-- Speaker notes: This slide helps practitioners decide when to use DML versus standard OLS. In commodity markets, most relationships are nonlinear: inventory effects are asymmetric, demand and supply interact, and seasonal patterns are complex. DML handles all of these naturally through the ML first stages. If you have a simple low-dimensional linear setup, OLS is fine. But in practice, commodity markets almost always have enough complexity to benefit from DML. -->
+
+---
+
 ## Connections
 
 <div class="columns">

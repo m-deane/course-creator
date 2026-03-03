@@ -154,6 +154,49 @@ print(f"95% CI:  {dml_plr.confint().values[0]}")
 
 ---
 
+## Diagnostics: Checking Nuisance Model Fit
+
+After fitting, examine nuisance model quality:
+
+```python
+# Check cross-validated predictions
+from sklearn.metrics import r2_score
+import numpy as np
+
+# Access nuisance predictions from fitted model
+r2_y = r2_score(Y, dml_plr.models['ml_l']['carbon_price_change'][0][0].predict(X))
+r2_d = r2_score(D, dml_plr.models['ml_m']['carbon_price_change'][0][0].predict(X))
+
+print(f"R²(Y|X): {r2_y:.3f}")
+print(f"R²(D|X): {r2_d:.3f}")
+```
+
+> Low R-squared does not bias $\hat{\theta}$ (orthogonality protects you), but it **widens** the confidence interval. Aim for the highest prediction quality feasible.
+
+<!-- Speaker notes: After fitting a PLR model, check how well the nuisance models predict. The R-squared values tell you how much variation the ML models capture. Low R-squared means the residuals are large, which increases the standard error of the treatment effect. Orthogonality ensures the estimate is still approximately unbiased, but precision suffers. If R-squared for Y is below 0.1, consider whether important predictors are missing from X. If R-squared for D is below 0.05, the treatment may be essentially random given X, which is actually good for identification. -->
+
+---
+
+## Hyperparameter Tuning for Nuisance Models
+
+Key hyperparameters by model type:
+
+| Model | Parameter | Recommended Range |
+|-------|-----------|:-----------------:|
+| Random Forest | `n_estimators` | 100-500 |
+| RF | `max_depth` | 5-15 |
+| RF | `min_samples_leaf` | 5-20 |
+| GBM | `n_estimators` | 100-500 |
+| GBM | `learning_rate` | 0.01-0.1 |
+| GBM | `max_depth` | 3-8 |
+| Lasso | `cv` | 5 (automatic) |
+
+> Tune for prediction accuracy (R-squared), not for treatment effect. Better prediction = smaller residual noise = tighter CI.
+
+<!-- Speaker notes: Hyperparameter tuning for DML nuisance models follows standard ML practices. The goal is to maximise out-of-sample prediction accuracy for both Y and D. Use cross-validated scores to select hyperparameters. A common mistake is to under-tune the models, which leads to noisy residuals and wide confidence intervals. The treatment effect itself is protected by orthogonality, but poor prediction quality inflates the standard error. In practice, gradient boosting with 200 trees, max_depth 5, and learning rate 0.1 is a robust starting point. -->
+
+---
+
 ## Connections
 
 <div class="columns">

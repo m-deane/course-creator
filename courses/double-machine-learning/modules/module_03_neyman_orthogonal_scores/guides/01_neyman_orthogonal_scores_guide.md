@@ -40,6 +40,8 @@ This derivative being zero is the formal statement that small perturbations of $
 
 ## How to See Orthogonality in Action
 
+Consider estimating the effect of OPEC production announcements on crude oil calendar spreads. Even with imperfect ML models for the nuisance functions (predicting spreads and production from market controls), DML's orthogonal score keeps the treatment effect estimate approximately unbiased.
+
 ```python
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
@@ -50,6 +52,8 @@ n = 5000
 p = 20
 true_theta = 1.0
 
+# Simulate: OPEC production impact on calendar spreads
+# X represents macro indicators, inventories, shipping rates, etc.
 X = np.random.randn(n, p)
 D = 0.5 * X[:, 0] + 0.3 * X[:, 1] + np.random.randn(n) * 0.5
 Y = true_theta * D + X[:, 0] + 0.5 * X[:, 2] + np.random.randn(n)

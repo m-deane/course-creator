@@ -124,6 +124,55 @@ Good overlap is essential for IRM:
 
 ---
 
+## When to Use IRM vs PLR
+
+| Criterion | PLR | IRM |
+|-----------|-----|-----|
+| Treatment type | Continuous | **Binary** |
+| Effect heterogeneity | Constant $\theta$ | Varies with $X$ |
+| Nuisance: outcome | $E[Y|X]$ (regressor) | $E[Y|D,X]$ (regressor) |
+| Nuisance: treatment | $E[D|X]$ (regressor) | $P(D=1|X)$ (**classifier**) |
+| Estimands | ATE only | **ATE + ATTE** |
+| Overlap required | No | **Yes** |
+
+<!-- Speaker notes: This decision table helps practitioners choose between PLR and IRM. PLR is simpler and works for continuous treatments. IRM is needed when treatment is binary and you want to estimate both ATE and ATTE. The key practical difference is that IRM requires a classifier for the propensity score and needs reasonable overlap between treated and untreated groups. If overlap is poor, IRM can be unstable. -->
+
+---
+
+## ATE vs ATTE: Which to Report?
+
+**ATE** (Average Treatment Effect): average over **all** units
+$$\theta_{ATE} = E[Y(1) - Y(0)]$$
+
+**ATTE** (Average Treatment Effect on Treated): average over **treated** units
+$$\theta_{ATTE} = E[Y(1) - Y(0) | D=1]$$
+
+> **Commodity example:** Sanctions raise freight rates by $1.50/ton (ATE) across all routes, but by $2.20/ton (ATTE) on actually sanctioned routes — because sanctioned routes are inherently more vulnerable.
+
+Report ATTE for policy evaluation, ATE for counterfactual analysis.
+
+<!-- Speaker notes: The choice between ATE and ATTE depends on the question. If a regulator asks what would happen if we sanctioned all routes, ATE is the answer. If they ask what was the impact on routes we actually sanctioned, ATTE is the answer. In commodity markets, ATTE is often more relevant because the treated units are self-selected — OPEC cuts production when conditions warrant it, sanctions target specific routes for strategic reasons. The difference between ATE and ATTE reveals selection effects. -->
+
+---
+
+## Propensity Score Trimming in Practice
+
+Extreme propensity scores ($m(X)$ near 0 or 1) create numerical instability:
+
+$$\text{AIPW weight} = \frac{D}{m(X)} \quad \text{explodes when } m(X) \to 0$$
+
+| Trimming threshold | Effect | When to use |
+|:-----------------:|--------|-------------|
+| 0.01 | Minimal trimming | Good overlap |
+| 0.05 | Standard | Most applications |
+| 0.10 | Aggressive | Poor overlap |
+
+> Check how many observations are trimmed. If > 10%, overlap may be insufficient for IRM.
+
+<!-- Speaker notes: Propensity score trimming drops observations where the propensity score is very close to 0 or 1. These observations receive extreme inverse probability weights that destabilise the estimator. The standard threshold of 0.05 means observations with propensity score below 0.05 or above 0.95 are excluded. If trimming removes more than 10% of observations, the overlap condition is likely violated and you should reconsider whether IRM is appropriate. Consider PLR instead, or use bounds analysis. -->
+
+---
+
 ## Connections
 
 <div class="columns">

@@ -133,6 +133,46 @@ Include: estimate, CI, p-value, nuisance model, sensitivity flag, data dimension
 
 ---
 
+## Common Production Failures
+
+| Failure Mode | Cause | Prevention |
+|-------------|-------|------------|
+| **Silent bias** | Missing confounder | Domain expert review |
+| **Stale model** | Market regime change | Periodic re-estimation |
+| **Data drift** | Feature distributions shift | Validation checks on new data |
+| **Numerical instability** | Extreme propensity scores | Trimming, overlap checks |
+| **Overfitting nuisance** | Too few folds | Use $K \geq 5$ |
+| **Non-reproducible** | Missing seed/versions | Log everything |
+
+> A production pipeline must anticipate failure modes, not just handle the happy path.
+
+<!-- Speaker notes: This table catalogues the most common ways a production DML pipeline can fail. Silent bias from missing confounders is the most dangerous because everything looks correct but the estimate is wrong. Stale models fail when market regimes shift, which happens regularly in commodity markets. Data drift means the feature distributions change over time, which can degrade ML prediction quality. Each failure mode has a specific prevention strategy that should be built into the pipeline. -->
+
+---
+
+## Commodity Production Example
+
+Complete workflow for a trading desk:
+
+```
+Daily:   Validate incoming data (missing, outliers)
+Weekly:  Re-estimate treatment effects with latest data
+Monthly: Full sensitivity analysis + model reselection
+         Compare to previous month's estimates
+         Flag significant changes for review
+
+Report:  "Carbon price increase of 1 EUR/tonne reduces
+          coal generation share by 0.50pp [0.42, 0.58]
+          Robust across Lasso/RF/GBM specifications.
+          Based on n=2,400 weekly observations."
+```
+
+> Automate the pipeline so that estimation runs without manual intervention.
+
+<!-- Speaker notes: This slide shows what a production DML pipeline looks like in a real commodity trading operation. The pipeline runs on a schedule: daily validation, weekly re-estimation, and monthly deep analysis. The report format is designed for stakeholders who do not know DML internals — they see the estimate, confidence interval, and robustness flag. The key principle is automation: the pipeline should run without manual intervention and flag anomalies for human review. This is achievable with the pipeline class from the guide and a scheduler like cron or Airflow. -->
+
+---
+
 ## Connections
 
 <div class="columns">

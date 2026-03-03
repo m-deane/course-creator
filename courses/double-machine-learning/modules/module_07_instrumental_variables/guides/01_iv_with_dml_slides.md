@@ -111,6 +111,70 @@ print(pliv.summary)
 
 ---
 
+## Commodity Instruments: Examples
+
+| Treatment | Instrument | Rationale |
+|-----------|-----------|-----------|
+| Shipping volume | **Weather anomaly** | Affects shipping, not prices directly |
+| Crop production | **Rainfall deviation** | Exogenous to demand |
+| Oil supply | **Pipeline outage** | Technical, not market-driven |
+| Electricity demand | **Temperature shock** | Weather is exogenous |
+| Trade volume | **Exchange rate shock** | Monetary policy instrument |
+
+> Finding valid instruments is the hardest part of IV analysis. The exclusion restriction is untestable.
+
+<!-- Speaker notes: This table provides commodity-specific examples of instrumental variables. The key challenge is finding instruments that satisfy both relevance (affects treatment) and exclusion (no direct effect on outcome). Weather is the most common instrument in commodity research because it is plausibly exogenous to market sentiment. Pipeline outages work similarly for oil supply studies. The exclusion restriction — that the instrument only affects the outcome through the treatment — cannot be tested statistically. It must be justified by domain knowledge. -->
+
+---
+
+## PLIV vs Classical 2SLS
+
+<div class="columns">
+<div>
+
+### Classical 2SLS
+- Linear first stage: $D = \alpha Z + X\gamma + V$
+- Linear reduced form
+- Works with $p \ll n$
+- F-statistic for weakness
+
+</div>
+<div>
+
+### PLIV
+- **ML first stage:** $D = r(X, Z) + V$
+- Nonlinear relationships captured
+- Works with **$p \gg n$**
+- Partial $R^2$ for weakness
+
+</div>
+</div>
+
+> PLIV is strictly more flexible. Use it when the instrument-treatment relationship may be nonlinear or controls are high-dimensional.
+
+<!-- Speaker notes: The comparison between 2SLS and PLIV mirrors the comparison between OLS and DML. 2SLS uses linear first stages, which miss nonlinear relationships between instruments and treatment. PLIV uses ML first stages that capture arbitrary functional forms. In commodity markets, the relationship between weather and shipping volume is often nonlinear — extreme weather has disproportionate effects. PLIV handles this naturally. The weakness diagnostic shifts from the F-statistic to partial R-squared, which extends naturally to ML first stages. -->
+
+---
+
+## Weak Instrument Warning Signs
+
+```mermaid
+flowchart TD
+    Check["Check instrument strength"] --> PR["Partial R² > 0.05?"]
+    PR -->|"Yes"| Strong["Strong instrument<br/>Trust PLIV results"]
+    PR -->|"No"| Weak["Weak instrument"]
+    Weak --> Wide["Wide CI<br/>(ratio > 3x PLR)"]
+    Weak --> Unstable["Point estimate unstable<br/>across specifications"]
+    Wide --> Action["Consider:<br/>1. Stronger instrument<br/>2. Bounds analysis<br/>3. Report PLR + PLIV"]
+    Unstable --> Action
+    style Strong fill:#6f6,color:#fff
+    style Weak fill:#f66,color:#fff
+```
+
+<!-- Speaker notes: Weak instruments are the main failure mode of IV estimation. This flowchart provides a diagnostic workflow. Start by computing the partial R-squared. If it exceeds 0.05, the instrument is likely strong enough. If not, check whether the confidence interval is much wider than PLR's (a ratio above 3 is concerning) and whether the point estimate is stable across nuisance model specifications. If the instrument is weak, consider finding a stronger one, using partial identification bounds, or reporting both PLR and PLIV results side by side. -->
+
+---
+
 ## Connections
 
 <div class="columns">

@@ -137,6 +137,64 @@ flowchart LR
 
 ---
 
+## CATE Estimator Comparison
+
+| Estimator | CATE Form | Best For |
+|-----------|-----------|----------|
+| `LinearDML` | $\tau(X) = X\beta$ | Linear heterogeneity |
+| `CausalForestDML` | $\tau(X) = f(X)$ | Nonlinear, many moderators |
+| `DML` (generic) | Custom final model | Advanced users |
+
+```python
+# LinearDML: fast, interpretable
+from econml.dml import LinearDML
+ldml = LinearDML(model_y=gbm, model_t=gbm)
+ldml.fit(Y, D, X=X, W=W)
+print(ldml.summary())  # Coefficients on X
+```
+
+<!-- Speaker notes: Three main estimators in econml for CATE. LinearDML assumes CATE is a linear function of the effect modifiers — fast and interpretable, good when you have a few key moderators. CausalForestDML is fully nonparametric and handles arbitrary heterogeneity patterns. The generic DML class lets you plug in any final-stage model. Start with LinearDML for interpretability, then check with CausalForestDML whether nonlinear heterogeneity is present. -->
+
+---
+
+## From CATE to Trading Decisions
+
+```mermaid
+flowchart LR
+    CATE["τ̂(Xᵢ)"] --> Classify["Classify:<br/>high/medium/low effect"]
+    Classify --> High["High effect<br/>→ Increase exposure"]
+    Classify --> Medium["Medium effect<br/>→ Maintain position"]
+    Classify --> Low["Low/negative effect<br/>→ Reduce exposure"]
+    High --> Portfolio["Portfolio<br/>allocation"]
+    Medium --> Portfolio
+    Low --> Portfolio
+    style Portfolio fill:#6f6,color:#fff
+```
+
+**Commodity application:** Before an inventory release:
+- **Energy** (high CATE): overweight futures position
+- **Metals** (moderate CATE): neutral position
+- **Agriculture** (low CATE): underweight or hedge
+
+<!-- Speaker notes: This is the practical payoff of CATE estimation for commodity traders. If you know that energy futures are 4x more sensitive to inventory surprises than metals, you can tilt your portfolio accordingly before scheduled releases. The CATE provides individual-level predictions, so you can even differentiate within sectors — some energy contracts may be more affected than others based on specific characteristics. This is targeted trading driven by causal inference rather than correlations. -->
+
+---
+
+## Sample Size Requirements for CATE
+
+| Analysis | Minimum $n$ | Ideal $n$ | Notes |
+|----------|:-----------:|:---------:|-------|
+| ATE (Module 05) | 500 | 1,000+ | Single parameter |
+| CATE (CausalForest) | 2,000 | 5,000+ | Function estimation |
+| BLP | 1,000 | 3,000+ | Few parameters |
+| GATES (5 groups) | 2,500 | 5,000+ | 500+ per group |
+
+> CATE estimation is more data-hungry than ATE. With small samples, report ATE and check for heterogeneity using BLP before attempting CATE.
+
+<!-- Speaker notes: CATE estimation requires substantially more data than ATE because you are estimating a function rather than a single number. The causal forest needs enough observations in each leaf to estimate local treatment effects reliably. With fewer than 2000 observations, CATE estimates tend to be noisy and GATES tests are underpowered. In commodity applications, this means you need several years of daily data or a large cross-section. If sample size is limited, start with ATE and use BLP to test for heterogeneity before investing in full CATE estimation. -->
+
+---
+
 ## Connections
 
 <div class="columns">

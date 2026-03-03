@@ -23,6 +23,8 @@ Result: Every observation has an OUT-OF-SAMPLE prediction.
 
 ## Why In-Sample Predictions Create Bias
 
+In a commodity context, suppose you are estimating the effect of inventory releases on oil futures spreads, with 50 market controls. If your random forest trains on all 2,000 observations and then predicts on the same data, it partially memorises each observation. This creates a subtle but damaging bias.
+
 When an ML model trains on observation $i$ and then predicts observation $i$, the prediction is biased toward the observed value. For flexible models like random forests:
 
 $$\hat{g}_{in}(X_i) \approx Y_i - \text{small residual}$$

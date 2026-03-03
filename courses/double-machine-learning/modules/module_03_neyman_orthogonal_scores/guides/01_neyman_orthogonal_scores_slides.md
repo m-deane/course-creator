@@ -162,6 +162,23 @@ In practice, neither is perfect, but the product structure means **both being de
 
 ---
 
+## Commodity Application: Imperfect ML in Energy Markets
+
+Energy market data is messy — regime changes, missing observations, structural breaks.
+
+ML models for nuisance functions are **never perfect**:
+- Random forest $R^2$ for $E[Y|X]$ typically 0.3-0.6
+- Gradient boosting $R^2$ for $E[D|X]$ typically 0.2-0.5
+
+**DML still works** because orthogonality makes bias $\propto 0.4 \times 0.5 = 0.20$
+rather than $\propto 0.4$ (naive) — a substantial reduction.
+
+> In commodity applications, "good enough" ML is sufficient for valid causal inference.
+
+<!-- Speaker notes: This slide connects the theory to practice. In energy markets, you rarely get very high R-squared for predicting spreads or production decisions from observable controls. The signal-to-noise ratio is low. But the orthogonality property means you do not need high R-squared. You need both models to be reasonably good, and their product of errors to be small enough. This is almost always satisfied with standard gradient boosting on commodity data. The practical message: do not over-tune your ML models. Focus on getting both to a reasonable level. -->
+
+---
+
 ## Connections
 
 <div class="columns">

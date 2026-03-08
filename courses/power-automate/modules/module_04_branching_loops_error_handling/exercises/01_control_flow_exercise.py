@@ -574,8 +574,8 @@ except RuntimeError as exc:
         False,
         "Unhandled RuntimeError escaped the loop — Bug 2 not fixed yet: add try/except around approve_expense()"
     )
-    check("Part 3: correct low_value count (< $500 → E03=$45)", False, "Fix Bug 2 first")
-    check("Part 3: correct high_value count ($500+ → E01, E02, E04, E05)", False, "Fix Bug 2 first")
+    check("Part 3: correct low_value count (< $500 → E01=$120, E03=$45)", False, "Fix Bug 2 first")
+    check("Part 3: correct high_value count ($500+ → E02, E04, E05)", False, "Fix Bug 2 first")
     check("Part 3: correct error count (E04=$1200 raises RuntimeError)", False, "Fix Bug 2 first")
 except Exception:
     check("Part 3 — no unexpected exception", False, traceback.format_exc())

@@ -230,6 +230,8 @@ The goal is a portfolio of production-quality feature selection pipelines you ca
 
 **For the researcher:** Module 2 (information theory), Module 6 (advanced evolutionary), and Module 9 (causal) contain the deepest theoretical content with research paper connections.
 
+**Cross-module connections:** Every guide ends with a "Cross-Module Connections" section that explains explicitly how the current method relates to methods taught in preceding modules, and where the method is used in later modules. These sections are the connective tissue of the course — read them even when skipping modules.
+
 ---
 
 ## Repository Layout

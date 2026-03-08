@@ -80,7 +80,7 @@ Power Automate connectors fall into three licensing tiers. The tier determines w
 | Create event | Add a calendar event |
 | Get calendar view | List events in a date range |
 
-> **On screen:** To send from a **shared mailbox**, expand the **Send an email (V2)** action card and enable **Show advanced options**. Set the **From** field to the shared mailbox address (e.g. `helpdesk@contoso.com`). You must have "Send As" or "Send on Behalf" permissions on that mailbox in Exchange.
+> **On screen:** To send from a **shared mailbox**, expand the **Send an email (V2)** action card and enable **Show advanced options**. Set the **From** field to the shared mailbox address (e.g. `helpdesk@your-org.com`). You must have "Send As" or "Send on Behalf" permissions on that mailbox in Exchange.
 
 **Gotcha:** The V2 and V3 variants of triggers and actions are not interchangeable. V3 of "When a new email arrives" supports attachment handling and the `hasAttachments` filter that V2 lacks. Always use the highest available version.
 
@@ -299,8 +299,8 @@ For on-premises SQL Server, also select the **On-premises data gateway** install
 Every connector requires a **connection** — a saved credential that the connector uses to call the external service. Power Automate stores connections in the environment and reuses them across flows.
 
 ```
-Flow A  ──► Outlook Connection (OAuth token for alice@contoso.com) ──► Exchange Online
-Flow B  ──► Outlook Connection (OAuth token for alice@contoso.com) ──► Exchange Online
+Flow A  ──► Outlook Connection (OAuth token for alice@your-org.com) ──► Exchange Online
+Flow B  ──► Outlook Connection (OAuth token for alice@your-org.com) ──► Exchange Online
 Flow C  ──► SQL Connection (SQL auth for db_reader account) ──► Azure SQL
 ```
 

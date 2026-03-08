@@ -41,7 +41,7 @@ For almost all business automation, use **Excel Online (Business)**.
 
 The Excel connector operates exclusively on **named Tables** (Insert → Table in Excel). It cannot read from raw cell ranges or worksheets without a Table. A Table gives every column a programmatic name, which Power Automate uses to map values.
 
-```
+```text
 Workbook: Q4_Sales_Report.xlsx
 └── Sheet: SalesData
     └── Table: tbl_Sales          ← Power Automate sees this
@@ -64,7 +64,7 @@ Retrieves all rows from a named table. This is the primary read action.
 
 > **On screen:** Click **+ New step** → search **Excel Online (Business)** → select **List rows present in a table**.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │  List rows present in a table                           ▲   │
 │  ───────────────────────────────────────────────────────    │
@@ -100,7 +100,7 @@ Appends a new row to the bottom of the table.
 
 > **On screen:** Select **Add a row into a table**. After selecting Location, Library, File, and Table, a field appears for each column in the table.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Add a row into a table                                 ▲   │
 │  ───────────────────────────────────────────────────────    │
@@ -125,7 +125,7 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 
 > **On screen:** Select **Update a row**. Enter Location, Library, File, Table, and the **Row ID** — an integer retrieved from a previous **List rows** or **Get a row** action.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Update a row                                           ▲   │
 │  ───────────────────────────────────────────────────────    │
@@ -155,7 +155,7 @@ Retrieves a single row by the value in a designated **Key Column**.
 
 > **On screen:** Select **Get a row**. After selecting the file and table, enter the **Key Column** (e.g., `OrderId`) and the **Key Value** (the specific value to look up in that column).
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Get a row                                              ▲   │
 │  ───────────────────────────────────────────────────────    │
@@ -196,7 +196,7 @@ Excel stores data in typed cells. Power Automate sends values as strings, and Ex
 
 Pass numeric values as numbers, not strings. If a column is formatted as Number or Currency in Excel:
 
-```
+```text
 Quantity:  5          ← correct (integer)
 Revenue:   1299.99    ← correct (decimal)
 ```
@@ -205,7 +205,7 @@ Passing `"1,299.99"` (a string with a comma) will store as text, breaking sum fo
 
 **Expression to convert a string to a number:**
 
-```
+```text
 float(triggerBody()?['amount'])
 ```
 
@@ -213,13 +213,13 @@ float(triggerBody()?['amount'])
 
 Excel stores dates as serial numbers internally. Pass dates in ISO 8601 format and Excel will interpret them correctly if the destination column is formatted as Date:
 
-```
+```text
 OrderDate:  2024-03-15
 ```
 
 Do not include time components for date-only columns — `2024-03-15T14:30:00Z` may appear as a decimal in a Date-formatted column. Use the `formatDateTime` expression to strip the time:
 
-```
+```text
 formatDateTime(utcNow(), 'yyyy-MM-dd')
 ```
 
@@ -231,7 +231,7 @@ Excel does not have a native Boolean column type. Use `TRUE` / `FALSE` (uppercas
 
 If an Excel table column is named "Order Date" (with a space), the dynamic content token will show it as `Order Date` but the internal key in the JSON response is `Order Date` (space preserved). When referencing it in an expression, quote the key:
 
-```
+```text
 items('Apply_to_each')?['Order Date']
 ```
 
@@ -243,7 +243,7 @@ This flow runs every Monday morning, reads all orders from the previous week in 
 
 ### Architecture overview
 
-```
+```text
 Recurrence trigger: every Monday at 7:00 AM
          ↓
 List rows (tbl_Orders) filtered by last 7 days
@@ -278,7 +278,7 @@ Your Excel workbook needs two tables:
 
 > **On screen:** In Power Automate: **+ Create** → **Scheduled cloud flow** → Name: `Weekly Sales Report` → Repeat every: `1 Week` → Starting: next Monday → click **Create**.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │  Recurrence                                                  ▲  │
 │  ─────────────────────────────────────────────────────────────  │
@@ -296,7 +296,7 @@ Your Excel workbook needs two tables:
 
 Filter Query:
 
-```
+```text
 OrderDate ge '@{formatDateTime(addDays(utcNow(), -7), 'yyyy-MM-dd')}'
 ```
 
@@ -306,7 +306,7 @@ OrderDate ge '@{formatDateTime(addDays(utcNow(), -7), 'yyyy-MM-dd')}'
 
 > **On screen:** Add **Initialize variable** × 2.
 
-```
+```text
 ┌─────────────────────────────────────┐
 │  Initialize variable                │
 │  Name:    TotalRevenue              │
@@ -326,7 +326,7 @@ OrderDate ge '@{formatDateTime(addDays(utcNow(), -7), 'yyyy-MM-dd')}'
 
 > **On screen:** Add **Apply to each** → select `value` from the List rows action. Inside the loop, add two **Increment variable** actions.
 
-```
+```text
 Apply to each: [value from List rows]
 │
 ├── Increment variable
@@ -342,7 +342,7 @@ Apply to each: [value from List rows]
 
 > **On screen:** Outside the Apply to each loop (below it), add **Excel Online (Business)** → **Add a row into a table**.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │  Add a row into a table                                      ▲  │
 │  ─────────────────────────────────────────────────────────────  │
@@ -364,7 +364,7 @@ Apply to each: [value from List rows]
 
 > **On screen:** Add **Office 365 Outlook** → **Send an email (V2)**.
 
-```
+```text
 To:       [your email]
 Subject:  Weekly report updated — @{variables('OrderCount')} orders
 Body:

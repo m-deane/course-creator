@@ -166,7 +166,7 @@ Amount: <b>$450.00</b><br>
 Category: Software License<br>
 Business justification: Annual renewal for JetBrains IDEs used by the backend team.<br>
 <br>
-<a href="https://contoso.sharepoint.com/sites/Finance/Expenses/item123">View Receipt</a>
+<a href="https://your-org.sharepoint.com/sites/Finance/Expenses/item123">View Receipt</a>
 ```
 
 ### What Renders and What Does Not

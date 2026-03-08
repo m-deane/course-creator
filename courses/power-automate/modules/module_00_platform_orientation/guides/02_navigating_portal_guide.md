@@ -244,7 +244,7 @@ Process Mining analyzes event logs from business systems to visualize how proces
 
 Power Automate licensing directly determines which connectors you can use and how flows can run. Choosing the wrong license tier is a common source of confusion when a flow that works in one environment fails in another.
 
-```
+```text
 Licensing Tiers (simplified):
 ├── Microsoft 365 (included with M365 subscriptions)
 │   └── Standard connectors only; limited run quota

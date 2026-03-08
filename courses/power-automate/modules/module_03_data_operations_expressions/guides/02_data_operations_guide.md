@@ -26,7 +26,7 @@ By the end of this guide you will be able to:
 
 Power Automate evaluates expressions inline in every field, but a complex expression written six different times in six different fields is hard to maintain. Compose solves this by computing the value once and letting downstream steps reference the single output.
 
-```
+```text
 Without Compose:
   Email subject:  concat('Report - ', formatDateTime(utcNow(), 'MMMM d, yyyy'))
   Email body:     "Date: " + concat('Report - ', formatDateTime(utcNow(), 'MMMM d, yyyy'))
@@ -93,7 +93,7 @@ Replaces the variable's current value with a new value.
 
 Example: after classifying an email, set `strStatus` to `"Approved"`:
 
-```
+```text
 Set variable
   Name:  strStatus
   Value: 'Approved'
@@ -105,7 +105,7 @@ Adds a number to an integer or float variable. This is the standard loop counter
 
 > **On screen:** Search for `Increment variable`. Select the action. Choose the variable and enter the increment amount (for example, `1`).
 
-```
+```text
 Initialize variable
   Name:  intCount
   Type:  Integer
@@ -127,7 +127,7 @@ Concatenates text onto the end of a string variable. Useful for building a multi
 
 Example: collect email subjects into a summary string:
 
-```
+```text
 Initialize variable
   Name:  strSummary
   Type:  String
@@ -149,7 +149,7 @@ Adds one item to the end of an array variable.
 
 Example: collect filtered items into an array for later processing:
 
-```
+```text
 Initialize variable
   Name:  arrHighPriority
   Type:  Array
@@ -184,7 +184,7 @@ Use Select when you have an array of complex objects and you want a simplified a
 
 Example: project an array of SharePoint user records to only name and email:
 
-```
+```text
 Select
   From:  [array of SharePoint user objects]
   Map:
@@ -216,7 +216,7 @@ Output array: `[{"Name": "Alice", "Email": "alice@contoso.com"}, ...]`
 
 Example: keep only items where Status equals `"Approved"`:
 
-```
+```text
 Filter array
   From:  [outputs('Get_items')?['body']?['value']]
   Condition (advanced):  @equals(item()?['Status'], 'Approved')
@@ -224,7 +224,7 @@ Filter array
 
 Example: keep items where Amount exceeds 5000:
 
-```
+```text
 Condition (advanced):  @greater(item()?['Amount'], 5000)
 ```
 
@@ -279,7 +279,7 @@ The output is a single string in CSV format that you can attach to an email usin
 
 **Join** collapses an array of values into a single string, placing a separator between each item.
 
-```
+```text
 Join
   From:  ["Alice", "Bob", "Priya"]
   Join with:  ', '
@@ -303,7 +303,7 @@ Use Join after Select to produce a readable summary of an array field for an ema
 
 When Power Automate receives a JSON string from an HTTP call or a text column, it treats the entire string as a single opaque value. You cannot access individual fields inside it without first parsing it.
 
-```
+```text
 Without Parse JSON:
   body('HTTP_call')  →  '{"invoiceId":"INV-001","amount":1500}'
   Trying to access amount: impossible without parsing

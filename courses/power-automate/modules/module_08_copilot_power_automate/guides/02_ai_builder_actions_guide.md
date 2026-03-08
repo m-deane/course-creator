@@ -173,7 +173,7 @@ This flow processes incoming emails from vendors: it extracts invoice data from 
 
 Start from the Copilot prompt on the Home page:
 
-```
+```text
 When I receive an email with an attachment from a sender whose address contains
 "vendor", extract invoice data from the attachment, analyze the email body
 sentiment, and create a SharePoint list item with the results
@@ -213,7 +213,7 @@ Add another AI Builder action: **Create text with GPT using a prompt**.
 
 In the prompt field, write:
 
-```
+```text
 You are a professional accounts payable assistant. Write a brief, professional
 acknowledgment reply for this vendor email.
 
@@ -261,17 +261,17 @@ After building a flow manually or with Copilot, you can use the Copilot panel to
 
 **Example modifications you can ask for:**
 
-```
+```text
 Add error handling so that if the invoice extraction fails, send me an email
 with the attachment name and the error message instead of failing the flow
 ```
 
-```
+```text
 Change the SharePoint list to also record the email subject line and the
 date the email was received
 ```
 
-```
+```text
 Add a condition: if the invoice total is greater than 10000, also post a
 message to the "High Value Invoices" Teams channel
 ```
@@ -296,7 +296,7 @@ Test prompts by running the flow with representative data. Review the GPT output
 
 When adding AI Builder steps to a flow, use the Copilot panel to explain what each step returns:
 
-```
+```text
 What fields does the "Extract information from invoices" action return?
 ```
 

@@ -28,7 +28,7 @@ This guide builds a complete IT helpdesk Copilot agent from scratch. By the end 
 
 ### Conversation Flow Overview
 
-```
+```text
 User message
      │
      ▼
@@ -331,7 +331,7 @@ All four flows use the **"When a flow is run from Copilot"** trigger from the Mi
 4. Configure:
    - **Name:** `IT Helpdesk Assistant`
    - **Description:** `Your self-service IT support assistant. Search knowledge base articles, submit and track support tickets, and escalate critical issues.`
-   - **Instructions:** `You are a professional IT helpdesk assistant for Contoso employees. Be concise and action-oriented. Only handle IT-related requests: hardware, software, network, and account issues. Always confirm before creating tickets. Do not provide general business advice. If a request is outside IT scope, politely redirect to the appropriate department.`
+   - **Instructions:** `You are a professional IT helpdesk assistant for your organization's employees. Be concise and action-oriented. Only handle IT-related requests: hardware, software, network, and account issues. Always confirm before creating tickets. Do not provide general business advice. If a request is outside IT scope, politely redirect to the appropriate department.`
 5. Click **Create**
 
 > **On screen:** The agent canvas loads with the Topics panel on the left. You see four pre-existing system topics: Conversation Start, End of Conversation, Confirmed Success, Confirmed Failure, and Fallback. Do not delete these — they handle edge cases automatically.
@@ -603,10 +603,10 @@ Create environment variables in the Power Platform admin center (or within a sol
 
 | Variable Name | Type | Example Value |
 |---------------|------|---------------|
-| `SP_IT_SITE_URL` | String | `https://contoso.sharepoint.com/sites/IT` |
+| `SP_IT_SITE_URL` | String | `https://your-org.sharepoint.com/sites/IT` |
 | `SP_KB_LIST_NAME` | String | `IT_KB_Articles` |
 | `SP_TICKETS_LIST_NAME` | String | `IT_Support_Tickets` |
-| `IT_MANAGER_EMAIL` | String | `itmanager@contoso.com` |
+| `IT_MANAGER_EMAIL` | String | `itmanager@your-org.com` |
 | `ESCALATION_SLA_CRITICAL` | String | `2 hours` |
 
 Use these environment variables inside flow actions by referencing them with the **Get environment variable** action from the Environment Variables connector, or by building the flow inside a solution where environment variables are accessible as first-class values.

@@ -44,7 +44,7 @@ Use this trigger when you only want to react to brand-new submissions — for ex
 ┌────────────────────────────────────────────────────┐
 │  When an item is created                        ▲  │
 │  ──────────────────────────────────────────────    │
-│  Site Address:  [ https://contoso.sharepoint.com ] │
+│  Site Address:  [ https://your-org.sharepoint.com ] │
 │  List Name:     [ Employee Onboarding          ▼ ] │
 └────────────────────────────────────────────────────┘
 ```
@@ -76,7 +76,7 @@ This trigger places an **Automate** button in the SharePoint list's command bar.
 ┌────────────────────────────────────────────────────────┐
 │  For a selected item                               ▲   │
 │  ────────────────────────────────────────────────────  │
-│  Site Address:  [ https://contoso.sharepoint.com ]     │
+│  Site Address:  [ https://your-org.sharepoint.com ]     │
 │  List Name:     [ Project Requests             ▼ ]     │
 │  ────────────────────────────────────────────────────  │
 │  User inputs (optional)                                 │
@@ -120,7 +120,7 @@ Adds a new row to a SharePoint list.
 ┌────────────────────────────────────────────────────┐
 │  Create item                                    ▲  │
 │  ──────────────────────────────────────────────    │
-│  Site Address:  [ https://contoso.sharepoint.com ] │
+│  Site Address:  [ https://your-org.sharepoint.com ] │
 │  List Name:     [ Expense Reports           ▼ ]    │
 │  ─ Dynamic fields appear after List Name is set ─  │
 │  Title:         [ [Email Subject]           ]      │
@@ -149,7 +149,7 @@ Retrieves multiple list items. This is the workhorse action for reading SharePoi
 ┌─────────────────────────────────────────────────────────┐
 │  Get items                                           ▲  │
 │  ─────────────────────────────────────────────────────  │
-│  Site Address:   [ https://contoso.sharepoint.com ]     │
+│  Site Address:   [ https://your-org.sharepoint.com ]     │
 │  List Name:      [ Expense Reports              ▼ ]     │
 │  ▼ Show advanced options                                 │
 │  ─────────────────────────────────────────────────────  │
@@ -181,7 +181,7 @@ Modifies one or more columns of an existing list item.
 ┌────────────────────────────────────────────────────┐
 │  Update item                                    ▲  │
 │  ──────────────────────────────────────────────    │
-│  Site Address:  [ https://contoso.sharepoint.com ] │
+│  Site Address:  [ https://your-org.sharepoint.com ] │
 │  List Name:     [ Expense Reports           ▼ ]    │
 │  Id:            [ [items('Apply_to_each')?['ID']]  │
 │  Status:        [ Approved                  ]      │
@@ -282,7 +282,7 @@ DepartmentId eq 5
 For **person** columns (People Picker), filter on the person's email:
 
 ```
-AssignedTo/EMail eq 'user@contoso.com'
+AssignedTo/EMail eq 'user@your-org.com'
 ```
 
 ---
@@ -301,7 +301,7 @@ Retrieves the binary content of a file. Use this before sending a file as an ema
 ┌────────────────────────────────────────────────────┐
 │  Get file content                               ▲  │
 │  ──────────────────────────────────────────────    │
-│  Site Address:     [ https://contoso.sharepoint.com│
+│  Site Address:     [ https://your-org.sharepoint.com│
 │  File Identifier:  [ /sites/Finance/Shared         │
 │                      Documents/Q4Report.xlsx ]     │
 └────────────────────────────────────────────────────┘
@@ -319,7 +319,7 @@ Uploads a new file to a document library.
 ┌────────────────────────────────────────────────────┐
 │  Create file                                    ▲  │
 │  ──────────────────────────────────────────────    │
-│  Site Address:  [ https://contoso.sharepoint.com ] │
+│  Site Address:  [ https://your-org.sharepoint.com ] │
 │  Folder Path:   [ /Shared Documents/Processed  ]   │
 │  File Name:     [ [Trigger File Name]          ]   │
 │  File Content:  [ [Get file content - File Content]│
@@ -372,10 +372,10 @@ For multi-select choice columns, the value is a semicolon-delimited string: `"Re
 **Writing:** Pass a person object. The easiest method is to use the **Office 365 Users** connector to look up a person first, then pass their ID:
 
 ```
-AssignedTo Claims: i:0#.f|membership|user@contoso.com
+AssignedTo Claims: i:0#.f|membership|user@your-org.com
 ```
 
-Or use the format `[{"claims": "i:0#.f|membership|user@contoso.com", "displayName": "First Last"}]` when the column expects an array.
+Or use the format `[{"claims": "i:0#.f|membership|user@your-org.com", "displayName": "First Last"}]` when the column expects an array.
 
 > **Practical tip:** Use **Send an HTTP request to SharePoint** or the **Office 365 Users — Get user profile (V2)** action to resolve a display name to a claims string before writing to a person column.
 
@@ -450,7 +450,7 @@ Before building the flow, add two columns to your document library:
 ┌────────────────────────────────────────────────────────────────┐
 │  When a file is created (properties only)                   ▲  │
 │  ────────────────────────────────────────────────────────────  │
-│  Site Address:  [ https://contoso.sharepoint.com           ]   │
+│  Site Address:  [ https://your-org.sharepoint.com           ]   │
 │  Library Name:  [ Contracts for Approval                 ▼ ]   │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -463,7 +463,7 @@ Before building the flow, add two columns to your document library:
 ┌─────────────────────────────────────────────────────────────────┐
 │  Update file properties                                      ▲  │
 │  ─────────────────────────────────────────────────────────────  │
-│  Site Address:    [ https://contoso.sharepoint.com           ]  │
+│  Site Address:    [ https://your-org.sharepoint.com           ]  │
 │  Library Name:    [ Contracts for Approval                 ▼ ]  │
 │  Id:              [ [Trigger body/ID]                        ]  │
 │  ApprovalStatus:  [ Pending                                  ]  │
@@ -480,7 +480,7 @@ Before building the flow, add two columns to your document library:
 │  ─────────────────────────────────────────────────────────────  │
 │  Approval type:   [ Approve/Reject - First to respond       ▼ ] │
 │  Title:           [ Please review: [Trigger Name]           ]   │
-│  Assigned to:     [ approver@contoso.com                    ]   │
+│  Assigned to:     [ approver@your-org.com                    ]   │
 │  Details:         [ File uploaded by [Trigger Created By    ]   │
 │                     on [Trigger Created]                    ]   │
 │  Item link:       [ [Trigger Link to item]                  ]   │

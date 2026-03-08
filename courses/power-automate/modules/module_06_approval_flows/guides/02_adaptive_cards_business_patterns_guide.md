@@ -229,7 +229,7 @@ This Power Automate action combines posting and waiting in a single step.
 
 The card's static text becomes dynamic when you inject Power Automate expressions into the JSON string. Use string interpolation to insert values from previous action outputs:
 
-```
+```text
 "value": "@{triggerOutputs()?['body/Amount']}"
 ```
 
@@ -241,13 +241,13 @@ After the user submits the card, the action outputs a **User input** object. Thi
 
 To access the decision from the card above:
 
-```
+```text
 outputs('Post_adaptive_card_and_wait_for_a_response')?['body/data/decision']
 ```
 
 To access the comments:
 
-```
+```text
 outputs('Post_adaptive_card_and_wait_for_a_response')?['body/data/comments']
 ```
 
@@ -259,7 +259,7 @@ Complex business processes require multiple sequential approvals. The pattern: e
 
 ### Architecture: Request → Manager → Finance → Confirmation
 
-```
+```text
 Stage 1: Manager Approval
   ↓ Approved
 Stage 2: Finance Director Approval
@@ -273,7 +273,7 @@ Complete
 
 ### Implementation Structure
 
-```
+```text
 [Trigger: New expense request]
     |
     ▼
@@ -340,7 +340,7 @@ When an approver does not respond within a defined SLA (e.g., 48 hours), automat
 
 **Implementation with Parallel Branches:**
 
-```
+```text
 [Start and wait for an approval]
     |
     ▼ (use Create an approval, not Start and wait)
@@ -366,12 +366,12 @@ Allow approvers to reassign an approval to another person. Implement this by:
 3. In the flow: if decision == "delegate", create a new approval assigned to the delegate's email
 4. Update the tracking record with the delegation chain
 
-```
-Original Approver → clicks Delegate → enters delegate@contoso.com
+```text
+Original Approver → clicks Delegate → enters delegate@your-org.com
     ↓
 Flow reads delegate email
 Flow creates new approval assigned to delegate
-Flow logs: "Delegated by original@contoso.com to delegate@contoso.com"
+Flow logs: "Delegated by original@your-org.com to delegate@your-org.com"
 Delegate receives approval notification
 ```
 
@@ -387,7 +387,7 @@ Track how long approvals take and flag SLA breaches for reporting.
 
 **Calculation in Power Automate:**
 
-```
+```text
 SLA threshold: 24 hours (in minutes: 1440)
 
 Response time in minutes:
@@ -403,7 +403,7 @@ Set `SLABreached = true` in your SharePoint or Dataverse record when the respons
 
 Route approvals to different approvers based on the value of the request.
 
-```
+```text
 Amount < $500       → Direct Manager
 Amount $500–$5000   → Department Head
 Amount > $5000      → VP Finance + CFO (everyone must approve)
@@ -411,7 +411,7 @@ Amount > $5000      → VP Finance + CFO (everyone must approve)
 
 Implementation: Use a **Switch** action (or nested Conditions) at the start of the flow to set an `ApproverEmail` variable and `ApprovalType` variable, then pass those variables into the approval action.
 
-```
+```text
 [Initialize variable: ApproverEmail]
 [Initialize variable: ApprovalType]
 
@@ -423,7 +423,7 @@ Implementation: Use a **Switch** action (or nested Conditions) at the start of t
         Set ApproverEmail = DeptHead.Mail
         Set ApprovalType = "Approve/Reject - First to respond"
     Default (≥ 5000):
-        Set ApproverEmail = "vp@contoso.com;cfo@contoso.com"
+        Set ApproverEmail = "vp@your-org.com;cfo@your-org.com"
         Set ApprovalType = "Approve/Reject - Everyone must approve"
 
 [Start and wait for an approval]

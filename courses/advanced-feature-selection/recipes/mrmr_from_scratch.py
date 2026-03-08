@@ -10,6 +10,7 @@ Two variants:
 Reference: Peng et al. 2005, "Feature Selection Based on Mutual Information".
 """
 
+import warnings
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_breast_cancer
@@ -40,8 +41,10 @@ def _compute_redundancy(X: np.ndarray, selected_idx: list[int], candidate_idx: i
     for s_idx in selected_idx:
         # mutual_info_classif treats the second arg as discrete target;
         # discretise it to approximate I(xi_candidate ; xi_selected).
-        discretiser = KBinsDiscretizer(n_bins=10, encode="ordinal", strategy="quantile")
-        y_proxy = discretiser.fit_transform(X[:, s_idx].reshape(-1, 1)).ravel().astype(int)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", FutureWarning)
+            discretiser = KBinsDiscretizer(n_bins=10, encode="ordinal", strategy="quantile")
+            y_proxy = discretiser.fit_transform(X[:, s_idx].reshape(-1, 1)).ravel().astype(int)
         mi = mutual_info_classif(
             X[:, candidate_idx].reshape(-1, 1),
             y_proxy,

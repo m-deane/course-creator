@@ -6,13 +6,12 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: This deck covers methods that go beyond element-wise sparsity to exploit structure in the feature space. The key insight is that domain knowledge about feature relationships — groups, graphs, hierarchies — can be encoded directly into the penalty function, leading to more interpretable and often more accurate feature selection. We cover three major approaches: random projections for dimensionality reduction, Sparse PCA for unsupervised structure discovery, and graph-guided penalties for incorporating known feature relationships. -->
 
 # Structured Sparsity
 ## Random Projections, Sparse PCA, and Graph-Guided Penalties
 
 Module 8 · Advanced Feature Selection
-
-<!-- Speaker notes: This deck covers methods that go beyond element-wise sparsity to exploit structure in the feature space. The key insight is that domain knowledge about feature relationships — groups, graphs, hierarchies — can be encoded directly into the penalty function, leading to more interpretable and often more accurate feature selection. We cover three major approaches: random projections for dimensionality reduction, Sparse PCA for unsupervised structure discovery, and graph-guided penalties for incorporating known feature relationships. -->
 
 ---
 

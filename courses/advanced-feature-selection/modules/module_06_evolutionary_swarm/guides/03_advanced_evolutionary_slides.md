@@ -6,14 +6,13 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: This deck covers the most sophisticated evolutionary strategies for feature selection. The common thread is hybridisation: combining the strengths of different algorithms. Memetic algorithms add local search. Cooperative co-evolution adds problem decomposition. Surrogate methods add computational efficiency. EDAs add probabilistic modelling. Island models add parallel diversity. Each addresses a specific weakness of standard GA. -->
 
 # Advanced Evolutionary Methods
 
 ## Module 06 — Evolutionary & Swarm Methods
 
 Memetic · Co-evolution · CMA-ES · Surrogates · EDAs · Islands
-
-<!-- Speaker notes: This deck covers the most sophisticated evolutionary strategies for feature selection. The common thread is hybridisation: combining the strengths of different algorithms. Memetic algorithms add local search. Cooperative co-evolution adds problem decomposition. Surrogate methods add computational efficiency. EDAs add probabilistic modelling. Island models add parallel diversity. Each addresses a specific weakness of standard GA. -->
 
 ---
 

@@ -6,21 +6,13 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: This is the third and final guide of Module 10. The key idea: everything we have learned so far (filters, wrappers, embedded methods, evolutionary algorithms, ensembles) requires a human to choose which method to use. Meta-learning removes that choice: we train a model that looks at dataset properties and recommends the best selector. This is the same idea behind AutoML systems like Auto-sklearn and FLAML, but focused specifically on feature selection. By the end of this deck, you will understand how to build, train, and evaluate a meta-learning recommender for feature selection. -->
 
 # Meta-Learning for Feature Selection
 
 **Module 10 — Ensemble & Hybrid Methods**
 
 > Teaching a model to recommend the best feature selection method — automatically, from data.
-
-<!--
-Speaker notes: Key talking points for this slide
-- This is the third and final guide of Module 10. It is also the most abstract.
-- The key idea: everything we have learned so far (filters, wrappers, embedded methods, evolutionary algorithms, ensembles) requires a human to choose which method to use.
-- Meta-learning removes that choice: we train a model that looks at dataset properties and recommends the best selector.
-- This is the same idea behind AutoML systems like Auto-sklearn and FLAML — but focused specifically on feature selection.
-- By the end of this deck, you will understand how to build, train, and evaluate a meta-learning recommender for feature selection.
--->
 
 ---
 
@@ -47,15 +39,7 @@ graph TD
 
 $$A^*(\mathcal{D}) = \arg\max_{A \in \mathcal{A}} \text{Performance}(\text{Model}(A(\mathcal{D})))$$
 
-<!--
-Speaker notes: Key talking points for this slide
-- The algorithm selection problem (Rice, 1976) is the foundational problem of meta-learning.
-- The naive solution: run all methods and pick the best. This is expensive (hours) and defeats the purpose.
-- The meta-learning solution: observe dataset properties, look up what worked before on similar datasets.
-- Key equation: A* is the algorithm that maximises downstream model performance when applied to D.
-- This is what experienced data scientists do intuitively: "this dataset looks like tabular financial data with correlated features, so I'll use elastic net, not lasso."
-- Meta-learning makes this intuition explicit and learnable from data.
--->
+<!-- Speaker notes: The algorithm selection problem (Rice, 1976) is the foundational problem of meta-learning. The naive solution: run all methods and pick the best. This is expensive (hours) and defeats the purpose. The meta-learning solution: observe dataset properties, look up what worked before on similar datasets. Key equation: A* is the algorithm that maximises downstream model performance when applied to D. This is what experienced data scientists do intuitively — meta-learning makes this intuition explicit and learnable from data. -->
 
 ---
 
@@ -89,14 +73,7 @@ $$A^*, \lambda^* = \arg\max_{A \in \mathcal{A},\, \lambda \in \Lambda_A} \text{C
 
 > Meta-learning provides warm-start candidates for CASH, dramatically reducing search time.
 
-<!--
-Speaker notes: Key talking points for this slide
-- CASH was formalised by Thornton et al. (2013) with Auto-WEKA. It is the theoretical foundation of AutoML.
-- For feature selection specifically, the search space includes which selector to use AND its hyperparameters.
-- Meta-learning's role in CASH: instead of starting the search from scratch, use past experience to identify promising (algorithm, hyperparameter) combinations.
-- This is called warm-starting: Auto-sklearn uses meta-learning to identify the top-25 (algorithm, config) pairs for a new dataset, then runs Bayesian optimisation from those starting points.
-- Result: warm-started AutoML typically finds good solutions 10× faster than cold-started search.
--->
+<!-- Speaker notes: CASH was formalised by Thornton et al. (2013) with Auto-WEKA. It is the theoretical foundation of AutoML. For feature selection specifically, the search space includes which selector to use AND its hyperparameters. Meta-learning's role in CASH: instead of starting the search from scratch, use past experience to identify promising (algorithm, hyperparameter) combinations. This is called warm-starting: Auto-sklearn uses meta-learning to identify the top-25 (algorithm, config) pairs for a new dataset, then runs Bayesian optimisation from those starting points. Result: warm-started AutoML typically finds good solutions 10× faster than cold-started search. -->
 
 ---
 
@@ -134,15 +111,7 @@ Properties we can compute cheaply from any dataset:
 </div>
 </div>
 
-<!--
-Speaker notes: Key talking points for this slide
-- These four categories of meta-features are the standard in the AutoML meta-learning literature.
-- Statistical features: basic dataset size and distributional properties. Cheap (O(np)).
-- Information-theoretic: capture the signal structure. How much does the average feature correlate with the target? How spiked is the MI distribution? Moderate cost (O(np log n)).
-- Correlation structure: captures inter-feature redundancy. Predicts whether methods like LASSO (which struggle with correlated features) or elastic net will work better.
-- Landmarking: use fast proxy algorithms to characterize dataset difficulty. A dataset where a depth-1 tree achieves 95% accuracy has different structure than one where it achieves 52%.
-- Key insight: landmarking is empirically one of the most predictive meta-feature categories.
--->
+<!-- Speaker notes: These four categories of meta-features are the standard in the AutoML meta-learning literature. Statistical features: basic dataset size and distributional properties. Cheap (O(np)). Information-theoretic: capture the signal structure. How much does the average feature correlate with the target? Correlation structure: captures inter-feature redundancy. Predicts whether methods like LASSO or elastic net will work better. Landmarking: use fast proxy algorithms to characterize dataset difficulty. A dataset where a depth-1 tree achieves 95% accuracy has different structure than one where it achieves 52%. Landmarking is empirically one of the most predictive meta-feature categories. -->
 
 ---
 
@@ -164,16 +133,7 @@ mi_gini is high        →  concentrated signal  →  univariate filter sufficie
 
 **These rules are automatically learned from data by the meta-model.**
 
-<!--
-Speaker notes: Key talking points for this slide
-- This slide builds intuition for WHY meta-features predict selector performance.
-- Each meta-feature captures a specific property of the dataset that we know (from theory and practice) affects selector behaviour.
-- Low n/p: we are in the small sample regime where single selectors are unreliable. Ensemble methods dominate.
-- High correlation: LASSO is unstable (picks arbitrary representatives). Elastic net or wrapper methods are better.
-- High frac_zero_mi: most features are noise. A filter as the first stage eliminates noise cheaply.
-- High mi_gini: a few features carry almost all the information. Simple filter ranking is sufficient.
-- The meta-model learns these rules from data. It may also discover non-obvious patterns that human experts don't know about.
--->
+<!-- Speaker notes: This slide builds intuition for WHY meta-features predict selector performance. Each meta-feature captures a specific property of the dataset that we know (from theory and practice) affects selector behaviour. Low n/p: we are in the small sample regime where single selectors are unreliable. Ensemble methods dominate. High correlation: LASSO is unstable. Elastic net or wrapper methods are better. High frac_zero_mi: most features are noise. A filter as the first stage eliminates noise cheaply. High mi_gini: a few features carry almost all the information. Simple filter ranking is sufficient. The meta-model learns these rules from data and may discover non-obvious patterns. -->
 
 ---
 
@@ -210,15 +170,7 @@ def compute_all_meta_features(X, y):
 
 **Total computation time: ~2–10 seconds per dataset.**
 
-<!--
-Speaker notes: Key talking points for this slide
-- This is the core code from Notebook 03. Walk through each section.
-- The log transformations are important: n/p ratios span orders of magnitude (1 to 10000). Log makes these comparable.
-- Subsampling features for correlation (min(p, 200)) prevents O(p^2) bottleneck for very high-dimensional data.
-- MI subsampling (min(p, 50)) keeps meta-feature computation fast. We don't need exact MI for all features — a sample of 50 gives a good picture of the MI distribution.
-- Landmarking is the most expensive part (requires CV). Keep it to 3-fold with subsampled data (max 500 samples).
-- Total cost: 2-10 seconds vs hours for running all selectors. This is the "free lunch" of meta-learning.
--->
+<!-- Speaker notes: This is the core code from Notebook 03. Walk through each section. The log transformations are important: n/p ratios span orders of magnitude (1 to 10000). Log makes these comparable. Subsampling features for correlation (min(p, 200)) prevents O(p^2) bottleneck for very high-dimensional data. MI subsampling (min(p, 50)) keeps meta-feature computation fast. Landmarking is the most expensive part (requires CV) — keep it to 3-fold with subsampled data (max 500 samples). Total cost: 2-10 seconds vs hours for running all selectors. This is the "free lunch" of meta-learning. -->
 
 ---
 
@@ -240,15 +192,7 @@ graph TD
 
 **Trade-off:** expensive offline training → fast online recommendation.
 
-<!--
-Speaker notes: Key talking points for this slide
-- The meta-dataset construction is the expensive one-time investment.
-- For N=30 datasets and 5 selectors: 30 × 60 = 1800 minutes ≈ 30 hours of computation.
-- This is done once. After that, recommendations for any new dataset cost only the meta-feature computation (2-10 seconds).
-- This is the classic ML trade-off: amortise expensive offline computation over many online queries.
-- In Notebook 03, we use a much smaller set (10 OpenML datasets) for illustration. The principles are identical.
-- OpenML (openml.org) provides hundreds of benchmark datasets. It is the standard source for meta-learning experiments.
--->
+<!-- Speaker notes: The meta-dataset construction is the expensive one-time investment. For N=30 datasets and 5 selectors: 30 × 60 = 1800 minutes ≈ 30 hours of computation. This is done once. After that, recommendations for any new dataset cost only the meta-feature computation (2-10 seconds). This is the classic ML trade-off: amortise expensive offline computation over many online queries. In Notebook 03, we use a much smaller set (10 OpenML datasets) for illustration. OpenML (openml.org) provides hundreds of benchmark datasets and is the standard source for meta-learning experiments. -->
 
 ---
 
@@ -277,14 +221,7 @@ def train_meta_model(meta_df, meta_feature_cols):
 **Why Leave-One-Dataset-Out?**
 Standard k-fold would use multiple rows from the same dataset for training and testing — this inflates accuracy.
 
-<!--
-Speaker notes: Key talking points for this slide
-- LODO is the correct evaluation methodology for meta-learning. Emphasise this.
-- Standard k-fold CV would train and test on rows from the same dataset. If dataset D has 3 runs (different seeds or folds), rows from D would appear in both train and test — this is data leakage.
-- LODO ensures the meta-model is evaluated on completely unseen datasets.
-- Expected accuracy: with 5 selectors, random baseline is 20%. A well-trained meta-model achieves 45-65% top-1 and 75-90% top-3.
-- The meta-model (RF) is appropriate because meta-features are heterogeneous (different scales and types), and RF handles this without normalisation.
--->
+<!-- Speaker notes: LODO is the correct evaluation methodology for meta-learning. Standard k-fold CV would train and test on rows from the same dataset. If dataset D has 3 runs (different seeds or folds), rows from D would appear in both train and test — this is data leakage. LODO ensures the meta-model is evaluated on completely unseen datasets. Expected accuracy: with 5 selectors, random baseline is 20%. A well-trained meta-model achieves 45-65% top-1 and 75-90% top-3. The meta-model (RF) is appropriate because meta-features are heterogeneous (different scales and types), and RF handles this without normalisation. -->
 
 ---
 
@@ -299,15 +236,7 @@ Speaker notes: Key talking points for this slide
 
 > The meta-recommender learns these associations from data, not hand-coded rules.
 
-<!--
-Speaker notes: Key talking points for this slide
-- Walk through each scenario and connect the meta-features to the recommendation.
-- Genomics: n << p is the key signal. log_ratio_n_p is very negative. BagFS-LASSO provides formal FDR guarantees in this regime.
-- Finance: high correlation fraction signals that LASSO will be unstable. Elastic net handles this. Walk-forward wrapper respects temporal ordering.
-- Tabular ML: dt1_lift > 0.2 means a single feature provides significant signal. RF importance captures this interaction-aware.
-- Text: frac_zero_mi > 0.9 means 90% of features are pure noise (stopwords, rare terms). Aggressive filter is essential.
-- The key message: these are the rules that the meta-model learns from data. It may also discover non-obvious patterns.
--->
+<!-- Speaker notes: Walk through each scenario and connect the meta-features to the recommendation. Genomics: n << p is the key signal. log_ratio_n_p is very negative. BagFS-LASSO provides formal FDR guarantees in this regime. Finance: high correlation fraction signals that LASSO will be unstable. Elastic net handles this. Walk-forward wrapper respects temporal ordering. Tabular ML: dt1_lift > 0.2 means a single feature provides significant signal. Text: frac_zero_mi > 0.9 means 90% of features are pure noise. Aggressive filter is essential. The key message: these are the rules that the meta-model learns from data — it may also discover non-obvious patterns. -->
 
 ---
 
@@ -339,14 +268,7 @@ def bma_feature_importance(X, y, eval_model, n_subsets=20, top_k=15):
     return importance
 ```
 
-<!--
-Speaker notes: Key talking points for this slide
-- BMA is the principled alternative to selecting a single feature subset.
-- Instead of committing to one subset, we maintain uncertainty over which features are relevant.
-- The BMA weight P(S|D) is approximated by exp(cv_score) — subsets that predict well get higher weight.
-- In the limit of many subsets, features that appear in all high-scoring subsets get high importance; features that appear only in poor subsets get low importance.
-- When to use BMA vs single-subset selection: use BMA when you want feature importance scores (for ranking or interpretation) rather than a discrete include/exclude decision.
--->
+<!-- Speaker notes: BMA is the principled alternative to selecting a single feature subset. Instead of committing to one subset, we maintain uncertainty over which features are relevant. The BMA weight P(S|D) is approximated by exp(cv_score) — subsets that predict well get higher weight. In the limit of many subsets, features that appear in all high-scoring subsets get high importance. Use BMA when you want feature importance scores (for ranking or interpretation) rather than a discrete include/exclude decision. -->
 
 ---
 
@@ -376,14 +298,7 @@ print(f"Best CV score: {automl.best_loss:.4f}")
 
 **FLAML** selects the model type AND hyperparameters jointly. The best model's feature importances provide implicit feature selection.
 
-<!--
-Speaker notes: Key talking points for this slide
-- FLAML is Microsoft's Fast and Lightweight AutoML library. It is faster than Auto-sklearn for small-to-medium time budgets.
-- The implicit feature selection through the best model's importances is a practical approach: AutoML finds the best model, and that model's importances identify which features matter.
-- This is not a replacement for explicit feature selection, but it is a useful baseline for comparison.
-- In practice: run FLAML for 120 seconds, extract importances, compare to your manual ensemble selection. They should largely agree on the top features.
-- If they disagree substantially, that is a signal to investigate further.
--->
+<!-- Speaker notes: FLAML is Microsoft's Fast and Lightweight AutoML library. It is faster than Auto-sklearn for small-to-medium time budgets. The implicit feature selection through the best model's importances is a practical approach: AutoML finds the best model, and that model's importances identify which features matter. This is not a replacement for explicit feature selection, but it is a useful baseline for comparison. In practice: run FLAML for 120 seconds, extract importances, compare to your manual ensemble selection. They should largely agree on the top features. If they disagree substantially, that is a signal to investigate further. -->
 
 ---
 
@@ -406,13 +321,7 @@ For each dataset D:
 
 **Top-3 accuracy 75–90%** means: 3 recommended selectors cover the best one in 8/10 cases.
 
-<!--
-Speaker notes: Key talking points for this slide
-- These benchmarks come from the meta-learning literature. Your results in Notebook 03 will be lower because we only use 10 datasets for training — in a real setting you'd use 50–200.
-- Top-3 accuracy is the most important practical metric: if the meta-model recommends 3 selectors and the best is in that list, you've reduced a 5-way search to a 3-way search at minimal cost.
-- Average rank of best: 1.8 means the best selector is typically the top-1 or top-2 recommendation. Random baseline: 3.0.
-- With only 10 training datasets (as in Notebook 03), expect top-1 accuracy around 30-40%. This is still better than random (20%) and demonstrates the concept.
--->
+<!-- Speaker notes: These benchmarks come from the meta-learning literature. Your results in Notebook 03 will be lower because we only use 10 datasets for training — in a real setting you'd use 50–200. Top-3 accuracy is the most important practical metric: if the meta-model recommends 3 selectors and the best is in that list, you've reduced a 5-way search to a 3-way search at minimal cost. Average rank of best: 1.8 means the best selector is typically the top-1 or top-2 recommendation. Random baseline: 3.0. With only 10 training datasets, expect top-1 accuracy around 30-40%. This is still better than random (20%) and demonstrates the concept. -->
 
 ---
 
@@ -439,15 +348,7 @@ graph LR
     style K fill:#4CAF50,color:#fff
 ```
 
-<!--
-Speaker notes: Key talking points for this slide
-- This diagram summarises the full meta-learning workflow.
-- Left side (offline): done once. Takes hours for 30 datasets. But never repeated.
-- Right side (online): fast. For any new dataset, compute meta-features (5s), get recommendations (< 1s), run only the recommended 3 selectors.
-- Total online cost: ~3× the cost of one selector instead of 5× the cost of all selectors.
-- Combined with warm-starting Bayesian optimisation, this reduces total AutoML wall time by 5-10×.
-- This is the production workflow for intelligent feature selection in large-scale ML systems.
--->
+<!-- Speaker notes: This diagram summarises the full meta-learning workflow. Left side (offline): done once. Takes hours for 30 datasets but never repeated. Right side (online): fast. For any new dataset, compute meta-features (5s), get recommendations (< 1s), run only the recommended 3 selectors. Total online cost: ~3× the cost of one selector instead of 5× the cost of all selectors. Combined with warm-starting Bayesian optimisation, this reduces total AutoML wall time by 5-10×. This is the production workflow for intelligent feature selection in large-scale ML systems. -->
 
 ---
 
@@ -476,14 +377,7 @@ Speaker notes: Key talking points for this slide
 
 > **Practical guidance:** use meta-learning to identify top-3 candidates, then validate with cross-validation on your actual data. Never skip validation.
 
-<!--
-Speaker notes: Key talking points for this slide
-- Honest assessment is important here. Meta-learning is a powerful tool but not a silver bullet.
-- The main limitation: generalisation requires diverse training data. If all your training datasets are financial time series, the recommender will be biased.
-- Distribution shift: if your production dataset has characteristics outside the range of training datasets (e.g., much larger n/p ratio), predictions degrade.
-- The 20-dataset minimum is a rough rule of thumb. In practice, you need enough datasets to cover the meta-feature space you care about.
-- Key message: meta-learning reduces exploration cost but doesn't eliminate the need to validate recommendations on the actual task.
--->
+<!-- Speaker notes: Honest assessment is important here. Meta-learning is a powerful tool but not a silver bullet. The main limitation: generalisation requires diverse training data. If all your training datasets are financial time series, the recommender will be biased. Distribution shift: if your production dataset has characteristics outside the range of training datasets (e.g., much larger n/p ratio), predictions degrade. The 20-dataset minimum is a rough rule of thumb. Key message: meta-learning reduces exploration cost but doesn't eliminate the need to validate recommendations on the actual task. -->
 
 ---
 
@@ -504,11 +398,4 @@ graph TB
 
 > **Next: Module 11 — Production Feature Selection** → deployment, monitoring, drift detection.
 
-<!--
-Speaker notes: Key talking points for this slide
-- This is the capstone of Module 10.
-- The three guides complement each other: ensemble addresses instability, hybrid addresses computation, meta-learning addresses method selection.
-- Together they form a complete advanced framework that practitioners can apply immediately.
-- Module 11 closes the course with the production perspective: how do you deploy, monitor, and maintain feature selection pipelines in real systems?
-- Encourage learners to complete all three notebooks before moving to Module 11. The notebooks are designed to build on each other.
--->
+<!-- Speaker notes: This is the capstone of Module 10. The three guides complement each other: ensemble addresses instability, hybrid addresses computation, meta-learning addresses method selection. Together they form a complete advanced framework that practitioners can apply immediately. Module 11 closes the course with the production perspective: how do you deploy, monitor, and maintain feature selection pipelines in real systems? Encourage learners to complete all three notebooks before moving to Module 11. -->

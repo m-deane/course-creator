@@ -6,14 +6,13 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: This deck covers the shift from single-objective to multi-objective feature selection. The key insight to open with: any weighted sum of objectives forces a trade-off commitment before you understand the trade-off surface. Multi-objective EAs remove that commitment and return the full trade-off curve. Emphasise that this is not added complexity for its own sake — it directly helps stakeholders make informed decisions. -->
 
 # Multi-Objective Evolutionary Feature Selection
 
 ## Module 06 — Evolutionary & Swarm Methods
 
 NSGA-II, NSGA-III, MOEA/D · Pareto Fronts · Knee Point Selection
-
-<!-- Speaker notes: This deck covers the shift from single-objective to multi-objective feature selection. The key insight to open with: any weighted sum of objectives forces a trade-off commitment before you understand the trade-off surface. Multi-objective EAs remove that commitment and return the full trade-off curve. Emphasise that this is not added complexity for its own sake — it directly helps stakeholders make informed decisions. -->
 
 ---
 

@@ -6,21 +6,13 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: This deck covers hybrid selection: combining multiple paradigms in sequence rather than in parallel. The key promise: you can get near-wrapper quality at a fraction of wrapper cost. A wrapper on 2000 features is computationally infeasible. A wrapper on 30 pre-screened features is fast. The insight is that most of the feature space is clearly irrelevant — a cheap filter identifies this in seconds, saving hours of wrapper time. We will build a full 3-stage pipeline: filter → embedded (LASSO) → GA wrapper. -->
 
 # Hybrid Feature Selection Methods
 
 **Module 10 — Ensemble & Hybrid Methods**
 
 > Cascade filter → embedded → evolutionary → wrapper for 10–100× computational savings with equivalent quality.
-
-<!--
-Speaker notes: Key talking points for this slide
-- This deck covers hybrid selection: combining multiple paradigms in sequence rather than in parallel.
-- The key promise: you can get near-wrapper quality at a fraction of wrapper cost.
-- Why does this matter? A wrapper on 2000 features is computationally infeasible. A wrapper on 30 pre-screened features is fast.
-- The insight is that most of the feature space is clearly irrelevant — a cheap filter identifies this in seconds, saving hours of wrapper time.
-- We will build a full 3-stage pipeline: filter → embedded (LASSO) → GA wrapper.
--->
 
 ---
 
@@ -43,14 +35,7 @@ After **filter pre-screening to 50 features:**
 
 **22–50× speedup. Quality loss: < 2%.**
 
-<!--
-Speaker notes: Key talking points for this slide
-- These are real order-of-magnitude estimates for a medium-complexity dataset (n=5000, p=2000).
-- The key insight: the exponential or quadratic cost applies to the dimensionality at the wrapper stage, not the original.
-- Pre-screening reduces dimensionality by 10–40×, which reduces wrapper cost by 100–1600× (quadratic for greedy, exponential for exhaustive).
-- Quality cost is small because the filter removes only clearly irrelevant features (near-zero MI with target).
-- This is the core justification for hybrid methods — not just "it's a nice idea" but concrete order-of-magnitude speedups.
--->
+<!-- Speaker notes: These are real order-of-magnitude estimates for a medium-complexity dataset (n=5000, p=2000). The key insight: the exponential or quadratic cost applies to the dimensionality at the wrapper stage, not the original. Pre-screening reduces dimensionality by 10–40×, which reduces wrapper cost by 100–1600× (quadratic for greedy, exponential for exhaustive). Quality cost is small because the filter removes only clearly irrelevant features (near-zero MI with target). This is the core justification for hybrid methods — concrete order-of-magnitude speedups. -->
 
 ---
 
@@ -70,15 +55,7 @@ graph TD
 
 Each stage passes a smaller, higher-quality feature set to the next.
 
-<!--
-Speaker notes: Key talking points for this slide
-- The funnel diagram is the core mental model for hybrid selection.
-- Each stage is a gate: features that pass are candidates for more expensive evaluation.
-- The filter gate is wide and fast — some false positives are acceptable.
-- The embedded gate is narrower — it removes redundant and weakly-relevant features.
-- The wrapper gate is narrow and slow — but it only operates on 30–50 features, making it tractable.
-- Key design principle: the filter should have HIGH RECALL (don't miss relevant features) even at the cost of lower precision (some irrelevant features pass through).
--->
+<!-- Speaker notes: The funnel diagram is the core mental model for hybrid selection. Each stage is a gate: features that pass are candidates for more expensive evaluation. The filter gate is wide and fast — some false positives are acceptable. The embedded gate is narrower — it removes redundant and weakly-relevant features. The wrapper gate is narrow and slow — but it only operates on 30–50 features, making it tractable. Key design principle: the filter should have HIGH RECALL (don't miss relevant features) even at the cost of lower precision. -->
 
 ---
 
@@ -107,15 +84,7 @@ def filter_stage(X, y, method='mi', top_k=150):
 - Want 20 final features → filter to 100–200
 - Want 50 final features → filter to 250–500
 
-<!--
-Speaker notes: Key talking points for this slide
-- The filter stage is intentionally conservative — it should NOT try to be precise.
-- Recall matters more than precision here: a relevant feature missed at the filter stage is gone forever.
-- Mutual Information is the best general-purpose filter for mixed/nonlinear data.
-- Pearson correlation is faster but only for linear feature-target relationships.
-- Variance threshold (remove constant features) should always be applied first, before MI scoring.
-- Practical timing: MI scoring on 2000 features × 5000 samples takes ~2 seconds. This is the "free lunch" stage.
--->
+<!-- Speaker notes: The filter stage is intentionally conservative — it should NOT try to be precise. Recall matters more than precision here: a relevant feature missed at the filter stage is gone forever. Mutual Information is the best general-purpose filter for mixed/nonlinear data. Pearson correlation is faster but only for linear feature-target relationships. Variance threshold (remove constant features) should always be applied first. Practical timing: MI scoring on 2000 features × 5000 samples takes ~2 seconds. -->
 
 ---
 
@@ -142,15 +111,7 @@ def embedded_stage(X_filtered, y, top_k=40):
 **Why LASSO at stage 2, not stage 1?**
 LASSO requires a full model fit ($O(n \cdot p_{\text{filter}}^2)$). Too slow for $p = 2000$; fast for $p = 150$.
 
-<!--
-Speaker notes: Key talking points for this slide
-- Stage 2 applies an embedded method — something that requires model fitting but is still polynomial-time.
-- LASSO is ideal because it performs variable selection within the fit via L1 regularisation.
-- On 150 features with n=5000, LassoCV fits in 5–10 seconds. On 2000 features, it would take minutes.
-- The embedded stage excels at removing redundancy: if X1 and X3 are correlated with Y, LASSO picks the stronger one.
-- If you know features are highly correlated, use ElasticNet (l1_ratio < 1.0) instead of LASSO — LASSO arbitrarily discards correlated features.
-- After stage 2: you have 30–50 candidate features, all with non-trivial LASSO coefficients.
--->
+<!-- Speaker notes: Stage 2 applies an embedded method — something that requires model fitting but is still polynomial-time. LASSO is ideal because it performs variable selection within the fit via L1 regularisation. On 150 features with n=5000, LassoCV fits in 5–10 seconds. On 2000 features, it would take minutes. The embedded stage excels at removing redundancy: if X1 and X3 are correlated with Y, LASSO picks the stronger one. If features are highly correlated, use ElasticNet (l1_ratio < 1.0) instead of LASSO — LASSO arbitrarily discards correlated features. -->
 
 ---
 
@@ -181,14 +142,7 @@ $$\min_\beta \|y - X\beta\|^2 + \lambda[\alpha\|\beta\|_1 + \frac{(1-\alpha)}{2}
 
 > **Financial/genomics data with high feature correlation → use Elastic Net at stage 2.**
 
-<!--
-Speaker notes: Key talking points for this slide
-- This distinction matters in practice. LASSO's "pick one from each correlated group" behaviour is a problem in finance (many correlated return signals) and genomics (LD blocks).
-- Elastic net with l1_ratio around 0.5 retains the sparsity property of LASSO while grouping correlated features together.
-- Scikit-learn's ElasticNetCV cross-validates both alpha (overall regularisation) and l1_ratio (mix).
-- Rule of thumb: if your correlation matrix has any entry |r| > 0.7, consider elastic net over LASSO.
-- The difference in selected features can be dramatic: LASSO might select X1 and drop X2 (r=0.9); elastic net selects both with coefficient 0.5.
--->
+<!-- Speaker notes: This distinction matters in practice. LASSO's "pick one from each correlated group" behaviour is a problem in finance (many correlated return signals) and genomics (LD blocks). Elastic net with l1_ratio around 0.5 retains the sparsity property of LASSO while grouping correlated features together. Scikit-learn's ElasticNetCV cross-validates both alpha (overall regularisation) and l1_ratio (mix). Rule of thumb: if your correlation matrix has any entry |r| > 0.7, consider elastic net over LASSO. -->
 
 ---
 
@@ -220,14 +174,7 @@ def ga_wrapper_refinement(X_candidates, y, eval_fn,
 
 **Seeded initialisation** = faster convergence (fewer generations to good solutions).
 
-<!--
-Speaker notes: Key talking points for this slide
-- The key innovation here is seeded initialisation, not random initialisation.
-- A random initial population on 40 features wastes the first 10-20 generations exploring chromosomes with no prior information.
-- Seeded initialisation biases toward features that the filter identified as high-MI — these are likely to produce good subsets immediately.
-- The 70% inclusion probability for seeded features reflects our confidence in the filter: high but not certain.
-- In practice, seeded GA converges in 20-30 generations; random GA needs 50-80 generations for the same quality.
--->
+<!-- Speaker notes: The key innovation here is seeded initialisation, not random initialisation. A random initial population on 40 features wastes the first 10-20 generations exploring chromosomes with no prior information. Seeded initialisation biases toward features that the filter identified as high-MI — these are likely to produce good subsets immediately. The 70% inclusion probability for seeded features reflects our confidence in the filter: high but not certain. In practice, seeded GA converges in 20-30 generations; random GA needs 50-80 generations for the same quality. -->
 
 ---
 
@@ -246,15 +193,7 @@ where $S(v) = 1/(1 + e^{-v})$ is the sigmoid transfer function.
 - GA: better exploration for multimodal fitness landscapes
 - Try both; GA often wins for discrete spaces
 
-<!--
-Speaker notes: Key talking points for this slide
-- Binary PSO is the extension of standard PSO to binary feature selection.
-- The sigmoid transfer function converts continuous velocities to selection probabilities.
-- Particles are attracted to their personal best and the global best — this provides directed search without explicit crossover.
-- For small p (< 50 features), PSO and GA tend to perform similarly.
-- For larger p (50-200), GA with crossover tends to outperform PSO.
-- Recommendation: use GA as the default for stage 3 hybrid pipelines; use PSO for exploratory analysis or comparison.
--->
+<!-- Speaker notes: Binary PSO is the extension of standard PSO to binary feature selection. The sigmoid transfer function converts continuous velocities to selection probabilities. Particles are attracted to their personal best and the global best — this provides directed search without explicit crossover. For small p (< 50 features), PSO and GA tend to perform similarly. For larger p (50-200), GA with crossover tends to outperform PSO. Recommendation: use GA as the default for stage 3 hybrid pipelines; use PSO for exploratory analysis or comparison. -->
 
 ---
 
@@ -287,14 +226,7 @@ Hybrid Cascade Pipeline Report
 
 vs naive GA on all 2000 features: **~4800 seconds**
 
-<!--
-Speaker notes: Key talking points for this slide
-- These numbers are real benchmarks from Notebook 02.
-- The pipeline runs in 50 seconds vs ~80 minutes for a naive GA on the full feature space.
-- Stage breakdown: filter is 1.8s (fast!), embedded is 6.2s (1 LassoCV fit), wrapper is 42s (GA on 40 features).
-- Quality: the hybrid pipeline achieves 97-99% of the quality of the naive full-space GA.
-- The remaining 1-3% quality gap can be closed by increasing the filter threshold (keep more features at stage 1) at minimal additional cost.
--->
+<!-- Speaker notes: These numbers are real benchmarks from Notebook 02. The pipeline runs in 50 seconds vs ~80 minutes for a naive GA on the full feature space. Stage breakdown: filter is 1.8s (fast!), embedded is 6.2s (1 LassoCV fit), wrapper is 42s (GA on 40 features). Quality: the hybrid pipeline achieves 97-99% of the quality of the naive full-space GA. The remaining 1-3% quality gap can be closed by increasing the filter threshold (keep more features at stage 1) at minimal additional cost. -->
 
 ---
 
@@ -321,14 +253,7 @@ Speedup factor ≈ $(p / p')^2$
 
 **Real speedup is lower** (filter has its own cost, model fitting time varies) but typically 10–200×.
 
-<!--
-Speaker notes: Key talking points for this slide
-- The quadratic speedup factor applies to greedy search. For GA, the speedup is more nuanced (GA cost is linear in p, but fitness evaluations are faster with smaller p).
-- For exhaustive search: speedup is exponential in (p - p') — essentially infinity for large reductions.
-- The practical takeaway: even a modest filter (p=2000 to p=200) provides 100× speedup for quadratic-cost wrappers.
-- More aggressive filtering (to p=50) provides 1600× speedup but risks dropping relevant features.
-- The optimal filter_top_k balances speedup vs recall risk — validate by comparing pipeline output to a larger-filter baseline.
--->
+<!-- Speaker notes: The quadratic speedup factor applies to greedy search. For GA, the speedup is more nuanced — GA cost is linear in p, but fitness evaluations are faster with smaller p. For exhaustive search: speedup is exponential in (p - p') — essentially infinity for large reductions. The practical takeaway: even a modest filter (p=2000 to p=200) provides 100× speedup for quadratic-cost wrappers. More aggressive filtering (to p=50) provides 1600× speedup but risks dropping relevant features. The optimal filter_top_k balances speedup vs recall risk. -->
 
 ---
 
@@ -376,15 +301,7 @@ Final: varies
 </div>
 </div>
 
-<!--
-Speaker notes: Key talking points for this slide
-- These four templates cover the most common problem types in industry.
-- Genomics template: designed for n << p. Stability selection is critical here for FDR control. Boruta confirms features against a permutation baseline.
-- Financial template: walk-forward wrapper is essential — standard CV introduces look-ahead bias with time series.
-- NLP template: chi-squared is specifically designed for sparse binary/count features (term presence/absence). L1-logistic is fast on sparse matrices.
-- Tabular ML: the most flexible. SHAP importance is model-agnostic and can capture interactions. Boruta confirms against shadow features.
-- Recommendation: always use the domain-appropriate filter at stage 1 before applying any generic embedded or wrapper.
--->
+<!-- Speaker notes: These four templates cover the most common problem types in industry. Genomics template: designed for n << p. Stability selection is critical here for FDR control. Boruta confirms features against a permutation baseline. Financial template: walk-forward wrapper is essential — standard CV introduces look-ahead bias with time series. NLP template: chi-squared is specifically designed for sparse binary/count features. Tabular ML: SHAP importance is model-agnostic and can capture interactions. Always use the domain-appropriate filter at stage 1 before applying any generic embedded or wrapper. -->
 
 ---
 
@@ -409,13 +326,7 @@ pipe = Pipeline([('select', HybridSelector()), ('model', clf)])
 scores = cross_val_score(pipe, X, y, cv=5)  # unbiased
 ```
 
-<!--
-Speaker notes: Key talking points for this slide
-- Data leakage is the most important pitfall. When the filter is fitted on all data including the validation fold, it uses information from the validation set to select features, making the CV accuracy overestimated.
-- The fix: wrap the entire selection pipeline in a sklearn Pipeline object so that fit() is called only on training folds.
-- Over-aggressive filtering is the second most common issue. If you filter to 30 features and want 20, the wrapper has very little room to refine.
-- Practical advice: start conservative (large filter_top_k), then tighten if timing is too slow.
--->
+<!-- Speaker notes: Data leakage is the most important pitfall. When the filter is fitted on all data including the validation fold, it uses information from the validation set to select features, making the CV accuracy overestimated. The fix: wrap the entire selection pipeline in a sklearn Pipeline object so that fit() is called only on training folds. Over-aggressive filtering is the second most common issue. If you filter to 30 features and want 20, the wrapper has very little room to refine. Start conservative (large filter_top_k), then tighten if timing is too slow. -->
 
 ---
 
@@ -441,11 +352,4 @@ graph LR
 
 > Next: **Guide 03 — Meta-Learning for Feature Selection** → Automate pipeline selection itself.
 
-<!--
-Speaker notes: Key talking points for this slide
-- The three-stage funnel is the core takeaway: filter (cheap, coarse) → embedded (moderate, targeted) → wrapper (expensive, precise).
-- Each stage is appropriate for a different aspect of the problem: filtering noise, removing redundancy, fine-tuning.
-- The computational savings are not marginal — they are one to two orders of magnitude.
-- Data leakage warning: this is the most common mistake when implementing hybrid pipelines. Emphasise this point.
-- Preview Guide 03: can we automate the choice of which pipeline to use? Meta-learning over dataset characteristics.
--->
+<!-- Speaker notes: The three-stage funnel is the core takeaway: filter (cheap, coarse) → embedded (moderate, targeted) → wrapper (expensive, precise). Each stage is appropriate for a different aspect of the problem: filtering noise, removing redundancy, fine-tuning. The computational savings are not marginal — they are one to two orders of magnitude. Data leakage warning: this is the most common mistake when implementing hybrid pipelines. Preview Guide 03: can we automate the choice of which pipeline to use? Meta-learning over dataset characteristics. -->

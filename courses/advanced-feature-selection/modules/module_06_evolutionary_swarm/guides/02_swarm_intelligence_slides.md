@@ -6,14 +6,13 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: Swarm intelligence is the second major family of nature-inspired optimisation, distinct from evolutionary computation. Where GA/NSGA-II mimic biological reproduction, swarm algorithms model collective behaviour: birds flocking (PSO), information diffusion via pheromones (ACO), and vector perturbations (DE). All three can be applied to feature selection. Today we implement all three and compare their behaviour. -->
 
 # Swarm Intelligence for Feature Selection
 
 ## Module 06 — Evolutionary & Swarm Methods
 
 PSO · Differential Evolution · Ant Colony Optimisation
-
-<!-- Speaker notes: Swarm intelligence is the second major family of nature-inspired optimisation, distinct from evolutionary computation. Where GA/NSGA-II mimic biological reproduction, swarm algorithms model collective behaviour: birds flocking (PSO), information diffusion via pheromones (ACO), and vector perturbations (DE). All three can be applied to feature selection. Today we implement all three and compare their behaviour. -->
 
 ---
 

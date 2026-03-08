@@ -6,13 +6,12 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: This is one of the most practically important topics in applied statistics that most practitioners get wrong. When you use data to select features and then estimate their effects using the same data, your confidence intervals do not have the stated coverage. This is not a subtle asymptotic issue — in realistic settings, a "95%" CI based on Lasso-selected OLS can have actual coverage of 45%. We cover three solutions: the Debiased Lasso, selective inference, and data splitting. -->
 
 # Post-Selection Inference
 ## Valid Confidence Intervals After Feature Selection
 
 Module 8 · Advanced Feature Selection
-
-<!-- Speaker notes: This is one of the most practically important topics in applied statistics that most practitioners get wrong. When you use data to select features and then estimate their effects using the same data, your confidence intervals do not have the stated coverage. This is not a subtle asymptotic issue — in realistic settings, a "95%" CI based on Lasso-selected OLS can have actual coverage of 45%. We cover three solutions: the Debiased Lasso, selective inference, and data splitting. -->
 
 ---
 

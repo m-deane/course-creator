@@ -6,13 +6,12 @@ math: mathjax
 ---
 
 <!-- _class: lead -->
+<!-- Speaker notes: Welcome to Module 8. This deck covers the theory and practice of screening methods for ultra-high dimensional data — settings where p is in the thousands to millions and n is in the hundreds. The core idea is elegantly simple: use cheap marginal statistics to reduce p to a tractable size, then apply your expensive selection method on the reduced set. By the end you will understand when this is guaranteed to work, when it fails, and how to fix the failures. -->
 
 # Feature Selection for High-Dimensional Data
 ## Sure Independence Screening and Its Variants
 
 Module 8 · Advanced Feature Selection
-
-<!-- Speaker notes: Welcome to Module 8. This deck covers the theory and practice of screening methods for ultra-high dimensional data — settings where p is in the thousands to millions and n is in the hundreds. The core idea is elegantly simple: use cheap marginal statistics to reduce p to a tractable size, then apply your expensive selection method on the reduced set. By the end you will understand when this is guaranteed to work, when it fails, and how to fix the failures. -->
 
 ---
 

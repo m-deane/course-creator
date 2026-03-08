@@ -1,0 +1,486 @@
+{
+  "_comment": [
+    "Adaptive Card Templates for Power Automate",
+    "",
+    "Use these cards with the 'Post an Adaptive Card' action in Teams or Outlook.",
+    "All cards target Adaptive Cards schema version 1.4 (supported in Teams, Outlook,",
+    "Power Automate approval panels, and the Adaptive Cards designer at adaptivecards.io).",
+    "",
+    "HOW TO USE IN POWER AUTOMATE:",
+    "  1. Add a 'Post an Adaptive Card to a Teams channel' action (or Teams chat/Outlook).",
+    "  2. In the 'Adaptive Card' field, select 'Expression' and paste:",
+    "       json('<paste the card JSON here>')",
+    "  3. Replace static placeholder values with dynamic expressions, e.g.:",
+    "       @{triggerBody()?['Title']}",
+    "",
+    "CUSTOMISATION GUIDE:",
+    "  Placeholders are wrapped in < > — replace with static text or PA expressions.",
+    "  Colors: 'default' | 'dark' | 'light' | 'accent' | 'good' | 'warning' | 'attention'",
+    "  Schema reference: https://adaptivecards.io/explorer/"
+  ],
+  "cards": {
+    "approval_card": {
+      "_comment": [
+        "Approval Card — shown to the approver in a Teams message.",
+        "Includes Approve and Reject buttons that respond back to the flow via",
+        "Power Automate's 'Wait for an adaptive card response' action.",
+        "",
+        "REQUIRED FLOW ACTIONS:",
+        "  - 'Post adaptive card and wait for a response' (Teams connector)",
+        "  - The card's Actions must match the flow's expected response schema.",
+        "",
+        "CUSTOMISE:",
+        "  <REQUEST_TITLE>    — display name for the request",
+        "  <REQUESTER_NAME>   — person who submitted the request",
+        "  <AMOUNT>           — amount or quantity (remove row if not applicable)",
+        "  <DESCRIPTION>      — short description of the request",
+        "  <ITEM_URL>         — deep link to the source item in SharePoint or other system",
+        "  <DUE_DATE>         — approval deadline"
+      ],
+      "type": "AdaptiveCard",
+      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "emphasis",
+          "items": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "type": "Column",
+                  "width": "auto",
+                  "items": [
+                    {
+                      "type": "Image",
+                      "url": "https://adaptivecards.io/content/pending.png",
+                      "width": "32px",
+                      "height": "32px",
+                      "altText": "Pending approval icon"
+                    }
+                  ]
+                },
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Approval Required",
+                      "weight": "bolder",
+                      "size": "medium"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "Please review and respond",
+                      "isSubtle": true,
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "spacing": "medium",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "<REQUEST_TITLE>",
+              "weight": "bolder",
+              "size": "large",
+              "wrap": true
+            },
+            {
+              "type": "FactSet",
+              "facts": [
+                {
+                  "title": "Requested by",
+                  "value": "<REQUESTER_NAME>"
+                },
+                {
+                  "title": "Amount",
+                  "value": "<AMOUNT>"
+                },
+                {
+                  "title": "Description",
+                  "value": "<DESCRIPTION>"
+                },
+                {
+                  "title": "Due by",
+                  "value": "<DUE_DATE>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_comment": "Optional comments field — the approver's text is returned to the flow",
+          "type": "Container",
+          "spacing": "medium",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Comments (optional)",
+              "weight": "bolder"
+            },
+            {
+              "type": "Input.Text",
+              "id": "approverComments",
+              "placeholder": "Enter any comments for the requestor...",
+              "isMultiline": true,
+              "maxLength": 500
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "_comment": "Value 'Approve' is returned to the flow in the response body",
+          "type": "Action.Submit",
+          "title": "Approve",
+          "style": "positive",
+          "data": {
+            "decision": "Approve"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Reject",
+          "style": "destructive",
+          "data": {
+            "decision": "Reject"
+          }
+        },
+        {
+          "_comment": "Opens the source item in a browser without submitting a response",
+          "type": "Action.OpenUrl",
+          "title": "View Request",
+          "url": "<ITEM_URL>"
+        }
+      ]
+    },
+    "status_update_card": {
+      "_comment": [
+        "Status Update Card — post to a Teams channel to broadcast progress.",
+        "Uses a coloured header bar and a progress-style fact set.",
+        "",
+        "CUSTOMISE:",
+        "  <PROCESS_NAME>     — name of the process or project being reported on",
+        "  <STATUS_LABEL>     — e.g. 'In Progress', 'Completed', 'Blocked'",
+        "  <STATUS_COLOR>     — 'good' (green) | 'warning' (amber) | 'attention' (red)",
+        "  <PERCENT_COMPLETE> — 0-100 integer",
+        "  <OWNER_NAME>       — person responsible",
+        "  <LAST_UPDATED>     — ISO 8601 date/time string",
+        "  <NEXT_MILESTONE>   — next key deliverable or date",
+        "  <DETAIL_URL>       — link to the full status dashboard or SharePoint page"
+      ],
+      "type": "AdaptiveCard",
+      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "<STATUS_COLOR>",
+          "bleed": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Status Update — <PROCESS_NAME>",
+              "weight": "bolder",
+              "color": "light",
+              "size": "medium"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "spacing": "medium",
+          "items": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Current Status",
+                      "isSubtle": true,
+                      "size": "small"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "<STATUS_LABEL>",
+                      "weight": "bolder",
+                      "color": "<STATUS_COLOR>",
+                      "size": "large",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "type": "Column",
+                  "width": "auto",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Complete",
+                      "isSubtle": true,
+                      "size": "small"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "<PERCENT_COMPLETE>%",
+                      "weight": "bolder",
+                      "size": "large",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_comment": "Visual progress bar using a filled/empty block character pattern",
+              "type": "TextBlock",
+              "text": "Progress",
+              "isSubtle": true,
+              "size": "small",
+              "spacing": "medium"
+            },
+            {
+              "type": "FactSet",
+              "facts": [
+                {
+                  "title": "Owner",
+                  "value": "<OWNER_NAME>"
+                },
+                {
+                  "title": "Last updated",
+                  "value": "<LAST_UPDATED>"
+                },
+                {
+                  "title": "Next milestone",
+                  "value": "<NEXT_MILESTONE>"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "View Full Dashboard",
+          "url": "<DETAIL_URL>"
+        }
+      ]
+    },
+    "data_collection_form_card": {
+      "_comment": [
+        "Data Collection Form Card — collects structured input from a Teams user.",
+        "Submit action returns all field values to the flow in a JSON object.",
+        "Use with 'Post adaptive card and wait for a response' (Teams connector).",
+        "",
+        "CUSTOMISE:",
+        "  <FORM_TITLE>       — heading shown to the user",
+        "  <FORM_DESCRIPTION> — one-line explanation of what data is needed",
+        "  Choice set options should reflect your actual categories.",
+        "  Add or remove Input.* blocks as needed for your schema."
+      ],
+      "type": "AdaptiveCard",
+      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "TextBlock",
+          "text": "<FORM_TITLE>",
+          "weight": "bolder",
+          "size": "large"
+        },
+        {
+          "type": "TextBlock",
+          "text": "<FORM_DESCRIPTION>",
+          "wrap": true,
+          "isSubtle": true,
+          "spacing": "none"
+        },
+        {
+          "type": "Container",
+          "spacing": "medium",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Title *",
+              "weight": "bolder"
+            },
+            {
+              "type": "Input.Text",
+              "id": "formTitle",
+              "placeholder": "Enter a short title...",
+              "isRequired": true,
+              "errorMessage": "Title is required"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Category *",
+              "weight": "bolder",
+              "spacing": "medium"
+            },
+            {
+              "type": "Input.ChoiceSet",
+              "id": "formCategory",
+              "style": "compact",
+              "isRequired": true,
+              "errorMessage": "Please select a category",
+              "placeholder": "Select a category",
+              "choices": [
+                {"title": "IT", "value": "IT"},
+                {"title": "Finance", "value": "Finance"},
+                {"title": "HR", "value": "HR"},
+                {"title": "Operations", "value": "Operations"},
+                {"title": "Other", "value": "Other"}
+              ]
+            },
+            {
+              "type": "TextBlock",
+              "text": "Priority",
+              "weight": "bolder",
+              "spacing": "medium"
+            },
+            {
+              "type": "Input.ChoiceSet",
+              "id": "formPriority",
+              "style": "expanded",
+              "value": "Medium",
+              "choices": [
+                {"title": "Low", "value": "Low"},
+                {"title": "Medium", "value": "Medium"},
+                {"title": "High", "value": "High"}
+              ]
+            },
+            {
+              "type": "TextBlock",
+              "text": "Due Date",
+              "weight": "bolder",
+              "spacing": "medium"
+            },
+            {
+              "type": "Input.Date",
+              "id": "formDueDate",
+              "placeholder": "Select a due date"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Description",
+              "weight": "bolder",
+              "spacing": "medium"
+            },
+            {
+              "type": "Input.Text",
+              "id": "formDescription",
+              "placeholder": "Provide additional details...",
+              "isMultiline": true,
+              "maxLength": 1000
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "Submit",
+          "style": "positive"
+        }
+      ]
+    },
+    "notification_card": {
+      "_comment": [
+        "Notification Card — informational card with optional action links.",
+        "No input fields; no response required from the recipient.",
+        "Post with 'Post an Adaptive Card to a Teams channel or chat' (no wait).",
+        "",
+        "CUSTOMISE:",
+        "  <NOTIFICATION_TYPE>  — e.g. 'Reminder', 'Alert', 'Info'",
+        "  <HEADER_COLOR>       — 'default' | 'accent' | 'good' | 'warning' | 'attention'",
+        "  <TITLE>              — main heading",
+        "  <BODY_TEXT>          — supporting paragraph (wrap is enabled)",
+        "  <ACTION_1_LABEL>     — text for the primary button",
+        "  <ACTION_1_URL>       — URL opened by the primary button",
+        "  <ACTION_2_LABEL>     — text for the secondary button (delete if not needed)",
+        "  <ACTION_2_URL>       — URL for secondary button",
+        "  <FOOTER_TEXT>        — small print (e.g. 'Sent by Automation Bot')"
+      ],
+      "type": "AdaptiveCard",
+      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "<HEADER_COLOR>",
+          "bleed": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "<NOTIFICATION_TYPE>",
+              "weight": "bolder",
+              "color": "light",
+              "size": "small",
+              "transform": "uppercase"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "spacing": "medium",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "<TITLE>",
+              "weight": "bolder",
+              "size": "large",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "<BODY_TEXT>",
+              "wrap": true,
+              "spacing": "small"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "spacing": "medium",
+          "separator": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "<FOOTER_TEXT>",
+              "isSubtle": true,
+              "size": "small",
+              "wrap": true
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "<ACTION_1_LABEL>",
+          "url": "<ACTION_1_URL>",
+          "style": "positive"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "<ACTION_2_LABEL>",
+          "url": "<ACTION_2_URL>"
+        }
+      ]
+    }
+  }
+}

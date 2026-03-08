@@ -368,9 +368,21 @@ def compare_feature_sets(mb_features, lasso_features, boruta_features, shap_feat
 
 ## Connections
 
-- **Builds on:** Conditional independence testing (Module 1), information-theoretic feature selection (Module 2)
+- **Builds on:** Conditional independence testing (Module 1 — the filter methods' independence tests underpin PC's skeleton discovery), information-theoretic feature selection (Module 2 — conditional MI is the information-theoretic equivalent of the partial correlation tests used in PC), Granger causality (Module 7 — Granger extends to structural causality when the VAR assumptions hold and there are no latent confounders)
 - **Leads to:** Invariant Causal Prediction (Guide 02), Causal ML methods (Guide 03)
 - **Related to:** Bayesian network structure learning, graphical models, d-separation
+
+---
+
+## Cross-Module Connections
+
+**From predictive to causal selection:** Modules 1–8 all select features that correlate with the target. Causal selection is strictly stronger: it asks which features remain predictive under intervention. The practical implication is distribution shift robustness — a model built on causal features generalises across environments; a model built on spurious correlates does not.
+
+**Granger vs. structural causality (Module 7):** Granger causality (Module 7) is a weak form of causal selection: it identifies predictive precedence in time series. PC, FCI, and GES identify structural causes — edges in the underlying DAG that persist under interventions. A practical workflow for time series: Granger screen to reduce the feature space (computationally cheap), then apply ICP or FCI on the survivors (computationally expensive but causally rigorous).
+
+**Markov blanket vs. information-theoretic selection (Module 2):** The MI-based Markov blanket approximation in Module 1 (greedy forward CMI search) and Module 2 (CMIM criterion) estimate the same object as the graph-theoretic Markov blanket from PC/GES, but via different paths. Under large samples and faithfulness, both converge to the same set. In finite samples, the graph-based approach (PC) tends to select smaller, sparser sets; the MI approach selects more conservatively (lower false negative rate).
+
+**Causal selector in production (Module 11):** The ICP and double ML selectors developed in Guides 02 and 03 of this module wrap directly into the `SelectorTransformer` pattern from Module 11, deploying as a drop-in pipeline step with correct cross-validation handling.
 
 ---
 

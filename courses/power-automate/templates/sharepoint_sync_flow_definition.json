@@ -1,0 +1,326 @@
+{
+  "_comment": [
+    "Power Automate Cloud Flow Definition — SharePoint List Synchronisation",
+    "",
+    "Trigger  : Recurrence (daily at configurable time)",
+    "Purpose  : Copy/upsert items from a source SharePoint list into a destination list.",
+    "           Errors for individual items are logged to a separate Error Log list rather",
+    "           than failing the entire run.",
+    "",
+    "PLACEHOLDER MARKERS — replace every value surrounded by < >:",
+    "  <SOURCE_SITE_URL>         e.g. https://contoso.sharepoint.com/sites/operations",
+    "  <SOURCE_LIST_NAME>        e.g. MasterInventory",
+    "  <DEST_SITE_URL>           e.g. https://contoso.sharepoint.com/sites/warehouse",
+    "  <DEST_LIST_NAME>          e.g. WarehouseInventory",
+    "  <ERROR_LOG_SITE_URL>      e.g. https://contoso.sharepoint.com/sites/it",
+    "  <ERROR_LOG_LIST_NAME>     e.g. FlowErrorLog",
+    "  <SYNC_HOUR_UTC>           0-23  — hour of day (UTC) to run the sync",
+    "  <SYNC_MINUTE>             0-59  — minute within the hour",
+    "  <UNIQUE_KEY_FIELD>        Internal name of the field that uniquely identifies items",
+    "                            in both lists (e.g. 'SKU', 'EmployeeID')",
+    "  <FIELD_1> ... <FIELD_N>   Internal names of fields to copy from source to destination",
+    "",
+    "CONCURRENCY NOTE:",
+    "  'Apply to each' is set to degree=5 (5 parallel branches).",
+    "  Increase for faster sync on large lists; decrease if throttling occurs.",
+    "  Power Automate throttles SharePoint at ~600 requests/60 seconds per connection."
+  ],
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "shared_sharepointonline"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "shared_office365"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "triggers": {
+        "Recurrence_Daily_Sync": {
+          "_comment": [
+            "Runs once per day at the configured UTC time.",
+            "Adjust frequency/interval for more frequent syncs (e.g. Minute/30 for half-hourly)."
+          ],
+          "type": "Recurrence",
+          "recurrence": {
+            "frequency": "Day",
+            "interval": 1,
+            "schedule": {
+              "hours": ["<SYNC_HOUR_UTC>"],
+              "minutes": ["<SYNC_MINUTE>"]
+            },
+            "timeZone": "UTC"
+          }
+        }
+      },
+      "actions": {
+        "Initialize_SyncStats": {
+          "_comment": "Counters for logging sync results at the end of each run",
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ItemsProcessed",
+                "type": "integer",
+                "value": 0
+              }
+            ]
+          },
+          "runAfter": {}
+        },
+        "Initialize_ErrorCount": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ErrorCount",
+                "type": "integer",
+                "value": 0
+              }
+            ]
+          },
+          "runAfter": {
+            "Initialize_SyncStats": ["Succeeded"]
+          }
+        },
+        "Get_Source_Items": {
+          "_comment": [
+            "Retrieves all items from the source list.",
+            "Add an OData $filter if you only want recently modified items, e.g.:",
+            "  Modified ge '@{addDays(utcNow(), -1)}'",
+            "The $top limit is 5000 (SharePoint REST API maximum per page).",
+            "For lists > 5000 items, use a paginated loop with $skiptoken."
+          ],
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetItems",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "<SOURCE_SITE_URL>",
+              "table": "<SOURCE_LIST_NAME>",
+              "$top": 5000,
+              "$orderby": "Modified asc"
+            }
+          },
+          "runAfter": {
+            "Initialize_ErrorCount": ["Succeeded"]
+          }
+        },
+        "Apply_To_Each_Source_Item": {
+          "_comment": [
+            "Processes each source item in parallel (degree 5).",
+            "For each item:",
+            "  1. Look up whether it already exists in the destination by the unique key.",
+            "  2. If found — update (Patch) the destination item.",
+            "  3. If not found — create a new item.",
+            "  4. On any error — log to the Error Log list and increment ErrorCount.",
+            "",
+            "Increase runtimeConfiguration.concurrency.repetitions up to 50 for faster",
+            "processing, but watch for SharePoint throttling (HTTP 429 responses)."
+          ],
+          "type": "Foreach",
+          "foreach": "@outputs('Get_Source_Items')?['body/value']",
+          "runtimeConfiguration": {
+            "concurrency": {
+              "repetitions": 5
+            }
+          },
+          "actions": {
+            "Scope_Process_Item": {
+              "_comment": "Isolates per-item errors so one bad item does not stop the loop",
+              "type": "Scope",
+              "actions": {
+                "Check_If_Item_Exists_In_Destination": {
+                  "_comment": [
+                    "OData filter finds any destination item whose <UNIQUE_KEY_FIELD>",
+                    "matches the current source item's value.",
+                    "Returns an empty array when no match exists."
+                  ],
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_sharepointonline",
+                      "operationId": "GetItems",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                    },
+                    "parameters": {
+                      "dataset": "<DEST_SITE_URL>",
+                      "table": "<DEST_LIST_NAME>",
+                      "$filter": "<UNIQUE_KEY_FIELD> eq '@{items('Apply_To_Each_Source_Item')?['<UNIQUE_KEY_FIELD>']}'",
+                      "$top": 1
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Create_Or_Update": {
+                  "_comment": [
+                    "Branches on whether the lookup returned a result.",
+                    "True  → item exists → patch (update) it",
+                    "False → item is new → create it"
+                  ],
+                  "type": "If",
+                  "expression": {
+                    "greater": [
+                      "@length(outputs('Check_If_Item_Exists_In_Destination')?['body/value'])",
+                      0
+                    ]
+                  },
+                  "actions": {
+                    "Update_Destination_Item": {
+                      "_comment": [
+                        "PATCH only updates fields you specify — other fields are preserved.",
+                        "Add or remove field mappings to match your list schema.",
+                        "Use the internal field name (not the display name)."
+                      ],
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connectionName": "shared_sharepointonline",
+                          "operationId": "PatchItem",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                        },
+                        "parameters": {
+                          "dataset": "<DEST_SITE_URL>",
+                          "table": "<DEST_LIST_NAME>",
+                          "id": "@{outputs('Check_If_Item_Exists_In_Destination')?['body/value'][0]?['ID']}",
+                          "item/<FIELD_1>": "@{items('Apply_To_Each_Source_Item')?['<FIELD_1>']}",
+                          "item/<FIELD_2>": "@{items('Apply_To_Each_Source_Item')?['<FIELD_2>']}",
+                          "item/SyncedAt": "@utcNow()"
+                        }
+                      }
+                    }
+                  },
+                  "else": {
+                    "actions": {
+                      "Create_Destination_Item": {
+                        "_comment": "Creates a brand-new item in the destination list",
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connectionName": "shared_sharepointonline",
+                            "operationId": "PostItem",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                          },
+                          "parameters": {
+                            "dataset": "<DEST_SITE_URL>",
+                            "table": "<DEST_LIST_NAME>",
+                            "item/Title": "@{items('Apply_To_Each_Source_Item')?['Title']}",
+                            "item/<UNIQUE_KEY_FIELD>": "@{items('Apply_To_Each_Source_Item')?['<UNIQUE_KEY_FIELD>']}",
+                            "item/<FIELD_1>": "@{items('Apply_To_Each_Source_Item')?['<FIELD_1>']}",
+                            "item/<FIELD_2>": "@{items('Apply_To_Each_Source_Item')?['<FIELD_2>']}",
+                            "item/SyncedAt": "@utcNow()"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Check_If_Item_Exists_In_Destination": ["Succeeded"]
+                  }
+                },
+                "Increment_ItemsProcessed": {
+                  "type": "IncrementVariable",
+                  "inputs": {
+                    "name": "ItemsProcessed",
+                    "value": 1
+                  },
+                  "runAfter": {
+                    "Create_Or_Update": ["Succeeded"]
+                  }
+                }
+              },
+              "runAfter": {}
+            },
+            "Handle_Item_Error": {
+              "_comment": [
+                "Runs when Scope_Process_Item fails for this iteration.",
+                "Writes a structured error record to the Error Log list so operators",
+                "can review and re-process failed items without rerunning the whole flow."
+              ],
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "PostItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "<ERROR_LOG_SITE_URL>",
+                  "table": "<ERROR_LOG_LIST_NAME>",
+                  "item/Title": "Sync error — @{items('Apply_To_Each_Source_Item')?['<UNIQUE_KEY_FIELD>']}",
+                  "item/FlowName": "SharePoint List Sync",
+                  "item/ErrorTime": "@utcNow()",
+                  "item/ItemKey": "@{items('Apply_To_Each_Source_Item')?['<UNIQUE_KEY_FIELD>']}",
+                  "item/ErrorMessage": "@{result('Scope_Process_Item')?[0]?['error']?['message']}",
+                  "item/ErrorCode": "@{result('Scope_Process_Item')?[0]?['error']?['code']}",
+                  "item/RunId": "@{workflow()?['run']?['name']}"
+                }
+              },
+              "runAfter": {
+                "Scope_Process_Item": ["Failed", "TimedOut"]
+              }
+            },
+            "Increment_ErrorCount": {
+              "type": "IncrementVariable",
+              "inputs": {
+                "name": "ErrorCount",
+                "value": 1
+              },
+              "runAfter": {
+                "Handle_Item_Error": ["Succeeded", "Failed"]
+              }
+            }
+          },
+          "runAfter": {
+            "Get_Source_Items": ["Succeeded"]
+          }
+        },
+        "Log_Sync_Summary": {
+          "_comment": [
+            "Appends a summary record to the Error Log list after all items are processed.",
+            "Use this to build a sync history dashboard in SharePoint."
+          ],
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "PostItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "<ERROR_LOG_SITE_URL>",
+              "table": "<ERROR_LOG_LIST_NAME>",
+              "item/Title": "Sync completed — @{utcNow('yyyy-MM-dd')}",
+              "item/FlowName": "SharePoint List Sync",
+              "item/ErrorTime": "@utcNow()",
+              "item/ItemKey": "SUMMARY",
+              "item/ErrorMessage": "Processed: @{variables('ItemsProcessed')} | Errors: @{variables('ErrorCount')}",
+              "item/RunId": "@{workflow()?['run']?['name']}"
+            }
+          },
+          "runAfter": {
+            "Apply_To_Each_Source_Item": ["Succeeded", "Failed"]
+          }
+        }
+      }
+    }
+  }
+}

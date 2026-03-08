@@ -284,7 +284,7 @@ Even with perfect weights, $\hat{v}(s, \mathbf{w})$ approximates $V^\pi(s)$ with
 
 ## Connections
 
-- **Builds on:** Module 02 (tabular TD methods), Module 03 (policy gradient concepts), Module 00 (MDP notation and $V^\pi$, $Q^\pi$ definitions)
+- **Builds on:** Module 03 (tabular TD methods), Module 00 (MDP notation and $V^\pi$, $Q^\pi$ definitions)
 - **Leads to:** Guide 02 (linear methods and semi-gradient TD), Guide 03 (deadly triad), Module 05 (DQN with neural network FA)
 - **Related to:** Supervised learning (FA uses the same regression machinery, but with non-stationary targets)
 

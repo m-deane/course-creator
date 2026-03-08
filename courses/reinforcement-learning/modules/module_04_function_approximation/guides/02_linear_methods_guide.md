@@ -524,7 +524,7 @@ Semi-gradient TD does not follow the gradient of any objective function. This me
 
 ## Connections
 
-- **Builds on:** Guide 01 (function approximation motivation and feature vectors), Module 02 (tabular TD(0) — linear methods are the same algorithm with generalization added)
+- **Builds on:** Guide 01 (function approximation motivation and feature vectors), Module 03 (tabular TD(0) — linear methods are the same algorithm with generalization added)
 - **Leads to:** Guide 03 (the deadly triad — off-policy + FA breaks convergence), Module 05 (DQN uses neural networks in place of linear FA with the same semi-gradient idea)
 - **Related to:** Supervised regression (same SGD form, but RL targets are non-stationary), temporal difference learning (tabular TD(0) is a special case with tabular features)
 

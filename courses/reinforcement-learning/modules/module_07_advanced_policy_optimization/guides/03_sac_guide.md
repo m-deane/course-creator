@@ -22,7 +22,7 @@ The maximum entropy RL objective augments this with a policy entropy term at eve
 
 $$J(\pi) = \sum_{t} \mathbb{E}_{(s_t, a_t) \sim \rho_\pi}\!\left[r(s_t, a_t) + \alpha \mathcal{H}(\pi(\cdot|s_t))\right]$$
 
-where $\mathcal{H}(\pi(\cdot|s_t)) = -\mathbb{E}_{a \sim \pi}\!\left[\log \pi(a|s_t)\right]$ is the Shannon entropy of the policy distribution at state $s_t$, and $\alpha > 0$ is the **temperature parameter** controlling the relative importance of entropy versus reward.
+where $\mathcal{H}(\pi(\cdot|s_t)) = -\mathbb{E}_{a \sim \pi}\!\left[\log \pi(a|s_t)\right]$ is the Shannon entropy of the policy distribution at state $s_t$, and $\alpha > 0$ is the **temperature parameter** controlling the relative importance of entropy versus reward. (Note: $\alpha$ here denotes the SAC temperature, not the learning rate $\alpha$ used in earlier modules.)
 
 ### The Soft Bellman Equations
 
@@ -412,7 +412,7 @@ Polyak coefficient $\tau = 0.005$ (i.e., 99.5% old, 0.5% new per step) is the st
 
 ## Connections
 
-- **Builds on:** Q-learning and actor-critic architectures (Module 4), double Q-learning (van Hasselt 2016), importance of exploration (Module 1)
+- **Builds on:** Actor-critic architectures (Module 6), double Q-learning (Module 5), exploration-exploitation trade-offs (Modules 2-3)
 - **Leads to:** TD3 (Fujimoto 2018) adds deterministic policy gradient to the SAC framework; REDQ (Chen 2021) pushes sample efficiency further with ensembles
 - **Related to:** MaxEnt IRL (Ziebart 2008) uses the same entropy-regularized objective for inverse RL; variational inference objectives have the same form as the soft Bellman equations
 

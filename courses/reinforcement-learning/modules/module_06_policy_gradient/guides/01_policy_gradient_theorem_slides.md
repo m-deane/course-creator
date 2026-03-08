@@ -16,7 +16,7 @@ math: mathjax
 <!--
 Speaker notes: Key talking points for this slide
 - Welcome to Module 06 -- we are now in the third major branch of RL: policy-based methods
-- Modules 01-03 covered dynamic programming and Monte Carlo, Module 04-05 covered value function approximation
+- Modules 01-02 covered dynamic programming and Monte Carlo, Module 03 covered TD learning, Modules 04-05 covered value function approximation
 - This module introduces a fundamentally different idea: don't learn a value function and derive a policy -- learn the policy directly
 - Key motivating question: "Why would we want to do that, given that value-based methods work so well?"
 -->

@@ -197,7 +197,6 @@ def sarsa(
             Q[state, action] += alpha * td_error
 
             # Advance — carry the preselected next_action forward
-            state = action = next_state, next_action
             state, action = next_state, next_action
 
         # Optional: decay epsilon for convergence guarantee

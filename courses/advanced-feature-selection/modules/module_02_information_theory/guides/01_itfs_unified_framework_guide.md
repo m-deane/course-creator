@@ -301,17 +301,16 @@ def cmi(x, y, z):
     Compute conditional mutual information I(x; y | z).
 
     Uses: I(x; y | z) = I(x; y, z) - I(x; z)
-    This avoids iterating over all values of z explicitly.
+    where I(x; y, z) is the MI between x and the joint variable (y, z).
     """
-    # Encode (y, z) pair as a joint variable
+    # Encode the (y, z) pair as a single joint variable
     n = len(z)
-    z_uniq = np.unique(z)
+    n_y = len(np.unique(y))
+    n_z = len(np.unique(z))
+    yz_joint = np.array([y[i] * n_z + z[i] for i in range(n)])
 
-    xy_joint = np.array([x[i] * len(np.unique(y)) + y[i] for i in range(n)])
-    xyz_joint = np.array([x[i] * len(np.unique(y)) * len(z_uniq) +
-                          y[i] * len(z_uniq) + z[i] for i in range(n)])
-
-    return mi(x, xy_joint) - mi(x, z)
+    # I(x; y | z) = I(x; y, z) - I(x; z)
+    return mi(x, yz_joint) - mi(x, z)
 
 def mrmr_score(x_k, y, S, X_data):
     """

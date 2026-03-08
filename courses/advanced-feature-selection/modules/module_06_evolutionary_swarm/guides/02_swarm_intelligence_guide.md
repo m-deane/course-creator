@@ -8,7 +8,7 @@ Swarm intelligence algorithms draw inspiration from collective natural behaviour
 
 ## Particle Swarm Optimisation (PSO)
 
-Reference: Kennedy & Eberhart (1995). *Particle swarm optimization*. Proceedings of ICNN, 4, 1942–1948.
+Reference: Kennedy & Eberhart (1995). *Particle swarm optimization*. Proceedings of ICNN, 4, 1942–1948. The binary PSO variant with sigmoid transfer was introduced in Kennedy & Eberhart (1997). *A discrete binary version of the particle swarm algorithm*. Proceedings of the 1997 IEEE International Conference on Systems, Man, and Cybernetics, 5, 4104–4108.
 
 ### Core PSO Mechanics
 
@@ -44,7 +44,7 @@ Four common mappings from continuous velocity to bit-flip probability:
 
 | Transfer Function | Formula | Notes |
 |---|---|---|
-| **S-shaped** | $S(v) = \frac{1}{1+e^{-v}}$ | Original Kennedy & Eberhart |
+| **S-shaped** | $S(v) = \frac{1}{1+e^{-v}}$ | Kennedy & Eberhart (1997) binary PSO |
 | **V-shaped** | $V(v) = \left\|\tanh(v)\right\|$ | Maintains sign information |
 | **Threshold** | $x = 1$ if $x_{\text{cont}} > 0.5$ | Deterministic after normalisation |
 | **Probabilistic** | $P(\text{flip}) = S(|v|) \cdot \text{sign}$ | Asymmetric flipping |

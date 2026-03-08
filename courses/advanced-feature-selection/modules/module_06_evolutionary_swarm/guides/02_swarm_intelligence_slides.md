@@ -49,7 +49,7 @@ All three methods are **population-based** and **gradient-free** — they work w
 
 ## Particle Swarm Optimisation (PSO)
 
-Kennedy & Eberhart, ICNN 1995.
+Kennedy & Eberhart, ICNN 1995 (continuous PSO). Binary PSO with sigmoid transfer: Kennedy & Eberhart, SMC 1997.
 
 Each particle has a **position** (solution) and a **velocity** (direction of movement):
 

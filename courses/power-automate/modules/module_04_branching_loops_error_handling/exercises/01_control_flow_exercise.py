@@ -566,8 +566,19 @@ def test_buggy_expense_processor() -> None:
 
 try:
     test_buggy_expense_processor()
+except RuntimeError as exc:
+    # The buggy version raises RuntimeError from approve_expense.
+    # This check fires when Bug 2 (missing try/except) is not yet fixed.
+    check(
+        "Part 3: all 5 expenses processed",
+        False,
+        "Unhandled RuntimeError escaped the loop — Bug 2 not fixed yet: add try/except around approve_expense()"
+    )
+    check("Part 3: correct low_value count (< $500 → E03=$45)", False, "Fix Bug 2 first")
+    check("Part 3: correct high_value count ($500+ → E01, E02, E04, E05)", False, "Fix Bug 2 first")
+    check("Part 3: correct error count (E04=$1200 raises RuntimeError)", False, "Fix Bug 2 first")
 except Exception:
-    check("Part 3 — no unhandled exception", False, traceback.format_exc())
+    check("Part 3 — no unexpected exception", False, traceback.format_exc())
 
 
 # ---------------------------------------------------------------------------

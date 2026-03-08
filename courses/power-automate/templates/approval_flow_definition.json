@@ -1,0 +1,388 @@
+{
+  "_comment": [
+    "Power Automate Cloud Flow Definition — Multi-Stage Approval",
+    "",
+    "Trigger : When a SharePoint item is created",
+    "Stage 1 : Manager approval (always required)",
+    "Stage 2 : Finance approval (only when Amount > APPROVAL_THRESHOLD)",
+    "Notifications : Requestor receives email at each decision point",
+    "Error handling : All approval actions wrapped in a Scope with a Catch branch",
+    "",
+    "HOW TO IMPORT:",
+    "  1. Power Automate > My flows > Import > Import Package (.zip)",
+    "  2. Or paste the 'definition' object into the flow designer via Edit > Advanced mode",
+    "",
+    "PLACEHOLDER MARKERS — replace every value surrounded by < >:",
+    "  <SHAREPOINT_SITE_URL>      e.g. https://contoso.sharepoint.com/sites/procurement",
+    "  <SHAREPOINT_LIST_NAME>     e.g. PurchaseRequests",
+    "  <MANAGER_EMAIL>            e.g. manager@contoso.com  (or use dynamic manager lookup)",
+    "  <FINANCE_EMAIL>            e.g. finance-approvals@contoso.com",
+    "  <APPROVAL_THRESHOLD>       e.g. 5000  (numeric, no quotes)",
+    "  <NOTIFICATION_EMAIL>       e.g. do-not-reply@contoso.com",
+    "  <ENVIRONMENT_ID>           Power Automate environment GUID"
+  ],
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "shared_sharepointonline"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_approvals": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "shared_approvals"
+        },
+        "api": {
+          "name": "shared_approvals"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "shared_office365"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_an_item_is_created": {
+          "_comment": "Fires whenever a new item is added to the SharePoint list",
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "OnNewItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "<SHAREPOINT_SITE_URL>",
+              "table": "<SHAREPOINT_LIST_NAME>"
+            }
+          },
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 3
+          }
+        }
+      },
+      "actions": {
+        "Initialize_ApprovalOutcome": {
+          "_comment": "Tracks the overall approval result across both stages",
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ApprovalOutcome",
+                "type": "string",
+                "value": "Pending"
+              }
+            ]
+          },
+          "runAfter": {}
+        },
+        "Scope_Stage1_Manager_Approval": {
+          "_comment": "Wraps Stage 1 in a Scope so errors can be caught and handled gracefully",
+          "type": "Scope",
+          "actions": {
+            "Create_Manager_Approval": {
+              "_comment": [
+                "Send an approval request to the item's direct manager.",
+                "Replace <MANAGER_EMAIL> with a dynamic expression if your list stores",
+                "the manager's email, e.g.: triggerBody()?['ManagerEmail']"
+              ],
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_approvals",
+                  "operationId": "CreateAnApproval",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals"
+                },
+                "parameters": {
+                  "approvalType": "Basic",
+                  "WebhookApprovalCreationInput/title": "Approval Required: @{triggerBody()?['Title']}",
+                  "WebhookApprovalCreationInput/assignedTo": "<MANAGER_EMAIL>",
+                  "WebhookApprovalCreationInput/details": "A new request has been submitted by @{triggerBody()?['Author']?['DisplayName']}.\n\nAmount: @{triggerBody()?['Amount']}\nDescription: @{triggerBody()?['Description']}\n\nPlease review and approve or reject.",
+                  "WebhookApprovalCreationInput/itemLink": "<SHAREPOINT_SITE_URL>/Lists/<SHAREPOINT_LIST_NAME>/DispForm.aspx?ID=@{triggerBody()?['ID']}",
+                  "WebhookApprovalCreationInput/itemLinkDescription": "View Request"
+                }
+              },
+              "runAfter": {}
+            },
+            "Wait_For_Manager_Approval": {
+              "_comment": "Pauses the flow until the manager responds (or the approval times out)",
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_approvals",
+                  "operationId": "WaitForAnApproval",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals"
+                },
+                "parameters": {
+                  "approvalId": "@outputs('Create_Manager_Approval')?['body/approvalId']"
+                }
+              },
+              "runAfter": {
+                "Create_Manager_Approval": ["Succeeded"]
+              }
+            },
+            "Set_Stage1_Outcome": {
+              "_comment": "Record the manager's decision in the variable for later conditions",
+              "type": "SetVariable",
+              "inputs": {
+                "name": "ApprovalOutcome",
+                "value": "@{outputs('Wait_For_Manager_Approval')?['body/outcome']}"
+              },
+              "runAfter": {
+                "Wait_For_Manager_Approval": ["Succeeded"]
+              }
+            },
+            "Notify_Requestor_Stage1": {
+              "_comment": "Email the original requestor with the manager's decision immediately",
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/To": "@{triggerBody()?['Author']?['Email']}",
+                  "emailMessage/Subject": "Manager Decision: @{variables('ApprovalOutcome')} — @{triggerBody()?['Title']}",
+                  "emailMessage/Body": "<p>Your request <strong>@{triggerBody()?['Title']}</strong> has been <strong>@{variables('ApprovalOutcome')}</strong> by your manager.</p><p>Comments: @{outputs('Wait_For_Manager_Approval')?['body/responses'][0]?['comments']}</p>",
+                  "emailMessage/From": "<NOTIFICATION_EMAIL>",
+                  "emailMessage/IsHtml": true
+                }
+              },
+              "runAfter": {
+                "Set_Stage1_Outcome": ["Succeeded"]
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_ApprovalOutcome": ["Succeeded"]
+          }
+        },
+        "Catch_Stage1_Error": {
+          "_comment": [
+            "Runs only when the Stage 1 Scope fails (e.g. approver not found, timeout).",
+            "Sends a failure notification and terminates the flow cleanly."
+          ],
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_office365",
+              "operationId": "SendEmailV2",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+            },
+            "parameters": {
+              "emailMessage/To": "<FINANCE_EMAIL>",
+              "emailMessage/Subject": "Flow Error — Stage 1 Approval Failed for @{triggerBody()?['Title']}",
+              "emailMessage/Body": "<p>An error occurred during the Stage 1 manager approval for request <strong>@{triggerBody()?['Title']}</strong>.</p><p>Error: @{result('Scope_Stage1_Manager_Approval')?[0]?['error']?['message']}</p><p>Please investigate and process manually.</p>",
+              "emailMessage/IsHtml": true
+            }
+          },
+          "runAfter": {
+            "Scope_Stage1_Manager_Approval": ["Failed", "TimedOut"]
+          }
+        },
+        "Terminate_After_Stage1_Error": {
+          "type": "Terminate",
+          "inputs": {
+            "runStatus": "Failed",
+            "runError": {
+              "code": "Stage1ApprovalError",
+              "message": "Manager approval step failed or timed out for item @{triggerBody()?['ID']}"
+            }
+          },
+          "runAfter": {
+            "Catch_Stage1_Error": ["Succeeded"]
+          }
+        },
+        "Check_If_Finance_Approval_Required": {
+          "_comment": [
+            "Finance review is only required when:",
+            "  1. The manager approved, AND",
+            "  2. The requested Amount exceeds the configured threshold",
+            "Adjust the threshold value (<APPROVAL_THRESHOLD>) to match your policy."
+          ],
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@variables('ApprovalOutcome')",
+                  "Approve"
+                ]
+              },
+              {
+                "greater": [
+                  "@triggerBody()?['Amount']",
+                  "<APPROVAL_THRESHOLD>"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Scope_Stage2_Finance_Approval": {
+              "_comment": "Wraps Stage 2 in a Scope for error isolation",
+              "type": "Scope",
+              "actions": {
+                "Create_Finance_Approval": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_approvals",
+                      "operationId": "CreateAnApproval",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals"
+                    },
+                    "parameters": {
+                      "approvalType": "Basic",
+                      "WebhookApprovalCreationInput/title": "Finance Approval Required: @{triggerBody()?['Title']}",
+                      "WebhookApprovalCreationInput/assignedTo": "<FINANCE_EMAIL>",
+                      "WebhookApprovalCreationInput/details": "This request requires Finance approval because the amount (@{triggerBody()?['Amount']}) exceeds the threshold.\n\nRequested by: @{triggerBody()?['Author']?['DisplayName']}\nManager approved on: @{utcNow()}\nManager comments: @{outputs('Wait_For_Manager_Approval')?['body/responses'][0]?['comments']}",
+                      "WebhookApprovalCreationInput/itemLink": "<SHAREPOINT_SITE_URL>/Lists/<SHAREPOINT_LIST_NAME>/DispForm.aspx?ID=@{triggerBody()?['ID']}",
+                      "WebhookApprovalCreationInput/itemLinkDescription": "View Request"
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Wait_For_Finance_Approval": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_approvals",
+                      "operationId": "WaitForAnApproval",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals"
+                    },
+                    "parameters": {
+                      "approvalId": "@outputs('Create_Finance_Approval')?['body/approvalId']"
+                    }
+                  },
+                  "runAfter": {
+                    "Create_Finance_Approval": ["Succeeded"]
+                  }
+                },
+                "Set_Stage2_Outcome": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ApprovalOutcome",
+                    "value": "@{outputs('Wait_For_Finance_Approval')?['body/outcome']}"
+                  },
+                  "runAfter": {
+                    "Wait_For_Finance_Approval": ["Succeeded"]
+                  }
+                },
+                "Notify_Requestor_Stage2": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_office365",
+                      "operationId": "SendEmailV2",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                    },
+                    "parameters": {
+                      "emailMessage/To": "@{triggerBody()?['Author']?['Email']}",
+                      "emailMessage/Subject": "Finance Decision: @{variables('ApprovalOutcome')} — @{triggerBody()?['Title']}",
+                      "emailMessage/Body": "<p>Your request <strong>@{triggerBody()?['Title']}</strong> has received a final decision from Finance: <strong>@{variables('ApprovalOutcome')}</strong>.</p><p>Comments: @{outputs('Wait_For_Finance_Approval')?['body/responses'][0]?['comments']}</p>",
+                      "emailMessage/From": "<NOTIFICATION_EMAIL>",
+                      "emailMessage/IsHtml": true
+                    }
+                  },
+                  "runAfter": {
+                    "Set_Stage2_Outcome": ["Succeeded"]
+                  }
+                }
+              },
+              "runAfter": {}
+            },
+            "Catch_Stage2_Error": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/To": "<FINANCE_EMAIL>",
+                  "emailMessage/Subject": "Flow Error — Stage 2 Finance Approval Failed for @{triggerBody()?['Title']}",
+                  "emailMessage/Body": "<p>An error occurred during the Finance approval step. Please process manually.</p><p>Error: @{result('Scope_Stage2_Finance_Approval')?[0]?['error']?['message']}</p>",
+                  "emailMessage/IsHtml": true
+                }
+              },
+              "runAfter": {
+                "Scope_Stage2_Finance_Approval": ["Failed", "TimedOut"]
+              }
+            }
+          },
+          "else": {
+            "actions": {
+              "Notify_Final_Approval_Under_Threshold": {
+                "_comment": "Manager approved and amount is below threshold — request is fully approved",
+                "type": "ApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_office365",
+                    "operationId": "SendEmailV2",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                  },
+                  "parameters": {
+                    "emailMessage/To": "@{triggerBody()?['Author']?['Email']}",
+                    "emailMessage/Subject": "Request Fully Approved — @{triggerBody()?['Title']}",
+                    "emailMessage/Body": "<p>Your request <strong>@{triggerBody()?['Title']}</strong> has been fully approved by your manager. No additional Finance approval is required for this amount.</p>",
+                    "emailMessage/From": "<NOTIFICATION_EMAIL>",
+                    "emailMessage/IsHtml": true
+                  }
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Scope_Stage1_Manager_Approval": ["Succeeded"]
+          }
+        },
+        "Update_SharePoint_Item_Status": {
+          "_comment": [
+            "Write the final outcome back to the SharePoint list so requestors and",
+            "administrators can see the decision without opening the flow run history.",
+            "Your list must have a 'ApprovalStatus' single-line text column."
+          ],
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "PatchItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "<SHAREPOINT_SITE_URL>",
+              "table": "<SHAREPOINT_LIST_NAME>",
+              "id": "@triggerBody()?['ID']",
+              "item/ApprovalStatus": "@variables('ApprovalOutcome')",
+              "item/ApprovalCompletedDate": "@utcNow()"
+            }
+          },
+          "runAfter": {
+            "Check_If_Finance_Approval_Required": ["Succeeded", "Skipped"]
+          }
+        }
+      }
+    }
+  }
+}

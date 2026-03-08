@@ -305,7 +305,6 @@ def cmi(x, y, z):
     """
     # Encode the (y, z) pair as a single joint variable
     n = len(z)
-    n_y = len(np.unique(y))
     n_z = len(np.unique(z))
     yz_joint = np.array([y[i] * n_z + z[i] for i in range(n)])
 

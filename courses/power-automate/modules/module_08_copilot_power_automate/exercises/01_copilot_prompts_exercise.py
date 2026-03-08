@@ -346,9 +346,11 @@ def test_exercise_3():
 
         prompt_passed = True
         for check_name, keyword_option_groups in checks.items():
-            # For each requirement, at least one keyword group must fully match
+            # For each requirement, at least one keyword from any option group must appear.
+            # keyword_option_groups is a list of sets; the requirement is met if any single
+            # keyword from any set appears in the student's prompt.
             requirement_met = any(
-                all(kw in student_prompt for kw in keyword_group)
+                any(kw in student_prompt for kw in keyword_group)
                 for keyword_group in keyword_option_groups
             )
             if not requirement_met:

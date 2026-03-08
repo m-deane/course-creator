@@ -31,7 +31,7 @@ ACRONYMS = {
     "llm": "LLM", "llms": "LLMs", "rag": "RAG", "eia": "EIA",
     "hmm": "HMM", "hmms": "HMMs", "ai": "AI", "genai": "GenAI",
     "ab": "A/B", "mab": "MAB", "api": "API", "ml": "ML",
-    "nlp": "NLP", "gpt": "GPT", "lda": "LDA",
+    "nlp": "NLP", "gpt": "GPT", "lda": "LDA", "dml": "DML",
 }
 
 CONTENT_SECTIONS = [
@@ -56,6 +56,7 @@ COURSE_ICONS = {
     "hidden-markov-models": "🔗",
     "multi-armed-bandits-ab-testing": "🎰",
     "panel-regression": "📈",
+    "double-machine-learning": "🎯",
 }
 
 ACCENT_COLORS = [

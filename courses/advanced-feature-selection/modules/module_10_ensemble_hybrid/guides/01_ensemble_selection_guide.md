@@ -574,9 +574,28 @@ def build_ensemble_selector(X: np.ndarray, y: np.ndarray,
 
 ## Connections
 
-- **Builds on:** Module 01 (filter methods), Module 03 (wrapper methods), Module 04 (embedded methods), Module 05 (genetic algorithms)
+- **Builds on:** Module 01 (filter methods — candidate selectors for the ensemble), Module 02 (information-theoretic criteria — MI/JMI as ensemble members), Module 03 (wrapper methods — Boruta and SFS as ensemble members), Module 04 (embedded methods — Lasso and RF importance as ensemble members), Module 05 (genetic algorithms — GA as a high-quality ensemble member), Module 06 (evolutionary and swarm methods — NSGA-II Pareto front aggregation)
 - **Leads to:** Module 11 (production feature selection pipelines), hybrid cascade methods (Guide 02)
 - **Related to:** Ensemble learning in prediction (bagging, boosting); random subspace methods; stability selection (LASSO + bootstrap)
+
+---
+
+## Cross-Module Connections
+
+**The ensemble assembles all prior methods.** Each preceding module contributes a distinct selector type to the ensemble:
+
+| Module | Selector type | Role in ensemble |
+|---|---|---|
+| Module 1 | Statistical filters (MI, HSIC, distance correlation) | Fast, cheap first pass; diverse assumptions |
+| Module 2 | Information-theoretic criteria (mRMR, JMI, CMIM) | Redundancy-aware filter members |
+| Module 3 | Wrappers (Boruta, SFFS) | Model-validated, interaction-aware |
+| Module 4 | Embedded (Lasso, RF importance, SHAP) | Regularisation-based; fast to compute |
+| Module 5 | Binary GA | Stochastic global search; escapes local optima |
+| Module 6 | NSGA-II | Returns Pareto front; enables multi-criteria aggregation |
+
+**Why heterogeneity matters:** Methods with different structural assumptions are imperfectly correlated — their errors do not coincide on the same features. Union and Borda count aggregation benefit most when ensemble members disagree on a different subset of irrelevant features.
+
+**Pareto aggregation (Module 6 link):** When ensemble members return Pareto fronts rather than single subsets (e.g., from NSGA-II in Module 6), aggregate by pooling all Pareto solutions and re-ranking by non-domination across the combined pool. This yields a meta-Pareto front that dominates any individual method's front.
 
 ---
 

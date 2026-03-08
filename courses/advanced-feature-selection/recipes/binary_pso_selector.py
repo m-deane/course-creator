@@ -148,6 +148,15 @@ def binary_pso_select(
 # ---------------------------------------------------------------------------
 
 def plot_convergence(history: list[float], save_path: str | None = None) -> None:
+    """Plot the BPSO global-best fitness convergence curve.
+
+    Parameters
+    ----------
+    history : list[float]
+        Global best fitness value per iteration (as returned by binary_pso_select).
+    save_path : str, optional
+        File path to save the figure. Displays interactively if None.
+    """
     fig, ax = plt.subplots(figsize=(8, 4))
     ax.plot(history, linewidth=2, color="steelblue")
     ax.set_xlabel("Iteration")

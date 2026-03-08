@@ -102,7 +102,7 @@ def granger_select_features(
     max_lag: int = 4,
     alpha: float = 0.05,
     correction: str = "fdr_bh",
-) -> list[str]:
+) -> tuple[list[str], pd.DataFrame]:
     """Return features that Granger-cause the target after MTC.
 
     Parameters

@@ -730,3 +730,13 @@ if __name__ == "__main__":
 6. **Elitism of 1–5%** prevents losing the best solution without sacrificing diversity.
 7. **Fitness caching** is essential — most chromosomes repeat across generations; cache by bytes key.
 8. **Early stopping** on fitness plateau saves computation without sacrificing solution quality.
+
+---
+
+## Cross-Module Connections
+
+**Comparison with wrapper methods (Module 3):** GAs and sequential wrappers (SFS, SFFS, Boruta) both use model cross-validation as the fitness signal, making them directly comparable. The key differences are search strategy (population-based vs. greedy sequential), escape from local optima (GAs naturally escape; SFS cannot), and computational cost (GAs evaluate many candidates in parallel across a population; SFS evaluates one addition at a time). For $p < 100$ with a fast model, SFFS typically converges faster; for $p > 200$ with complex interactions, GAs are preferred.
+
+**Foundation for Module 6 (evolutionary and swarm methods):** The binary chromosome, tournament selection, and fitness evaluation patterns introduced here are the direct foundation for PSO (replaces discrete chromosomes with continuous velocity vectors), Differential Evolution (replaces crossover with difference-vector mutation), and NSGA-II (extends the GA loop to multiple simultaneous objectives). Read this guide before Module 6.
+
+**Walk-forward GA (Module 7):** When applying GAs to time series feature selection, the fitness function must use walk-forward cross-validation rather than random CV splits to respect temporal ordering and prevent lookahead leakage. The GA operators themselves are unchanged; only the fitness evaluation loop changes. See Module 7, Guide 2 for the purged walk-forward fitness wrapper.

@@ -328,7 +328,7 @@ When the goal is to select entire groups of features together, Lasso and Elastic
 
 ## Connections
 
-- **Builds on:** Linear regression, convex optimisation, KKT conditions (Module 03)
+- **Builds on:** Linear regression, convex optimisation, KKT conditions (mathematical prerequisites); Module 01 and 02 (filter-based relevance scores motivate why embedded methods are an improvement — they optimise directly for the downstream model); Module 03 wrapper methods (embedded methods trade the wrapper's explicit CV loop for an implicit regularisation path)
 - **Leads to:** Stability selection (Guide 02), Group Lasso (Guide 02), Knockoff filter (Guide 03)
 - **Related to:** Coordinate descent, proximal gradient methods, ADMM
 

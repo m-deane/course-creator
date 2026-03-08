@@ -48,6 +48,7 @@ def _setup_toolbox(
         creator.create("Individual", list, fitness=creator.FitnessMulti)
 
     def evaluate(individual: list[int]) -> tuple[float, float]:
+        """Evaluate one NSGA-II individual; returns (1-accuracy, feature_ratio)."""
         mask = np.array(individual, dtype=bool)
         if mask.sum() == 0:
             # Penalise empty selection: worst accuracy, worst (maximum) feature ratio
@@ -185,6 +186,17 @@ def plot_pareto_front(
     knee_idx: int,
     save_path: str | None = None,
 ) -> None:
+    """Plot the NSGA-II Pareto front with the knee point highlighted.
+
+    Parameters
+    ----------
+    objectives : list[tuple[float, float]]
+        Pareto front objective values as (1-accuracy, feature_ratio) tuples.
+    knee_idx : int
+        Index into objectives of the knee point solution.
+    save_path : str, optional
+        File path to save the figure. Displays interactively if None.
+    """
     obj_array = np.array(objectives)
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.scatter(obj_array[:, 1], 1 - obj_array[:, 0], color="steelblue",

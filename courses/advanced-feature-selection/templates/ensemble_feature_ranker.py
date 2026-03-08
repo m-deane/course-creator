@@ -135,17 +135,17 @@ def _score_lasso(
     X: np.ndarray, y: np.ndarray, task: str, cv_folds: int, seed: int, n_jobs: int
 ) -> np.ndarray:
     scaler = StandardScaler()
-    Xs = scaler.fit_transform(X)
+    xs = scaler.fit_transform(X)
     model = LassoCV(cv=cv_folds, random_state=seed, n_jobs=n_jobs)
-    model.fit(Xs, y)
+    model.fit(xs, y)
     return np.abs(model.coef_)
 
 
 def _score_random_forest(
     X: np.ndarray, y: np.ndarray, task: str, n_estimators: int, seed: int, n_jobs: int
 ) -> np.ndarray:
-    EstClass = RandomForestClassifier if task == "classification" else RandomForestRegressor
-    rf = EstClass(n_estimators=n_estimators, random_state=seed, n_jobs=n_jobs)
+    est_class = RandomForestClassifier if task == "classification" else RandomForestRegressor
+    rf = est_class(n_estimators=n_estimators, random_state=seed, n_jobs=n_jobs)
     rf.fit(X, y)
     return rf.feature_importances_
 

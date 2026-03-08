@@ -686,8 +686,18 @@ def granger_feature_selection_pipeline(
 ## Connections
 
 - **Builds on:** Module 02 mutual information; stationarity testing (ADF, KPSS); VAR models
-- **Leads to:** Module 07 walk-forward validation (testing Granger features over time); Module 09 causal feature selection
+- **Leads to:** Module 07 Guide 2 (walk-forward validation — applying these Granger-selected features correctly over time); Module 09 causal feature selection (upgrading Granger's predictive precedence to structural causality)
 - **Related to:** Transfer entropy (information-theoretic Granger); directed acyclic graphs; cointegration
+
+---
+
+## Cross-Module Connections
+
+**Why i.i.d. selectors fail on time series (linking back to Modules 1–6):** Every filter method (Module 1), information-theoretic criterion (Module 2), wrapper (Module 3), embedded method (Module 4), and genetic algorithm (Module 5) assumes i.i.d. observations. On time series this assumption fails: autocorrelation inflates apparent MI scores, random cross-validation splits create lookahead leakage, and feature relevance shifts across regimes. Granger causality is the time-series analogue of MI — it measures directional information flow while respecting temporal ordering.
+
+**GA with walk-forward fitness (Modules 5 and 7):** The genetic algorithm from Module 5 can be adapted for time series by replacing the random cross-validation fitness evaluation with a walk-forward expanding-window evaluation. This is covered in detail in Guide 2 of this module. The GA operators themselves (crossover, mutation, selection) carry over unchanged; only the inner fitness function loop changes to use non-overlapping temporal folds with embargo gaps.
+
+**Granger vs. causal selection (Module 9):** Granger causality identifies features with predictive precedence — necessary but not sufficient for structural causality. Module 9's ICP and double ML methods test whether a feature remains predictive across different environments (e.g., different market regimes), providing a stricter causal guarantee. A practical workflow: use Granger screening to reduce the feature space, then apply ICP on the survivors.
 
 ---
 

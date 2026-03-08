@@ -280,9 +280,19 @@ Provided the sure screening property holds, the oracle rate of the second-step e
 
 ## Connections
 
-- **Builds on:** Lasso (Module 4), information theory screening (Module 1), filter methods (Module 1)
+- **Builds on:** Lasso (Module 4 — SIS is always followed by a second-step Lasso or SCAD), statistical filter methods (Module 1 — SIS is marginal correlation screening, the same family as F-test and MI filters), information-theoretic criteria (Module 2 — NIS screening uses a nonparametric R² score that generalises MI-based filters)
 - **Leads to:** Post-selection inference (Guide 03), structured sparsity (Guide 02)
 - **Related to:** Forward stepwise regression, stability selection (Module 10)
+
+---
+
+## Cross-Module Connections
+
+**SIS is a filter method at heart (Module 1 connection):** SIS computes marginal correlation scores for all $p$ features and retains the top $d_n$ — the same ranked-threshold pattern as F-test or MI filters in Module 1. The key addition is the sure screening theorem, which provides a theoretical guarantee that relevant features survive. DC-SIS extends this to distance correlation (also introduced in Module 1's advanced dependence measures guide), and NIS extends it to nonparametric R².
+
+**ISIS feeds into Lasso (Module 4 connection):** ISIS is not a standalone selector — it is a pre-processing step for Lasso, SCAD, or MCP. The two-stage SIS + Lasso pipeline directly applies the Lasso path theory from Module 4. The cross-validated EBIC threshold selection for SIS maps to the LassoCV selection of $\lambda$ in Module 4.
+
+**High-dimensional GA (Module 5 and 6 connection):** When $p > 10{,}000$, even the GA from Module 5 requires a pre-screening stage: running the full GA on 10,000 binary genes is computationally infeasible. The recommended pattern is SIS/ISIS to reduce $p$ to $O(n / \log n)$, then a compact GA (discussed in Guide 02 of this module) on the reduced set. The GA's biased initialisation (from Module 5) can incorporate SIS scores as inclusion probabilities.
 
 ---
 

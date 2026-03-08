@@ -191,9 +191,9 @@ def _stability_selection_mask(
         rng = np.random.RandomState(seed)
         idx = rng.choice(n_samples, size=n_samples // 2, replace=False)
         scaler = StandardScaler()
-        Xs = scaler.fit_transform(X[idx])
+        xs = scaler.fit_transform(X[idx])
         model = LassoCV(cv=3, random_state=seed, n_jobs=1)
-        model.fit(Xs, y[idx])
+        model.fit(xs, y[idx])
         return (model.coef_ != 0).astype(int)
 
     results = Parallel(n_jobs=n_jobs)(
@@ -217,12 +217,12 @@ def _boruta_mask(
     hits = np.zeros(n_features, dtype=int)
     total_rounds = min(max_iter, 30)  # cap for speed in templates
 
-    EstimatorClass = RandomForestClassifier if task == "classification" else RandomForestRegressor
+    estimator_class = RandomForestClassifier if task == "classification" else RandomForestRegressor
 
     for i in range(total_rounds):
         shadow = X[:, rng.permutation(n_features)]
         X_aug = np.hstack([X, shadow])
-        rf = EstimatorClass(
+        rf = estimator_class(
             n_estimators=50,
             random_state=random_state + i,
             n_jobs=n_jobs,
@@ -252,8 +252,8 @@ def _shap_importances(
     except ImportError as exc:
         raise ImportError("shap is required for wrapper_method='shap'. pip install shap") from exc
 
-    EstimatorClass = RandomForestClassifier if task == "classification" else RandomForestRegressor
-    rf = EstimatorClass(n_estimators=n_estimators, random_state=random_state, n_jobs=n_jobs)
+    estimator_class = RandomForestClassifier if task == "classification" else RandomForestRegressor
+    rf = estimator_class(n_estimators=n_estimators, random_state=random_state, n_jobs=n_jobs)
     rf.fit(X, y)
     explainer = shap.TreeExplainer(rf)
     shap_values = explainer.shap_values(X)
@@ -404,9 +404,9 @@ class ProductionFeatureSelector(BaseEstimator, TransformerMixin):
 
         if cfg.embedded_method == "lasso":
             scaler = StandardScaler()
-            Xs = scaler.fit_transform(X_sub)
+            xs = scaler.fit_transform(X_sub)
             model = LassoCV(cv=cfg.lasso_cv_folds, random_state=cfg.random_state, n_jobs=cfg.n_jobs)
-            model.fit(Xs, y)
+            model.fit(xs, y)
             coefs = np.abs(model.coef_)
             mask = coefs > 0
             self.feature_importances_["embedded"] = coefs

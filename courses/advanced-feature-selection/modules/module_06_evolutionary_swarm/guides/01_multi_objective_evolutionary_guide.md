@@ -358,3 +358,15 @@ MOEA/D is computationally cheaper than NSGA-II on large populations because upda
 - Knee point detection is a principled, parameter-free way to auto-select from the Pareto front.
 - NSGA-III and MOEA/D extend to many objectives at the cost of additional configuration (reference points, weight vectors).
 - Stability as a third objective is practically important: a feature set that changes across resamples is not deployable.
+
+---
+
+## Cross-Module Connections
+
+**Foundation in Module 5 (GA fundamentals):** NSGA-II is a direct extension of the binary GA introduced in Module 5. The chromosome encoding, tournament selection, and elitism mechanics carry over unchanged. The only addition is the dominance-based ranking that replaces the single scalar fitness with a multi-dimensional objective vector. If the GA operators in Module 5 are unfamiliar, read that module first.
+
+**Comparison with single-objective wrappers (Module 3):** Sequential wrapper methods (SFS, Boruta) implicitly make a trade-off decision: they select a single target feature count $k$ and optimise accuracy. NSGA-II defers this decision by returning the full Pareto front over (accuracy, $k$) pairs. This is the principled approach when the deployment context has uncertain resource constraints.
+
+**Comparison with embedded methods (Module 4):** Lasso's regularisation path sweeps over $\lambda$ and implicitly traces a curve in (error, sparsity) space. The Pareto front from NSGA-II approximates the same trade-off surface but without the linearity assumption of Lasso. On nonlinear datasets, the NSGA-II Pareto front will dominate the Lasso path.
+
+**Used in Module 10 (ensemble and hybrid methods):** The Pareto front solutions from NSGA-II feed naturally into Pareto-front aggregation in ensemble selection. Module 10 discusses how to combine Pareto fronts from multiple runs or methods using Pareto dominance ranking across the combined solution pool.

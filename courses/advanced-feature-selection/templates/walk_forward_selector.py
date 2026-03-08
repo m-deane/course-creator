@@ -186,9 +186,9 @@ def _select_features(
 
     if method == "lasso":
         scaler = StandardScaler()
-        Xs = scaler.fit_transform(X_train)
+        xs = scaler.fit_transform(X_train)
         model = LassoCV(cv=3, random_state=random_state, n_jobs=n_jobs)
-        model.fit(Xs, y_train)
+        model.fit(xs, y_train)
         coefs = np.abs(model.coef_)
         nonzero = np.where(coefs > 0)[0].tolist()
         if len(nonzero) < k:
@@ -197,11 +197,9 @@ def _select_features(
         return nonzero[:k]
 
     if method == "random_forest":
-        rf = RandomForestClassifier(
-            n_estimators=100, random_state=random_state, n_jobs=n_jobs
-        ) if task == "classification" else __import__(
-            "sklearn.ensemble", fromlist=["RandomForestRegressor"]
-        ).RandomForestRegressor(n_estimators=100, random_state=random_state, n_jobs=n_jobs)
+        from sklearn.ensemble import RandomForestRegressor
+        est_class = RandomForestClassifier if task == "classification" else RandomForestRegressor
+        rf = est_class(n_estimators=100, random_state=random_state, n_jobs=n_jobs)
         rf.fit(X_train, y_train)
         imps = rf.feature_importances_
         return list(np.argsort(imps)[::-1][:k])

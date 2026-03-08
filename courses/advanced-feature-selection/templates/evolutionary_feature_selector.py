@@ -161,6 +161,7 @@ class Individual:
         self.n_features = int(self.mask.sum())
 
     def clone(self) -> "Individual":
+        """Return a deep copy of this individual."""
         return Individual(mask=self.mask.copy(), fitness=self.fitness, n_features=self.n_features)
 
     def dominates(self, other: "Individual") -> bool:
@@ -251,6 +252,7 @@ class FitnessEvaluator:
 
     @property
     def n_evaluations(self) -> int:
+        """Total number of unique fitness evaluations performed."""
         return self._n_evaluations
 
 

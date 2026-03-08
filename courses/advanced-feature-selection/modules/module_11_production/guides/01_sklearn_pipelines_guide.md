@@ -406,9 +406,30 @@ With caching, re-fitting the pipeline with the same data and parameters skips re
 
 ## Connections
 
-- **Builds on:** Module 10 ensemble hybrid selection, Module 03 wrapper methods
-- **Leads to:** Module 11 drift monitoring (pipelines wrap the entire re-selection cycle)
-- **Related to:** Module 09 causal selection (causal selector drops in as a custom transformer)
+- **Builds on:** Every preceding module — any selector developed in Modules 1–10 drops into a `Pipeline` as a `SelectorTransformer`
+- **Leads to:** Guide 02 (drift monitoring — the deployed pipeline is what we monitor for drift), Guide 03 (MLOps integration — wrapping the pipeline in MLflow experiment tracking)
+- **Related to:** Module 09 causal selection (ICP and double ML selectors wrap into `SelectorTransformer`); Module 10 ensemble hybrid (the ensemble selector becomes a single pipeline step)
+
+---
+
+## Cross-Module Connections
+
+**Every method from Modules 1–10 plugs into this pipeline framework.** The `SelectorTransformer` wrapper converts any sklearn-compatible selector into a pipeline step:
+
+| Module | Selector | Drop-in pattern |
+|---|---|---|
+| Module 1 | `SelectKBest(mutual_info_classif, k)` | Native sklearn — wrapping not needed |
+| Module 2 | Custom JMI/CMIM implementation | Wrap with `SelectorTransformer` |
+| Module 3 | `Boruta`, `SequentialFeatureSelector` | Wrap with `SelectorTransformer` |
+| Module 4 | `SelectFromModel(LassoCV())`, `StabilitySelector` | Native or `SelectorTransformer` |
+| Module 5 | `GAFeatureSelector` from Module 5 | Wrap with `SelectorTransformer` |
+| Module 6 | NSGA-II — select knee point solution, then wrap | `SelectorTransformer` on the knee solution |
+| Module 7 | `PurgedWalkForwardSelector` | Wrap with `SelectorTransformer`; CV is internal |
+| Module 8 | SIS + Lasso two-stage pipeline | Chain as two separate pipeline steps |
+| Module 9 | `ICPSelector`, `DoubleMLSelector` | Wrap with `SelectorTransformer` |
+| Module 10 | `EnsembleSelector` | Wrap with `SelectorTransformer` |
+
+**Production pipeline architecture:** A production feature selection pipeline chains: (1) raw feature validation, (2) preprocessing (scaling, encoding), (3) the selected method from any of Modules 1–10, (4) the downstream model, and (5) output validation. Guide 02 and Guide 03 in this module add drift monitoring and MLflow tracking as outer wrappers around this core chain.
 
 ---
 

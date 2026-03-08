@@ -164,7 +164,7 @@ for key, correct in CORRECT_ANSWERS_PART1.items():
     num = key.replace("SCENARIO_", "").replace("_ANSWER", "")
     check(
         f"Scenario {num}: correct pattern",
-        student.strip().title() == correct,
+        student.strip().lower() == correct.lower(),
         f"Expected '{correct}', got '{student}'"
     )
 

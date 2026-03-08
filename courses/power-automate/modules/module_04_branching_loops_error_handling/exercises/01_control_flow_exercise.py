@@ -548,14 +548,14 @@ def test_buggy_expense_processor() -> None:
         f"Expected processed=5, got {result['processed']}"
     )
     check(
-        "Part 3: correct low_value count (< $500 → E03=$45)",
-        result["low_value"] == 1,
-        f"Expected low_value=1 (only E03 is under $500), got {result['low_value']}"
+        "Part 3: correct low_value count (< $500 → E01=$120, E03=$45)",
+        result["low_value"] == 2,
+        f"Expected low_value=2 (E01=$120 and E03=$45 are under $500), got {result['low_value']}"
     )
     check(
-        "Part 3: correct high_value count ($500+ → E01, E02, E04, E05)",
-        result["high_value"] == 4,
-        f"Expected high_value=4, got {result['high_value']}"
+        "Part 3: correct high_value count ($500+ → E02, E04, E05)",
+        result["high_value"] == 3,
+        f"Expected high_value=3, got {result['high_value']}"
     )
     check(
         "Part 3: correct error count (E04=$1200 raises RuntimeError)",

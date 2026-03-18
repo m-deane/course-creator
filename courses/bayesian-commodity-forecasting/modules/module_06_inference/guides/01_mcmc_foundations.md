@@ -8,6 +8,41 @@ Markov Chain Monte Carlo (MCMC) constructs a Markov chain whose stationary distr
 
 ---
 
+## Formal Definition
+
+A **Markov chain** is a sequence of random variables $\theta^{(0)}, \theta^{(1)}, ..., \theta^{(T)}$ such that:
+$$P(\theta^{(t+1)} | \theta^{(t)}, \theta^{(t-1)}, ..., \theta^{(0)}) = P(\theta^{(t+1)} | \theta^{(t)})$$
+
+The chain is characterized by a **transition kernel** $T(\theta' | \theta)$ giving the probability of moving to $\theta'$ from $\theta$.
+
+A distribution $\pi(\theta)$ is **stationary** (invariant) for a chain with kernel $T$ if:
+$$\pi(\theta') = \int T(\theta' | \theta) \pi(\theta) d\theta$$
+
+**Detailed balance** (sufficient for stationarity):
+$$\pi(\theta) T(\theta' | \theta) = \pi(\theta') T(\theta | \theta')$$
+
+The **Metropolis-Hastings algorithm** constructs a transition kernel satisfying detailed balance with target $\pi = p(\theta | y)$ by accepting proposed moves with probability:
+$$\alpha(\theta^*, \theta^{(t)}) = \min\left(1, \frac{p(\theta^* | y) \cdot q(\theta^{(t)} | \theta^*)}{p(\theta^{(t)} | y) \cdot q(\theta^* | \theta^{(t)})}\right)$$
+
+where $q(\theta^* | \theta^{(t)})$ is any **proposal distribution** that is irreducible and aperiodic over the support of $\pi$.
+
+---
+
+## Intuitive Explanation
+
+Think of the posterior distribution as a mountain range shrouded in fog. You want to map the terrain, but you can only feel the ground under your feet. MCMC is a hiker who:
+
+1. Stands at a current location $\theta^{(t)}$
+2. Randomly proposes a step to $\theta^*$
+3. Checks if the new location is higher than the current one (better posterior density)
+4. Always moves uphill; moves downhill only with probability proportional to the density ratio
+
+After many steps, the hiker spends time in each region proportional to its posterior density — spending the most time at the mountain peaks (high posterior regions) and less at the valleys (low posterior regions). When you collect all the positions visited, you have a map of the posterior.
+
+The acceptance rule is what makes this work: if you only moved uphill, you would get stuck at local peaks. The probabilistic downhill acceptance allows exploration of the entire mountain range while still concentrating samples where the posterior is highest.
+
+---
+
 ## The Core Problem
 
 We want to sample from:
@@ -78,7 +113,7 @@ Optimal: ~25-50% acceptance rate for high dimensions
 
 ---
 
-## Implementation from Scratch
+## Code Implementation
 
 ```python
 import numpy as np
@@ -152,7 +187,7 @@ print(f"Sample mean: {samples[1000:].mean(axis=0)}")  # Discard burn-in
 
 ---
 
-## Challenges with Basic MCMC
+## Common Pitfalls
 
 ### 1. Random Walk Inefficiency
 

@@ -34,7 +34,7 @@ $$\begin{bmatrix} f(x_1) \\ \vdots \\ f(x_n) \end{bmatrix} \sim \mathcal{N}\left
 
 ---
 
-## Visual Intuition
+## Intuitive Explanation
 
 ### Prior Samples
 

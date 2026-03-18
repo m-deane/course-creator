@@ -22,6 +22,65 @@ $$\begin{bmatrix} f(x_1) \\ \vdots \\ f(x_n) \end{bmatrix} \sim \mathcal{N}\left
 
 ---
 
+## Intuitive Explanation
+
+A kernel is a similarity function: $k(x_i, x_j)$ answers "how similar are inputs $x_i$ and $x_j$ from the perspective of the function values they produce?"
+
+For time series: inputs are time points, and the kernel says how correlated tomorrow's price is with today's, next week's, next year's. The Squared Exponential kernel says correlations decay smoothly and quickly with distance — appropriate for slowly changing equilibrium levels. The Matérn-1/2 kernel says correlations decay like an exponential — appropriate for markets where a single shock tomorrow is nearly uncorrelated with today's level after a week.
+
+The composition rules make kernels a language for encoding domain knowledge:
+- **Sum:** "Price = trend + seasonal + noise" → add three kernels
+- **Product:** "Seasonal amplitude changes over time" → multiply a trend kernel by a periodic kernel
+
+A natural gas price model might say: "There is a long-term trend (RBF with 3-year length scale) plus an annual heating/cooling cycle (periodic, period=365 days) whose amplitude shrinks in mild years (periodic × RBF) plus short-term noise (Matérn-1/2, length scale=3 days)." Each of these beliefs translates directly into a kernel component.
+
+---
+
+## Code Implementation
+
+The commodity-specific kernel designs in the sections below include complete PyMC implementations. Here is the core pattern for building composite kernels:
+
+```python
+import pymc as pm
+import numpy as np
+
+# Time index (days since 2020-01-01)
+t_train = np.arange(0, 500, dtype=float)[:, None]
+
+with pm.Model() as commodity_kernel_model:
+    # --- Hyperparameters ---
+    # Trend component: long, smooth variations
+    ell_trend = pm.Gamma('ell_trend', alpha=10, beta=0.01)  # Prior: ~1000 days
+    sigma_trend = pm.HalfNormal('sigma_trend', sigma=10)
+
+    # Seasonal component: annual cycle
+    ell_seasonal = pm.Gamma('ell_seasonal', alpha=5, beta=0.1)  # Smoothness within year
+    sigma_seasonal = pm.HalfNormal('sigma_seasonal', sigma=5)
+
+    # Short-term component: week-scale noise
+    ell_short = pm.Gamma('ell_short', alpha=3, beta=0.3)  # Prior: ~10 days
+    sigma_short = pm.HalfNormal('sigma_short', sigma=3)
+
+    # Observation noise
+    sigma_noise = pm.HalfNormal('sigma_noise', sigma=1)
+
+    # --- Build composite kernel ---
+    k_trend = sigma_trend**2 * pm.gp.cov.ExpQuad(1, ls=ell_trend)
+    k_seasonal = sigma_seasonal**2 * pm.gp.cov.Periodic(1, period=365.25, ls=ell_seasonal)
+    k_short = sigma_short**2 * pm.gp.cov.Matern52(1, ls=ell_short)
+
+    # Composite: trend + seasonal + short-term dynamics
+    k_total = k_trend + k_seasonal + k_short
+
+    # --- GP ---
+    gp = pm.gp.Marginal(cov_func=k_total)
+
+# Each kernel component can be inspected via its covariance matrix:
+# K_trend = k_trend(t_train, t_train).eval()
+```
+
+---
+
 ## Core Kernel Building Blocks
 
 ### 1. Stationary Kernels (Time-Invariant)

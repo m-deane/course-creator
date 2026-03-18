@@ -2,7 +2,90 @@
 
 ## In Brief
 
-This guide reviews the probability concepts essential for Bayesian inference. If these concepts feel unfamiliar, complete the prerequisite review before proceeding.
+This guide reviews the probability concepts essential for Bayesian inference. Mastery of random variables, key distributions, and conditional probability is the prerequisite for everything in this course.
+
+> 💡 **Key Insight:** Bayesian inference is applied conditional probability. Every model in this course is an expression of $P(\theta | \text{data}) \propto P(\text{data} | \theta) \cdot P(\theta)$. The machinery of probability—densities, expectations, conditioning—is the language we use to write that expression precisely and compute it efficiently.
+
+---
+
+## Formal Definition
+
+A **probability space** is a triple $(\Omega, \mathcal{F}, P)$ where $\Omega$ is the sample space, $\mathcal{F}$ a sigma-algebra of events, and $P: \mathcal{F} \to [0,1]$ satisfies the Kolmogorov axioms: $P(\Omega) = 1$, $P(A) \geq 0$, and countable additivity.
+
+A **random variable** $X: \Omega \to \mathbb{R}$ is a measurable function from outcomes to real numbers. Its distribution is characterized by the CDF $F(x) = P(X \leq x)$.
+
+**Conditional probability:** For events $A$ and $B$ with $P(B) > 0$:
+$$P(A | B) = \frac{P(A \cap B)}{P(B)}$$
+
+**Bayes' theorem** follows directly:
+$$P(\theta | y) = \frac{P(y | \theta) \cdot P(\theta)}{P(y)}$$
+
+---
+
+## Intuitive Explanation
+
+Think of a commodity price as a random variable: before observing tomorrow's close, the price lives on a distribution shaped by supply news, positioning, and macro factors. The PDF assigns density to each possible price level — higher density where prices are more likely.
+
+Conditional probability narrows the sample space. "What's the probability of a crude inventory draw, given that US production is rising?" is a conditional question. The answer shifts our distribution for inventory changes, which flows through to our price forecast. This conditioning chain — from fundamentals to inventory to price — is exactly what Bayesian commodity models formalize.
+
+---
+
+## Code Implementation
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Compare Normal vs Student-t for commodity returns
+# Student-t better captures fat tails (supply shocks, geopolitical events)
+np.random.seed(42)
+
+x = np.linspace(-5, 5, 500)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Panel 1: Normal vs Student-t PDFs
+axes[0].plot(x, stats.norm.pdf(x), 'b-', lw=2, label='Normal(0,1)')
+axes[0].plot(x, stats.t.pdf(x, df=5), 'r--', lw=2, label='t(df=5)')
+axes[0].plot(x, stats.t.pdf(x, df=2), 'g:', lw=2, label='t(df=2)')
+axes[0].set_title('Normal vs Student-t Tails')
+axes[0].set_xlabel('Return (standardized)')
+axes[0].set_ylabel('Density')
+axes[0].legend()
+axes[0].set_xlim(-5, 5)
+
+# Panel 2: Bayesian updating with Beta-Binomial
+# "How often do weekly EIA reports show inventory draws?"
+alpha_prior, beta_prior = 2, 2  # Weak prior centered at 0.5
+draws = [1, 0, 1, 1, 0, 1, 1, 0, 1, 1]  # 1 = inventory draw week
+
+theta = np.linspace(0, 1, 500)
+axes[1].plot(theta, stats.beta.pdf(theta, alpha_prior, beta_prior),
+             'b-', lw=2, label='Prior Beta(2,2)')
+
+alpha_curr, beta_curr = alpha_prior, beta_prior
+for i, d in enumerate(draws):
+    alpha_curr += d
+    beta_curr += (1 - d)
+
+axes[1].plot(theta, stats.beta.pdf(theta, alpha_curr, beta_curr),
+             'r-', lw=2, label=f'Posterior Beta({alpha_curr},{beta_curr})')
+axes[1].axvline(sum(draws)/len(draws), color='green', linestyle='--',
+                label=f'MLE: {sum(draws)/len(draws):.1f}')
+axes[1].set_title('Bayesian Updating: Probability of Inventory Draw')
+axes[1].set_xlabel('θ (probability of draw)')
+axes[1].set_ylabel('Density')
+axes[1].legend()
+
+plt.tight_layout()
+plt.show()
+
+# Print posterior summaries
+post = stats.beta(alpha_curr, beta_curr)
+print(f"Posterior mean: {post.mean():.3f}")
+print(f"95% credible interval: [{post.ppf(0.025):.3f}, {post.ppf(0.975):.3f}]")
+```
 
 ---
 
@@ -179,7 +262,24 @@ $$f(x) = \int f(x | \theta) f(\theta) d\theta$$
 
 ---
 
-## 7. Common Pitfalls
+## Connections
+
+**Builds on:**
+- High school statistics: mean, variance, histograms
+- Calculus: integration, derivatives (for density functions)
+
+**Leads to:**
+- Module 1: Bayes' theorem — conditional probability applied to parameters
+- Module 1: Conjugate priors — specific distribution families for analytical updating
+- Module 6: MCMC — numerical methods for computing posteriors when integration is intractable
+
+**Related to:**
+- Measure theory: the formal foundation of probability
+- Information theory: entropy as a measure of uncertainty
+
+---
+
+## Common Pitfalls
 
 ### Confusing PDF value with probability
 - $f(x) = 2$ does NOT mean $P(X = x) = 2$
@@ -201,6 +301,7 @@ $$f(x) = \int f(x | \theta) f(\theta) d\theta$$
 ---
 
 ## 8. Quick Reference Table
+
 
 | Distribution | Notation | Parameters | Mean | Variance |
 |-------------|----------|------------|------|----------|
@@ -228,3 +329,12 @@ $$f(x) = \int f(x | \theta) f(\theta) d\theta$$
 ---
 
 *Answers and detailed solutions in the notebook exercises.*
+
+---
+
+## Further Reading
+
+1. **DeGroot & Schervish** *Probability and Statistics* (4th ed.) — Rigorous undergraduate reference, Chapters 1-5 cover everything in this guide
+2. **Blitzstein & Hwang** *Introduction to Probability* — Free online, outstanding intuition with story proofs
+3. **Gelman et al.** *Bayesian Data Analysis* Appendix A — Brief notation and probability summary oriented toward BDA's approach
+4. **3Blue1Brown** "Bayes theorem, the geometry of changing beliefs" (YouTube) — Excellent visual intuition for conditional probability

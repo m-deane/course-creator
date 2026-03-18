@@ -92,7 +92,7 @@ $$\lambda_j = \frac{n_j / \sigma^2}{n_j / \sigma^2 + 1 / \tau^2} = \frac{n_j \ta
 
 ---
 
-## Visual Intuition
+## Intuitive Explanation
 
 ### Shrinkage Diagram
 
@@ -133,7 +133,7 @@ Partial pooling minimizes total prediction error.
 
 ---
 
-## Code Example
+## Code Implementation
 
 ```python
 import pymc as pm

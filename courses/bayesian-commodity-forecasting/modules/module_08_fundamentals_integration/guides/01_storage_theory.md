@@ -8,7 +8,7 @@ Storage theory explains how inventory levels, storage costs, and the convenience
 
 ---
 
-## Formal Framework
+## Formal Definition
 
 ### The Cost of Carry Model
 
@@ -43,6 +43,16 @@ Where:
 - Low when supply is ample (no urgency)
 
 > 💡 **Key variable:** Convenience yield $y$ is the single most important input for fundamentals-based forecasting. When you cannot observe it directly, it must be inferred from the spot-futures spread — making it a latent variable that Bayesian methods are ideally suited to estimate.
+
+---
+
+## Intuitive Explanation
+
+Imagine a crude oil refiner who needs to keep at least 20 million barrels in their tanks at all times as a safety buffer. If total US crude stocks are 460 million barrels — well above the 5-year seasonal average of 430 million — the refiner doesn't care about buying spot today. They can easily buy on the futures market for next month's delivery. This lack of urgency keeps convenience yield low and futures trade at a premium to spot (contango).
+
+Now fast-forward six months. A OPEC+ surprise cut plus a cold winter depleted stocks to 390 million barrels, below the seasonal average. The refiner's buffer is suddenly at risk. They will pay a premium over the futures price to secure physical crude today — this premium is the convenience yield, and it drives the curve into steep backwardation.
+
+The Bayesian model's job is to infer this latent convenience yield from observable data (spot prices, futures curve, inventory reports) and use it to forecast whether current backwardation will persist or revert. The convenience yield is never directly observed — it must be estimated from the spot-futures spread after accounting for storage costs and interest rates. This latent variable problem is exactly what Bayesian state space models are built to solve.
 
 ---
 

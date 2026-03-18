@@ -12,6 +12,16 @@ Conjugate priors exist for mathematical convenience, not physical reality. They 
 3. Components within larger models
 4. Initialization of MCMC samplers
 
+## Intuitive Explanation
+
+A conjugate prior is like using the same unit of measurement before and after an experiment. If you express your beliefs about a probability as "I've seen 3 successes out of 5 virtual trials" (a Beta prior), then after seeing real data your updated beliefs are still expressed in the same units — just with more virtual trials added. The form of uncertainty doesn't change, only its magnitude.
+
+For commodity inventory forecasting: if you express prior beliefs about the weekly draw probability as Beta(6, 4) — equivalent to having seen 6 draws in 10 prior weeks — and then the EIA reports 3 more draws in the next 5 weeks, your posterior is simply Beta(9, 6). No integrals, no simulation. The Beta distribution's shape absorbed the data and spit out a new Beta.
+
+The deeper insight: conjugacy is not a special feature of Bayesian inference — it is a property of the mathematical relationship between the exponential family distributions. Likelihoods from the exponential family always have conjugate priors. This covers the Normal, Poisson, Binomial, Gamma, and many other distributions used in commodity models.
+
+---
+
 ## Formal Definition
 
 A prior $p(\theta)$ is **conjugate** to a likelihood $p(y|\theta)$ if:
@@ -175,6 +185,51 @@ This is the **Normal-Inverse-Gamma** prior, conjugate for the Normal likelihood 
 
 ---
 
+## Code Implementation
+
+The code examples within each conjugate family above show single-update calculations. Here is a complete PyMC implementation that uses conjugate structure as initialization for a full posterior sampling workflow, demonstrating the connection between analytical and numerical approaches:
+
+```python
+import pymc as pm
+import numpy as np
+import arviz as az
+from scipy import stats
+
+# --- Analytical conjugate update (Normal-Normal) ---
+# Prior on crude oil price level: N(80, 10^2)
+mu_0, sigma_0 = 80.0, 10.0
+tau_0 = 1.0 / sigma_0**2
+
+# Observed weekly closes (20 weeks)
+np.random.seed(42)
+true_mu = 76.0
+obs_sigma = 5.0
+prices = np.random.normal(true_mu, obs_sigma, 20)
+
+# Analytical posterior
+tau_obs = 1.0 / obs_sigma**2
+n = len(prices)
+tau_post = tau_0 + n * tau_obs
+mu_post = (tau_0 * mu_0 + n * tau_obs * prices.mean()) / tau_post
+sigma_post = np.sqrt(1.0 / tau_post)
+
+print("=== Analytical Conjugate Posterior ===")
+print(f"Posterior mean:  {mu_post:.3f}")
+print(f"Posterior std:   {sigma_post:.3f}")
+print(f"95% CI:          [{mu_post - 1.96*sigma_post:.2f}, {mu_post + 1.96*sigma_post:.2f}]")
+
+# --- Equivalent PyMC model (should match above exactly) ---
+with pm.Model() as normal_normal_model:
+    mu = pm.Normal('mu', mu=mu_0, sigma=sigma_0)
+    y_obs = pm.Normal('y_obs', mu=mu, sigma=obs_sigma, observed=prices)
+    trace = pm.sample(2000, tune=1000, random_seed=42, progressbar=False)
+
+print("\n=== PyMC Posterior (should match analytical) ===")
+print(az.summary(trace, var_names=['mu'])[['mean', 'sd', 'hdi_3%', 'hdi_97%']])
+```
+
+---
+
 ## Why Conjugate Priors Matter for Time Series
 
 ### Sequential Updating
@@ -288,6 +343,23 @@ Different sources use different parameterizations for Gamma, Inverse-Gamma, etc.
 With Beta(1,1) prior and 0 successes in 0 trials:
 - Posterior is still Beta(1,1)
 - The data didn't help because there was no data
+
+---
+
+## Connections
+
+**Builds on:**
+- Module 1 (Guide 1): Bayes' theorem — the prior-likelihood-posterior framework
+- Module 0: Key distributions — Beta, Normal, Gamma are all conjugate family members
+
+**Leads to:**
+- Module 3: Kalman filter — exact Normal-Normal conjugate updates in state space form
+- Module 6: MCMC — needed when conjugacy does not apply (non-conjugate priors, complex likelihoods)
+- Module 4: Hierarchical models — conjugate components within larger non-conjugate structures
+
+**Related concepts:**
+- Exponential family distributions: the class of likelihoods that always have conjugate priors
+- Natural parameters: the canonical parameterization that makes conjugate updates transparent
 
 ---
 

@@ -8,6 +8,36 @@ Quality commodity forecasting requires reliable data on prices, fundamentals, an
 
 ---
 
+## Formal Definition
+
+**Fundamental data** in commodity markets refers to the supply-demand balance sheet variables that determine equilibrium prices according to storage theory. The core relationship is:
+
+$$\text{Ending Stocks}_t = \text{Beginning Stocks}_t + \text{Production}_t + \text{Imports}_t - \text{Consumption}_t - \text{Exports}_t$$
+
+This **stock-flow accounting identity** is exact — there is no approximation. Every commodity forecasting model ultimately reduces to beliefs about the future evolution of this balance sheet. Data sources differ by:
+
+- **Frequency:** Daily (prices, LME stocks) → Weekly (EIA, CFTC) → Monthly (USDA WASDE) → Quarterly (company reports)
+- **Revision frequency:** Weekly EIA estimates are revised monthly; WASDE estimates are revised and replaced each month
+- **Look-back window:** Older data more reliable; newer data subject to revision
+- **Coverage:** US-only (EIA) vs. global (WASDE world tables, IEA)
+
+**Survey vs. administrative data:**
+- EIA petroleum: Survey-based (sample of operators), subject to sampling error
+- USDA NASS: Survey and administrative records
+- CFTC COT: Administrative (regulatory filing), nearly exact
+
+---
+
+## Intuitive Explanation
+
+Think of commodity data sources as different lenses on the same physical reality. The EIA weekly petroleum report is a blurry photo taken quickly every Wednesday — it captures the rough shape of US crude inventories but has measurement noise and is revised. The annual EIA-914 natural gas production survey is a sharper, longer-exposure photo — more accurate but only available months later.
+
+Bayesian models handle these different data qualities naturally: attach a likelihood with wider variance to noisier sources, and a tighter likelihood to more reliable data. The posterior automatically down-weights noisy observations. When you update your inventory model with a fresh EIA report, you're doing exactly what Bayes' theorem prescribes: weighting new information by its precision relative to your prior uncertainty.
+
+The look-ahead bias danger is the most important practical point: using revised data in backtests makes models look better than they actually were. The real-time data vintage — what a trader saw on the day — is what matters. Several data vendors (Refinitiv, Bloomberg, FactSet) provide vintage-stamped data specifically for this reason.
+
+---
+
 ## 1. Energy Data (EIA)
 
 ### Weekly Petroleum Status Report
@@ -282,6 +312,57 @@ data/
 2. **Logged:** Track when data was downloaded
 3. **Versioned:** Store raw data, process into features
 4. **Tested:** Validate data quality automatically
+
+---
+
+## Common Pitfalls
+
+### 1. Look-Ahead Bias in Backtests
+
+Using revised data to backtest a model that would have seen only preliminary data produces overly optimistic results. The EIA revises crude inventory estimates monthly — using the final revised number pretends you had information you didn't.
+
+**Fix:** Download EIA data with revision timestamps, or use only data older than 6 months where revisions are mostly complete.
+
+### 2. Ignoring Release Timing
+
+EIA petroleum data released Wednesday covers the week ending Friday (5 days prior). Using it as same-day information in a daily model is look-ahead bias.
+
+**Fix:** In your data pipeline, always store `release_date` separately from `reference_period`.
+
+### 3. Mixing Frequencies Without Alignment
+
+Merging daily prices with weekly EIA inventory and monthly WASDE data requires careful date alignment. A naive join produces NaN-filled rows that can contaminate model training.
+
+**Fix:** Decide on a target frequency, then use `ffill()` (forward-fill) for slower-frequency series — the EIA inventory figure was valid from release date until the next release.
+
+### 4. EIA API Pagination
+
+EIA's v2 API returns max 5,000 rows per call. Long historical pulls silently truncate data.
+
+**Fix:** Implement pagination with `offset` parameter or use date-range chunking.
+
+### 5. USDA WASDE Marketing Year vs. Calendar Year
+
+USDA uses marketing years (corn: September-August) not calendar years. Merging WASDE with calendar-year macro data on year alone gives 4-month misalignment.
+
+**Fix:** Always join on the `period_end` date, not the year field.
+
+---
+
+## Connections
+
+**Builds on:**
+- Module 0: Commodity markets introduction — the supply-demand balance sheet structure
+- Module 0: Probability review — measurement error as a likelihood component
+
+**Leads to:**
+- Module 2 (Guide 2): Seasonality analysis — extracting seasonal patterns from these data series
+- Module 3: State space models — the inventory stock-flow equations as state transitions
+- Module 8: Fundamental variables — using balance sheet data directly in Bayesian forecasting models
+
+**Related to:**
+- Data engineering: pipelines, idempotency, vintage management
+- Measurement error models: explicitly modeling the gap between survey estimates and true inventories
 
 ---
 

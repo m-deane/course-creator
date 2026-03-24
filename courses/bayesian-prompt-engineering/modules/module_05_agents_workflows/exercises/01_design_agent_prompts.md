@@ -5,10 +5,17 @@
 You will design condition-aware system prompts for three different agent roles. For each agent, you will:
 
 1. Identify the switch variables the agent needs to do its job precisely
-2. Write a system prompt that establishes Layer 0 through Layer 4 conditions
-3. Specify how the agent should handle missing conditions — and how it should ask for them
+2. Write a complete system prompt that sets the agent's role, instructs it to extract conditions before answering, and specifies how to handle missing conditions
+3. Review an example conversation showing the agent asking for conditions before proceeding
 
-This exercise applies everything from Module 5 to real agent design problems.
+This exercise applies the full Module 5 agent conditioning framework to real design problems.
+
+**Time estimate:** 45–60 minutes
+
+**Prerequisites:**
+- `guides/01_agent_conditioning_guide.md`
+- `guides/02_claude_specific_patterns_guide.md`
+- `notebooks/01_condition_aware_agent.ipynb`
 
 ---
 
@@ -16,108 +23,131 @@ This exercise applies everything from Module 5 to real agent design problems.
 
 For each agent role:
 1. Read the role description and example query
-2. Complete the switch variable analysis (the template is provided)
-3. Write the system prompt
-4. Write the missing conditions handler
-5. Test your system prompt by running it against the example query with and without the switch variables you identified
+2. Review the switch variable analysis (provided for the first agent, blank for the others)
+3. Write the complete system prompt — copy-paste ready
+4. Review or write the example conversation showing the agent in action
+5. Test your system prompt against the example query with and without conditions
 
 ---
 
-## Agent Role 1: Legal Research Agent
+## Agent Role 1: Legal Research Agent (Worked Example)
 
 ### Role Description
 
-This agent assists legal professionals (attorneys and paralegals) with researching relevant case law, statutes, and regulatory guidance. It returns structured research findings with citations.
+This agent assists attorneys and paralegals with researching relevant case law, statutes, and regulatory guidance. It returns structured research findings with citations and explicitly flags how jurisdiction and client position affect which precedents apply.
 
 ### Example Query
 
-"Find cases that support our position on employee non-compete clause enforceability."
+> "Find cases that support our position on employee non-compete clause enforceability."
 
 ### Why This Query Is Difficult Without Conditions
 
-The answer to "are non-compete clauses enforceable?" ranges from "always, with reasonable limitations" (Georgia) to "almost never" (California) to "never for most employees" (Minnesota, starting 2023) depending on jurisdiction. The right answer also depends on whether the client is seeking to enforce or escape the clause, the employee's role, and the timeline of the dispute.
+"Are non-compete clauses enforceable?" ranges from "yes, with reasonable limitations" (Georgia, Texas) to "never, with limited exceptions" (California, Minnesota since 2023) to "only for certain employee tiers" (Illinois, Colorado) — based entirely on jurisdiction. The right answer also flips based on whether the client is seeking to enforce or escape the clause, the employee's role and salary, and whether the dispute is pending or anticipatory.
 
----
-
-### Your Task: Switch Variable Analysis
-
-Complete this analysis before writing the system prompt.
-
-**Question: What are the switch variables for this agent's work?**
-
-Think about: which conditions, if unknown, would cause this agent to research the wrong jurisdiction, the wrong legal standard, or the wrong precedent?
+### Switch Variable Analysis
 
 | Switch Variable | Possible Values | How It Changes the Research |
 |----------------|-----------------|----------------------------|
-| Jurisdiction | [fill in] | [fill in — think: 3-4 different state standards] |
-| Client position | [fill in] | [fill in — enforcing vs. escaping changes which cases to find] |
-| Employee type | [fill in] | [fill in — executives vs. general employees have different standards] |
-| Dispute timeline | [fill in] | [fill in — pending vs. active vs. anticipatory] |
-
-Add any additional switch variables you identify.
+| Jurisdiction | California, Texas, Georgia, Minnesota, Delaware, federal circuit | Changes which precedents apply; some states have per se invalidity, others apply reasonableness test |
+| Client position | Enforcing (employer) / Escaping (employee) | Flips which cases are "for our position" — enforcer wants strong enforcement precedents, employee wants invalidation precedents |
+| Employee type | Executive (C-suite, VP) / Technical (engineer, scientist) / General employee | Courts apply different standards; higher-level employees face stricter enforceability in some states |
+| Dispute timeline | Anticipatory (not yet triggered) / Pending (notice sent, no filing) / Active litigation | Changes whether to research injunction standards vs. merits vs. damages |
+| Consideration | Offered at hire / Offered mid-employment | Mid-employment non-competes face additional scrutiny in several states; affects validity analysis |
 
 ---
 
-### Your Task: Write the System Prompt
-
-Write a system prompt that:
-- Establishes the agent's role (Layer 0)
-- Specifies standing constraints on research quality and citation standards (Layer 4)
-- Leaves Layer 5 (facts) and Layer 6 (output format) for per-query injection
-
-**Starter template (fill in the [...] sections):**
+### Complete System Prompt (Copy-Paste Ready)
 
 ```
-You are a legal research specialist assisting [who?] with [what purpose?].
+You are a legal research specialist assisting attorneys and paralegals with employment law research, specifically non-compete and restrictive covenant matters.
 
-JURISDICTION: [How should the agent handle unknown jurisdiction?]
+ROLE AND SCOPE:
+You research relevant case law, statutes, and regulatory guidance. You return structured findings with citations. You do not give legal advice or predict litigation outcomes — you identify the strongest precedents and flag jurisdictional gaps.
+
+JURISDICTION HANDLING:
+Non-compete enforceability law is jurisdiction-specific to a degree that makes any general answer unreliable. Before conducting any research, you must know:
+1. The state(s) whose law governs the agreement (look for choice-of-law clauses in the agreement and the employee's work location — they may differ)
+2. Whether federal law applies (FTC rule on non-competes, if in effect)
+
+If jurisdiction is not specified, do not begin research. Ask for it first.
+
+CLIENT POSITION:
+You must know whether the client is the employer seeking to enforce the non-compete or the employee seeking to escape it. This determines which line of cases is "supporting" and which is "adverse." A case that supports enforcement is adverse from the employee's perspective and vice versa.
+
+If client position is not specified, ask before proceeding.
 
 RESEARCH STANDARDS:
-- [Standard 1 — e.g., citation requirements]
-- [Standard 2 — e.g., recency requirements]
-- [Standard 3 — e.g., what to do when precedents conflict]
+- Cite cases by name, court, year, and jurisdiction (e.g., "Edwards v. Arthur Andersen LLP, 44 Cal.4th 937 (Cal. 2008)")
+- Prioritize: (1) Supreme Court of the applicable state, (2) intermediate appellate courts, (3) federal district/circuit courts applying state law
+- Note the holding's current status: good law / distinguished / questioned / overruled
+- Flag if a relevant statute was enacted after the most recent case you found (statutory changes may supersede case law)
+- For any case decided before 2020, note whether subsequent cases have applied or limited it
 
 STANDING CONSTRAINTS:
-- [Constraint 1 — what you will never do]
-- [Constraint 2 — when you will flag a result as unreliable]
-- [Constraint 3 — how to handle jurisdictional gaps]
+- Never present a case as supporting a position without reading its actual holding
+- Flag when the research reveals that the client's jurisdiction has unusually strong or weak enforcement (calibrate expectations)
+- If precedents conflict within the same jurisdiction, present both and explain the circuit split or factual distinction
+- Do not omit adverse precedents — flag them clearly rather than suppressing them
 
 MISSING CONDITIONS PROTOCOL:
-If jurisdiction is not specified: [what should the agent do?]
-If client position is not specified: [what should the agent do?]
+If jurisdiction is not specified:
+  → Ask: "To find the relevant case law, I need to know which state's law governs the non-compete. This is usually determined by the choice-of-law clause in the agreement and the employee's primary work location. Which state applies here?"
+
+If client position is not specified:
+  → Ask: "Are you representing the employer seeking to enforce the non-compete, or the employee seeking to invalidate or escape it? This determines which cases are 'supporting' — the same precedents are adverse from the opposite position."
+
+If employee type is not specified and it could change the answer:
+  → Ask: "What is the employee's role and approximate compensation level? Courts in several states apply different enforceability standards based on whether the employee is an executive, a highly compensated technical employee, or a general worker."
 ```
 
 ---
 
-### Your Task: Missing Conditions Handler
+### Example Conversation
 
-Write the questions this agent should ask when switch variables are missing. The questions should:
-- Be specific (not "what is your jurisdiction?" but something that helps a non-lawyer specify correctly)
-- Be ordered by importance (most important switch variable first)
-- Offer examples or options where helpful
+**User:** Find cases that support our position on employee non-compete clause enforceability.
 
-**Questions to ask when jurisdiction is missing:**
+**Agent:** To find the relevant case law, I need two pieces of information before I can identify which cases support your position.
 
-```
-[Write the question here]
-```
+First: which state's law governs the non-compete? This is usually determined by the choice-of-law clause in the agreement and the employee's primary work location — and they sometimes differ. If there is a conflict, tell me both states.
 
-**Questions to ask when client position is missing:**
-
-```
-[Write the question here]
-```
+Second: are you representing the employer seeking to enforce the non-compete, or the employee seeking to escape it? The same precedent that helps an employer enforce a clause is the case the employee's attorney wants to distinguish. "Supporting our position" means different things depending on which side you're on.
 
 ---
 
-### Test Your Design
+**User:** Texas law governs. We represent the employer seeking to enforce the non-compete against a former VP of Sales.
 
-Run this prompt against the example query with:
-1. No additional context — observe what the agent does
-2. Jurisdiction: California — observe how the answer changes
-3. Jurisdiction: Georgia + client is enforcing — observe the change again
+**Agent:** Thank you — that gives me what I need.
 
-The answer should change substantially between these three conditions. If it does not, your system prompt may not be setting the right Layer 0 conditions.
+**Research findings: Non-compete enforceability in Texas — enforcing employer's position, VP of Sales**
+
+Texas governs non-competes under the Texas Covenants Not to Compete Act (Tex. Bus. & Com. Code §15.50), which requires that a non-compete be ancillary to an otherwise enforceable agreement, have reasonable limitations on time, geography, and scope of activity, and not impose a greater restraint than necessary to protect the employer's legitimate interests.
+
+**Cases supporting enforceability (employer's position):**
+
+1. **Mann Frankfort Stein & Lipp Advisors, Inc. v. Fielding**, 289 S.W.3d 844 (Tex. 2009)
+   - Holding: Non-compete is enforceable if ancillary to an agreement that contains enforceable promises. Confidentiality agreement plus at-will employment can satisfy the "ancillary to an otherwise enforceable agreement" requirement.
+   - Significance for your case: If the VP signed a confidentiality agreement at hire, this supports the threshold enforceability argument.
+   - Status: Good law; regularly cited by Texas courts.
+
+2. **Marsh USA Inc. v. Cook**, 354 S.W.3d 764 (Tex. 2011)
+   - Holding: Stock options granted in exchange for signing a non-compete satisfy the consideration requirement under §15.50. The non-compete is "ancillary to" the stock option grant.
+   - Significance: If the VP received equity compensation tied to the non-compete, Marsh directly supports enforceability.
+   - Status: Good law; Supreme Court of Texas.
+
+[Research continues with geographic and temporal reasonableness cases...]
+
+**Note:** Texas courts will blue-pencil (reform) overbroad non-competes rather than void them entirely. This cuts both ways — it means an overbroad clause is likely enforceable in reduced form, which supports your enforcement position but may limit the scope of the injunction available.
+
+---
+
+### Test Your System Prompt
+
+Run the system prompt above against the example query with:
+1. No additional context — confirm the agent asks for jurisdiction and client position
+2. "Texas, employer enforcing against VP of Sales" — confirm the research changes substantively
+3. "California, employee seeking to escape" — confirm the research produces invalidation precedents, not enforcement precedents
+
+The research results should be categorically different across these three conditions.
 
 ---
 ---
@@ -126,11 +156,11 @@ The answer should change substantially between these three conditions. If it doe
 
 ### Role Description
 
-This agent reviews code diffs and produces structured feedback. It integrates with pull request workflows and provides comments on quality, security, performance, and correctness.
+This agent reviews code diffs and functions and produces structured feedback. It integrates with pull request workflows and provides comments organized by severity. It must calibrate its review to the deployment environment and the team's stated review scope.
 
 ### Example Query
 
-"Review this Python function for issues."
+> "Review this Python function for issues."
 
 ```python
 def process_user_data(user_id, db_connection):
@@ -141,85 +171,73 @@ def process_user_data(user_id, db_connection):
 
 ### Why This Query Is Difficult Without Conditions
 
-What constitutes a "review issue" depends heavily on context:
-- Is this a prototype or production code?
-- What is the security threat model?
-- What are the performance requirements?
-- Does the codebase have existing patterns this code should match?
-- Is the reviewer looking for blockers or all issues?
-
-The SQL injection vulnerability is critical in production. In a local development prototype with trusted inputs, it may be a lower-priority note.
+The SQL injection vulnerability in this function is a critical blocker for a production API handling external user input. It is a low-priority informational note for a local data science notebook with trusted internal inputs. The review changes from "stop, do not merge" to "worth noting for future cleanup" based entirely on the deployment environment condition.
 
 ---
 
 ### Your Task: Switch Variable Analysis
 
+Identify the switch variables for this agent. Fill in the table:
+
 | Switch Variable | Possible Values | How It Changes the Review |
 |----------------|-----------------|--------------------------|
-| Code environment | [fill in] | [fill in] |
-| Review scope | [fill in] | [fill in] |
-| Security threat model | [fill in] | [fill in] |
-| Codebase standards | [fill in] | [fill in] |
+| Deployment environment | | |
+| Review scope | | |
+| Security threat model | | |
+| Codebase standards | | |
+| Reviewer intent | | |
 
 ---
 
 ### Your Task: Write the System Prompt
 
-The code review agent needs a system prompt that produces consistent, actionable reviews. Key design decisions:
-
-- What severity levels should it use? (blocker / warning / suggestion / nitpick — or something else?)
-- What categories should it review? (security, performance, readability, correctness, maintainability)
-- What should it do when it cannot determine environment context?
-- How should it handle the tension between "thorough" and "not overwhelming the developer"?
+Write a complete, copy-paste ready system prompt. Design decisions to make:
+- What severity levels does this agent use? (Define each one clearly)
+- What categories does it review? (In what priority order?)
+- How does it handle unknown deployment environment?
+- What does it always flag regardless of environment?
+- What does it suppress unless specifically requested?
 
 ```
-You are a code review specialist operating under these standing conditions:
-
-REVIEW SCOPE: [Default scope when not specified]
-
-SEVERITY LEVELS:
-- [Level 1]: [Definition and when to use]
-- [Level 2]: [Definition and when to use]
-- [Level 3]: [Definition and when to use]
-
-REVIEW CATEGORIES (apply in this order):
-1. [Category 1 — highest priority]
-2. [Category 2]
-3. [Category 3]
-
-STANDING CONSTRAINTS:
-- [Constraint on number of issues to surface]
-- [Constraint on what NOT to flag unless specifically requested]
-- [Constraint on how to handle ambiguous cases]
-
-MISSING CONDITIONS:
-If the code environment is unspecified: [what to assume and what to ask]
+(Write your complete system prompt here)
 ```
 
 ---
 
-### Your Task: Missing Conditions Handler
+### Your Task: Write the Example Conversation
 
-For a code review agent, some conditions can be partially inferred from the code itself (language, patterns), while others genuinely need to be asked.
+Write a short conversation (3–5 turns) showing:
+1. The user submits the function above with no context
+2. The agent asks for the one condition it needs most
+3. The user provides the condition
+4. The agent delivers a calibrated review
 
-Which switch variables can be inferred from the code? Which must be asked?
+```
+User: (paste the query above)
 
-**Inferred from code:**
-- [List conditions you can detect from the code diff/function itself]
+Agent: (what does it ask?)
 
-**Must be asked:**
-- [List conditions that genuinely need to be asked, with the questions to ask]
+User: (provide a condition — your choice)
+
+Agent: (what does the calibrated review look like?)
+```
 
 ---
 
 ### Test: Environment Switch Variable
 
-Write the same function review prompt three times with different environment conditions:
-1. "This is a production API endpoint handling external user input"
-2. "This is a data science notebook for exploratory analysis, not deployed"
-3. "This is an internal tool used only by admins with read-only database access"
+Write what you expect the review to say for the SQL injection issue under three conditions:
+1. "Production API endpoint handling external user input from a public web form"
+2. "Data science notebook for exploratory analysis, inputs are trusted internal data"
+3. "Internal admin tool where only 3 engineers have access and inputs are validated upstream"
 
-The review of the SQL injection issue should differ substantially across these three conditions. Write what you would expect the review to say for each.
+```
+Environment 1 — what the review says about SQL injection:
+
+Environment 2 — what the review says about SQL injection:
+
+Environment 3 — what the review says about SQL injection:
+```
 
 ---
 ---
@@ -228,25 +246,15 @@ The review of the SQL injection issue should differ substantially across these t
 
 ### Role Description
 
-This agent analyzes datasets and produces insights, summaries, and recommendations. It works with business analysts who provide data and questions.
+This agent analyzes datasets and produces insights, summaries, and recommendations. It works with business analysts and managers who provide data and questions. It is built to avoid the two most common failures in AI-assisted data analysis: (1) answering the wrong question because the metric was ambiguous, and (2) claiming causation when only correlation is supported.
 
 ### Example Query
 
-"Analyze the sales data and tell me what's driving the revenue decline."
+> "Analyze the sales data and tell me what's driving the revenue decline."
 
 ### Why This Query Is Difficult Without Conditions
 
-"Revenue decline" could mean:
-- Total revenue vs. revenue per customer vs. revenue per product
-- Month-over-month vs. year-over-year vs. compared to plan
-- Is the decline happening everywhere or in a specific segment?
-
-"Driving" implies a causal analysis, but:
-- Do you want correlation or causation?
-- What is the business context that would make a cause actionable?
-- Are there known external factors that should be excluded?
-
-Without conditions, the agent will produce an analysis of average generality that is unlikely to match what the analyst actually needs.
+"Revenue decline" could mean total invoiced revenue, net revenue after refunds, recognized revenue, MRR/ARR, or revenue per customer. "Driving" implies causation, but without knowing the business context, the agent cannot distinguish a cause from a correlated factor. Without knowing what decision this analysis will inform, the agent cannot tell the analyst which insights are actionable vs. interesting.
 
 ---
 
@@ -254,122 +262,111 @@ Without conditions, the agent will produce an analysis of average generality tha
 
 | Switch Variable | Possible Values | How It Changes the Analysis |
 |----------------|-----------------|---------------------------|
-| Metric definition | [fill in] | [fill in] |
-| Time comparison | [fill in] | [fill in] |
-| Analysis depth | [fill in] | [fill in] |
-| Actionability constraint | [fill in] | [fill in] |
+| Metric definition | | |
+| Time comparison period | | |
+| Analysis objective | | |
+| Causation standard | | |
+| Actionability constraint | | |
 
 ---
 
 ### Your Task: Write the System Prompt
 
-The data analysis agent needs special handling for:
-- Ambiguous metric definitions (what counts as "revenue"?)
-- The distinction between correlation and causation
-- Unknown context (why does the business care about this?)
-- How to handle incomplete data
+Write a complete, copy-paste ready system prompt. Design decisions to make:
+- How does the agent handle ambiguous metric definitions without blocking on every analysis?
+- When does it claim causation vs. correlation? (Write an explicit policy)
+- What does it always do before starting an analysis?
+- How does it handle missing data?
+- What clarifying questions does it ask, and in what order?
 
 ```
-You are a data analysis specialist operating under these standing conditions:
-
-ANALYSIS OBJECTIVE: [Default objective when not specified]
-
-METRIC STANDARDS:
-- [How to handle ambiguous metric definitions]
-- [Default statistical methods]
-- [How to report confidence / uncertainty]
-
-CAUSATION POLICY:
-- [When to claim causation vs. correlation]
-- [How to flag confounders]
-
-STANDING CONSTRAINTS:
-- [What this agent will NOT conclude without sufficient evidence]
-- [How to handle missing data]
-- [When to ask for clarification vs. proceeding with assumptions]
-
-MISSING CONDITIONS PROTOCOL:
-If the metric definition is ambiguous: [what to do]
-If the time period for comparison is unspecified: [what to do]
+(Write your complete system prompt here)
 ```
 
 ---
 
-### Your Task: Missing Conditions Handler
+### Your Task: Write the Example Conversation
 
-For a data analysis agent, clarification questions need to be specific and non-technical (since analysts may not know statistical terminology). Write clarification questions that:
-- Are business-language, not statistical language
-- Offer concrete examples to help the user specify correctly
-- Are prioritized (most important first)
+Write a short conversation showing:
+1. The user submits the analysis request above
+2. The agent asks for conditions — show which ones it prioritizes and how it phrases the questions in business language (not statistical language)
+3. The user provides answers
+4. The agent begins the analysis with explicit condition statements
 
-**Questions to ask before starting analysis:**
+```
+User: Analyze the sales data and tell me what's driving the revenue decline.
 
-1. **About the metric:** [Write the question — offer 2-3 examples of how revenue could be defined]
+Agent: (what questions does it ask, and in what order?)
 
-2. **About the comparison:** [Write the question — offer examples of comparison periods]
+User: (provide answers — your choice)
 
-3. **About the desired outcome:** [Write the question — what decision will this analysis inform?]
-
----
-
-### Advanced: Layer 0 vs. Layer 5 Separation
-
-For the data analysis agent, there is a design tension: the agent needs some context that changes per analysis (the data, the question), but other context that should be stable (how to handle statistical uncertainty, when to claim causation).
-
-**Map each condition to its layer:**
-
-| Condition | Layer | Reason |
-|-----------|-------|--------|
-| "Always report confidence intervals for trend claims" | [Layer 0 or 5?] | [Why?] |
-| "This dataset covers January–June 2024" | [Layer 0 or 5?] | [Why?] |
-| "The company's objective is to maximize customer lifetime value" | [Layer 0 or 5?] | [Why?] |
-| "Revenue = invoiced amount, not cash received" | [Layer 0 or 5?] | [Why?] |
-| "Do not attribute changes to seasonality without explicit seasonal adjustment" | [Layer 0 or 5?] | [Why?] |
+Agent: (how does it begin the analysis, and what does it commit to before looking at numbers?)
+```
 
 ---
 
-## Reflection Questions
+### Advanced: The Causation Policy
 
-After completing all three agents, answer these questions. They connect back to the core concepts from Module 5.
+The data analysis agent must have an explicit policy on when it claims causation vs. correlation. Write that policy here in plain language:
 
-**1. Condition decay risk**
+```
+The agent claims causation when:
 
-Which of the three agents faces the highest condition decay risk in a multi-step pipeline? Why?
 
-*Hint: Think about which agent's conditions would most change the analysis if they were dropped midway through a pipeline.*
+The agent claims correlation when:
 
-**2. Minimal viable condition set**
 
-For each agent, which single switch variable, if unspecified, would cause the most harm? This is the variable that must survive every handoff — your minimum viable condition.
+The agent asks for clarification when:
 
-| Agent | Most critical switch variable | Why |
-|-------|------------------------------|-----|
-| Legal Research | | |
-| Code Review | | |
-| Data Analysis | | |
 
-**3. System prompt as Layer 0**
-
-Look at the system prompts you wrote. Which conditions did you put in the system prompt? Why those and not others?
-
-If you put task-specific conditions in the system prompt (conditions that change per query), move them to the user message template instead. System prompts should contain only stable conditions.
-
-**4. The missing conditions protocol**
-
-Compare the three missing conditions protocols you wrote. What is the pattern? When is it better to ask vs. proceed with an assumption?
-
-Write a rule: "Ask when ____. Proceed with assumption when ____."
+The agent refuses to make a causal claim when:
+```
 
 ---
 
-## Extension: Build One
+## Synthesis: Patterns Across All Three Agents
 
-Pick one of the three agent roles above. Implement it as a working Claude agent using the Anthropic Python SDK. Your implementation should:
+After completing all three, answer these questions:
 
-1. Use your system prompt as the `system` parameter
-2. Accept a user question plus an optional `known_conditions` dict
-3. Use forced `tool_choice` to extract needed conditions that aren't present
-4. Ask for missing conditions (or list what it would ask, if not interactive)
-5. Generate a structured answer using your condition stack
+### 1. The universal pattern
 
-Reference: `notebooks/01_condition_aware_agent.ipynb` for the implementation pattern.
+What is the one structural element that appears in all three system prompts — regardless of domain?
+
+```
+Your answer:
+```
+
+### 2. The right trigger for asking
+
+All three agents face the same tension: ask too often and the agent is annoying; ask too rarely and the agent gives wrong answers. Based on the three agents you designed, write a general rule for when an agent should ask for conditions vs. proceed with stated assumptions:
+
+```
+Ask when:
+
+
+Proceed with assumption when:
+
+
+Always flag the assumption when:
+```
+
+### 3. Layer 0 vs. Layer 5
+
+System prompts contain Layer 0 conditions (stable across all calls). User messages contain Layer 5 conditions (specific to each call). For each of these conditions, identify which layer it belongs in:
+
+| Condition | Layer 0 (system prompt) or Layer 5 (user message)? |
+|-----------|---------------------------------------------------|
+| "Always use Bluebook citation format" | |
+| "The employee at issue is a VP of Engineering" | |
+| "Never claim causation without mentioning confounders" | |
+| "The dataset covers Q1–Q3 2024" | |
+| "Default to conservative severity assessments" | |
+| "The deployment environment is production" | |
+
+---
+
+## Next Steps
+
+- `notebooks/01_condition_aware_agent.ipynb` — implement one of these agents as a working Claude API call
+- `notebooks/02_multi_agent_pipeline.ipynb` — how switch variables pass between specialized agents via JSON handoffs
+- Module 7 (`guides/01_production_patterns_guide.md`) — how to inject conditions from data sources so the agent doesn't have to ask for conditions that are already known

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Styling Guide — Live Preview</title>
+  <style>
+    /* === Font Loading === */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* === CSS Custom Properties === */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-section-mint: #e8f5e9;
+      --bg-section-amber: #fff8e1;
+      --bg-section-blue: #e3f2fd;
+      --bg-section-lavender: #f3e5f5;
+      --bg-section-rose: #fce4ec;
+      --bg-code: #1e1e2e;
+      --bg-sidebar: #1a1a2e;
+      --accent-green: #4caf50;
+      --accent-orange: #ff9800;
+      --accent-blue: #2196f3;
+      --accent-red: #ef5350;
+      --accent-purple: #7c4dff;
+      --text-primary: #212121;
+      --text-heading: #1a1a2e;
+      --text-muted: #757575;
+      --text-on-dark: #f5f5f5;
+      --border-light: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --font-heading: Georgia, 'Playfair Display', serif;
+      --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    }
+
+    /* === Reset & Base === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: #f8f9fa;
+    }
+
+    /* === Header === */
+    .site-header {
+      background: linear-gradient(135deg, var(--bg-sidebar), #16213e);
+      color: var(--text-on-dark);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .site-header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .site-header p {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+
+    /* === Navigation === */
+    .toc {
+      background: white;
+      max-width: 960px;
+      margin: -2rem auto 2rem;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      justify-content: center;
+    }
+    .toc a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.3rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .toc a:hover {
+      border-color: var(--accent-blue);
+    }
+
+    /* === Main Content === */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    /* === Section Styling === */
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      position: relative;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-orange);
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p { margin-bottom: 1rem; }
+
+    /* === Color Swatches === */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .swatch {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: transform 0.2s;
+    }
+    .swatch:hover { transform: translateY(-2px); }
+    .swatch-color {
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 8px 12px;
+    }
+    .swatch-color span {
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.85);
+      color: var(--text-primary);
+    }
+    .swatch-color.dark span {
+      background: rgba(0,0,0,0.5);
+      color: var(--text-on-dark);
+    }
+    .swatch-label {
+      padding: 8px 12px;
+      background: white;
+      font-size: 0.85rem;
+    }
+    .swatch-label .token {
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* === Typography Demo === */
+    .type-demo {
+      padding: 1.5rem;
+      background: #fafafa;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .type-demo .demo-h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2em;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+    .type-demo .demo-h2 {
+      font-family: var(--font-heading);
+      font-size: 1.6em;
+      font-weight: 600;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    .type-demo .demo-h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-orange);
+      border-radius: 2px;
+    }
+    .type-demo .demo-h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2em;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin: 0.75rem 0 0.5rem;
+    }
+    .type-demo .demo-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+    .type-demo .demo-code {
+      font-family: var(--font-code);
+      font-size: 0.85em;
+      color: #c3e88d;
+      background: var(--bg-code);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .type-demo .demo-caption {
+      font-family: var(--font-body);
+      font-size: 0.85em;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .type-scale {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 0.5rem 1.5rem;
+      align-items: baseline;
+      margin: 1rem 0;
+    }
+    .type-scale .size-label {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* === Code Window === */
+    .code-window {
+      background: var(--bg-code);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      margin: 1rem 0;
+      position: relative;
+    }
+    .code-header {
+      background: #2d2d44;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+    .dot-red, .dot-yellow, .dot-green {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28ca41; }
+    .filename {
+      color: #a0a0b0;
+      font-family: var(--font-code);
+      font-size: 0.8em;
+    }
+    .code-body {
+      padding: 1.2rem 1.5rem;
+      color: #cdd6f4;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    .code-body .keyword { color: #cba6f7; }
+    .code-body .function { color: #89b4fa; }
+    .code-body .string { color: #a6e3a1; }
+    .code-body .comment { color: #6c7086; font-style: italic; }
+    .code-body .number { color: #fab387; }
+    .code-body .decorator { color: #f9e2af; }
+    .code-annotation {
+      position: absolute;
+      background: white;
+      color: var(--text-heading);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      white-space: nowrap;
+    }
+    .code-annotation.right {
+      right: -10px;
+      transform: translateX(100%);
+    }
+
+    /* === Process Flow === */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 1.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .flow-step {
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      text-align: center;
+      min-width: 140px;
+      box-shadow: 0 2px 8px var(--shadow);
+      font-size: 0.9rem;
+    }
+    .flow-step.mint { background: var(--bg-section-mint); border: 2px solid var(--accent-green); color: #1b5e20; }
+    .flow-step.amber { background: var(--bg-section-amber); border: 2px solid var(--accent-orange); color: #e65100; }
+    .flow-step.blue { background: var(--bg-section-blue); border: 2px solid var(--accent-blue); color: #0d47a1; }
+    .flow-step.lavender { background: var(--bg-section-lavender); border: 2px solid var(--accent-purple); color: #4a148c; }
+    .flow-step.rose { background: var(--bg-section-rose); border: 2px solid var(--accent-red); color: #b71c1c; }
+    .flow-arrow {
+      font-size: 1.5em;
+      color: var(--text-muted);
+      padding: 0 0.5rem;
+    }
+
+    /* === Callout Boxes === */
+    .callout-insight, .callout-warning, .callout-key, .callout-danger, .callout-info {
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border-left: 4px solid;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .callout-insight { background: var(--bg-section-lavender); border-color: var(--accent-purple); }
+    .callout-warning { background: var(--bg-section-amber); border-color: var(--accent-orange); }
+    .callout-key { background: var(--bg-section-mint); border-color: var(--accent-green); }
+    .callout-danger { background: var(--bg-section-rose); border-color: var(--accent-red); }
+    .callout-info { background: var(--bg-section-blue); border-color: var(--accent-blue); }
+
+    /* === Comparison Cards === */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .compare-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .compare-card .header {
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    .compare-card .header.before { background: var(--accent-red); }
+    .compare-card .header.after { background: var(--accent-green); }
+    .compare-card .body {
+      padding: 1rem;
+      background: white;
+      font-size: 0.9rem;
+    }
+    .compare-card .body ul {
+      list-style: none;
+      padding: 0;
+    }
+    .compare-card .body ul li {
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .compare-card .body ul li::before {
+      position: absolute;
+      left: 0;
+    }
+    .compare-card:first-child .body ul li::before { content: "\2717"; color: var(--accent-red); }
+    .compare-card:last-child .body ul li::before { content: "\2713"; color: var(--accent-green); }
+
+    /* === Table Styling === */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+      border: 1px solid var(--border-light);
+    }
+    .styled-table thead th {
+      background: var(--bg-sidebar);
+      color: var(--text-on-dark);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .styled-table tbody td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .styled-table tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+    .styled-table tbody tr:hover {
+      background: var(--bg-section-blue);
+    }
+
+    /* === Section Break Demo === */
+    .module-break-demo {
+      background: var(--bg-section-mint);
+      border-top: 4px solid var(--accent-green);
+      padding: 2rem;
+      text-align: center;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .module-break-demo h2 {
+      display: inline-block;
+    }
+    .module-break-demo h2::after { display: none; }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      .site-header { padding: 2rem 1rem; }
+      .site-header h1 { font-size: 1.8rem; }
+      .container { padding: 0 1rem 3rem; }
+      .section { padding: 1.5rem; }
+      .swatch-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .compare { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+      .toc { flex-direction: column; align-items: center; }
+      .code-annotation.right {
+        position: static;
+        transform: none;
+        display: block;
+        margin: 0.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header">
+    <h1>Course Styling Guide</h1>
+    <p>Live preview of all visual components, colors, and typography</p>
+  </header>
+
+  <!-- ============================================================
+       TABLE OF CONTENTS
+       ============================================================ -->
+  <nav class="toc">
+    <a href="#colors">Color Palette</a>
+    <a href="#typography">Typography</a>
+    <a href="#code-window">Code Window</a>
+    <a href="#process-flow">Process Flow</a>
+    <a href="#callouts">Callout Boxes</a>
+    <a href="#comparison">Comparison Cards</a>
+    <a href="#tables">Tables</a>
+    <a href="#section-break">Section Break</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- ============================================================
+         1. COLOR PALETTE
+         ============================================================ -->
+    <div class="section" id="colors">
+      <h2>Color Palette</h2>
+
+      <h3>Backgrounds</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background: #ffffff; border: 1px solid #e0e0e0;">
+            <span>#ffffff</span>
+          </div>
+          <div class="swatch-label">Primary<span class="token">--bg-primary</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #e8f5e9;"><span>#e8f5e9</span></div>
+          <div class="swatch-label">Mint<span class="token">--bg-section-mint</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #fff8e1;"><span>#fff8e1</span></div>
+          <div class="swatch-label">Amber<span class="token">--bg-section-amber</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #e3f2fd;"><span>#e3f2fd</span></div>
+          <div class="swatch-label">Blue<span class="token">--bg-section-blue</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #f3e5f5;"><span>#f3e5f5</span></div>
+          <div class="swatch-label">Lavender<span class="token">--bg-section-lavender</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #fce4ec;"><span>#fce4ec</span></div>
+          <div class="swatch-label">Rose<span class="token">--bg-section-rose</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color dark" style="background: #1e1e2e;"><span>#1e1e2e</span></div>
+          <div class="swatch-label">Code Background<span class="token">--bg-code</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color dark" style="background: #1a1a2e;"><span>#1a1a2e</span></div>
+          <div class="swatch-label">Sidebar<span class="token">--bg-sidebar</span></div>
+        </div>
+      </div>
+
+      <h3>Accents</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background: #4caf50;"><span style="background:rgba(0,0,0,0.5);color:white;">#4caf50</span></div>
+          <div class="swatch-label">Green<span class="token">--accent-green</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #ff9800;"><span style="background:rgba(0,0,0,0.5);color:white;">#ff9800</span></div>
+          <div class="swatch-label">Orange<span class="token">--accent-orange</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #2196f3;"><span style="background:rgba(0,0,0,0.5);color:white;">#2196f3</span></div>
+          <div class="swatch-label">Blue<span class="token">--accent-blue</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #ef5350;"><span style="background:rgba(0,0,0,0.5);color:white;">#ef5350</span></div>
+          <div class="swatch-label">Red<span class="token">--accent-red</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #7c4dff;"><span style="background:rgba(0,0,0,0.5);color:white;">#7c4dff</span></div>
+          <div class="swatch-label">Purple<span class="token">--accent-purple</span></div>
+        </div>
+      </div>
+
+      <h3>Text &amp; Borders</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color dark" style="background: #212121;"><span>#212121</span></div>
+          <div class="swatch-label">Primary Text<span class="token">--text-primary</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color dark" style="background: #1a1a2e;"><span>#1a1a2e</span></div>
+          <div class="swatch-label">Heading Text<span class="token">--text-heading</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #757575;"><span style="background:rgba(255,255,255,0.85);color:#212121;">#757575</span></div>
+          <div class="swatch-label">Muted Text<span class="token">--text-muted</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #f5f5f5; border: 1px solid #e0e0e0;"><span>#f5f5f5</span></div>
+          <div class="swatch-label">Text on Dark<span class="token">--text-on-dark</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #e0e0e0;"><span>#e0e0e0</span></div>
+          <div class="swatch-label">Light Border<span class="token">--border-light</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         2. TYPOGRAPHY
+         ============================================================ -->
+    <div class="section" id="typography">
+      <h2>Typography Scale</h2>
+
+      <div class="type-demo">
+        <div class="type-scale">
+          <div class="size-label">2.2em / 700</div>
+          <div class="demo-h1">H1 — Heading One (Serif)</div>
+
+          <div class="size-label">1.6em / 600</div>
+          <div><div class="demo-h2">H2 — Heading Two (Serif)<br></div></div>
+
+          <div class="size-label">1.2em / 600</div>
+          <div class="demo-h3">H3 — Heading Three (Serif)</div>
+
+          <div class="size-label">1em / 400</div>
+          <div class="demo-body">Body text uses Inter at regular weight with generous line-height for readability. This is how paragraphs appear in guides and notebooks.</div>
+
+          <div class="size-label">0.85em / 400</div>
+          <div><span class="demo-code">code_variable = "monospace"</span></div>
+
+          <div class="size-label">0.85em / italic</div>
+          <div class="demo-caption">Figure 1: Caption text for images, diagrams, and data visualizations.</div>
+        </div>
+      </div>
+
+      <h3>Font Stacks</h3>
+      <table class="styled-table">
+        <thead><tr><th>Element</th><th>Font Stack</th><th>Size</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td>Headings</td><td style="font-family: Georgia, serif;">Georgia, 'Playfair Display', serif</td><td>2.2/1.6/1.2em</td><td>700/600</td></tr>
+          <tr><td>Body</td><td style="font-family: Inter, sans-serif;">'Inter', 'Segoe UI', system-ui, sans-serif</td><td>16-26px</td><td>400</td></tr>
+          <tr><td>Code</td><td style="font-family: 'JetBrains Mono', monospace;">'JetBrains Mono', 'Fira Code', monospace</td><td>0.85em</td><td>400</td></tr>
+          <tr><td>Captions</td><td style="font-family: Inter, sans-serif; font-style: italic;">Body font, italic</td><td>0.85em</td><td>400</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================================
+         3. CODE WINDOW
+         ============================================================ -->
+    <div class="section" id="code-window">
+      <h2>Code Window</h2>
+      <p>macOS-style terminal window with traffic-light dots, filename, and syntax highlighting.</p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="dots">
+            <span class="dot-red"></span>
+            <span class="dot-yellow"></span>
+            <span class="dot-green"></span>
+          </div>
+          <span class="filename">genetic_selector.py</span>
+        </div>
+        <div class="code-body">
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">from</span> sklearn.base <span class="keyword">import</span> BaseEstimator
+
+<span class="keyword">class</span> <span class="function">GeneticSelector</span>(BaseEstimator):
+    <span class="string">"""Feature selection using genetic algorithms."""</span>
+
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, estimator, n_features=<span class="number">10</span>,
+                 population_size=<span class="number">50</span>, n_generations=<span class="number">100</span>):
+        self.estimator = estimator
+        self.n_features = n_features
+        self.population_size = population_size
+        self.n_generations = n_generations
+
+    <span class="keyword">def</span> <span class="function">fit</span>(self, X, y):
+        <span class="comment"># Initialize random population</span>
+        self.population_ = self._init_population(X.shape[<span class="number">1</span>])
+        <span class="comment"># Evolve for n_generations</span>
+        <span class="keyword">for</span> gen <span class="keyword">in</span> range(self.n_generations):
+            fitness = self._evaluate(X, y)
+            self.population_ = self._evolve(fitness)
+        <span class="keyword">return</span> self
+        </div>
+        <div class="code-annotation right" style="top: 175px; right: 20px; transform: none;">
+          Wrapper method uses model accuracy as fitness
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         4. PROCESS FLOW
+         ============================================================ -->
+    <div class="section" id="process-flow">
+      <h2>Process Flow</h2>
+      <p>Numbered step-by-step flow with pastel-colored boxes connected by arrows.</p>
+
+      <div class="flow">
+        <div class="flow-step mint">1. Initialize Population</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step amber">2. Evaluate Fitness</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step blue">3. Select Parents</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step lavender">4. Crossover</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step rose">5. Mutate</div>
+      </div>
+
+      <h3>Color Variants</h3>
+      <p>Each step can use any palette color. Here is a three-step flow with different colors:</p>
+
+      <div class="flow">
+        <div class="flow-step blue">Load Data</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step amber">Transform Features</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step mint">Train Model</div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         5. CALLOUT BOXES
+         ============================================================ -->
+    <div class="section" id="callouts">
+      <h2>Callout Boxes</h2>
+      <p>Five semantic callout types, each with a distinct pastel background and accent border.</p>
+
+      <div class="callout-insight">
+        <strong>Insight:</strong> Genetic algorithms are particularly effective when the search space is too large for exhaustive methods but has enough structure for evolutionary pressure to exploit. They trade guaranteed optimality for practical scalability.
+      </div>
+
+      <div class="callout-warning">
+        <strong>Warning:</strong> Premature convergence occurs when the population loses diversity too early. Monitor population entropy across generations and consider increasing mutation rate if diversity drops below threshold.
+      </div>
+
+      <div class="callout-key">
+        <strong>Key Point:</strong> Tournament selection balances exploitation and exploration better than roulette wheel for most feature selection tasks. Start with tournament size k=3 and adjust based on convergence speed.
+      </div>
+
+      <div class="callout-danger">
+        <strong>Danger:</strong> Never evaluate fitness on the test set. Use cross-validation within the training fold only. Data leakage from fitness evaluation is the most common mistake in GA-based feature selection.
+      </div>
+
+      <div class="callout-info">
+        <strong>Info:</strong> The chromosome length equals the number of input features. Each gene is a binary flag (0 or 1) indicating whether that feature is included in the selected subset.
+      </div>
+    </div>
+
+    <!-- ============================================================
+         6. COMPARISON CARDS
+         ============================================================ -->
+    <div class="section" id="comparison">
+      <h2>Comparison Cards</h2>
+      <p>Side-by-side before/after layout for contrasting approaches or states.</p>
+
+      <div class="compare">
+        <div class="compare-card">
+          <div class="header before">Before: Manual Feature Selection</div>
+          <div class="body">
+            <ul>
+              <li>Trial-and-error approach</li>
+              <li>Misses feature interactions</li>
+              <li>Time-consuming for high-dimensional data</li>
+              <li>Results depend on domain expertise</li>
+            </ul>
+          </div>
+        </div>
+        <div class="compare-card">
+          <div class="header after">After: GA Feature Selection</div>
+          <div class="body">
+            <ul>
+              <li>Systematic population-based search</li>
+              <li>Captures interaction effects automatically</li>
+              <li>Scales to hundreds of features</li>
+              <li>Driven by cross-validated performance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         7. TABLE STYLING
+         ============================================================ -->
+    <div class="section" id="tables">
+      <h2>Table Styling</h2>
+      <p>Dark header with white text, striped body rows, and hover highlighting.</p>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Selection Method</th>
+            <th>Diversity</th>
+            <th>Selection Pressure</th>
+            <th>Computational Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tournament (k=3)</td>
+            <td>High</td>
+            <td>Adjustable</td>
+            <td>O(k * N)</td>
+          </tr>
+          <tr>
+            <td>Roulette Wheel</td>
+            <td>Medium</td>
+            <td>Proportional</td>
+            <td>O(N)</td>
+          </tr>
+          <tr>
+            <td>Rank Selection</td>
+            <td>High</td>
+            <td>Uniform</td>
+            <td>O(N log N)</td>
+          </tr>
+          <tr>
+            <td>Elitism</td>
+            <td>Low</td>
+            <td>Very High</td>
+            <td>O(N)</td>
+          </tr>
+          <tr>
+            <td>Stochastic Universal</td>
+            <td>High</td>
+            <td>Low bias</td>
+            <td>O(N)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================================
+         8. SECTION BREAK
+         ============================================================ -->
+    <div class="section" id="section-break">
+      <h2>Section Break (Module Break)</h2>
+      <p>Used between major slide sections to visually separate modules.</p>
+
+      <div class="module-break-demo">
+        <h2>Module 3: Crossover and Mutation</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer style="background: var(--bg-sidebar); color: var(--text-on-dark); text-align: center; padding: 2rem; font-size: 0.85rem;">
+    <p>Course Styling Guide &mdash; Live Component Preview</p>
+    <p style="opacity: 0.6; margin-top: 0.5rem;">See STYLING_GUIDE.md for full documentation, copy-paste markup, and integration instructions.</p>
+  </footer>
+
+</body>
+</html>

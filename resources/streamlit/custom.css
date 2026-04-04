@@ -1,0 +1,883 @@
+/* =============================================================================
+   Course Browser — Custom CSS
+   Injected via st.markdown(unsafe_allow_html=True) in app.py
+   Matches the DDoDS-inspired design system from resources/themes/course-theme.css
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   CSS Custom Properties (mirrored from Marp theme)
+   --------------------------------------------------------------------------- */
+:root {
+    --bg-primary: #ffffff;
+    --bg-section-mint: #e8f5e9;
+    --bg-section-amber: #fff8e1;
+    --bg-section-blue: #e3f2fd;
+    --bg-section-lavender: #f3e5f5;
+    --bg-section-rose: #fce4ec;
+    --bg-code: #1e1e2e;
+    --bg-sidebar: #1a1a2e;
+    --accent-green: #4caf50;
+    --accent-orange: #ff9800;
+    --accent-blue: #2196f3;
+    --accent-red: #ef5350;
+    --accent-purple: #7c4dff;
+    --text-primary: #212121;
+    --text-heading: #1a1a2e;
+    --text-muted: #757575;
+    --text-on-dark: #f5f5f5;
+    --border-light: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --font-heading: Georgia, 'Playfair Display', serif;
+    --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-code: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Google Fonts
+   --------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+/* ---------------------------------------------------------------------------
+   Hide Streamlit Chrome
+   --------------------------------------------------------------------------- */
+#MainMenu { visibility: hidden; }
+header [data-testid="stToolbar"] { display: none; }
+footer { visibility: hidden; }
+[data-testid="stDeployButton"] { display: none; }
+
+/* ---------------------------------------------------------------------------
+   Global Typography
+   --------------------------------------------------------------------------- */
+.stApp {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+}
+
+.stApp h1, .stApp h2, .stApp h3 {
+    font-family: var(--font-heading);
+    color: var(--text-heading);
+    letter-spacing: -0.01em;
+}
+
+.stApp h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+}
+
+.stApp h2 {
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+.stApp h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   Dark Sidebar
+   --------------------------------------------------------------------------- */
+section[data-testid="stSidebar"] {
+    background: var(--bg-sidebar) !important;
+    border-right: 1px solid #2d2d44;
+}
+
+section[data-testid="stSidebar"] * {
+    color: var(--text-on-dark) !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button {
+    background: transparent;
+    border: none;
+    color: rgba(245, 245, 245, 0.85) !important;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: var(--font-body);
+    transition: all 0.2s ease;
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button:focus {
+    box-shadow: none;
+}
+
+section[data-testid="stSidebar"] .stTextInput > div > div > input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: var(--text-on-dark) !important;
+    font-size: 0.85rem;
+}
+
+section[data-testid="stSidebar"] .stTextInput > div > div > input::placeholder {
+    color: rgba(245, 245, 245, 0.4) !important;
+}
+
+section[data-testid="stSidebar"] .stTextInput > div > div > input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 1px var(--accent-blue);
+}
+
+section[data-testid="stSidebar"] hr {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Sidebar expander (course tree) */
+section[data-testid="stSidebar"] .streamlit-expanderHeader {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+section[data-testid="stSidebar"] .streamlit-expanderContent {
+    border: none;
+    padding-left: 0.5rem;
+}
+
+/* Sidebar active course indicator */
+.sidebar-active-course {
+    background: rgba(33, 150, 243, 0.15);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 0 8px 8px 0;
+    padding: 0.4rem 0.75rem;
+    margin: 0.15rem 0;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #ffffff !important;
+}
+
+/* Sidebar title */
+.sidebar-title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    padding: 0.5rem 0;
+    margin-bottom: 0.25rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Progress Bar (sidebar)
+   --------------------------------------------------------------------------- */
+.progress-container {
+    margin: 0.75rem 0;
+    padding: 0.5rem 0;
+}
+
+.progress-label {
+    font-size: 0.75rem;
+    color: rgba(245, 245, 245, 0.6);
+    margin-bottom: 0.35rem;
+}
+
+.progress-bar-bg {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    height: 6px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background: var(--accent-green);
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.4s ease;
+}
+
+.progress-text {
+    font-size: 0.7rem;
+    color: rgba(245, 245, 245, 0.45);
+    margin-top: 0.25rem;
+    text-align: right;
+}
+
+/* ---------------------------------------------------------------------------
+   Breadcrumb Navigation
+   --------------------------------------------------------------------------- */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    padding: 0.6rem 0;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+    color: var(--accent-blue);
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.breadcrumb-item:hover {
+    color: #1976d2;
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    color: var(--text-muted);
+    margin: 0 0.15rem;
+    font-size: 0.75em;
+}
+
+.breadcrumb-current {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   Metrics Cards (Home Page)
+   --------------------------------------------------------------------------- */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.metric-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.metric-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.metric-value {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1;
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ---------------------------------------------------------------------------
+   Module Cards (Course Landing)
+   --------------------------------------------------------------------------- */
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.module-card {
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.module-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Pastel background variants for module cards */
+.module-card.mint {
+    background: var(--bg-section-mint);
+    border-color: rgba(76, 175, 80, 0.2);
+}
+
+.module-card.amber {
+    background: var(--bg-section-amber);
+    border-color: rgba(255, 152, 0, 0.2);
+}
+
+.module-card.blue {
+    background: var(--bg-section-blue);
+    border-color: rgba(33, 150, 243, 0.2);
+}
+
+.module-card.lavender {
+    background: var(--bg-section-lavender);
+    border-color: rgba(124, 77, 255, 0.2);
+}
+
+.module-card.rose {
+    background: var(--bg-section-rose);
+    border-color: rgba(239, 83, 80, 0.2);
+}
+
+.module-card-number {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--text-heading);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.module-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-heading);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.module-card-badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+}
+
+.module-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------------
+   Course Cards (Home Page)
+   --------------------------------------------------------------------------- */
+.course-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.25s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-color: var(--accent-blue);
+}
+
+.course-card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.course-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+}
+
+.course-card-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+.course-card-stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.card-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-section-blue);
+    border-radius: 12px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.72rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.card-badge strong {
+    color: var(--accent-blue);
+    margin-right: 0.25rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Course Header (Course Landing)
+   --------------------------------------------------------------------------- */
+.course-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.course-header-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.course-header-info h1 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    margin: 0 0 0.4rem 0;
+    letter-spacing: -0.02em;
+}
+
+.course-header-info p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem 0;
+}
+
+/* Stat pills (light theme) */
+.stat-pills {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--bg-section-blue);
+    border: 1px solid rgba(33, 150, 243, 0.15);
+    border-radius: 20px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+}
+
+.stat-pill .stat-value {
+    font-weight: 700;
+    color: var(--accent-blue);
+    font-size: 0.95rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Hero Section (Home Page)
+   --------------------------------------------------------------------------- */
+.hero-section {
+    background: linear-gradient(135deg, var(--bg-sidebar), #16213e);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-section .stat-pills {
+    margin-top: 1rem;
+}
+
+.hero-section .stat-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-section .stat-pill .stat-value {
+    color: var(--accent-orange);
+}
+
+/* ---------------------------------------------------------------------------
+   Slide Viewer
+   --------------------------------------------------------------------------- */
+.slide-viewer-container {
+    background: var(--bg-code);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.slide-viewer-container iframe {
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    height: 800px;
+}
+
+/* ---------------------------------------------------------------------------
+   Content Container (Guide / Notebook / Code)
+   --------------------------------------------------------------------------- */
+.content-container {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Section Divider
+   --------------------------------------------------------------------------- */
+.section-divider {
+    background: var(--bg-section-blue);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    margin: 1.5rem 0 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-left: 3px solid var(--accent-blue);
+}
+
+.section-divider-icon {
+    font-size: 1rem;
+}
+
+.section-divider-label {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-heading);
+}
+
+.section-divider-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Content Section Headers (inside modules)
+   --------------------------------------------------------------------------- */
+.content-section-header {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid var(--border-light);
+}
+
+/* ---------------------------------------------------------------------------
+   File Items / Buttons
+   --------------------------------------------------------------------------- */
+.file-type-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+}
+
+/* Override Streamlit button styling */
+.stButton > button {
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-family: var(--font-body);
+}
+
+/* Breadcrumb secondary buttons */
+.stButton > button[kind="secondary"] {
+    background: transparent !important;
+    border: none !important;
+    color: var(--accent-blue) !important;
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.4rem !important;
+    box-shadow: none !important;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    text-decoration: underline !important;
+    background: transparent !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Viewer Header
+   --------------------------------------------------------------------------- */
+.viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.viewer-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-heading);
+}
+
+/* ---------------------------------------------------------------------------
+   Navigation Buttons (Prev / Next)
+   --------------------------------------------------------------------------- */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border-light);
+}
+
+/* ---------------------------------------------------------------------------
+   Search Bar
+   --------------------------------------------------------------------------- */
+.stTextInput > div > div > input {
+    border-radius: 8px;
+    border-color: var(--border-light);
+    font-family: var(--font-body);
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 1px var(--accent-blue);
+}
+
+/* ---------------------------------------------------------------------------
+   Streamlit Layout Overrides
+   --------------------------------------------------------------------------- */
+.block-container {
+    padding-top: 2rem;
+}
+
+.streamlit-expanderHeader {
+    background: var(--bg-section-blue);
+    border-radius: 8px;
+    font-family: var(--font-body);
+}
+
+/* Tab bar styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 0;
+    background: var(--bg-section-blue);
+    border-radius: 8px;
+    padding: 0.25rem;
+}
+
+.stTabs [data-baseweb="tab"] {
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    color: var(--text-muted);
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    background: #ffffff;
+    color: var(--text-heading);
+    box-shadow: 0 1px 3px var(--shadow);
+}
+
+.stTabs [data-baseweb="tab-highlight"] {
+    display: none;
+}
+
+.stTabs [data-baseweb="tab-border"] {
+    display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Callout Classes (matching Marp theme, for guide rendering)
+   --------------------------------------------------------------------------- */
+.callout-insight, .callout-warning, .callout-key, .callout-danger, .callout-info {
+    padding: 1.2rem 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.callout-insight {
+    background: var(--bg-section-lavender);
+    border-color: var(--accent-purple);
+}
+
+.callout-warning {
+    background: var(--bg-section-amber);
+    border-color: var(--accent-orange);
+}
+
+.callout-key {
+    background: var(--bg-section-mint);
+    border-color: var(--accent-green);
+}
+
+.callout-danger {
+    background: var(--bg-section-rose);
+    border-color: var(--accent-red);
+}
+
+.callout-info {
+    background: var(--bg-section-blue);
+    border-color: var(--accent-blue);
+}
+
+/* ---------------------------------------------------------------------------
+   Process Flow (matching Marp theme, for guide rendering)
+   --------------------------------------------------------------------------- */
+.flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.flow-step {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 140px;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.flow-step.mint { background: var(--bg-section-mint); border: 2px solid var(--accent-green); }
+.flow-step.amber { background: var(--bg-section-amber); border: 2px solid var(--accent-orange); }
+.flow-step.blue { background: var(--bg-section-blue); border: 2px solid var(--accent-blue); }
+.flow-step.lavender { background: var(--bg-section-lavender); border: 2px solid var(--accent-purple); }
+
+.flow-arrow {
+    font-size: 1.5em;
+    color: var(--text-muted);
+    padding: 0 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Comparison Cards (matching Marp theme, for guide rendering)
+   --------------------------------------------------------------------------- */
+.compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.compare-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.compare-card .header {
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+}
+
+.compare-card .header.before { background: var(--accent-red); }
+.compare-card .header.after { background: var(--accent-green); }
+.compare-card .body { padding: 1rem; background: white; }
+
+/* ---------------------------------------------------------------------------
+   Code Window (matching Marp theme, for guide rendering)
+   --------------------------------------------------------------------------- */
+.code-window {
+    background: var(--bg-code);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+    margin: 1rem 0;
+}
+
+.code-header {
+    background: #2d2d44;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.code-header .dots {
+    display: flex;
+    gap: 6px;
+}
+
+.code-header .dot-red,
+.code-header .dot-yellow,
+.code-header .dot-green {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.code-header .dot-red { background: #ff5f57; }
+.code-header .dot-yellow { background: #ffbd2e; }
+.code-header .dot-green { background: #28ca41; }
+
+.code-header .filename {
+    color: #a0a0b0;
+    font-family: var(--font-code);
+    font-size: 0.8em;
+}

@@ -3,6 +3,9 @@ Course Content Browser — Streamlit App
 
 Browse all courses, slides, notebooks, and guides.
 Deploy free on Streamlit Community Cloud: https://streamlit.io/cloud
+
+Design: DDoDS-inspired light theme with dark sidebar, pastel module cards,
+progress tracking, and tabbed content viewers.
 """
 
 import json
@@ -16,6 +19,7 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent
 COURSES_DIR = PROJECT_ROOT / "courses"
+CUSTOM_CSS_PATH = PROJECT_ROOT / "resources" / "streamlit" / "custom.css"
 
 ACRONYMS = {
     "llm": "LLM", "llms": "LLMs", "rag": "RAG", "eia": "EIA",
@@ -66,6 +70,48 @@ FILE_ICONS = {
     "text": "\U0001f4c4",
 }
 
+TYPE_BADGES = {
+    "html": ("Slide Deck", "#ff9800"),
+    "markdown": ("Guide", "#2196f3"),
+    "notebook": ("Notebook", "#4caf50"),
+    "python": ("Python", "#7c4dff"),
+    "exercises": ("Exercise", "#ef5350"),
+    "csv": ("Data", "#757575"),
+    "yaml": ("Config", "#757575"),
+    "json": ("Config", "#757575"),
+    "text": ("Text", "#757575"),
+}
+
+SECTION_ICONS = {
+    "guides": "\U0001f4dd",
+    "notebooks": "\U0001f4d3",
+    "exercises": "\u270d\ufe0f",
+    "resources": "\U0001f4ce",
+}
+
+SECTION_LABELS = {
+    "guides": "Guides",
+    "notebooks": "Notebooks",
+    "exercises": "Exercises",
+    "resources": "Resources",
+}
+
+# Pastel color cycle for module cards
+MODULE_COLORS = ["mint", "amber", "blue", "lavender", "rose"]
+
+
+# ---------------------------------------------------------------------------
+# Custom CSS Injection
+# ---------------------------------------------------------------------------
+
+def inject_custom_css():
+    """Load and inject custom CSS from resources/streamlit/custom.css."""
+    css = ""
+    if CUSTOM_CSS_PATH.exists():
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+    if css:
+        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -83,6 +129,16 @@ def humanize(name: str) -> str:
     return " ".join(result)
 
 
+def humanize_filename(filename: str) -> str:
+    """Convert a filename into a human-readable title."""
+    stem = Path(filename).stem
+    for suffix in ("_slides", "_guide", "_exercises", "_exercise", "_notebook"):
+        if stem.endswith(suffix):
+            stem = stem[: -len(suffix)]
+    stem = re.sub(r"^\d+[a-z]?_", "", stem)
+    return humanize(stem)
+
+
 def extract_readme_info(readme_path: Path) -> tuple:
     if not readme_path.exists():
         return "", ""
@@ -92,9 +148,84 @@ def extract_readme_info(readme_path: Path) -> tuple:
         if line.startswith("# ") and not title:
             title = line[2:].strip()
         elif title and not desc and line.strip() and not line.startswith("#"):
-            desc = line.strip()
-            break
+            raw = line.strip()
+            if raw.startswith(">") or raw.startswith("![") or raw.startswith("[!"):
+                continue
+            raw = re.sub(r"\*{1,3}(.+?)\*{1,3}", r"\1", raw)
+            raw = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", raw)
+            if raw:
+                desc = raw
+                break
     return title, desc
+
+
+def get_file_type_badge_html(file_type: str) -> str:
+    label, color = TYPE_BADGES.get(file_type, ("File", "#757575"))
+    return (
+        f'<span class="file-type-badge" '
+        f'style="background:{color}15; color:{color}; border: 1px solid {color}33;">'
+        f'{label}</span>'
+    )
+
+
+def get_module_number(dir_name: str) -> str:
+    """Extract module number from dir name like module_01_topic."""
+    parts = dir_name.split("_")
+    if len(parts) >= 2:
+        return parts[1]
+    return ""
+
+
+def get_module_clean_title(mod: dict) -> str:
+    """Get a clean module title without leading number/dash or 'Module N:' prefix."""
+    title = mod["name"]
+    title = re.sub(r"^\d+\s*[—\-]\s*", "", title)
+    title = re.sub(r"^Module\s+\d+\s*:\s*", "", title)
+    return title
+
+
+# ---------------------------------------------------------------------------
+# Progress Tracking
+# ---------------------------------------------------------------------------
+
+def track_page_visit(course_slug: str, module_dir: str, content_type: str, filename: str):
+    """Record a page visit for progress tracking."""
+    if "visited_pages" not in st.session_state:
+        st.session_state.visited_pages = set()
+    st.session_state.visited_pages.add((course_slug, module_dir, content_type, filename))
+
+
+def get_course_progress(courses: dict, course_slug: str) -> tuple:
+    """Return (visited_count, total_count) for a course."""
+    course = courses.get(course_slug)
+    if not course:
+        return 0, 0
+
+    total = 0
+    visited = 0
+    visited_pages = st.session_state.get("visited_pages", set())
+
+    for mod in course["modules"]:
+        for sl in mod["slides"]:
+            total += 1
+            key = (course_slug, mod["dir_name"], "slides", Path(sl["path"]).name)
+            if key in visited_pages:
+                visited += 1
+        for sec_key in ["guides", "notebooks", "exercises", "resources"]:
+            for f in mod["content"].get(sec_key, []):
+                total += 1
+                key = (course_slug, mod["dir_name"], sec_key, f["name"])
+                if key in visited_pages:
+                    visited += 1
+
+    for folder, sec in course["sections"].items():
+        for f in sec["files"]:
+            total += 1
+            key = (course_slug, folder, "section", f["name"])
+            if key in visited_pages:
+                visited += 1
+
+    return visited, total
 
 
 # ---------------------------------------------------------------------------
@@ -216,21 +347,23 @@ def _list_content_files(directory: Path) -> list:
 
 def render_markdown_file(file_path: Path):
     text = file_path.read_text(encoding="utf-8", errors="replace")
-    # Strip Marp frontmatter if present
     if text.startswith("---"):
         end = text.find("---", 3)
         if end != -1:
             frontmatter = text[3:end]
             if "marp:" in frontmatter:
                 text = text[end + 3:].lstrip("\n")
+    st.markdown('<div class="content-container">', unsafe_allow_html=True)
     st.markdown(text, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_notebook_file(file_path: Path):
     data = json.loads(file_path.read_text(encoding="utf-8", errors="replace"))
     cells = data.get("cells", [])
 
-    for i, cell in enumerate(cells):
+    st.markdown('<div class="content-container">', unsafe_allow_html=True)
+    for cell in cells:
         ctype = cell.get("cell_type", "code")
         source = "".join(cell.get("source", []))
 
@@ -241,7 +374,6 @@ def render_notebook_file(file_path: Path):
             st.markdown(source, unsafe_allow_html=True)
         elif ctype == "code":
             st.code(source, language="python")
-            # Show outputs
             for out in cell.get("outputs", []):
                 out_type = out.get("output_type", "")
                 if out_type == "stream":
@@ -262,27 +394,37 @@ def render_notebook_file(file_path: Path):
                     tb = "\n".join(out.get("traceback", []))
                     tb = re.sub(r'\x1b\[[0-9;]*m', '', tb)
                     st.error(tb)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_python_file(file_path: Path):
     code = file_path.read_text(encoding="utf-8", errors="replace")
+    st.markdown('<div class="content-container">', unsafe_allow_html=True)
     st.code(code, language="python")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_html_slides(file_path: Path):
+    """Render HTML slides in an iframe with dark surround."""
     html = file_path.read_text(encoding="utf-8", errors="replace")
-    st.components.v1.html(html, height=620, scrolling=True)
+    st.markdown('<div class="slide-viewer-container">', unsafe_allow_html=True)
+    st.components.v1.html(html, height=800, scrolling=False)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_csv_file(file_path: Path):
     import pandas as pd
+    st.markdown('<div class="content-container">', unsafe_allow_html=True)
     df = pd.read_csv(file_path)
     st.dataframe(df, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_text_file(file_path: Path):
     text = file_path.read_text(encoding="utf-8", errors="replace")
+    st.markdown('<div class="content-container">', unsafe_allow_html=True)
     st.code(text)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_file(rel_path: str):
@@ -317,13 +459,195 @@ def nav_to(page: str, **kwargs):
         st.session_state[k] = v
 
 
+def render_breadcrumb(items: list):
+    """Render a breadcrumb trail.
+
+    items: list of (label, page, kwargs) for navigable items, or (label,) for current page.
+    """
+    parts = []
+    for item in items:
+        if len(item) == 1:
+            parts.append(f'<span class="breadcrumb-current">{item[0]}</span>')
+        else:
+            parts.append(f'<span class="breadcrumb-item">{item[0]}</span>')
+
+    breadcrumb_html = ' <span class="breadcrumb-separator">\u203a</span> '.join(parts)
+    st.markdown(
+        f'<div class="breadcrumb">{breadcrumb_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+    nav_items = [item for item in items if len(item) >= 3]
+    if nav_items:
+        cols = st.columns(len(nav_items) + 2)
+        for idx, item in enumerate(nav_items):
+            label, page, kwargs = item
+            with cols[idx]:
+                if st.button(f"\u21a9 {label}", key=f"bc_{label}_{page}", type="secondary"):
+                    nav_to(page, **kwargs)
+                    st.rerun()
+
+
+def find_adjacent_files(courses: dict, slug: str, current_path: str):
+    """Find previous and next files within the same module/section."""
+    course = courses.get(slug)
+    if not course:
+        return None, None
+
+    all_files = []
+
+    for folder, sec in course["sections"].items():
+        for f in sec["files"]:
+            all_files.append(f["path"])
+
+    for mod in course["modules"]:
+        for sl in mod["slides"]:
+            all_files.append(sl["path"])
+        for sec_key in ["guides", "notebooks", "exercises", "resources"]:
+            for f in mod["content"].get(sec_key, []):
+                all_files.append(f["path"])
+
+    if current_path not in all_files:
+        return None, None
+
+    idx = all_files.index(current_path)
+    prev_path = all_files[idx - 1] if idx > 0 else None
+    next_path = all_files[idx + 1] if idx < len(all_files) - 1 else None
+    return prev_path, next_path
+
+
+def find_module_for_file(course: dict, file_path: str) -> dict | None:
+    """Find which module a file belongs to."""
+    for mod in course.get("modules", []):
+        for sl in mod["slides"]:
+            if sl["path"] == file_path:
+                return mod
+        for sec_key in ["guides", "notebooks", "exercises", "resources"]:
+            for f in mod["content"].get(sec_key, []):
+                if f["path"] == file_path:
+                    return mod
+    return None
+
+
+def get_file_type_from_path(file_path: str) -> str:
+    ext = Path(file_path).suffix.lower()
+    type_map = {
+        ".md": "markdown", ".ipynb": "notebook", ".py": "python",
+        ".html": "html", ".txt": "text", ".yaml": "yaml",
+        ".yml": "yaml", ".json": "json", ".csv": "csv",
+    }
+    return type_map.get(ext, "text")
+
+
+# ---------------------------------------------------------------------------
+# Sidebar
+# ---------------------------------------------------------------------------
+
+def render_sidebar(courses: dict):
+    """Render the dark sidebar with course/module navigation tree and progress."""
+    current_slug = st.session_state.get("course_slug", "")
+    search = st.session_state.get("search", "").lower()
+
+    with st.sidebar:
+        st.markdown(
+            '<p class="sidebar-title">\U0001f393 Course Browser</p>',
+            unsafe_allow_html=True,
+        )
+
+        # Home button
+        if st.button("\U0001f3e0  Home", key="sidebar_home", use_container_width=True):
+            nav_to("home")
+            st.rerun()
+
+        st.markdown(
+            '<hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin: 0.75rem 0;">',
+            unsafe_allow_html=True,
+        )
+
+        # Search
+        st.text_input(
+            "Search courses",
+            key="search",
+            placeholder="\U0001f50d Search courses...",
+            label_visibility="collapsed",
+        )
+
+        st.markdown(
+            '<hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin: 0.75rem 0;">',
+            unsafe_allow_html=True,
+        )
+
+        # Course navigation tree
+        for slug, course in courses.items():
+            if search and search not in slug and search not in course["title"].lower():
+                continue
+
+            icon = COURSE_ICONS.get(slug, "\U0001f4d6")
+            is_active = slug == current_slug
+
+            if is_active and course["modules"]:
+                # Active course with collapsible module tree
+                st.markdown(
+                    f'<div class="sidebar-active-course">{icon} {course["title"]}</div>',
+                    unsafe_allow_html=True,
+                )
+                # Show modules as indented buttons
+                for mod in course["modules"]:
+                    mod_num = get_module_number(mod["dir_name"])
+                    mod_title = get_module_clean_title(mod)
+                    short_label = f"  {mod_num}. {mod_title}"
+                    if st.button(
+                        short_label,
+                        key=f"sidebar_mod_{slug}_{mod['dir_name']}",
+                        use_container_width=True,
+                    ):
+                        nav_to("module", course_slug=slug, module_dir=mod["dir_name"])
+                        st.rerun()
+
+                # Progress bar for active course
+                visited, total = get_course_progress(courses, slug)
+                pct = int((visited / total * 100) if total > 0 else 0)
+                st.markdown(f"""
+                <div class="progress-container">
+                    <div class="progress-label">Progress</div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: {pct}%;"></div>
+                    </div>
+                    <div class="progress-text">{visited}/{total} pages visited</div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                # Inactive course — single button
+                label = f"{icon} {course['title']}"
+                if st.button(
+                    label,
+                    key=f"nav_{slug}",
+                    use_container_width=True,
+                ):
+                    nav_to("course", course_slug=slug)
+                    st.rerun()
+
+        st.markdown(
+            '<hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin: 0.75rem 0;">',
+            unsafe_allow_html=True,
+        )
+
+        with st.expander("About"):
+            st.markdown(
+                "**Practical-first courses** producing professional-grade "
+                "educational materials across ML, GenAI, econometrics, and "
+                "trading systems.\n\n"
+                "Content includes Marp slide decks, Jupyter notebooks, "
+                "Python templates, and markdown guides."
+            )
+
+
 # ---------------------------------------------------------------------------
 # Pages
 # ---------------------------------------------------------------------------
 
 def page_home(courses: dict):
-    st.title("Course Browser")
-    st.caption("Practical-first courses spanning ML, GenAI, econometrics, and trading systems")
+    """Home page with hero section, metrics grid, and course cards."""
 
     # Aggregate stats
     total = {"courses": len(courses), "modules": 0, "slides": 0, "notebooks": 0, "guides": 0}
@@ -331,124 +655,411 @@ def page_home(courses: dict):
         for k in ("modules", "slides", "notebooks", "guides"):
             total[k] += c["stats"][k]
 
-    cols = st.columns(5)
-    for col, (label, val) in zip(cols, [
-        ("Courses", total["courses"]),
-        ("Modules", total["modules"]),
-        ("Slide Decks", total["slides"]),
-        ("Notebooks", total["notebooks"]),
-        ("Guides", total["guides"]),
-    ]):
-        col.metric(label, val)
+    # Hero section
+    st.markdown(f"""
+    <div class="hero-section">
+        <p class="hero-title">Course Browser</p>
+        <p class="hero-subtitle">
+            Practical-first courses spanning ML, GenAI, econometrics, and trading systems
+        </p>
+        <div class="stat-pills">
+            <span class="stat-pill"><span class="stat-value">{total["courses"]}</span> Courses</span>
+            <span class="stat-pill"><span class="stat-value">{total["modules"]}</span> Modules</span>
+            <span class="stat-pill"><span class="stat-value">{total["slides"]}</span> Slide Decks</span>
+            <span class="stat-pill"><span class="stat-value">{total["notebooks"]}</span> Notebooks</span>
+            <span class="stat-pill"><span class="stat-value">{total["guides"]}</span> Guides</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.divider()
+    # Metrics cards
+    st.markdown(f"""
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-icon">\U0001f4da</span>
+            <div class="metric-value">{total["courses"]}</div>
+            <div class="metric-label">Courses</div>
+        </div>
+        <div class="metric-card">
+            <span class="metric-icon">\U0001f4e6</span>
+            <div class="metric-value">{total["modules"]}</div>
+            <div class="metric-label">Modules</div>
+        </div>
+        <div class="metric-card">
+            <span class="metric-icon">\U0001f4d3</span>
+            <div class="metric-value">{total["notebooks"]}</div>
+            <div class="metric-label">Notebooks</div>
+        </div>
+        <div class="metric-card">
+            <span class="metric-icon">\U0001f310</span>
+            <div class="metric-value">{total["slides"]}</div>
+            <div class="metric-label">Slide Decks</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Course grid
+    # Search filter
     search = st.session_state.get("search", "").lower()
     filtered = {k: v for k, v in courses.items()
                 if not search or search in k.lower() or search in v["title"].lower()
                 or search in v.get("description", "").lower()}
 
-    for i in range(0, len(filtered), 3):
+    # Course card grid
+    items = list(filtered.items())
+    for i in range(0, len(items), 3):
         cols = st.columns(3)
-        for col, (slug, course) in zip(cols, list(filtered.items())[i:i+3]):
-            with col:
+        for j, (slug, course) in enumerate(items[i:i + 3]):
+            with cols[j]:
                 icon = COURSE_ICONS.get(slug, "\U0001f4d6")
                 stats = course["stats"]
-                st.markdown(f"### {icon} {course['title']}")
-                if course["description"]:
-                    st.caption(course["description"][:120])
-                st.markdown(
-                    f"**{stats['modules']}** modules · "
-                    f"**{stats['slides']}** slides · "
-                    f"**{stats['notebooks']}** notebooks"
-                )
-                if st.button("Open", key=f"open_{slug}"):
+                desc = course["description"][:120] if course["description"] else "Explore course content"
+                st.markdown(f"""
+                <div class="course-card">
+                    <div class="course-card-icon">{icon}</div>
+                    <div class="course-card-title">{course['title']}</div>
+                    <div class="course-card-desc">{desc}</div>
+                    <div class="course-card-stats">
+                        <span class="card-badge"><strong>{stats['modules']}</strong> modules</span>
+                        <span class="card-badge"><strong>{stats['slides']}</strong> slides</span>
+                        <span class="card-badge"><strong>{stats['notebooks']}</strong> notebooks</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                if st.button(f"Open \u2192", key=f"open_{slug}", use_container_width=True):
                     nav_to("course", course_slug=slug)
                     st.rerun()
 
 
 def page_course(courses: dict):
+    """Course landing page with module card grid."""
     slug = st.session_state.get("course_slug", "")
     course = courses.get(slug)
     if not course:
         st.error("Course not found")
         return
 
-    if st.button("\u2190 All Courses"):
-        nav_to("home")
-        st.rerun()
-
     icon = COURSE_ICONS.get(slug, "\U0001f4d6")
-    st.title(f"{icon} {course['title']}")
-    if course["description"]:
-        st.markdown(course["description"])
 
-    # Stats row
+    # Breadcrumb
+    render_breadcrumb([
+        ("Home", "home", {}),
+        (course["title"],),
+    ])
+
+    # Course header
     s = course["stats"]
-    cols = st.columns(4)
-    cols[0].metric("Modules", s["modules"])
-    cols[1].metric("Slide Decks", s["slides"])
-    cols[2].metric("Notebooks", s["notebooks"])
-    cols[3].metric("Guides", s["guides"])
-
-    st.divider()
+    desc_html = f"<p>{course['description']}</p>" if course["description"] else ""
+    st.markdown(f"""
+    <div class="course-header">
+        <div class="course-header-icon">{icon}</div>
+        <div class="course-header-info">
+            <h1>{course['title']}</h1>
+            {desc_html}
+            <div class="stat-pills">
+                <span class="stat-pill"><span class="stat-value">{s['modules']}</span> Modules</span>
+                <span class="stat-pill"><span class="stat-value">{s['slides']}</span> Slides</span>
+                <span class="stat-pill"><span class="stat-value">{s['notebooks']}</span> Notebooks</span>
+                <span class="stat-pill"><span class="stat-value">{s['guides']}</span> Guides</span>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Top-level sections (quick-starts, templates, etc.)
     for folder, sec in course["sections"].items():
-        with st.expander(f"\U0001f4c1 {sec['label']} ({len(sec['files'])} files)"):
-            for f in sec["files"]:
-                fi = FILE_ICONS.get(f["type"], "\U0001f4c4")
-                if st.button(f"{fi} {f['name']}", key=f"sec_{folder}_{f['path']}"):
+        st.markdown(f"""
+        <div class="section-divider">
+            <span class="section-divider-icon">\U0001f4c1</span>
+            <span class="section-divider-label">{sec['label']}</span>
+            <span class="section-divider-count">{len(sec['files'])} files</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        for f in sec["files"]:
+            fi = FILE_ICONS.get(f["type"], "\U0001f4c4")
+            display_name = humanize_filename(f["name"])
+            badge_html = get_file_type_badge_html(f["type"])
+
+            col1, col2 = st.columns([6, 1])
+            with col1:
+                if st.button(
+                    f"{fi}  {display_name}",
+                    key=f"sec_{folder}_{f['path']}",
+                    use_container_width=True,
+                ):
                     nav_to("viewer", view_path=f["path"], course_slug=slug)
                     st.rerun()
+            with col2:
+                st.markdown(badge_html, unsafe_allow_html=True)
 
-    # Modules
+    # Module card grid
     if course["modules"]:
-        st.subheader("Modules")
-        for mod in course["modules"]:
-            with st.expander(f"\U0001f4d6 {mod['name']}"):
-                # Slides
-                if mod["slides"]:
-                    st.markdown("**Slide Decks**")
-                    for sl in mod["slides"]:
-                        if st.button(f"\U0001f3ac {sl['name']}", key=f"sl_{sl['path']}"):
-                            nav_to("viewer", view_path=sl["path"], course_slug=slug)
-                            st.rerun()
+        st.markdown(f"""
+        <div class="section-divider" style="margin-top: 2rem;">
+            <span class="section-divider-icon">\U0001f4da</span>
+            <span class="section-divider-label">Modules</span>
+            <span class="section-divider-count">{len(course['modules'])} modules</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-                # Content sections
-                section_labels = {
-                    "guides": ("\U0001f4dd", "Guides"),
-                    "notebooks": ("\U0001f4d3", "Notebooks"),
-                    "exercises": ("\u270d\ufe0f", "Exercises"),
-                    "resources": ("\U0001f4ce", "Resources"),
-                }
-                for sec_key, (sec_icon, sec_label) in section_labels.items():
-                    files = mod["content"].get(sec_key, [])
-                    if files:
-                        st.markdown(f"**{sec_label}**")
-                        for f in files:
-                            fi = FILE_ICONS.get(f["type"], "\U0001f4c4")
-                            if st.button(f"{fi} {f['name']}", key=f"mod_{sec_key}_{f['path']}"):
-                                nav_to("viewer", view_path=f["path"], course_slug=slug)
-                                st.rerun()
+        # Render module cards in a grid via HTML
+        cards_html = '<div class="module-grid">'
+        for idx, mod in enumerate(course["modules"]):
+            mod_num = get_module_number(mod["dir_name"])
+            mod_title = get_module_clean_title(mod)
+            color = MODULE_COLORS[idx % len(MODULE_COLORS)]
+
+            n_slides = len(mod["slides"])
+            n_guides = len(mod["content"].get("guides", []))
+            n_notebooks = len(mod["content"].get("notebooks", []))
+            n_exercises = len(mod["content"].get("exercises", []))
+
+            badges = ""
+            if n_slides:
+                badges += f'<span class="module-badge">\U0001f310 {n_slides} slides</span>'
+            if n_guides:
+                badges += f'<span class="module-badge">\U0001f4dd {n_guides} guides</span>'
+            if n_notebooks:
+                badges += f'<span class="module-badge">\U0001f4d3 {n_notebooks} notebooks</span>'
+            if n_exercises:
+                badges += f'<span class="module-badge">\u270d\ufe0f {n_exercises} exercises</span>'
+
+            cards_html += f"""
+            <div class="module-card {color}">
+                <span class="module-card-number">Module {mod_num}</span>
+                <div class="module-card-title">{mod_title}</div>
+                <div class="module-card-badges">{badges}</div>
+            </div>
+            """
+        cards_html += '</div>'
+        st.markdown(cards_html, unsafe_allow_html=True)
+
+        # Module open buttons (Streamlit needs real buttons for interactivity)
+        cols_per_row = 3
+        mods = course["modules"]
+        for i in range(0, len(mods), cols_per_row):
+            cols = st.columns(cols_per_row)
+            for j, mod in enumerate(mods[i:i + cols_per_row]):
+                with cols[j]:
+                    mod_num = get_module_number(mod["dir_name"])
+                    mod_title = get_module_clean_title(mod)
+                    if st.button(
+                        f"Open Module {mod_num} \u2192",
+                        key=f"open_mod_{slug}_{mod['dir_name']}",
+                        use_container_width=True,
+                    ):
+                        nav_to("module", course_slug=slug, module_dir=mod["dir_name"])
+                        st.rerun()
+
+
+def page_module(courses: dict):
+    """Module detail page with tabbed content viewer."""
+    slug = st.session_state.get("course_slug", "")
+    module_dir_name = st.session_state.get("module_dir", "")
+    course = courses.get(slug)
+    if not course:
+        st.error("Course not found")
+        return
+
+    # Find the module
+    mod = None
+    for m in course["modules"]:
+        if m["dir_name"] == module_dir_name:
+            mod = m
+            break
+    if not mod:
+        st.error("Module not found")
+        return
+
+    mod_num = get_module_number(mod["dir_name"])
+    mod_title = get_module_clean_title(mod)
+
+    # Breadcrumb
+    render_breadcrumb([
+        ("Home", "home", {}),
+        (course["title"], "course", {"course_slug": slug}),
+        (f"Module {mod_num}: {mod_title}",),
+    ])
+
+    # Module header
+    st.markdown(f"""
+    <div class="course-header">
+        <div class="course-header-icon">\U0001f4e6</div>
+        <div class="course-header-info">
+            <h1>Module {mod_num}: {mod_title}</h1>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Build tab data
+    tab_data = {}
+    if mod["slides"]:
+        tab_data["Slides"] = ("slides", mod["slides"])
+    guides = mod["content"].get("guides", [])
+    if guides:
+        tab_data["Guide"] = ("guides", guides)
+    notebooks = mod["content"].get("notebooks", [])
+    if notebooks:
+        tab_data["Notebook"] = ("notebooks", notebooks)
+    exercises = mod["content"].get("exercises", [])
+    if exercises:
+        tab_data["Exercises"] = ("exercises", exercises)
+    resources = mod["content"].get("resources", [])
+    if resources:
+        tab_data["Resources"] = ("resources", resources)
+
+    if not tab_data:
+        st.info("No content available in this module.")
+        return
+
+    # Tabbed interface
+    tabs = st.tabs(list(tab_data.keys()))
+    for tab, (tab_label, (content_type, files)) in zip(tabs, tab_data.items()):
+        with tab:
+            for f in files:
+                if content_type == "slides":
+                    # Slides have a different structure
+                    display_name = humanize_filename(f["path"].split("/")[-1])
+                    file_path = f["path"]
+                    file_type = "html"
+                else:
+                    display_name = humanize_filename(f["name"])
+                    file_path = f["path"]
+                    file_type = f["type"]
+
+                badge_html = get_file_type_badge_html(file_type)
+
+                col1, col2 = st.columns([6, 1])
+                with col1:
+                    if st.button(
+                        f"{FILE_ICONS.get(file_type, '\U0001f4c4')}  {display_name}",
+                        key=f"tab_{content_type}_{file_path}",
+                        use_container_width=True,
+                    ):
+                        # Track visit
+                        track_page_visit(
+                            slug, mod["dir_name"], content_type,
+                            Path(file_path).name
+                        )
+                        nav_to(
+                            "viewer",
+                            view_path=file_path,
+                            course_slug=slug,
+                            source_module=mod["dir_name"],
+                        )
+                        st.rerun()
+                with col2:
+                    st.markdown(badge_html, unsafe_allow_html=True)
+
+    # Previous / Next module navigation
+    mod_index = next(
+        (i for i, m in enumerate(course["modules"]) if m["dir_name"] == module_dir_name),
+        None
+    )
+    if mod_index is not None:
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col1:
+            if mod_index > 0:
+                prev_mod = course["modules"][mod_index - 1]
+                prev_num = get_module_number(prev_mod["dir_name"])
+                if st.button(
+                    f"\u2190 Module {prev_num}",
+                    key="prev_module",
+                    use_container_width=True,
+                ):
+                    nav_to("module", course_slug=slug, module_dir=prev_mod["dir_name"])
+                    st.rerun()
+        with col3:
+            if mod_index < len(course["modules"]) - 1:
+                next_mod = course["modules"][mod_index + 1]
+                next_num = get_module_number(next_mod["dir_name"])
+                if st.button(
+                    f"Module {next_num} \u2192",
+                    key="next_module",
+                    use_container_width=True,
+                ):
+                    nav_to("module", course_slug=slug, module_dir=next_mod["dir_name"])
+                    st.rerun()
 
 
 def page_viewer(courses: dict):
+    """Content viewer page with breadcrumbs and prev/next navigation."""
     slug = st.session_state.get("course_slug", "")
     view_path = st.session_state.get("view_path", "")
+    course = courses.get(slug, {})
+    course_title = course.get("title", "Course")
 
-    col1, col2 = st.columns([1, 4])
-    with col1:
-        if st.button("\u2190 Back"):
-            nav_to("course", course_slug=slug)
-            st.rerun()
-    with col2:
-        file_name = Path(view_path).name
-        st.markdown(f"**{file_name}**")
+    file_name = Path(view_path).name
+    display_name = humanize_filename(file_name)
+    file_type = get_file_type_from_path(view_path)
 
-    st.divider()
+    # Track visit
+    mod = find_module_for_file(course, view_path)
+    if mod:
+        mod_title = get_module_clean_title(mod)
+        mod_num = get_module_number(mod["dir_name"])
+
+        # Determine content type for tracking
+        content_type = "other"
+        for sec_key in ["guides", "notebooks", "exercises", "resources"]:
+            for f in mod["content"].get(sec_key, []):
+                if f["path"] == view_path:
+                    content_type = sec_key
+                    break
+        for sl in mod["slides"]:
+            if sl["path"] == view_path:
+                content_type = "slides"
+                break
+
+        track_page_visit(slug, mod["dir_name"], content_type, file_name)
+    else:
+        mod_title = None
+        mod_num = None
+
+    # Breadcrumb
+    if mod:
+        render_breadcrumb([
+            ("Home", "home", {}),
+            (course_title, "course", {"course_slug": slug}),
+            (f"Module {mod_num}: {mod_title}", "module",
+             {"course_slug": slug, "module_dir": mod["dir_name"]}),
+            (display_name,),
+        ])
+    else:
+        render_breadcrumb([
+            ("Home", "home", {}),
+            (course_title, "course", {"course_slug": slug}),
+            (display_name,),
+        ])
+
+    # Viewer header
+    badge_html = get_file_type_badge_html(file_type)
+    st.markdown(f"""
+    <div class="viewer-header">
+        <span class="viewer-title">{display_name}</span>
+        {badge_html}
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Render content
     render_file(view_path)
+
+    # Prev/Next navigation
+    prev_path, next_path = find_adjacent_files(courses, slug, view_path)
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col1:
+        if prev_path:
+            prev_name = humanize_filename(Path(prev_path).name)
+            if st.button(f"\u2190 {prev_name}", key="prev_file", use_container_width=True):
+                nav_to("viewer", view_path=prev_path, course_slug=slug)
+                st.rerun()
+    with col3:
+        if next_path:
+            next_name = humanize_filename(Path(next_path).name)
+            if st.button(f"{next_name} \u2192", key="next_file", use_container_width=True):
+                nav_to("viewer", view_path=next_path, course_slug=slug)
+                st.rerun()
 
 
 # ---------------------------------------------------------------------------
@@ -463,36 +1074,23 @@ def main():
         initial_sidebar_state="expanded",
     )
 
+    # Initialize session state
+    if "visited_pages" not in st.session_state:
+        st.session_state.visited_pages = set()
+
+    inject_custom_css()
+
     courses = scan_all_courses()
 
     # Sidebar
-    with st.sidebar:
-        st.title("\U0001f393 Courses")
-        search = st.text_input("Search courses", key="search", placeholder="Filter...")
-
-        st.divider()
-        for slug, course in courses.items():
-            if search and search.lower() not in slug and search.lower() not in course["title"].lower():
-                continue
-            icon = COURSE_ICONS.get(slug, "\U0001f4d6")
-            if st.button(f"{icon} {course['title']}", key=f"nav_{slug}", use_container_width=True):
-                nav_to("course", course_slug=slug)
-                st.rerun()
-
-        st.divider()
-        with st.expander("About"):
-            st.markdown(
-                "**Practical-first courses** producing professional-grade "
-                "educational materials across ML, GenAI, econometrics, and "
-                "trading systems.\n\n"
-                "Content includes Marp slide decks, Jupyter notebooks, "
-                "Python templates, and markdown guides."
-            )
+    render_sidebar(courses)
 
     # Router
     page = st.session_state.get("page", "home")
     if page == "course":
         page_course(courses)
+    elif page == "module":
+        page_module(courses)
     elif page == "viewer":
         page_viewer(courses)
     else:

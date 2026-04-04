@@ -4,12 +4,15 @@
 
 Neural forecasting models like NHITS produce accurate forecasts but provide no built-in explanation of which inputs drove each prediction. This module covers three attribution methods — Integrated Gradients, Input × Gradient, and Shapley Value Sampling — that answer the question "Why did the model forecast this value?"
 
-By the end of this module, you can:
-- Call `.explain()` on any trained NeuralForecast model and parse the attribution tensors
-- Decode insample and futr_exog tensor shapes and extract lag and feature attributions
-- Visualize attributions as heatmaps, waterfall plots, and bar charts
-- Validate whether a model's learned attributions match business expectations
-- Translate attribution numbers into a stakeholder-ready narrative
+## Learning Objectives
+
+By the end of this module you will be able to:
+
+1. Apply three attribution methods (Integrated Gradients, Input×Gradient, Shapley) to neural forecasts
+2. Use neuralforecast's `.explain()` API to generate feature attributions
+3. Parse and interpret attribution tensor shapes (insample, futr_exog)
+4. Visualize attributions using heatmaps, waterfall plots, and bar charts
+5. Translate technical attributions into stakeholder-facing narratives
 
 ## Prerequisites
 

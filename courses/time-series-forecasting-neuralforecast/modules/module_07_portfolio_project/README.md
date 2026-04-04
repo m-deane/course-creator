@@ -6,6 +6,16 @@ forecasting stack from this course.
 
 There are no grades, quizzes, or submission requirements. The output is yours.
 
+## Learning Objectives
+
+By the end of this module you will be able to:
+
+1. Design a complete demand forecasting system combining models, sample paths, and explainability
+2. Select and prepare a real-world time series dataset
+3. Implement an end-to-end pipeline: train → simulate → explain → decide
+4. Produce a stakeholder-facing summary with visualizations
+5. Build a portfolio-ready forecasting project
+
 ---
 
 ## What You Produce

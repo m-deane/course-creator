@@ -228,7 +228,7 @@ print(f"P(stock-out within 4 days):    {p_stockout:.3f}")
 
 ---
 
-## 5. Sample Paths vs. Quantile Forecasts: A Visual Comparison
+## 6. Sample Paths vs. Quantile Forecasts: A Visual Comparison
 
 ```python
 import matplotlib.pyplot as plt
@@ -288,7 +288,7 @@ The bands look identical — but only the left panel can answer questions about 
 
 ---
 
-## 6. How NeuralForecast Implements Sample Paths
+## 7. How NeuralForecast Implements Sample Paths
 
 NeuralForecast v3.1.6+ exposes a `.simulate()` method on any model trained with `MQLoss`. Under the hood, it applies the Gaussian Copula method (covered in the next guide) to generate paths that respect the temporal autocorrelation of your data.
 
@@ -318,7 +318,7 @@ paths_df = nf.models[0].simulate(
 print(paths_df.shape)  # (n_series * 7, 102)
 ```
 
-The complete implementation with real French Bakery data is in Notebook 01.
+Notebook 01 walks through the full implementation step by step, including data loading, training diagnostics, and path visualisation.
 
 ---
 

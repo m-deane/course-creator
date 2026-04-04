@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="240" viewBox="0 0 600 240" font-family="Inter, sans-serif">
+  <style>text { font-family: Inter, sans-serif; } .heading { font-family: Georgia, serif; font-weight: 700; } .code { font-family: JetBrains Mono, monospace; }</style>
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feOffset dx="0" dy="2" in="SourceAlpha" result="offOut" />
+      <feGaussianBlur in="offOut" stdDeviation="3" result="blurOut" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+  </defs>
+  <text x="300" y="36" text-anchor="middle" dominant-baseline="middle" class="heading" font-size="22" fill="#1a1a2e">Selection Method Comparison</text>
+  <rect x="20" y="70" width="260" height="150" rx="12" ry="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" filter="url(#shadow)" />
+  <rect x="20" y="70" width="260" height="40" rx="12" ry="12" fill="#ef5350" />
+  <rect x="20" y="98" width="260" height="12" fill="#ef5350" />
+  <text x="150" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="#ffffff" font-weight="700">Tournament Selection</text>
+  <circle cx="45" cy="130" r="4" fill="#ef5350" />
+  <text x="60" y="130" text-anchor="start" dominant-baseline="middle" font-size="13" fill="#424242">Pick k random individuals</text>
+  <circle cx="45" cy="160" r="4" fill="#ef5350" />
+  <text x="60" y="160" text-anchor="start" dominant-baseline="middle" font-size="13" fill="#424242">Best one wins</text>
+  <circle cx="45" cy="190" r="4" fill="#ef5350" />
+  <text x="60" y="190" text-anchor="start" dominant-baseline="middle" font-size="13" fill="#424242">Adjustable pressure via k</text>
+  <rect x="320" y="70" width="260" height="150" rx="12" ry="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" filter="url(#shadow)" />
+  <rect x="320" y="70" width="260" height="40" rx="12" ry="12" fill="#4caf50" />
+  <rect x="320" y="98" width="260" height="12" fill="#4caf50" />
+  <text x="450" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="#ffffff" font-weight="700">Roulette Wheel</text>
+  <circle cx="345" cy="130" r="4" fill="#4caf50" />
+  <text x="360" y="130" text-anchor="start" dominant-baseline="middle" font-size="13" fill="#424242">Probability proportional to fitness</text>
+  <circle cx="345" cy="160" r="4" fill="#4caf50" />
+  <text x="360" y="160" text-anchor="start" dominant-baseline="middle" font-size="13" fill="#424242">Spin wheel to select</text>
+  <circle cx="345" cy="190" r="4" fill="#4caf50" />
+  <text x="360" y="190" text-anchor="start" dominant-baseline="middle" font-size="13" fill="#424242">High fitness dominates</text>
+</svg>

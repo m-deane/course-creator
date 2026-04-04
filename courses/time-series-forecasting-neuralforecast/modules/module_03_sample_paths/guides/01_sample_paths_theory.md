@@ -4,11 +4,56 @@
 
 A probabilistic forecast gives you marginal distributions: the uncertainty around day 1, then day 2, then day 3, independently. A sample path gives you something more powerful — a single plausible trajectory for the entire forecast horizon, drawn from the joint distribution. Run hundreds of these paths and you can answer any business question by applying a function to each path and computing statistics over the results.
 
-Start here: generating sample paths from a random walk in six lines.
+Start here: loading real French Bakery sales data, training NHITS with quantile loss, and generating sample paths with `.simulate()`.
+
+```python
+import pandas as pd
+from neuralforecast import NeuralForecast
+from neuralforecast.models import NHITS
+from neuralforecast.losses.pytorch import MQLoss
+from neuralforecast.utils import AirPassengersDF  # placeholder import; bakery data loaded below
+
+# Load French Bakery dataset (daily sales, multiple SKUs)
+url = "https://raw.githubusercontent.com/Nixtla/neuralforecast/main/nbs/data/french_bakery_data.csv"
+df = pd.read_csv(url, parse_dates=["ds"])
+df_train = df[df["ds"] < "2023-01-01"]
+
+# Train NHITS with MQLoss to get marginal quantile estimates
+model = NHITS(
+    h=7,                          # 7-day forecast horizon
+    input_size=28,                # 4 weeks of look-back
+    loss=MQLoss(level=[80, 90]),  # quantile levels used to fit marginal CDFs
+    scaler_type="robust",
+    max_steps=500,
+)
+nf = NeuralForecast(models=[model], freq="D")
+nf.fit(df_train)
+
+# Generate 200 sample paths — each is one plausible 7-day trajectory
+# Returns a DataFrame: columns unique_id, ds, sample_1 … sample_200
+paths_df = nf.models[0].simulate(futr_df=None, step_size=1, n_paths=200)
+print(paths_df.shape)          # (n_series * 7, 202)
+print(paths_df.head())
+
+# Answer a business question directly from paths:
+# P(total weekly sales > 500 units) for the first SKU
+sku_paths = paths_df[paths_df["unique_id"] == paths_df["unique_id"].iloc[0]]
+sample_cols = [c for c in sku_paths.columns if c.startswith("sample_")]
+weekly_totals = sku_paths[sample_cols].sum(axis=0)   # sum each path over 7 days
+prob = (weekly_totals > 500).mean()
+print(f"P(weekly total > 500) ≈ {prob:.3f}")
+```
+
+That is the complete workflow. Every concept in this guide unpacks what happens inside those five steps.
+
+---
+
+## 1. Building Intuition: A Minimal Random Walk
+
+Before the formal definitions, a stripped-down example makes the shape of the idea clear. A random walk has no parameters to fit — you can see exactly what "sample path" means without any model machinery.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 
 rng = np.random.default_rng(42)
 
@@ -26,9 +71,11 @@ prob = (paths.sum(axis=1) > 10).mean()
 print(f"P(total > 10 over 14 days) ≈ {prob:.3f}")
 ```
 
+The key observation: each row is a self-consistent trajectory. Step 5 in path 0 is not drawn independently from step 4 — it grew from it. That temporal consistency is what distinguishes a sample path from a bag of independent quantile draws. Now the formal statement:
+
 ---
 
-## 1. What Are Sample Paths?
+## 2. What Are Sample Paths?
 
 A sample path is one draw from the joint forecast distribution over the entire horizon.
 
@@ -63,7 +110,7 @@ flowchart LR
 
 ---
 
-## 2. The Monte Carlo Framework
+## 3. The Monte Carlo Framework
 
 Once you have $S$ sample paths, any business question becomes a three-step calculation:
 
@@ -108,7 +155,7 @@ print(f"80th percentile worst day: {worst_day_80:.1f}")
 
 ---
 
-## 3. Why Marginal Quantiles Are Insufficient
+## 4. Why Marginal Quantiles Are Insufficient
 
 The 80th percentile quantile for day $t$ tells you: "On day $t$ alone, I need $q_t$ units with 80% confidence."
 
@@ -147,7 +194,7 @@ With $\phi = 0.7$, the naive sum overstates the true 80th percentile — a pract
 
 ---
 
-## 4. Answering Probability Questions Exactly
+## 5. Answering Probability Questions Exactly
 
 Sample paths give direct answers to probability questions that have no clean closed form under marginal distributions.
 

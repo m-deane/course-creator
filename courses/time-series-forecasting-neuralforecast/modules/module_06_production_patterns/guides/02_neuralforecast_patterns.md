@@ -18,6 +18,49 @@ print(f"Device count: {torch.cuda.device_count()}")
 
 ---
 
+## Pattern Selection
+
+Use this decision tree to choose which pattern applies to your situation before diving into the code.
+
+```mermaid
+flowchart TD
+    A([Start: What is your problem?]) --> B{Multiple series\nto forecast?}
+
+    B -- Yes --> C{Shared seasonality\nor shape?}
+    C -- Yes --> D[Global model pattern\nSection 3a: unique_id]
+    C -- No --> E[Batch forecasting pattern\nSection 3b: forecast_in_batches]
+
+    B -- No --> F{Need uncertainty\nor risk bounds?}
+    F -- Yes --> G{Need sample paths\nor count data?}
+    G -- Yes --> H[DistributionLoss\nSection 1b]
+    G -- No --> I[MQLoss + asymmetric quantiles\nSection 1a]
+    F -- No --> J[MAE or MSE loss\ndefault NHITS]
+
+    D --> K{Training taking\n> 10 minutes?}
+    E --> K
+    H --> K
+    I --> K
+    J --> K
+
+    K -- Yes --> L{GPU available?}
+    L -- Yes --> M[Select accelerator + batch_size\nSection 2a / 2c]
+    L -- No --> N[Early stopping\nSection 2c]
+    K -- No --> O{Mission-critical\npipeline?}
+
+    M --> O
+    N --> O
+
+    O -- Yes --> P[Fallback model +\nforecast validation\nSection 5a / 5b]
+    O -- No --> Q{Need experiment\nreproducibility?}
+
+    P --> Q
+    Q -- Yes --> R[Experiment logging\nSection 4]
+    Q -- No --> S([Done: run your pipeline])
+    R --> S
+```
+
+---
+
 ## 1. Custom Losses
 
 NeuralForecast ships `MQLoss` (quantile), `DistributionLoss` (full distribution), and `MAE`/`MSE` for point forecasting. For production, two customizations are common: asymmetric quantiles and scaled losses.

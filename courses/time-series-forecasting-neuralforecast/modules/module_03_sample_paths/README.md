@@ -2,6 +2,16 @@
 
 This is the core module of the course. It introduces sample paths as the mathematically correct framework for multi-step forecast uncertainty, explains the Gaussian Copula method that NeuralForecast uses to generate them, and demonstrates their superiority over marginal quantile forecasts for real business decisions.
 
+## Learning Objectives
+
+By the end of this module you will be able to:
+
+1. Explain why marginal quantiles fail for multi-period decisions
+2. Describe the Gaussian Copula method for generating sample paths
+3. Use neuralforecast's `.simulate()` to generate sample paths from trained models
+4. Answer business questions (inventory stocking, reorder timing) using the Monte Carlo framework
+5. Compare sample path bounds vs marginal quantile bounds
+
 ## Why This Module Matters
 
 Module 02 showed that quantile forecasts fail for any question involving more than one forecast step. This module provides the solution: sample paths drawn from the joint forecast distribution. The Monte Carlo framework — simulate paths, apply a function, compute statistics — answers any business question correctly.

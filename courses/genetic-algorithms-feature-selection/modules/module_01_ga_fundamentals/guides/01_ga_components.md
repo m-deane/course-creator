@@ -42,6 +42,12 @@ Genetic algorithms simulate natural evolution to solve optimization problems:
 
 ![Selection Methods](./selection_methods.svg)
 
+<div class="callout-insight">
+
+💡 **Key Insight:** The six-step GA loop (initialize, evaluate, select, crossover, mutate, replace) is the same for every GA application. What changes between problems is the chromosome encoding and the fitness function -- everything else is reusable infrastructure.
+
+</div>
+
 ## Chromosome Representation
 
 ### Binary Encoding for Feature Selection
@@ -285,6 +291,12 @@ def two_point_crossover(
 ```
 
 ## Mutation Operators
+
+<div class="callout-warning">
+
+⚠️ **Warning:** After any mutation or crossover operation, always validate that at least one feature is selected. An all-zeros chromosome is invalid and will crash most fitness functions.
+
+</div>
 
 ### Bit-Flip Mutation
 

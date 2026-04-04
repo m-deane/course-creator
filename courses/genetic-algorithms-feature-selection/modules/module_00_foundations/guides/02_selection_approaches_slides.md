@@ -48,7 +48,11 @@ flowchart LR
 | **Wrapper** | Slow | Higher | Full |
 | **Embedded** | Medium | Medium-High | Specific model |
 
-> **Key tradeoff**: computational cost vs. optimization quality
+<div class="callout-info">
+
+ℹ️ **Key tradeoff**: computational cost vs. optimization quality
+
+</div>
 
 ---
 
@@ -119,6 +123,13 @@ Where:
 
 ## Filter Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">filter_selection_mi.py</span>
+</div>
+
 ```python
 from sklearn.feature_selection import mutual_info_regression, SelectKBest
 
@@ -131,6 +142,15 @@ def filter_selection_mi(X, y, k=10):
     return selected_indices, mi_scores
 ```
 
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Example
 np.random.seed(42)
@@ -140,6 +160,8 @@ y = (X[:, 0]**2 + 2*X[:, 1] + np.sin(X[:, 2]) +
      np.exp(X[:, 3]/2) + X[:, 4] + np.random.randn(n)*0.1)
 selected, mi_scores = filter_selection_mi(X, y, k=10)
 ```
+
+</div>
 
 ---
 
@@ -174,6 +196,13 @@ $$S_{\text{wrapper}} = \argmin_{S \subseteq F} \text{CV\_Error}(M_S, S)$$
 
 ## Wrapper: Forward Selection
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_selection_wrapper.py</span>
+</div>
+
 ```python
 def forward_selection_wrapper(X, y, max_features=10, cv=5):
     n_features = X.shape[1]
@@ -202,6 +231,8 @@ def forward_selection_wrapper(X, y, max_features=10, cv=5):
 
     return selected, scores
 ```
+
+</div>
 
 ---
 
@@ -242,6 +273,13 @@ As $\lambda$ increases from 0 to $\infty$:
 - $\lambda \to \infty$: No features ($\beta = 0$)
 - Intermediate: **Sparse solutions**
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">lasso_selection.py</span>
+</div>
+
 ```python
 from sklearn.linear_model import LassoCV
 from sklearn.preprocessing import StandardScaler
@@ -254,6 +292,8 @@ def lasso_selection(X, y, n_alphas=100):
     selected = np.where(lasso_cv.coef_ != 0)[0]
     return selected, lasso_cv.coef_, lasso_cv.alpha_
 ```
+
+</div>
 
 ---
 
@@ -302,6 +342,13 @@ flowchart TD
 
 ## Comparing All Three
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_selection_methods.py</span>
+</div>
+
 ```python
 def compare_selection_methods(X, y, n_features=10):
     X_train, X_test, y_train, y_test = train_test_split(
@@ -324,6 +371,8 @@ def compare_selection_methods(X, y, n_features=10):
     return results
 ```
 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -337,6 +386,13 @@ def compare_selection_methods(X, y, n_features=10):
 
 ## Pitfall 1: Filters Miss Interactions
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # XOR problem: y = x1 XOR x2
 X = np.random.randint(0, 2, size=(1000, 2))
@@ -347,6 +403,8 @@ print(f"Corr(x1, y): {np.corrcoef(X[:, 0], y)[0, 1]:.4f}")  # ~0
 print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")  # ~0
 # But BOTH features are necessary!
 ```
+
+</div>
 
 > **Fix**: Use wrapper methods for problems with known interactions, or add interaction terms.
 
@@ -360,6 +418,13 @@ print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")  # ~0
 <div>
 
 **WRONG** -- overfit to test set:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 X_train, X_test, y_train, y_test = \
     train_test_split(X, y)
@@ -371,9 +436,18 @@ for subset in generate_subsets():
 ```
 
 </div>
+
+</div>
 <div>
 
 **RIGHT** -- nested CV:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 for train, test in KFold(5).split(X):
     X_tr, X_te = X[train], X[test]
@@ -387,6 +461,8 @@ for train, test in KFold(5).split(X):
 ```
 
 </div>
+
+</div>
 </div>
 
 ---
@@ -398,6 +474,13 @@ for train, test in KFold(5).split(X):
 Lasso and tree importance assume specific model structures.
 
 **Fix**: Combine multiple embedded methods:
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.ensemble import RandomForestRegressor
@@ -416,11 +499,20 @@ rf_features = np.argsort(rf.feature_importances_)[-10:]
 combined = np.union1d(lasso_features, rf_features)
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Stability analysis measures how consistently a method selects the same features across bootstrap resamples. The Jaccard similarity metric compares feature sets pairwise. Stable methods produce high similarity (close to 1.0). Unstable selection should not be trusted. -->
 
 ## Stability Analysis
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evaluate_stability.py</span>
+</div>
 
 ```python
 from sklearn.utils import resample
@@ -449,6 +541,8 @@ def evaluate_stability(X, y, method, n_iterations=20):
                 similarities.append(inter / union)
     return np.mean(similarities)
 ```
+
+</div>
 
 ---
 
@@ -504,4 +598,8 @@ FEATURE SELECTION APPROACHES
               Wrapper Method          for robustness
 ```
 
-> **Key insight**: GAs are a powerful wrapper method that explores the search space more effectively than greedy approaches.
+<div class="callout-insight">
+
+💡 **Key insight**: GAs are a powerful wrapper method that explores the search space more effectively than greedy approaches.
+
+</div>

@@ -83,6 +83,13 @@ The default choice for GAs
 
 ## Tournament Selection Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
+</div>
+
 ```python
 def tournament_selection(population, tournament_size=3,
                          minimize=True):
@@ -102,6 +109,8 @@ def tournament_selection(population, tournament_size=3,
     return winner
 ```
 
+</div>
+
 > **Typical values**: $k \in \{2, 3, 5, 7\}$. Selection pressure $\approx k$ for large populations.
 
 ---
@@ -109,6 +118,13 @@ def tournament_selection(population, tournament_size=3,
 <!-- Speaker notes: Adaptive tournament size is a powerful technique. Start with small tournaments (k=2) for broad exploration in early generations, then increase to large tournaments (k=7) for exploitation as the population converges. The linear interpolation based on progress ratio is the simplest schedule. -->
 
 ## Adaptive Tournament Size
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_tournament_selection.py</span>
+</div>
 
 ```python
 def adaptive_tournament_selection(population, generation,
@@ -119,6 +135,8 @@ def adaptive_tournament_selection(population, generation,
     size = int(min_size + progress * (max_size - min_size))
     return tournament_selection(population, tournament_size=size)
 ```
+
+</div>
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -141,6 +159,13 @@ Fitness-proportionate selection
 
 ## Roulette Wheel Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_wheel_selection.py</span>
+</div>
+
 ```python
 def roulette_wheel_selection(population, minimize=True):
     fitnesses = np.array([ind.fitness for ind in population])
@@ -157,7 +182,13 @@ def roulette_wheel_selection(population, minimize=True):
     return population[idx]
 ```
 
-> **Key issue**: sensitive to fitness scaling. One super-fit individual can dominate.
+</div>
+
+<div class="callout-info">
+
+ℹ️ **Key issue**: sensitive to fitness scaling. One super-fit individual can dominate.
+
+</div>
 
 ---
 
@@ -166,6 +197,13 @@ def roulette_wheel_selection(population, minimize=True):
 ## Stochastic Universal Sampling (SUS)
 
 Better than repeated roulette -- single spin with evenly-spaced pointers:
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stochastic_universal_sampling.py</span>
+</div>
 
 ```python
 def stochastic_universal_sampling(population, n_select, minimize=True):
@@ -189,6 +227,8 @@ def stochastic_universal_sampling(population, n_select, minimize=True):
     return selected
 ```
 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -203,6 +243,13 @@ Robust to fitness scaling issues
 <!-- Speaker notes: Linear rank selection assigns probabilities based on sorted position. The selection_pressure parameter in [1.0, 2.0] controls the spread: at 2.0, the best individual gets probability 2/N and the worst gets 0. At 1.0, all individuals have equal probability 1/N (no selection pressure). The formula ensures probabilities sum to 1. -->
 
 ## Linear Rank Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rank_selection.py</span>
+</div>
 
 ```python
 def rank_selection(population, minimize=True, selection_pressure=2.0):
@@ -225,6 +272,8 @@ def rank_selection(population, minimize=True, selection_pressure=2.0):
     return sorted_pop[idx]
 ```
 
+</div>
+
 > `selection_pressure` in $[1.0, 2.0]$: at 2.0, best gets $2/N$ probability, worst gets 0.
 
 ---
@@ -232,6 +281,13 @@ def rank_selection(population, minimize=True, selection_pressure=2.0):
 <!-- Speaker notes: Exponential rank selection provides stronger selection pressure than linear rank. The base parameter controls the decay rate: lower base means stronger pressure (the best individual gets much more probability than the rest). Typical range is [0.9, 0.99]. This is useful when you want aggressive exploitation. -->
 
 ## Exponential Rank Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">exponential_rank_selection.py</span>
+</div>
 
 ```python
 def exponential_rank_selection(population, minimize=True, base=0.95):
@@ -245,6 +301,8 @@ def exponential_rank_selection(population, minimize=True, base=0.95):
     idx = np.random.choice(N, p=probabilities)
     return sorted_pop[idx]
 ```
+
+</div>
 
 > Lower `base` = higher pressure. Typical range: $[0.9, 0.99]$.
 
@@ -278,6 +336,13 @@ graph TD
 
 ## Pitfall 1: Wrong Fitness Transform
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bad_roulette.py</span>
+</div>
+
 ```python
 # BAD -- higher fitness gets MORE selection (wrong for minimization!)
 def bad_roulette(population):
@@ -294,11 +359,20 @@ def good_roulette(population):
     return np.random.choice(population, p=probs)
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Tournament with replacement allows the same individual to appear multiple times, which weakens selection pressure and can cause the tournament to always select the same dominant individual. Premature convergence from excessive pressure is equally dangerous -- start with small tournaments and increase over time. -->
 
 ## Pitfall 2: Tournament with Replacement
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # BAD -- same individual can appear twice in tournament
@@ -309,7 +383,16 @@ tournament = [population[np.random.randint(len(population))]
 tournament = np.random.choice(population, size=k, replace=False)
 ```
 
+</div>
+
 ## Pitfall 3: Premature Convergence
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_pressure.py</span>
+</div>
 
 ```python
 # BAD -- tournament too large from start
@@ -320,6 +403,8 @@ def adaptive_pressure(population, gen, max_gen):
     k = int(2 + 5 * (gen / max_gen))
     return tournament_selection(population, tournament_size=k)
 ```
+
+</div>
 
 ---
 

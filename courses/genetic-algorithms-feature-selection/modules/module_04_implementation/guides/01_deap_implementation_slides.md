@@ -36,11 +36,28 @@ flowchart TD
 pip install deap
 ```
 
+<div class="flow">
+<div class="flow-step mint">creator</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Toolbox</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">tools</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">algorithms</div>
+</div>
+
 <!-- Speaker notes: Walk through the four main DEAP components: creator defines types, Toolbox registers operators, tools provides built-in operators, and algorithms offers ready-made evolution loops. Ask learners to install DEAP before continuing. -->
 
 ---
 
 ## Step 1: Define Types
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from deap import base, creator, tools, algorithms
@@ -54,6 +71,8 @@ creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMin)
 ```
 
+</div>
+
 ```
 Fitness weights determine optimization direction:
   weights=(-1.0,)  → MINIMIZE (error, loss)
@@ -66,6 +85,13 @@ Fitness weights determine optimization direction:
 ---
 
 ## Step 2: Create Toolbox
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">setup_toolbox.py</span>
+</div>
 
 ```python
 def setup_toolbox(n_features, X, y):
@@ -93,11 +119,20 @@ def setup_toolbox(n_features, X, y):
     return toolbox
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through each register call step by step. Highlight that the toolbox is a central registry where you can swap operators easily without changing the rest of the code. Point out the key parameters: indpb for per-gene crossover probability, and tournsize for selection pressure. -->
 
 ---
 
 ## The Fitness Function
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evaluate_features.py</span>
+</div>
 
 ```python
 def evaluate_features(individual, X, y):
@@ -116,6 +151,8 @@ def evaluate_features(individual, X, y):
     return (-scores.mean(),)  # Tuple with single value
 ```
 
+</div>
+
 ```
 CRITICAL: Fitness must return a TUPLE, even for single-objective.
 
@@ -129,6 +166,13 @@ CRITICAL: Fitness must return a TUPLE, even for single-objective.
 ---
 
 ## Step 3: Run Evolution (Simple)
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">run_ga.py</span>
+</div>
 
 ```python
 def run_ga(X, y, pop_size=50, n_generations=50):
@@ -160,6 +204,8 @@ def run_ga(X, y, pop_size=50, n_generations=50):
     return [i for i, bit in enumerate(best) if bit == 1]
 ```
 
+</div>
+
 <!-- Speaker notes: Explain the three key additions beyond basic evolution: Statistics tracking logs progress per generation, HallOfFame preserves the best individuals found across all generations (not just the final one), and verbose output helps monitor convergence during development. -->
 
 ---
@@ -184,6 +230,13 @@ flowchart TD
 ---
 
 ## Custom Evolution Loop
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">custom_ga.py</span>
+</div>
 
 ```python
 def custom_ga(X, y, pop_size=50, n_gens=50, elitism=2, early_stop=10):
@@ -225,11 +278,20 @@ def custom_ga(X, y, pop_size=50, n_gens=50, elitism=2, early_stop=10):
                 break
 ```
 
+</div>
+
 <!-- Speaker notes: Highlight the three improvements over eaSimple: elitism ensures the best solutions are never lost, the empty-chromosome repair guarantees at least one feature is always selected, and early stopping prevents wasted computation when the search has stagnated. -->
 
 ---
 
 ## Time Series Feature Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">setup_timeseries_toolbox.py</span>
+</div>
 
 ```python
 def setup_timeseries_toolbox(n_features, X, y):
@@ -259,11 +321,20 @@ def setup_timeseries_toolbox(n_features, X, y):
     return toolbox
 ```
 
+</div>
+
 <!-- Speaker notes: Emphasize the critical difference from standard CV: TimeSeriesSplit preserves temporal order so the model never trains on future data. Also note the feature penalty term that encourages parsimony. Ask learners why standard k-fold would be dangerous for time series. -->
 
 ---
 
 ## Parallel Evaluation
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">run_parallel_ga.py</span>
+</div>
 
 ```python
 from multiprocessing import Pool
@@ -291,6 +362,8 @@ def run_parallel_ga(X, y, pop_size=50, n_generations=50, n_processes=4):
         pool.join()
 ```
 
+</div>
+
 ```
 Serial:   50 individuals × 10s each = 500s per generation
 Parallel: 50 individuals ÷ 8 cores × 10s = 63s per generation
@@ -302,6 +375,13 @@ Speedup:  ~8x
 ---
 
 ## Visualizing Evolution
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_evolution.py</span>
+</div>
 
 ```python
 def plot_evolution(history):
@@ -316,6 +396,8 @@ def plot_evolution(history):
     ax2.set_ylabel('Number of Features')
     ax2.set_xlabel('Generation')
 ```
+
+</div>
 
 ```
 Fitness Evolution:                Feature Count:

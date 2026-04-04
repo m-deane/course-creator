@@ -97,6 +97,13 @@ flowchart TD
 
 ## Binary Encoding: Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">binaryindividual.py</span>
+</div>
+
 ```python
 @dataclass
 class BinaryIndividual:
@@ -121,11 +128,20 @@ class BinaryIndividual:
         return int(self.chromosome.sum())
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Bit-flip mutation is the standard mutation for binary encoding. Each bit independently flips with probability mutation_rate. The while loop at the end enforces the minimum feature constraint -- critical to prevent empty chromosomes that crash the fitness function. Invalidating fitness (setting to None) forces re-evaluation. -->
 
 ## Binary Mutation
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">binary_mutate.py</span>
+</div>
 
 ```python
 def binary_mutate(individual: BinaryIndividual,
@@ -148,11 +164,20 @@ def binary_mutate(individual: BinaryIndividual,
     return mutant
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Binary crossover supports both uniform and single-point modes. Uniform is preferred for feature selection because it has no positional bias. The mask determines which parent contributes each gene. NumPy vectorization makes this very fast. -->
 
 ## Binary Crossover
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">binary_crossover.py</span>
+</div>
 
 ```python
 def binary_crossover(parent1, parent2, method='uniform'):
@@ -175,6 +200,8 @@ def binary_crossover(parent1, parent2, method='uniform'):
     return BinaryIndividual(child1), BinaryIndividual(child2)
 ```
 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -189,6 +216,13 @@ For sparse feature selection
 <!-- Speaker notes: The IntegerIndividual stores selected feature indices directly. The random factory method chooses n_selected random indices without replacement. The to_binary method converts back to a binary vector for compatibility with standard fitness functions. -->
 
 ## Integer Encoding: Implementation
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">integerindividual.py</span>
+</div>
 
 ```python
 @dataclass
@@ -214,11 +248,20 @@ class IntegerIndividual:
         return binary
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Integer mutation has three operations: add a new feature, remove an existing one, or replace one with another. Each operation maintains uniqueness by only choosing from available (unselected) features. The mutation_rate controls how often any operation fires. This is more complex than binary mutation but preserves the integer encoding structure. -->
 
 ## Integer Mutation
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">integer_mutate.py</span>
+</div>
 
 ```python
 def integer_mutate(individual: IntegerIndividual,
@@ -246,6 +289,8 @@ def integer_mutate(individual: IntegerIndividual,
                 mutant.chromosome[idx] = np.random.choice(available)
     return mutant
 ```
+
+</div>
 
 ---
 
@@ -299,6 +344,13 @@ flowchart TD
 
 **Bad** -- no constraint:
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bad_mutation.py</span>
+</div>
+
 ```python
 def bad_mutation(individual):
     mutant = individual.copy()
@@ -311,9 +363,18 @@ def bad_mutation(individual):
 ```
 
 </div>
+
+</div>
 <div>
 
 **Good** -- enforced minimum:
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">good_mutation.py</span>
+</div>
 
 ```python
 def good_mutation(individual,
@@ -332,6 +393,8 @@ def good_mutation(individual,
 ```
 
 </div>
+
+</div>
 </div>
 
 ---
@@ -339,6 +402,13 @@ def good_mutation(individual,
 <!-- Speaker notes: Integer encoding has a unique pitfall: duplicate indices. If you randomly replace a feature index with any random integer, you might pick one that is already in the chromosome. The fix is to only choose from features NOT already selected, using np.setdiff1d. -->
 
 ## Pitfall 2: Integer Encoding Duplicates
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bad_integer_mutation.py</span>
+</div>
 
 ```python
 # BAD -- might create duplicate feature index
@@ -359,11 +429,20 @@ def good_integer_mutation(individual):
     return mutant
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Python loops over individual array elements are extremely slow compared to NumPy vectorized operations. The bad example uses a for loop with per-element random calls. The good example uses np.random.random to generate all random values at once and np.where for the selection. This can be 100x faster for large chromosomes. -->
 
 ## Pitfall 3: Inefficient Binary Operations
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">slow_crossover.py</span>
+</div>
 
 ```python
 # BAD -- Python loops (100x slower)
@@ -383,7 +462,13 @@ def fast_crossover(parent1, parent2):
     return BinaryIndividual(child)
 ```
 
-> Always vectorize with NumPy for binary encoding operations.
+</div>
+
+<div class="callout-key">
+
+🔑 Always vectorize with NumPy for binary encoding operations.
+
+</div>
 
 ---
 

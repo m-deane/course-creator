@@ -30,6 +30,11 @@ For $n$ features, there are $2^n$ possible subsets:
 
 This combinatorial explosion makes exhaustive search infeasible.
 
+<div class="callout-warning">
+
+⚠️ **Warning:** Even with parallelization across 1000 cores, exhaustive search for 30+ features is physically impossible. Any feature selection method that promises to evaluate all subsets at this scale is either approximating or lying.
+
+</div>
 
 ![Feature Selection Pipeline](./feature_selection_pipeline.svg)
 
@@ -177,6 +182,12 @@ General-purpose optimization strategies that:
 | **Ant Colony** | Foraging ants | Pheromone-based path selection |
 
 ### Why GAs for Feature Selection?
+
+<div class="callout-insight">
+
+💡 **Key Insight:** GAs are uniquely suited for feature selection because the binary chromosome directly maps to feature inclusion/exclusion -- no encoding transformation needed. This natural representation means standard crossover and mutation operators work out of the box.
+
+</div>
 
 1. **Natural encoding**: Binary chromosome = feature mask
 2. **Population-based**: Explore multiple solutions simultaneously

@@ -60,6 +60,13 @@ Child:    [0, 1, 0, 1, 1]  ✓ LA only
 
 ## Feature-Group-Aware Crossover
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">customcrossover.py</span>
+</div>
+
 ```python
 class CustomCrossover:
     def __init__(self, feature_groups):
@@ -86,6 +93,8 @@ class CustomCrossover:
         return child1, child2
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. The key insight is that one-hot groups are swapped as a whole unit, while other features use standard uniform crossover. This guarantees that the child always has exactly one city selected. -->
 
 ---
@@ -108,6 +117,13 @@ HIERARCHICAL CROSSOVER:
 After repair: [1, 0, 0, 0, 1, 0]  ✓ Invalid interactions removed
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hierarchical_crossover.py</span>
+</div>
+
 ```python
 def hierarchical_crossover(child, interaction_map):
     for interaction_idx, base_indices in interaction_map.items():
@@ -115,6 +131,8 @@ def hierarchical_crossover(child, interaction_map):
             child[interaction_idx] = 0  # Remove invalid interaction
     return child
 ```
+
+</div>
 
 <!-- Speaker notes: Highlight the repair-after-crossover approach: if any base feature for an interaction is missing, the interaction term is removed. This is simpler than preventing violations during crossover and equally effective. Ask learners what other dependency structures they can think of. -->
 
@@ -143,6 +161,13 @@ noise_1    0.001       0.01  ← Less exploration
 noise_2    0.001       0.01
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">importance_weighted_mutation.py</span>
+</div>
+
 ```python
 def importance_weighted_mutation(individual, importances, base_rate=0.01):
     importances_scaled = importances / (importances.max() + 1e-10)
@@ -154,6 +179,8 @@ def importance_weighted_mutation(individual, importances, base_rate=0.01):
             mutant[i] = 1 - mutant[i]
     return mutant
 ```
+
+</div>
 
 <!-- Speaker notes: Explain the intuition: important features get higher mutation rates because we want the GA to explore their on/off status more aggressively. Less important features are explored less frequently. The scaling formula maps importance scores to mutation rates proportionally. -->
 
@@ -171,6 +198,13 @@ flowchart LR
     B -->|No| D["Standard mutation"]
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">correlation_aware_mutation.py</span>
+</div>
+
 ```python
 def correlation_aware_mutation(individual, corr_matrix, base_rate=0.01,
                                 threshold=0.7):
@@ -185,6 +219,8 @@ def correlation_aware_mutation(individual, corr_matrix, base_rate=0.01,
                     mutant[j] = 1 - mutant[j]
     return mutant
 ```
+
+</div>
 
 <!-- Speaker notes: The core idea is that highly correlated features provide redundant information, so flipping one should trigger consideration of flipping its correlated partner. The 50% probability prevents deterministic coupling while still encouraging coordinated exploration. -->
 
@@ -201,6 +237,13 @@ After:  [1, 0, 0, 0, 1, 1, 0, 0, 1, 0]  (4 features)
 
 Feature count unchanged!
 ```
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">swap_mutation.py</span>
+</div>
 
 ```python
 def swap_mutation(individual, n_swaps=1):
@@ -219,6 +262,8 @@ def swap_mutation(individual, n_swaps=1):
 
     return mutant
 ```
+
+</div>
 
 <!-- Speaker notes: Swap mutation is essential when you have a fixed feature budget, such as a model that can only handle N inputs for latency or interpretability reasons. It replaces one selected feature with one unselected feature, keeping the total count constant. -->
 
@@ -245,6 +290,13 @@ Mutation Rate Over Generations:
 
 $$p_m(t) = p_{max} - \frac{t}{T_{max}} \cdot (p_{max} - p_{min})$$
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_mutation.py</span>
+</div>
+
 ```python
 def adaptive_mutation(individual, generation, max_gen,
                       initial_rate=0.1, final_rate=0.01):
@@ -252,6 +304,8 @@ def adaptive_mutation(individual, generation, max_gen,
     rate = initial_rate - progress * (initial_rate - final_rate)
     # Apply mutation at computed rate...
 ```
+
+</div>
 
 <!-- Speaker notes: Adaptive mutation follows the explore-then-exploit principle. High mutation early on helps discover diverse regions of the search space, while low mutation later preserves good solutions and fine-tunes. This will be covered in more depth in the adaptive operators deck. -->
 
@@ -298,6 +352,13 @@ Population Diversity:
 
 Select best individual from each cluster (niche):
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">niching_selection.py</span>
+</div>
+
 ```python
 def niching_selection(population, fitness_scores, n_niches=5):
     """Select best individual from each population niche."""
@@ -317,6 +378,8 @@ def niching_selection(population, fitness_scores, n_niches=5):
 
     return selected
 ```
+
+</div>
 
 Ensures all regions of the search space are represented.
 

@@ -62,6 +62,13 @@ Choose based on your constraint:
 
 ## NSGA-II Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evaluate.py</span>
+</div>
+
 ```python
 from deap import base, creator, tools
 
@@ -87,6 +94,8 @@ pareto_front = tools.sortNondominated(
     population, len(population), first_front_only=True
 )[0]
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code highlighting three key differences from single-objective: FitnessMulti with two negative weights, the evaluate function returning a two-element tuple, and selNSGA2 replacing selTournament. The sortNondominated call at the end extracts just the Pareto-optimal solutions. -->
 
@@ -132,6 +141,13 @@ Gen 20: [Still converging...]               [Local search climbs each]
 Gen 50: [Finally near optimum]    Gen 20: [CONVERGED to global optimum]
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">local_search.py</span>
+</div>
+
 ```python
 def local_search(individual, X, y, n_iterations=10):
     """Hill climbing to refine GA solution."""
@@ -152,6 +168,8 @@ def local_search(individual, X, y, n_iterations=10):
     return best, best_fitness
 ```
 
+</div>
+
 <!-- Speaker notes: Explain the memetic algorithm concept: after each GA generation, the top individuals are refined with local search (hill climbing). The code shows first-improvement hill climbing, which flips each bit and takes the first improvement found. This is covered in much more depth in the hybrid methods deck. -->
 
 ---
@@ -170,6 +188,13 @@ flowchart TD
     G --> H["Standard GA Evolution"]
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">filter_guided_initialization.py</span>
+</div>
+
 ```python
 def filter_guided_initialization(X, y, pop_size, top_k=None):
     mi_scores = mutual_info_regression(X, y)
@@ -187,6 +212,8 @@ def filter_guided_initialization(X, y, pop_size, top_k=None):
 
     return population
 ```
+
+</div>
 
 <!-- Speaker notes: Smart initialization uses filter methods like mutual information to bias the initial population toward promising regions. Half the population uses guided initialization from top-K features, and half uses random initialization to maintain diversity. This hybrid approach reduces the number of generations needed to converge. -->
 
@@ -212,6 +239,13 @@ Feature Votes:
   Feature 12: 2/5 =  40%  ← Not consensus
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">ensemble_ga.py</span>
+</div>
+
 ```python
 def ensemble_ga(X, y, n_runs=10, **ga_params):
     feature_votes = np.zeros(X.shape[1])
@@ -222,6 +256,8 @@ def ensemble_ga(X, y, n_runs=10, **ga_params):
     consensus = np.where(feature_votes > n_runs / 2)[0]
     return consensus
 ```
+
+</div>
 
 <!-- Speaker notes: Ensemble GA addresses the stochastic nature of GAs by running multiple independent searches and taking the consensus. Features selected in more than half the runs are considered robust. This dramatically reduces the risk of selecting features that are artifacts of a particular random seed. -->
 
@@ -253,6 +289,13 @@ Features selected by **multiple models** are more likely truly informative, not 
 
 ## Constraint Handling: Repair Operators
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">constrained_ga.py</span>
+</div>
+
 ```python
 def constrained_ga(X, y, feature_groups, min_per_group=1, max_per_group=3):
     def repair_individual(individual):
@@ -272,6 +315,8 @@ def constrained_ga(X, y, feature_groups, min_per_group=1, max_per_group=3):
                 selected = [i for i in indices if ind[i] == 1]
         return ind
 ```
+
+</div>
 
 Repair after crossover and mutation to maintain feasibility.
 
@@ -294,6 +339,13 @@ flowchart TD
     C --> F
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">surrogatefitness.py</span>
+</div>
+
 ```python
 class SurrogateFitness:
     def __init__(self, X, y):
@@ -311,11 +363,23 @@ class SurrogateFitness:
         return fitness
 ```
 
+</div>
+
 <!-- Speaker notes: Surrogate models replace expensive fitness evaluations with cheap approximations. The Gaussian process gives both a prediction and an uncertainty estimate. When uncertainty is low, use the cheap prediction; when high, do the expensive evaluation and update the surrogate. This can cut evaluation costs by 50-80%. -->
 
 ---
 
 ## Key Takeaways
+
+<div class="flow">
+<div class="flow-step mint">NSGA-II</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Hybrid</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Ensemble</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Surrogate</div>
+</div>
 
 | Technique | When to Use |
 |-----------|-------------|

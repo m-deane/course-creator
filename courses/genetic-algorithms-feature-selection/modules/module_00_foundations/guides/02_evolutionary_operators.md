@@ -145,7 +145,15 @@ selected = rank_selection(population, fitness_scores)
 print(f"Rank selected: {selected}")
 ```
 
+![Crossover Types](./crossover_types.svg)
+
 ## Crossover Operators
+
+<div class="callout-insight">
+
+💡 **Key Insight:** For feature selection, uniform crossover typically outperforms single-point and two-point crossover because features are unordered -- there is no positional structure to preserve.
+
+</div>
 
 ### Single-Point Crossover
 
@@ -220,7 +228,15 @@ print(f"Child 1: {c1}")
 print(f"Child 2: {c2}")
 ```
 
+![Mutation Types](./mutation_types.svg)
+
 ## Mutation Operators
+
+<div class="callout-warning">
+
+⚠️ **Warning:** Setting mutation rate too high (above 0.1 per gene) effectively degrades the GA to random search. The rule of thumb is `1/n` where `n` is chromosome length, which flips approximately one gene per individual.
+
+</div>
 
 ### Bit Flip Mutation
 

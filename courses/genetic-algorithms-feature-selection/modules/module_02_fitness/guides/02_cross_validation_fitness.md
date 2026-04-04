@@ -159,6 +159,14 @@ for chrom in test_chromosomes:
 </div>
 
 
+![Walk-Forward Timeline](./walk_forward_timeline.svg)
+
+<div class="callout-warning">
+
+⚠️ **Warning:** Caching fitness values assumes deterministic evaluation. If your cross-validation uses random splits or your model has stochastic initialization, two evaluations of the same chromosome can return different fitness values, breaking the cache invariant.
+
+</div>
+
 ## Time Series Cross-Validation
 
 For financial applications, use time-aware CV:

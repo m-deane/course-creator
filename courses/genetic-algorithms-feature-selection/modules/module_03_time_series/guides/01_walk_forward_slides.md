@@ -20,11 +20,20 @@ Respecting temporal ordering in feature selection
 
 ## Why Standard CV is Invalid for Time Series
 
+![Walk-Forward Timeline](walk_forward_timeline.svg)
+
 Standard k-fold trains on future data to predict the past:
 
 $$\forall (x_{train}, y_{train}) \in D_{train}, (x_{test}, y_{test}) \in D_{test}: t_{train} < t_{test}$$
 
 This temporal constraint **must** hold. Violations create unrealistic optimistic estimates.
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # WRONG - trains on future to predict past!
@@ -35,7 +44,13 @@ scores = cross_val_score(model, X, y, cv=5)  # DON'T DO THIS
 validator = WalkForwardValidator(n_splits=5, expanding=True)
 ```
 
-> Standard k-fold on autocorrelated data can show **2-10x better** performance than reality.
+</div>
+
+<div class="callout-info">
+
+ℹ️ Standard k-fold on autocorrelated data can show **2-10x better** performance than reality.
+
+</div>
 
 ---
 
@@ -88,6 +103,13 @@ Note: Scores may degrade over time (concept drift signal)
 
 ## WalkForwardValidator Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walkforwardvalidator.py</span>
+</div>
+
 ```python
 class WalkForwardValidator:
     def __init__(self, n_splits=5, test_size=None,
@@ -119,6 +141,8 @@ class WalkForwardValidator:
             )
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: The gap parameter is the most commonly overlooked detail. Without a gap, the last training sample and first test sample may be strongly autocorrelated, leaking information. The ASCII diagrams show the problem: adjacent samples share autocorrelation. With gap=10, a 10-sample buffer breaks the autocorrelation chain. The rule of thumb: set gap to the lag where the ACF drops below the significance threshold (typically 1.96/sqrt(n)). -->
@@ -143,6 +167,13 @@ Time: ────────────────────────�
 
 Rule of thumb: Set gap to the lag where ACF drops below significance threshold.
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Bad - no gap
 validator = WalkForwardValidator(gap=0)
@@ -150,6 +181,8 @@ validator = WalkForwardValidator(gap=0)
 # Good - gap prevents immediate autocorrelation leakage
 validator = WalkForwardValidator(gap=10)
 ```
+
+</div>
 
 ---
 
@@ -179,6 +212,13 @@ flowchart TD
 
 ## Feature Selection with Walk-Forward
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_feature_selection.py</span>
+</div>
+
 ```python
 def walk_forward_feature_selection(
     X, y, chromosome, model_fn, validator, metric=None
@@ -207,6 +247,8 @@ def walk_forward_feature_selection(
 
     return np.mean(fold_scores)
 ```
+
+</div>
 
 ---
 
@@ -238,6 +280,13 @@ Use case: Financial data where news spreads gradually and orders execute over ti
 
 ## Danger: Wrong CV Comparison
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Generate highly autocorrelated data
 y = np.zeros(1000)
@@ -251,6 +300,8 @@ mse_wrong = -cross_val_score(model, X, y, cv=5,
 # RIGHT: Walk-forward
 mse_right = walk_forward_evaluate(model, X, y)
 ```
+
+</div>
 
 ```
 Standard k-fold CV (WRONG):      MSE = 0.012  ← Overly optimistic!

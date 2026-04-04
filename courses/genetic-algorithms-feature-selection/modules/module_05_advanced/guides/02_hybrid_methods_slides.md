@@ -64,6 +64,13 @@ The key addition: **local search refinement** between evaluation and selection.
 
 For each selected individual, try flipping each bit:
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hill_climbing.py</span>
+</div>
+
 ```python
 def hill_climbing(individual, fitness_func, max_iter=10):
     """1-flip neighborhood local search."""
@@ -90,6 +97,8 @@ def hill_climbing(individual, fitness_func, max_iter=10):
 
     return current, current_fitness
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the hill climbing code step by step. For each bit position, it tries flipping the bit and checks if fitness improves. First-improvement means it takes the first improving move rather than searching all neighbors. This is faster than best-improvement and works well in practice. Note the zero-sum guard preventing empty feature sets. -->
 
@@ -143,6 +152,13 @@ Rule of thumb:
 
 ## Memetic Algorithm Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">memeticalgorithm.py</span>
+</div>
+
 ```python
 class MemeticAlgorithm:
     def __init__(self, n_features, fitness_func,
@@ -169,6 +185,8 @@ class MemeticAlgorithm:
 
         return population, fitness_scores
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the implementation highlighting the local_search_freq parameter that controls what fraction of the population gets refined. Only refining the top 20% keeps the computational cost manageable. Note how the learning type switch determines whether genes or only fitness values are updated. -->
 
@@ -261,6 +279,14 @@ Memetic Lamarckian: Best fitness AND fewer features
 ---
 
 ## Key Takeaways
+
+<div class="flow">
+<div class="flow-step mint">GA Explores</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Local Search Refines</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Memetic Converges</div>
+</div>
 
 | Insight | Detail |
 |---------|--------|

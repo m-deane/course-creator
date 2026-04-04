@@ -139,6 +139,13 @@ MSE
 
 ## Basic Multi-Objective Fitness
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multi_objective_fitness.py</span>
+</div>
+
 ```python
 def multi_objective_fitness(individual, X, y):
     selected = np.array(individual, dtype=bool)
@@ -159,11 +166,20 @@ def multi_objective_fitness(individual, X, y):
     return (mse, complexity)  # Both to MINIMIZE
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: DEAP's NSGA-II setup requires creating a multi-objective fitness type with weights=(-1.0, -1.0), meaning minimize both objectives. The toolbox registers standard operators: two-point crossover, bit-flip mutation, and NSGA-II selection. The selNSGA2 function handles non-dominated sorting and crowding distance automatically. The weights are the most critical parameter -- getting the signs wrong inverts the optimization direction. -->
 
 ## NSGA-II with DEAP
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">setup_nsga2.py</span>
+</div>
 
 ```python
 from deap import base, creator, tools, algorithms
@@ -183,6 +199,8 @@ def setup_nsga2(n_features):
     return toolbox
 ```
 
+</div>
+
 > `weights=(-1.0, -1.0)` means minimize both objectives.
 
 ---
@@ -190,6 +208,13 @@ def setup_nsga2(n_features):
 <!-- Speaker notes: The run_nsga2 function executes the multi-objective evolution. It uses eaMuPlusLambda which combines parents and offspring before selecting the next generation (mu+lambda strategy). The ParetoFront hall of fame preserves all non-dominated solutions found across all generations. The stats object tracks average and minimum objective values per generation for monitoring convergence. -->
 
 ## Running NSGA-II
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">run_nsga2.py</span>
+</div>
 
 ```python
 def run_nsga2(X, y, population_size=100, n_generations=50):
@@ -212,6 +237,8 @@ def run_nsga2(X, y, population_size=100, n_generations=50):
 
     return hof, logbook
 ```
+
+</div>
 
 ---
 
@@ -266,6 +293,13 @@ Measures quality of Pareto front approximation:
 
 $$HV(\mathcal{P}) = \text{volume} \left( \bigcup_{s \in \mathcal{P}} [f_1(s), r_1] \times \cdots \times [f_m(s), r_m] \right)$$
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hypervolume_2d.py</span>
+</div>
+
 ```python
 def hypervolume_2d(pareto_front, reference_point):
     front = sorted(pareto_front)
@@ -281,6 +315,8 @@ def hypervolume_2d(pareto_front, reference_point):
     return hv
 ```
 
+</div>
+
 > Larger hypervolume = better Pareto approximation.
 
 ---
@@ -288,6 +324,13 @@ def hypervolume_2d(pareto_front, reference_point):
 <!-- Speaker notes: Three-objective extension adds a third objective: feature acquisition cost. This is relevant in domains where different features have different costs to obtain (e.g., some require expensive lab tests, others are freely available). The DEAP setup for three objectives uses weights=(-1.0, -1.0, -1.0) to minimize all three. NSGA-II handles three or more objectives, though visualization becomes harder. -->
 
 ## Three-Objective Extension
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">three_objective_fitness.py</span>
+</div>
 
 ```python
 def three_objective_fitness(individual, X, y, feature_costs):
@@ -309,6 +352,8 @@ def three_objective_fitness(individual, X, y, feature_costs):
 
     return (mse, n_features, total_cost)
 ```
+
+</div>
 
 ---
 
@@ -339,6 +384,13 @@ flowchart TD
 
 ## Decision Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_from_pareto.py</span>
+</div>
+
 ```python
 def select_from_pareto(pareto_front, strategy='knee'):
     objectives = [ind.fitness.values for ind in pareto_front]
@@ -362,6 +414,8 @@ def select_from_pareto(pareto_front, strategy='knee'):
     return pareto_front[idx]
 ```
 
+</div>
+
 > The **knee point** is often the best default -- maximum distance from the line connecting extremes.
 
 ---
@@ -382,6 +436,13 @@ def select_from_pareto(pareto_front, strategy='knee'):
 
 **WRONG** -- weighted sum:
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">weighted_fitness.py</span>
+</div>
+
 ```python
 def weighted_fitness(ind, X, y,
                      w1=0.7, w2=0.3):
@@ -392,9 +453,18 @@ def weighted_fitness(ind, X, y,
 ```
 
 </div>
+
+</div>
 <div>
 
 **RIGHT** -- true multi-objective:
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multi_obj_fitness.py</span>
+</div>
 
 ```python
 def multi_obj_fitness(ind, X, y):
@@ -404,6 +474,8 @@ def multi_obj_fitness(ind, X, y):
     # NSGA-II finds entire
     # Pareto front!
 ```
+
+</div>
 
 </div>
 </div>
@@ -437,6 +509,13 @@ def multi_obj_fitness(ind, X, y):
 
 **Fix:** Crowding distance preserves spread along the front.
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">diverse_mutation.py</span>
+</div>
+
 ```python
 # NSGA-II uses crowding distance automatically
 # When comparing same-rank individuals, prefer higher crowding distance
@@ -447,6 +526,8 @@ def diverse_mutation(individual, indpb=0.05):
         indpb *= 2  # Double mutation rate when diversity low
     return tools.mutFlipBit(individual, indpb=indpb)
 ```
+
+</div>
 
 ---
 

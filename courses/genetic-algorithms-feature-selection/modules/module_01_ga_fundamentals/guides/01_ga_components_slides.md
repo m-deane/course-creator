@@ -20,6 +20,8 @@ The complete framework: initialization, evaluation, selection, crossover, mutati
 
 ## The GA Framework
 
+![GA Lifecycle](ga_lifecycle.svg)
+
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -57,6 +59,13 @@ Not Selected: {f2, f5, f6, f8}             (4 features)
 
 ## Individual & Population
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">individual.py</span>
+</div>
+
 ```python
 @dataclass
 class Individual:
@@ -72,6 +81,15 @@ class Individual:
         return self.chromosome.sum()
 ```
 
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">population.py</span>
+</div>
+
 ```python
 class Population:
     @classmethod
@@ -84,6 +102,8 @@ class Population:
             individuals.append(Individual(chromosome=chromosome))
         return cls(individuals)
 ```
+
+</div>
 
 ---
 
@@ -108,6 +128,13 @@ flowchart LR
     C --> D["Best wins<br/>(lowest error)"]
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
+</div>
+
 ```python
 def tournament_selection(pop, k=3):
     """Select best from random tournament."""
@@ -117,6 +144,8 @@ def tournament_selection(pop, k=3):
     return min(participants, key=lambda x: x.fitness)
 ```
 
+</div>
+
 > Larger tournament = stronger pressure. See **02_selection_slides** for full comparison of all methods.
 
 ---
@@ -124,6 +153,13 @@ def tournament_selection(pop, k=3):
 <!-- Speaker notes: Roulette wheel selection assigns probability proportional to fitness. For minimization, we invert fitness so lower error gets higher probability. The epsilon (1e-6) prevents division by zero. Main weakness: one super-fit individual can dominate the entire selection. -->
 
 ## Roulette Wheel Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_selection.py</span>
+</div>
 
 ```python
 def roulette_selection(population):
@@ -136,6 +172,8 @@ def roulette_selection(population):
     return population.individuals[idx]
 ```
 
+</div>
+
 $$P(i) = \frac{f_{max} - f_i + \epsilon}{\sum_j (f_{max} - f_j + \epsilon)}$$
 
 ---
@@ -143,6 +181,13 @@ $$P(i) = \frac{f_{max} - f_i + \epsilon}{\sum_j (f_{max} - f_j + \epsilon)}$$
 <!-- Speaker notes: Rank selection solves roulette wheel's scaling sensitivity by using rank position instead of raw fitness values. This prevents a single dominant individual from taking over. The tradeoff: it ignores the actual magnitude of fitness differences between individuals. -->
 
 ## Rank Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rank_selection.py</span>
+</div>
 
 ```python
 def rank_selection(population):
@@ -154,6 +199,8 @@ def rank_selection(population):
     idx = np.random.choice(n, p=probs)
     return sorted_pop[idx]
 ```
+
+</div>
 
 > Robust to fitness outliers -- prevents super-fit individuals from dominating.
 
@@ -216,6 +263,13 @@ Each gene randomly from either parent.
 
 ## Crossover Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">uniform_crossover.py</span>
+</div>
+
 ```python
 def uniform_crossover(parent1, parent2,
                       crossover_prob=0.8, swap_prob=0.5):
@@ -229,6 +283,8 @@ def uniform_crossover(parent1, parent2,
 
     return Individual(child1_chrom), Individual(child2_chrom)
 ```
+
+</div>
 
 > Applied with probability $p_c \in [0.6, 0.95]$, typically 0.8
 
@@ -247,6 +303,13 @@ Maintaining diversity
 
 ## Bit-Flip Mutation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bit_flip_mutation.py</span>
+</div>
+
 ```python
 def bit_flip_mutation(individual, mutation_prob=0.01):
     """Flip each bit with given probability."""
@@ -262,7 +325,13 @@ def bit_flip_mutation(individual, mutation_prob=0.01):
     return mutant
 ```
 
-> Rule of thumb: $p_m = 1/n$ (one bit flip per individual on average)
+</div>
+
+<div class="callout-info">
+
+ℹ️ Rule of thumb: $p_m = 1/n$ (one bit flip per individual on average)
+
+</div>
 
 ---
 
@@ -274,6 +343,13 @@ def bit_flip_mutation(individual, mutation_prob=0.01):
 <div>
 
 **Adaptive** -- decreases over time:
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_mutation.py</span>
+</div>
 
 ```python
 def adaptive_mutation(individual,
@@ -289,9 +365,18 @@ def adaptive_mutation(individual,
 ```
 
 </div>
+
+</div>
 <div>
 
 **Swap** -- preserves feature count:
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">swap_mutation.py</span>
+</div>
 
 ```python
 def swap_mutation(individual,
@@ -310,6 +395,8 @@ def swap_mutation(individual,
             mutant.chromosome[on] = 1
     return mutant
 ```
+
+</div>
 
 </div>
 </div>
@@ -350,6 +437,13 @@ flowchart LR
 
 ## Replacement Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">generational_replacement.py</span>
+</div>
+
 ```python
 def generational_replacement(old_population, offspring, elitism=1):
     """Replace population, keeping best (elitism)."""
@@ -366,6 +460,8 @@ def steady_state_replacement(population, offspring):
     new_pop = combined_sorted[:len(population.individuals)]
     return Population(new_pop)
 ```
+
+</div>
 
 ---
 

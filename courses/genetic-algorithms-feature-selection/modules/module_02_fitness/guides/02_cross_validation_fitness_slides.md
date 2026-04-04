@@ -40,6 +40,13 @@ flowchart TD
 
 ## CVFitnessEvaluator Class
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cvfitnessevaluator.py</span>
+</div>
+
 ```python
 class CVFitnessEvaluator:
     def __init__(self, X, y, model, cv=5, metric='neg_mse',
@@ -71,11 +78,20 @@ class CVFitnessEvaluator:
         return fitness
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: This example demonstrates the evaluator in action. Three test chromosomes show the tradeoff: first 10 features (targeted), all 50 features (kitchen sink), and every 5th feature (sparse). The fitness scores reveal how the penalty_weight affects the ranking. Run this code live to show learners the numbers. -->
 
 ## Example Usage
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.datasets import make_regression
@@ -100,6 +116,8 @@ for chrom in test_chromosomes:
     fitness = evaluator.evaluate(chrom)
     print(f"Features: {sum(chrom):2d}, Fitness: {fitness:.4f}")
 ```
+
+</div>
 
 ---
 
@@ -138,6 +156,13 @@ flowchart LR
 
 ## TimeSeriesFitnessEvaluator
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">timeseriesfitnessevaluator.py</span>
+</div>
+
 ```python
 class TimeSeriesFitnessEvaluator(CVFitnessEvaluator):
     def __init__(self, X, y, model, n_splits=5, test_size=None,
@@ -162,11 +187,20 @@ class TimeSeriesFitnessEvaluator(CVFitnessEvaluator):
         }
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: This example shows how to use the time series evaluator with a 5-day gap. The gap=5 parameter ensures that the last 5 days of training data are not adjacent to the first day of test data, preventing autocorrelation leakage. The evaluate_with_details call returns rich diagnostics. High CV standard deviation is a warning sign that the feature subset is unstable across time periods. -->
 
 ## Time Series Example
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 ts_evaluator = TimeSeriesFitnessEvaluator(
@@ -187,6 +221,8 @@ print(f"CV Std:  {details['cv_std']:.4f}")
 print(f"Scores:  {[f'{s:.4f}' for s in details['cv_scores']]}")
 ```
 
+</div>
+
 > High CV standard deviation = unstable features. Prefer low-variance subsets.
 
 ---
@@ -203,6 +239,13 @@ Balancing accuracy vs. parsimony
 <!-- Speaker notes: The MultiObjectiveFitness class returns a tuple of two objectives: accuracy (CV score, maximize) and negative feature count (minimize features, so negate to maximize). The dominates method implements Pareto dominance: solution A dominates B if A is at least as good on all objectives and strictly better on at least one. get_pareto_front filters the population to keep only non-dominated solutions. -->
 
 ## Multi-Objective Evaluator
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multiobjectivefitness.py</span>
+</div>
 
 ```python
 class MultiObjectiveFitness:
@@ -233,6 +276,8 @@ class MultiObjectiveFitness:
                             for j in range(len(objectives)) if j != i)]
         return [population[i] for i, _ in pareto], [obj for _, obj in pareto]
 ```
+
+</div>
 
 ---
 
@@ -287,6 +332,13 @@ flowchart TD
 
 ## L1/L2 Regularized Fitness
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regularizedfitness.py</span>
+</div>
+
 ```python
 class RegularizedFitness:
     def __init__(self, X, y, cv=5, alpha_l1=0.01, alpha_l2=0.01):
@@ -318,11 +370,20 @@ class RegularizedFitness:
         return cv_score - l1 - l2
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: The EfficientFitnessEvaluator implements LRU (Least Recently Used) caching with a configurable maximum size. The OrderedDict maintains insertion order, and move_to_end on cache hits implements the LRU policy. When the cache exceeds its size limit, the oldest (least recently used) entry is evicted with popitem(last=False). The stats dictionary tracks evaluations, cache hits, and misses for monitoring. -->
 
 ## Efficient Caching
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">efficientfitnessevaluator.py</span>
+</div>
 
 ```python
 class EfficientFitnessEvaluator:
@@ -356,6 +417,8 @@ class EfficientFitnessEvaluator:
             self.cache.popitem(last=False)  # Evict oldest
         return fitness
 ```
+
+</div>
 
 ---
 

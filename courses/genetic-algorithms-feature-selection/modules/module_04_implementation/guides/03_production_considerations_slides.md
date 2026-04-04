@@ -68,6 +68,13 @@ $$S = \frac{T_{\text{serial}}}{T_{\text{parallel}}} \approx \frac{W}{1 + \frac{W
 
 ## Parallel Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">parallelga.py</span>
+</div>
+
 ```python
 from joblib import Parallel, delayed
 import multiprocessing as mp
@@ -100,6 +107,8 @@ class ParallelGA:
             self.fitness_cache[key] = fitness
         return fitness
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code showing joblib for parallelization and SHA-256 hashing for fitness caching. Highlight the cache hit counter for monitoring. Point out that n_jobs=-1 uses all available CPU cores automatically. -->
 
@@ -138,6 +147,13 @@ Over 5000 evaluations with 20% hit rate → **1000 evaluations saved**.
 
 ## Reproducibility Management
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">reproduciblega.py</span>
+</div>
+
 ```python
 class ReproducibleGA:
     def __init__(self, random_state=42):
@@ -168,6 +184,8 @@ class ReproducibleGA:
             pickle.dump(state, f)
 ```
 
+</div>
+
 <!-- Speaker notes: Emphasize that reproducibility requires seeding ALL randomness sources: Python's random module, NumPy, and any ML framework like TensorFlow or PyTorch. The save_state method enables checkpointing so long runs can be resumed after failures. -->
 
 ---
@@ -193,6 +211,13 @@ Root causes:                      Solutions:
 ---
 
 ## Sklearn Pipeline Integration
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gafeatureselector.py</span>
+</div>
 
 ```python
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -226,6 +251,8 @@ pipeline = Pipeline([
 ])
 pipeline.fit(X_train, y_train)
 ```
+
+</div>
 
 <!-- Speaker notes: This is the production-ready integration pattern. By implementing BaseEstimator and TransformerMixin, the GA feature selector plugs directly into sklearn pipelines with fit/transform, cross-validation, and grid search. This is the standard way to productionize custom feature selection. -->
 
@@ -267,6 +294,16 @@ Total potential speedup: ~28x
 ---
 
 ## Key Takeaways
+
+<div class="flow">
+<div class="flow-step mint">Parallel</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Cache</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Reproduce</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Integrate</div>
+</div>
 
 | Production Need | Solution |
 |----------------|----------|

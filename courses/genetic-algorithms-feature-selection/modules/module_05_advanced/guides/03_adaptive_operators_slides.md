@@ -104,6 +104,13 @@ Low diversity → high mutation (re-exploration)
 
 ## Strategy 3: Feedback-Based Adaptation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adapt_feedback.py</span>
+</div>
+
 ```python
 def adapt_feedback(self, best_fitness):
     self.improvement_history.append(best_fitness)
@@ -124,6 +131,8 @@ def adapt_feedback(self, best_fitness):
                 self.min_mutation_rate
             )
 ```
+
+</div>
 
 ```
 Stagnation detected → mutation rate ↑ → explore more → find new region
@@ -188,6 +197,13 @@ flowchart TD
 
 ## Self-Adaptive Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">selfadaptivega.py</span>
+</div>
+
 ```python
 class SelfAdaptiveGA:
     def _create_individual(self):
@@ -213,6 +229,8 @@ class SelfAdaptiveGA:
         child = self._mutate_chromosome(child)
         # 3. Selection on FITNESS (parameters evolve implicitly)
 ```
+
+</div>
 
 <!-- Speaker notes: Highlight the critical ordering: mutate parameters FIRST, then mutate the chromosome using those new parameters. This ensures that the parameters used to create the offspring are the ones that get passed along. The clipping prevents parameters from drifting to extreme values. -->
 
@@ -307,6 +325,16 @@ Gen 11-15: SR = 0.22 (approximately 0.20) → keep p_m (balanced)
 ---
 
 ## Key Takeaways
+
+<div class="flow">
+<div class="flow-step mint">Fixed</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Scheduled</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Feedback</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Self-Adaptive</div>
+</div>
 
 | Strategy | Complexity | Performance | Tuning Needed |
 |----------|-----------|-------------|---------------|

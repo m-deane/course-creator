@@ -85,7 +85,11 @@ VIF > 10 for all lags!
 → Numerical instability, inflated variance
 ```
 
-> Rule of thumb: VIF > 10 indicates problematic multicollinearity.
+<div class="callout-info">
+
+ℹ️ Rule of thumb: VIF > 10 indicates problematic multicollinearity.
+
+</div>
 
 ---
 
@@ -113,6 +117,13 @@ GA can automatically discover these patterns without domain knowledge.
 <!-- Speaker notes: The lag selection fitness function adds a VIF penalty to the standard walk-forward evaluation. Three penalties combine: prediction error (from walk-forward CV), complexity penalty (proportional to number of selected features), and VIF penalty (proportional to the number of features with VIF above the threshold). The VIF penalty discourages selecting redundant lag features that introduce multicollinearity. -->
 
 ## GA Fitness for Lag Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">lag_selection_fitness.py</span>
+</div>
 
 ```python
 def lag_selection_fitness(
@@ -145,6 +156,8 @@ def lag_selection_fitness(
     return avg_mse + complexity_penalty + vif_penalty
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Lag-aware mutation respects the group structure of lag features. Standard mutation flips individual bits randomly, which can create inconsistent lag patterns (e.g., selecting lag 2 of variable X but not lag 1). Lag-aware mutation operates on entire variable groups, flipping all lags of a variable together. This produces more coherent mutations and converges faster because it respects the natural structure of the feature space. -->
@@ -164,6 +177,13 @@ Groups: [var1  ] [var2  ] [var3  ]
 After:  [1,1,0, 1,0,1, 1,0,0]   # Entire var2 group flipped
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">lag_aware_mutation.py</span>
+</div>
+
 ```python
 def lag_aware_mutation(chromosome, lag_groups, mutation_rate=0.1):
     mutant = chromosome.copy()
@@ -174,11 +194,20 @@ def lag_aware_mutation(chromosome, lag_groups, mutation_rate=0.1):
     return mutant
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: The identify_significant_lags function uses ACF and PACF to find statistically significant lags. The 95% confidence interval is 1.96/sqrt(T). Lags where the ACF or PACF exceeds this threshold are candidates for inclusion. Using both ACF and PACF gives complementary information: ACF identifies general dependence, PACF identifies direct dependence. These significant lags form the candidate set for the GA search space. -->
 
 ## Identifying Significant Lags
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">identify_significant_lags.py</span>
+</div>
 
 ```python
 def identify_significant_lags(series, max_lag=40, method='both'):
@@ -200,6 +229,8 @@ def identify_significant_lags(series, max_lag=40, method='both'):
     return results
 ```
 
+</div>
+
 Significant lags: $|\rho(k)| > \frac{1.96}{\sqrt{T}}$ (95% confidence)
 
 ---
@@ -220,6 +251,13 @@ flowchart TD
     F --> G["GA selects from<br/>non-redundant lags"]
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">remove_redundant_lags.py</span>
+</div>
+
 ```python
 def remove_redundant_lags(X, threshold=0.95):
     """Remove highly correlated lag features."""
@@ -229,11 +267,23 @@ def remove_redundant_lags(X, threshold=0.95):
     return X.drop(columns=to_drop)
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: This ASCII pipeline shows the complete lag feature selection workflow from start to finish. Step 1 identifies candidate lags using ACF/PACF. Step 2 creates the feature matrix. Step 3 removes multicollinear features (VIF > 10). Step 4 runs the GA with lag-aware operators and VIF penalty. Step 5 uses walk-forward validation. Step 6 produces the final selected lag features. This is the reference workflow for lag feature selection. -->
 
 ## Complete Workflow
+
+<div class="flow">
+<div class="flow-step blue">ACF/PACF</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Lag Matrix</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">VIF Filter</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">GA Selection</div>
+</div>
 
 ```
 LAG FEATURE SELECTION PIPELINE

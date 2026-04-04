@@ -41,6 +41,13 @@ flowchart LR
 
 ## Basic CV Fitness
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cv_fitness.py</span>
+</div>
+
 ```python
 def cv_fitness(chromosome, X, y, model_fn, cv_folds=5,
                scoring='neg_mean_squared_error'):
@@ -59,13 +66,26 @@ def cv_fitness(chromosome, X, y, model_fn, cv_folds=5,
     return -scores.mean()  # Positive = bad (we minimize)
 ```
 
-> Never evaluate on training data alone -- always cross-validate.
+</div>
+
+<div class="callout-key">
+
+🔑 Never evaluate on training data alone -- always cross-validate.
+
+</div>
 
 ---
 
 <!-- Speaker notes: Multi-objective fitness separates accuracy and complexity into distinct objectives. The weighted sum approach (top function) collapses both into a single number. The Pareto approach (bottom function) returns a tuple, allowing NSGA-II to find the full tradeoff frontier. The Pareto approach is strictly more informative but requires a multi-objective optimizer. -->
 
 ## Multi-Objective Fitness
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multi_objective_fitness.py</span>
+</div>
 
 ```python
 def multi_objective_fitness(chromosome, X, y, model_fn,
@@ -96,6 +116,8 @@ def pareto_fitness(chromosome, X, y, model_fn):
                               cv=5, scoring='neg_mean_squared_error')
     return (-scores.mean(), len(selected))  # (error, count)
 ```
+
+</div>
 
 ---
 
@@ -132,13 +154,24 @@ flowchart LR
     H --> I
 ```
 
-> Training window always precedes test window -- no lookahead bias.
+<div class="callout-key">
+
+🔑 Training window always precedes test window -- no lookahead bias.
+
+</div>
 
 ---
 
 <!-- Speaker notes: The walk-forward implementation uses sklearn's TimeSeriesSplit for the fold structure. Key details: the test_size parameter controls how many samples are in each test window, and the function manually trains and predicts rather than using cross_val_score to have full control over the temporal splits. The feature penalty is added as a ratio to keep it scale-invariant. -->
 
 ## Walk-Forward Implementation
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_fitness.py</span>
+</div>
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit
@@ -166,11 +199,20 @@ def walk_forward_fitness(chromosome, X, y, model_fn,
     return np.mean(errors)
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Expanding window fitness is an alternative to walk-forward that explicitly controls the minimum training size and step size. The training window starts at min_train_size and grows by step_size each iteration. This gives more control but requires more parameters. Use expanding window when you want to specify exact window sizes rather than number of splits. -->
 
 ## Expanding Window Fitness
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">expanding_window_fitness.py</span>
+</div>
 
 ```python
 def expanding_window_fitness(chromosome, X, y, model_fn,
@@ -200,6 +242,8 @@ def expanding_window_fitness(chromosome, X, y, model_fn,
 
     return np.mean(errors)
 ```
+
+</div>
 
 ---
 
@@ -234,6 +278,13 @@ flowchart TD
 
 ## Nested CV Implementation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nested_cv_fitness.py</span>
+</div>
+
 ```python
 def nested_cv_fitness(chromosome, X, y, model_fn,
                       outer_cv=5, inner_cv=3):
@@ -260,11 +311,20 @@ def nested_cv_fitness(chromosome, X, y, model_fn,
     return np.mean(outer_scores)
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Regularized fitness applies double regularization: model-level (Ridge regression with alpha) and selection-level (feature count penalty). The multiplicative penalty (1 + complexity_penalty) is scale-invariant -- it increases the base error by a percentage proportional to the fraction of features selected. This creates a smoother fitness landscape that aids GA convergence. -->
 
 ## Regularized Fitness
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regularized_fitness.py</span>
+</div>
 
 ```python
 def regularized_fitness(chromosome, X, y, model_fn,
@@ -287,6 +347,8 @@ def regularized_fitness(chromosome, X, y, model_fn,
     return base_error * (1 + complexity_penalty)
 ```
 
+</div>
+
 > Double regularization: model-level (Ridge) + selection-level (feature penalty).
 
 ---
@@ -294,6 +356,13 @@ def regularized_fitness(chromosome, X, y, model_fn,
 <!-- Speaker notes: Bootstrap fitness uses out-of-bag (OOB) samples for evaluation. Each bootstrap sample includes about 63% of the data (drawn with replacement), leaving 37% as OOB for testing. This is more robust than single-split evaluation because each bootstrap gives a different training set. The minimum 10 OOB samples check prevents unreliable estimates from very small OOB sets. -->
 
 ## Robust Estimation: Bootstrap
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bootstrap_fitness.py</span>
+</div>
 
 ```python
 def bootstrap_fitness(chromosome, X, y, model_fn, n_bootstrap=10):
@@ -320,11 +389,20 @@ def bootstrap_fitness(chromosome, X, y, model_fn, n_bootstrap=10):
     return np.mean(errors) if errors else float('inf')
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Fitness with uncertainty returns both the mean error and an upper confidence bound (UCB). The UCB is the pessimistic estimate: mean + 1.96 standard errors. Using UCB for selection prefers consistently good feature subsets over ones that are occasionally great but highly variable. This is risk-averse selection -- important in financial applications where stability matters more than occasional peaks. -->
 
 ## Fitness with Uncertainty
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fitness_with_uncertainty.py</span>
+</div>
 
 ```python
 def fitness_with_uncertainty(chromosome, X, y, model_fn, cv_folds=10):
@@ -346,6 +424,8 @@ def fitness_with_uncertainty(chromosome, X, y, model_fn, cv_folds=10):
     return mean_error, ucb
 ```
 
+</div>
+
 > Use UCB for risk-averse selection -- prefer consistently good over occasionally great.
 
 ---
@@ -353,6 +433,13 @@ def fitness_with_uncertainty(chromosome, X, y, model_fn, cv_folds=10):
 <!-- Speaker notes: Caching is essential for GA efficiency. The same chromosome often appears multiple times across generations (through crossover producing duplicates, or elitism carrying forward the same individual). The cache converts the chromosome to a hashable tuple and stores the fitness. This saves 20-40% of evaluations in a typical GA run. The eval_count attribute tracks how many unique evaluations were performed. -->
 
 ## Caching Fitness Evaluations
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cachedfitnessevaluator.py</span>
+</div>
 
 ```python
 class CachedFitnessEvaluator:
@@ -370,6 +457,8 @@ class CachedFitnessEvaluator:
             )
         return self.cache[key]
 ```
+
+</div>
 
 > Same chromosome = same fitness. Cache saves 20-40% of evaluations in a typical GA run.
 

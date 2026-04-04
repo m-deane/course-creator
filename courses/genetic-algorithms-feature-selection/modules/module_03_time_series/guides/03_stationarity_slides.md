@@ -64,6 +64,13 @@ flowchart TD
 
 ## The Spurious Correlation Problem
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Non-stationary features
 f1 = np.random.randn(500).cumsum()      # Random walk
@@ -79,6 +86,8 @@ Trend:        correlation =  0.72  ← SPURIOUS!
 AR1:          correlation =  0.48  ← REAL
 Seasonal:     correlation =  0.35  ← REAL
 ```
+
+</div>
 
 GA might select Random_Walk and Trend because they have **higher** correlation — but these are meaningless coincidences from shared trends!
 
@@ -136,6 +145,13 @@ flowchart TD
 
 ## Transformation Code
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">make_stationary.py</span>
+</div>
+
 ```python
 def make_stationary(series, method='diff', **kwargs):
     """Transform series to achieve stationarity."""
@@ -161,11 +177,20 @@ def auto_make_stationary(series, max_diff=2, alpha=0.05):
     return transformed, {'method': 'diff', 'order': max_diff}
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: The stationarity penalty in the fitness function discourages the GA from selecting non-stationary features. Each selected feature is tested with ADF, and those that fail the stationarity test incur a penalty. This steers the GA toward stationary features that have genuine predictive power. The comparison at the bottom shows the dramatic difference: without the penalty, the GA selects spurious features; with the penalty, it selects the correct stationary features. -->
 
 ## GA Fitness with Stationarity Penalty
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stationary_feature_selection_fitness.py</span>
+</div>
 
 ```python
 def stationary_feature_selection_fitness(
@@ -191,6 +216,8 @@ def stationary_feature_selection_fitness(
     return avg_mse + penalty
 ```
 
+</div>
+
 ```
 Feature Selection Comparison:
 Without stationarity penalty: selects {Random_Walk, Trend, AR1}  ✗
@@ -202,6 +229,13 @@ With stationarity penalty:    selects {AR1, Seasonal, White_Noise}  ✓
 <!-- Speaker notes: The prepare_stationary_features function transforms ALL features to stationary versions before running the GA. It tests each feature individually, applies auto-differencing to non-stationary ones, and returns the transformed dataset along with transformation metadata. The padding with NaN ensures length alignment, and dropna removes rows with missing values from the differencing. This preprocessing step should be done before GA selection. -->
 
 ## Preparing Stationary Features
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">prepare_stationary_features.py</span>
+</div>
 
 ```python
 def prepare_stationary_features(X):
@@ -226,6 +260,8 @@ def prepare_stationary_features(X):
 
     return X_stationary.dropna(), transform_info
 ```
+
+</div>
 
 ---
 
@@ -296,6 +332,14 @@ Correlation with y: 0.72 (SPURIOUS)
 <!-- Speaker notes: These takeaways and the decision flow are the practical reference for this topic. Always test stationarity before feature selection. Use both ADF and KPSS for complete diagnosis. Differencing handles most cases. Penalize non-stationary features in the fitness function. Consider cointegration for the advanced case where non-stationary features can be useful if they share a common stochastic trend with the target. -->
 
 ## Key Takeaways
+
+<div class="flow">
+<div class="flow-step blue">Test Stationarity</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Transform if Needed</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">GA Feature Selection</div>
+</div>
 
 | Principle | Detail |
 |-----------|--------|

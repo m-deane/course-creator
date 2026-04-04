@@ -11,6 +11,11 @@ Time series feature selection has unique challenges:
 3. **Non-stationarity** - feature relationships may change over time
 4. **Limited data** - can't simply collect more samples
 
+<div class="callout-insight">
+
+💡 **Key Insight:** The single most important rule in time series feature selection: never let future information leak into training. Standard k-fold cross-validation violates this by design. Always use walk-forward or temporal validation strategies.
+
+</div>
 
 ![Walk-Forward Timeline](./walk_forward_timeline.svg)
 
@@ -148,6 +153,12 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
 ```
 
 ## Handling Non-Stationarity
+
+<div class="callout-warning">
+
+⚠️ **Warning:** Features selected on a bull market period may be useless during a recession. Rolling feature selection across different market regimes reveals which features are robust versus regime-specific.
+
+</div>
 
 ### Rolling Feature Selection
 

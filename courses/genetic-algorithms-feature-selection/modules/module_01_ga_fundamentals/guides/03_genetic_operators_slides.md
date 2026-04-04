@@ -81,6 +81,13 @@ $$x'_i = \begin{cases} 1 - x_i & \text{with probability } p_m \\ x_i & \text{oth
 
 ## Single-Point Crossover
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">single_point_crossover.py</span>
+</div>
+
 ```python
 def single_point_crossover(parent1, parent2, crossover_prob=0.8):
     if np.random.random() > crossover_prob:
@@ -97,6 +104,8 @@ def single_point_crossover(parent1, parent2, crossover_prob=0.8):
     return BinaryIndividual(child1), BinaryIndividual(child2)
 ```
 
+</div>
+
 ```
 P1: [1 1 1 1 1 | 0 0 0 0 0]     C1: [1 1 1 1 1 | 1 1 1 1 1]
 P2: [0 0 0 0 0 | 1 1 1 1 1]     C2: [0 0 0 0 0 | 0 0 0 0 0]
@@ -108,6 +117,13 @@ P2: [0 0 0 0 0 | 1 1 1 1 1]     C2: [0 0 0 0 0 | 0 0 0 0 0]
 <!-- Speaker notes: Two-point crossover swaps a segment between the two cut points. It produces more mixing than single-point because the swapped region can be anywhere. The implementation uses sorted random points to ensure point1 < point2. Still has some positional bias since genes within the swapped segment travel together. -->
 
 ## Two-Point Crossover
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">two_point_crossover.py</span>
+</div>
 
 ```python
 def two_point_crossover(parent1, parent2, crossover_prob=0.8):
@@ -126,6 +142,8 @@ def two_point_crossover(parent1, parent2, crossover_prob=0.8):
     return BinaryIndividual(child1), BinaryIndividual(child2)
 ```
 
+</div>
+
 ```
 P1: [1 1 | 1 1 1 0 | 0 0 0 0]   C1: [1 1 | 0 0 0 1 | 0 0 0 0]
 P2: [0 0 | 0 0 0 1 | 1 1 1 1]   C2: [0 0 | 1 1 1 0 | 1 1 1 1]
@@ -137,6 +155,13 @@ P2: [0 0 | 0 0 0 1 | 1 1 1 1]   C2: [0 0 | 1 1 1 0 | 1 1 1 1]
 <!-- Speaker notes: Uniform crossover is the recommended default for feature selection. Each gene is independently chosen from either parent with probability swap_prob (typically 0.5). This gives maximum mixing with zero positional bias -- critical when feature ordering is arbitrary, which is always the case in feature selection. The NumPy implementation with np.where is very efficient. -->
 
 ## Uniform Crossover (Best for Feature Selection)
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">uniform_crossover.py</span>
+</div>
 
 ```python
 def uniform_crossover(parent1, parent2,
@@ -152,6 +177,8 @@ def uniform_crossover(parent1, parent2,
 
     return BinaryIndividual(child1), BinaryIndividual(child2)
 ```
+
+</div>
 
 > **Why best for FS?** No positional bias, maximum mixing, features can be reordered.
 
@@ -180,6 +207,13 @@ graph TD
 
 ## Scattered (Multi-Point) Crossover
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">scattered_crossover.py</span>
+</div>
+
 ```python
 def scattered_crossover(parent1, parent2, crossover_prob=0.8,
                         n_points=None):
@@ -207,6 +241,8 @@ def scattered_crossover(parent1, parent2, crossover_prob=0.8,
     return BinaryIndividual(child1), BinaryIndividual(child2)
 ```
 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -219,6 +255,13 @@ def scattered_crossover(parent1, parent2, crossover_prob=0.8,
 <!-- Speaker notes: Bit-flip mutation is the standard for binary chromosomes. The rule of thumb p_m = 1/n ensures roughly one bit flips per individual. The while loop enforcing minimum features is critical -- without it, mutation can produce all-zero chromosomes that crash the fitness function. Setting fitness to None forces re-evaluation of mutated individuals. -->
 
 ## Bit-Flip Mutation
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bit_flip_mutation.py</span>
+</div>
 
 ```python
 def bit_flip_mutation(individual, mutation_rate=None, min_features=1):
@@ -244,13 +287,26 @@ def bit_flip_mutation(individual, mutation_rate=None, min_features=1):
     return mutant
 ```
 
-> **Rule of thumb**: $p_m = 1/n$ ensures ~1 bit flip per individual.
+</div>
+
+<div class="callout-info">
+
+ℹ️ **Rule of thumb**: $p_m = 1/n$ ensures ~1 bit flip per individual.
+
+</div>
 
 ---
 
 <!-- Speaker notes: Swap mutation is specifically designed for feature selection. It turns one feature off and another on, keeping the total count constant. This is useful when you want to explore different combinations of the same number of features -- it avoids the problem of gradually growing or shrinking the feature set. The ASCII diagram shows the swap operation clearly. -->
 
 ## Swap Mutation (Preserves Feature Count)
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">swap_mutation.py</span>
+</div>
 
 ```python
 def swap_mutation(individual, n_swaps=1):
@@ -268,6 +324,8 @@ def swap_mutation(individual, n_swaps=1):
     return mutant
 ```
 
+</div>
+
 ```
 Before: [1, 0, 1, 1, 0, 0]  (3 features)
          ^off         ^on
@@ -279,6 +337,13 @@ After:  [0, 0, 1, 1, 0, 1]  (3 features -- same count!)
 <!-- Speaker notes: Adaptive mutation schedules change the mutation rate over time. Three common schedules: linear (simple decay), exponential (fast initial decay), and cosine (smooth with a restart-like profile). All start with high rates for exploration and decrease for exploitation. The Mermaid diagram shows the general trend from exploration to exploitation. -->
 
 ## Adaptive Mutation Schedules
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_mutation.py</span>
+</div>
 
 ```python
 def adaptive_mutation(individual, generation, max_generations,
@@ -295,6 +360,8 @@ def adaptive_mutation(individual, generation, max_generations,
 
     return bit_flip_mutation(individual, mutation_rate=rate)
 ```
+
+</div>
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -328,6 +395,13 @@ Crossover child:      [1,1,*,*,1,1,0,0]  (both blocks!)
 
 ## Combined Operator Pipeline
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">apply_genetic_operators.py</span>
+</div>
+
 ```python
 def apply_genetic_operators(parent1, parent2,
                             crossover_type='uniform',
@@ -350,6 +424,8 @@ def apply_genetic_operators(parent1, parent2,
     return child1, child2
 ```
 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -363,6 +439,13 @@ def apply_genetic_operators(parent1, parent2,
 
 ## Pitfall 1: Mutation Rate Too High
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # BAD -- 50% of bits flip! Destroys good solutions.
 mutant = bit_flip_mutation(individual, mutation_rate=0.5)
@@ -372,9 +455,18 @@ n = len(individual.chromosome)
 mutant = bit_flip_mutation(individual, mutation_rate=1/n)
 ```
 
+</div>
+
 **Test**: Average Hamming distance between parent and child should be ~1-2.
 
 ## Pitfall 2: Wrong Crossover for Feature Selection
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # BAD -- positional bias irrelevant for unordered features
@@ -384,11 +476,20 @@ child1, child2 = single_point_crossover(p1, p2)
 child1, child2 = uniform_crossover(p1, p2)
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: The third pitfall is forgetting to enforce the minimum feature constraint after mutation. Without it, mutation can produce chromosomes with zero selected features, which crashes the fitness function when you try to train a model on zero features. The good version uses the constraint enforcement built into the bit_flip_mutation function. Always enforce constraints after every genetic operation. -->
 
 ## Pitfall 3: No Constraint Enforcement
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bad_mutation.py</span>
+</div>
 
 ```python
 # BAD -- might create empty solution
@@ -405,6 +506,8 @@ def good_mutation(individual, min_features=1):
     # Constraint enforcement built into bit_flip_mutation
     return mutant
 ```
+
+</div>
 
 ---
 

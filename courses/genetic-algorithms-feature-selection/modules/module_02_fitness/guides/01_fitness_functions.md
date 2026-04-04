@@ -120,6 +120,14 @@ def pareto_fitness(
     )
 ```
 
+![Feature Selection Pipeline](./feature_selection_pipeline.svg)
+
+<div class="callout-warning">
+
+⚠️ **Warning:** The parsimony penalty weight `lambda` controls the accuracy-complexity tradeoff. Too small and the GA selects all features; too large and it selects too few. Start with `lambda = 0.01` and tune via validation.
+
+</div>
+
 ## Time Series Specific Fitness
 
 ### Walk-Forward Validation

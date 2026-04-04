@@ -22,6 +22,8 @@ Temporal validation, rolling selection, and regime awareness
 
 Time series feature selection has unique constraints that violate standard ML assumptions:
 
+![Walk-Forward Timeline](walk_forward_timeline.svg)
+
 | Challenge | Standard ML | Time Series |
 |-----------|------------|-------------|
 | **Data ordering** | i.i.d. samples | Temporal dependence |
@@ -63,6 +65,13 @@ Fold 3: [TRAIN TRAIN TRAIN TRAIN TRAIN] gap [TEST]
 
 ## Walk-Forward Validation
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_split.py</span>
+</div>
+
 ```python
 def walk_forward_split(
     n_samples: int,
@@ -85,6 +94,8 @@ def walk_forward_split(
 
     return splits
 ```
+
+</div>
 
 ---
 
@@ -109,17 +120,33 @@ flowchart LR
 
 Purging removes samples near train/test boundaries to prevent autocorrelation leakage.
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Purge window removes samples within 10 steps of boundary
 train_idx.extend(range(0, max(0, test_start - purge_window)))
 train_idx.extend(range(min(n_samples, test_end + purge_window), n_samples))
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: This GA fitness function uses proper temporal validation. The create_timeseries_fitness function creates a closure that captures the walk-forward splits. Each individual is evaluated by training a model on each temporal training set and testing on the corresponding test set. The feature penalty is normalized by chromosome length to be scale-invariant. The splits are computed once and reused for all evaluations. -->
 
 ## GA Fitness with Time Series CV
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_timeseries_fitness.py</span>
+</div>
 
 ```python
 def create_timeseries_fitness(X, y, n_splits=5, gap=5):
@@ -146,6 +173,8 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
 
     return fitness_function
 ```
+
+</div>
 
 ---
 
@@ -183,6 +212,13 @@ Run GA on rolling windows to track how selected features change over time.
 
 ## Feature Stability Analysis
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_feature_stability.py</span>
+</div>
+
 ```python
 def analyze_feature_stability(rolling_results, n_features):
     """Analyze stability of selected features across windows."""
@@ -201,6 +237,8 @@ def analyze_feature_stability(rolling_results, n_features):
         'most_stable': np.argsort(selection_frequency)[::-1][:10].tolist()
     }
 ```
+
+</div>
 
 ```
 Feature Stability Over Rolling Windows:
@@ -230,6 +268,13 @@ flowchart LR
     F --> G["Features robust<br/>across regimes"]
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_aware_fitness.py</span>
+</div>
+
 ```python
 def regime_aware_fitness(X, y, regime_labels):
     """Evaluate feature subsets across market regimes."""
@@ -243,6 +288,8 @@ def regime_aware_fitness(X, y, regime_labels):
         return (np.mean(regime_errors),)
     return fitness_function
 ```
+
+</div>
 
 ---
 
@@ -261,6 +308,13 @@ Horizon 3 (20-day):  Features {A, D, E}
                          across all horizons
 ```
 
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multi_horizon_fitness.py</span>
+</div>
+
 ```python
 def multi_horizon_fitness(X, y_dict, horizon_weights=None):
     """Select features across multiple forecast horizons."""
@@ -274,11 +328,20 @@ def multi_horizon_fitness(X, y_dict, horizon_weights=None):
     return fitness_function
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: Lag feature creation expands the feature space by creating lagged versions of each feature. With 3 original features and max_lag=3, you get 12 features total (3 original + 9 lagged). The GA then selects from this expanded feature space. The np.roll function shifts the data, and rows with NaN (from the shift) are removed. The key insight: the GA can discover which historical time steps are most predictive without manual lag specification. -->
 
 ## Lag Feature Handling
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_lag_features.py</span>
+</div>
 
 ```python
 def create_lag_features(X, feature_names, max_lag=5):
@@ -295,6 +358,8 @@ def create_lag_features(X, feature_names, max_lag=5):
     valid_rows = ~np.any(np.isnan(X_lagged), axis=1)
     return X_lagged[valid_rows], lag_names, valid_rows
 ```
+
+</div>
 
 ```
 Original features:  [price, volume, sentiment]

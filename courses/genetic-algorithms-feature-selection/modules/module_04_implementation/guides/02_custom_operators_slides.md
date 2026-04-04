@@ -22,6 +22,7 @@ Crossover, mutation, and selection for feature selection
 Standard operators treat all genes equally. Features have **structure**:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Feature Structure] --> B["Feature Groups<br/>(one-hot categories)"]
     A --> C["Hierarchical<br/>(interactions need bases)"]
@@ -29,9 +30,6 @@ flowchart TD
     B --> E["Group-Aware Crossover"]
     C --> F["Hierarchical Crossover"]
     D --> G["Swap Mutation"]
-    style E fill:#6f9
-    style F fill:#6f9
-    style G fill:#6f9
 ```
 
 Custom operators that respect structure converge **2-5x faster** than standard operators.
@@ -166,11 +164,11 @@ def importance_weighted_mutation(individual, importances, base_rate=0.01):
 Highly correlated features should be mutated together:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Mutate Feature i"] --> B{"Any feature j with<br/>|corr(i,j)| > 0.7?"}
     B -->|Yes| C["Also flip j<br/>with 50% probability"]
     B -->|No| D["Standard mutation"]
-    style C fill:#ff9
 ```
 
 ```python
@@ -273,6 +271,7 @@ Standard selection: pick the fittest (may lose diversity).
 Diversity-preserving: balance fitness with uniqueness.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Population"] --> B["Compute Fitness"]
     A --> C["Compute Pairwise<br/>Hamming Distance"]
@@ -280,7 +279,6 @@ flowchart LR
     C --> D
     D --> E["Combined Score:<br/>(1-w)×fitness + w×shared"]
     E --> F["Select Top N"]
-    style F fill:#6f9
 ```
 
 ```

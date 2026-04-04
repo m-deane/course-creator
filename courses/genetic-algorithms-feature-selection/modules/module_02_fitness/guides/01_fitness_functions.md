@@ -1,14 +1,25 @@
 # Fitness Function Design
 
+> **Reading time:** ~5 min | **Module:** 2 — Fitness Functions | **Prerequisites:** Module 1 GA Fundamentals
+
 ## The Critical Component
 
 The fitness function determines GA success. For feature selection:
 
 $$\text{fitness}(\mathbf{x}) = \text{model\_error}(\mathbf{x}) + \lambda \cdot \text{complexity}(\mathbf{x})$$
 
+
+![Fitness Landscape](./fitness_landscape.svg)
+
 ## Basic Fitness Functions
 
 ### Cross-Validation Error
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cv_fitness.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -46,6 +57,8 @@ def cv_fitness(
     # Return negative MSE (we minimize, so positive = bad)
     return -scores.mean()
 ```
+</div>
+
 
 ### Multi-Objective Fitness
 
@@ -416,6 +429,9 @@ class CachedFitnessEvaluator:
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **Cross-validation is essential** - never evaluate on training data alone
 
 2. **Time series requires temporal splits** - use walk-forward or expanding window
@@ -425,3 +441,7 @@ class CachedFitnessEvaluator:
 4. **Nested CV prevents bias** - separate evaluation from selection
 
 5. **Cache evaluations** - same chromosome should return same fitness
+</div>
+---
+
+**Next:** [Companion Slides](./01_fitness_functions_slides.md) | [Notebook](../notebooks/01_fitness_functions.ipynb)

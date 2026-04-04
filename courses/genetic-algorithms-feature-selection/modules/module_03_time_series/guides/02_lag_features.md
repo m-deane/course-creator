@@ -1,10 +1,18 @@
 # Lag Feature Selection for Time Series
 
+> **Reading time:** ~15 min | **Module:** 3 — Time Series | **Prerequisites:** 01 Walk-Forward Validation
+
 ## In Brief
 
 Lag features capture temporal dependencies by including past values of variables as predictors. Genetic algorithms for lag feature selection must balance autocorrelation benefits against multicollinearity risks while respecting the temporal ordering constraint that predictions cannot use future information.
 
-> 💡 **Key Insight:** Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
+<div class="callout-insight">
+Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
+</div>
+
+
+
+![Walk-Forward Timeline](./walk_forward_timeline.svg)
 
 ## Formal Definition
 
@@ -66,6 +74,12 @@ Imagine predicting tomorrow's temperature. Yesterday's temperature is obviously 
 ## Code Implementation
 
 ### Lag Feature Engineering
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_lag_features.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -292,6 +306,8 @@ def identify_significant_lags(
 
     return results
 ```
+</div>
+
 
 ### Multicollinearity Detection and Handling
 
@@ -743,6 +759,10 @@ lags = list(range(1, 8)) + [30, 60, 90, 365]  # Daily data
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Prerequisites
 - Autocorrelation concepts (ACF, PACF)
 - Walk-forward validation
@@ -908,3 +928,6 @@ def analyze_lag_importance(
 3. **Multicollinearity management essential** - penalize high VIF in fitness
 4. **Lag selection depends on forecast horizon** - different lags optimal for different horizons
 5. **Domain knowledge invaluable** - known cycles, reporting periods, etc.
+---
+
+**Next:** [Companion Slides](./02_lag_features_slides.md) | [Notebook](../notebooks/02_lag_selection.ipynb)

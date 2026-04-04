@@ -1,10 +1,20 @@
 # Genetic Operators: Crossover and Mutation
 
+> **Reading time:** ~14 min | **Module:** 1 — GA Fundamentals | **Prerequisites:** 02 Selection Operators
+
 ## In Brief
 
 Crossover combines genetic material from two parents to create offspring, enabling the exchange of beneficial feature combinations. Mutation introduces random changes to maintain diversity and explore new regions of the search space. Together, these operators balance exploitation (crossover) with exploration (mutation).
 
-> 💡 **Key Insight:** The effectiveness of genetic operators depends on the problem structure. For feature selection, uniform crossover often outperforms single-point crossover because feature interactions are typically non-positional. Mutation rate should be inversely proportional to chromosome length to maintain approximately one change per individual.
+<div class="callout-insight">
+The effectiveness of genetic operators depends on the problem structure. For feature selection, uniform crossover often outperforms single-point crossover because feature interactions are typically non-positional. Mutation rate should be inversely proportional to chromosome length to maintain approximately one change per individual.
+</div>
+
+
+
+![Crossover Types](./crossover_types.svg)
+
+![Mutation Types](./mutation_types.svg)
 
 ## Formal Definition
 
@@ -52,6 +62,12 @@ Crossover preserves building blocks when crossover point falls outside the schem
 ## Code Implementation
 
 ### Crossover Operators
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">copy.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -278,6 +294,8 @@ def scattered_crossover(
         BinaryIndividual(chromosome=child2_chrom)
     )
 ```
+</div>
+
 
 ### Mutation Operators
 
@@ -731,6 +749,10 @@ def good_mutation(individual, min_features=1):
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Prerequisites
 - Encoding strategies (binary, integer)
 - Selection operators
@@ -891,3 +913,6 @@ def ltga_crossover(parent1: Individual, parent2: Individual,
 3. **Crossover rate 0.6-0.9** is standard (0.8 is common default)
 4. **Building block preservation** matters: use crossover that respects problem structure
 5. **Adaptive rates** can improve performance, especially adaptive mutation
+---
+
+**Next:** [Companion Slides](./03_genetic_operators_slides.md) | [Notebook](../notebooks/02_operator_analysis.ipynb)

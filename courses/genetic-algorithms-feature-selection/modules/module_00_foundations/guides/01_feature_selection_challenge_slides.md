@@ -27,7 +27,9 @@ Feature selection is the process of identifying the **most relevant subset** of 
 - Reduce overfitting
 - Enhance interpretability
 
-> In time series forecasting with many potential features and limited observations, this becomes **critical for generalization**.
+<div class="callout-info">
+ℹ️ **Context:** In time series forecasting with many potential features and limited observations, this becomes **critical for generalization**.
+</div>
 
 ---
 
@@ -47,7 +49,9 @@ With $p$ features, there are $2^p$ possible subsets to evaluate.
 
 *Assuming 1ms per evaluation
 
-> This combinatorial explosion makes exhaustive search infeasible for real problems.
+<div class="callout-danger">
+🚨 **Warning:** This combinatorial explosion makes exhaustive search infeasible for real problems.
+</div>
 
 ---
 
@@ -82,7 +86,9 @@ Feature selection = assembling the right team:
 - **Diverse perspectives** -- features providing unique information
 - **Manageable team** -- not so many that noise dominates
 
-> With 100 features: $2^{100} \approx 10^{30}$ possible teams!
+<div class="callout-insight">
+💡 **Key Insight:** With 100 features: $2^{100} \approx 10^{30}$ possible teams!
+</div>
 
 ---
 
@@ -99,7 +105,9 @@ $$\text{Overfitting Risk} \propto \frac{p}{n}$$
 - $p = 100$ technical indicators
 - Ratio: $p/n = 0.4$ (HIGH RISK)
 
-When $p \approx n$ or $p > n$, models learn **noise instead of signal**.
+<div class="callout-warning">
+⚠️ **Warning:** When $p \approx n$ or $p > n$, models learn **noise instead of signal**.
+</div>
 
 ---
 
@@ -107,7 +115,10 @@ When $p \approx n$ or $p > n$, models learn **noise instead of signal**.
 
 ## Search Strategy Overview
 
+![GA Lifecycle](ga_lifecycle.svg)
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Feature Selection<br/>Search Strategies] --> B[Exhaustive]
     A --> C[Greedy]
@@ -118,9 +129,6 @@ flowchart TD
     D --> D1[Genetic Algorithms]
     D --> D2[Simulated Annealing]
     D --> D3[Particle Swarm]
-    style B fill:#6f9
-    style C fill:#ff9
-    style D fill:#f96
 ```
 
 ---
@@ -128,6 +136,12 @@ flowchart TD
 <!-- Speaker notes: This is a key argument for GAs. The XOR problem shows that greedy methods fundamentally cannot find features whose value only emerges in combination. Walk through the correlations and ask: "Would forward selection ever pick A or B?" -->
 
 ## Why Greedy Fails: The XOR Problem
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">xor_problem.py</span>
+</div>
 
 ```python
 np.random.seed(42)
@@ -141,12 +155,16 @@ y = (A ^ B) + 0.1 * np.random.randn(n)
 X = np.column_stack([A, B, C])
 ```
 
+</div>
+
 **The problem:**
 - A alone: correlation with y $\approx$ 0
 - B alone: correlation with y $\approx$ 0
 - {A, B} together: **high predictive power**
 
-> Greedy evaluates features individually and misses the interaction!
+<div class="callout-key">
+🔑 **Key Point:** Greedy evaluates features individually and misses the interaction!
+</div>
 
 ---
 
@@ -155,6 +173,7 @@ X = np.column_stack([A, B, C])
 ## Greedy vs. Population-Based Search
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Greedy Search"
         G1[Start: empty] --> G2["+best single"] --> G3["+best single"] --> G4["Local optimum"]
@@ -163,9 +182,17 @@ flowchart LR
         P1["Pop of 50<br/>random subsets"] --> P2["Select best<br/>Crossover"] --> P3["Mutate<br/>Evaluate"] --> P4["Global optimum"]
         P3 -->|"Repeat"| P2
     end
-    style G4 fill:#ff9
-    style P4 fill:#6f9
 ```
+
+<div class="flow">
+<div class="flow-step amber">Greedy: Single Path</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Local Optimum</div>
+<div class="flow-arrow">vs</div>
+<div class="flow-step mint">GA: Population</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Global Optimum</div>
+</div>
 
 ---
 
@@ -183,6 +210,10 @@ flowchart LR
 3. **Crossover**: Combine good feature subsets from different parents
 
 4. **No Free Lunch**: No single algorithm is best for all problems -- GAs are strong for combinatorial binary search
+
+<div class="callout-insight">
+💡 **Key Insight:** Binary encoding maps directly to feature masks, making GAs a natural fit for feature selection.
+</div>
 
 ---
 
@@ -207,7 +238,9 @@ Prediction Error
     +-----------------> # Features
 ```
 
-> Each point on the Pareto frontier is optimal -- improving one objective worsens the other.
+<div class="callout-info">
+ℹ️ **Info:** Each point on the Pareto frontier is optimal -- improving one objective worsens the other.
+</div>
 
 ---
 
@@ -222,10 +255,10 @@ Prediction Error
 
 ## Pitfall 1: Selection on Full Dataset
 
-<div class="columns">
-<div>
-
-**WRONG** -- data leakage:
+<div class="compare">
+<div class="compare-card">
+<div class="header before">WRONG -- data leakage</div>
+<div class="body">
 
 ```python
 # Uses ALL data for selection
@@ -236,9 +269,10 @@ cv_score = cross_val_score(
 ```
 
 </div>
-<div>
-
-**RIGHT** -- selection inside CV:
+</div>
+<div class="compare-card">
+<div class="header after">RIGHT -- selection inside CV</div>
+<div class="body">
 
 ```python
 tscv = TimeSeriesSplit(n_splits=5)
@@ -260,6 +294,7 @@ for train_idx, test_idx in tscv.split(X):
 
 </div>
 </div>
+</div>
 
 ---
 
@@ -268,6 +303,12 @@ for train_idx, test_idx in tscv.split(X):
 ## Pitfall 2: Ignoring Feature Redundancy
 
 Selecting multiple highly correlated features wastes degrees of freedom.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fitness_diversity.py</span>
+</div>
 
 ```python
 def fitness_with_diversity(features, X, y):
@@ -287,7 +328,11 @@ def fitness_with_diversity(features, X, y):
     return -error - 0.1 * avg_corr
 ```
 
-> Add correlation penalty to promote diverse feature sets.
+</div>
+
+<div class="callout-key">
+🔑 **Key Point:** Add correlation penalty to promote diverse feature sets.
+</div>
 
 ---
 
@@ -296,6 +341,7 @@ def fitness_with_diversity(features, X, y):
 ## Decision Flow for Feature Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Start: p features] --> B{p > 15?}
     B -->|No| C[Exhaustive Search<br/>Guaranteed optimal]
@@ -309,7 +355,6 @@ flowchart TD
     H --> I
     C --> I
     I --> J[Validate on<br/>held-out data]
-    style H fill:#f96,stroke:#333
 ```
 
 ---
@@ -318,24 +363,28 @@ flowchart TD
 
 ## Connections & What's Next
 
-<div class="columns">
-<div>
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Builds On</div>
+<div class="body">
 
-**Builds On:**
 - Linear algebra (feature spaces)
 - Optimization theory
 - Probability (overfitting)
 - Time series fundamentals
 
 </div>
-<div>
+</div>
+<div class="compare-card">
+<div class="header after">Leads To</div>
+<div class="body">
 
-**Leads To:**
 - **Module 1**: GA fundamentals
 - **Module 2**: Fitness function design
 - **Module 3**: Time series CV strategies
 - **Module 5**: Multi-objective optimization
 
+</div>
 </div>
 </div>
 
@@ -354,4 +403,6 @@ flowchart TD
 | **GAs well-suited** | Binary encoding maps directly to feature masks |
 | **Multi-objective** | Balance accuracy vs. parsimony on Pareto frontier |
 
-> **Next**: Feature selection approaches -- filter, wrapper, and embedded methods.
+<div class="callout-info">
+ℹ️ **Next**: Feature selection approaches -- filter, wrapper, and embedded methods.
+</div>

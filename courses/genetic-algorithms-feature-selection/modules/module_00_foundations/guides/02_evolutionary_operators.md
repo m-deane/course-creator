@@ -1,5 +1,7 @@
 # Evolutionary Operators: Selection, Crossover, and Mutation
 
+> **Reading time:** ~7 min | **Module:** 0 — Foundations | **Prerequisites:** 01 Optimization Basics
+
 ## Introduction
 
 Genetic algorithms evolve solutions through three fundamental operators:
@@ -9,9 +11,18 @@ Genetic algorithms evolve solutions through three fundamental operators:
 
 Understanding these operators is essential for effective GA design.
 
+
+![Feature Selection Pipeline](./feature_selection_pipeline.svg)
+
 ## Selection Operators
 
 ### Tournament Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -51,6 +62,8 @@ selected = tournament_selection(population, fitness_scores, tournament_size=3)
 print(f"Selected individual: {selected}")
 print(f"Fitness: {sum(selected)}")
 ```
+</div>
+
 
 ### Roulette Wheel Selection
 
@@ -424,6 +437,9 @@ compare_operators()
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **Selection pressure** controls exploitation vs exploration balance
 
 2. **Tournament selection** is robust and easy to tune via tournament size
@@ -435,3 +451,7 @@ compare_operators()
 5. **Constraint handling** is essential for feature selection problems
 
 6. **Adaptive operators** can improve performance by responding to population state
+</div>
+---
+
+**Next:** [Companion Slides](./02_evolutionary_operators_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)

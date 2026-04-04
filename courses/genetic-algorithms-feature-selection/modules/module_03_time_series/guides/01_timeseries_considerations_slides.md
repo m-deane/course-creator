@@ -93,20 +93,17 @@ def walk_forward_split(
 ## Purged K-Fold: Preventing Leakage
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Standard K-Fold"
         A["Train"] --- B["Test"]
         B --- C["Train"]
-        style B fill:#f96
     end
     subgraph "Purged K-Fold"
         D["Train"] --- E["PURGE"]
         E --- F["Test"]
         F --- G["PURGE"]
         G --- H["Train"]
-        style E fill:#ff9
-        style G fill:#ff9
-        style F fill:#f96
     end
 ```
 
@@ -164,6 +161,7 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
 ## Rolling Feature Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Full Time Series] --> B["Window 1: t=0..500"]
     A --> C["Window 2: t=100..600"]
@@ -175,7 +173,6 @@ flowchart TD
     F --> H
     G --> H
     H --> I["Stable: {A, F}<br/>Unstable: {C, D, G}"]
-    style I fill:#6f9
 ```
 
 Run GA on rolling windows to track how selected features change over time.
@@ -221,6 +218,7 @@ Feature D: ████░░░░░░░░░░░░░░░░   20%  �
 ## Regime-Aware Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Time Series Data] --> B[Regime Detection]
     B --> C["Bull Market<br/>Regime 1"]
@@ -230,7 +228,6 @@ flowchart LR
     D --> F
     E --> F
     F --> G["Features robust<br/>across regimes"]
-    style G fill:#6f9
 ```
 
 ```python

@@ -20,6 +20,7 @@ From toolbox setup to parallel evolution
 ## DEAP Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[DEAP Framework] --> B[creator]
     A --> C[base.Toolbox]
@@ -29,7 +30,6 @@ flowchart TD
     C --> C1["Register Operators<br/>evaluate, mate, mutate, select"]
     D --> D1["Built-in Operators<br/>cxUniform, mutFlipBit, selTournament"]
     E --> E1["Evolution Loops<br/>eaSimple, eaMuPlusLambda"]
-    style A fill:#6f9
 ```
 
 ```bash
@@ -167,6 +167,7 @@ def run_ga(X, y, pop_size=50, n_generations=50):
 ## Evolution Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Initialize Population<br/>(pop_size random chromosomes)"] --> B["Evaluate Fitness<br/>(train model for each)"]
     B --> C["Select Parents<br/>(tournament selection)"]
@@ -176,8 +177,6 @@ flowchart TD
     F --> G{"Max generations<br/>reached?"}
     G -->|No| C
     G -->|Yes| H["Return Best<br/>(Hall of Fame)"]
-    style A fill:#6f9
-    style H fill:#6f9
 ```
 
 <!-- Speaker notes: Use this diagram to trace the evolution loop step by step. Emphasize the cyclic nature: select, crossover, mutate, evaluate, repeat. Ask learners what would happen if the mutation probability were set too high or too low. -->

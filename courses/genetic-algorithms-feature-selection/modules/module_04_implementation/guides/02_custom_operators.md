@@ -1,10 +1,19 @@
 # Custom Genetic Operators: Crossover, Mutation, and Selection
 
+> **Reading time:** ~13 min | **Module:** 4 — Implementation | **Prerequisites:** 01 DEAP Implementation
+
 ## In Brief
 
 Custom genetic operators adapt the GA to problem-specific structure, improving convergence speed and solution quality. Standard operators (uniform crossover, bit-flip mutation, tournament selection) work broadly but ignore domain knowledge. Custom operators encode problem constraints, exploit feature relationships, and bias search toward promising regions while maintaining population diversity.
 
-> 💡 **Key Insight:** Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5× faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
+<div class="callout-insight">
+Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5× faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
+</div>
+
+
+![Crossover Types](./crossover_types.svg)
+
+![Mutation Types](./mutation_types.svg)
 
 ## Formal Definition
 
@@ -112,6 +121,12 @@ Child:    [0, 1, 0, 1, 1]  ✓ (LA, income, age)
 - Noise features: $p_m = 0.02$ (lower exploration)
 - Focus search on promising features
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Feature importances from random forest
 importances = [0.15, 0.12, 0.10, 0.05, 0.03, ..., 0.001]
@@ -119,6 +134,8 @@ importances = [0.15, 0.12, 0.10, 0.05, 0.03, ..., 0.001]
 # Mutation rates proportional to importance
 mutation_rates = 0.01 + 0.04 * (importances / max(importances))
 ```
+</div>
+
 
 ### Correlation-Aware Mutation
 
@@ -628,6 +645,12 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 
 ## Common Pitfalls
 
+<div class="callout-warning">
+
+⚠️ **Warning:** The most frequent mistake with custom operators is producing invalid offspring (e.g., selecting two mutually exclusive one-hot features). Always add constraint validation after every crossover and mutation call.
+
+</div>
+
 **1. Violating Problem Constraints**
 - Problem: Custom operators produce invalid solutions (e.g., two cities selected)
 - Symptom: Fitness function must constantly repair individuals
@@ -654,6 +677,10 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 - Solution: A/B test custom vs standard operators on validation set
 
 ## Connections
+
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
 
 **Builds on:**
 - Module 1: GA fundamentals (standard operators)
@@ -725,3 +752,6 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 ---
 
 *"Standard operators are general. Custom operators are optimal. Choose based on problem structure."*
+---
+
+**Next:** [Companion Slides](./02_custom_operators_slides.md) | [Notebook](../notebooks/02_custom_operators.ipynb)

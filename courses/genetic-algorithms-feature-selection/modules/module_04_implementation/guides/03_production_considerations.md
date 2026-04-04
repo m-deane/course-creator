@@ -1,10 +1,17 @@
 # Production Considerations: Scaling, Parallelization, and Reproducibility
 
+> **Reading time:** ~10 min | **Module:** 4 — Implementation | **Prerequisites:** 02 Custom Operators
+
 ## In Brief
 
 Production genetic algorithms require careful attention to computational efficiency, reproducibility, and system integration. Naive GA implementations are prohibitively slow for high-dimensional feature spaces (hours for 1000 features), non-reproducible due to random seeds, and difficult to integrate with ML pipelines. Production-ready GAs use parallel fitness evaluation, efficient caching, deterministic execution, and standard ML interfaces.
 
-> 💡 **Key Insight:** The fitness function is the bottleneck—evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that's 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100× speedup while maintaining determinism through careful random state management.
+<div class="callout-insight">
+The fitness function is the bottleneck—evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that's 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100× speedup while maintaining determinism through careful random state management.
+</div>
+
+
+![GA Lifecycle](./ga_lifecycle.svg)
 
 ## Formal Definition
 
@@ -107,6 +114,12 @@ Over 5000 evaluations with 20% cache hit rate → 1000 evaluations saved!
 ### Reproducibility Challenge
 
 **Non-Reproducible Run:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Run 1
 np.random.seed(42)
@@ -116,6 +129,8 @@ ga.run()  # Best fitness: 0.87
 np.random.seed(42)
 ga.run()  # Best fitness: 0.89  ← Different!
 ```
+</div>
+
 
 Why? Cross-validation shuffles differently, thread scheduling varies, floating-point operations non-deterministic.
 
@@ -593,6 +608,12 @@ print(f"  Test accuracy: {test_score:.4f}")
 
 ## Common Pitfalls
 
+<div class="callout-warning">
+
+⚠️ **Warning:** Parallel fitness evaluation with shared mutable state (e.g., a global cache dictionary) causes race conditions and non-deterministic results. Use process-safe data structures or evaluate cache checks before dispatching parallel work.
+
+</div>
+
 **1. Race Conditions in Parallel Execution**
 - Problem: Multiple workers modifying shared state simultaneously
 - Symptom: Inconsistent results, crashes, deadlocks
@@ -619,6 +640,10 @@ print(f"  Test accuracy: {test_score:.4f}")
 - Solution: Understand Amdahl's law, account for overhead, measure realistic baselines
 
 ## Connections
+
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
 
 **Builds on:**
 - Module 1-3: Core GA implementation (what to parallelize)
@@ -691,3 +716,6 @@ print(f"  Test accuracy: {test_score:.4f}")
 ---
 
 *"Production code is 10% algorithm, 90% engineering."*
+---
+
+**Next:** [Companion Slides](./03_production_considerations_slides.md) | [Notebook](../notebooks/03_case_study.ipynb)

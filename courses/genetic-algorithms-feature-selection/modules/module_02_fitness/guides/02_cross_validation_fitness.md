@@ -1,12 +1,23 @@
 # Cross-Validation Based Fitness Functions
 
+> **Reading time:** ~7 min | **Module:** 2 — Fitness Functions | **Prerequisites:** 01 Fitness Functions
+
 ## Introduction
 
 For feature selection, fitness must evaluate how well selected features predict the target. Cross-validation provides robust estimation of generalization performance.
 
+
+![Fitness Landscape](./fitness_landscape.svg)
+
 ## The CV-Based Fitness Framework
 
 ### Basic Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -145,6 +156,8 @@ for chrom in test_chromosomes:
     n_features = sum(chrom)
     print(f"Features: {n_features:2d}, Fitness: {fitness:.4f}")
 ```
+</div>
+
 
 ## Time Series Cross-Validation
 
@@ -519,6 +532,9 @@ for k, v in stats.items():
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **Cross-validation** provides robust out-of-sample fitness estimates
 
 2. **Time series CV** prevents lookahead bias in financial applications
@@ -530,3 +546,7 @@ for k, v in stats.items():
 5. **Caching** dramatically speeds up GA with repeated evaluations
 
 6. **Regularization** can be incorporated into fitness for smoother landscapes
+</div>
+---
+
+**Next:** [Companion Slides](./02_cross_validation_fitness_slides.md) | [Notebook](../notebooks/01_fitness_functions.ipynb)

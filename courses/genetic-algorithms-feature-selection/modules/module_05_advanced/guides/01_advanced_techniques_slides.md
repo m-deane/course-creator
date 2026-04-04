@@ -22,11 +22,10 @@ Multi-objective, hybrid, ensemble, and constraint handling
 Two competing objectives: **minimize error** AND **minimize feature count**.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Standard GA<br/>Single Objective"] --> B["One Best Solution<br/>min(error + λ·features)"]
     C["NSGA-II<br/>Multi-Objective"] --> D["Pareto Frontier<br/>Set of trade-off solutions"]
-    style B fill:#ff9
-    style D fill:#6f9
 ```
 
 $$\min_{\mathbf{x}} \begin{pmatrix} L(M_\mathbf{x}) \\ |\mathbf{x}|_1 \end{pmatrix}$$
@@ -96,6 +95,7 @@ pareto_front = tools.sortNondominated(
 ## NSGA-II Evolution Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Initialize Population<br/>(random chromosomes)"] --> B["Evaluate Both Objectives"]
     B --> C["Non-Dominated Sorting<br/>(rank by Pareto dominance)"]
@@ -108,7 +108,6 @@ flowchart TD
     I --> J{"Done?"}
     J -->|No| C
     J -->|Yes| K["Return Pareto Front"]
-    style K fill:#6f9
 ```
 
 <!-- Speaker notes: Trace through the NSGA-II flow step by step. The two unique components are non-dominated sorting (ranking by Pareto dominance layers) and crowding distance (preferring solutions in sparse regions of the frontier for diversity). Together these produce a well-spread Pareto front. -->
@@ -160,6 +159,7 @@ def local_search(individual, X, y, n_iterations=10):
 ## GA + Filter Methods (Smart Initialization)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Compute Feature Importance<br/>(Mutual Information)"] --> B["Rank Features"]
     B --> C["Top-K Important Features"]
@@ -168,7 +168,6 @@ flowchart TD
     D --> G["Combined Initial Population"]
     F --> G
     G --> H["Standard GA Evolution"]
-    style G fill:#6f9
 ```
 
 ```python
@@ -233,6 +232,7 @@ def ensemble_ga(X, y, n_runs=10, **ga_params):
 Select features that work across **multiple models**:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Dataset"] --> B["GA + Random Forest"]
     A --> C["GA + Ridge Regression"]
@@ -243,7 +243,6 @@ flowchart TD
     E --> H["Intersection: {0, 5}<br/>Robust: {0, 2, 5}"]
     F --> H
     G --> H
-    style H fill:#6f9
 ```
 
 Features selected by **multiple models** are more likely truly informative, not model-specific artifacts.
@@ -285,6 +284,7 @@ Repair after crossover and mutation to maintain feasibility.
 Replace expensive model training with a cheap approximation:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["New Chromosome"] --> B{"Surrogate<br/>Uncertainty?"}
     B -->|"Low (confident)"| C["Use Surrogate Prediction<br/>(instant)"]
@@ -292,8 +292,6 @@ flowchart TD
     D --> E["Update Surrogate Model"]
     E --> F["Fitness Value"]
     C --> F
-    style C fill:#6f9
-    style D fill:#f96
 ```
 
 ```python

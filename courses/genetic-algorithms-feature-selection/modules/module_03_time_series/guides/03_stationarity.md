@@ -1,10 +1,18 @@
 # Stationarity Requirements for GA Feature Selection
 
+> **Reading time:** ~15 min | **Module:** 3 — Time Series | **Prerequisites:** 02 Lag Features
+
 ## In Brief
 
 Stationarity means that a time series' statistical properties (mean, variance, autocorrelation) do not change over time. For genetic algorithm feature selection, non-stationary data can cause selected features to perform well during training but fail on future data when the underlying relationships shift.
 
-> 💡 **Key Insight:** Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
+<div class="callout-insight">
+Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
+</div>
+
+
+
+![Walk-Forward Timeline](./walk_forward_timeline.svg)
 
 ## Formal Definition
 
@@ -60,6 +68,12 @@ Imagine trying to predict house prices using a dataset spanning 1970-2020. If yo
 ## Code Implementation
 
 ### Stationarity Testing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__str__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -267,6 +281,8 @@ def test_stationarity_multiple_series(
 
     return pd.DataFrame(results)
 ```
+</div>
+
 
 ### Transformation to Stationarity
 
@@ -820,6 +836,10 @@ def rolling_stationarity_test(series, window=100):
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Prerequisites
 - Time series basics
 - Hypothesis testing
@@ -981,3 +1001,6 @@ def optimal_differencing_strategy(
 3. **Differencing usually sufficient** - first difference makes most series stationary
 4. **Watch for over-differencing** - can introduce spurious autocorrelation
 5. **Cointegration matters** - non-stationary features can be useful if cointegrated with target
+---
+
+**Next:** [Companion Slides](./03_stationarity_slides.md) | [Notebook](../notebooks/02_lag_selection.ipynb)

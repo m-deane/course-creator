@@ -26,14 +26,13 @@ The choice of encoding determines:
 - What constraints need enforcement
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Feature Selection<br/>Problem] --> B{Encoding}
     B --> C[Binary<br/>0/1 per feature]
     B --> D[Integer<br/>list of indices]
     C --> E[Standard GA<br/>operators]
     D --> F[Specialized<br/>operators]
-    style C fill:#6f9
-    style D fill:#6cf
 ```
 
 ---
@@ -83,14 +82,13 @@ Binary equivalent: [0,0,1,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0]
 ## When to Use Each
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["How many features<br/>to select?"] --> B{"Selecting < 5%<br/>of total?"}
     B -->|Yes| C["Integer Encoding<br/>More compact<br/>e.g., 10 from 10,000"]
     B -->|No| D["Binary Encoding<br/>Simpler operators<br/>Default choice"]
     C --> E["Specialized operators<br/>needed"]
     D --> F["Standard crossover<br/>& mutation"]
-    style D fill:#6f9
-    style C fill:#6cf
 ```
 
 ---
@@ -256,6 +254,7 @@ def integer_mutate(individual: IntegerIndividual,
 ## Integer Mutation Operations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Integer Mutation] --> B{Random<br/>Operation}
     B -->|Add| C["[2,7,14] -> [2,7,14,5]<br/>Add available feature"]
@@ -265,7 +264,6 @@ flowchart TD
     D --> F
     E --> F
     F -->|"Check min/max<br/>& uniqueness"| G[Valid Individual]
-    style G fill:#6f9
 ```
 
 ---
@@ -296,7 +294,7 @@ flowchart TD
 
 ## Pitfall 1: Allowing Empty Solutions
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Bad** -- no constraint:
@@ -393,7 +391,7 @@ def fast_crossover(parent1, parent2):
 
 ## Connections & What's Next
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Prerequisites:**

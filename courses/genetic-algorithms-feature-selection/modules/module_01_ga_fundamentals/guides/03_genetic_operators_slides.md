@@ -21,13 +21,12 @@ Balancing exploitation (crossover) with exploration (mutation)
 ## Crossover + Mutation = Evolution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Parents] --> B["Crossover<br/>p_c = 0.8"]
     B --> C["Offspring<br/>(combined traits)"]
     C --> D["Mutation<br/>p_m = 1/n"]
     D --> E["Final Offspring<br/>(diverse)"]
-    style B fill:#6cf
-    style D fill:#f96
 ```
 
 **Crossover** = exploitation (combine known good solutions)
@@ -163,6 +162,7 @@ def uniform_crossover(parent1, parent2,
 ## Crossover Type Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Crossover Types"] --> B["Single-Point"]
     A --> C["Two-Point"]
@@ -172,7 +172,6 @@ graph TD
     C --> C1["Medium mixing<br/>Medium bias<br/>Swaps segments"]
     D --> D1["High mixing<br/>No bias<br/>BEST for FS"]
     E --> E1["Variable mixing<br/>k random points<br/>Generalizes 2-point"]
-    style D fill:#6f9
 ```
 
 ---
@@ -298,11 +297,9 @@ def adaptive_mutation(individual, generation, max_generations,
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Gen 0: rate=0.1<br/>EXPLORE"] --> B["Gen 50: rate=0.05<br/>Balanced"] --> C["Gen 100: rate=0.001<br/>EXPLOIT"]
-    style A fill:#f96
-    style B fill:#ff9
-    style C fill:#6f9
 ```
 
 ---
@@ -416,6 +413,7 @@ def good_mutation(individual, min_features=1):
 ## Operator Effects on Diversity
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Crossover Effects"
         A["Single-point<br/>Low diversity<br/>Preserves blocks"]
@@ -435,7 +433,7 @@ flowchart TD
 
 ## Connections
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Prerequisites:**

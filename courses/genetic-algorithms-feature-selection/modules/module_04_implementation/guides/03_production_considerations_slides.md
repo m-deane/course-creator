@@ -43,6 +43,7 @@ Parallel (8 cores): ■■■         1.7 hours
 ## Parallelization Strategy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Generation N"] --> B["Master Process"]
     B --> C1["Worker 1<br/>Evaluate ind 1-12"]
@@ -57,7 +58,6 @@ flowchart TD
     C5 --> D
     D --> E["Selection + Crossover + Mutation"]
     E --> F["Generation N+1"]
-    style B fill:#6f9
 ```
 
 $$S = \frac{T_{\text{serial}}}{T_{\text{parallel}}} \approx \frac{W}{1 + \frac{W \times T_{\text{comm}}}{P \times T_{\text{fitness}}}}$$
@@ -120,6 +120,7 @@ Gen 10, Ind B: [1,0,1,0,1] → Cache HIT!  → 0.85           (0.001s)
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Chromosome"] --> B["SHA-256 Hash"]
     B --> C{"In Cache?"}
@@ -127,8 +128,6 @@ flowchart LR
     C -->|No| E["Evaluate fitness<br/>(expensive)"]
     E --> F["Store in cache"]
     F --> D
-    style D fill:#6f9
-    style E fill:#f96
 ```
 
 Over 5000 evaluations with 20% hit rate → **1000 evaluations saved**.

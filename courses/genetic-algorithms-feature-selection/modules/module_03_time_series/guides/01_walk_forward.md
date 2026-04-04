@@ -1,10 +1,18 @@
 # Walk-Forward Validation for Time Series
 
+> **Reading time:** ~14 min | **Module:** 3 — Time Series | **Prerequisites:** Module 2 Fitness Functions
+
 ## In Brief
 
 Walk-forward validation evaluates time series models by training on past data and testing on future data in a rolling manner, mimicking real-world deployment where you can only predict forward in time. This respects temporal ordering and prevents data leakage that would occur with random cross-validation.
 
-> 💡 **Key Insight:** Standard k-fold cross-validation is invalid for time series because it trains on future data to predict the past, creating unrealistic optimistic performance estimates. Walk-forward validation prevents this temporal leakage and provides realistic estimates of how the model will perform on unseen future data.
+<div class="callout-insight">
+Standard k-fold cross-validation is invalid for time series because it trains on future data to predict the past, creating unrealistic optimistic performance estimates. Walk-forward validation prevents this temporal leakage and provides realistic estimates of how the model will perform on unseen future data.
+</div>
+
+
+
+![Walk-Forward Timeline](./walk_forward_timeline.svg)
 
 ## Formal Definition
 
@@ -51,6 +59,12 @@ Imagine predicting stock prices. In reality, you can only use data up to today t
 ## Code Implementation
 
 ### Basic Walk-Forward Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -307,6 +321,8 @@ def walk_forward_feature_selection(
 
     return np.mean(fold_scores)
 ```
+</div>
+
 
 ### Advanced Walk-Forward Strategies
 
@@ -697,6 +713,10 @@ validator = WalkForwardValidator(expanding=False)
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Prerequisites
 - Time series basics (stationarity, autocorrelation)
 - Cross-validation concepts
@@ -859,3 +879,6 @@ def multi_horizon_walk_forward(
 3. **Expanding window preferred** for stationary series
 4. **Fixed window preferred** for non-stationary series with concept drift
 5. **Multiple validation paths** (combinatorial) more robust than single path
+---
+
+**Next:** [Companion Slides](./01_walk_forward_slides.md) | [Notebook](../notebooks/01_walk_forward_ga.ipynb)

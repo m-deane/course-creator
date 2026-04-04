@@ -1,10 +1,18 @@
 # Feature Selection Approaches
 
+> **Reading time:** ~13 min | **Module:** 0 — Foundations | **Prerequisites:** 01 Feature Selection Problem
+
 ## In Brief
 
 Feature selection methods fall into three main categories: **filter methods** (statistical tests independent of models), **wrapper methods** (model-based evaluation), and **embedded methods** (selection built into model training). Each approach offers different tradeoffs between computational cost, model dependency, and optimization quality.
 
-> 💡 **Key Insight:** The choice of feature selection approach determines both what you optimize (statistical relevance vs. prediction accuracy) and how you search (independent evaluation vs. model-guided search). Filters are fast but ignore model interactions; wrappers are accurate but computationally expensive; embedded methods balance both but are model-specific.
+<div class="callout-insight">
+The choice of feature selection approach determines both what you optimize (statistical relevance vs. prediction accuracy) and how you search (independent evaluation vs. model-guided search). Filters are fast but ignore model interactions; wrappers are accurate but computationally expensive; embedded methods balance both but are model-specific.
+</div>
+
+
+
+![Feature Selection Pipeline](./feature_selection_pipeline.svg)
 
 ## Formal Definition
 
@@ -109,6 +117,12 @@ The **regularization path** shows which features are eliminated at each $\lambda
 
 ### Filter Method: Mutual Information
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">filter_selection_mi.py</span>
+</div>
+
 ```python
 import numpy as np
 from sklearn.feature_selection import mutual_info_regression
@@ -173,6 +187,8 @@ plt.tight_layout()
 print(f"Selected features: {selected}")
 print(f"True relevant features: [0, 1, 2, 3, 4]")
 ```
+</div>
+
 
 ### Wrapper Method: Forward Selection
 
@@ -534,6 +550,10 @@ print(f"Combined: {len(combined)}")
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Builds On
 - **01_feature_selection_problem.md**: Understanding why selection is necessary
 - **Statistical testing**: Hypothesis tests for filter methods
@@ -682,3 +702,6 @@ for method in ['filter', 'wrapper', 'embedded']:
 - **Bolón-Canedo, Sánchez-Maroño & Alonso-Betanzos (2013)**: "A Review of Feature Selection Methods on Synthetic Data" - Systematic comparison across different data characteristics.
 
 - **Li et al. (2017)**: "Feature Selection: A Data Perspective" - Modern comprehensive review including recent developments.
+---
+
+**Next:** [Companion Slides](./02_selection_approaches_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)

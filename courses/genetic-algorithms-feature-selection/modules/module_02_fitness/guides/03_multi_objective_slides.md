@@ -23,11 +23,10 @@ Finding optimal tradeoffs instead of single solutions
 There is no single "best" feature subset -- the optimal choice depends on priorities.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Single Objective<br/>One answer"] --> B["Weighted sum<br/>f = w1*error + w2*features"]
     C["Multi-Objective<br/>Set of answers"] --> D["Pareto Front<br/>All optimal tradeoffs"]
-    style A fill:#ff9
-    style C fill:#6f9
 ```
 
 > Multi-objective finds ALL non-dominated solutions, giving decision-makers flexibility.
@@ -75,6 +74,7 @@ $$\mathcal{P} = \{s \in S : \nexists s' \in S \text{ such that } s' \prec s\}$$
 ## Pareto Front Visualization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Objective Space"
         A["A: 95% acc, 50 features<br/>(high accuracy)"]
@@ -82,10 +82,6 @@ graph LR
         C["C: 88% acc, 5 features<br/>(sparse)"]
         D["D: 90% acc, 30 features<br/>(DOMINATED by B)"]
     end
-    style A fill:#6f9
-    style B fill:#6f9
-    style C fill:#6f9
-    style D fill:#f66
 ```
 
 A, B, C are Pareto optimal. D is dominated (B is better on both objectives).
@@ -224,6 +220,7 @@ def run_nsga2(X, y, population_size=100, n_generations=50):
 ## NSGA-II Selection Mechanism
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Combined Population<br/>Parents + Offspring"] --> B["Non-dominated<br/>Sorting"]
     B --> C["Rank 0: Pareto front"]
@@ -234,8 +231,6 @@ flowchart TD
     F -->|"Last rank<br/>doesn't fit"| G["Sort by<br/>Crowding Distance"]
     G --> H["Keep most<br/>isolated solutions"]
     H --> I["New Generation"]
-    style C fill:#6f9
-    style H fill:#6cf
 ```
 
 ---
@@ -329,13 +324,13 @@ def three_objective_fitness(individual, X, y, feature_costs):
 ## Selection Strategies
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Pareto Front<br/>(10-20 solutions)"] --> B{"Strategy?"}
     B -->|"Best accuracy"| C["Minimize MSE<br/>(most features)"]
     B -->|"Most sparse"| D["Minimize features<br/>(worst accuracy)"]
     B -->|"Balanced"| E["Minimize<br/>normalized sum"]
     B -->|"Knee point"| F["Max distance to<br/>extreme line"]
-    style F fill:#6f9
 ```
 
 ---
@@ -382,7 +377,7 @@ def select_from_pareto(pareto_front, strategy='knee'):
 
 ## Pitfall 1: Collapsing to Single Objective
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **WRONG** -- weighted sum:
@@ -459,7 +454,7 @@ def diverse_mutation(individual, indpb=0.05):
 
 ## Connections
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Builds On:**

@@ -22,20 +22,24 @@ The three fundamental operators that drive genetic algorithm evolution
 ## The Three Operators
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Population] --> B[Selection]
     B --> C[Crossover]
     C --> D[Mutation]
     D --> E[New Population]
     E -->|Next Generation| A
-    style B fill:#f96,stroke:#333
-    style C fill:#6cf,stroke:#333
-    style D fill:#9f6,stroke:#333
 ```
 
-1. **Selection** — Choose parents for reproduction
-2. **Crossover** — Combine parent traits to create offspring
-3. **Mutation** — Introduce random variation
+<div class="flow">
+<div class="flow-step amber">1. Selection</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">2. Crossover</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">3. Mutation</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">New Population</div>
+</div>
 
 ---
 
@@ -54,6 +58,12 @@ Choosing which individuals reproduce
 
 Pick $k$ random individuals, return the fittest:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
+</div>
+
 ```python
 def tournament_selection(pop, fitness, k=3):
     """Select best from random tournament."""
@@ -61,7 +71,13 @@ def tournament_selection(pop, fitness, k=3):
     return pop[max(idx, key=lambda i: fitness[i])]
 ```
 
-> Larger $k$ = stronger selection pressure. Full implementation in **Module 01: Selection Operators**.
+</div>
+
+<div class="callout-info">
+
+ℹ️ **Info:** Larger $k$ = stronger selection pressure. Full implementation in **Module 01: Selection Operators**.
+
+</div>
 
 ---
 
@@ -73,6 +89,12 @@ Selection probability proportional to fitness:
 
 $$P(i) = \frac{f_i}{\sum_j f_j}$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_selection.py</span>
+</div>
+
 ```python
 def roulette_selection(pop, fitness):
     """Higher fitness = higher selection probability."""
@@ -82,13 +104,25 @@ def roulette_selection(pop, fitness):
     return pop[np.random.choice(len(pop), p=probs)]
 ```
 
-> Sensitive to fitness scaling. Full implementation in **Module 01: Selection Operators**.
+</div>
+
+<div class="callout-warning">
+
+⚠️ **Warning:** Sensitive to fitness scaling. Full implementation in **Module 01: Selection Operators**.
+
+</div>
 
 ---
 
 <!-- Speaker notes: Rank selection solves the scaling problem by using ranks instead of raw fitness values. The selection_pressure parameter controls the spread between best and worst selection probabilities. -->
 
 ## Rank Selection (Preview)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rank_selection.py</span>
+</div>
 
 ```python
 def rank_selection(pop, fitness, pressure=1.5):
@@ -103,7 +137,13 @@ def rank_selection(pop, fitness, pressure=1.5):
     return pop[np.random.choice(n, p=probs)]
 ```
 
-> More robust to fitness scaling issues than roulette wheel.
+</div>
+
+<div class="callout-key">
+
+🔑 **Key Point:** More robust to fitness scaling issues than roulette wheel.
+
+</div>
 
 ---
 
@@ -112,6 +152,7 @@ def rank_selection(pop, fitness, pressure=1.5):
 ## Selection Methods Compared
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Selection Methods] --> B[Tournament]
     A --> C[Roulette Wheel]
@@ -119,10 +160,9 @@ graph TD
     B --> B1["+ Easy to tune<br/>+ No fitness scaling needed<br/>- Stochastic pressure"]
     C --> C1["+ Proportional to fitness<br/>- Dominated by super-fit<br/>- Scaling sensitive"]
     D --> D1["+ Robust to outliers<br/>+ Controllable pressure<br/>- Ignores fitness magnitude"]
-    style B fill:#6f9
-    style C fill:#ff9
-    style D fill:#6cf
 ```
+
+![Selection Methods](selection_methods.svg)
 
 ---
 
@@ -139,6 +179,12 @@ Combining parent genetic material
 
 ## Single-Point Crossover
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">single_point_crossover.py</span>
+</div>
+
 ```python
 def single_point_crossover(parent1, parent2):
     n = len(parent1)
@@ -147,6 +193,8 @@ def single_point_crossover(parent1, parent2):
     child2 = parent2[:point] + parent1[point:]
     return child1, child2
 ```
+
+</div>
 
 ```
 Parent 1: [1 1 1 1 1 | 0 0 0 0 0]
@@ -163,6 +211,12 @@ Child 2:  [0 0 0 0 0 | 0 0 0 0 0]
 
 ## Two-Point Crossover
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">two_point_crossover.py</span>
+</div>
+
 ```python
 def two_point_crossover(parent1, parent2):
     n = len(parent1)
@@ -171,6 +225,8 @@ def two_point_crossover(parent1, parent2):
     child2 = parent2[:pt1] + parent1[pt1:pt2] + parent2[pt2:]
     return child1, child2
 ```
+
+</div>
 
 ```
 Parent 1: [1 1 | 1 1 1 0 | 0 0 0 0]
@@ -187,6 +243,12 @@ Child 2:  [0 0 | 1 1 1 0 | 1 1 1 1]
 
 ## Uniform Crossover
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">uniform_crossover.py</span>
+</div>
+
 ```python
 def uniform_crossover(parent1, parent2, swap_prob=0.5):
     child1, child2 = [], []
@@ -198,13 +260,19 @@ def uniform_crossover(parent1, parent2, swap_prob=0.5):
     return child1, child2
 ```
 
+</div>
+
 ```
 Parent 1: [1  1  1  1  1  0  0  0  0  0]
 Mask:     [0  1  0  1  1  0  1  0  1  0]  (random)
 Child 1:  [1  0  1  0  0  0  1  0  1  0]
 ```
 
-> Each gene swapped independently -- maximum mixing.
+<div class="callout-insight">
+
+💡 **Key Insight:** Each gene swapped independently -- maximum mixing with no positional bias.
+
+</div>
 
 ---
 
@@ -218,7 +286,13 @@ Child 1:  [1  0  1  0  0  0  1  0  1  0]
 | Two-point | Medium | Medium | General purpose |
 | Uniform | High | None | Feature selection |
 
-> For feature selection, **uniform crossover** is often preferred since feature order doesn't matter.
+![Crossover Types](crossover_types.svg)
+
+<div class="callout-key">
+
+🔑 **Key Point:** For feature selection, **uniform crossover** is often preferred since feature order doesn't matter.
+
+</div>
 
 ---
 
@@ -235,6 +309,12 @@ Introducing random variation to maintain diversity
 
 ## Bit Flip Mutation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bit_flip_mutation.py</span>
+</div>
+
 ```python
 def bit_flip_mutation(individual, mutation_rate=0.1):
     mutant = individual.copy()
@@ -243,6 +323,8 @@ def bit_flip_mutation(individual, mutation_rate=0.1):
             mutant[i] = 1 - mutant[i]  # Flip bit
     return mutant
 ```
+
+</div>
 
 ```
 Original: [1 1 1 1 1 1 1 1 1 1]
@@ -259,10 +341,11 @@ Mutated:  [1 1 0 1 1 1 0 1 1 1]
 
 ## Other Mutation Types
 
-<div class="columns">
-<div>
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Gaussian (real-valued)</div>
+<div class="body">
 
-**Gaussian (real-valued):**
 ```python
 def gaussian_mutation(individual,
                       rate=0.1, sigma=0.1):
@@ -276,9 +359,11 @@ def gaussian_mutation(individual,
 ```
 
 </div>
-<div>
+</div>
+<div class="compare-card">
+<div class="header after">Swap (permutations)</div>
+<div class="body">
 
-**Swap (permutations):**
 ```python
 def swap_mutation(individual):
     mutant = individual.copy()
@@ -291,6 +376,7 @@ def swap_mutation(individual):
     return mutant
 ```
 
+</div>
 </div>
 </div>
 
@@ -309,15 +395,19 @@ Specialized operators with constraints
 
 ## Constrained Feature Selection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">constrained_operators.py</span>
+</div>
+
 ```python
 class FeatureSelectionOperators:
     def __init__(self, n_features,
                  min_features=1, max_features=None):
         self.min_features = min_features
         self.max_features = max_features or n_features
-```
 
-```python
     def _enforce_constraints(self, individual):
         n_selected = sum(individual)
         if n_selected < self.min_features:
@@ -333,6 +423,8 @@ class FeatureSelectionOperators:
         return individual
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: This flowchart shows the constraint enforcement logic visually. Walk through each branch with a concrete example. -->
@@ -340,6 +432,7 @@ class FeatureSelectionOperators:
 ## Constraint Enforcement Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Offspring from<br/>Crossover/Mutation] --> B{Count<br/>selected}
     B -->|"< min"| C[Add random<br/>features to reach min]
@@ -348,14 +441,27 @@ flowchart TD
     C --> F[Valid Individual]
     D --> F
     E --> F
-    style F fill:#6f9,stroke:#333
 ```
+
+<div class="flow">
+<div class="flow-step blue">Offspring</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Count Check</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Valid Individual</div>
+</div>
 
 ---
 
 <!-- Speaker notes: Adaptive mutation is an advanced concept that responds to the current state of the population. When diversity is low (population is converging), mutation rate increases to inject new variation. -->
 
 ## Adaptive Mutation: Diversity Measurement
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_mutation.py</span>
+</div>
 
 ```python
 class AdaptiveMutation:
@@ -365,9 +471,7 @@ class AdaptiveMutation:
         self.base_rate = base_rate
         self.min_rate = min_rate
         self.max_rate = max_rate
-```
 
-```python
     def get_rate(self, population):
         n = len(population)
         total_distance, count = 0, 0
@@ -381,11 +485,19 @@ class AdaptiveMutation:
         diversity_ratio = avg_diversity / len(population[0])
 ```
 
+</div>
+
 ---
 
 <!-- Speaker notes: The interpolation formula maps diversity to mutation rate. Low diversity pushes rate toward max_rate, high diversity pushes toward base_rate. The clip ensures we stay within bounds. -->
 
 ## Adaptive Mutation: Rate Computation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">adaptive_mutation.py</span>
+</div>
 
 ```python
         # Low diversity -> high mutation
@@ -396,23 +508,32 @@ class AdaptiveMutation:
         return np.clip(rate, self.min_rate, self.max_rate)
 ```
 
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["High Diversity<br/>Population spread out"] -->|"Low mutation rate"| B["Preserve<br/>exploration"]
     C["Low Diversity<br/>Population converging"] -->|"High mutation rate"| D["Inject<br/>diversity"]
-    style A fill:#6f9
-    style C fill:#f66
-    style B fill:#6cf
-    style D fill:#f96
 ```
 
-> Adaptive mutation prevents **premature convergence** while allowing fine-tuning near optima.
+<div class="callout-insight">
+
+💡 **Key Insight:** Adaptive mutation prevents **premature convergence** while allowing fine-tuning near optima.
+
+</div>
 
 ---
 
 <!-- Speaker notes: This experiment compares how much offspring diversity each crossover type produces. Uniform crossover produces the most diverse offspring, confirming it as the best choice for feature selection. -->
 
 ## Operator Comparison: Offspring Diversity
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_operators.py</span>
+</div>
 
 ```python
 def compare_operators(n_trials=100):
@@ -430,7 +551,13 @@ def compare_operators(n_trials=100):
             results[name].append(d)
 ```
 
-> Uniform crossover produces the **most diverse** offspring.
+</div>
+
+<div class="callout-key">
+
+🔑 **Key Point:** Uniform crossover produces the **most diverse** offspring.
+
+</div>
 
 ---
 
@@ -447,4 +574,8 @@ def compare_operators(n_trials=100):
 | **Constraint handling** | Essential for feature selection problems |
 | **Adaptive operators** | Respond to population state dynamically |
 
-> **Next**: Feature selection approaches -- filter, wrapper, and embedded methods.
+<div class="callout-info">
+
+ℹ️ **Next**: Feature selection approaches -- filter, wrapper, and embedded methods.
+
+</div>

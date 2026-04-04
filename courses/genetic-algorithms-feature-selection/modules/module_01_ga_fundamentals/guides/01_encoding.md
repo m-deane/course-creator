@@ -1,10 +1,18 @@
 # Encoding Strategies for Feature Selection
 
+> **Reading time:** ~11 min | **Module:** 1 — GA Fundamentals | **Prerequisites:** Module 0 foundations
+
 ## In Brief
 
 Binary and integer encoding schemes transform the feature selection problem into a representation suitable for genetic algorithm manipulation. Binary encoding maps each feature to a bit (0=excluded, 1=included), while integer encoding stores indices of selected features.
 
-> 💡 **Key Insight:** The choice of encoding determines what genetic operators can do. Binary encoding enables standard crossover/mutation operators and naturally handles variable-length feature sets, while integer encoding can be more compact but requires specialized operators to maintain validity.
+<div class="callout-insight">
+The choice of encoding determines what genetic operators can do. Binary encoding enables standard crossover/mutation operators and naturally handles variable-length feature sets, while integer encoding can be more compact but requires specialized operators to maintain validity.
+</div>
+
+
+
+![GA Lifecycle](./ga_lifecycle.svg)
 
 ## Formal Definition
 
@@ -42,6 +50,12 @@ Integer encoding is like a list of which lights are ON. The list can grow or shr
 ## Code Implementation
 
 ### Binary Encoding Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__post_init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -215,6 +229,8 @@ def demo_binary_encoding():
     print(f"Child 1:  {child1.chromosome}")
     print(f"Child 2:  {child2.chromosome}")
 ```
+</div>
+
 
 ### Integer Encoding Implementation
 
@@ -516,6 +532,10 @@ def fast_crossover(parent1, parent2):
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Prerequisites
 - Basic understanding of genetic algorithms
 - NumPy array operations
@@ -654,3 +674,6 @@ class SparseBinaryIndividual:
 - **DEAP**: Distributed Evolutionary Algorithms in Python
 - **geneticalgorithm2**: Modern GA implementation with multiple encodings
 - **sklearn-genetic**: Scikit-learn compatible GA feature selection
+---
+
+**Next:** [Companion Slides](./01_encoding_slides.md) | [Notebook](../notebooks/01_basic_ga.ipynb)

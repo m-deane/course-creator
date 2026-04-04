@@ -1,5 +1,7 @@
 # Implementing GAs with DEAP
 
+> **Reading time:** ~5 min | **Module:** 4 — Implementation | **Prerequisites:** Modules 1-3
+
 ## Introduction to DEAP
 
 DEAP (Distributed Evolutionary Algorithms in Python) is a flexible framework for evolutionary computation.
@@ -8,9 +10,23 @@ DEAP (Distributed Evolutionary Algorithms in Python) is a flexible framework for
 pip install deap
 ```
 
+![GA Lifecycle](./ga_lifecycle.svg)
+
+<div class="callout-insight">
+
+💡 **Key Insight:** DEAP's toolbox pattern decouples GA components (representation, operators, fitness) so you can swap any piece without rewriting the loop. This makes it the de facto standard for prototyping evolutionary algorithms in Python.
+
+</div>
+
 ## Basic GA Setup
 
 ### Defining Types
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -25,6 +41,8 @@ creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 # Define individual
 creator.create("Individual", list, fitness=creator.FitnessMin)
 ```
+</div>
+
 
 ### Creating the Toolbox
 
@@ -246,6 +264,12 @@ def custom_ga(
 
 ## Time Series Feature Selection
 
+<div class="callout-warning">
+
+⚠️ **Warning:** Never use standard `cross_val_score` with default `KFold` for time series data. Always pass a `TimeSeriesSplit` splitter to prevent look-ahead bias, which produces unrealistically optimistic fitness estimates.
+
+</div>
+
 ```python
 from sklearn.model_selection import TimeSeriesSplit
 
@@ -375,6 +399,9 @@ plot_evolution(result['history'])
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **DEAP provides flexibility** - customize every component
 
 2. **Toolbox pattern** organizes all GA components
@@ -384,3 +411,7 @@ plot_evolution(result['history'])
 4. **Early stopping** prevents wasted computation
 
 5. **Parallel evaluation** speeds up fitness computation
+</div>
+---
+
+**Next:** [Companion Slides](./01_deap_implementation_slides.md) | [Notebook](../notebooks/01_deap_ga.ipynb)

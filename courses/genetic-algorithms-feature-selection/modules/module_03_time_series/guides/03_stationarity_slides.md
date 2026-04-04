@@ -45,18 +45,17 @@ STATIONARY:                    NON-STATIONARY:
 ## Why Stationarity Matters for Feature Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Non-Stationary Data] --> B["GA finds features<br/>correlated with TREND"]
     B --> C["Training: 'Year' predicts prices!<br/>(spurious correlation)"]
     C --> D["Production: Trend changes<br/>(recession, policy shift)"]
     D --> E["Model FAILS on new data"]
-    style E fill:#f96
 
     F[Stationary Data] --> G["GA finds features<br/>with TRUE relationships"]
     G --> H["Training: Fundamental drivers<br/>(real predictive power)"]
     H --> I["Production: Relationships persist"]
     I --> J["Model GENERALIZES"]
-    style J fill:#6f9
 ```
 
 ---
@@ -116,6 +115,7 @@ $$\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \sum \delta_i \Delta y_{t-i} 
 ## Transformations to Achieve Stationarity
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Non-Stationary Series] --> B{"Type of<br/>non-stationarity?"}
     B -->|"Trend"| C["Differencing<br/>Δy_t = y_t - y_{t-1}"]
@@ -128,7 +128,6 @@ flowchart TD
     F --> G
     G -->|"Stationary?"| H["Ready for GA"]
     G -->|"Still not"| A
-    style H fill:#6f9
 ```
 
 ---

@@ -1,5 +1,7 @@
 # Genetic Algorithm Components
 
+> **Reading time:** ~6 min | **Module:** 1 — GA Fundamentals | **Prerequisites:** Module 0 foundations
+
 ## The GA Framework
 
 Genetic algorithms simulate natural evolution to solve optimization problems:
@@ -35,6 +37,11 @@ Genetic algorithms simulate natural evolution to solve optimization problems:
 └─────────────────────────────────────────────────────────────┘
 ```
 
+
+![GA Lifecycle](./ga_lifecycle.svg)
+
+![Selection Methods](./selection_methods.svg)
+
 ## Chromosome Representation
 
 ### Binary Encoding for Feature Selection
@@ -50,6 +57,12 @@ Not Selected: {f2, f5, f6, f8}
 ```
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">selected_features.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -108,6 +121,8 @@ class Population:
         fitnesses = [ind.fitness for ind in self.individuals if ind.fitness is not None]
         return np.mean(fitnesses) if fitnesses else float('inf')
 ```
+</div>
+
 
 ## Selection Operators
 
@@ -402,6 +417,9 @@ def steady_state_replacement(
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **Binary encoding** is natural for feature selection - each bit represents a feature
 
 2. **Tournament selection** is robust and tunable via tournament size
@@ -411,3 +429,7 @@ def steady_state_replacement(
 4. **Mutation rate** should be low (0.01-0.1) to maintain good solutions
 
 5. **Elitism** preserves best solutions across generations
+</div>
+---
+
+**Next:** [Companion Slides](./01_ga_components_slides.md) | [Notebook](../notebooks/01_basic_ga.ipynb)

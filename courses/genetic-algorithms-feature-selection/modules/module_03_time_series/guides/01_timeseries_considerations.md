@@ -1,5 +1,7 @@
 # Time Series Considerations for GA Feature Selection
 
+> **Reading time:** ~5 min | **Module:** 3 — Time Series | **Prerequisites:** Module 2 Fitness Functions
+
 ## The Time Series Challenge
 
 Time series feature selection has unique challenges:
@@ -9,9 +11,18 @@ Time series feature selection has unique challenges:
 3. **Non-stationarity** - feature relationships may change over time
 4. **Limited data** - can't simply collect more samples
 
+
+![Walk-Forward Timeline](./walk_forward_timeline.svg)
+
 ## Validation Strategies
 
 ### Walk-Forward Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_split.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -52,6 +63,8 @@ splits = walk_forward_split(1000, n_splits=5, gap=5)
 for i, (train, test) in enumerate(splits):
     print(f"Split {i}: Train {train[0]}-{train[-1]}, Test {test[0]}-{test[-1]}")
 ```
+</div>
+
 
 ### Purged K-Fold
 
@@ -356,6 +369,9 @@ def ga_with_lag_features(X, y, feature_names, max_lag=5):
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **Always use temporal validation** - never shuffle time series data
 
 2. **Walk-forward is gold standard** - mimics real forecasting conditions
@@ -365,3 +381,7 @@ def ga_with_lag_features(X, y, feature_names, max_lag=5):
 4. **Non-stationarity requires rolling analysis** - features may change importance
 
 5. **Multi-horizon testing** ensures robust feature selection
+</div>
+---
+
+**Next:** [Companion Slides](./01_timeseries_considerations_slides.md) | [Notebook](../notebooks/01_walk_forward_ga.ipynb)

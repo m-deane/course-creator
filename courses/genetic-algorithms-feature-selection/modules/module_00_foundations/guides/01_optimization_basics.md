@@ -1,5 +1,7 @@
 # Optimization Foundations for Feature Selection
 
+> **Reading time:** ~5 min | **Module:** 0 — Foundations | **Prerequisites:** Calculus, basic Python
+
 ## The Feature Selection Problem
 
 ### Problem Definition
@@ -28,9 +30,18 @@ For $n$ features, there are $2^n$ possible subsets:
 
 This combinatorial explosion makes exhaustive search infeasible.
 
+
+![Feature Selection Pipeline](./feature_selection_pipeline.svg)
+
 ## Search Strategies
 
 ### Exhaustive Search
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">exhaustive_search.py</span>
+</div>
 
 ```python
 from itertools import combinations
@@ -62,6 +73,8 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
     scores = cross_val_score(model, X, y, cv=cv_folds, scoring='neg_mean_squared_error')
     return -scores.mean()
 ```
+</div>
+
 
 ### Greedy Search (Forward Selection)
 
@@ -267,6 +280,9 @@ Prediction Error
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **Feature selection is NP-hard** - exhaustive search is infeasible for real problems
 
 2. **Greedy methods** are fast but get stuck in local optima
@@ -276,3 +292,7 @@ Prediction Error
 4. **GAs are well-suited** for binary feature selection problems
 
 5. **No free lunch** - algorithm choice depends on problem structure
+</div>
+---
+
+**Next:** [Notebook](../notebooks/01_selection_comparison.ipynb)

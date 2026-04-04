@@ -21,6 +21,7 @@ The complete framework: initialization, evaluation, selection, crossover, mutati
 ## The GA Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["1. INITIALIZATION<br/>Generate random population"] --> B["2. EVALUATION<br/>Calculate fitness"]
     B --> C["3. SELECTION<br/>Choose parents by fitness"]
@@ -30,12 +31,6 @@ flowchart TD
     F --> G{Converged?}
     G -->|No| B
     G -->|Yes| H[Best Solution]
-    style A fill:#6cf
-    style B fill:#f96
-    style C fill:#ff9
-    style D fill:#9f6
-    style E fill:#c9f
-    style F fill:#fc9
 ```
 
 ---
@@ -106,11 +101,11 @@ Choosing who reproduces
 ## Tournament Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Population<br/>(50 individuals)"] --> B["Random sample<br/>k=3 individuals"]
     B --> C["Compare<br/>fitness"]
     C --> D["Best wins<br/>(lowest error)"]
-    style D fill:#6f9
 ```
 
 ```python
@@ -177,7 +172,7 @@ Combining parent genetic material
 
 ## Three Crossover Types
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Single-Point:**
@@ -275,7 +270,7 @@ def bit_flip_mutation(individual, mutation_prob=0.01):
 
 ## Adaptive & Swap Mutation
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Adaptive** -- decreases over time:
@@ -335,6 +330,7 @@ Forming the next generation
 ## Generational vs. Steady-State
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Generational"
         G1[Old Pop] --> G2["Keep elite<br/>(best 1-2)"]
@@ -378,6 +374,7 @@ def steady_state_replacement(population, offspring):
 ## Complete GA Cycle
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Initialize: 50 random<br/>binary chromosomes"] --> B["Evaluate: fitness = CV error<br/>+ lambda * n_features"]
     B --> C["Select: tournament k=3<br/>choose 50 parents"]
@@ -387,7 +384,6 @@ flowchart TD
     F --> G{"Gen < 100?"}
     G -->|Yes| B
     G -->|No| H["Return best<br/>feature subset"]
-    style H fill:#6f9,stroke:#333
 ```
 
 ---

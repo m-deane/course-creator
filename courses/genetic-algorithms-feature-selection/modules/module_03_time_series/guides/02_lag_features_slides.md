@@ -94,6 +94,7 @@ VIF > 10 for all lags!
 ## Common Lag Patterns by Domain
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Time Series Type] --> B["Daily Data"]
     A --> C["Hourly Data"]
@@ -103,10 +104,6 @@ flowchart TD
     C --> C1["Lags: {1, 24, 168}<br/>last hour + day + week"]
     D --> D1["Lags: {1, 5, 20}<br/>prev day + week + month"]
     E --> E1["Lags: {1, 12}<br/>prev month + prev year"]
-    style B1 fill:#6f9
-    style C1 fill:#6f9
-    style D1 fill:#6f9
-    style E1 fill:#6f9
 ```
 
 GA can automatically discover these patterns without domain knowledge.
@@ -212,6 +209,7 @@ Significant lags: $|\rho(k)| > \frac{1.96}{\sqrt{T}}$ (95% confidence)
 ## Handling Redundant Lags
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["All 100 Lag Features"] --> B["Correlation Matrix"]
     B --> C{"Any pair with<br/>|corr| > 0.95?"}
@@ -220,7 +218,6 @@ flowchart TD
     D --> C
     E --> F["Reduced Feature Set"]
     F --> G["GA selects from<br/>non-redundant lags"]
-    style F fill:#6f9
 ```
 
 ```python

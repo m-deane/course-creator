@@ -22,6 +22,7 @@ Three paradigms for choosing the right features
 ## Three Categories at a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Filter
         F1[Features] --> F2[Statistical<br/>Test] --> F3[Ranked<br/>Features]
@@ -33,9 +34,6 @@ flowchart LR
     subgraph Embedded
         E1[Features +<br/>Target] --> E2[Model Training<br/>with Penalty] --> E3[Sparse<br/>Solution]
     end
-    style F2 fill:#6cf
-    style W2 fill:#f96
-    style E2 fill:#9f6
 ```
 
 ---
@@ -212,6 +210,7 @@ def forward_selection_wrapper(X, y, max_features=10, cv=5):
 ## RFE Algorithm
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Start: All p features"] --> B["Train model M"]
     B --> C["Rank features by importance"]
@@ -219,7 +218,6 @@ flowchart TD
     D --> E{"|F| > k?"}
     E -->|Yes| B
     E -->|No| F["Return remaining k features"]
-    style F fill:#6f9,stroke:#333
 ```
 
 ---
@@ -285,6 +283,7 @@ Coefficient
 ## Method Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Feature Selection<br/>Problem"] --> B{"How many<br/>features?"}
     B -->|"p > 1000"| C["Filter First<br/>(Fast screening)"]
@@ -295,7 +294,6 @@ flowchart TD
     F -->|Limited| G["Wrapper:<br/>Forward Selection"]
     F -->|Generous| H["Wrapper:<br/>Genetic Algorithm"]
     C --> I["Then refine with<br/>Wrapper or Embedded"]
-    style H fill:#f96
 ```
 
 ---
@@ -358,7 +356,7 @@ print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")  # ~0
 
 ## Pitfall 2: Wrapper Overfitting
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **WRONG** -- overfit to test set:
@@ -458,7 +456,7 @@ def evaluate_stability(X, y, method, n_iterations=20):
 
 ## Connections
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Builds On:**

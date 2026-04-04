@@ -42,6 +42,7 @@ Gen 50: rate=0.001 [Local refinement → OPTIMAL]
 ## Three Adaptation Strategies
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Adaptation Strategy] --> B["Deterministic<br/>(Scheduled)"]
     A --> C["Feedback-Based<br/>(Performance-Driven)"]
@@ -49,9 +50,6 @@ flowchart TD
     B --> B1["Linear/exponential decay<br/>p_m(t) = p_max · (1 - t/T)"]
     C --> C1["Stagnation → increase rate<br/>Improvement → decrease rate"]
     D --> D1["Parameters IN chromosome<br/>Evolution tunes itself"]
-    style B fill:#6f9
-    style C fill:#ff9
-    style D fill:#f96
 ```
 
 <!-- Speaker notes: Present the three strategies in order of increasing sophistication. Deterministic schedules are simplest but cannot react to the search dynamics. Feedback-based strategies react to performance but require threshold tuning. Self-adaptive strategies encode parameters in the chromosome itself, letting evolution discover the best values. -->
@@ -84,6 +82,7 @@ Good baseline, but can't react to search dynamics.
 ## Strategy 2: Diversity-Based Adaptation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Measure Population Diversity<br/>(avg Hamming distance)"] --> B{"Diversity Level?"}
     B -->|"HIGH (> 0.6)"| C["Reduce mutation<br/>(let crossover work)"]
@@ -92,8 +91,6 @@ flowchart TD
     C --> F["p_m = p_min + (p_max - p_min) · (1 - D)"]
     D --> F
     E --> F
-    style C fill:#6f9
-    style E fill:#f96
 ```
 
 $$D(t) = \frac{1}{P(P-1)} \sum_{i=1}^P \sum_{j>i}^P \text{Hamming}(x_i, x_j) / n$$
@@ -169,6 +166,7 @@ Self-adaptive chromosome:
 ## Self-Adaptive Evolution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Individual A<br/>genes: [1,0,1,1,0]<br/>p_m = 0.10 (high)"] --> B["Mutate parameters first<br/>p_m' = p_m · exp(τ·N(0,1))"]
     B --> C["Mutate chromosome using p_m'<br/>[1,1,0,0,1] (many changes)"]
@@ -180,8 +178,6 @@ flowchart TD
     H --> I["Evaluate fitness: 0.88<br/>(incremental improvement)"]
     I --> J["Selection: SURVIVES<br/>p_m = 0.025 spreads"]
 
-    style E fill:#f96
-    style J fill:#6f9
 ```
 
 **Parameter mutation**: $p_m' = p_m \cdot e^{\tau \cdot N(0,1)}$ where $\tau = \frac{1}{\sqrt{n}}$
@@ -225,6 +221,7 @@ class SelfAdaptiveGA:
 ## Island Model: Multi-Population Adaptation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Island 1"
         A1["Pop: 25<br/>p_m = 0.01<br/>Exploitation"]
@@ -240,9 +237,6 @@ flowchart LR
     A2 -->|"Migrate best"| A3
     A3 -->|"Migrate best"| A1
 
-    style A1 fill:#6f9
-    style A2 fill:#ff9
-    style A3 fill:#f96
 ```
 
 - Different islands use different parameter settings

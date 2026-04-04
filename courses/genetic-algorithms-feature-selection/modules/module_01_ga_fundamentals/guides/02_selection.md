@@ -1,10 +1,18 @@
 # Selection Operators for Genetic Algorithms
 
+> **Reading time:** ~12 min | **Module:** 1 — GA Fundamentals | **Prerequisites:** 01 GA Components, 01 Encoding
+
 ## In Brief
 
 Selection operators determine which individuals from the current population reproduce to create the next generation. Tournament, roulette wheel, and rank selection represent different strategies for balancing exploitation of good solutions with exploration of the search space.
 
-> 💡 **Key Insight:** Selection pressure controls the trade-off between convergence speed and population diversity. High pressure (large tournaments, steep rank weighting) accelerates convergence but risks premature convergence to local optima. Low pressure maintains diversity but may converge too slowly.
+<div class="callout-insight">
+Selection pressure controls the trade-off between convergence speed and population diversity. High pressure (large tournaments, steep rank weighting) accelerates convergence but risks premature convergence to local optima. Low pressure maintains diversity but may converge too slowly.
+</div>
+
+
+
+![Selection Methods](./selection_methods.svg)
 
 ## Formal Definition
 
@@ -52,6 +60,12 @@ Think of selection as choosing participants for a breeding program:
 ## Code Implementation
 
 ### Tournament Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">copy.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -143,6 +157,8 @@ def adaptive_tournament_selection(
     size = int(min_size + progress * (max_size - min_size))
     return tournament_selection(population, tournament_size=size, minimize=minimize)
 ```
+</div>
+
 
 ### Roulette Wheel Selection
 
@@ -537,6 +553,10 @@ def good_roulette_negative(population):
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Prerequisites
 - Basic probability and statistics
 - Population-based optimization concepts
@@ -679,3 +699,6 @@ def non_dominated_tournament(population: List[Individual],
 2. **Selection pressure should adapt** over the run (start low, increase)
 3. **SUS is superior to repeated roulette** for proportionate selection
 4. **Rank selection prevents premature convergence** better than fitness-proportionate
+---
+
+**Next:** [Companion Slides](./02_selection_slides.md) | [Notebook](../notebooks/02_operator_analysis.ipynb)

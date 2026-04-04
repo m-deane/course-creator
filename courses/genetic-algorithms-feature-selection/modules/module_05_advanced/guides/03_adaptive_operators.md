@@ -1,10 +1,17 @@
 # Adaptive Genetic Operators: Self-Adaptive Parameters and Mutation Rates
 
+> **Reading time:** ~11 min | **Module:** 5 — Advanced Topics | **Prerequisites:** 02 Hybrid Methods
+
 ## In Brief
 
 Adaptive operators automatically adjust GA parameters (mutation rate, crossover probability, population diversity) during evolution based on search progress, eliminating manual tuning and improving robustness. Fixed parameters work well for specific problems but fail across diverse landscapes. Self-adaptive GAs evolve their own parameters alongside solutions, with successful parameter settings propagating through the population via natural selection, achieving performance comparable to expert-tuned parameters without human intervention.
 
-> 💡 **Key Insight:** Optimal GA parameters change during search: early exploration needs high mutation/diversity, late exploitation needs low mutation/focused search. Fixed parameters are either too exploratory (slow convergence) or too exploitative (premature convergence). Adaptive operators measure population state (diversity, fitness improvement, convergence rate) and dynamically adjust parameters. Self-adaptive operators encode parameters in chromosomes, allowing evolution to discover optimal settings for the current search phase.
+<div class="callout-insight">
+Optimal GA parameters change during search: early exploration needs high mutation/diversity, late exploitation needs low mutation/focused search. Fixed parameters are either too exploratory (slow convergence) or too exploitative (premature convergence). Adaptive operators measure population state (diversity, fitness improvement, convergence rate) and dynamically adjust parameters. Self-adaptive operators encode parameters in chromosomes, allowing evolution to discover optimal settings for the current search phase.
+</div>
+
+
+![Fitness Landscape](./fitness_landscape.svg)
 
 ## Formal Definition
 
@@ -159,6 +166,12 @@ Decision: Increase mutation to 0.08 (restore exploration)
 ## Code Implementation
 
 ### Adaptive Mutation Rate
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -409,6 +422,8 @@ for strategy, result in results.items():
     print(f"  Features selected: {result['best_individual'].sum()}")
     print(f"  Final mutation rate: {result['mutation_rate_history'][-1]:.4f}")
 ```
+</div>
+
 
 ### Self-Adaptive GA
 
@@ -585,6 +600,12 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 
 ## Common Pitfalls
 
+<div class="callout-warning">
+
+⚠️ **Warning:** Self-adaptive parameters with weak selection pressure drift randomly rather than converging to useful settings. Ensure tournament size is at least 3 and population is large enough (50+) for parameter evolution to work.
+
+</div>
+
 **1. Over-Adapting**
 - Problem: Changing parameters every generation based on noise
 - Symptom: Erratic parameter values, unstable search
@@ -611,6 +632,10 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 - Solution: Always compare against well-tuned baseline
 
 ## Connections
+
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
 
 **Builds on:**
 - Module 1-3: Operators (what to adapt)
@@ -684,3 +709,6 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 ---
 
 *"Evolution adapts organisms. Adaptive GAs adapt themselves."*
+---
+
+**Next:** [Companion Slides](./03_adaptive_operators_slides.md) | [Notebook](../notebooks/02_hybrid_ga.ipynb)

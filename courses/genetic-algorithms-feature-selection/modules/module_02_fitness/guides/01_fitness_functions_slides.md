@@ -23,6 +23,7 @@ The critical component that determines GA success
 $$\text{fitness}(\mathbf{x}) = \text{model\_error}(\mathbf{x}) + \lambda \cdot \text{complexity}(\mathbf{x})$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Chromosome<br/>binary vector] --> B[Select<br/>Features]
     B --> C[Train Model<br/>on subset]
@@ -32,7 +33,6 @@ flowchart LR
     F --> G[Complexity<br/>Penalty]
     E --> H[Fitness<br/>Score]
     G --> H
-    style H fill:#f96
 ```
 
 ---
@@ -113,6 +113,7 @@ Temporal validation strategies
 ## Walk-Forward Validation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Walk-Forward Splits"
         direction TB
@@ -129,7 +130,6 @@ flowchart LR
     F --> I
     G --> I
     H --> I
-    style I fill:#f96
 ```
 
 > Training window always precedes test window -- no lookahead bias.
@@ -215,6 +215,7 @@ def expanding_window_fitness(chromosome, X, y, model_fn,
 ## Nested Cross-Validation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Outer Loop<br/>(5 folds)"] --> B["Fold 1: Train | Test"]
     A --> C["Fold 2: Train | Test"]
@@ -223,7 +224,6 @@ flowchart TD
     E --> F["Select features<br/>+ tune model"]
     F --> G["Evaluate on<br/>Outer Test"]
     G --> H["Unbiased<br/>estimate"]
-    style H fill:#6f9
 ```
 
 > Inner loop: select features. Outer loop: evaluate selection quality.
@@ -380,6 +380,7 @@ class CachedFitnessEvaluator:
 ## Fitness Design Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Fitness Design"] --> B{"Time series?"}
     B -->|Yes| C["Walk-forward<br/>or expanding window"]
@@ -393,7 +394,6 @@ flowchart TD
     H --> J["Cache + evaluate"]
     I --> J
     F --> J
-    style J fill:#6f9
 ```
 
 ---

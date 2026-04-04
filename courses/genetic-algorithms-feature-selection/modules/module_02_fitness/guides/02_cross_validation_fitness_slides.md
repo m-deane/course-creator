@@ -21,6 +21,7 @@ Robust evaluation of feature subsets using CV strategies
 ## The CV Fitness Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Chromosome"] --> B["Extract selected<br/>features"]
     B --> C{"n_features >= min?"}
@@ -31,7 +32,6 @@ flowchart TD
     G --> H["Apply feature<br/>penalty"]
     H --> I["Fitness"]
     I --> J["Cache result"]
-    style I fill:#f96
 ```
 
 ---
@@ -117,6 +117,7 @@ Preventing lookahead bias in financial applications
 ## Time Series CV Structure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Standard k-Fold (WRONG for TS)"
         A1["Fold 1: random split"]
@@ -127,10 +128,6 @@ flowchart LR
         B2["Split 2: [0..150] | [155..200]"]
         B3["Split 3: [0..200] | [205..250]"]
     end
-    style A2 fill:#f66
-    style B1 fill:#6f9
-    style B2 fill:#6f9
-    style B3 fill:#6f9
 ```
 
 > The `gap` parameter prevents information leakage between train and test.
@@ -266,6 +263,7 @@ MSE (lower = better)
 ## Pareto Front Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Population of<br/>50 chromosomes"] --> B["Evaluate all<br/>on 2 objectives"]
     B --> C["Find non-dominated<br/>solutions"]
@@ -274,7 +272,6 @@ flowchart TD
     E -->|"Priority: accuracy"| F["Pick lowest MSE"]
     E -->|"Priority: simplicity"| G["Pick fewest features"]
     E -->|"Balanced"| H["Pick knee point"]
-    style D fill:#f96
 ```
 
 ---
@@ -367,6 +364,7 @@ class EfficientFitnessEvaluator:
 ## Fitness Type Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Fitness Functions"] --> B["Basic CV"]
     A --> C["Time Series CV"]
@@ -378,8 +376,6 @@ graph TD
     D --> D1["Pareto front<br/>NSGA-II<br/>Multiple tradeoffs"]
     E --> E1["L1/L2 penalties<br/>Smooth landscape<br/>Better convergence"]
     F --> F1["Out-of-bag error<br/>Robust estimate<br/>Slower"]
-    style C fill:#6cf
-    style D fill:#f96
 ```
 
 ---

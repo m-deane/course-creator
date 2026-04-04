@@ -1,10 +1,18 @@
 # Multi-Objective Feature Selection
 
+> **Reading time:** ~13 min | **Module:** 2 — Fitness Functions | **Prerequisites:** 02 Cross-Validation Fitness
+
 ## In Brief
 
 Multi-objective feature selection explicitly optimizes multiple conflicting goals simultaneously (e.g., prediction accuracy vs. feature count vs. computational cost) rather than combining them into a single weighted objective. This produces a Pareto frontier of non-dominated solutions, giving decision-makers flexibility to choose the final tradeoff.
 
-> 💡 **Key Insight:** There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
+<div class="callout-insight">
+There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
+</div>
+
+
+
+![Fitness Landscape](./fitness_landscape.svg)
 
 ## Formal Definition
 
@@ -127,6 +135,12 @@ Larger hypervolume = better Pareto approximation.
 
 ### Basic Multi-Objective Fitness
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multi_objective_fitness.py</span>
+</div>
+
 ```python
 import numpy as np
 from sklearn.model_selection import cross_val_score
@@ -186,6 +200,8 @@ individual = np.random.randint(0, 2, p)
 objectives = multi_objective_fitness(individual, X, y)
 print(f"MSE: {objectives[0]:.4f}, Complexity: {objectives[1]:.4f}")
 ```
+</div>
+
 
 ### NSGA-II with DEAP
 
@@ -527,6 +543,10 @@ def diverse_mutation(individual, indpb=0.05):
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Builds On
 - **02_cross_validation_fitness.md**: Proper fitness evaluation
 - **01_fitness_functions.md**: Single-objective fitness design
@@ -700,3 +720,6 @@ print(f"Knee solution: {sum(knee_solution)} features, "
 - **Li et al. (2015)**: "Many-Objective Evolutionary Algorithms: A Survey" - Extensions to more than 3 objectives (many-objective optimization).
 
 - **Ishibuchi et al. (2008)**: "Evolutionary Many-Objective Optimization: A Short Review" - Challenges and solutions for high-dimensional objective spaces.
+---
+
+**Next:** [Companion Slides](./03_multi_objective_slides.md) | [Notebook](../notebooks/01_fitness_functions.ipynb)

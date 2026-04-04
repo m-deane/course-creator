@@ -41,6 +41,7 @@ Gen 20:      ●                   (CONVERGED — global optimum!)
 ## Memetic Algorithm Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Initialize Population"] --> B["Evaluate Fitness"]
     B --> C["LOCAL SEARCH<br/>Refine top individuals"]
@@ -51,8 +52,6 @@ flowchart TD
     G --> H{"Max generations?"}
     H -->|No| C
     H -->|Yes| I["Return Best"]
-    style C fill:#ff9
-    style I fill:#6f9
 ```
 
 The key addition: **local search refinement** between evaluation and selection.
@@ -99,14 +98,13 @@ def hill_climbing(individual, fitness_func, max_iter=10):
 ## Lamarckian vs Baldwinian Learning
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Individual: [1,0,0,1,0]<br/>Fitness: 0.82"] --> B["Local Search"]
     B --> C["Improved: [1,1,0,1,1]<br/>Fitness: 0.90"]
     C --> D{"Learning Type?"}
     D -->|"Lamarckian"| E["Replace genes AND fitness<br/>[1,1,0,1,1] → offspring<br/>Improved genes propagate"]
     D -->|"Baldwinian"| F["Update fitness ONLY<br/>[1,0,0,1,0] → offspring<br/>Original genes propagate<br/>Fitness = 0.90"]
-    style E fill:#6f9
-    style F fill:#ff9
 ```
 
 | Type | Genes | Fitness | Best For |

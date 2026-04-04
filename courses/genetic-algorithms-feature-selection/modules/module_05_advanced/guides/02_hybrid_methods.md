@@ -1,10 +1,17 @@
 # Hybrid Methods: Memetic Algorithms and GA + Local Search
 
+> **Reading time:** ~10 min | **Module:** 5 — Advanced Topics | **Prerequisites:** 01 Advanced Techniques
+
 ## In Brief
 
 Hybrid methods combine genetic algorithms' global exploration with local search's exploitation, achieving faster convergence and better solutions than either method alone. Pure GAs explore broadly but converge slowly near optima. Pure local search (hill climbing, gradient descent) converges quickly but gets stuck in local optima. Memetic algorithms—GAs with local search refinement—inherit both strengths: global exploration from evolution, rapid local improvement from search.
 
-> 💡 **Key Insight:** GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5× fewer evaluations to reach same quality, or better final solutions with same budget.
+<div class="callout-insight">
+GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5× fewer evaluations to reach same quality, or better final solutions with same budget.
+</div>
+
+
+![GA Lifecycle](./ga_lifecycle.svg)
 
 ## Formal Definition
 
@@ -159,6 +166,12 @@ Benefit: Selection pressure toward "improvable" genotypes, not just locally opti
 ## Code Implementation
 
 ### Basic Memetic Algorithm
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -478,6 +491,8 @@ print(f"Standard GA:            {result_ga['best_fitness']:.4f}")
 print(f"Memetic (Lamarckian):   {result_ma_lamarck['best_fitness']:.4f}")
 print(f"Memetic (Baldwinian):   {result_ma_baldwin['best_fitness']:.4f}")
 ```
+</div>
+
 
 ### Advanced Hybrid: GA + Greedy Forward Selection
 
@@ -534,6 +549,12 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 
 ## Common Pitfalls
 
+<div class="callout-warning">
+
+⚠️ **Warning:** Memetic algorithms can silently consume 5-10x more fitness evaluations than a pure GA. Always compare methods at equal evaluation budgets, not equal generations, to get an honest performance comparison.
+
+</div>
+
 **1. Excessive Local Search**
 - Problem: Refining every individual every generation
 - Symptom: 10× more evaluations, only marginal improvement
@@ -560,6 +581,10 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 - Solution: Track total evaluations, compare at equal budgets
 
 ## Connections
+
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
 
 **Builds on:**
 - Module 1-3: Core GA operators (what to hybridize)
@@ -628,3 +653,6 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 ---
 
 *"Evolution finds the mountain. Local search climbs it."*
+---
+
+**Next:** [Companion Slides](./02_hybrid_methods_slides.md) | [Notebook](../notebooks/02_hybrid_ga.ipynb)

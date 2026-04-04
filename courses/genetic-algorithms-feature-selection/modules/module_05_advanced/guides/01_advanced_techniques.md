@@ -1,10 +1,20 @@
 # Advanced GA Techniques
 
+> **Reading time:** ~7 min | **Module:** 5 — Advanced Topics | **Prerequisites:** Modules 1-4
+
+![Fitness Landscape](./fitness_landscape.svg)
+
 ## Multi-Objective Optimization
 
 ### NSGA-II for Feature Selection
 
 NSGA-II (Non-dominated Sorting Genetic Algorithm II) solves feature selection as a two-objective problem: minimize prediction error while simultaneously minimizing the number of features. The Pareto front it produces gives you a set of non-dominated trade-off solutions, letting you choose how much accuracy to trade for simplicity.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">setup_nsga2_toolbox.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -99,6 +109,14 @@ def run_nsga2(X, y, pop_size=100, n_generations=50):
         ]
     }
 ```
+</div>
+
+
+<div class="callout-insight">
+
+💡 **Key Insight:** The Pareto front from NSGA-II gives you a menu of accuracy-vs-parsimony tradeoffs rather than a single answer. In production, you pick the "knee point" -- the solution where adding one more feature yields diminishing accuracy gains.
+
+</div>
 
 ## Hybrid Methods
 
@@ -437,6 +455,9 @@ class SurrogateFitness:
 
 ## Key Takeaways
 
+<div class="callout-key">
+🔑 **Key Points**
+
 1. **NSGA-II** handles multi-objective optimization naturally
 
 2. **Hybrid methods** combine global and local search effectively
@@ -446,3 +467,7 @@ class SurrogateFitness:
 4. **Constraints** can be handled through repair operators
 
 5. **Surrogate models** reduce computational cost for expensive fitness functions
+</div>
+---
+
+**Next:** [Companion Slides](./01_advanced_techniques_slides.md) | [Notebook](../notebooks/01_nsga2_features.ipynb)

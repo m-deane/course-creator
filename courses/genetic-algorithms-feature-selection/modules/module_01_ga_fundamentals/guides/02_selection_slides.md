@@ -28,11 +28,11 @@ Selection pressure controls the trade-off:
 $$s = \frac{E[\text{offspring of best}]}{E[\text{offspring per individual}]} = N \cdot P(\text{best})$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Low Pressure<br/>k=2"] -->|"Slow but<br/>thorough"| C["Balance"]
     B["High Pressure<br/>k=7"] -->|"Fast but<br/>risky"| C
     C --> D["Optimal: adapt<br/>pressure over time"]
-    style C fill:#6f9
 ```
 
 ---
@@ -121,10 +121,9 @@ def adaptive_tournament_selection(population, generation,
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Gen 0<br/>k=2<br/>Explore"] --> B["Gen 25<br/>k=3"] --> C["Gen 50<br/>k=5"] --> D["Gen 100<br/>k=7<br/>Exploit"]
-    style A fill:#6cf
-    style D fill:#f96
 ```
 
 ---
@@ -256,6 +255,7 @@ def exponential_rank_selection(population, minimize=True, base=0.95):
 ## Method Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Selection Methods"] --> B["Tournament"]
     A --> C["Roulette Wheel"]
@@ -263,7 +263,6 @@ graph TD
     B --> B1["+ Robust & tunable<br/>+ Works for min/max<br/>+ No fitness transform<br/>- Stochastic pressure"]
     C --> C1["+ Fitness-proportionate<br/>- Scaling sensitive<br/>- Premature convergence<br/>- Needs positive fitness"]
     D --> D1["+ Robust to outliers<br/>+ Controllable pressure<br/>- Ignores fitness magnitude<br/>- Sorting overhead"]
-    style B fill:#6f9
 ```
 
 ---
@@ -329,6 +328,7 @@ def adaptive_pressure(population, gen, max_gen):
 ## Selection Pressure Across Methods
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Low Pressure (Explore)"
         A1["Tournament k=2"]
@@ -344,9 +344,6 @@ graph LR
         C2["Rank p=2.0"]
         C3["Exp Rank b=0.9"]
     end
-    style A1 fill:#6cf
-    style B1 fill:#ff9
-    style C1 fill:#f96
 ```
 
 ---
@@ -355,7 +352,7 @@ graph LR
 
 ## Connections
 
-<div class="columns">
+<div class="compare">
 <div>
 
 **Prerequisites:**

@@ -1,10 +1,18 @@
 # The Feature Selection Problem
 
+> **Reading time:** ~9 min | **Module:** 0 — Foundations | **Prerequisites:** Linear algebra, basic probability
+
 ## In Brief
 
 Feature selection is the process of identifying the most relevant subset of features from a larger feature space to improve model performance, reduce overfitting, and enhance interpretability. In time series forecasting with many potential features and limited observations, this becomes critical for generalization.
 
-> 💡 **Key Insight:** The feature selection problem grows exponentially with the number of features: with $p$ features, there are $2^p$ possible subsets to evaluate. For even moderate feature sets (p=30), exhaustive search requires evaluating over 1 billion combinations, making intelligent search strategies essential.
+<div class="callout-insight">
+The feature selection problem grows exponentially with the number of features: with $p$ features, there are $2^p$ possible subsets to evaluate. For even moderate feature sets (p=30), exhaustive search requires evaluating over 1 billion combinations, making intelligent search strategies essential.
+</div>
+
+
+
+![Feature Selection Pipeline](./feature_selection_pipeline.svg)
 
 ## Formal Definition
 
@@ -63,7 +71,10 @@ For time series with $n$ observations and $p$ features:
 **Overfitting Risk:**
 $$\text{Risk} \propto \frac{p}{n}$$
 
-> ⚠️ **Warning:** When $p \approx n$ or $p > n$, most models will overfit — training error decreases while test error explodes. A ratio of $p/n > 0.2$ is a serious red flag requiring aggressive feature selection.
+<div class="callout-warning">
+When $p \approx n$ or $p > n$, most models will overfit — training error decreases while test error explodes. A ratio of $p/n > 0.2$ is a serious red flag requiring aggressive feature selection.
+</div>
+
 
 When $p \approx n$ or $p > n$, most models will overfit:
 - Training error decreases
@@ -92,6 +103,12 @@ This creates a Pareto frontier: improving one objective may worsen others.
 ## Code Implementation
 
 ### Naive Exhaustive Search
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">exhaustive_feature_selection.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -165,6 +182,8 @@ best_features, best_score = exhaustive_feature_selection(X, y, max_features=5)
 print(f"Best features: {best_features}")
 print(f"Best score: {best_score:.4f}")
 ```
+</div>
+
 
 ### Time Series Feature Selection Problem
 
@@ -298,6 +317,10 @@ def fitness_with_cost(features, X, y, feature_names):
 
 ## Connections
 
+<div class="callout-info">
+ℹ️ **How this connects to the rest of the course:**
+</div>
+
 ### Builds On
 - **Linear algebra**: Understanding feature spaces and dimensionality
 - **Optimization theory**: Search strategies and objective functions
@@ -425,3 +448,6 @@ print(f"Possible subsets: 2^{n_features} = {2**n_features:,.0f}")
 - **Chandrashekar & Sahin (2014)**: "A Survey on Feature Selection Methods" - Taxonomy of methods including filters, wrappers, and embedded approaches.
 
 - **Li et al. (2017)**: "Feature Selection: A Data Perspective" - Modern survey covering recent advances including deep learning approaches.
+---
+
+**Next:** [Companion Slides](./01_feature_selection_challenge_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)

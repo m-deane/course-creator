@@ -1,8 +1,13 @@
 /* =============================================================================
    Course Browser — Custom CSS
-   Injected via st.markdown(unsafe_allow_html=True) in app.py
+   Injected via st.markdown(unsafe_allow_html=True) and styled_html() in app.py
    Matches the DDoDS-inspired design system from resources/themes/course-theme.css
    ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Google Fonts — @import MUST appear before all other rules
+   --------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 /* ---------------------------------------------------------------------------
    CSS Custom Properties (mirrored from Marp theme)
@@ -31,11 +36,6 @@
     --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
     --font-code: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 }
-
-/* ---------------------------------------------------------------------------
-   Google Fonts
-   --------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 /* ---------------------------------------------------------------------------
    Hide Streamlit Chrome
@@ -128,15 +128,18 @@ section[data-testid="stSidebar"] hr {
     border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Sidebar expander (course tree) */
-section[data-testid="stSidebar"] .streamlit-expanderHeader {
+/* Sidebar expander (course tree) — support old + new Streamlit selectors */
+section[data-testid="stSidebar"] .streamlit-expanderHeader,
+section[data-testid="stSidebar"] [data-testid="stExpanderToggleIcon"],
+section[data-testid="stSidebar"] summary {
     background: rgba(255, 255, 255, 0.04);
     border-radius: 8px;
     font-size: 0.88rem;
     font-weight: 600;
 }
 
-section[data-testid="stSidebar"] .streamlit-expanderContent {
+section[data-testid="stSidebar"] .streamlit-expanderContent,
+section[data-testid="stSidebar"] [data-testid="stExpanderDetails"] {
     border: none;
     padding-left: 0.5rem;
 }
@@ -707,7 +710,8 @@ section[data-testid="stSidebar"] .streamlit-expanderContent {
     padding-top: 2rem;
 }
 
-.streamlit-expanderHeader {
+.streamlit-expanderHeader,
+[data-testid="stExpander"] summary {
     background: var(--bg-section-blue);
     border-radius: 8px;
     font-family: var(--font-body);

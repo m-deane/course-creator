@@ -560,6 +560,20 @@ def diverse_mutation(individual, indpb=0.05):
 
 <!-- Speaker notes: This ASCII summary is a quick reference showing single-objective vs multi-objective, the Pareto front concept, and the three decision strategies. The key visual: dominated solutions (marked with asterisk) are discarded, Pareto optimal solutions (marked with o) form the front, and the decision-maker picks from the front based on their priority. -->
 
+<div class="callout-key">
+
+🔑 **Key Point:** The knee point on the Pareto front is often the best default -- it represents the point of diminishing returns.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Evaluate</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Pareto Sort</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Decide</div>
+</div>
+
 ## Visual Summary
 
 ```

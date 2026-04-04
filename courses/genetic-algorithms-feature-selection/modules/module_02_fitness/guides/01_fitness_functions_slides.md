@@ -504,6 +504,22 @@ flowchart TD
 
 <!-- Speaker notes: This ASCII summary is a quick reference showing the complete fitness function design space. The tree structure branches from the fitness equation into cross-validation strategies on the left and robustness/caching on the right. Encourage learners to keep this as a reference while implementing their own fitness functions. -->
 
+<div class="callout-key">
+
+🔑 **Key Point:** Always cross-validate, always cache, always penalize complexity. For time series, walk-forward is mandatory.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Chromosome</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">CV Error</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step mint">Penalty</div>
+<div class="flow-arrow">=</div>
+<div class="flow-step lavender">Fitness</div>
+</div>
+
 ## Visual Summary
 
 ```

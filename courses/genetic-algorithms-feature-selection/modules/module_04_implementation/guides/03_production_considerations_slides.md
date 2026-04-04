@@ -279,6 +279,12 @@ Total potential speedup: ~28x
 
 ---
 
+<div class="callout-info">
+
+ℹ️ **Info:** Combining parallel evaluation, caching, early stopping, and warm-start can achieve a 28x speedup -- reducing 14 hours to 30 minutes.
+
+</div>
+
 ## Common Pitfalls
 
 | Pitfall | Symptom | Solution |

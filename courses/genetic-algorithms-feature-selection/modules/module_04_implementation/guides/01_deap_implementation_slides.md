@@ -414,6 +414,12 @@ Avg  ────                                     ──────  7
 
 ---
 
+<div class="callout-key">
+
+🔑 **Key Point:** Fitness must return a TUPLE, even for single-objective. HallOfFame preserves the best solutions across all generations.
+
+</div>
+
 ## Key Takeaways
 
 | Component | Implementation |

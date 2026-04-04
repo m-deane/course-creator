@@ -460,6 +460,20 @@ graph TD
 
 <!-- Speaker notes: This ASCII summary shows the complete CV fitness framework as a tree. The chromosome flows through feature selection into either standard or time series CV, then into single-objective or multi-objective fitness. This is the reference architecture for fitness function design in this course. -->
 
+<div class="callout-insight">
+
+💡 **Key Insight:** Time series CV with a gap parameter prevents lookahead bias. Caching saves 20-40% of compute.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Select Features</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Cross-Validate</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Cache Result</div>
+</div>
+
 ## Visual Summary
 
 ```

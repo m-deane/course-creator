@@ -466,6 +466,20 @@ graph LR
 
 <!-- Speaker notes: This ASCII summary is a quick reference card. The key recommendation at the bottom is the main takeaway: start with tournament k=2-3, increase over time, use rank if you have fitness outliers. -->
 
+<div class="callout-key">
+
+🔑 **Key Point:** Start with Tournament k=2-3, increase to k=5-7 as generations progress. Use Rank if fitness has outliers.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Low Pressure (k=2)</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Medium (k=3-5)</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">High Pressure (k=7)</div>
+</div>
+
 ## Visual Summary
 
 ```

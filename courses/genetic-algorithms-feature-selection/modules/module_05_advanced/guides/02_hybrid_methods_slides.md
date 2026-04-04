@@ -264,6 +264,12 @@ Memetic Lamarckian: Best fitness AND fewer features
 
 ---
 
+<div class="callout-key">
+
+🔑 **Key Point:** Refine the elite only (top 10-20%) for best budget efficiency. Compare by total evaluations, not by generation count.
+
+</div>
+
 ## Common Pitfalls
 
 | Pitfall | Symptom | Solution |

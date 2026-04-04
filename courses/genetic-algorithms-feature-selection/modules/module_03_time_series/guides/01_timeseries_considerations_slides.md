@@ -389,6 +389,20 @@ GA selects from 12 features instead of 3
 
 <!-- Speaker notes: This ASCII summary provides a quick reference for the three pillars of time series GA feature selection: validation (walk-forward), stability (rolling windows), and robustness (multi-horizon). Each column shows the approach and key takeaway. The checkmarks reinforce the correct practices. -->
 
+<div class="callout-danger">
+
+🚨 **Warning:** Standard k-fold on autocorrelated data can show 2-10x better performance than reality. Always use walk-forward for time series.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Walk-Forward</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Rolling Stability</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Multi-Horizon</div>
+</div>
+
 ## Visual Summary
 
 ```

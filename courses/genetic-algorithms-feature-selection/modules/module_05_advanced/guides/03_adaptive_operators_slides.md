@@ -310,6 +310,12 @@ Gen 11-15: SR = 0.22 (approximately 0.20) → keep p_m (balanced)
 
 ---
 
+<div class="callout-insight">
+
+💡 **Key Insight:** Self-adaptive parameters eliminate manual tuning by encoding strategy parameters directly in the chromosome.
+
+</div>
+
 ## Common Pitfalls
 
 | Pitfall | Symptom | Solution |

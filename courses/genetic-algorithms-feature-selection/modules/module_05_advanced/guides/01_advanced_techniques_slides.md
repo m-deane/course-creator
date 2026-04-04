@@ -395,6 +395,12 @@ class SurrogateFitness:
 
 ---
 
+<div class="callout-insight">
+
+💡 **Key Insight:** Most real-world problems benefit from combining two or three advanced techniques. Start simple and add complexity with evidence.
+
+</div>
+
 ## Visual Summary
 
 ```

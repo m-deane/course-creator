@@ -488,6 +488,12 @@ flowchart TD
 
 ## Key Takeaways
 
+<div class="callout-insight">
+
+💡 **Key Insight:** The GA framework is a cycle: initialize, evaluate, select, crossover, mutate, replace. Each component has a recommended default for feature selection.
+
+</div>
+
 | Component | Recommendation |
 |-----------|---------------|
 | **Encoding** | Binary -- natural for feature selection |
@@ -499,6 +505,16 @@ flowchart TD
 ---
 
 <!-- Speaker notes: This ASCII summary is a quick reference card. It shows the end-to-end pipeline from chromosome to best feature subset. Encourage learners to keep this as a reference while building their own GA implementations. -->
+
+<div class="flow">
+<div class="flow-step blue">Initialize</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Evaluate</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Select</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Evolve</div>
+</div>
 
 ## Visual Summary
 

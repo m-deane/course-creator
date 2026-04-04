@@ -566,6 +566,20 @@ flowchart TD
 
 <!-- Speaker notes: This ASCII summary is a quick reference card for genetic operators. The bottom section highlights the key tradeoff: high crossover with low mutation converges fast but may get stuck; balanced parameters (0.8 crossover + 1/n mutation) are the standard recommendation. -->
 
+<div class="callout-insight">
+
+💡 **Key Insight:** Uniform crossover + bit-flip mutation at rate 1/n is the standard recommendation for feature selection GAs.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Crossover (p=0.8)</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Mutation (p=1/n)</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Offspring</div>
+</div>
+
 ## Visual Summary
 
 ```

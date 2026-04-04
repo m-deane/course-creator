@@ -329,6 +329,20 @@ Standard k-fold gives 7x better performance than reality!
 
 <!-- Speaker notes: This ASCII decision tree is the key takeaway. Four simple questions determine the correct validation strategy: Is data time-ordered? Is it stationary? Is it autocorrelated? How much data is available? Following this tree leads to realistic performance estimates that match production behavior. The final line emphasizes the practical benefit: your backtested performance will match what you see in production. -->
 
+<div class="callout-key">
+
+🔑 **Key Point:** Walk-forward validation is the gold standard for time series. The gap parameter prevents autocorrelation leakage.
+
+</div>
+
+<div class="flow">
+<div class="flow-step blue">Temporal Order</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Walk-Forward</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Realistic Estimates</div>
+</div>
+
 ## Key Takeaways
 
 ```

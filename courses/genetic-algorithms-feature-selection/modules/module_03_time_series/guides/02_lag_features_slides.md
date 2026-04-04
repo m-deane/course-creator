@@ -327,6 +327,12 @@ Step 6: Selected Lags
 
 <!-- Speaker notes: These takeaways summarize the key insights. PACF is more useful than ACF for selecting specific lags. Seasonal lags should always be included as candidates. Multicollinearity must be managed through VIF penalties. Domain knowledge helps narrow the search. Lag-aware operators respect the variable-lag group structure for more efficient search. -->
 
+<div class="callout-insight">
+
+💡 **Key Insight:** PACF is more useful than ACF for selecting specific lags -- it removes intermediate effects and reveals direct dependencies.
+
+</div>
+
 ## Key Takeaways
 
 | Insight | Detail |

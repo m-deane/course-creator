@@ -317,6 +317,12 @@ Correlation with y: 0.72 (SPURIOUS)
 
 <!-- Speaker notes: These five pitfalls cover the most dangerous mistakes when handling stationarity. Ignoring non-stationarity leads to spurious selection. Over-differencing introduces artificial autocorrelation. Mixing stationarity levels causes spurious regression. Not accounting for structural breaks makes the series appear non-stationary when it is actually piecewise stationary. Blind transformation (differencing already-stationary data) wastes information. -->
 
+<div class="callout-danger">
+
+🚨 **Warning:** Non-stationary features create spurious correlations that fool the GA into selecting features with no real predictive power.
+
+</div>
+
 ## Common Pitfalls
 
 | Pitfall | Problem | Solution |

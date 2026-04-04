@@ -576,6 +576,14 @@ def evaluate_stability(X, y, method, n_iterations=20):
 
 <!-- Speaker notes: Use this ASCII diagram as a quick reference card. It summarizes all three approaches, their costs, strengths, and weaknesses. The key insight is that GAs are a powerful wrapper method. -->
 
+<div class="flow">
+<div class="flow-step blue">Filter</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Embedded</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Wrapper (GA)</div>
+</div>
+
 ## Visual Summary
 
 ```

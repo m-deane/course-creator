@@ -498,9 +498,21 @@ def fast_crossover(parent1, parent2):
 
 **Related:** Permutation encoding (ordered problems), real-valued encoding (continuous), tree encoding (GP)
 
+<div class="callout-key">
+
+🔑 **Key Point:** Binary encoding is the default for feature selection. Use integer encoding only when selecting less than 5% of features.
+
+</div>
+
 ---
 
 <!-- Speaker notes: This ASCII summary is a quick reference for the two encoding strategies. The decision rule at the bottom is the key takeaway: use binary when selecting more than 5% of features, integer otherwise. Most feature selection problems use binary encoding. -->
+
+<div class="flow">
+<div class="flow-step mint">Binary (Default)</div>
+<div class="flow-arrow">vs</div>
+<div class="flow-step blue">Integer (Sparse)</div>
+</div>
 
 ## Visual Summary
 

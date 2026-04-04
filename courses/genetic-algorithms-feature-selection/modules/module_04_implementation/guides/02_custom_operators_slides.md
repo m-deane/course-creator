@@ -401,6 +401,20 @@ Ensures all regions of the search space are represented.
 
 ---
 
+<div class="callout-insight">
+
+💡 **Key Insight:** Custom operators that respect feature structure converge 2-5x faster than standard operators. Always A/B test to verify.
+
+</div>
+
+<div class="flow">
+<div class="flow-step mint">Group-Aware</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Importance-Weighted</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Diversity-Preserving</div>
+</div>
+
 ## Key Takeaways
 
 | Operator | Use When |

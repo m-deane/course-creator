@@ -20,6 +20,13 @@ Respecting temporal ordering in feature selection
 
 ## Why Standard CV is Invalid for Time Series
 
+<div class="callout-danger">
+
+**Danger:** Using random k-fold on time series trains on future data to predict the past. Performance estimates are meaningless for production deployment.
+
+</div>
+
+
 ![Walk-Forward Timeline](walk_forward_timeline.svg)
 
 Standard k-fold trains on future data to predict the past:
@@ -190,6 +197,13 @@ validator = WalkForwardValidator(gap=10)
 
 ## Fixed vs Expanding Window Decision
 
+<div class="callout-insight">
+
+**Insight:** Use expanding windows for stationary data (more data = better). Use fixed windows for non-stationary data with concept drift (old data becomes misleading).
+
+</div>
+
+
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -316,6 +330,20 @@ Standard k-fold gives 7x better performance than reality!
 <!-- Speaker notes: This pitfall table is a practical reference. The five most common mistakes: using standard k-fold (trains on future), no gap (autocorrelation leaks), too few test samples (unreliable), expanding on non-stationary data (old data irrelevant), and single validation path (not robust). Each has a clear solution. Combinatorial purged CV is the advanced technique for maximum robustness. -->
 
 ## Common Pitfalls
+
+<div class="callout-warning">
+
+**Warning:** A gap of 0 between train and test allows autocorrelation leakage. For daily financial data, use a gap of at least 5-10 trading days.
+
+</div>
+
+
+<div class="callout-warning">
+
+**Warning:** A gap of 0 between train and test allows autocorrelation leakage. For daily financial data, use a gap of at least 5-10 trading days.
+
+</div>
+
 
 | Pitfall | Problem | Solution |
 |---------|---------|----------|

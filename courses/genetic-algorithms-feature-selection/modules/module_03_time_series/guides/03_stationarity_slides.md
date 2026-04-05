@@ -44,6 +44,13 @@ STATIONARY:                    NON-STATIONARY:
 
 ## Why Stationarity Matters for Feature Selection
 
+<div class="callout-danger">
+
+**Danger:** Regression on non-stationary data produces spurious correlations. Two unrelated random walks can show correlation of 0.9 purely by chance.
+
+</div>
+
+
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -96,6 +103,13 @@ GA might select Random_Walk and Trend because they have **higher** correlation â
 <!-- Speaker notes: The ADF (Augmented Dickey-Fuller) test is the standard stationarity test. The null hypothesis is that the series has a unit root (non-stationary). A p-value below 0.05 means we reject the null and conclude stationarity. Best practice is to use both ADF and KPSS because they test different null hypotheses. The four possible combinations (both agree, both disagree, mixed) give a complete picture. KPSS tests the null that the series IS stationary, so the tests are complementary. -->
 
 ## Stationarity Testing
+
+<div class="callout-insight">
+
+**Insight:** Use both ADF and KPSS tests together. ADF tests the null of non-stationarity; KPSS tests the null of stationarity. A series should pass both for confidence.
+
+</div>
+
 
 ### ADF Test
 
@@ -337,7 +351,21 @@ Correlation with y: 0.72 (SPURIOUS)
 
 <!-- Speaker notes: These takeaways and the decision flow are the practical reference for this topic. Always test stationarity before feature selection. Use both ADF and KPSS for complete diagnosis. Differencing handles most cases. Penalize non-stationary features in the fitness function. Consider cointegration for the advanced case where non-stationary features can be useful if they share a common stochastic trend with the target. -->
 
+<div class="callout-warning">
+
+**Warning:** Over-differencing a stationary series introduces artificial negative autocorrelation. Always test before differencing.
+
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Over-differencing a stationary series introduces artificial negative autocorrelation. Always test before differencing.
+
+</div>
+
 ## Key Takeaways
+
+
 
 <div class="flow">
 <div class="flow-step blue">Test Stationarity</div>

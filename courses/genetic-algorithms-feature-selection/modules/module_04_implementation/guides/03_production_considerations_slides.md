@@ -19,6 +19,13 @@ Scaling, parallelization, caching, and reproducibility
 
 ## The Production Bottleneck
 
+<div class="callout-danger">
+
+**Danger:** A naive GA with population 100, 50 generations, and 5-fold CV trains 25,000 models. At 10 seconds each, that is 70 hours. Parallelization and caching are not optional -- they are mandatory.
+
+</div>
+
+
 The fitness function dominates runtime:
 
 $$T_{\text{serial}} = G \times P \times T_{\text{fitness}}$$
@@ -146,6 +153,13 @@ Over 5000 evaluations with 20% hit rate → **1000 evaluations saved**.
 ---
 
 ## Reproducibility Management
+
+<div class="callout-warning">
+
+**Warning:** Non-deterministic GAs produce different results every run, making debugging impossible. Always set random seeds for NumPy, Python random, and your ML framework.
+
+</div>
+
 
 
 <div class="code-window">
@@ -299,7 +313,14 @@ Total potential speedup: ~28x
 
 ---
 
+<div class="callout-key">
+
+**Key:** Fitness caching alone provides 30-50% speedup. Combined with 4-8 core parallelization, expect 5-10x wall-clock reduction.
+
+</div>
+
 ## Key Takeaways
+
 
 <div class="flow">
 <div class="flow-step mint">Parallel</div>

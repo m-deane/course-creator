@@ -205,6 +205,12 @@ print(f"MSE: {objectives[0]:.4f}, Complexity: {objectives[1]:.4f}")
 
 ### NSGA-II with DEAP
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nsga2_feature_selection.py</span>
+</div>
+
 ```python
 from deap import base, creator, tools, algorithms
 import matplotlib.pyplot as plt
@@ -309,6 +315,8 @@ for i, ind in enumerate(pareto_front[:5]):
     print(f"Solution {i+1}: {n_features} features, MSE={mse:.4f}, "
           f"Complexity={complexity:.4f}")
 ```
+
+</div>
 
 ### Hypervolume Calculation
 
@@ -484,6 +492,10 @@ for strategy in ['accuracy', 'sparse', 'balanced', 'knee']:
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> Converting multi-objective to single-objective with a weighted sum (e.g., 0.7 * error + 0.3 * features) permanently collapses the Pareto front into a single point. You lose all other trade-off options. This decision is irreversible once the GA has run.
+</div>
+
 ### Pitfall 1: Converting to Single Objective Too Early
 
 **Problem:** Using weighted sum $f(s) = w_1 f_1(s) + w_2 f_2(s)$ collapses the Pareto front to a single solution.
@@ -562,6 +574,10 @@ def diverse_mutation(individual, indpb=0.05):
 - **Architecture search**: Multi-objective neural architecture optimization
 - **Portfolio optimization**: Financial applications of Pareto optimization
 - **Engineering design**: Tradeoffs in physical system design
+
+<div class="callout-key">
+<strong>Key Takeaway:</strong> The "knee point" of the Pareto front -- where further feature reduction causes disproportionate accuracy loss -- is usually the best practical choice. It represents the point of diminishing returns for model simplification.
+</div>
 
 ## Practice Problems
 

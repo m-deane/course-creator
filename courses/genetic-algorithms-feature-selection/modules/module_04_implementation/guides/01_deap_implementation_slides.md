@@ -127,6 +127,13 @@ def setup_toolbox(n_features, X, y):
 
 ## The Fitness Function
 
+<div class="callout-danger">
+
+**Danger:** DEAP's `creator.create()` modifies global state. Calling it twice with the same name raises an error. In notebooks, restart the kernel or guard with `hasattr(creator, "FitnessMin")`.
+
+</div>
+
+
 
 <div class="code-window">
 <div class="code-header">
@@ -286,6 +293,13 @@ def custom_ga(X, y, pop_size=50, n_gens=50, elitism=2, early_stop=10):
 
 ## Time Series Feature Selection
 
+<div class="callout-warning">
+
+**Warning:** Never use standard `cross_val_score` with default `KFold` for time series. Always pass `TimeSeriesSplit` to prevent look-ahead bias.
+
+</div>
+
+
 
 <div class="code-window">
 <div class="code-header">
@@ -420,7 +434,14 @@ Avg  ────                                     ──────  7
 
 </div>
 
+<div class="callout-key">
+
+**Key:** The custom evolution loop gives you control over elitism, early stopping, and constraint enforcement -- use it for production over `eaSimple`.
+
+</div>
+
 ## Key Takeaways
+
 
 | Component | Implementation |
 |-----------|---------------|

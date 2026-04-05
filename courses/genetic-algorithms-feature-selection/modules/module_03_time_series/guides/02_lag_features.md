@@ -311,6 +311,12 @@ def identify_significant_lags(
 
 ### Multicollinearity Detection and Handling
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multicollinearity.py</span>
+</div>
+
 ```python
 def compute_vif(X: pd.DataFrame) -> pd.Series:
     """
@@ -425,7 +431,15 @@ def remove_redundant_lags(
     return X_reduced
 ```
 
+</div>
+
 ### GA Fitness Function for Lag Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">lag_selection_fitness.py</span>
+</div>
 
 ```python
 from sklearn.base import BaseEstimator
@@ -569,6 +583,8 @@ def lag_aware_mutation(
     return mutant
 ```
 
+</div>
+
 ### Complete Example
 
 ```python
@@ -709,6 +725,10 @@ if __name__ == "__main__":
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> Lag features with consecutive indices (lag-1, lag-2, lag-3, ...) are almost always highly correlated (VIF > 100). Including them all causes numerical instability in linear models and wastes capacity in tree models. Always check VIF before using lag features.
+</div>
+
 ### 1. Including Too Many Lags
 
 **Problem**: Overfitting and multicollinearity from redundant lags.
@@ -744,6 +764,10 @@ fitness = mse + alpha_vif * vif_penalty
 
 # For k-step ahead forecast, you need y_{t-k-1}, not y_{t-1}
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> Confusing lag-k features with k-step-ahead forecasting is a common mistake. A lag-k feature uses y(t-k) to predict y(t) -- this is still a 1-step-ahead forecast. For true k-step-ahead, you need lags starting at k, not 1.
+</div>
 
 ### 4. Not Accounting for Seasonality
 

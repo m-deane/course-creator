@@ -299,6 +299,12 @@ def scattered_crossover(
 
 ### Mutation Operators
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">mutation_operators.py</span>
+</div>
+
 ```python
 def bit_flip_mutation(
     individual: Individual,
@@ -391,8 +397,11 @@ def swap_mutation(
 
     mutant.fitness = None
     return mutant
+```
 
+</div>
 
+```python
 def adaptive_mutation(
     individual: Individual,
     generation: int,
@@ -470,6 +479,12 @@ def inversion_mutation(
 
 ### Combined Operators and Analysis
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">combined_operators.py</span>
+</div>
+
 ```python
 def apply_genetic_operators(
     parent1: Individual,
@@ -517,8 +532,11 @@ def apply_genetic_operators(
     child2 = bit_flip_mutation(child2, mutation_rate, min_features)
 
     return child1, child2
+```
 
+</div>
 
+```python
 def analyze_operator_effects():
     """
     Analyze effects of different operators on offspring diversity.
@@ -689,6 +707,10 @@ if __name__ == "__main__":
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> A mutation rate of 0.5 means half of all bits flip each generation -- this is random search, not evolution. The GA loses all memory of good solutions. Always verify that the Hamming distance between parent and child is small (1-2 bits).
+</div>
+
 ### 1. Mutation Rate Too High
 
 **Problem**: High mutation rate destroys good solutions (becomes random search).
@@ -716,6 +738,10 @@ child1, child2 = uniform_crossover(p1, p2, crossover_prob=1.0)
 child1, child2 = uniform_crossover(p1, p2, crossover_prob=0.8)
 # 20% of time, returns clones of parents
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> Single-point crossover introduces positional bias -- features near each other in the chromosome tend to stay together. For feature selection, features have no natural ordering, so this bias is harmful. Use uniform crossover as the default.
+</div>
 
 ### 3. Wrong Crossover for Problem Structure
 

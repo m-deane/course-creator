@@ -4,6 +4,10 @@
 
 ## Introduction
 
+<div class="callout-key">
+<strong>Key Takeaway:</strong> The three operators -- selection, crossover, mutation -- form a balanced system. Selection drives convergence, crossover combines good building blocks, and mutation prevents stagnation. Removing or misconfiguring any one breaks the system.
+</div>
+
 Genetic algorithms evolve solutions through three fundamental operators:
 1. **Selection**: Choose parents for reproduction
 2. **Crossover**: Combine parent traits to create offspring
@@ -13,6 +17,16 @@ Understanding these operators is essential for effective GA design.
 
 
 ![Feature Selection Pipeline](./feature_selection_pipeline.svg)
+
+<div class="flow">
+<div class="flow-step mint">Selection</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Crossover</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Mutation</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Offspring</div>
+</div>
 
 ## Selection Operators
 
@@ -67,6 +81,12 @@ print(f"Fitness: {sum(selected)}")
 
 ### Roulette Wheel Selection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_wheel.py</span>
+</div>
+
 ```python
 def roulette_wheel_selection(population, fitness_scores):
     """
@@ -110,6 +130,8 @@ def roulette_wheel_vectorized(population, fitness_scores, n_select=1):
 selected = roulette_wheel_selection(population, fitness_scores)
 print(f"Roulette selected: {selected}")
 ```
+
+</div>
 
 ### Rank Selection
 
@@ -308,6 +330,12 @@ print(f"Mutated:  {mutated_perm}")
 
 For feature selection, chromosomes are binary vectors where 1 = feature selected:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">feature_selection_operators.py</span>
+</div>
+
 ```python
 class FeatureSelectionOperators:
     """Operators specialized for feature selection."""
@@ -372,6 +400,8 @@ print(f"Parent 2 features: {sum(parent2)}")
 print(f"Child 1 features: {sum(child1)}")
 print(f"Mutated features: {sum(mutated)}")
 ```
+
+</div>
 
 ## Adaptive Operators
 
@@ -470,4 +500,4 @@ compare_operators()
 </div>
 ---
 
-**Next:** [Companion Slides](./02_evolutionary_operators_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)
+**Next:** [Companion Slides](./03_evolutionary_operators_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)

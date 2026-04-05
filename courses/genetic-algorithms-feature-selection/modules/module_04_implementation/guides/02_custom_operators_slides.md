@@ -40,6 +40,13 @@ Custom operators that respect structure converge **2-5x faster** than standard o
 
 ## The One-Hot Problem
 
+<div class="callout-danger">
+
+**Danger:** Standard crossover can split one-hot encoded feature groups, creating invalid individuals (e.g., selecting 2 of 3 dummy variables). Always use group-aware operators for categorical features.
+
+</div>
+
+
 ```
 Features: [city_NYC, city_LA, city_CHI, income, age]
 
@@ -147,6 +154,13 @@ def hierarchical_crossover(child, interaction_map):
 ---
 
 ## Importance-Weighted Mutation
+
+<div class="callout-insight">
+
+**Insight:** Mutating important features less frequently preserves good building blocks while still allowing exploration via unimportant features.
+
+</div>
+
 
 ```
 Standard Mutation: All features p_m = 0.01
@@ -415,7 +429,14 @@ Ensures all regions of the search space are represented.
 <div class="flow-step blue">Diversity-Preserving</div>
 </div>
 
+<div class="callout-key">
+
+**Key:** Custom operators that respect feature structure converge 2-5x faster than generic ones. The development effort pays off quickly.
+
+</div>
+
 ## Key Takeaways
+
 
 | Operator | Use When |
 |----------|----------|

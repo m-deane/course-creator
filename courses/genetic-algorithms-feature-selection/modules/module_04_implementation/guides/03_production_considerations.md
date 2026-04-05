@@ -606,6 +606,10 @@ print(f"  Train accuracy: {train_score:.4f}")
 print(f"  Test accuracy: {test_score:.4f}")
 ```
 
+<div class="callout-danger">
+<strong>Danger:</strong> Non-deterministic GAs produce different results on every run, making debugging impossible and A/B testing unreliable. Always set random seeds for NumPy, Python random, and your ML framework. Store seeds alongside results for full reproducibility.
+</div>
+
 ## Common Pitfalls
 
 <div class="callout-warning">
@@ -659,6 +663,10 @@ print(f"  Test accuracy: {test_score:.4f}")
 - Distributed computing (Dask, Ray, Spark for large-scale GA)
 - Hyperparameter optimization (Optuna, Hyperopt parallelization)
 - Workflow orchestration (Airflow, Prefect for GA pipelines)
+
+<div class="callout-key">
+<strong>Key Takeaway:</strong> Fitness caching alone can provide 30-50% speedup for typical GA runs. Combined with parallelization (4-8 cores), you can achieve 5-10x wall-clock reduction, making GA feature selection feasible for production ML pipelines.
+</div>
 
 ## Practice Problems
 

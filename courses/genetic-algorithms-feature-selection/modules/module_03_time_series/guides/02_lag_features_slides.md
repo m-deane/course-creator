@@ -67,6 +67,13 @@ ACF decays slowly → many               PACF cuts off → lags 1,2,7
 
 ## The Multicollinearity Problem
 
+<div class="callout-warning">
+
+**Warning:** Consecutive lag features (lag-1, lag-2, lag-3) are highly correlated. Including all of them wastes model capacity and causes multicollinearity (VIF > 100).
+
+</div>
+
+
 Lag features are naturally correlated:
 
 $$\text{VIF}_j = \frac{1}{1 - R_j^2}$$
@@ -117,6 +124,13 @@ GA can automatically discover these patterns without domain knowledge.
 <!-- Speaker notes: The lag selection fitness function adds a VIF penalty to the standard walk-forward evaluation. Three penalties combine: prediction error (from walk-forward CV), complexity penalty (proportional to number of selected features), and VIF penalty (proportional to the number of features with VIF above the threshold). The VIF penalty discourages selecting redundant lag features that introduce multicollinearity. -->
 
 ## GA Fitness for Lag Selection
+
+<div class="callout-insight">
+
+**Insight:** Include a VIF penalty in the fitness function to discourage the GA from selecting redundant correlated lags.
+
+</div>
+
 
 
 <div class="code-window">
@@ -333,7 +347,21 @@ Step 6: Selected Lags
 
 </div>
 
+<div class="callout-key">
+
+**Key:** PACF is more useful than ACF for selecting specific lags because it removes the effect of intermediate lags.
+
+</div>
+
+<div class="callout-key">
+
+**Key:** PACF is more useful than ACF for selecting specific lags because it removes the effect of intermediate lags, revealing which lags add genuinely new information.
+
+</div>
+
 ## Key Takeaways
+
+
 
 | Insight | Detail |
 |---------|--------|

@@ -643,6 +643,10 @@ print(f"  Diversity-preserving: {div_diverse:.2f}")
 print(f"  Fitness-only: {div_fitness:.2f}")
 ```
 
+<div class="callout-danger">
+<strong>Danger:</strong> Custom operators that violate problem constraints (e.g., selecting zero features, exceeding budget limits) corrupt the population silently. Always wrap custom operators with a constraint-repair step that fires after every crossover and mutation.
+</div>
+
 ## Common Pitfalls
 
 <div class="callout-warning">
@@ -696,6 +700,10 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 - Constraint satisfaction (operators respecting constraints)
 - Local search (mutation as local neighborhood exploration)
 - Problem-specific heuristics (domain knowledge integration)
+
+<div class="callout-key">
+<strong>Key Takeaway:</strong> Custom operators that respect feature group structure (e.g., keeping all one-hot encoded columns together) converge 2-5x faster than standard operators. The investment in operator design pays off quickly for domain-specific problems.
+</div>
 
 ## Practice Problems
 

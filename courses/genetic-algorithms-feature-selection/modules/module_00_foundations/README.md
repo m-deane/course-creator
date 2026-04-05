@@ -18,8 +18,9 @@ By completing this module, you will:
 
 ### Guides
 - `01_feature_selection_problem.md` - The curse of dimensionality
-- `02_selection_approaches.md` - Filter, wrapper, embedded
-- `03_optimization_basics.md` - Search spaces and objectives
+- `03_evolutionary_operators.md` - Selection, crossover, mutation
+- `04_selection_approaches.md` - Filter, wrapper, embedded
+- `02_optimization_basics.md` - Search spaces and objectives
 
 ### Notebooks
 - `01_selection_comparison.ipynb` - Comparing approaches

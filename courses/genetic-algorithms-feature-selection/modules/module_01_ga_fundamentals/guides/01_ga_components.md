@@ -40,6 +40,20 @@ Genetic algorithms simulate natural evolution to solve optimization problems:
 
 ![GA Lifecycle](./ga_lifecycle.svg)
 
+<div class="flow">
+<div class="flow-step mint">Initialize</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Evaluate</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Select</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Crossover</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Mutate</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Replace</div>
+</div>
+
 ![Selection Methods](./selection_methods.svg)
 
 <div class="callout-insight">
@@ -134,6 +148,12 @@ class Population:
 
 ### Tournament Selection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
+</div>
+
 ```python
 def tournament_selection(
     population: Population,
@@ -164,6 +184,8 @@ def select_parents(
         for _ in range(n_parents)
     ]
 ```
+
+</div>
 
 ### Roulette Wheel Selection
 
@@ -292,6 +314,10 @@ def two_point_crossover(
 
 ## Mutation Operators
 
+<div class="callout-danger">
+<strong>Danger:</strong> An all-zeros chromosome (no features selected) will crash most fitness functions with division-by-zero or empty-array errors. Every operator must include a validity check to ensure at least one feature remains selected.
+</div>
+
 <div class="callout-warning">
 
 ⚠️ **Warning:** After any mutation or crossover operation, always validate that at least one feature is selected. An all-zeros chromosome is invalid and will crash most fitness functions.
@@ -379,6 +405,12 @@ def swap_mutation(
 
 ### Generational Replacement
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">replacement_strategies.py</span>
+</div>
+
 ```python
 def generational_replacement(
     old_population: Population,
@@ -403,6 +435,8 @@ def generational_replacement(
 
     return Population(new_pop)
 ```
+
+</div>
 
 ### Steady-State Replacement
 

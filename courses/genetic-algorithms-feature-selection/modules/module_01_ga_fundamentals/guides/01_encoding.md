@@ -37,6 +37,27 @@ A solution is represented as a variable-length vector $\mathbf{v} = [i_1, i_2, .
 - **Maximum features**: $|\mathbf{x}|_1 \leq k_{max}$ (problem-dependent)
 - **Uniqueness**: In integer encoding, no duplicate indices
 
+<div class="compare">
+<div class="compare-card">
+<div class="header red">Binary Encoding</div>
+<ul>
+<li>Fixed-length chromosome (n bits)</li>
+<li>Standard crossover/mutation operators</li>
+<li>Memory: O(n) always</li>
+<li>Best when selecting many features</li>
+</ul>
+</div>
+<div class="compare-card">
+<div class="header green">Integer Encoding</div>
+<ul>
+<li>Variable-length chromosome (k indices)</li>
+<li>Requires specialized operators</li>
+<li>Memory: O(k) -- compact when k &lt;&lt; n</li>
+<li>Best when selecting very few features</li>
+</ul>
+</div>
+</div>
+
 ## Intuitive Explanation
 
 Think of binary encoding like a light switch panel where each switch controls one feature. All switches are always present, but can be ON (1) or OFF (0). This makes it easy to flip switches (mutation) or exchange switch settings between two panels (crossover).
@@ -233,6 +254,12 @@ def demo_binary_encoding():
 
 
 ### Integer Encoding Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">integer_encoding.py</span>
+</div>
 
 ```python
 @dataclass
@@ -443,6 +470,8 @@ if __name__ == "__main__":
     compare_encodings()
 ```
 
+</div>
+
 ## Common Pitfalls
 
 ### 1. Allowing Empty Solutions
@@ -475,6 +504,10 @@ def good_mutation(individual, min_features=1):
     return mutant
 ```
 
+<div class="callout-danger">
+<strong>Danger:</strong> Choosing the wrong encoding for your problem size can make the GA 100x slower. If selecting 5 features from 100,000, binary encoding wastes 99.995% of the chromosome on zeros. Use integer encoding instead.
+</div>
+
 ### 2. Integer Encoding Duplicates
 
 **Problem**: Crossover or mutation creates duplicate feature indices.
@@ -501,6 +534,10 @@ def good_integer_mutation(individual):
 
     return mutant
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> Always validate uniqueness after integer crossover or mutation. Two parents with overlapping feature indices can produce children with duplicate entries, violating the encoding constraint.
+</div>
 
 ### 3. Inefficient Binary Operations
 

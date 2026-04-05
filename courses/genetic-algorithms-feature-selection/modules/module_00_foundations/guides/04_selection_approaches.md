@@ -51,6 +51,27 @@ Examples:
 - **Tree-based importance**: Feature usage in decision trees
 - **Elastic Net**: $\lambda_1 \sum |\beta_i| + \lambda_2 \sum \beta_i^2$
 
+<div class="compare">
+<div class="compare-card">
+<div class="header red">Filter Methods</div>
+<ul>
+<li>Fast: O(n · p) complexity</li>
+<li>Model-independent</li>
+<li>Miss feature interactions</li>
+<li>Best for initial screening</li>
+</ul>
+</div>
+<div class="compare-card">
+<div class="header green">Wrapper Methods</div>
+<ul>
+<li>Slow: O(2^p) worst case</li>
+<li>Model-specific evaluation</li>
+<li>Capture interactions</li>
+<li>Best for final selection</li>
+</ul>
+</div>
+</div>
+
 ## Intuitive Explanation
 
 Think of choosing team members for a project:
@@ -192,6 +213,12 @@ print(f"True relevant features: [0, 1, 2, 3, 4]")
 
 ### Wrapper Method: Forward Selection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_selection_wrapper.py</span>
+</div>
+
 ```python
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import cross_val_score
@@ -272,7 +299,15 @@ plt.grid(alpha=0.3)
 plt.tight_layout()
 ```
 
+</div>
+
 ### Embedded Method: Lasso
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">lasso_selection.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import LassoCV, Lasso
@@ -354,6 +389,8 @@ plt.tight_layout()
 
 print(f"Selected features (Lasso): {selected_lasso}")
 ```
+
+</div>
 
 ### Comparing All Three Approaches
 
@@ -481,6 +518,10 @@ print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")
 
 **How to avoid:** Use wrapper methods for problems with known interactions, or add interaction terms to filter evaluation.
 
+<div class="callout-danger">
+<strong>Danger:</strong> Evaluating thousands of feature subsets on the same validation set is a form of data leakage. The "best" subset is partially optimized to the validation set, not the true data distribution. Always use nested cross-validation for wrapper methods.
+</div>
+
 ### Pitfall 2: Overfitting with Wrapper Methods
 
 **Problem:** Testing many feature subsets on the same validation set leads to overfitting the validation set.
@@ -518,6 +559,10 @@ for train_idx, test_idx in KFold(5).split(X):
     score = evaluate(X_test, y_test, best_subset)
     outer_scores.append(score)
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> Wrapper methods can require thousands of model evaluations. For expensive models (deep learning, large ensembles), use filters for initial screening, then wrappers for final refinement.
+</div>
 
 ### Pitfall 3: Embedded Methods with Non-Linear Models
 
@@ -704,4 +749,4 @@ for method in ['filter', 'wrapper', 'embedded']:
 - **Li et al. (2017)**: "Feature Selection: A Data Perspective" - Modern comprehensive review including recent developments.
 ---
 
-**Next:** [Companion Slides](./02_selection_approaches_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)
+**Next:** [Companion Slides](./04_selection_approaches_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)

@@ -19,6 +19,13 @@ Self-tuning parameters and mutation rates
 
 ## Why Fixed Parameters Fail
 
+<div class="callout-danger">
+
+**Danger:** A fixed mutation rate of 0.01 may be too low for early exploration and too high for late refinement. The optimal rate changes during the search -- what works at generation 1 fails at generation 50.
+
+</div>
+
+
 Optimal parameters change during search:
 
 ```
@@ -80,6 +87,13 @@ Good baseline, but can't react to search dynamics.
 ---
 
 ## Strategy 2: Diversity-Based Adaptation
+
+<div class="callout-insight">
+
+**Insight:** Diversity-based adaptation is the most robust strategy: measure Hamming distance across the population, increase mutation when diversity drops, decrease when diversity is high.
+
+</div>
+
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -330,7 +344,14 @@ Gen 11-15: SR = 0.22 (approximately 0.20) → keep p_m (balanced)
 
 ---
 
+<div class="callout-key">
+
+**Key:** The 1/5 success rule provides a simple adaptive heuristic: if more than 1/5 of mutations improve fitness, increase the mutation rate; if fewer, decrease it.
+
+</div>
+
 ## Key Takeaways
+
 
 <div class="flow">
 <div class="flow-step mint">Fixed</div>

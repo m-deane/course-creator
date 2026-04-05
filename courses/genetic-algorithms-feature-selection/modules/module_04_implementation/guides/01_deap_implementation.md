@@ -18,6 +18,18 @@ pip install deap
 
 </div>
 
+<div class="flow">
+<div class="flow-step mint">Define Types</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Build Toolbox</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Create Population</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Run Evolution</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Extract Best</div>
+</div>
+
 ## Basic GA Setup
 
 ### Defining Types
@@ -45,6 +57,12 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 
 
 ### Creating the Toolbox
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">setup_toolbox.py</span>
+</div>
 
 ```python
 def setup_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
@@ -96,6 +114,8 @@ def setup_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
 
     return toolbox
 ```
+
+</div>
 
 ## Running the GA
 
@@ -164,6 +184,12 @@ print(f"Best fitness: {result['fitness']:.4f}")
 ```
 
 ## Custom Evolution Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">custom_ga.py</span>
+</div>
 
 ```python
 def custom_ga(
@@ -262,7 +288,13 @@ def custom_ga(
     }
 ```
 
+</div>
+
 ## Time Series Feature Selection
+
+<div class="callout-danger">
+<strong>Danger:</strong> DEAP's creator.create() modifies global state. Calling it twice with the same name (e.g., "FitnessMin") raises an error. In notebooks, restart the kernel or add a guard: if not hasattr(creator, "FitnessMin").
+</div>
 
 <div class="callout-warning">
 

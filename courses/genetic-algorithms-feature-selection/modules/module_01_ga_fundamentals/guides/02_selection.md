@@ -162,6 +162,12 @@ def adaptive_tournament_selection(
 
 ### Roulette Wheel Selection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_wheel_selection.py</span>
+</div>
+
 ```python
 def roulette_wheel_selection(
     population: List[Individual],
@@ -269,7 +275,15 @@ def stochastic_universal_sampling(
     return selected
 ```
 
+</div>
+
 ### Rank Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rank_selection.py</span>
+</div>
 
 ```python
 def rank_selection(
@@ -323,8 +337,11 @@ def rank_selection(
     # Select
     idx = np.random.choice(N, p=probabilities)
     return sorted_pop[idx]
+```
 
+</div>
 
+```python
 def exponential_rank_selection(
     population: List[Individual],
     minimize: bool = True,
@@ -485,6 +502,10 @@ if __name__ == "__main__":
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> Using raw fitness values with roulette wheel selection in a minimization problem inverts the selection logic -- the worst individual gets the highest selection probability. This silently produces terrible results with no error message.
+</div>
+
 ### 1. Wrong Fitness Transformation for Minimization
 
 **Problem**: Using raw fitness for roulette wheel in minimization problems.
@@ -573,6 +594,10 @@ def good_roulette_negative(population):
 - Diversity maintenance
 - Fitness sharing and niching
 - Island models and migration
+
+<div class="callout-key">
+<strong>Key Takeaway:</strong> Tournament selection is the safest default. It works for both minimization and maximization, is insensitive to fitness scaling, and provides easily tunable selection pressure via tournament size.
+</div>
 
 ## Practice Problems
 

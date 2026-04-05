@@ -52,6 +52,27 @@ Imagine predicting stock prices. In reality, you can only use data up to today t
 
 **Walk-forward validation** is like taking practice tests that only use knowledge available before each test date. Your practice scores will realistically reflect real-world performance.
 
+<div class="compare">
+<div class="compare-card">
+<div class="header red">Fixed Window</div>
+<ul>
+<li>Constant training size</li>
+<li>Discards old data automatically</li>
+<li>Better for non-stationary series</li>
+<li>Adapts to concept drift</li>
+</ul>
+</div>
+<div class="compare-card">
+<div class="header green">Expanding Window</div>
+<ul>
+<li>Growing training size</li>
+<li>Uses all available history</li>
+<li>Better for stationary series</li>
+<li>More data = better estimates</li>
+</ul>
+</div>
+</div>
+
 **Fixed vs. Expanding window:**
 - **Fixed window**: Like only remembering the last $N$ days (useful for non-stationary series where old data becomes irrelevant)
 - **Expanding window**: Like remembering everything (useful for stationary series where more data = better estimates)
@@ -326,6 +347,12 @@ def walk_forward_feature_selection(
 
 ### Advanced Walk-Forward Strategies
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">advanced_walk_forward.py</span>
+</div>
+
 ```python
 class AdaptiveWalkForward:
     """
@@ -479,6 +506,8 @@ def purged_walk_forward(
     # Implementation similar to BlockedWalkForward with symmetric gaps
     pass
 ```
+
+</div>
 
 ### Practical Example with Genetic Algorithm
 
@@ -661,6 +690,10 @@ if __name__ == "__main__":
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> Training on future data to predict the past is the time series equivalent of looking at the exam answers before taking the test. The resulting performance estimates are meaningless -- they tell you how well the model memorizes temporal patterns, not how well it forecasts.
+</div>
+
 ### 1. Using Standard K-Fold Cross-Validation
 
 **Problem**: Trains on future data to predict past.
@@ -686,6 +719,10 @@ validator = WalkForwardValidator(gap=0)
 # Good - gap prevents immediate autocorrelation leakage
 validator = WalkForwardValidator(gap=10)  # Skip 10 samples
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> A gap of 0 between train and test sets allows autocorrelation to leak information. For financial data with daily frequency, use a gap of at least 5-10 trading days.
+</div>
 
 ### 3. Not Enough Test Samples
 

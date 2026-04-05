@@ -4,6 +4,10 @@
 
 ## Introduction
 
+<div class="callout-key">
+<strong>Key Takeaway:</strong> The fitness function is the single most impactful component of your GA. A well-designed fitness function with proper cross-validation will find good features even with suboptimal operators. A poorly designed one will find bad features regardless of how sophisticated your GA is.
+</div>
+
 For feature selection, fitness must evaluate how well selected features predict the target. Cross-validation provides robust estimation of generalization performance.
 
 
@@ -171,6 +175,12 @@ for chrom in test_chromosomes:
 
 For financial applications, use time-aware CV:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">timeseries_fitness.py</span>
+</div>
+
 ```python
 class TimeSeriesFitnessEvaluator(CVFitnessEvaluator):
     """
@@ -260,6 +270,8 @@ print(f"  CV Mean: {details['cv_mean']:.4f}")
 print(f"  CV Std: {details['cv_std']:.4f}")
 print(f"  Scores: {[f'{s:.4f}' for s in details['cv_scores']]}")
 ```
+
+</div>
 
 ## Multi-Objective Fitness
 
@@ -355,6 +367,10 @@ print("\nPareto-optimal solutions:")
 for ind, obj in zip(pareto_front[:5], pareto_objectives[:5]):
     print(f"  Features: {sum(ind):2d}, Accuracy: {obj[0]:.4f}")
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> Multi-objective fitness returns a tuple, not a scalar. Ensure your GA is configured for multi-objective optimization (e.g., NSGA-II) before using Pareto fitness. Passing a tuple to a single-objective GA will crash or silently produce wrong results.
+</div>
 
 ## Regularized Fitness
 

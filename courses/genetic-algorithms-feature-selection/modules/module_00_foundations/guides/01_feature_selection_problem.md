@@ -100,6 +100,10 @@ f_3(s) = \text{Computational Cost}(X_s)
 
 This creates a Pareto frontier: improving one objective may worsen others.
 
+<div class="callout-key">
+<strong>Key Takeaway:</strong> With $p > 20$ features, exhaustive search is physically impossible. This is not a performance problem -- it is a mathematical certainty. Any viable approach must use intelligent search heuristics.
+</div>
+
 ## Code Implementation
 
 ### Naive Exhaustive Search
@@ -187,6 +191,12 @@ print(f"Best score: {best_score:.4f}")
 
 ### Time Series Feature Selection Problem
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">time_series_features.py</span>
+</div>
+
 ```python
 import pandas as pd
 from sklearn.model_selection import TimeSeriesSplit
@@ -231,7 +241,13 @@ print(f"Possible subsets: 2^{features.shape[1]} = {2**features.shape[1]:,.0f}")
 print(f"Need intelligent search strategy!")
 ```
 
+</div>
+
 ## Common Pitfalls
+
+<div class="callout-danger">
+<strong>Danger:</strong> Data leakage from feature selection outside cross-validation is the most common and most damaging mistake in ML pipelines. It produces models that appear to perform well in development but fail catastrophically in production.
+</div>
 
 ### Pitfall 1: Selection on Full Dataset
 
@@ -240,6 +256,13 @@ print(f"Need intelligent search strategy!")
 **Why it happens:** It's tempting to select features once then validate, but this allows test information to influence selection.
 
 **How to avoid:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">proper_cv_selection.py</span>
+</div>
+
 ```python
 # WRONG: Feature selection before CV
 selected = select_features(X, y)  # Uses all data
@@ -260,6 +283,8 @@ for train_idx, test_idx in tscv.split(X):
     score = model.score(X_test[:, selected], y_test)
     scores.append(score)
 ```
+
+</div>
 
 ### Pitfall 2: Ignoring Feature Redundancy
 

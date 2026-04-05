@@ -33,6 +33,12 @@ Time series feature selection has unique constraints that violate standard ML as
 
 > Standard cross-validation **leaks future information** into training.
 
+<div class="callout-warning">
+
+**Warning:** Even a single future observation leaking into training can inflate accuracy metrics by 20-50% for autocorrelated financial data.
+
+</div>
+
 ---
 
 <!-- Speaker notes: The ASCII diagrams make the problem visually obvious. In standard k-fold, fold 3 uses future data (folds 4 and 5) for training to predict the past. This is cheating. Walk-forward always trains on past data and tests on future data, with a gap to prevent autocorrelation leakage. The checkmark and X marks reinforce which approach is correct. -->
@@ -120,6 +126,12 @@ flowchart LR
 
 Purging removes samples near train/test boundaries to prevent autocorrelation leakage.
 
+<div class="callout-insight">
+
+**Insight:** Set the purge window to the lag where the autocorrelation function (ACF) drops below the significance threshold (typically 1.96/sqrt(n)).
+
+</div>
+
 
 <div class="code-window">
 <div class="code-header">
@@ -205,6 +217,12 @@ flowchart TD
 ```
 
 Run GA on rolling windows to track how selected features change over time.
+
+<div class="callout-key">
+
+**Key:** Features selected in >80% of rolling windows are "core features" -- they should form the baseline of any model, with regime-specific features added on top.
+
+</div>
 
 ---
 

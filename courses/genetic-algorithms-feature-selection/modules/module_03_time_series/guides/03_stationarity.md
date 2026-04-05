@@ -286,6 +286,12 @@ def test_stationarity_multiple_series(
 
 ### Transformation to Stationarity
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stationarity_transforms.py</span>
+</div>
+
 ```python
 def make_stationary(
     series: np.ndarray,
@@ -516,7 +522,15 @@ def auto_make_stationary(
     return current, transformations
 ```
 
+</div>
+
 ### GA Feature Selection with Stationarity Handling
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stationary_fitness.py</span>
+</div>
 
 ```python
 def stationary_feature_selection_fitness(
@@ -654,6 +668,8 @@ def prepare_stationary_features(
     return X_stationary, transform_info
 ```
 
+</div>
+
 ### Complete Example
 
 ```python
@@ -784,6 +800,10 @@ if __name__ == "__main__":
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> Regression on non-stationary data produces spurious correlations. Two unrelated random walks will show a correlation of 0.5-0.9 purely by chance. If your GA selects non-stationary features, you are likely finding artifacts, not real predictive relationships.
+</div>
+
 ### 1. Ignoring Non-Stationarity
 
 **Problem**: Selected features work in training but fail in production.
@@ -807,6 +827,10 @@ X_diff = np.diff(X, axis=0)
 # Good - test first, only transform if needed
 X_stat, info = auto_make_stationary(X)
 ```
+
+<div class="callout-warning">
+<strong>Warning:</strong> Over-differencing a stationary series introduces artificial negative autocorrelation at lag 1. Always test stationarity before differencing -- if the ADF test already rejects the unit root null, do not difference.
+</div>
 
 ### 3. Mixing Stationary and Non-Stationary Features
 

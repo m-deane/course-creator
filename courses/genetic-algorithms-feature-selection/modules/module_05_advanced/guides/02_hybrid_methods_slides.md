@@ -19,6 +19,13 @@ Combining GA global exploration with local search exploitation
 
 ## The Complementary Strengths
 
+<div class="callout-insight">
+
+**Insight:** GAs excel at finding promising regions (global search). Local search excels at climbing to the nearest peak (exploitation). Combining both yields 2-5x fewer evaluations to reach the same quality.
+
+</div>
+
+
 ```
 PURE GA (Global, Slow):           PURE HILL CLIMBING (Local, Stuck):
 Gen 0:  ×  ×  ×  ×  ×             Start: ×
@@ -126,6 +133,13 @@ flowchart TD
 ---
 
 ## When to Use Each Learning Type
+
+<div class="callout-warning">
+
+**Warning:** Lamarckian learning (writing improved solutions back to the chromosome) can reduce diversity too aggressively. Use Baldwinian learning (only updating fitness) when diversity is a concern.
+
+</div>
+
 
 ```
 LAMARCKIAN (Replace genes):
@@ -284,7 +298,14 @@ Memetic Lamarckian: Best fitness AND fewer features
 
 ---
 
+<div class="callout-key">
+
+**Key:** Budget allocation matters: spend 70% on GA evolution and 30% on local search refinement as a starting point. Adjust based on problem landscape ruggedness.
+
+</div>
+
 ## Key Takeaways
+
 
 <div class="flow">
 <div class="flow-step mint">GA Explores</div>

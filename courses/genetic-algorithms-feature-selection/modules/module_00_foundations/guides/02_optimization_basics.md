@@ -83,6 +83,12 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
 
 ### Greedy Search (Forward Selection)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_selection.py</span>
+</div>
+
 ```python
 def forward_selection(X, y, model_fn, max_features=None):
     """
@@ -119,6 +125,8 @@ def forward_selection(X, y, model_fn, max_features=None):
 
     return selected, best_score
 ```
+
+</div>
 
 ### Why Greedy Fails
 
@@ -181,6 +189,27 @@ General-purpose optimization strategies that:
 | **Particle Swarm** | Bird flocking | Social information sharing |
 | **Ant Colony** | Foraging ants | Pheromone-based path selection |
 
+<div class="compare">
+<div class="compare-card">
+<div class="header red">Greedy Methods</div>
+<ul>
+<li>Fast convergence to local optima</li>
+<li>Cannot escape poor solutions</li>
+<li>Miss feature interactions (XOR problem)</li>
+<li>Deterministic -- same result every run</li>
+</ul>
+</div>
+<div class="compare-card">
+<div class="header green">Metaheuristic Methods (GAs)</div>
+<ul>
+<li>Explore multiple regions simultaneously</li>
+<li>Escape local optima via crossover/mutation</li>
+<li>Discover non-obvious feature combinations</li>
+<li>Stochastic -- population-based diversity</li>
+</ul>
+</div>
+</div>
+
 ### Why GAs for Feature Selection?
 
 <div class="callout-insight">
@@ -227,6 +256,8 @@ def visualize_fitness_landscape():
     plt.show()
 ```
 
+</div>
+
 ### Landscape Properties
 
 | Property | Description | Impact on GA |
@@ -235,6 +266,10 @@ def visualize_fitness_landscape():
 | **Neutrality** | Flat regions | Genetic drift |
 | **Epistasis** | Feature interactions | Crossover effectiveness |
 | **Deception** | Misleading gradients | May require larger population |
+
+<div class="callout-danger">
+<strong>Danger:</strong> Never trust a GA configuration without validating it on your specific problem. A setup that works brilliantly for one dataset may completely fail on another -- this is a mathematical guarantee, not just practical advice.
+</div>
 
 ## No Free Lunch Theorem
 

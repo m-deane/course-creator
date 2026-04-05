@@ -4,6 +4,14 @@
 
 ![Fitness Landscape](./fitness_landscape.svg)
 
+<div class="callout-danger">
+<strong>Danger:</strong> Running NSGA-II with insufficient population size (e.g., 20 individuals for a 100-feature problem) produces a sparse, unreliable Pareto front. Use at least 2-3x the number of features as population size for meaningful multi-objective results.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> DEAP's creator.create() uses global state. If you define FitnessMulti for NSGA-II after previously defining FitnessMin for single-objective, both remain active. Clear previous definitions or use separate modules.
+</div>
+
 ## Multi-Objective Optimization
 
 ### NSGA-II for Feature Selection

@@ -19,6 +19,13 @@ Multi-objective, hybrid, ensemble, and constraint handling
 
 ## NSGA-II: Multi-Objective Feature Selection
 
+<div class="callout-insight">
+
+**Insight:** NSGA-II defers the accuracy-vs-simplicity tradeoff decision by presenting the full Pareto frontier. Stakeholders choose the operating point after seeing all options.
+
+</div>
+
+
 Two competing objectives: **minimize error** AND **minimize feature count**.
 
 ```mermaid
@@ -132,6 +139,13 @@ flowchart TD
 ---
 
 ## GA + Local Search (Memetic Algorithm)
+
+<div class="callout-warning">
+
+**Warning:** Applying local search to every individual every generation is prohibitively expensive. Limit it to the top 10-20% of the population, or every 5-10 generations.
+
+</div>
+
 
 ```
 PURE GA:                          MEMETIC ALGORITHM:
@@ -369,7 +383,14 @@ class SurrogateFitness:
 
 ---
 
+<div class="callout-key">
+
+**Key:** Memetic algorithms (GA + local search) are the practical gold standard. The GA finds promising regions; local search polishes each candidate.
+
+</div>
+
 ## Key Takeaways
+
 
 <div class="flow">
 <div class="flow-step mint">NSGA-II</div>

@@ -547,6 +547,10 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
     pass
 ```
 
+<div class="callout-danger">
+<strong>Danger:</strong> Applying local search to every individual in every generation makes the GA prohibitively expensive (n_features evaluations per local search step). Limit local search to the top 10-20% of the population, or apply it every 5-10 generations.
+</div>
+
 ## Common Pitfalls
 
 <div class="callout-warning">
@@ -600,6 +604,10 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 - Simulated annealing (alternative local search)
 - Tabu search (memory-based local search)
 - Variable neighborhood search (multiple neighborhood structures)
+
+<div class="callout-key">
+<strong>Key Takeaway:</strong> Memetic algorithms (GA + local search) are the practical gold standard for feature selection. The GA finds promising regions, local search polishes each candidate to its local optimum. This combination typically finds solutions in 2-5x fewer evaluations than either method alone.
+</div>
 
 ## Practice Problems
 

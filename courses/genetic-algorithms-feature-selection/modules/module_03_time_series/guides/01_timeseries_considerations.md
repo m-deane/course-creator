@@ -19,6 +19,16 @@ Time series feature selection has unique challenges:
 
 ![Walk-Forward Timeline](./walk_forward_timeline.svg)
 
+<div class="flow">
+<div class="flow-step mint">Walk-Forward</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Rolling Stability</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Regime Awareness</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">Multi-Horizon</div>
+</div>
+
 ## Validation Strategies
 
 ### Walk-Forward Validation
@@ -73,6 +83,12 @@ for i, (train, test) in enumerate(splits):
 
 ### Purged K-Fold
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">purged_kfold.py</span>
+</div>
+
 ```python
 def purged_kfold(
     n_samples: int,
@@ -108,6 +124,8 @@ def purged_kfold(
 
     return splits
 ```
+
+</div>
 
 ## GA Fitness with Time Series CV
 
@@ -152,6 +170,10 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
     return fitness_function
 ```
 
+<div class="callout-danger">
+<strong>Danger:</strong> Using standard k-fold cross-validation on time series data is the most common source of inflated performance metrics. A model that appears 95% accurate with k-fold may be only 60% accurate with walk-forward validation. Always validate with temporal splits.
+</div>
+
 ## Handling Non-Stationarity
 
 <div class="callout-warning">
@@ -161,6 +183,12 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
 </div>
 
 ### Rolling Feature Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rolling_feature_selection.py</span>
+</div>
 
 ```python
 def rolling_feature_selection(
@@ -224,6 +252,8 @@ def analyze_feature_stability(rolling_results: List[dict], n_features: int) -> d
         'most_stable': np.argsort(selection_frequency)[::-1][:10].tolist()
     }
 ```
+
+</div>
 
 ### Regime-Aware Selection
 

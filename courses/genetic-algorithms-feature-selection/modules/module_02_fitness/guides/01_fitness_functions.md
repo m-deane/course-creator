@@ -11,6 +11,18 @@ $$\text{fitness}(\mathbf{x}) = \text{model\_error}(\mathbf{x}) + \lambda \cdot \
 
 ![Fitness Landscape](./fitness_landscape.svg)
 
+<div class="flow">
+<div class="flow-step mint">Chromosome</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step blue">Select Features</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step amber">Train Model</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step lavender">CV Error</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step mint">Fitness</div>
+</div>
+
 ## Basic Fitness Functions
 
 ### Cross-Validation Error
@@ -128,9 +140,19 @@ def pareto_fitness(
 
 </div>
 
+<div class="callout-danger">
+<strong>Danger:</strong> Never evaluate fitness on the training set alone. Without cross-validation, the GA will select all features (maximum overfitting) because in-sample error always decreases with more features. This produces models that look perfect in development and fail in production.
+</div>
+
 ## Time Series Specific Fitness
 
 ### Walk-Forward Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_fitness.py</span>
+</div>
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit
@@ -170,6 +192,8 @@ def walk_forward_fitness(
 
     return np.mean(errors)
 ```
+
+</div>
 
 ### Expanding Window
 
@@ -400,6 +424,12 @@ def fitness_with_uncertainty(
 
 ### Caching Fitness Evaluations
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cached_fitness.py</span>
+</div>
+
 ```python
 from functools import lru_cache
 
@@ -434,6 +464,8 @@ class CachedFitnessEvaluator:
         total_calls = len(self.cache) + self.eval_count - len(self.cache)
         return 1 - (len(self.cache) / total_calls) if total_calls > 0 else 0
 ```
+
+</div>
 
 ## Key Takeaways
 

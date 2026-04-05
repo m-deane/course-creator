@@ -24,7 +24,7 @@
   /* Accents */
   --accent-green: #4caf50;
   --accent-orange: #ff9800;
-  --accent-blue: #2196f3;
+  --accent-blue: #1976D2;
   --accent-red: #ef5350;
   --accent-purple: #7c4dff;
 
@@ -699,4 +699,66 @@ section::after {
 .badge.rose {
   background: var(--bg-section-rose);
   color: #b71c1c;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Flow Step — Rose Variant
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.flow-step.rose {
+  background: var(--bg-section-rose);
+  border: 2px solid var(--accent-red);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Link Preview Card
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.link-card {
+  display: block;
+  background: #ffffff;
+  border-radius: 10px;
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.2rem;
+  margin: 0.8em 0;
+  box-shadow: 0 2px 8px var(--shadow);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.link-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+}
+
+.link-card .link-card-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1em;
+  color: var(--text-heading);
+  margin-bottom: 0.3em;
+}
+
+.link-card .link-card-description {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.link-card::after {
+  content: '\2192';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  color: var(--accent-blue);
+  transition: transform 0.2s;
+}
+
+.link-card:hover::after {
+  transform: translateY(-50%) translateX(4px);
 }

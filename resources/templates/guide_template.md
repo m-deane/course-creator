@@ -1,35 +1,42 @@
 # Guide Title
 
-> **Module N** | Course Name | Estimated reading time: X min
+> **Reading time:** ~X min | **Module:** N — Topic | **Prerequisites:** Module N-1
 
 ---
 
-## Learning Objectives
+<!-- ============================================================
+     FULL FORMAT — Use for conceptual/theoretical guides that
+     introduce a topic for the first time.
+     ============================================================ -->
 
-- Objective 1: What the learner will understand
-- Objective 2: What the learner will be able to do
-- Objective 3: The practical outcome
+## In Brief
 
----
-
-## Section 1: Concept Name
-
-Introduce the concept with 2-3 paragraphs of clear explanation. Lead with the practical context — why does this matter? What problem does it solve?
-
-<!-- Insert SVG diagram here -->
-<!-- Example: ![Process Flow](../resources/process_flow.svg) -->
-
-Continue with 1-2 paragraphs that build on the visual. Reference specific elements of the diagram to connect explanation to illustration.
-
-<div class="callout-key">
-  <strong>Key Point:</strong> State the single most important takeaway from this section. Keep to one or two sentences.
+<div class="callout-insight">
+  <strong>Insight:</strong> One-paragraph summary of the concept and why it matters.
 </div>
 
----
+## Formal Definition
 
-## Section 2: Implementation
+State the formal mathematical or technical definition.
 
-Explain the implementation approach. Start with the high-level pattern before diving into code details.
+$$
+f(x) = \sum_{i=1}^{n} w_i \cdot x_i
+$$
+
+where:
+- $w_i$ is the weight for feature $i$
+- $x_i \in \{0, 1\}$ indicates feature inclusion
+
+## Intuitive Explanation
+
+Explain the concept using an analogy or plain language. Reference the diagram below to make it concrete.
+
+<!-- Insert SVG diagram here -->
+<!-- Example: ![Concept Map](../resources/concept_map.svg) -->
+
+<div class="caption">Figure 1: Description of the diagram.</div>
+
+## Code Implementation
 
 <div class="code-window">
   <div class="code-header">
@@ -38,7 +45,7 @@ Explain the implementation approach. Start with the high-level pattern before di
   </div>
 
 ```python
-# Implementation code here
+# Primary implementation — use code-window for the key example
 def main():
     data = load_data("dataset.csv")
     results = process(data)
@@ -47,59 +54,116 @@ def main():
 
 </div>
 
-Explain what the code does and how it connects to the concept from Section 1.
+Supporting examples use bare fenced blocks:
 
-<div class="callout-insight">
-  <strong>Insight:</strong> A deeper observation that connects this implementation to broader principles or alternative approaches.
-</div>
-
----
-
-## Section 3: Practical Considerations
-
-Discuss trade-offs, edge cases, and real-world considerations.
+```python
+# Purpose: Show alternative invocation pattern
+results = main()
+print(f"Processed {len(results)} records")
+```
 
 <div class="callout-warning">
-  <strong>Warning:</strong> Highlight a common pitfall or mistake that learners should avoid.
+  <strong>Warning:</strong> Highlight a common pitfall related to this implementation.
 </div>
 
-### Comparison
+## Common Pitfalls
 
-<div class="compare">
-  <div class="compare-card">
-    <div class="header before">Approach A</div>
-    <div class="body">
-      Description of the first approach with trade-offs.
-    </div>
-  </div>
-  <div class="compare-card">
-    <div class="header after">Approach B</div>
-    <div class="body">
-      Description of the preferred approach and why.
-    </div>
-  </div>
+1. **Pitfall name** — Explanation of what goes wrong and why.
+
+```python
+# Purpose: Demonstrate the wrong approach
+bad_result = process(data, leak_test=True)  # Data leakage!
+```
+
+2. **Pitfall name** — Explanation with corrected approach.
+
+## Connections
+
+<div class="callout-info">
+  <strong>How this connects to the rest of the course:</strong>
 </div>
 
-<div class="callout-danger">
-  <strong>Danger:</strong> Flag any critical mistakes that could cause data loss, security issues, or incorrect results.
+- **Builds On:** [Prior concept](./XX_prior_guide.md) — what foundation this assumes
+- **Leads To:** [Next concept](./XX_next_guide.md) — where this knowledge is applied
+- **Related To:** [Parallel concept](./XX_related_guide.md) — complementary material
+
+## Practice Problems
+
+1. **Problem statement** — What the learner should implement or answer.
+
+```python
+# Skeleton code for the learner to complete
+def solve():
+    # TODO: Implement the solution
+    pass
+```
+
+2. **Problem statement** — Second practice exercise.
+
+## Further Reading
+
+- Author, "Paper Title," *Journal*, Year. [Link](url)
+- Author, *Book Title*, Publisher, Year.
+- [Online Resource Title](url) — Brief description.
+
+---
+
+**Next:** [Companion Slides](./XX_concept_slides.md) | [Notebook](../notebooks/XX_concept_notebook.ipynb)
+
+
+<!-- ============================================================
+     COMPACT FORMAT — Use for practical/reference guides where
+     the reader already has conceptual foundation.
+     Delete everything above and use this format instead.
+     ============================================================ -->
+
+<!--
+# Guide Title
+
+> **Reading time:** ~X min | **Module:** N — Topic | **Prerequisites:** Module N-1
+
+---
+
+## [Topic-Driven Section 1]
+
+Focused explanation of the first practical topic. Lead with working code.
+
+<div class="code-window">
+  <div class="code-header">
+    <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+    <span class="filename">example.py</span>
+  </div>
+
+```python
+# Key implementation
+result = run_pipeline(data, config)
+```
+
+</div>
+
+## [Topic-Driven Section 2]
+
+Focused explanation of the second practical topic.
+
+```python
+# Purpose: Quick supporting example
+config = {"param": value}
+```
+
+<div class="callout-warning">
+  <strong>Warning:</strong> Common mistake to avoid.
+</div>
+
+## Key Takeaways
+
+<div class="callout-key">
+  <strong>Key Takeaways:</strong>
+  1. First takeaway — the most important practical lesson
+  2. Second takeaway — what to watch out for
+  3. Third takeaway — when to use this approach vs. alternatives
 </div>
 
 ---
 
-## Summary
-
-| Concept | Key Takeaway |
-|---------|-------------|
-| Concept 1 | One-line summary |
-| Concept 2 | One-line summary |
-| Concept 3 | One-line summary |
-
-<div class="callout-info">
-  <strong>Info:</strong> Additional context or background reading for learners who want to go deeper.
-</div>
-
-## Next Steps
-
-- Companion slide deck: [`XX_concept_slides.md`](./XX_concept_slides.md)
-- Hands-on notebook: [`notebooks/XX_concept_notebook.ipynb`](../notebooks/XX_concept_notebook.ipynb)
-- Self-check exercises: [`exercises/XX_concept_exercises.py`](../exercises/XX_concept_exercises.py)
+**Next:** [Companion Slides](./XX_concept_slides.md) | [Notebook](../notebooks/XX_concept_notebook.ipynb)
+-->

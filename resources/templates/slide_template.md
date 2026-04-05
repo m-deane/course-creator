@@ -116,6 +116,92 @@ def process(data):
 
 ---
 
+<!-- _class: comparison -->
+
+## Side-by-Side Code
+
+<div class="code-window">
+  <div class="code-header">
+    <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+    <span class="filename">approach_a.py</span>
+  </div>
+
+```python
+# Approach A: Manual selection
+features = ["vol", "mom", "rsi"]
+X = df[features]
+```
+
+</div>
+
+<div class="code-window">
+  <div class="code-header">
+    <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+    <span class="filename">approach_b.py</span>
+  </div>
+
+```python
+# Approach B: GA selection
+selector = GeneticSelector(model)
+X = selector.fit_transform(df)
+```
+
+</div>
+
+<!-- Speaker notes: Compare the two code approaches side by side. The comparison class places them in a 2-column grid automatically. -->
+
+---
+
+## Diagram Reference
+
+Brief context sentence explaining what the diagram shows.
+
+![Architecture Diagram](../resources/architecture_diagram.svg)
+
+<div class="caption">Figure 1: System architecture showing data flow from input to prediction.</div>
+
+<!-- Speaker notes: Walk through the diagram components. Start from the left (input) and trace the data path to the right (output). -->
+
+---
+
+<!-- _class: module-break -->
+
+## Section Two: Implementation Details
+
+---
+
+## Multi-Code-Window Slide
+
+<div class="code-window">
+  <div class="code-header">
+    <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+    <span class="filename">config.py</span>
+  </div>
+
+```python
+CONFIG = {"population_size": 50, "mutation_rate": 0.01}
+```
+
+</div>
+
+<div class="code-window">
+  <div class="code-header">
+    <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+    <span class="filename">run.py</span>
+  </div>
+
+```python
+selector = GeneticSelector(**CONFIG)
+selector.fit(X_train, y_train)
+print(f"Selected {selector.n_selected_} features")
+```
+
+</div>
+
+<!-- Speaker notes: Show how configuration is separated from execution. The first window defines parameters, the second uses them. -->
+
+---
+
 ## Summary
 
 | Concept | Key Takeaway |

@@ -20,7 +20,7 @@
       --bg-sidebar: #1a1a2e;
       --accent-green: #4caf50;
       --accent-orange: #ff9800;
-      --accent-blue: #2196f3;
+      --accent-blue: #1976D2;
       --accent-red: #ef5350;
       --accent-purple: #7c4dff;
       --text-primary: #212121;
@@ -455,6 +455,97 @@
     }
     .module-break-demo h2::after { display: none; }
 
+    /* === Link Card === */
+    .link-card {
+      display: block;
+      background: #ffffff;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent-blue);
+      padding: 1rem 1.2rem;
+      padding-right: 2.5rem;
+      margin: 0.8rem 0;
+      box-shadow: 0 2px 8px var(--shadow);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .link-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      text-decoration: none;
+    }
+    .link-card .link-card-title {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1em;
+      color: var(--text-heading);
+      margin-bottom: 0.3em;
+    }
+    .link-card .link-card-description {
+      font-size: 0.85em;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .link-card::after {
+      content: '\2192';
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2em;
+      color: var(--accent-blue);
+      transition: transform 0.2s;
+    }
+    .link-card:hover::after {
+      transform: translateY(-50%) translateX(4px);
+    }
+
+    /* === Badge === */
+    .badge {
+      display: inline-block;
+      font-size: 0.75em;
+      font-weight: 500;
+      padding: 0.2em 0.6em;
+      border-radius: 12px;
+      font-family: var(--font-body);
+    }
+    .badge.mint { background: var(--bg-section-mint); color: #1b5e20; }
+    .badge.amber { background: var(--bg-section-amber); color: #e65100; }
+    .badge.blue { background: var(--bg-section-blue); color: #0d47a1; }
+    .badge.lavender { background: var(--bg-section-lavender); color: #4a148c; }
+    .badge.rose { background: var(--bg-section-rose); color: #b71c1c; }
+
+    /* === Code annotation arrow connectors === */
+    .code-annotation.right::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 6px solid #ffffff;
+    }
+    .code-annotation.left {
+      left: -10px;
+      transform: translateX(-100%);
+    }
+    .code-annotation.left::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 6px solid #ffffff;
+    }
+
     /* === Responsive === */
     @media (max-width: 768px) {
       .site-header { padding: 2rem 1rem; }
@@ -497,6 +588,9 @@
     <a href="#comparison">Comparison Cards</a>
     <a href="#tables">Tables</a>
     <a href="#section-break">Section Break</a>
+    <a href="#link-cards">Link Cards</a>
+    <a href="#badges">Badges</a>
+    <a href="#multi-annotation">Multi-Annotation</a>
   </nav>
 
   <div class="container">
@@ -556,7 +650,7 @@
           <div class="swatch-label">Orange<span class="token">--accent-orange</span></div>
         </div>
         <div class="swatch">
-          <div class="swatch-color" style="background: #2196f3;"><span style="background:rgba(0,0,0,0.5);color:white;">#2196f3</span></div>
+          <div class="swatch-color" style="background: #1976D2;"><span style="background:rgba(0,0,0,0.5);color:white;">#1976D2</span></div>
           <div class="swatch-label">Blue<span class="token">--accent-blue</span></div>
         </div>
         <div class="swatch">
@@ -831,6 +925,77 @@
 
       <div class="module-break-demo">
         <h2>Module 3: Crossover and Mutation</h2>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         9. LINK CARDS
+         ============================================================ -->
+    <div class="section" id="link-cards">
+      <h2>Link Preview Cards</h2>
+      <p>Styled cross-reference cards with title, description, and arrow icon. Hover for lift effect.</p>
+
+      <a class="link-card" href="#">
+        <div class="link-card-title">Advanced Feature Selection — Companion Slides</div>
+        <div class="link-card-description">Interactive slide deck covering implementation details and worked examples with real datasets.</div>
+      </a>
+
+      <a class="link-card" href="#">
+        <div class="link-card-title">Hands-on Notebook: GA with DEAP</div>
+        <div class="link-card-description">15-minute micro-notebook implementing a genetic algorithm for feature selection using the DEAP framework.</div>
+      </a>
+    </div>
+
+    <!-- ============================================================
+         10. BADGES
+         ============================================================ -->
+    <div class="section" id="badges">
+      <h2>Metadata Badges</h2>
+      <p>Inline pill-shaped tags for reading time, difficulty, module labels, and topics.</p>
+
+      <p>
+        <span class="badge mint">Beginner</span>
+        <span class="badge amber">~10 min</span>
+        <span class="badge blue">Module 2</span>
+        <span class="badge lavender">ML</span>
+        <span class="badge rose">Advanced</span>
+      </p>
+    </div>
+
+    <!-- ============================================================
+         11. MULTI-ANNOTATION CODE WINDOW
+         ============================================================ -->
+    <div class="section" id="multi-annotation">
+      <h2>Multi-Annotation Code Window</h2>
+      <p>Multiple annotation pills positioned at different code lines with arrow connectors.</p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="dots">
+            <span class="dot-red"></span>
+            <span class="dot-yellow"></span>
+            <span class="dot-green"></span>
+          </div>
+          <span class="filename">pipeline.py</span>
+        </div>
+        <div class="code-body">
+<span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score
+<span class="keyword">from</span> genetic_selector <span class="keyword">import</span> GeneticSelector
+
+selector = <span class="function">GeneticSelector</span>(estimator=model)
+selector.<span class="function">fit</span>(X_train, y_train)
+selected = selector.<span class="function">get_support</span>()
+X_reduced = X_train[:, selected]
+        </div>
+        <div class="code-annotation right" style="top: 100px; right: 20px; transform: none;">
+          Wrapper pattern — wraps any sklearn estimator
+        </div>
+        <div class="code-annotation right" style="top: 148px; right: 20px; transform: none;">
+          Returns boolean mask of selected features
+        </div>
+        <div class="code-annotation right" style="top: 175px; right: 20px; transform: none;">
+          Apply mask to reduce the feature matrix
+        </div>
       </div>
     </div>
 

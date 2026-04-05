@@ -32,7 +32,7 @@ A comprehensive, portable reference for the visual styling system used across al
 | `--bg-sidebar` | `#1a1a2e` | Navigation sidebar |
 | `--accent-green` | `#4caf50` | Success, checkmarks, positive |
 | `--accent-orange` | `#ff9800` | Warnings, highlights, steps |
-| `--accent-blue` | `#2196f3` | Links, interactive, info |
+| `--accent-blue` | `#1976D2` | Links, interactive, info |
 | `--accent-red` | `#ef5350` | Errors, important, danger |
 | `--accent-purple` | `#7c4dff` | Special emphasis |
 | `--text-primary` | `#212121` | Body text |
@@ -52,7 +52,7 @@ Each content context maps to a pastel background + accent border + icon:
 | Warning | `--bg-section-amber` (`#fff8e1`) | `--accent-orange` (`#ff9800`) | Warning triangle |
 | Key Point | `--bg-section-mint` (`#e8f5e9`) | `--accent-green` (`#4caf50`) | Key |
 | Danger | `--bg-section-rose` (`#fce4ec`) | `--accent-red` (`#ef5350`) | Alert |
-| Info | `--bg-section-blue` (`#e3f2fd`) | `--accent-blue` (`#2196f3`) | Info circle |
+| Info | `--bg-section-blue` (`#e3f2fd`) | `--accent-blue` (`#1976D2`) | Info circle |
 
 ### 2.3 Accessibility Contrast Ratios
 
@@ -63,10 +63,12 @@ Each content context maps to a pastel background + accent border + icon:
 | `--text-muted` (#757575) on `--bg-primary` (#ffffff) | 4.48:1 | Pass (normal text) |
 | `--text-on-dark` (#f5f5f5) on `--bg-sidebar` (#1a1a2e) | 14.8:1 | Pass |
 | `--text-on-dark` (#f5f5f5) on `--bg-code` (#1e1e2e) | 14.1:1 | Pass |
-| `--accent-blue` (#2196f3) on `--bg-primary` (#ffffff) | 3.26:1 | Fail for text |
+| `--accent-blue` (#1976D2) on `--bg-primary` (#ffffff) | 4.56:1 | Pass (normal text) |
 | `--accent-green` (#4caf50) on `--bg-primary` (#ffffff) | 3.07:1 | Fail for text |
 
-**Rule:** Muted text and accent colors are never used as the sole text color for essential content. They are always paired with borders, icons, or high-contrast body text.
+**Rules:**
+- Accent green is never used as the sole text color for essential content. It is always paired with borders, icons, or high-contrast body text.
+- Do not use `--text-muted` as body text on pastel backgrounds. Use `--text-primary` (#212121) instead. Muted text on pastel backgrounds fails AA (approximately 3.8-4.0:1).
 
 ---
 
@@ -200,6 +202,49 @@ selected = ga.get_support()
 | `.code-annotation.left` | Positioned to the left |
 | `.code-annotation.top` | Positioned above |
 
+**Annotation positioning details:**
+
+Each annotation position variant includes a CSS `::before` or `::after` pseudo-element that renders a triangular arrow connector pointing from the pill toward the code. The arrows are 6px CSS triangles using transparent borders.
+
+- **`.right`:** Positioned with `right: -10px; transform: translateX(100%)`. Arrow points left via `::before`.
+- **`.left`:** Positioned with `left: -10px; transform: translateX(-100%)`. Arrow points right via `::after`.
+- **`.top`:** Positioned with `top: -10px; transform: translateY(-100%); left: 50%`. Arrow points down via `::after`.
+
+**Setting the `top` offset:** Use an inline `style="top: Xpx;"` to align each annotation with the relevant code line. Estimate ~26px per line of code (at slide font size) or ~22px per line (at guide font size). Example: to annotate line 3, use `style="top: 78px;"` (3 lines x 26px).
+
+**Stacking multiple annotations:** When placing multiple `.code-annotation.right` pills, space them at least 40px apart vertically to avoid overlap. Each annotation pill is approximately 28px tall.
+
+```html
+<div class="code-window" style="position: relative;">
+  <div class="code-header">
+    <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+    <span class="filename">pipeline.py</span>
+  </div>
+  <div class="code-body">
+
+```python
+from sklearn.model_selection import cross_val_score
+selector = GeneticSelector(estimator=model)
+selector.fit(X_train, y_train)
+selected = selector.get_support()
+X_reduced = X_train[:, selected]
+```
+
+  </div>
+  <div class="code-annotation right" style="top: 52px;">
+    Wrapper pattern — wraps any sklearn estimator
+  </div>
+  <div class="code-annotation right" style="top: 104px;">
+    Returns boolean mask of selected features
+  </div>
+  <div class="code-annotation left" style="top: 130px;">
+    Apply mask to reduce feature matrix
+  </div>
+</div>
+```
+
+**Constraints:** Annotation text should stay under ~40 characters to avoid overflow. Annotations use `white-space: nowrap`, so long text will extend outside the slide boundary. For longer explanations, use a callout box below the code-window instead.
+
 ### 4.2 Process Flow
 
 Numbered step-by-step flow with pastel-colored boxes and arrows.
@@ -226,6 +271,7 @@ Numbered step-by-step flow with pastel-colored boxes and arrows.
 | `.flow-step.amber` | Amber background + orange border |
 | `.flow-step.blue` | Blue background + blue border |
 | `.flow-step.lavender` | Lavender background + purple border |
+| `.flow-step.rose` | Rose background + red border |
 | `.flow-arrow` | 1.5em arrow character, muted color |
 
 ### 4.3 Callout Boxes
@@ -353,6 +399,172 @@ Module section break slides use the `module-break` class:
 ```
 
 **Styling:** Mint background (`--bg-section-mint`), centered serif H2, 4px top border in `--accent-green`.
+
+### 4.7 Link Preview Card
+
+Styled preview card for cross-references between guides, slides, and external resources. Rounded card with a title, description, left border accent, and hover lift effect.
+
+```html
+<a class="link-card" href="./02_advanced_topic_slides.md">
+  <div class="link-card-title">Advanced Topic — Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the implementation details and worked examples.</div>
+</a>
+```
+
+**Multiple cards:**
+
+```html
+<a class="link-card" href="../notebooks/02_advanced_topic.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with real data and guided exercises.</div>
+</a>
+
+<a class="link-card" href="./02_advanced_topic_guide.md">
+  <div class="link-card-title">Conceptual Guide</div>
+  <div class="link-card-description">Deep dive into the theory and mathematical foundations.</div>
+</a>
+```
+
+**CSS classes:**
+
+| Class | Purpose |
+|-------|---------|
+| `.link-card` | Outer container (white bg, left border in `--accent-blue`, shadow, hover lift) |
+| `.link-card-title` | Heading-weight title (serif, `--text-heading`) |
+| `.link-card-description` | Muted description text (0.85em, `--text-muted`) |
+| `.link-card::after` | Arrow icon (auto-generated via CSS) |
+
+### 4.8 Badges
+
+Inline metadata pills for tags, reading time, difficulty, and module labels.
+
+```html
+<span class="badge mint">Beginner</span>
+<span class="badge amber">~10 min</span>
+<span class="badge blue">Module 2</span>
+<span class="badge lavender">ML</span>
+<span class="badge rose">Advanced</span>
+```
+
+**CSS classes:**
+
+| Class | Background | Text Color |
+|-------|-----------|-----------|
+| `.badge` | Base style: inline-block, 0.75em, 500 weight, rounded pill |
+| `.badge.mint` | `--bg-section-mint` | `#1b5e20` |
+| `.badge.amber` | `--bg-section-amber` | `#e65100` |
+| `.badge.blue` | `--bg-section-blue` | `#0d47a1` |
+| `.badge.lavender` | `--bg-section-lavender` | `#4a148c` |
+| `.badge.rose` | `--bg-section-rose` | `#b71c1c` |
+
+### 4.9 Caption
+
+Centered italic text for figure and diagram captions.
+
+```html
+<div class="caption">Figure 1: GA lifecycle showing initialization, evaluation, selection, crossover, and mutation stages.</div>
+```
+
+**Styling:** 0.85em, italic, `--text-muted`, centered, 0.4em top margin.
+
+### 4.10 Base Element Styles
+
+These elements are styled automatically by course-theme.css without needing extra classes.
+
+#### Blockquotes
+
+Amber background with orange left border. Used for metadata banners and supplementary notes.
+
+```html
+> **Reading time:** ~10 min | **Module:** 2 — Selection Methods | **Prerequisites:** Module 1
+```
+
+**Styling:** 4px left border in `--accent-orange`, `--bg-section-amber` background, normal font style (not italic), 8px border-radius on right corners.
+
+#### Inline Code
+
+Highlighted code within body text.
+
+```html
+Use `np.array()` to convert the list to a NumPy array.
+```
+
+**Styling:** `#f0f0f5` background, `--text-heading` color, 4px border-radius, 0.85em monospace.
+
+#### Code Blocks (outside code-window)
+
+Standalone fenced code blocks without the macOS code-window wrapper.
+
+**Styling:** `--bg-code` background, 12px border-radius, subtle shadow. Code text uses `--text-on-dark` (#f5f5f5) at 0.85em monospace.
+
+#### Strong and Emphasis
+
+- **`<strong>` / `**text**`:** Renders in `--text-heading` color (#1a1a2e) for stronger visual weight.
+- **`<em>` / `*text*`:** Renders in `--text-muted` color (#757575) for de-emphasized content.
+
+#### Horizontal Rules
+
+```html
+---
+```
+
+**Styling:** 2px solid `--border-light` line, 1.2em vertical margin. In Marp slides, horizontal rules create slide breaks.
+
+#### Images
+
+All images auto-constrain to `max-width: 100%` with 8px border-radius.
+
+#### Lists
+
+Unordered and ordered lists use 0.4em vertical margin with 0.25em spacing between items. Bold text within list items renders in `--text-heading`.
+
+#### MathJax
+
+`.MathJax` elements render at 1em (matching body text). Use `$...$` for inline math and `$$...$$` for display math.
+
+#### Mermaid Diagrams
+
+`.mermaid` elements are centered with flex layout and 0.8em auto margins.
+
+#### Pagination Footer
+
+`section::after` renders page numbers at 0.65em in `--text-muted`.
+
+### 4.11 Lead Slides
+
+Title/section slides with a dark gradient background.
+
+```html
+<!-- _class: lead -->
+
+# Deck Title
+## Module N — Course Name
+```
+
+**CSS behavior:**
+
+| Selector | Effect |
+|----------|--------|
+| `section.lead` | Dark gradient background (`--bg-sidebar` to `#16213e`), centered layout, white text |
+| `section.lead::before` | Subtle radial overlay for visual depth |
+| `section.lead h1` | 2.4em, white, text shadow, no bottom border |
+| `section.lead h2` | Sans-serif, 1.1em, 70% white opacity, no orange underline |
+| `section.lead strong` | Orange accent (`--accent-orange`) for emphasis on dark backgrounds |
+| `section.lead blockquote` | Orange left border, semi-transparent white background |
+
+### 4.12 Comparison Slides
+
+Two-column grid layout for side-by-side content on a single slide.
+
+```html
+<!-- _class: comparison -->
+
+Left column content goes here.
+
+Right column content goes here.
+```
+
+**CSS behavior:** `section.comparison` applies a 2-column CSS grid with `1fr 1fr` columns and 1rem gap. Content flows into columns automatically. Use this for placing two code-windows, two callouts, or any two blocks side by side.
 
 ---
 
@@ -703,6 +915,197 @@ Every Jupyter notebook follows this cell structure:
 - Guides: SVG diagrams, callout boxes, comparison cards, tables
 - Slides: Flow components, code windows, Mermaid diagrams, comparison cards
 - Notebooks: Plots, inline SVGs, styled DataFrames, callout HTML
+
+### 8.5 Graphic Selection Guide
+
+Use this matrix to select the right visual type for your content:
+
+| Content Type | Recommended Visual | Fallback |
+|---|---|---|
+| Conceptual / theory explanation | Concept map SVG or architecture diagram | Process flow |
+| Sequential processes / algorithms | Process flow component (`.flow`) or timeline SVG | Mermaid flowchart |
+| Comparisons / tradeoffs | Comparison cards (`.compare`) or comparison SVG | Side-by-side table |
+| Code explanations | Code-window with annotations | Code block + callout |
+| Key decisions / warnings | Callout boxes (`.callout-*`) | Blockquote |
+| Data relationships / workflows | Mermaid diagrams | Architecture SVG |
+| Mathematical concepts | LaTeX blocks (`$$...$$`) with callout context | Table of notation |
+| Timelines / historical progressions | Timeline SVG | Numbered list |
+| Summary / reference data | Table with dark headers | Bulleted callout |
+
+**Medium selection by content type:**
+- **Slide decks:** Use Mermaid diagrams (rendered live by Marp) and HTML components (`.flow`, `.compare`, `.code-window`).
+- **Guide markdowns:** Use pre-generated SVG files (embedded via `![alt](./path.svg)`) and HTML components.
+- **Notebooks:** Use inline SVG via `diagram_generator.py` or matplotlib/seaborn plots.
+
+### 8.6 Code Presentation Tiers
+
+Not every code block needs a full code-window. Use these tiers to decide:
+
+| Tier | When to Use | Format |
+|------|-------------|--------|
+| **Code-window** | Key implementations, functions the learner will use, code being explained in detail | Full `<div class="code-window">` with filename header and traffic-light dots |
+| **Annotated code-window** | Code with non-obvious patterns that need visual callouts | Code-window + `.code-annotation` pills pointing to specific lines |
+| **Bare fenced block** | Short snippets (<5 lines), inline examples, configuration, terminal commands, practice problems | Standard triple-backtick ` ```python ` block |
+
+**Rules:**
+- The first/primary code example in each guide section uses a code-window.
+- Follow-up code blocks in the same section may use bare fenced blocks with a `# Purpose:` first-line comment.
+- Practice problem code always uses bare fenced blocks (to visually distinguish from teaching code).
+- Terminal/shell commands always use bare fenced blocks with ` ```bash `.
+
+### 8.7 Guide Structure — Two Formats
+
+Guides follow one of two structures depending on content type.
+
+**Full format** — for conceptual/theoretical guides introducing a topic for the first time:
+
+```markdown
+# Title
+
+> **Reading time:** ~X min | **Module:** N — Topic | **Prerequisites:** ...
+
+## In Brief
+
+<div class="callout-insight">
+  <strong>Insight:</strong> One-paragraph summary of the concept.
+</div>
+
+## Formal Definition
+
+[LaTeX definitions and mathematical formulation]
+
+## Intuitive Explanation
+
+[Analogy or plain-language explanation]
+
+## Code Implementation
+
+<div class="code-window">...</div>
+
+[Supporting bare code blocks with # Purpose: comments]
+
+## Common Pitfalls
+
+1. Pitfall with code example
+2. Pitfall with code example
+
+## Connections
+
+<div class="callout-info">
+  <strong>How this connects:</strong>
+</div>
+
+- **Builds On:** [Prior concepts]
+- **Leads To:** [Next concepts]
+- **Related To:** [Parallel concepts]
+
+## Practice Problems
+
+1. Problem statement
+   ```python
+   # skeleton code
+   ```
+
+## Further Reading
+
+- [Academic papers]
+- [Books]
+- [Online resources]
+
+---
+
+**Next:** [Companion Slides](./XX_slides.md) | [Notebook](../notebooks/XX.ipynb)
+```
+
+**Compact format** — for practical/reference guides where the reader already has conceptual foundation:
+
+```markdown
+# Title
+
+> **Reading time:** ~X min | **Module:** N — Topic | **Prerequisites:** ...
+
+## [Topic-Driven Section 1]
+
+[Focused explanation + code]
+
+## [Topic-Driven Section 2]
+
+[Focused explanation + code]
+
+## Key Takeaways
+
+<div class="callout-key">
+  <strong>Key Takeaways:</strong>
+  1. Takeaway one
+  2. Takeaway two
+  3. Takeaway three
+</div>
+
+---
+
+**Next:** [Companion Slides](./XX_slides.md) | [Notebook](../notebooks/XX.ipynb)
+```
+
+**When to use each:**
+- **Full format:** First guide for a topic area, concept introductions, theory-heavy content.
+- **Compact format:** Reference/implementation guides, practical how-to content, supplementary material.
+
+### 8.8 Algorithm Pseudocode Presentation
+
+Present algorithms using a `callout-info` with monospace formatting:
+
+```html
+<div class="callout-info" style="font-family: var(--font-code);">
+<strong>Algorithm:</strong> Tournament Selection<br/>
+<strong>Input:</strong> Population P, tournament size k<br/>
+<strong>Output:</strong> Selected individual<br/><br/>
+1. Sample k individuals from P uniformly at random<br/>
+2. Evaluate fitness of each sampled individual<br/>
+3. Return individual with best fitness from sample
+</div>
+```
+
+### 8.9 Parameter Tables
+
+Use a standard markdown table with consistent columns for documenting configuration parameters:
+
+```markdown
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `population_size` | int | 50 | Number of individuals per generation |
+| `mutation_rate` | float | 0.01 | Probability of flipping each gene |
+| `crossover_rate` | float | 0.8 | Probability of recombination |
+| `tournament_size` | int | 3 | Number of candidates per selection |
+```
+
+For parameters with mathematical notation, add a Symbol column:
+
+```markdown
+| Parameter | Symbol | Range | Recommended | Notes |
+|-----------|--------|-------|-------------|-------|
+| Population size | $N$ | 20-200 | 50 | Larger for more features |
+| Mutation rate | $p_m$ | 0.001-0.1 | $1/n$ | $n$ = chromosome length |
+| Crossover rate | $p_c$ | 0.6-0.95 | 0.8 | |
+| Tournament size | $k$ | 2-7 | 3 | Higher = more pressure |
+```
+
+### 8.10 LaTeX Conventions
+
+- Use `$$...$$` for display (block) math and `$...$` for inline math.
+- Use `\operatorname{argmin}` instead of `\argmin` for proper upright rendering.
+- Avoid `\text{}` where possible for KaTeX compatibility. Use `\mathrm{}` if you need upright text in math mode.
+- Multi-line equations: use `\begin{cases}` or `\begin{bmatrix}`, not aligned plain text.
+- Where/Given/Find blocks: use bold labels followed by a bulleted list outside the math block.
+
+```markdown
+$$
+f(x) = \sum_{i=1}^{n} w_i \cdot x_i
+$$
+
+where:
+- $w_i$ is the weight for feature $i$
+- $x_i \in \{0, 1\}$ indicates feature inclusion
+```
 
 ---
 

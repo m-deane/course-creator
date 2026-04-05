@@ -430,7 +430,52 @@ def render_markdown_file(file_path: Path):
                 text = text[end + 3:].lstrip("\n")
     # Resolve relative image paths to inline data URIs
     text = _resolve_images(text, file_path.parent)
-    st.markdown(text, unsafe_allow_html=True)
+
+    # Split content into markdown and HTML blocks.
+    # st.markdown strips complex nested divs, so we render HTML blocks
+    # (code-window, callout-*, flow, compare) via styled_html() and
+    # the rest via st.markdown().
+    _render_mixed_content(text)
+
+
+def _render_mixed_content(text: str):
+    """Render mixed markdown + HTML content, splitting HTML component blocks
+    into styled_html() calls, LaTeX into st.latex(), and markdown into
+    st.markdown() calls."""
+    # First, split out custom HTML component blocks
+    html_block_pattern = re.compile(
+        r'(<div\s+class="(?:code-window|callout-\w+|flow|compare)[^"]*".*?</div>\s*</div>|'
+        r'<div\s+class="(?:code-window|callout-\w+|flow|compare)[^"]*">.*?</div>)',
+        re.DOTALL,
+    )
+
+    parts = html_block_pattern.split(text)
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if html_block_pattern.match(part):
+            styled_html(part)
+        else:
+            _render_markdown_with_latex(part)
+
+
+def _render_markdown_with_latex(text: str):
+    """Render markdown text, extracting $$...$$ LaTeX blocks and rendering
+    them with st.latex() so complex LaTeX (array, text, etc.) works."""
+    # Split on block LaTeX: $$...$$
+    latex_pattern = re.compile(r'(\$\$.*?\$\$)', re.DOTALL)
+    segments = latex_pattern.split(text)
+    for seg in segments:
+        seg_stripped = seg.strip()
+        if not seg_stripped:
+            continue
+        if seg_stripped.startswith('$$') and seg_stripped.endswith('$$'):
+            # Extract inner LaTeX, render with st.latex
+            inner = seg_stripped[2:-2].strip()
+            st.latex(inner)
+        else:
+            st.markdown(seg, unsafe_allow_html=True)
 
 
 def render_notebook_file(file_path: Path):

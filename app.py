@@ -336,6 +336,10 @@ def _scan_module(mod_dir: Path) -> dict:
         sub_dir = mod_dir / sub
         if sub_dir.exists():
             files = _list_content_files(sub_dir)
+            if sub == "guides":
+                # Filter out _slides.md and _slides.html — those are handled
+                # separately as slide decks, not study guides
+                files = [f for f in files if "_slides" not in f["name"]]
             if files:
                 content[sub] = files
 
@@ -382,6 +386,40 @@ def _list_content_files(directory: Path) -> list:
 # Content Renderers
 # ---------------------------------------------------------------------------
 
+def _resolve_images(text: str, base_dir: Path) -> str:
+    """Replace relative image paths with base64 data URIs so they render in st.markdown."""
+    import base64
+
+    def _replace_img(match):
+        alt = match.group(1)
+        img_path_str = match.group(2)
+        # Skip URLs
+        if img_path_str.startswith(("http://", "https://", "data:")):
+            return match.group(0)
+        # Resolve relative to the markdown file's directory
+        img_path = base_dir / img_path_str
+        if not img_path.exists():
+            return match.group(0)  # leave as-is if not found
+        suffix = img_path.suffix.lower()
+        if suffix == ".svg":
+            svg_content = img_path.read_text(encoding="utf-8", errors="replace")
+            encoded = base64.b64encode(svg_content.encode("utf-8")).decode("ascii")
+            return f'<img src="data:image/svg+xml;base64,{encoded}" alt="{alt}" style="max-width:100%; height:auto; margin: 1rem 0; border-radius: 8px;">'
+        elif suffix in (".png", ".jpg", ".jpeg", ".gif", ".webp"):
+            mime = {
+                ".png": "image/png", ".jpg": "image/jpeg",
+                ".jpeg": "image/jpeg", ".gif": "image/gif",
+                ".webp": "image/webp",
+            }.get(suffix, "image/png")
+            img_bytes = img_path.read_bytes()
+            encoded = base64.b64encode(img_bytes).decode("ascii")
+            return f'<img src="data:{mime};base64,{encoded}" alt="{alt}" style="max-width:100%; height:auto; margin: 1rem 0; border-radius: 8px;">'
+        return match.group(0)
+
+    # Match markdown image syntax: ![alt](path)
+    return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', _replace_img, text)
+
+
 def render_markdown_file(file_path: Path):
     text = file_path.read_text(encoding="utf-8", errors="replace")
     if text.startswith("---"):
@@ -390,9 +428,9 @@ def render_markdown_file(file_path: Path):
             frontmatter = text[3:end]
             if "marp:" in frontmatter:
                 text = text[end + 3:].lstrip("\n")
-    # Content container (Streamlit handles layout)
+    # Resolve relative image paths to inline data URIs
+    text = _resolve_images(text, file_path.parent)
     st.markdown(text, unsafe_allow_html=True)
-    # End content container
 
 
 def render_notebook_file(file_path: Path):
@@ -819,47 +857,42 @@ def page_course(courses: dict):
         </div>
         """)
 
-        # Render module cards in a grid via HTML
-        cards_html = '<div class="module-grid">'
-        for idx, mod in enumerate(course["modules"]):
-            mod_num = get_module_number(mod["dir_name"])
-            mod_title = get_module_clean_title(mod)
-            color = MODULE_COLORS[idx % len(MODULE_COLORS)]
-
-            n_slides = len(mod["slides"])
-            n_guides = len(mod["content"].get("guides", []))
-            n_notebooks = len(mod["content"].get("notebooks", []))
-            n_exercises = len(mod["content"].get("exercises", []))
-
-            badges = ""
-            if n_slides:
-                badges += f'<span class="module-badge">\U0001f310 {n_slides} slides</span>'
-            if n_guides:
-                badges += f'<span class="module-badge">\U0001f4dd {n_guides} guides</span>'
-            if n_notebooks:
-                badges += f'<span class="module-badge">\U0001f4d3 {n_notebooks} notebooks</span>'
-            if n_exercises:
-                badges += f'<span class="module-badge">\u270d\ufe0f {n_exercises} exercises</span>'
-
-            cards_html += f"""
-            <div class="module-card {color}">
-                <span class="module-card-number">Module {mod_num}</span>
-                <div class="module-card-title">{mod_title}</div>
-                <div class="module-card-badges">{badges}</div>
-            </div>
-            """
-        cards_html += '</div>'
-        styled_html(cards_html)
-
-        # Module open buttons (Streamlit needs real buttons for interactivity)
+        # Render module cards as clickable Streamlit containers
         cols_per_row = 3
         mods = course["modules"]
         for i in range(0, len(mods), cols_per_row):
             cols = st.columns(cols_per_row)
             for j, mod in enumerate(mods[i:i + cols_per_row]):
+                idx = i + j
                 with cols[j]:
                     mod_num = get_module_number(mod["dir_name"])
                     mod_title = get_module_clean_title(mod)
+                    color = MODULE_COLORS[idx % len(MODULE_COLORS)]
+
+                    n_slides = len(mod["slides"])
+                    n_guides = len(mod["content"].get("guides", []))
+                    n_notebooks = len(mod["content"].get("notebooks", []))
+                    n_exercises = len(mod["content"].get("exercises", []))
+
+                    badges = ""
+                    if n_slides:
+                        badges += f'\U0001f310 {n_slides} slides  '
+                    if n_guides:
+                        badges += f'\U0001f4dd {n_guides} guides  '
+                    if n_notebooks:
+                        badges += f'\U0001f4d3 {n_notebooks} notebooks  '
+                    if n_exercises:
+                        badges += f'\u270d\ufe0f {n_exercises} exercises'
+
+                    # Use a styled container with a button inside
+                    card_html = f"""
+                    <div class="module-card {color}" style="pointer-events: none;">
+                        <span class="module-card-number">Module {mod_num}</span>
+                        <div class="module-card-title">{mod_title}</div>
+                        <div class="module-card-badges">{badges.strip()}</div>
+                    </div>
+                    """
+                    styled_html(card_html)
                     if st.button(
                         f"Open Module {mod_num} \u2192",
                         key=f"open_mod_{slug}_{mod['dir_name']}",
@@ -895,7 +928,7 @@ def _pair_guides_and_slides(mod: dict) -> list:
     # Walk guides, find matching slides
     for g in guides:
         fname = Path(g["path"]).stem  # e.g. 01_ga_components
-        # Skip _slides markdown files (they're source, HTML is what we show)
+        # Skip any _slides files (source .md or rendered .html)
         if "_slides" in g["name"]:
             continue
         base = fname

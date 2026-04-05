@@ -1,0 +1,110 @@
+- generic [ref=e1]:
+  - banner [ref=e2]
+  - generic [ref=e4]:
+    - button [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+    - generic [ref=e20]:
+      - paragraph [ref=e24]: 🎓 Course Browser
+      - button "🏠 Home" [ref=e27] [cursor=pointer]:
+        - paragraph [ref=e29]: 🏠 Home
+      - separator [ref=e33]
+      - textbox "Search courses" [ref=e38]:
+        - /placeholder: 🔍 Search courses...
+      - separator [ref=e42]
+      - button "▸ 🤖 Agentic AI & Large Language Models" [ref=e626] [cursor=pointer]:
+        - paragraph [ref=e628]: ▸ 🤖 Agentic AI & Large Language Models
+      - button "🤖 Agentic AI with LLMs - Practical Edition" [ref=e50] [cursor=pointer]:
+        - paragraph [ref=e52]: 🤖 Agentic AI with LLMs - Practical Edition
+      - 'button "⚙️ AI Engineer Fundamentals: Building Production LLM Systems" [ref=e55] [cursor=pointer]':
+        - paragraph [ref=e57]: "⚙️ AI Engineer Fundamentals: Building Production LLM Systems"
+      - button "📊 Bayesian Time Series Forecasting for Commodity Trading" [ref=e60] [cursor=pointer]:
+        - paragraph [ref=e62]: 📊 Bayesian Time Series Forecasting for Commodity Trading
+      - 'button "📊 Bayesian Prompt Engineering: Conditional Probability for AI Mastery" [ref=e65] [cursor=pointer]':
+        - paragraph [ref=e67]: "📊 Bayesian Prompt Engineering: Conditional Probability for AI Mastery"
+      - button "🧠 Captum Neural Network Interpretability" [ref=e70] [cursor=pointer]:
+        - paragraph [ref=e72]: 🧠 Captum Neural Network Interpretability
+      - button "📈 Causalpy Interrupted Time Series" [ref=e75] [cursor=pointer]:
+        - paragraph [ref=e77]: 📈 Causalpy Interrupted Time Series
+      - 'button "🧩 Gen AI & Dataiku: LLM Mesh Use Cases" [ref=e80] [cursor=pointer]':
+        - paragraph [ref=e82]: "🧩 Gen AI & Dataiku: LLM Mesh Use Cases"
+      - button "🎯 Double Machine Learning" [ref=e85] [cursor=pointer]:
+        - paragraph [ref=e87]: 🎯 Double Machine Learning
+      - button "📐 Dynamic Factor Models for Time Series Econometrics" [ref=e90] [cursor=pointer]:
+        - paragraph [ref=e92]: 📐 Dynamic Factor Models for Time Series Econometrics
+      - button "💬 Generative AI for Commodities Trading & Fundamentals Analysis" [ref=e95] [cursor=pointer]:
+        - paragraph [ref=e97]: 💬 Generative AI for Commodities Trading & Fundamentals Analysis
+      - button "🧬 Genetic Algorithms for Feature Selection in Time Series Forecasting" [ref=e100] [cursor=pointer]:
+        - paragraph [ref=e102]: 🧬 Genetic Algorithms for Feature Selection in Time Series Forecasting
+      - button "🔗 Hidden Markov Models for Time Series Analysis" [ref=e105] [cursor=pointer]:
+        - paragraph [ref=e107]: 🔗 Hidden Markov Models for Time Series Analysis
+      - button "🕔 Midas Mixed Frequency Nowcasting" [ref=e110] [cursor=pointer]:
+        - paragraph [ref=e112]: 🕔 Midas Mixed Frequency Nowcasting
+      - button "🎰 Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading" [ref=e115] [cursor=pointer]:
+        - paragraph [ref=e117]: 🎰 Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading
+      - button "📈 Panel Regression Models with Fixed and Random Effects" [ref=e120] [cursor=pointer]:
+        - paragraph [ref=e122]: 📈 Panel Regression Models with Fixed and Random Effects
+      - button "⚡ Power Automate" [ref=e125] [cursor=pointer]:
+        - paragraph [ref=e127]: ⚡ Power Automate
+      - button "🎮 Reinforcement Learning" [ref=e130] [cursor=pointer]:
+        - paragraph [ref=e132]: 🎮 Reinforcement Learning
+      - button "📉 Modern Time Series Forecasting with NeuralForecast" [ref=e135] [cursor=pointer]:
+        - paragraph [ref=e137]: 📉 Modern Time Series Forecasting with NeuralForecast
+      - separator [ref=e141]
+      - group [ref=e143]:
+        - generic "About" [ref=e144] [cursor=pointer]:
+          - paragraph [ref=e147]: About
+          - img [ref=e148]
+    - generic [ref=e155]:
+      - generic [ref=e632]: "Home › Agentic AI & Large Language Models › Module 00: Foundations › Transformer Architecture"
+      - generic [ref=e633]:
+        - button "← Home" [ref=e1250] [cursor=pointer]:
+          - paragraph [ref=e1252]: ← Home
+        - button "← Agentic AI & Large Language Models" [ref=e1258] [cursor=pointer]:
+          - paragraph [ref=e1260]: ← Agentic AI & Large Language Models
+        - 'button "← Module 00: Foundations" [ref=e1266] [cursor=pointer]':
+          - paragraph [ref=e1268]: "← Module 00: Foundations"
+      - generic [ref=e648]:
+        - generic [ref=e1273]: Transformer Architecture
+        - generic [ref=e1274]: Slide Deck
+      - iframe [ref=e1275]:
+        - generic [ref=f2e2]:
+          - img [ref=f2e3]:
+            - generic [ref=f2e5]:
+              - heading "Transformer Architecture for Agent Builders" [level=1] [ref=f2e6]
+              - paragraph [ref=f2e7]:
+                - strong [ref=f2e8]: Module 00 — Foundations
+              - blockquote [ref=f2e9]:
+                - paragraph [ref=f2e10]: Understanding how transformers process and generate text helps you write better prompts, debug agent behavior, and make informed design decisions.
+              - text: "1"
+          - img: "2"
+          - img: "3"
+          - img: "4"
+          - img: "5"
+          - img: "6"
+          - img: "7"
+          - img: "8"
+          - img: "9"
+          - img: "10"
+          - img: "11"
+          - img: "12"
+          - img: "13"
+          - img: "14"
+          - img: "15"
+          - img: "16"
+          - img: "17"
+          - img: "18"
+          - img: "19"
+          - img: "20"
+          - img: "21"
+          - img: "22"
+          - img: "23"
+          - generic:
+            - button [disabled]: Previous slide
+            - button: Next slide
+            - button: Toggle fullscreen
+            - button: Open presenter view
+      - generic [ref=e313]:
+        - button "← Project Specification" [ref=e1278] [cursor=pointer]:
+          - paragraph [ref=e1280]: ← Project Specification
+        - button "LLM Providers →" [ref=e1287] [cursor=pointer]:
+          - paragraph [ref=e1289]: LLM Providers →

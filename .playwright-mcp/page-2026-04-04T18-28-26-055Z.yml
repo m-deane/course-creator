@@ -1,0 +1,405 @@
+- generic [ref=e1]:
+  - banner [ref=e2]
+  - generic [ref=e4]:
+    - button [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+    - generic [ref=e20]:
+      - paragraph [ref=e24]: 🎓 Course Browser
+      - button "🏠 Home" [ref=e27] [cursor=pointer]:
+        - paragraph [ref=e29]: 🏠 Home
+      - separator [ref=e33]
+      - textbox "Search courses" [ref=e38]:
+        - /placeholder: 🔍 Search courses...
+      - separator [ref=e42]
+      - button "🤖 Agentic AI & Large Language Models" [ref=e45] [cursor=pointer]:
+        - paragraph [ref=e47]: 🤖 Agentic AI & Large Language Models
+      - button "🤖 Agentic AI with LLMs - Practical Edition" [ref=e50] [cursor=pointer]:
+        - paragraph [ref=e52]: 🤖 Agentic AI with LLMs - Practical Edition
+      - 'button "⚙️ AI Engineer Fundamentals: Building Production LLM Systems" [ref=e55] [cursor=pointer]':
+        - paragraph [ref=e57]: "⚙️ AI Engineer Fundamentals: Building Production LLM Systems"
+      - button "📊 Bayesian Time Series Forecasting for Commodity Trading" [ref=e60] [cursor=pointer]:
+        - paragraph [ref=e62]: 📊 Bayesian Time Series Forecasting for Commodity Trading
+      - 'button "📊 Bayesian Prompt Engineering: Conditional Probability for AI Mastery" [ref=e65] [cursor=pointer]':
+        - paragraph [ref=e67]: "📊 Bayesian Prompt Engineering: Conditional Probability for AI Mastery"
+      - button "🧠 Captum Neural Network Interpretability" [ref=e70] [cursor=pointer]:
+        - paragraph [ref=e72]: 🧠 Captum Neural Network Interpretability
+      - button "📈 Causalpy Interrupted Time Series" [ref=e75] [cursor=pointer]:
+        - paragraph [ref=e77]: 📈 Causalpy Interrupted Time Series
+      - 'button "🧩 Gen AI & Dataiku: LLM Mesh Use Cases" [ref=e80] [cursor=pointer]':
+        - paragraph [ref=e82]: "🧩 Gen AI & Dataiku: LLM Mesh Use Cases"
+      - button "🎯 Double Machine Learning" [ref=e85] [cursor=pointer]:
+        - paragraph [ref=e87]: 🎯 Double Machine Learning
+      - button "📐 Dynamic Factor Models for Time Series Econometrics" [ref=e90] [cursor=pointer]:
+        - paragraph [ref=e92]: 📐 Dynamic Factor Models for Time Series Econometrics
+      - button "💬 Generative AI for Commodities Trading & Fundamentals Analysis" [ref=e95] [cursor=pointer]:
+        - paragraph [ref=e97]: 💬 Generative AI for Commodities Trading & Fundamentals Analysis
+      - button "🧬 Genetic Algorithms for Feature Selection in Time Series Forecasting" [ref=e100] [cursor=pointer]:
+        - paragraph [ref=e102]: 🧬 Genetic Algorithms for Feature Selection in Time Series Forecasting
+      - button "🔗 Hidden Markov Models for Time Series Analysis" [ref=e105] [cursor=pointer]:
+        - paragraph [ref=e107]: 🔗 Hidden Markov Models for Time Series Analysis
+      - button "🕔 Midas Mixed Frequency Nowcasting" [ref=e110] [cursor=pointer]:
+        - paragraph [ref=e112]: 🕔 Midas Mixed Frequency Nowcasting
+      - button "🎰 Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading" [ref=e115] [cursor=pointer]:
+        - paragraph [ref=e117]: 🎰 Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading
+      - button "📈 Panel Regression Models with Fixed and Random Effects" [ref=e120] [cursor=pointer]:
+        - paragraph [ref=e122]: 📈 Panel Regression Models with Fixed and Random Effects
+      - button "⚡ Power Automate" [ref=e125] [cursor=pointer]:
+        - paragraph [ref=e127]: ⚡ Power Automate
+      - button "🎮 Reinforcement Learning" [ref=e130] [cursor=pointer]:
+        - paragraph [ref=e132]: 🎮 Reinforcement Learning
+      - button "📉 Modern Time Series Forecasting with NeuralForecast" [ref=e135] [cursor=pointer]:
+        - paragraph [ref=e137]: 📉 Modern Time Series Forecasting with NeuralForecast
+      - separator [ref=e141]
+      - group [ref=e143]:
+        - generic "About" [ref=e144] [cursor=pointer]:
+          - paragraph [ref=e147]: About
+          - img [ref=e148]
+    - generic [ref=e155]:
+      - generic [ref=e159]:
+        - paragraph [ref=e160]: Course Browser
+        - paragraph [ref=e161]: Practical-first courses spanning ML, GenAI, econometrics, and trading systems
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]: "19"
+            - text: Courses
+          - generic [ref=e165]:
+            - generic [ref=e166]: "146"
+            - text: Modules
+          - generic [ref=e167]:
+            - generic [ref=e168]: "259"
+            - text: Slide Decks
+          - generic [ref=e169]:
+            - generic [ref=e170]: "315"
+            - text: Notebooks
+          - generic [ref=e171]:
+            - generic [ref=e172]: "609"
+            - text: Guides
+      - generic [ref=e173]:
+        - generic [ref=e177]:
+          - generic [ref=e181]:
+            - generic [ref=e182]: 🤖
+            - generic [ref=e183]: Agentic AI & Large Language Models
+            - generic [ref=e184]: Build production-grade AI agent systems using modern LLM architectures. Learn to design, implement, and deploy autonomou
+            - generic [ref=e185]:
+              - generic [ref=e186]:
+                - strong [ref=e187]: "8"
+                - text: modules
+              - generic [ref=e188]:
+                - strong [ref=e189]: "32"
+                - text: slides
+              - generic [ref=e190]:
+                - strong [ref=e191]: "20"
+                - text: notebooks
+          - button "Open →" [ref=e194] [cursor=pointer]:
+            - paragraph [ref=e196]: Open →
+        - generic [ref=e200]:
+          - generic [ref=e204]:
+            - generic [ref=e205]: 🤖
+            - generic [ref=e206]: Agentic AI with LLMs - Practical Edition
+            - generic [ref=e207]: "> **Start Here:** [00_your_first_agent.ipynb](quick-starts/00_your_first_agent.ipynb) - Working agent in 2 minutes"
+            - generic [ref=e208]:
+              - generic [ref=e209]:
+                - strong [ref=e210]: "0"
+                - text: modules
+              - generic [ref=e211]:
+                - strong [ref=e212]: "0"
+                - text: slides
+              - generic [ref=e213]:
+                - strong [ref=e214]: "3"
+                - text: notebooks
+          - button "Open →" [ref=e217] [cursor=pointer]:
+            - paragraph [ref=e219]: Open →
+        - generic [ref=e223]:
+          - generic [ref=e227]:
+            - generic [ref=e228]: ⚙️
+            - generic [ref=e229]: "AI Engineer Fundamentals: Building Production LLM Systems"
+            - generic [ref=e230]: "> **\"Transformer is just the engine. The winners will build the full loop: alignment, memory, tools, protocols, systems"
+            - generic [ref=e231]:
+              - generic [ref=e232]:
+                - strong [ref=e233]: "9"
+                - text: modules
+              - generic [ref=e234]:
+                - strong [ref=e235]: "11"
+                - text: slides
+              - generic [ref=e236]:
+                - strong [ref=e237]: "1"
+                - text: notebooks
+          - button "Open →" [ref=e240] [cursor=pointer]:
+            - paragraph [ref=e242]: Open →
+      - generic [ref=e243]:
+        - generic [ref=e247]:
+          - generic [ref=e251]:
+            - generic [ref=e252]: 📊
+            - generic [ref=e253]: Bayesian Time Series Forecasting for Commodity Trading
+            - generic [ref=e254]: This advanced course teaches Bayesian approaches to time series modeling with a specific focus on commodity market funda
+            - generic [ref=e255]:
+              - generic [ref=e256]:
+                - strong [ref=e257]: "9"
+                - text: modules
+              - generic [ref=e258]:
+                - strong [ref=e259]: "27"
+                - text: slides
+              - generic [ref=e260]:
+                - strong [ref=e261]: "24"
+                - text: notebooks
+          - button "Open →" [ref=e264] [cursor=pointer]:
+            - paragraph [ref=e266]: Open →
+        - generic [ref=e270]:
+          - generic [ref=e274]:
+            - generic [ref=e275]: 📊
+            - generic [ref=e276]: "Bayesian Prompt Engineering: Conditional Probability for AI Mastery"
+            - generic [ref=e277]: "> *Every bad AI answer is a tax you pay for making the model guess your conditions.*"
+            - generic [ref=e278]:
+              - generic [ref=e279]:
+                - strong [ref=e280]: "8"
+                - text: modules
+              - generic [ref=e281]:
+                - strong [ref=e282]: "0"
+                - text: slides
+              - generic [ref=e283]:
+                - strong [ref=e284]: "6"
+                - text: notebooks
+          - button "Open →" [ref=e287] [cursor=pointer]:
+            - paragraph [ref=e289]: Open →
+        - generic [ref=e293]:
+          - generic [ref=e297]:
+            - generic [ref=e298]: 🧠
+            - generic [ref=e299]: Captum Neural Network Interpretability
+            - generic [ref=e300]: Explore course content
+            - generic [ref=e301]:
+              - generic [ref=e302]:
+                - strong [ref=e303]: "9"
+                - text: modules
+              - generic [ref=e304]:
+                - strong [ref=e305]: "0"
+                - text: slides
+              - generic [ref=e306]:
+                - strong [ref=e307]: "28"
+                - text: notebooks
+          - button "Open →" [ref=e310] [cursor=pointer]:
+            - paragraph [ref=e312]: Open →
+      - generic [ref=e313]:
+        - generic [ref=e317]:
+          - generic [ref=e321]:
+            - generic [ref=e322]: 📈
+            - generic [ref=e323]: Causalpy Interrupted Time Series
+            - generic [ref=e324]: Explore course content
+            - generic [ref=e325]:
+              - generic [ref=e326]:
+                - strong [ref=e327]: "8"
+                - text: modules
+              - generic [ref=e328]:
+                - strong [ref=e329]: "0"
+                - text: slides
+              - generic [ref=e330]:
+                - strong [ref=e331]: "25"
+                - text: notebooks
+          - button "Open →" [ref=e334] [cursor=pointer]:
+            - paragraph [ref=e336]: Open →
+        - generic [ref=e340]:
+          - generic [ref=e344]:
+            - generic [ref=e345]: 🧩
+            - generic [ref=e346]: "Gen AI & Dataiku: LLM Mesh Use Cases"
+            - generic [ref=e347]: Leverage Dataiku's LLM Mesh to build enterprise Gen AI applications. Learn to orchestrate multiple LLM providers, build
+            - generic [ref=e348]:
+              - generic [ref=e349]:
+                - strong [ref=e350]: "5"
+                - text: modules
+              - generic [ref=e351]:
+                - strong [ref=e352]: "14"
+                - text: slides
+              - generic [ref=e353]:
+                - strong [ref=e354]: "10"
+                - text: notebooks
+          - button "Open →" [ref=e357] [cursor=pointer]:
+            - paragraph [ref=e359]: Open →
+        - generic [ref=e363]:
+          - generic [ref=e367]:
+            - generic [ref=e368]: 🎯
+            - generic [ref=e369]: Double Machine Learning
+            - generic [ref=e370]: Explore course content
+            - generic [ref=e371]:
+              - generic [ref=e372]:
+                - strong [ref=e373]: "10"
+                - text: modules
+              - generic [ref=e374]:
+                - strong [ref=e375]: "10"
+                - text: slides
+              - generic [ref=e376]:
+                - strong [ref=e377]: "11"
+                - text: notebooks
+          - button "Open →" [ref=e380] [cursor=pointer]:
+            - paragraph [ref=e382]: Open →
+      - generic [ref=e383]:
+        - generic [ref=e387]:
+          - generic [ref=e391]:
+            - generic [ref=e392]: 📐
+            - generic [ref=e393]: Dynamic Factor Models for Time Series Econometrics
+            - generic [ref=e394]: This advanced course provides a comprehensive treatment of Dynamic Factor Models (DFMs), one of the most powerful tools
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - strong [ref=e397]: "9"
+                - text: modules
+              - generic [ref=e398]:
+                - strong [ref=e399]: "28"
+                - text: slides
+              - generic [ref=e400]:
+                - strong [ref=e401]: "15"
+                - text: notebooks
+          - button "Open →" [ref=e404] [cursor=pointer]:
+            - paragraph [ref=e406]: Open →
+        - generic [ref=e410]:
+          - generic [ref=e414]:
+            - generic [ref=e415]: 💬
+            - generic [ref=e416]: Generative AI for Commodities Trading & Fundamentals Analysis
+            - generic [ref=e417]: Apply generative AI and large language models to commodities markets—processing unstructured data, analyzing fundamental
+            - generic [ref=e418]:
+              - generic [ref=e419]:
+                - strong [ref=e420]: "7"
+                - text: modules
+              - generic [ref=e421]:
+                - strong [ref=e422]: "21"
+                - text: slides
+              - generic [ref=e423]:
+                - strong [ref=e424]: "17"
+                - text: notebooks
+          - button "Open →" [ref=e427] [cursor=pointer]:
+            - paragraph [ref=e429]: Open →
+        - generic [ref=e433]:
+          - generic [ref=e437]:
+            - generic [ref=e438]: 🧬
+            - generic [ref=e439]: Genetic Algorithms for Feature Selection in Time Series Forecasting
+            - generic [ref=e440]: Apply evolutionary optimization to identify optimal feature subsets for time series prediction. Learn to design fitness
+            - generic [ref=e441]:
+              - generic [ref=e442]:
+                - strong [ref=e443]: "6"
+                - text: modules
+              - generic [ref=e444]:
+                - strong [ref=e445]: "20"
+                - text: slides
+              - generic [ref=e446]:
+                - strong [ref=e447]: "12"
+                - text: notebooks
+          - button "Open →" [ref=e450] [cursor=pointer]:
+            - paragraph [ref=e452]: Open →
+      - generic [ref=e453]:
+        - generic [ref=e457]:
+          - generic [ref=e461]:
+            - generic [ref=e462]: 🔗
+            - generic [ref=e463]: Hidden Markov Models for Time Series Analysis
+            - generic [ref=e464]: Master Hidden Markov Models (HMMs) for regime detection, sequence modeling, and probabilistic forecasting. Learn the mat
+            - generic [ref=e465]:
+              - generic [ref=e466]:
+                - strong [ref=e467]: "6"
+                - text: modules
+              - generic [ref=e468]:
+                - strong [ref=e469]: "16"
+                - text: slides
+              - generic [ref=e470]:
+                - strong [ref=e471]: "14"
+                - text: notebooks
+          - button "Open →" [ref=e474] [cursor=pointer]:
+            - paragraph [ref=e476]: Open →
+        - generic [ref=e480]:
+          - generic [ref=e484]:
+            - generic [ref=e485]: 🕔
+            - generic [ref=e486]: Midas Mixed Frequency Nowcasting
+            - generic [ref=e487]: Explore course content
+            - generic [ref=e488]:
+              - generic [ref=e489]:
+                - strong [ref=e490]: "9"
+                - text: modules
+              - generic [ref=e491]:
+                - strong [ref=e492]: "0"
+                - text: slides
+              - generic [ref=e493]:
+                - strong [ref=e494]: "28"
+                - text: notebooks
+          - button "Open →" [ref=e497] [cursor=pointer]:
+            - paragraph [ref=e499]: Open →
+        - generic [ref=e503]:
+          - generic [ref=e507]:
+            - generic [ref=e508]: 🎰
+            - generic [ref=e509]: Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading
+            - generic [ref=e510]: Learn to make better decisions under uncertainty — while you're still operating. This course teaches multi-armed bandit
+            - generic [ref=e511]:
+              - generic [ref=e512]:
+                - strong [ref=e513]: "9"
+                - text: modules
+              - generic [ref=e514]:
+                - strong [ref=e515]: "38"
+                - text: slides
+              - generic [ref=e516]:
+                - strong [ref=e517]: "33"
+                - text: notebooks
+          - button "Open →" [ref=e520] [cursor=pointer]:
+            - paragraph [ref=e522]: Open →
+      - generic [ref=e523]:
+        - generic [ref=e527]:
+          - generic [ref=e531]:
+            - generic [ref=e532]: 📈
+            - generic [ref=e533]: Panel Regression Models with Fixed and Random Effects
+            - generic [ref=e534]: Master econometric techniques for analyzing panel (longitudinal) data—observations of multiple entities over time. Learn
+            - generic [ref=e535]:
+              - generic [ref=e536]:
+                - strong [ref=e537]: "6"
+                - text: modules
+              - generic [ref=e538]:
+                - strong [ref=e539]: "22"
+                - text: slides
+              - generic [ref=e540]:
+                - strong [ref=e541]: "13"
+                - text: notebooks
+          - button "Open →" [ref=e544] [cursor=pointer]:
+            - paragraph [ref=e546]: Open →
+        - generic [ref=e550]:
+          - generic [ref=e554]:
+            - generic [ref=e555]: ⚡
+            - generic [ref=e556]: Power Automate
+            - generic [ref=e557]: Explore course content
+            - generic [ref=e558]:
+              - generic [ref=e559]:
+                - strong [ref=e560]: "10"
+                - text: modules
+              - generic [ref=e561]:
+                - strong [ref=e562]: "20"
+                - text: slides
+              - generic [ref=e563]:
+                - strong [ref=e564]: "13"
+                - text: notebooks
+          - button "Open →" [ref=e567] [cursor=pointer]:
+            - paragraph [ref=e569]: Open →
+        - generic [ref=e573]:
+          - generic [ref=e577]:
+            - generic [ref=e578]: 🎮
+            - generic [ref=e579]: Reinforcement Learning
+            - generic [ref=e580]: Explore course content
+            - generic [ref=e581]:
+              - generic [ref=e582]:
+                - strong [ref=e583]: "10"
+                - text: modules
+              - generic [ref=e584]:
+                - strong [ref=e585]: "0"
+                - text: slides
+              - generic [ref=e586]:
+                - strong [ref=e587]: "26"
+                - text: notebooks
+          - button "Open →" [ref=e590] [cursor=pointer]:
+            - paragraph [ref=e592]: Open →
+      - generic [ref=e597]:
+        - generic [ref=e601]:
+          - generic [ref=e602]: 📉
+          - generic [ref=e603]: Modern Time Series Forecasting with NeuralForecast
+          - generic [ref=e604]: "**Sample Paths, Explainability & State-of-the-Art Architectures**"
+          - generic [ref=e605]:
+            - generic [ref=e606]:
+              - strong [ref=e607]: "8"
+              - text: modules
+            - generic [ref=e608]:
+              - strong [ref=e609]: "0"
+              - text: slides
+            - generic [ref=e610]:
+              - strong [ref=e611]: "16"
+              - text: notebooks
+        - button "Open →" [ref=e614] [cursor=pointer]:
+          - paragraph [ref=e616]: Open →

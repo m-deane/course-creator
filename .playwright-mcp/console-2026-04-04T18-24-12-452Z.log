@@ -1,0 +1,157 @@
+[  103731ms] [WARNING] Unrecognized feature: 'ambient-light-sensor'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'battery'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'document-domain'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'layout-animations'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'legacy-image-formats'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'oversized-images'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'vr'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103731ms] [WARNING] Unrecognized feature: 'wake-lock'. @ http://localhost:8501/static/js/index.B-cSXLfy.js:40
+[  103960ms] [WARNING] An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing. @ about:srcdoc:0
+[  104074ms] [ERROR] SecurityError: Failed to execute 'replaceState' on 'History': A history state object with URL 'about://srcdoc' cannot be created in a document with origin 'http://localhost:8501' and URL 'about:srcdoc'.
+    at Object.i [as setter] (about:srcdoc:532:1138)
+    at v (about:srcdoc:532:1603)
+    at about:srcdoc:532:21448
+    at about:srcdoc:532:21467
+    at about:srcdoc:532:21804
+    at about:srcdoc:532:21807 @ about:srcdoc:531
+[  104076ms] [ERROR] SecurityError: Failed to execute 'replaceState' on 'History': A history state object with URL 'about://srcdoc' cannot be created in a document with origin 'http://localhost:8501' and URL 'about:srcdoc'.
+    at i (about:srcdoc:532:1138)
+    at Object.setter (about:srcdoc:532:14366)
+    at v (about:srcdoc:532:1603)
+    at re (about:srcdoc:532:14343)
+    at about:srcdoc:532:21590
+    at about:srcdoc:532:21804
+    at about:srcdoc:532:21807 @ about:srcdoc:531
+[  104100ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104100ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104101ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104101ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104102ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104102ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104102ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104103ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104104ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104104ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104104ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104104ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104105ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104105ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104106ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104106ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104108ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104108ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104109ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104109ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104110ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104111ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104111ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104112ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104112ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104112ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104113ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104113ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104114ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104114ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104124ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  104125ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106128ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106130ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106134ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106134ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106135ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106136ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106136ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106136ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106137ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106137ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106138ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106138ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106139ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106139ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106139ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106140ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106147ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106157ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106167ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106176ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106187ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106197ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106207ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106216ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106227ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106236ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106246ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106256ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106266ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106277ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106286ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106297ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106306ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106317ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106326ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  106337ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  110875ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110876ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110878ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110878ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110889ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110889ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110890ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110891ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110893ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110893ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110896ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110897ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110899ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  110899ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  119911ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119912ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119912ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119913ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119914ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119914ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119914ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119915ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119915ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119916ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119916ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119916ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119916ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119917ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119917ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119949ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119951ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119951ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119951ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119952ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119952ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119953ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119953ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119954ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119954ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119955ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119955ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119955ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119956ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  119956ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  120108ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ about:srcdoc:435
+[  123255ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  123257ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  123262ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  123264ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  123266ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  123269ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102
+[  123273ms] [VERBOSE] Rendering was performed in a subtree hidden by content-visibility. @ :3102

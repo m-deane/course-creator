@@ -1,0 +1,274 @@
+- generic [ref=e1]:
+  - banner [ref=e2]
+  - generic [ref=e4]:
+    - button [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+    - generic [ref=e20]:
+      - paragraph [ref=e24]: 🎓 Course Browser
+      - button "🏠 Home" [ref=e27] [cursor=pointer]:
+        - paragraph [ref=e29]: 🏠 Home
+      - separator [ref=e33]
+      - textbox "Search courses" [ref=e38]:
+        - /placeholder: 🔍 Search courses...
+      - separator [ref=e42]
+      - button "▸ 🤖 Agentic AI & Large Language Models" [ref=e626] [cursor=pointer]:
+        - paragraph [ref=e628]: ▸ 🤖 Agentic AI & Large Language Models
+      - button "🤖 Agentic AI with LLMs - Practical Edition" [ref=e50] [cursor=pointer]:
+        - paragraph [ref=e52]: 🤖 Agentic AI with LLMs - Practical Edition
+      - 'button "⚙️ AI Engineer Fundamentals: Building Production LLM Systems" [ref=e55] [cursor=pointer]':
+        - paragraph [ref=e57]: "⚙️ AI Engineer Fundamentals: Building Production LLM Systems"
+      - button "📊 Bayesian Time Series Forecasting for Commodity Trading" [ref=e60] [cursor=pointer]:
+        - paragraph [ref=e62]: 📊 Bayesian Time Series Forecasting for Commodity Trading
+      - 'button "📊 Bayesian Prompt Engineering: Conditional Probability for AI Mastery" [ref=e65] [cursor=pointer]':
+        - paragraph [ref=e67]: "📊 Bayesian Prompt Engineering: Conditional Probability for AI Mastery"
+      - button "🧠 Captum Neural Network Interpretability" [ref=e70] [cursor=pointer]:
+        - paragraph [ref=e72]: 🧠 Captum Neural Network Interpretability
+      - button "📈 Causalpy Interrupted Time Series" [ref=e75] [cursor=pointer]:
+        - paragraph [ref=e77]: 📈 Causalpy Interrupted Time Series
+      - 'button "🧩 Gen AI & Dataiku: LLM Mesh Use Cases" [ref=e80] [cursor=pointer]':
+        - paragraph [ref=e82]: "🧩 Gen AI & Dataiku: LLM Mesh Use Cases"
+      - button "🎯 Double Machine Learning" [ref=e85] [cursor=pointer]:
+        - paragraph [ref=e87]: 🎯 Double Machine Learning
+      - button "📐 Dynamic Factor Models for Time Series Econometrics" [ref=e90] [cursor=pointer]:
+        - paragraph [ref=e92]: 📐 Dynamic Factor Models for Time Series Econometrics
+      - button "💬 Generative AI for Commodities Trading & Fundamentals Analysis" [ref=e95] [cursor=pointer]:
+        - paragraph [ref=e97]: 💬 Generative AI for Commodities Trading & Fundamentals Analysis
+      - button "🧬 Genetic Algorithms for Feature Selection in Time Series Forecasting" [ref=e100] [cursor=pointer]:
+        - paragraph [ref=e102]: 🧬 Genetic Algorithms for Feature Selection in Time Series Forecasting
+      - button "🔗 Hidden Markov Models for Time Series Analysis" [ref=e105] [cursor=pointer]:
+        - paragraph [ref=e107]: 🔗 Hidden Markov Models for Time Series Analysis
+      - button "🕔 Midas Mixed Frequency Nowcasting" [ref=e110] [cursor=pointer]:
+        - paragraph [ref=e112]: 🕔 Midas Mixed Frequency Nowcasting
+      - button "🎰 Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading" [ref=e115] [cursor=pointer]:
+        - paragraph [ref=e117]: 🎰 Multi-Armed Bandits & Adaptive Experimentation for Commodity Trading
+      - button "📈 Panel Regression Models with Fixed and Random Effects" [ref=e120] [cursor=pointer]:
+        - paragraph [ref=e122]: 📈 Panel Regression Models with Fixed and Random Effects
+      - button "⚡ Power Automate" [ref=e125] [cursor=pointer]:
+        - paragraph [ref=e127]: ⚡ Power Automate
+      - button "🎮 Reinforcement Learning" [ref=e130] [cursor=pointer]:
+        - paragraph [ref=e132]: 🎮 Reinforcement Learning
+      - button "📉 Modern Time Series Forecasting with NeuralForecast" [ref=e135] [cursor=pointer]:
+        - paragraph [ref=e137]: 📉 Modern Time Series Forecasting with NeuralForecast
+      - separator [ref=e141]
+      - group [ref=e143]:
+        - generic "About" [ref=e144] [cursor=pointer]:
+          - paragraph [ref=e147]: About
+          - img [ref=e148]
+    - generic [ref=e155]:
+      - generic [ref=e632]: "Home › Agentic AI & Large Language Models › Module 00: Foundations › Transformer Architecture"
+      - generic [ref=e633]:
+        - button "← Home" [ref=e1250] [cursor=pointer]:
+          - paragraph [ref=e1252]: ← Home
+        - button "← Agentic AI & Large Language Models" [ref=e1258] [cursor=pointer]:
+          - paragraph [ref=e1260]: ← Agentic AI & Large Language Models
+        - 'button "← Module 00: Foundations" [ref=e1266] [cursor=pointer]':
+          - paragraph [ref=e1268]: "← Module 00: Foundations"
+      - generic [ref=e648]:
+        - generic [ref=e1273]: Transformer Architecture
+        - generic [ref=e1274]: Slide Deck
+      - generic [ref=e667]:
+        - generic [ref=e668]: 📁
+        - generic [ref=e669]: Capstone
+        - generic [ref=e670]: 1 files
+      - generic [ref=e313]:
+        - button "📝 Project Specification" [ref=e673] [cursor=pointer]:
+          - paragraph [ref=e675]: 📝 Project Specification
+        - paragraph [ref=e676]:
+          - generic [ref=e677]: Guide
+      - generic [ref=e681]:
+        - generic [ref=e682]: 📚
+        - generic [ref=e683]: Modules
+        - generic [ref=e684]: 8 modules
+      - generic [ref=e689]:
+        - generic [ref=e690]: Module 00 Foundations
+        - generic [ref=e691]:
+          - generic [ref=e692]: 🌐 4
+          - generic [ref=e693]: 📝 12
+          - generic [ref=e694]: 📓 2
+          - generic [ref=e695]: 📎 2
+      - group [ref=e697]:
+        - generic "View Module 00 Content" [ref=e698] [cursor=pointer]:
+          - paragraph [ref=e701]: View Module 00 Content
+          - img [ref=e845]
+        - generic [ref=e851]:
+          - generic [ref=e855]: 🌐 Slide Decks
+          - generic [ref=e856]:
+            - button "🌐 Transformer Architecture" [active] [ref=e863] [cursor=pointer]:
+              - paragraph [ref=e865]: 🌐 Transformer Architecture
+            - paragraph [ref=e873]:
+              - generic [ref=e874]: Slide Deck
+          - generic [ref=e875]:
+            - button "🌐 LLM Providers" [ref=e882] [cursor=pointer]:
+              - paragraph [ref=e884]: 🌐 LLM Providers
+            - paragraph [ref=e892]:
+              - generic [ref=e893]: Slide Deck
+          - generic [ref=e894]:
+            - button "🌐 Prompt Basics" [ref=e901] [cursor=pointer]:
+              - paragraph [ref=e903]: 🌐 Prompt Basics
+            - paragraph [ref=e911]:
+              - generic [ref=e912]: Slide Deck
+          - generic [ref=e913]:
+            - button "🌐 Cheatsheet" [ref=e920] [cursor=pointer]:
+              - paragraph [ref=e922]: 🌐 Cheatsheet
+            - paragraph [ref=e930]:
+              - generic [ref=e931]: Slide Deck
+          - generic [ref=e935]: 📝 Guides
+          - generic [ref=e936]:
+            - button "📝 Transformer Architecture" [ref=e943] [cursor=pointer]:
+              - paragraph [ref=e945]: 📝 Transformer Architecture
+            - paragraph [ref=e953]:
+              - generic [ref=e954]: Guide
+          - generic [ref=e955]:
+            - button "🌐 Transformer Architecture" [ref=e962] [cursor=pointer]:
+              - paragraph [ref=e964]: 🌐 Transformer Architecture
+            - paragraph [ref=e972]:
+              - generic [ref=e973]: Slide Deck
+          - generic [ref=e974]:
+            - button "📝 Transformer Architecture" [ref=e981] [cursor=pointer]:
+              - paragraph [ref=e983]: 📝 Transformer Architecture
+            - paragraph [ref=e991]:
+              - generic [ref=e992]: Guide
+          - generic [ref=e993]:
+            - button "📝 LLM Providers" [ref=e1000] [cursor=pointer]:
+              - paragraph [ref=e1002]: 📝 LLM Providers
+            - paragraph [ref=e1010]:
+              - generic [ref=e1011]: Guide
+          - generic [ref=e1012]:
+            - button "🌐 LLM Providers" [ref=e1019] [cursor=pointer]:
+              - paragraph [ref=e1021]: 🌐 LLM Providers
+            - paragraph [ref=e1029]:
+              - generic [ref=e1030]: Slide Deck
+          - generic [ref=e1031]:
+            - button "📝 LLM Providers" [ref=e1038] [cursor=pointer]:
+              - paragraph [ref=e1040]: 📝 LLM Providers
+            - paragraph [ref=e1048]:
+              - generic [ref=e1049]: Guide
+          - generic [ref=e1050]:
+            - button "📝 Prompt Basics" [ref=e1057] [cursor=pointer]:
+              - paragraph [ref=e1059]: 📝 Prompt Basics
+            - paragraph [ref=e1067]:
+              - generic [ref=e1068]: Guide
+          - generic [ref=e1069]:
+            - button "🌐 Prompt Basics" [ref=e1076] [cursor=pointer]:
+              - paragraph [ref=e1078]: 🌐 Prompt Basics
+            - paragraph [ref=e1086]:
+              - generic [ref=e1087]: Slide Deck
+          - generic [ref=e1088]:
+            - button "📝 Prompt Basics" [ref=e1095] [cursor=pointer]:
+              - paragraph [ref=e1097]: 📝 Prompt Basics
+            - paragraph [ref=e1105]:
+              - generic [ref=e1106]: Guide
+          - generic [ref=e1107]:
+            - button "📝 Cheatsheet" [ref=e1114] [cursor=pointer]:
+              - paragraph [ref=e1116]: 📝 Cheatsheet
+            - paragraph [ref=e1124]:
+              - generic [ref=e1125]: Guide
+          - generic [ref=e1126]:
+            - button "🌐 Cheatsheet" [ref=e1133] [cursor=pointer]:
+              - paragraph [ref=e1135]: 🌐 Cheatsheet
+            - paragraph [ref=e1143]:
+              - generic [ref=e1144]: Slide Deck
+          - generic [ref=e1145]:
+            - button "📝 Cheatsheet" [ref=e1152] [cursor=pointer]:
+              - paragraph [ref=e1154]: 📝 Cheatsheet
+            - paragraph [ref=e1162]:
+              - generic [ref=e1163]: Guide
+          - generic [ref=e1167]: 📓 Notebooks
+          - generic [ref=e1168]:
+            - button "📓 API Setup" [ref=e1175] [cursor=pointer]:
+              - paragraph [ref=e1177]: 📓 API Setup
+            - paragraph [ref=e1185]:
+              - generic [ref=e1186]: Notebook
+          - generic [ref=e1187]:
+            - button "📓 Token Exploration" [ref=e1194] [cursor=pointer]:
+              - paragraph [ref=e1196]: 📓 Token Exploration
+            - paragraph [ref=e1204]:
+              - generic [ref=e1205]: Notebook
+          - generic [ref=e1209]: 📎 Resources
+          - generic [ref=e1210]:
+            - button "📝 Additional Readings" [ref=e1217] [cursor=pointer]:
+              - paragraph [ref=e1219]: 📝 Additional Readings
+            - paragraph [ref=e1227]:
+              - generic [ref=e1228]: Guide
+          - generic [ref=e1229]:
+            - button "📝 Readme" [ref=e1236] [cursor=pointer]:
+              - paragraph [ref=e1238]: 📝 Readme
+            - paragraph [ref=e1246]:
+              - generic [ref=e1247]: Guide
+      - generic [ref=e709]:
+        - generic [ref=e710]: Module 01 LLM Fundamentals for Agents
+        - generic [ref=e711]:
+          - generic [ref=e712]: 🌐 4
+          - generic [ref=e713]: 📝 12
+          - generic [ref=e714]: 📓 3
+          - generic [ref=e715]: 📎 2
+      - group [ref=e717]:
+        - generic "View Module 01 Content" [ref=e718] [cursor=pointer]:
+          - paragraph [ref=e721]: View Module 01 Content
+          - img [ref=e722]
+      - generic [ref=e729]:
+        - generic [ref=e730]: Module 02 Tool Use & Function Calling
+        - generic [ref=e731]:
+          - generic [ref=e732]: 🌐 4
+          - generic [ref=e733]: 📝 12
+          - generic [ref=e734]: 📓 2
+          - generic [ref=e735]: 📎 2
+      - group [ref=e737]:
+        - generic "View Module 02 Content" [ref=e738] [cursor=pointer]:
+          - paragraph [ref=e741]: View Module 02 Content
+          - img [ref=e742]
+      - generic [ref=e749]:
+        - generic [ref=e750]: Module 03 Memory & Context Management
+        - generic [ref=e751]:
+          - generic [ref=e752]: 🌐 4
+          - generic [ref=e753]: 📝 12
+          - generic [ref=e754]: 📓 3
+          - generic [ref=e755]: 📎 2
+      - group [ref=e757]:
+        - generic "View Module 03 Content" [ref=e758] [cursor=pointer]:
+          - paragraph [ref=e761]: View Module 03 Content
+          - img [ref=e762]
+      - generic [ref=e769]:
+        - generic [ref=e770]: Module 04 Planning & Reasoning
+        - generic [ref=e771]:
+          - generic [ref=e772]: 🌐 4
+          - generic [ref=e773]: 📝 12
+          - generic [ref=e774]: 📓 2
+          - generic [ref=e775]: 📎 2
+      - group [ref=e777]:
+        - generic "View Module 04 Content" [ref=e778] [cursor=pointer]:
+          - paragraph [ref=e781]: View Module 04 Content
+          - img [ref=e782]
+      - generic [ref=e789]:
+        - generic [ref=e790]: Module 05 Multi-Agent Systems
+        - generic [ref=e791]:
+          - generic [ref=e792]: 🌐 4
+          - generic [ref=e793]: 📝 12
+          - generic [ref=e794]: 📓 3
+          - generic [ref=e795]: 📎 2
+      - group [ref=e797]:
+        - generic "View Module 05 Content" [ref=e798] [cursor=pointer]:
+          - paragraph [ref=e801]: View Module 05 Content
+          - img [ref=e802]
+      - generic [ref=e809]:
+        - generic [ref=e810]: Module 06 Evaluation & Safety
+        - generic [ref=e811]:
+          - generic [ref=e812]: 🌐 4
+          - generic [ref=e813]: 📝 12
+          - generic [ref=e814]: 📓 3
+          - generic [ref=e815]: 📎 2
+      - group [ref=e817]:
+        - generic "View Module 06 Content" [ref=e818] [cursor=pointer]:
+          - paragraph [ref=e821]: View Module 06 Content
+          - img [ref=e822]
+      - generic [ref=e829]:
+        - generic [ref=e830]: Module 07 Production Deployment
+        - generic [ref=e831]:
+          - generic [ref=e832]: 🌐 4
+          - generic [ref=e833]: 📝 12
+          - generic [ref=e834]: 📓 2
+          - generic [ref=e835]: 📎 2
+      - group [ref=e837]:
+        - generic "View Module 07 Content" [ref=e838] [cursor=pointer]:
+          - paragraph [ref=e841]: View Module 07 Content
+          - img [ref=e842]

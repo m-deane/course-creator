@@ -732,8 +732,6 @@ for scenario in scenarios:
 11. **"Teaching Models to Express Their Uncertainty in Words"** - Verbalized confidence
 12. **"Calibrating Large Language Models"** - Current best practices (2024)
 
----
-
 *"Confidence without calibration is noise. Calibrated confidence is signal."*
 
 ---

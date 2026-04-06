@@ -668,8 +668,6 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 9. **"Inside the House of Money" by Steven Drobny** - Macro signal frameworks
 10. **"The New Commodity Trading Guide" by Kleinman** - Signal implementation
 
----
-
 *"Signals are where narrative meets numbers. A framework ensures LLM insights become systematic, risk-managed trades."*
 
 ---

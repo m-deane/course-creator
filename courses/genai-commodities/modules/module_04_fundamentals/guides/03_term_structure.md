@@ -607,8 +607,6 @@ def analyze_curve_evolution(futures_data, dates):
 9. **"Using LLMs for Market Structure Analysis"** - Curve interpretation
 10. **"Augmenting Quantitative Strategies with Narrative Analysis"** - Combining curves with news
 
----
-
 *"The futures curve is a market's expectation written in prices. LLMs read the news to explain why the market thinks that way."*
 
 ---

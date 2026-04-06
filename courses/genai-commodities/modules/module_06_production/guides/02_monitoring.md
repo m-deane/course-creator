@@ -770,8 +770,6 @@ if final_status['drift']:
 11. **"Model Risk Management"** by OCC - Regulatory guidance
 12. **"Algorithmic Trading: A Practitioner's Guide"** - Production monitoring for trading
 
----
-
 *"Monitor early, monitor often. Silent failures are the most expensive."*
 
 ---

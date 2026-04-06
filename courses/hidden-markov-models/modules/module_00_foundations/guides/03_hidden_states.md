@@ -610,8 +610,6 @@ problems.learning(observations)
    - Clear mathematical exposition
    - Examples from speech recognition
 
----
-
 **Key Takeaway:** States are "hidden" because we observe only indirect evidence (emissions) of an underlying process. HMMs provide a principled probabilistic framework for inferring these hidden states from observations, enabling us to model complex systems where the true state is latent or unobservable.
 
 ---

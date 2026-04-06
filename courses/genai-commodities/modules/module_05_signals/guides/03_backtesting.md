@@ -752,8 +752,6 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 11. **"Risk and Portfolio Management with Econometrics" by Roncalli** - Risk metrics
 12. **"The Mathematics of Money Management" by Ralph Vince** - Position sizing in backtests
 
----
-
 *"Backtest like you'll trade. Trade like you backtested."*
 
 ---

@@ -770,9 +770,8 @@ print(f"  Test accuracy: {test_score:.4f}")
 11. **"Dask Documentation"** - Distributed computing in Python
 12. **"Ray Documentation"** - Scalable distributed applications
 
----
-
 *"Production code is 10% algorithm, 90% engineering."*
+
 ---
 
 **Next:** [Companion Slides](./03_production_considerations_slides.md) | [Notebook](../notebooks/03_case_study.ipynb)

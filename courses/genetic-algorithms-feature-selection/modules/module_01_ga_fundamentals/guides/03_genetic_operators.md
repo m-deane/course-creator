@@ -465,6 +465,8 @@ def swap_mutation(
 
 </div>
 
+Mutation rates can also be **adapted over time**, starting high for exploration and decreasing as the population converges.
+
 ```python
 def adaptive_mutation(
     individual: Individual,
@@ -599,6 +601,8 @@ def apply_genetic_operators(
 ```
 
 </div>
+
+The following function measures how different crossover operators affect offspring diversity, providing empirical guidance for operator selection.
 
 ```python
 def analyze_operator_effects():

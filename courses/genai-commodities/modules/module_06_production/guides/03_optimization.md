@@ -751,9 +751,7 @@ for model, count in model_counts.items():
 11. **"Model Distillation"** - Creating cheaper versions
 12. **"Mixture of Experts"** - Efficient model architectures
 
----
-
-*"Optimize for cost, latency, and quality—in that order—until constraints are met."*
+*"Optimize for cost, latency, and quality -- in that order -- until constraints are met."*
 
 ---
 

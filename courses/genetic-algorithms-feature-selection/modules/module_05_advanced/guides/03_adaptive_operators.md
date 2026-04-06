@@ -752,9 +752,8 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 11. **"Meta-Evolution"** - Evolving evolutionary algorithms
 12. **"Adaptive Operator Selection"** - Credit assignment for operators
 
----
-
 *"Evolution adapts organisms. Adaptive GAs adapt themselves."*
+
 ---
 
 **Next:** [Companion Slides](./03_adaptive_operators_slides.md) | [Notebook](../notebooks/02_hybrid_ga.ipynb)

@@ -384,6 +384,7 @@ response = client.messages.create(
 **5. JSON Parsing Failures**
 - **Issue:** LLM returns malformed JSON
 - **Solution:** Use libraries like instructor or manual validation
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -392,6 +393,7 @@ response = client.messages.create(
 
 ```python
 import json
+import re as re_mod
 
 def safe_json_parse(text):
     """Extract and parse JSON from LLM response."""
@@ -400,14 +402,15 @@ def safe_json_parse(text):
         return json.loads(text)
     except json.JSONDecodeError:
         # Try to extract JSON from markdown code blocks
-        import re
-        json_match = re.search(r'```
-
-</div>json\n(.*?)\n```', text, re.DOTALL)
+        fence = "`" * 3
+        pattern = fence + r"json\n(.*?)\n" + fence
+        json_match = re_mod.search(pattern, text, re_mod.DOTALL)
         if json_match:
             return json.loads(json_match.group(1))
         raise ValueError("No valid JSON found in response")
 ```
+
+</div>
 
 ## Connections
 

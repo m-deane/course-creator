@@ -349,6 +349,8 @@ def rank_selection(
 
 </div>
 
+An alternative is **exponential rank selection**, which provides stronger selection pressure by weighting ranks exponentially rather than linearly.
+
 ```python
 def exponential_rank_selection(
     population: List[Individual],

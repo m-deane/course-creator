@@ -803,9 +803,8 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 11. **"DEAP Documentation"** - Python GA framework with custom operators
 12. **"GA Operator Benchmarking"** - Testing operator effectiveness
 
----
-
 *"Standard operators are general. Custom operators are optimal. Choose based on problem structure."*
+
 ---
 
 **Next:** [Companion Slides](./02_custom_operators_slides.md) | [Notebook](../notebooks/02_custom_operators.ipynb)

@@ -702,9 +702,8 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 11. **"Parallel Memetic Algorithms"** - Distributed implementations
 12. **"Memetic Algorithms for Multi-Objective Optimization"** - Extensions
 
----
-
 *"Evolution finds the mountain. Local search climbs it."*
+
 ---
 
 **Next:** [Companion Slides](./02_hybrid_methods_slides.md) | [Notebook](../notebooks/02_hybrid_ga.ipynb)

@@ -809,8 +809,6 @@ def initialize_with_kmeans(observations, n_states):
    - HMM as example
    - UC Berkeley Technical Report
 
----
-
 **Key Takeaway:** Baum-Welch solves the chicken-and-egg problem of HMM learning: we need states to estimate parameters, and parameters to infer states. By alternating between soft state inference (E-step) and parameter updates (M-step), we iteratively improve our model until convergence to a local optimum.
 
 ---

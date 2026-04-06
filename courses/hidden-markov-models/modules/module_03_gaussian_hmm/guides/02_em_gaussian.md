@@ -784,8 +784,6 @@ def initialize_from_kmeans(model, observations):
    - Section 17.4.2: Gaussian HMMs
    - Complete code examples
 
----
-
 **Key Takeaway:** Gaussian HMMs extend the EM framework to continuous observations by using probability densities instead of discrete probabilities. The M-step becomes weighted maximum likelihood estimation for Gaussian parameters, where weights are the state occupation probabilities from the E-step.
 
 ---

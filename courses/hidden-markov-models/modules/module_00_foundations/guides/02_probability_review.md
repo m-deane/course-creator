@@ -540,8 +540,6 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
    - Free video lectures on conditional probability
    - Good refresher for basics
 
----
-
 **Next Steps:** With this probability foundation, you're ready to understand Markov chains (which add the temporal dimension) and Hidden Markov Models (which add the hidden state layer).
 
 ---

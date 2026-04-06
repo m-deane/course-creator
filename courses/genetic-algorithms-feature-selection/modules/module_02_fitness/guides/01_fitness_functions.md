@@ -117,6 +117,7 @@ def cv_fitness(
 ```
 
 </div>
+</div>
 
 
 ### Multi-Objective Fitness
@@ -244,6 +245,7 @@ def walk_forward_fitness(
     return np.mean(errors)
 ```
 
+</div>
 </div>
 
 ### Expanding Window
@@ -518,6 +520,7 @@ class CachedFitnessEvaluator:
         return 1 - (len(self.cache) / total_calls) if total_calls > 0 else 0
 ```
 
+</div>
 </div>
 
 ## Key Takeaways

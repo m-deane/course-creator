@@ -134,6 +134,7 @@ states = [Bull, Bull, Bear, Bull, ...]            # Hidden regimes
 ```
 
 </div>
+</div>
 
 ## Why Use Hidden States?
 
@@ -323,6 +324,7 @@ print(f"True state changes: {sum(1 for i in range(1, len(hidden_states)) if hidd
 ```
 
 </div>
+</div>
 
 ### Why States are "Hidden"
 
@@ -356,6 +358,7 @@ def demonstrate_hidden_ambiguity(hmm, observations):
 demonstrate_hidden_ambiguity(hmm, observations)
 ```
 
+</div>
 </div>
 
 Output:
@@ -436,6 +439,7 @@ problems.decoding(observations)
 problems.learning(observations)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

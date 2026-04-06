@@ -118,6 +118,7 @@ print(response.text)
 ```
 
 </div>
+</div>
 
 ### Chat Interface
 
@@ -154,6 +155,7 @@ for message in chat.messages:
     print(f"{message.role}: {message.content[:100]}...")
 ```
 
+</div>
 </div>
 
 ### Structured Output
@@ -192,6 +194,7 @@ print(data)
 ```
 
 </div>
+</div>
 
 ## Connection Management
 
@@ -221,6 +224,7 @@ for conn in llm_connections:
     print(f"Name: {conn['name']}, Provider: {conn.get('params', {}).get('provider')}")
 ```
 
+</div>
 </div>
 
 ### Connection Testing
@@ -261,6 +265,7 @@ for conn_name in ['anthropic-claude', 'openai-gpt4']:
 ```
 
 </div>
+</div>
 
 ## Model Routing
 
@@ -299,6 +304,7 @@ router = LLMRouter("anthropic-claude", "openai-gpt4")
 result = router.complete("Summarize recent OPEC decisions")
 ```
 
+</div>
 </div>
 
 ### Cost-Based Routing
@@ -344,6 +350,7 @@ def select_model_by_budget(
     return viable_models[0][0]
 ```
 
+</div>
 </div>
 
 ## Access Control
@@ -394,6 +401,7 @@ print(f"Tokens used: {tracker.total_tokens}")
 print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 ```
 
+</div>
 </div>
 
 ## Key Takeaways

@@ -291,7 +291,7 @@ Begin your analysis:"""
 
 Start the response to guide format:
 
-```python
+````python
 prompt = """Convert this natural language query to SQL.
 
 Query: Show me all customers who made purchases over $100 in the last month
@@ -299,7 +299,7 @@ Query: Show me all customers who made purchases over $100 in the last month
 SQL:
 ```sql
 SELECT"""  # Prime the model to continue in SQL format
-```
+````
 
 ### Pattern 4: Negative Prompting
 

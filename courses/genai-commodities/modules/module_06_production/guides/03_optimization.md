@@ -111,6 +111,7 @@ for news in news_feed:
 ```
 
 </div>
+</div>
 
 **Optimized Implementation:**
 
@@ -141,6 +142,7 @@ for news in news_feed:
     # Effective cost: $0.01/signal → $10/day → $300/month
 ```
 
+</div>
 </div>
 
 **Savings: 90% cost reduction**
@@ -628,6 +630,7 @@ for model, count in model_counts.items():
     print(f"  {model}: {count} calls ({pct:.1f}%)")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

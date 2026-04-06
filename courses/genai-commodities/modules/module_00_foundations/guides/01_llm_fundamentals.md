@@ -258,6 +258,7 @@ Now extract from:
 ```
 
 </div>
+</div>
 
 ### Chain of Thought
 
@@ -292,6 +293,7 @@ Provide your analysis followed by a conclusion with:
 """
 ```
 
+</div>
 </div>
 
 ## Token Efficiency
@@ -349,6 +351,7 @@ def cached_extraction(cache_key, text, prompt_template):
 ```
 
 </div>
+</div>
 
 ## Validation and Error Handling
 
@@ -396,6 +399,7 @@ def extract_with_validation(text):
 ```
 
 </div>
+</div>
 
 ### Handling Hallucinations
 
@@ -426,6 +430,7 @@ Text: {text}
 """
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

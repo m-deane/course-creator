@@ -279,6 +279,7 @@ class PromptRouter:
 ```
 
 </div>
+</div>
 
 **Usage:**
 
@@ -315,6 +316,7 @@ for request in requests:
     router.update(idx, reward)
 ```
 
+</div>
 </div>
 
 ## Intuitive Explanation

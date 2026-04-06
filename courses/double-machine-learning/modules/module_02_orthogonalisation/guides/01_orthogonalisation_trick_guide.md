@@ -138,6 +138,7 @@ def manual_dml(Y, D, X, n_folds=5):
 ```
 
 </div>
+</div>
 
 This function implements the full DML algorithm with cross-fitting. Each fold trains ML models on training data and predicts on held-out data, ensuring all residuals are out-of-sample.
 
@@ -182,6 +183,7 @@ print(f"\nOLS estimate:  {ols_model.params[1]:.2f}")
 print(f"OLS SE:        {ols_model.bse[1]:.3f}")
 ```
 
+</div>
 </div>
 
 DML handles the nonlinear relationships (sin, squared terms, interactions) that OLS misses. The ML first stages capture these patterns, and the residuals isolate the causal signal.

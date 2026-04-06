@@ -103,6 +103,7 @@ print(f"Sum: {total:.4f}")  # -0.0740
 ```
 
 </div>
+</div>
 
 Notice that equal averaging effectively weights March 2020 (the large COVID shock) at only 1/3. Last-period sampling captures the shock, but misses the pre-shock values that provide context.
 
@@ -199,6 +200,7 @@ def chow_lin_interpolate(y_low, z_high, m=3, rho=0.5):
     return y_high
 ```
 
+</div>
 </div>
 
 ### Limitations of Interpolation
@@ -298,6 +300,7 @@ def bridge_equation_nowcast(y_quarterly, x_monthly, current_quarter_obs):
     return nowcast, bridge.coef_[0], bridge.intercept_
 ```
 
+</div>
 </div>
 
 ### Error Compounding in Bridge Equations

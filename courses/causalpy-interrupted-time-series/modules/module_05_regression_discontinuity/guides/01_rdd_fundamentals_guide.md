@@ -170,6 +170,7 @@ def sharp_rdd_local_linear(df, outcome, running_var, cutoff, bandwidth):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -212,6 +213,7 @@ print(f"Optimal bandwidth: {bw.bws['h']:.3f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -240,6 +242,7 @@ print(density_test.summary())
 ```
 
 </div>
+</div>
 
 A spike in the running variable's density just above the cutoff is a red flag.
 
@@ -264,6 +267,7 @@ for covariate in ['age', 'income', 'prior_score']:
 # All should have p >> 0.05 (no jump in covariates)
 ```
 
+</div>
 </div>
 
 ### Sorting Near the Cutoff
@@ -322,6 +326,7 @@ result.plot()
 print(result.summary())
 ```
 
+</div>
 </div>
 
 The `epsilon` parameter defines the neighbourhood of the cutoff used for the treatment effect estimate. The plot shows both sides of the regression and the estimated jump.

@@ -88,6 +88,7 @@ print(f"Corr(Z, U): {np.corrcoef(Z, U)[0,1]:.3f} (instrument exogenous)")
 ```
 
 </div>
+</div>
 
 ## How to Estimate PLIV with doubleml
 
@@ -122,6 +123,7 @@ print(pliv.summary)
 print(f"\nTrue effect: {true_theta}")
 ```
 
+</div>
 </div>
 
 <div class="callout-warning">
@@ -159,6 +161,7 @@ print(f"Partial R² of Z: {partial_r2:.3f}")
 print(f"Instrument is {'STRONG' if partial_r2 > 0.05 else 'WEAK'}")
 ```
 
+</div>
 </div>
 
 The partial $R^2$ measures how much additional predictive power the instrument adds beyond the controls. Values below 0.05 suggest a weak instrument.

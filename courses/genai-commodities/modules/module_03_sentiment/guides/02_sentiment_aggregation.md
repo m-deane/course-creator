@@ -145,6 +145,7 @@ print(f"Unweighted sentiment: {result['unweighted_sentiment']:.4f}")
 ```
 
 </div>
+</div>
 
 ## Source Quality Weighting
 
@@ -202,6 +203,7 @@ result = source_aggregator.aggregate(sentiment_data)
 print(f"Source-weighted sentiment: {result['weighted_sentiment']:.4f}")
 ```
 
+</div>
 </div>
 
 ## Multi-Commodity Sentiment Index
@@ -297,6 +299,7 @@ print(f"\nComposite Index: {index_results['composite_index']:.4f}")
 ```
 
 </div>
+</div>
 
 ## Sentiment Regime Detection
 
@@ -380,6 +383,7 @@ print(regimes.value_counts())
 ```
 
 </div>
+</div>
 
 ## Visualization
 
@@ -446,6 +450,7 @@ def plot_sentiment_dashboard(sentiment_df, commodity, lookback=30):
 plot_sentiment_dashboard(multi_df, 'oil')
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

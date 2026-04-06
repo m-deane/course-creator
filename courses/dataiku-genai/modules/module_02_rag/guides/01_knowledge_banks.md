@@ -110,6 +110,7 @@ print(f"Knowledge bank created with {kb.document_count} documents")
 ```
 
 </div>
+</div>
 
 ## Chunking Strategies
 
@@ -133,6 +134,7 @@ chunking_config = {
 ```
 
 </div>
+</div>
 
 ### Semantic Chunking
 
@@ -154,6 +156,7 @@ chunking_config = {
 }
 ```
 
+</div>
 </div>
 
 ### Document-Specific Chunking
@@ -195,6 +198,7 @@ def custom_chunker(document: dict) -> list:
 ```
 
 </div>
+</div>
 
 ## Querying Knowledge Banks
 
@@ -227,6 +231,7 @@ for result in results:
 ```
 
 </div>
+</div>
 
 ### Filtered Retrieval
 
@@ -254,6 +259,7 @@ results = kb.search(
 ```
 
 </div>
+</div>
 
 ### Hybrid Search
 
@@ -276,6 +282,7 @@ results = kb.search(
 )
 ```
 
+</div>
 </div>
 
 ## RAG Pipeline
@@ -367,6 +374,7 @@ print(f"\nSources used: {len(result['sources'])}")
 ```
 
 </div>
+</div>
 
 ### Evaluation
 
@@ -423,6 +431,7 @@ Return just a number 1-5."""
 ```
 
 </div>
+</div>
 
 ## Maintaining Knowledge Banks
 
@@ -455,6 +464,7 @@ def update_knowledge_bank(kb_name: str, new_documents: list):
     return kb.document_count
 ```
 
+</div>
 </div>
 
 ### Scheduled Refresh
@@ -499,6 +509,7 @@ def refresh_kb():
     print(f"KB now has {kb.document_count} documents")
 ```
 
+</div>
 </div>
 
 ## Key Takeaways

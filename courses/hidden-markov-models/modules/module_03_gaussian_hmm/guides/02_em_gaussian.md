@@ -573,6 +573,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -618,6 +619,7 @@ def identify_states(model):
 ```
 
 </div>
+</div>
 
 4. **Numerical Underflow**
    - Forward/backward probabilities become very small
@@ -653,6 +655,7 @@ def initialize_from_kmeans(model, observations):
     return model
 ```
 
+</div>
 </div>
 
 ## Connections

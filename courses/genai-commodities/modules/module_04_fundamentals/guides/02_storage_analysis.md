@@ -459,6 +459,7 @@ CRITICAL SEASONAL CONTEXT:
 ```
 
 </div>
+</div>
 
 ### Historical Pattern Comparison
 
@@ -620,6 +621,7 @@ Based on these historical patterns, provide analysis as JSON:
         return json.loads(response.content[0].text)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

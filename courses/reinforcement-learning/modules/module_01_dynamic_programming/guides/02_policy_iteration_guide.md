@@ -143,10 +143,6 @@ The sequence $\pi_0, \pi_1, \ldots$ must terminate in a finite number of steps a
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -155,13 +151,15 @@ flowchart LR
     Impr --> Stable{"pi_{k+1} == pi_k\nfor all s?"}
     Stable -->|"No"| Eval
     Stable -->|"Yes"| Opt["Return pi* = pi_k\nand V* = V^pi_k"]
-    style Init fill:#27ae60,color:#fff
-    style Eval fill:#e67e22,color:#fff
-    style Impr fill:#9b59b6,color:#fff
-    style Opt fill:#4a90d9,color:#fff
+    class Opt cls_Opt
+    class Impr cls_Impr
+    class Eval cls_Eval
+    class Init cls_Init
+    classDef cls_Opt fill:#4a90d9,color:#fff
+    classDef cls_Impr fill:#9b59b6,color:#fff
+    classDef cls_Eval fill:#e67e22,color:#fff
+    classDef cls_Init fill:#27ae60,color:#fff
 ```
-
-</div>
 
 The two phases alternate until stability. Stability implies optimality by the policy improvement theorem.
 
@@ -277,6 +275,7 @@ n_states, n_actions = 16, 4  # 4x4 grid, actions: 0=up,1=down,2=left,3=right
 # pi_star, V_star = policy_iteration(P, R, gamma=0.99)
 ```
 
+</div>
 </div>
 
 ---

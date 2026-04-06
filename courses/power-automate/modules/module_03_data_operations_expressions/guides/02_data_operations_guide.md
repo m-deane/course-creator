@@ -76,6 +76,7 @@ With Compose:
 ```
 
 </div>
+</div>
 
 ### Adding a Compose Action
 
@@ -152,6 +153,7 @@ Set variable
 ```
 
 </div>
+</div>
 
 ### Increment Variable
 
@@ -180,6 +182,7 @@ Initialize variable
     Value:  1
 ```
 
+</div>
 </div>
 
 After the loop, `intCount` contains the total number of items processed.
@@ -212,6 +215,7 @@ Initialize variable
     Value:  concat('- ', items('Apply_to_each')?['Subject'], '\n')
 ```
 
+</div>
 </div>
 
 After the loop, `strSummary` contains a bullet-pointed list of subjects.

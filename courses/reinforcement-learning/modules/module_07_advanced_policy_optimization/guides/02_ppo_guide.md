@@ -305,6 +305,7 @@ def ppo_update(model, optimizer, rollout, n_epochs=4, batch_size=64,
 ```
 
 </div>
+</div>
 
 ### Advantage Estimation (GAE)
 
@@ -353,6 +354,7 @@ def compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):
     return advantages, returns
 ```
 
+</div>
 </div>
 
 ---

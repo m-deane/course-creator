@@ -67,6 +67,7 @@ print(pooled_lm.summary.tables[1])
 
 
 </div>
+</div>
 
 ### What Pooled OLS Assumes
 
@@ -165,6 +166,7 @@ print(f"Intraclass correlation: {rho:.3f}")
 
 
 </div>
+</div>
 
 ### Impact on Standard Errors
 
@@ -210,6 +212,7 @@ print(f"Clustered SE: {pooled_clustered.std_errors['x']:.4f}")
 ```
 
 
+</div>
 </div>
 
 ### The Sandwich Estimator

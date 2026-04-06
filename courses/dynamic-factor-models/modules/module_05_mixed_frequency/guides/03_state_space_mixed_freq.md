@@ -378,6 +378,7 @@ print(f"Q2 Actual: {q2_actual:.3f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -461,6 +462,7 @@ def em_algorithm_mixed_freq(data_monthly, data_quarterly, quarterly_periods,
     return params, factors_smoothed
 ```
 
+</div>
 </div>
 
 ---
@@ -586,6 +588,7 @@ for n_months in [1, 2, 3]:
     print(f"  Error:   {nowcast - actual:.3f}")
 ```
 
+</div>
 </div>
 
 ---

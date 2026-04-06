@@ -245,6 +245,7 @@ def extract_eia_data(report_excerpt, llm_client):
 ```
 
 </div>
+</div>
 
 ## Commodity-Specific Prompts
 
@@ -304,6 +305,7 @@ Analyze:
 ```
 
 </div>
+</div>
 
 ## Handling Model Limitations
 
@@ -348,6 +350,7 @@ DATA GAPS:
 ```
 
 </div>
+</div>
 
 ### Hallucination Prevention
 
@@ -377,6 +380,7 @@ ANSWER (cite specific data points):
 """
 ```
 
+</div>
 </div>
 
 ## Evaluation and Testing
@@ -436,6 +440,7 @@ test_cases = [
 ]
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

@@ -175,6 +175,7 @@ class ProductionBanditSystem:
 ```
 
 </div>
+</div>
 
 **Commodity Application:**
 
@@ -214,6 +215,7 @@ context = get_market_features()  # VIX, term structure, momentum
 allocation = system.make_decision(context)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -298,6 +300,7 @@ When a commodity allocation performs poorly, you need to know: Was the arm enabl
            return arm
    ```
 
+</div>
 </div>
 
    List at least 3 architectural problems and how to fix them.

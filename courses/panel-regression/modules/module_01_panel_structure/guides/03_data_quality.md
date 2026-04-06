@@ -251,6 +251,7 @@ print("\nMissing patterns visualization saved to missing_patterns.png")
 
 
 </div>
+</div>
 
 ### Testing for Missing Data Bias
 
@@ -315,6 +316,7 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
 ```
 
 
+</div>
 </div>
 
 ### Handling Unbalanced Panels
@@ -381,6 +383,7 @@ print(f"  True value: 1.500")
 ```
 
 
+</div>
 </div>
 
 ### Outlier Detection and Treatment

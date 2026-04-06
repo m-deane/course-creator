@@ -104,6 +104,7 @@ for i, (train, test) in enumerate(splits):
 ```
 
 </div>
+</div>
 
 
 ### Purged K-Fold
@@ -152,6 +153,7 @@ def purged_kfold(
     return splits
 ```
 
+</div>
 </div>
 
 ## GA Fitness with Time Series CV
@@ -284,6 +286,7 @@ def analyze_feature_stability(rolling_results: List[dict], n_features: int) -> d
     }
 ```
 
+</div>
 </div>
 
 ### Regime-Aware Selection

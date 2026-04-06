@@ -142,6 +142,7 @@ def run_placebo_tests(Y_all, n_pre, treated_idx=0):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -219,6 +220,7 @@ def filtered_p_value(gaps, rmspe_pre, treated_idx=0, rmspe_multiplier=2.0):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -281,6 +283,7 @@ def plot_placebo_gaps(gaps, rmspe_pre, time_post, treated_idx=0,
 ```
 
 </div>
+</div>
 
 ---
 
@@ -338,6 +341,7 @@ def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
     return gap, rmspe_pre
 ```
 
+</div>
 </div>
 
 **Interpretation:**
@@ -411,6 +415,7 @@ def confidence_set_sc(Y_all, n_pre, treated_idx=0, alpha=0.1, alpha0_grid=None):
     return in_set
 ```
 
+</div>
 </div>
 
 ---

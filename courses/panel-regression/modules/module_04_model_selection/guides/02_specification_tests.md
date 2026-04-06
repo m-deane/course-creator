@@ -117,6 +117,7 @@ f_test_fixed_effects(df, 'y', ['x1', 'x2'], 'entity', 'time')
 
 
 </div>
+</div>
 
 ## Breusch-Pagan LM Test
 
@@ -199,6 +200,7 @@ breusch_pagan_lm(df, 'y', ['x1', 'x2'], 'entity', 'time')
 
 
 </div>
+</div>
 
 ## Robust Hausman Test
 
@@ -265,6 +267,7 @@ robust_hausman_test(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
 
+</div>
 </div>
 
 ## Serial Correlation Tests

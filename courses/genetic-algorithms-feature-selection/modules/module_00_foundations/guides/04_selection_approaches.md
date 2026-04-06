@@ -218,6 +218,7 @@ print(f"True relevant features: [0, 1, 2, 3, 4]")
 ```
 
 </div>
+</div>
 
 
 Now that we have seen how filters evaluate features independently using statistical scores, let's examine the key limitation: filters miss feature interactions entirely. In the XOR problem, both features have zero individual correlation with the target, yet together they are perfectly predictive. Wrapper methods address this by evaluating feature *subsets* with the actual model, capturing interactions that filters cannot see. The cost is computational -- instead of scoring features one at a time, wrappers must train and validate the model for every candidate subset.
@@ -313,6 +314,7 @@ plt.tight_layout()
 ```
 
 </div>
+</div>
 
 Wrapper methods give us interaction-aware selection, but they require explicitly searching through feature subsets -- and that search can be expensive and incomplete (forward selection is greedy). Embedded methods take a different approach: they build feature selection directly into the model training process. Instead of searching externally, the model itself decides which features matter. The tradeoff: embedded methods are fast and elegant, but the selection is tied to the specific model structure. Features selected by Lasso may not be the best features for a random forest.
 
@@ -407,6 +409,7 @@ plt.tight_layout()
 print(f"Selected features (Lasso): {selected_lasso}")
 ```
 
+</div>
 </div>
 
 ### Comparing All Three Approaches

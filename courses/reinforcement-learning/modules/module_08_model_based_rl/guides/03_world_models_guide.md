@@ -182,10 +182,6 @@ where $u_{t+k}$ is the actual reward, $z_{t+k}$ is the bootstrapped target value
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -210,10 +206,9 @@ flowchart LR
     DYN1 --> LOSS
     DYN2 --> LOSS
 
-    style UNROLL fill:#fff8e8,stroke:#D4A017
+    class UNROLL cls_UNROLL
+    classDef cls_UNROLL fill:#fff8e8,stroke:#D4A017
 ```
-
-</div>
 
 ---
 
@@ -394,6 +389,7 @@ class MemoryModel(nn.Module):
         return pi, mu, log_sigma, hidden
 ```
 
+</div>
 </div>
 
 ---

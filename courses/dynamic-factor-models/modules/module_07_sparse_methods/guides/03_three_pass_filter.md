@@ -541,6 +541,7 @@ class ThreePassRegressionFilter:
 ```
 
 </div>
+</div>
 
 ### Example Application
 
@@ -626,6 +627,7 @@ plt.savefig('three_pass_filter_results.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
 </div>
 
 ### Comparison: 3PRF vs Standard Methods
@@ -719,6 +721,7 @@ for method, rmse in comparison.items():
 ```
 
 </div>
+</div>
 
 ---
 
@@ -756,6 +759,7 @@ y_ahead = y[:-h]  # Off by one!
 y_ahead = y[h:T_eff + h]  # Properly aligned
 ```
 
+</div>
 </div>
 
 ### 3. Not Including AR Terms

@@ -279,6 +279,7 @@ print(idio_corr[:5, :5].round(3))
 ```
 
 </div>
+</div>
 
 ### Eigenvalue Spectrum Analysis
 
@@ -352,6 +353,7 @@ def analyze_eigenvalue_spectrum(X, true_r=None):
 analyze_eigenvalue_spectrum(X, true_r=r)
 ```
 
+</div>
 </div>
 
 ### Bai-Ng Information Criteria
@@ -466,6 +468,7 @@ ic_results = bai_ng_ic(X, k_max=10)
 ```
 
 </div>
+</div>
 
 ### Weak Dependence Verification
 
@@ -558,6 +561,7 @@ def check_weak_dependence(X, threshold=0.3):
 diagnostics = check_weak_dependence(X, threshold=0.3)
 ```
 
+</div>
 </div>
 
 ---

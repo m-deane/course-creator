@@ -168,6 +168,7 @@ def adaptive_tournament_selection(
 ```
 
 </div>
+</div>
 
 
 ### Roulette Wheel Selection
@@ -288,6 +289,7 @@ def stochastic_universal_sampling(
 ```
 
 </div>
+</div>
 
 ### Rank Selection
 
@@ -353,6 +355,7 @@ def rank_selection(
     return sorted_pop[idx]
 ```
 
+</div>
 </div>
 
 An alternative is **exponential rank selection**, which provides stronger selection pressure by weighting ranks exponentially rather than linearly.

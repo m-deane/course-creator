@@ -206,6 +206,7 @@ Business justification: Annual renewal for JetBrains IDEs used by the backend te
 ```
 
 </div>
+</div>
 
 ### What Renders and What Does Not
 

@@ -223,6 +223,7 @@ Report:
 ```
 
 </div>
+</div>
 
 ## Building Balance Models
 
@@ -277,6 +278,7 @@ class BalanceTracker:
         })
 ```
 
+</div>
 </div>
 
 ### Surprise Analysis
@@ -339,6 +341,7 @@ Return JSON:
     return response.content[0].text
 ```
 
+</div>
 </div>
 
 ## Forecasting with LLMs
@@ -419,6 +422,7 @@ Return JSON:
 ```
 
 </div>
+</div>
 
 ## Integrating Multiple Sources
 
@@ -488,6 +492,7 @@ Return JSON:
     return response.content[0].text
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

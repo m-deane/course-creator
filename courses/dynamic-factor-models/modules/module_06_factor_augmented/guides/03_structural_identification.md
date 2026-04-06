@@ -689,6 +689,7 @@ class StructuralFAVAR:
 ```
 
 </div>
+</div>
 
 ### Example: Monetary Policy Shock
 
@@ -797,6 +798,7 @@ print(f"\nEstimated impact matrix (Cholesky):\n{sfavar_chol.B_}")
 print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 ```
 
+</div>
 </div>
 
 ---

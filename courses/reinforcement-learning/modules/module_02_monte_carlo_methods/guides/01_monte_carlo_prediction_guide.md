@@ -281,6 +281,7 @@ def mc_prediction_every_visit(env, policy, gamma=0.99, n_episodes=10_000):
 ```
 
 </div>
+</div>
 
 ---
 

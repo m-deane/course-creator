@@ -13,111 +13,6 @@ Start here: the pipeline below runs end-to-end on the French Bakery dataset and 
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-from neuralforecast import NeuralForecast
-from neuralforecast.models import NHITS
-from neuralforecast.losses.pytorch import MQLoss
-import pandas as pd
-import numpy as np
-
-# ── 1. Load the French Bakery dataset ──────────────────────────────────────────
-url = "https://raw.githubusercontent.com/nixtla/transfer-learning-time-series/main/datasets/french_bakery/bakery.csv"
-df = pd.read_csv(url, parse_dates=["date"])
-
-# Convert to nixtla long format: unique_id | ds | y
-df = (
-    df.rename(columns={"date": "ds", "Quantity": "y", "article": "unique_id"})
-    .loc[:, ["unique_id", "ds", "y"]]
-    .sort_values(["unique_id", "ds"])
-)
-
-baguette = df[df["unique_id"] == "BAGUETTE"].copy()
-print(baguette.tail(3))
-print(f"\nSeries length: {len(baguette)} days")
-
-# ── 2. Train NHITS with quantile loss ──────────────────────────────────────────
-H = 7  # forecast horizon: one week ahead
-
-model = NHITS(
-    h=H,
-    input_size=3 * H,     # look-back window = 3x horizon
-    loss=MQLoss(quantiles=[0.1, 0.5, 0.8, 0.9]),
-    max_steps=300,
-    random_seed=42,
-)
-
-nf = NeuralForecast(models=[model], freq="D")
-nf.fit(baguette)
-
-# ── 3. Forecast ────────────────────────────────────────────────────────────────
-forecast = nf.predict()
-print(forecast.tail(7))
-
-# ── 4. Answer the business question ───────────────────────────────────────────
-q80_col = "NHITS-MQLoss-q-0.8"
-order_qty = int(forecast[q80_col].sum())
-print(f"\n80% service level order for the week: {order_qty} baguettes")
-```
-
-</div>
-
-<div class="callout-key">
-
-<strong>Key Concept:</strong> This guide shows how to build a complete, production-ready forecasting pipeline using NeuralForecast. You will wrap data ingestion, model training, probabilistic simulation, and explainability into a single `ForecastPipeline` class that makes a complete business decision in one call.
-
-</div>
-
-
----
-
-## 1. Why Pipelines Matter in Production
-
-Ad-hoc notebooks do not survive contact with production. Three failure modes appear within the first month of deployment:
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> Ad-hoc notebooks do not survive contact with production.
-
-</div>
-
-
-1. **Data drift without detection** — the pipeline trains on historical data once; when the distribution shifts, forecasts degrade silently.
-2. **Manual retraining triggers** — someone remembers to retrain every quarter, or doesn't.
-3. **Non-reproducible forecasts** — different team members run different notebook cells in different orders.
-
-
-<div class="flow">
-<div class="flow-step mint">1. Data drift without detection</div>
-<div class="flow-arrow">&#8594;</div>
-<div class="flow-step amber">2. Manual retraining triggers</div>
-<div class="flow-arrow">&#8594;</div>
-<div class="flow-step blue">3. Non-reproducible forecasts</div>
-</div>
-
-A `ForecastPipeline` class solves all three by making every stage explicit, testable, and callable from a scheduler.
-
----
-
-## 2. Pipeline Architecture
-
-
-<span class="filename">example.py</span>
-</div>
-<div class="callout-key">
-<strong>Key Point:</strong> example.py
-The following implementation builds on the approach above:
-Each stage is a method on `ForecastPipeline`.
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -138,8 +33,6 @@ flowchart LR
     M -->|sliding window| G
     M -->|expanding window| G
 ```
-
-</div>
 
 Each stage is a method on `ForecastPipeline`. This makes unit testing trivial and lets orchestrators (Airflow, Prefect, GitHub Actions) call individual stages.
 
@@ -367,6 +260,7 @@ class ForecastPipeline:
 ```
 
 </div>
+</div>
 
 ---
 
@@ -416,6 +310,7 @@ def select_model(series_length: int, n_features: int, needs_explanation: bool) -
     return "nhits"  # default for long, feature-rich series
 ```
 
+</div>
 </div>
 
 ---

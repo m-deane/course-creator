@@ -88,6 +88,7 @@ print(f"Fitness: {sum(selected)}")
 ```
 
 </div>
+</div>
 
 
 ### Roulette Wheel Selection
@@ -144,6 +145,7 @@ selected = roulette_wheel_selection(population, fitness_scores)
 print(f"Roulette selected: {selected}")
 ```
 
+</div>
 </div>
 
 ### Rank Selection
@@ -440,6 +442,7 @@ print(f"Child 1 features: {sum(child1)}")
 print(f"Mutated features: {sum(mutated)}")
 ```
 
+</div>
 </div>
 
 ## Adaptive Operators

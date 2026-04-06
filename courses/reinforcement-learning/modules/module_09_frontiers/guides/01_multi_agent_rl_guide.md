@@ -113,52 +113,6 @@ The simplest MARL approach: each agent runs a standard single-agent RL algorithm
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-class IndependentLearner:
-    """
-    Each agent maintains its own Q-table or policy network.
-    Other agents are treated as part of a non-stationary environment.
-    """
-    def __init__(self, agent_id: int, obs_dim: int, action_dim: int, lr: float = 1e-3):
-        self.agent_id = agent_id
-        self.policy_net = PolicyNetwork(obs_dim, action_dim)
-        self.optimizer = torch.optim.Adam(self.policy_net.parameters(), lr=lr)
-
-    def act(self, observation: np.ndarray) -> int:
-        # Condition only on own observation — other agents invisible
-        logits = self.policy_net(torch.tensor(observation, dtype=torch.float32))
-        return torch.distributions.Categorical(logits=logits).sample().item()
-
-    def update(self, batch: dict) -> float:
-        # Standard single-agent policy gradient update
-        loss = compute_policy_gradient_loss(self.policy_net, batch)
-        self.optimizer.zero_grad()
-        loss.backward()
-        self.optimizer.step()
-        return loss.item()
-```
-
-</div>
-
----
-
-## Centralized Training, Decentralized Execution (CTDE)
-
-CTDE is the dominant paradigm for cooperative MARL. During training, agents have access to global information (all observations, all actions, even ground-truth state). At execution time, each agent acts using only its local observation.
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -177,11 +131,11 @@ flowchart TD
     Grad --> A2
     Grad --> An
 
-    style Training fill:#4A90D9,color:#fff
-    style Execution fill:#E8844A,color:#fff
+    class Execution cls_Execution
+    class Training cls_Training
+    classDef cls_Execution fill:#E8844A,color:#fff
+    classDef cls_Training fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 **Key algorithms using CTDE:**
 
@@ -249,6 +203,7 @@ class CommunicatingAgent:
         return self.actor(torch.cat([obs, aggregated], dim=-1))
 ```
 
+</div>
 </div>
 
 ---

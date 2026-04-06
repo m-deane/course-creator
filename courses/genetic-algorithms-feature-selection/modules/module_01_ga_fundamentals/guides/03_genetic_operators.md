@@ -343,6 +343,7 @@ def scattered_crossover(
 ```
 
 </div>
+</div>
 
 
 ## The Exploitation-Exploration Duality
@@ -467,6 +468,7 @@ def swap_mutation(
     return mutant
 ```
 
+</div>
 </div>
 
 Mutation rates can also be **adapted over time**, starting high for exploration and decreasing as the population converges.
@@ -606,6 +608,7 @@ def apply_genetic_operators(
     return child1, child2
 ```
 
+</div>
 </div>
 
 The following function measures how different crossover operators affect offspring diversity, providing empirical guidance for operator selection.

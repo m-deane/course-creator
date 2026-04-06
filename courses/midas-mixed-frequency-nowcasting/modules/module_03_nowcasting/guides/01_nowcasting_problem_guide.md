@@ -153,6 +153,7 @@ def midas_nowcast_ragged(alpha, beta, theta1, theta2, X_current, h_missing, K):
 ```
 
 </div>
+</div>
 
 ---
 

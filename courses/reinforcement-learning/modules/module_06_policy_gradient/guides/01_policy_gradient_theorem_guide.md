@@ -165,10 +165,6 @@ When a sampled action $a$ exceeds the current mean and led to high return, the m
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
@@ -200,12 +196,13 @@ graph TB
     U --> P1
     P1 -.->|"repeat"| P2
 
-    style P2 fill:#4A90D9,color:#fff
-    style J2 fill:#4A90D9,color:#fff
-    style G fill:#E8844A,color:#fff
+    class G cls_G
+    class J2 cls_J2
+    class P2 cls_P2
+    classDef cls_G fill:#E8844A,color:#fff
+    classDef cls_J2 fill:#4A90D9,color:#fff
+    classDef cls_P2 fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 Policy gradient methods perform gradient ascent on $J(\theta)$ using Monte Carlo estimates of the gradient. Because $J(\theta)$ is generally non-convex, convergence to global optima is not guaranteed — only local optima.
 
@@ -286,6 +283,7 @@ def compute_policy_gradient_loss(
     return -(log_probs * returns).mean()
 ```
 
+</div>
 </div>
 
 ---

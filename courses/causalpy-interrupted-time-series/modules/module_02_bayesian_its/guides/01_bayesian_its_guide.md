@@ -134,6 +134,7 @@ print(f"P(effect < 0) = {p_negative:.1%}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -223,6 +224,7 @@ def prior_predictive_check_its(y_scale, n_obs):
     print("tighten the priors.")
 ```
 
+</div>
 </div>
 
 ---

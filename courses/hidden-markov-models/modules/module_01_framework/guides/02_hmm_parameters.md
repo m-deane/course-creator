@@ -185,6 +185,7 @@ analyze_transition_matrix(hmm.A)
 ```
 
 </div>
+</div>
 
 ## Emission Parameters
 
@@ -248,6 +249,7 @@ print("(Rows = states, Columns = symbols)")
 print(discrete_hmm.B.round(3))
 ```
 
+</div>
 </div>
 
 ### Gaussian Emissions
@@ -357,6 +359,7 @@ gauss_hmm.visualize_emissions()
 ```
 
 </div>
+</div>
 
 ## Parameter Constraints
 
@@ -448,6 +451,7 @@ validate_hmm_parameters(
 ```
 
 </div>
+</div>
 
 ## Parameter Interpretation
 
@@ -520,6 +524,7 @@ for i, name in enumerate(state_names):
 market_hmm.visualize_emissions()
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

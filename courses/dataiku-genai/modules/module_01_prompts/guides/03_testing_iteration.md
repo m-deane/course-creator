@@ -228,6 +228,7 @@ def estimate_tokens(text: str) -> int:
 ```
 
 </div>
+</div>
 
 ### Test Suite Implementation
 
@@ -345,6 +346,7 @@ baseline_results = test_suite.run_all_tests()
 ```
 
 </div>
+</div>
 
 ### Version Comparison
 
@@ -433,6 +435,7 @@ comparison = compare_prompt_versions(
 print(comparison)
 ```
 
+</div>
 </div>
 
 ### Systematic Iteration Process
@@ -611,6 +614,7 @@ best = iterator.get_best_version()
 ```
 
 </div>
+</div>
 
 ### Regression Testing
 
@@ -692,6 +696,7 @@ else:
     print("Regressions detected - do not deploy")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

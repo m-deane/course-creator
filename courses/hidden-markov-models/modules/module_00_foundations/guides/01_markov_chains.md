@@ -225,6 +225,7 @@ print(f"Half-life: {np.log(2) / np.log(1/rate):.1f} steps")
 ```
 
 </div>
+</div>
 
 ## Expected Hitting Times
 
@@ -271,6 +272,7 @@ print(f"Expected steps to Bear from Bull: {hitting[0]:.1f}")
 ```
 
 </div>
+</div>
 
 ## Estimating Transition Probabilities
 
@@ -309,6 +311,7 @@ print("\nTrue transition matrix:")
 print(mc.A)
 ```
 
+</div>
 </div>
 
 ### Bayesian Estimation
@@ -357,6 +360,7 @@ def bayesian_transitions(
     return mean, ci_lower, ci_upper
 ```
 
+</div>
 </div>
 
 ## Visualization
@@ -410,6 +414,7 @@ def plot_markov_chain(mc: MarkovChain, simulation: List[int] = None):
 plot_markov_chain(mc, states[:100])
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

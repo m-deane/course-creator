@@ -530,6 +530,7 @@ print(f"First forecast:\n{F_forecast[0, :]}")
 ```
 
 </div>
+</div>
 
 ### Output (Representative)
 
@@ -585,6 +586,7 @@ F_hat_sklearn = pca.fit_transform(X_scaled)
 # (Similar to our implementation above)
 ```
 
+</div>
 </div>
 
 ---

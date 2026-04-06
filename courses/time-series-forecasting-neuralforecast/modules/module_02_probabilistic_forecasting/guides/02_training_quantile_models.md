@@ -77,6 +77,7 @@ for col in forecast.columns:
 ```
 
 </div>
+</div>
 
 Expected output:
 ```
@@ -177,6 +178,7 @@ print("The optimal predictor is the 90th percentile — below which you're right
 ```
 
 </div>
+</div>
 
 ### Why This Produces the Quantile
 
@@ -243,6 +245,7 @@ print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -290,6 +293,7 @@ for level in [80, 90]:
     print(f"Empirical coverage at {level}%: {inside:.1%} (target: {level}%)")
 ```
 
+</div>
 </div>
 
 ---

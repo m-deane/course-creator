@@ -106,6 +106,7 @@ print(f"Forward variables:\n{alpha}")
 ```
 
 </div>
+</div>
 
 ### Scaled Forward Algorithm
 
@@ -153,6 +154,7 @@ def forward_scaled(
     return alpha, scaling, log_likelihood
 ```
 
+</div>
 </div>
 
 ## Backward Algorithm
@@ -233,6 +235,7 @@ def backward_scaled(
 ```
 
 </div>
+</div>
 
 ## State Probabilities
 
@@ -306,6 +309,7 @@ for t, g in enumerate(gamma):
 ```
 
 </div>
+</div>
 
 ## Relationship Between Variables
 
@@ -372,6 +376,7 @@ def forward_vectorized(
     return np.exp(log_alpha), log_likelihood
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

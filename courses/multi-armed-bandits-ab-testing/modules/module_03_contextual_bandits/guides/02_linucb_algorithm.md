@@ -216,6 +216,7 @@ class LinUCB:
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -319,6 +320,7 @@ def get_uncertainty(self, arm, context):
     return np.sqrt(context @ A_inv @ context)
 ```
 
+</div>
 </div>
 
 ### 4. Diagnostic Question

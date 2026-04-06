@@ -130,6 +130,7 @@ print(balanced.groupby('entity').size())
 
 
 </div>
+</div>
 
 ### Unbalanced Panel
 Some entity-period combinations missing:
@@ -157,6 +158,7 @@ unbalanced = pd.DataFrame({
 ```
 
 
+</div>
 </div>
 
 ## Panel Data Notation
@@ -220,6 +222,7 @@ print(panel.xs(5, level='time').head())  # Period 5 for all entities
 ```
 
 
+</div>
 </div>
 
 ### Using linearmodels PanelData

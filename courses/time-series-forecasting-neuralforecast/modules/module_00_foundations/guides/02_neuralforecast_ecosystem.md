@@ -37,6 +37,7 @@ print(df['unique_id'].value_counts())
 ```
 
 </div>
+</div>
 
 Expected output:
 ```
@@ -112,6 +113,7 @@ cv_results = nf.cross_validation(df=df)  # .cross_validation()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -171,6 +173,7 @@ nf = NeuralForecast(models=models, freq='D')
 ```
 
 </div>
+</div>
 
 Running both at once produces side-by-side forecasts in a single DataFrame — column names distinguish models.
 
@@ -214,6 +217,7 @@ print(f"Train rows: {len(train):,}")
 print(f"Test rows:  {len(test):,}")
 ```
 
+</div>
 </div>
 
 ### Fitting the Model

@@ -171,6 +171,7 @@ print(f"Observations: {obs}")
 ```
 
 </div>
+</div>
 
 ## Probability Calculations
 
@@ -213,6 +214,7 @@ print(f"Joint probability: {jp:.2e}")
 ```
 
 </div>
+</div>
 
 ### Log Probability (Numerical Stability)
 
@@ -244,6 +246,7 @@ def log_joint_probability(
     return log_prob
 ```
 
+</div>
 </div>
 
 ## Likelihood of Observations
@@ -314,6 +317,7 @@ Arrows indicate conditional dependencies.
 ```
 
 </div>
+</div>
 
 ### Volatility Regimes
 
@@ -333,6 +337,7 @@ Arrows indicate conditional dependencies.
 # State 1: High volatility regime
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

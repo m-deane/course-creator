@@ -135,6 +135,7 @@ def compute_volatility_regime(prices, window=20):
 ```
 
 </div>
+</div>
 
 **Why:** Defensive commodities (gold, treasuries) perform better in high-vol regimes; growth commodities (industrial metals) prefer low-vol.
 
@@ -157,6 +158,7 @@ def compute_term_structure(front_price, back_price):
     return term_spread
 ```
 
+</div>
 </div>
 
 **Why:** Contango indicates oversupply or low demand (bad for commodities); backwardation indicates shortage or high demand (good).
@@ -183,6 +185,7 @@ def compute_seasonality(date):
     return np.array([is_harvest, is_winter])
 ```
 
+</div>
 </div>
 
 **Why:** Seasonal patterns are strong in agriculture (harvest pressure) and energy (heating demand).

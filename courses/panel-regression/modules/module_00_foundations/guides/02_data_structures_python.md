@@ -47,6 +47,7 @@ print(long_data)
 
 
 </div>
+</div>
 
 Output:
 ```
@@ -98,6 +99,7 @@ print(wide_data)
 ```
 
 
+</div>
 </div>
 
 ### Converting Between Formats
@@ -186,6 +188,7 @@ print(f"Index levels: {panel_data.index.nlevels}")
 ```
 
 
+</div>
 </div>
 
 ### Accessing Data in Panel Structure

@@ -69,6 +69,7 @@ output_dataset.write_with_schema(output_df)
 ```
 
 </div>
+</div>
 
 ## Batch Processing Patterns
 
@@ -131,6 +132,7 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 ```
 
 </div>
+</div>
 
 ### Chunked Processing for Large Datasets
 
@@ -188,6 +190,7 @@ def process_in_chunks(input_name: str, output_name: str, chunk_size: int = 100):
 process_in_chunks("large_reports", "summarized_reports")
 ```
 
+</div>
 </div>
 
 ## Building Custom Endpoints
@@ -248,6 +251,7 @@ def api_handler(request):
     }
 ```
 
+</div>
 </div>
 
 ### Webapp Backend
@@ -313,6 +317,7 @@ def get_history():
     return jsonify({'messages': messages})
 ```
 
+</div>
 </div>
 
 ## Complex Pipelines
@@ -414,6 +419,7 @@ dataiku.Dataset("trading_signals").write_with_schema(output_df)
 ```
 
 </div>
+</div>
 
 ## Error Handling
 
@@ -478,6 +484,7 @@ class RobustLLMProcessor:
         }
 ```
 
+</div>
 </div>
 
 ## Key Takeaways

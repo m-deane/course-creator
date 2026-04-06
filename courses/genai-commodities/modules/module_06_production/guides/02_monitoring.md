@@ -651,6 +651,7 @@ if final_status['drift']:
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 

@@ -256,6 +256,7 @@ def scree_plot(eigenvalues, title="Scree Plot"):
 ```
 
 </div>
+</div>
 
 ### Kaiser Criterion
 
@@ -286,6 +287,7 @@ def variance_explained(eigenvalues, threshold=0.9):
     return n_components, cumulative
 ```
 
+</div>
 </div>
 
 ---
@@ -343,6 +345,7 @@ def interpret_loadings(loadings, variable_names, n_top=5):
 ```
 
 </div>
+</div>
 
 ### Rotation
 
@@ -399,6 +402,7 @@ def varimax_rotation(loadings, max_iter=100, tol=1e-6):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -454,6 +458,7 @@ print(f"PCA variance explained: {pca.explained_variance_ratio_.sum():.3f}")
 print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 ```
 
+</div>
 </div>
 
 ---

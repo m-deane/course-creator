@@ -34,6 +34,7 @@ print("baseline_pred shape: ", baseline_pred.shape)
 ```
 
 </div>
+</div>
 
 <div class="callout-key">
 
@@ -99,6 +100,7 @@ print("Most important lag per forecast step:", most_important_lag)
 # Typical output: [0 0 0 0 1 0 ...] — lag 0 (most recent) is usually dominant
 ```
 
+</div>
 </div>
 
 ### What "Lag 0" Means
@@ -171,6 +173,7 @@ print(f"is_holiday total attribution: {holiday_total:.1f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -238,6 +241,7 @@ plt.savefig("../resources/lag_attribution_heatmap.png", dpi=150)
 plt.show()
 ```
 
+</div>
 </div>
 
 **Reading the heatmap:** dark red cells indicate lags that push the forecast up; dark blue cells push it down. A column of high-magnitude cells at lag 0 confirms the model relies heavily on recent history, which is expected and healthy for a daily series.

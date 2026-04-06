@@ -146,6 +146,7 @@ demonstrate_nickell_bias(true_rho=0.5)
 
 
 </div>
+</div>
 
 ## Magnitude of Bias
 
@@ -230,6 +231,7 @@ plot_bias_magnitude()
 ```
 
 
+</div>
 </div>
 
 ## Solutions to Nickell Bias
@@ -322,6 +324,7 @@ ah_est, ah_model = anderson_hsiao(df_dyn, 'entity', 'time', 'y')
 ```
 
 
+</div>
 </div>
 
 ### 2. Arellano-Bond GMM Estimator

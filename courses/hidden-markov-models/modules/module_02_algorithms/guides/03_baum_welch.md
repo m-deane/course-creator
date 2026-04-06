@@ -511,6 +511,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -546,6 +547,7 @@ def fit_with_multiple_initializations(observations, n_states, n_inits=10):
     return best_hmm
 ```
 
+</div>
 </div>
 
 2. **Numerical Underflow**
@@ -586,6 +588,7 @@ def forward_scaled(self, observations):
     return alpha, scales, log_likelihood
 ```
 
+</div>
 </div>
 
 3. **Overfitting with Too Many States**
@@ -635,6 +638,7 @@ def select_num_states(observations, max_states=5):
 ```
 
 </div>
+</div>
 
 4. **Poor Initialization**
    - Random initialization may start far from good solution
@@ -680,6 +684,7 @@ def initialize_with_kmeans(observations, n_states):
     return hmm
 ```
 
+</div>
 </div>
 
 5. **Ignoring Convergence Criteria**

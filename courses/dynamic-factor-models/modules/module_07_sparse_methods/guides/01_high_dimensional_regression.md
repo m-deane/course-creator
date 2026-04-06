@@ -538,6 +538,7 @@ class HighDimensionalRegression:
 ```
 
 </div>
+</div>
 
 ### Example Application
 
@@ -618,6 +619,7 @@ print("=" * 60)
 ```
 
 </div>
+</div>
 
 ### Visualization
 
@@ -684,6 +686,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -717,6 +720,7 @@ model = Lasso(alpha=0.1)
 model.fit(X_scaled, y)
 ```
 
+</div>
 </div>
 
 ### 2. Not Centering the Response
@@ -755,6 +759,7 @@ model.fit(X_train, y_train)
 score = model.score(X_test, y_test)  # Honest estimate
 ```
 
+</div>
 </div>
 
 ### 4. Interpreting Selected Variables as "Causal"

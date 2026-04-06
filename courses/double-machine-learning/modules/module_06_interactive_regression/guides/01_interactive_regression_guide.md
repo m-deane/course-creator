@@ -85,6 +85,7 @@ print(f"Treatment prevalence: {D.mean():.1%}")
 ```
 
 </div>
+</div>
 
 ## How to Estimate ATE and ATTE
 
@@ -123,6 +124,7 @@ print("\nATTE Results:")
 print(irm_atte.summary)
 ```
 
+</div>
 </div>
 
 <div class="callout-warning">
@@ -165,6 +167,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 Good overlap between treated and untreated propensity distributions is essential for IRM.

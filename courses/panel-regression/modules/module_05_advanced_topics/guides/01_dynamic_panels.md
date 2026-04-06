@@ -144,6 +144,7 @@ print(f"  Theoretical bias: {result['theoretical_bias']:.3f}")
 
 
 </div>
+</div>
 
 ## The Anderson-Hsiao Estimator
 
@@ -227,6 +228,7 @@ print(f"  True rho: {rho_true}")
 
 
 </div>
+</div>
 
 ## The Arellano-Bond Estimator (GMM)
 
@@ -295,6 +297,7 @@ print(f"  True rho: {rho_true}")
 ```
 
 
+</div>
 </div>
 
 ## System GMM (Blundell-Bond)

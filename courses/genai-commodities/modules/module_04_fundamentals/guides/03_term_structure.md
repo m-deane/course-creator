@@ -408,6 +408,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ### Curve Evolution Analysis
 
@@ -484,6 +485,7 @@ def analyze_curve_evolution(futures_data, dates):
     return df, fig
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

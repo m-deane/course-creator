@@ -166,6 +166,7 @@ def midas_hac_inference(Y, X, theta1_hat, theta2_hat, beta_weights_fn, n_lags=No
 ```
 
 </div>
+</div>
 
 ---
 
@@ -236,6 +237,7 @@ def test_equal_weights(Y, X, midas_result, beta_weights_fn):
     return F, p_val
 ```
 
+</div>
 </div>
 
 ---
@@ -335,6 +337,7 @@ def bootstrap_se(boot_dist, param_names=None):
         print(f"{name:<12} {vals.mean():>10.4f} {vals.std():>10.4f} {ci[0]:>10.4f} {ci[1]:>10.4f}")
 ```
 
+</div>
 </div>
 
 ---

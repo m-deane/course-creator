@@ -277,6 +277,7 @@ def estimate_midas(Y, X, theta0=(1.0, 5.0)):
 ```
 
 </div>
+</div>
 
 **Key implementation notes:**
 
@@ -340,6 +341,7 @@ def plot_midas_weights(weights, freq_ratio=3, title="Estimated MIDAS Weights"):
     plt.show()
 ```
 
+</div>
 </div>
 
 A declining weight pattern (high weight on lag 0, lower on older lags) indicates the most recent month of the quarter is most informative. A hump-shaped pattern would suggest an intermediate lag matters most.

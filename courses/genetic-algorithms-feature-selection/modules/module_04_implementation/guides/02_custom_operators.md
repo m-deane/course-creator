@@ -171,6 +171,7 @@ mutation_rates = 0.01 + 0.04 * (importances / max(importances))
 ```
 
 </div>
+</div>
 
 
 ### Correlation-Aware Mutation

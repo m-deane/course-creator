@@ -66,6 +66,7 @@ print(f"Pre-intervention range: {pre_range:.1f}")
 ```
 
 </div>
+</div>
 
 ### Step 2: Define Plausible Effect Bounds
 
@@ -145,6 +146,7 @@ def prior_predictive_check(
     print("Ask: Do these trajectories span plausible outcome values?")
 ```
 
+</div>
 </div>
 
 ### Step 4: Refine and Iterate
@@ -279,6 +281,7 @@ def its_with_custom_beta2_prior(df, t_star, beta2_sigma, y_pre_std):
     )
 ```
 
+</div>
 </div>
 
 ---

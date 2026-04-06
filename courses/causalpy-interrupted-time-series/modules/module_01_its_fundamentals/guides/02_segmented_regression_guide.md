@@ -96,6 +96,7 @@ print(dm)
 ```
 
 </div>
+</div>
 
 ---
 
@@ -204,6 +205,7 @@ def check_autocorrelation(df: pd.DataFrame, formula: str) -> dict:
 ```
 
 </div>
+</div>
 
 ### Solution 1: Newey-West Standard Errors
 
@@ -228,6 +230,7 @@ model = smf.ols("y ~ 1 + t + treated + t_post", data=df).fit(
 print(model.summary())
 ```
 
+</div>
 </div>
 
 ### Solution 2: Prais-Winsten / Cochrane-Orcutt (AR(1) Model)
@@ -285,6 +288,7 @@ def build_its_ar1_model(y, X):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -338,6 +342,7 @@ spline_basis = dmatrix(
 ```
 
 </div>
+</div>
 
 ---
 
@@ -389,6 +394,7 @@ print(comparison)
 ```
 
 </div>
+</div>
 
 The model with higher LOO ELPD (expected log pointwise predictive density) is preferred.
 
@@ -418,6 +424,7 @@ df["month"] = df["date"].dt.month
 formula = "y ~ 1 + t + treated + t_post + C(month)"
 ```
 
+</div>
 </div>
 
 This controls for monthly seasonal patterns without assuming a functional form.
@@ -463,6 +470,7 @@ df_seasonal = add_fourier_terms(df, period=12, n_terms=2)
 formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 ```
 
+</div>
 </div>
 
 ---

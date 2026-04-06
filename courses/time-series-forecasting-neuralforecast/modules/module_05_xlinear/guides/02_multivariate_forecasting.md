@@ -13,83 +13,6 @@ Start here: the code below trains univariate NHITS and multivariate XLinear on E
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-from neuralforecast import NeuralForecast
-from neuralforecast.models import NHITS, XLinear
-from datasetsforecast.long_horizon import LongHorizon
-from utilsforecast.losses import mae, mse
-from utilsforecast.evaluation import evaluate
-
-# Load ETTm1
-Y_df, _, _ = LongHorizon.load(directory="data", group="ETTm1")
-freq = "15min"
-val_size = 11520
-test_size = 11520
-
-# Univariate: NHITS forecasts each series independently
-nhits = NHITS(h=96, input_size=192, max_steps=1000)
-
-# Multivariate: XLinear uses all 7 series jointly
-xlinear = XLinear(
-    h=96, input_size=96, n_series=7,
-    hidden_size=512, temporal_ff=256, channel_ff=21,
-    head_dropout=0.5, embed_dropout=0.2,
-    learning_rate=1e-4, batch_size=32, max_steps=2000,
-)
-
-# Train and evaluate both
-nf_nhits = NeuralForecast(models=[nhits], freq=freq)
-nf_xlinear = NeuralForecast(models=[xlinear], freq=freq)
-
-cv_nhits = nf_nhits.cross_validation(df=Y_df, val_size=val_size, test_size=test_size)
-cv_xlinear = nf_xlinear.cross_validation(df=Y_df, val_size=val_size, test_size=test_size)
-
-# Evaluate — filter to test set
-test_nhits = cv_nhits[cv_nhits["ds"].isin(cv_nhits.groupby("unique_id")["ds"].last().values)]
-test_xlinear = cv_xlinear[cv_xlinear["ds"].isin(cv_xlinear.groupby("unique_id")["ds"].last().values)]
-
-eval_nhits = evaluate(test_nhits, metrics=[mae, mse], models=["NHITS"])
-eval_xlinear = evaluate(test_xlinear, metrics=[mae, mse], models=["XLinear"])
-
-print("NHITS  — MAE:", eval_nhits["NHITS"].iloc[0], "MSE:", eval_nhits["NHITS"].iloc[1])
-print("XLinear— MAE:", eval_xlinear["XLinear"].iloc[0], "MSE:", eval_xlinear["XLinear"].iloc[1])
-```
-
-</div>
-
-<div class="callout-key">
-
-<strong>Key Concept:</strong> Multivariate forecasting feeds all correlated series simultaneously into a single model, letting the model learn cross-variable patterns. XLinear is purpose-built for this: its Variate-wise Gating Module (VGM) learns which series inform which targets, and the `n_series` parameter controls the entire cross-variable pathway.
-
-</div>
-
-
----
-
-## 1. Univariate vs. Multivariate: When Cross-Series Information Helps
-
-Not every dataset benefits from multivariate modeling. The key question is: **do other series carry information about the target that is not already in the target's own history?**
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> Not every dataset benefits from multivariate modeling.
-
-</div>
-
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -101,8 +24,6 @@ flowchart TD
     Q3 -->|Yes| MV
     Q3 -->|No| UV2["Univariate often\nsufficient"]
 ```
-
-</div>
 
 **Cases where multivariate wins:**
 - Energy systems: electrical load drives transformer temperature
@@ -188,6 +109,7 @@ model = XLinear(
 ```
 
 </div>
+</div>
 
 **Mismatch consequences:**
 - `n_series < actual`: XLinear sees only a subset of variables; cross-variable learning is incomplete
@@ -233,6 +155,7 @@ The gate values at inference time tell you which series are most informative:
 # for predicting OT (oil temperature), consistent with physics
 ```
 
+</div>
 </div>
 
 The `channel_ff` parameter controls the MLP hidden size. Setting `channel_ff < n_series` creates a bottleneck — cross-variable information is compressed before gating. This can act as regularization but risks discarding informative cross-series patterns. The reference setting `channel_ff=21` is larger than `n_series=7` in the base ETTm1 setup, reflecting that the feature space includes lags and date encodings.

@@ -89,6 +89,7 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 ```
 
 </div>
+</div>
 
 
 ### Creating the Toolbox
@@ -152,6 +153,7 @@ def setup_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
     return toolbox
 ```
 
+</div>
 </div>
 
 ## Parameter Selection Guide
@@ -344,6 +346,7 @@ def custom_ga(
     }
 ```
 
+</div>
 </div>
 
 ## Time Series Feature Selection

@@ -148,6 +148,7 @@ def pre_period_fit(y_treated_pre, y_synthetic_pre):
 ```
 
 </div>
+</div>
 
 **Rule of thumb:** RMSPE in the pre-period should be below 10–20% of the treated unit's
 pre-intervention standard deviation. If pre-period fit is poor, the counterfactual extrapolation
@@ -185,6 +186,7 @@ donor_pool = [s for s in all_states if s not in ["CA"] + states_with_tobacco_pro
 print(f"Donor pool size: {len(donor_pool)}")
 ```
 
+</div>
 </div>
 
 ---
@@ -225,6 +227,7 @@ sc_model.plot_weights()
 sc_model.plot()
 ```
 
+</div>
 </div>
 
 The Bayesian approach gives a full posterior distribution over the counterfactual trajectory,
@@ -272,6 +275,7 @@ print(f"Immediate post-intervention gap: {gap_mean[0]:.1f} "
       f"[{gap_hdi[0, 0]:.1f}, {gap_hdi[0, 1]:.1f}]")
 ```
 
+</div>
 </div>
 
 ---

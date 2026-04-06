@@ -38,6 +38,7 @@ else:
 ```
 
 </div>
+</div>
 
 ### Gaussian (Continuous Rewards, Known Variance)
 
@@ -65,6 +66,7 @@ sigma[arm] = np.sqrt(1 / tau_post)
 ```
 
 </div>
+</div>
 
 ### Poisson (Count Data)
 
@@ -89,6 +91,7 @@ alpha[arm] += reward
 beta[arm] += 1
 ```
 
+</div>
 </div>
 
 ## Conjugate Prior Table

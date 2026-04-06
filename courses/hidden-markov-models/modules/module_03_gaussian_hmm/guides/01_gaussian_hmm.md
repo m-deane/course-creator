@@ -169,6 +169,7 @@ for label, stats in detector.get_regime_stats().items():
 ```
 
 </div>
+</div>
 
 ## Model Selection
 
@@ -234,6 +235,7 @@ print(f"\nBest number of states (BIC): {best_n}")
 ```
 
 </div>
+</div>
 
 ### Covariance Type
 
@@ -273,6 +275,7 @@ def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
     return pd.DataFrame(results)
 ```
 
+</div>
 </div>
 
 ## Visualization
@@ -327,6 +330,7 @@ def plot_regime_detection(returns, predicted_states, state_probs, dates=None):
 plot_regime_detection(returns, predicted_states, state_probs)
 ```
 
+</div>
 </div>
 
 ## Real-World Application
@@ -391,6 +395,7 @@ result = regime_analysis('SPY', '2020-01-01', '2024-01-01')
 print(result['regime_stats'])
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

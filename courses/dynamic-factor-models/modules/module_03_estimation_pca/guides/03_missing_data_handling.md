@@ -618,6 +618,7 @@ print("\n\nSaved convergence plot to 'empca_convergence.png'")
 ```
 
 </div>
+</div>
 
 ### Output (Representative)
 

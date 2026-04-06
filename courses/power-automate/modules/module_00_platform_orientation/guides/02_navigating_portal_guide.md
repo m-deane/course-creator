@@ -319,6 +319,7 @@ Licensing Tiers (simplified):
 ```
 
 </div>
+</div>
 
 > **On screen:** Your current license tier appears under your profile avatar > `View account`. In the Power Automate portal, attempting to add a Premium connector when you have only a Standard license shows an upgrade prompt inline in the flow designer — it does not block you from designing the flow, only from saving it in a licensed environment.
 

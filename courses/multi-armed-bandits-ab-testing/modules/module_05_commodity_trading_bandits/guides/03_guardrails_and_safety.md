@@ -122,6 +122,7 @@ def apply_position_limits(weights, max_weight=0.40):
 ```
 
 </div>
+</div>
 
 **Typical values:**
 - Conservative: 30% max per arm
@@ -147,6 +148,7 @@ safe_weights = apply_position_limits(weights, max_weight=0.40)
 # Result: WTI capped at 40%, excess reallocated
 ```
 
+</div>
 </div>
 
 **Why it matters:**
@@ -183,6 +185,7 @@ def apply_minimum_allocation(weights, min_weight=0.05):
     return weights / weights.sum()
 ```
 
+</div>
 </div>
 
 **Typical values:**

@@ -41,6 +41,7 @@ print(explanations.keys())
 ```
 
 </div>
+</div>
 
 <div class="callout-key">
 
@@ -120,6 +121,7 @@ fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradie
 ```
 
 </div>
+</div>
 
 ---
 
@@ -146,6 +148,7 @@ The following implementation builds on the approach above:
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="InputXGradient")
 ```
 
+</div>
 </div>
 
 ---
@@ -184,6 +187,7 @@ $$\sum_{i=1}^{n} \phi_i = f(x) - E[f(x)]$$
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSampling")
 ```
 
+</div>
 </div>
 
 ---

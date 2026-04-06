@@ -200,6 +200,7 @@ def get_config(env: Environment) -> DeploymentConfig:
 ```
 
 </div>
+</div>
 
 ### Deployment Pipeline
 
@@ -415,6 +416,7 @@ else:
     print("Deployment failed")
 ```
 
+</div>
 </div>
 
 ### Production Monitoring
@@ -690,6 +692,7 @@ monitor = ProductionMonitor(config)
 monitor.run_monitoring_cycle()
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

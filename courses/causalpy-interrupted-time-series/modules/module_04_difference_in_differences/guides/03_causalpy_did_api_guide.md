@@ -79,6 +79,7 @@ print(f"\nGroup counts:\n{nj_data.groupby(['state', 'period']).size()}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -108,6 +109,7 @@ result = cp.DifferenceInDifferences(
 )
 ```
 
+</div>
 </div>
 
 ### Formula Structure
@@ -140,6 +142,7 @@ result = cp.DifferenceInDifferences(
 ```
 
 </div>
+</div>
 
 ### Using the Frequentist Backend
 
@@ -163,6 +166,7 @@ result_freq = cp.DifferenceInDifferences(
 )
 ```
 
+</div>
 </div>
 
 ---
@@ -207,6 +211,7 @@ print(f"94% HDI: {np.percentile(treatment_effect_samples, [3, 97])}")
 print(f"P(effect > 0): {(treatment_effect_samples > 0).mean():.3f}")
 ```
 
+</div>
 </div>
 
 The full posterior lets you compute any summary statistic and answer questions like "What is the probability the effect exceeds 1 FTE employee?"
@@ -262,6 +267,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ### Trace Plots for Diagnostics
 
@@ -286,6 +292,7 @@ plt.show()
 az.summary(result.idata, var_names=["post:treated"])
 ```
 
+</div>
 </div>
 
 ---
@@ -330,6 +337,7 @@ result_informative = cp.DifferenceInDifferences(
 )
 ```
 
+</div>
 </div>
 
 ### Prior Sensitivity Analysis
@@ -379,6 +387,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -404,6 +413,7 @@ plt.title("Posterior Predictive Check")
 plt.show()
 ```
 
+</div>
 </div>
 
 ### Convergence Diagnostics
@@ -486,6 +496,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 ---

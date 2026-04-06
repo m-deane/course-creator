@@ -121,6 +121,7 @@ def research_bot_reward(query, response, retrieved_docs, ground_truth=None):
 ```
 
 </div>
+</div>
 
 **Key insight:** Hallucination penalty is -0.5 per unsupported claim. This makes hallucinating very expensive for the bandit.
 
@@ -190,6 +191,7 @@ for query in incoming_queries:
     })
 ```
 
+</div>
 </div>
 
 ### Key Lessons
@@ -305,6 +307,7 @@ def eia_extraction_reward(section_type, response, ground_truth):
     return 0.5  # Default
 ```
 
+</div>
 </div>
 
 ### The Result

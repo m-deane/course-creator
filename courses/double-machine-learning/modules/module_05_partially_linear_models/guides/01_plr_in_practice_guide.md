@@ -82,6 +82,7 @@ print(dml_data)
 ```
 
 </div>
+</div>
 
 The `DoubleMLData` object organises your data into the Y, D, X structure that DML requires.
 
@@ -115,6 +116,7 @@ ml_l_lasso = LassoCV(cv=5, random_state=42)
 ml_m_lasso = LassoCV(cv=5, random_state=42)
 ```
 
+</div>
 </div>
 
 <div class="callout-warning">
@@ -151,6 +153,7 @@ print(f"p-value: {dml_plr.pval[0]:.4f}")
 ```
 
 </div>
+</div>
 
 The `summary` output includes the coefficient, standard error, t-statistic, and p-value. The confidence intervals use the normal approximation justified by DML's asymptotic theory.
 
@@ -182,6 +185,7 @@ for name, ml_l, ml_m in [
     print(f"{name:<20} theta={dml.coef[0]:.4f}  SE={dml.se[0]:.4f}")
 ```
 
+</div>
 </div>
 
 If all nuisance models give similar treatment effects, the result is robust. If they differ substantially, the nonlinearity of confounding matters and you should prefer the most flexible model.
@@ -219,6 +223,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 ## Connections

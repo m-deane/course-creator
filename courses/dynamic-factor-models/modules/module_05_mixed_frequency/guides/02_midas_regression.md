@@ -167,6 +167,7 @@ print("Beta weight patterns saved to midas_beta_weights.png")
 ```
 
 </div>
+</div>
 
 ### Exponential Almon Lag Weights
 
@@ -242,6 +243,7 @@ plt.tight_layout()
 plt.savefig('midas_almon_weights.png', dpi=150)
 ```
 
+</div>
 </div>
 
 ---
@@ -464,6 +466,7 @@ Y_pred = midas.predict(ip_monthly)
 print(f"\nOut-of-sample RMSE: {np.sqrt(mean_squared_error(Y_test, Y_pred[-len(Y_test):])):.4f}")
 ```
 
+</div>
 </div>
 
 ---

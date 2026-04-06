@@ -137,6 +137,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 After quarterly averaging, the two scenarios are indistinguishable — despite potentially carrying very different signals about momentum.
 

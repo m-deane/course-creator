@@ -87,6 +87,7 @@ print(f"  X7 selected: {7 in selected}")
 ```
 
 </div>
+</div>
 
 Lasso selects based on prediction of $Y$. Variables like $X_1$ and $X_7$ confound $D$ but may be weak predictors of $Y$ — Lasso drops them, reintroducing bias.
 
@@ -119,6 +120,7 @@ in_ci = post_lasso_ols.conf_int()[1][0] <= true_effect <= post_lasso_ols.conf_in
 print(f"True effect in CI:      {in_ci}")
 ```
 
+</div>
 </div>
 
 <div class="callout-warning">
@@ -177,6 +179,7 @@ print(f"Mean bias:         {bias:+.3f}")
 ```
 
 </div>
+</div>
 
 The actual coverage is substantially below 95%, confirming that post-Lasso OLS inference is invalid.
 
@@ -219,6 +222,7 @@ print(f"\nDouble selection OLS: {double_sel_ols.params[1]:.2f} (SE: {double_sel_
 print(f"True effect:         {true_effect:.2f}")
 ```
 
+</div>
 </div>
 
 Double selection improves over single Lasso, but DML goes further — it replaces the linear Lasso with any ML model and adds orthogonal scores for robustness.
@@ -271,6 +275,7 @@ def compare_coverage(n_sims=200, n=1000, p=200, true_theta=1.5):
     pass
 ```
 
+</div>
 </div>
 
 

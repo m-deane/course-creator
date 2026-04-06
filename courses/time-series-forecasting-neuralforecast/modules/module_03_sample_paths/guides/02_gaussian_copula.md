@@ -13,73 +13,6 @@ Start with the complete working example, then study each step in detail.
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-import numpy as np
-import pandas as pd
-from neuralforecast import NeuralForecast
-from neuralforecast.models import NHITS
-from neuralforecast.losses.pytorch import MQLoss
-
-# Load French Bakery data — baguette daily sales
-url = "https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/french_bakery.csv"
-df = pd.read_csv(url, parse_dates=["date"])
-df_baguette = df[df["item"] == "BAGUETTE"][["date", "quantity"]].copy()
-df_baguette.columns = ["ds", "y"]
-df_baguette["unique_id"] = "baguette"
-df_baguette = df_baguette[["unique_id", "ds", "y"]].sort_values("ds").reset_index(drop=True)
-
-# Train/test split: hold out last 7 days
-df_train = df_baguette.iloc[:-7]
-df_test = df_baguette.iloc[-7:]
-
-# Train NHITS with MQLoss for marginal quantile forecasts
-model = NHITS(
-    h=7,
-    input_size=28,
-    loss=MQLoss(level=[80, 90]),
-    scaler_type="robust",
-    max_steps=500,
-)
-nf = NeuralForecast(models=[model], freq="D")
-nf.fit(df_train)
-
-# Generate 100 sample paths via the Gaussian Copula
-paths_df = nf.models[0].simulate(n_paths=100)
-print(paths_df.shape)    # (7, 102) — 7 horizon steps, 100 path columns + id/ds
-print(paths_df.columns[:5].tolist())  # ['unique_id', 'ds', 'sample_1', 'sample_2', ...]
-```
-
-</div>
-
-<div class="callout-key">
-
-<strong>Key Concept:</strong> NeuralForecast's `.simulate()` uses the Gaussian Copula method to generate sample paths. It starts from marginal quantile forecasts — which NHITS with MQLoss already produces — and builds correlated joint trajectories that respect the temporal autocorrelation of your data.
-
-</div>
-
-
----
-
-## The Six-Step Pipeline
-
-
-<span class="filename">example.py</span>
-</div>
-<div class="callout-insight">
-<strong>Insight:</strong> example.py
-The following implementation builds on the approach above:
----
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -90,8 +23,6 @@ flowchart TD
     E["Step 5: CDF transform Φ(z) → u ∈ [0,1]\nStandard normal CDF"] --> F
     F["Step 6: Inverse quantile transform F_t⁻¹(u_t)\nBack to forecast scale"]
 ```
-
-</div>
 
 ---
 
@@ -128,6 +59,7 @@ print(forecasts.columns.tolist())
 print(forecasts[["ds", "NHITS-lo-80", "NHITS", "NHITS-hi-80"]].to_string())
 ```
 
+</div>
 </div>
 
 At this point we have the marginal forecasts. The problem: these treat each day independently. The Gaussian Copula will stitch them into correlated paths.
@@ -180,6 +112,7 @@ phi = estimate_ar1_phi(y_train)
 print(f"Estimated AR(1) coefficient: phi = {phi:.4f}")
 ```
 
+</div>
 </div>
 
 Typical values for daily retail demand: $\phi \in [0.3, 0.7]$, reflecting moderate positive autocorrelation (busy days cluster together).

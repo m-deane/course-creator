@@ -152,6 +152,7 @@ def health_check():
 ```
 
 </div>
+</div>
 
 The frontend HTML connects to the backend endpoints and renders the analysis results:
 
@@ -388,6 +389,7 @@ The frontend HTML connects to the backend endpoints and renders the analysis res
 ```
 
 </div>
+</div>
 
 ### Chatbot Interface
 
@@ -483,6 +485,7 @@ def chat_history():
     return jsonify({'history': history})
 ```
 
+</div>
 </div>
 
 The chatbot frontend manages conversation state and renders the message history:
@@ -650,6 +653,7 @@ The chatbot frontend manages conversation state and renders the message history:
 ```
 
 </div>
+</div>
 
 ### Streaming Responses
 
@@ -698,6 +702,7 @@ def stream_analysis():
     )
 ```
 
+</div>
 </div>
 
 The frontend JavaScript reads from the event stream and updates the UI incrementally:
@@ -748,6 +753,7 @@ async function streamAnalysis() {
 }
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

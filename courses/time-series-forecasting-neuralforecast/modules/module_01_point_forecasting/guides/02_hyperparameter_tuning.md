@@ -40,6 +40,7 @@ for input_size in [7, 14, 28, 56]:
 ```
 
 </div>
+</div>
 
 Run this first. It shows the most important hyperparameter decision.
 
@@ -114,6 +115,7 @@ model_annual = NHITS(h=7, input_size=365, max_steps=1500)
 ```
 
 </div>
+</div>
 
 ### The Validation Curve
 
@@ -182,6 +184,7 @@ for scaler in scalers:
 ```
 
 </div>
+</div>
 
 ---
 
@@ -222,6 +225,7 @@ model_mq = NHITS(h=7, input_size=28, loss=MQLoss(), max_steps=500)
 model_huber = NHITS(h=7, input_size=28, loss=HuberLoss(delta=1.0), max_steps=500)
 ```
 
+</div>
 </div>
 
 ### Which Loss to Choose

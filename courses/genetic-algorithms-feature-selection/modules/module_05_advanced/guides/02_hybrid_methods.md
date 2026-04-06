@@ -526,6 +526,7 @@ print(f"Memetic (Baldwinian):   {result_ma_baldwin['best_fitness']:.4f}")
 ```
 
 </div>
+</div>
 
 
 ### Advanced Hybrid: GA + Greedy Forward Selection

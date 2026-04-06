@@ -109,6 +109,7 @@ def extract_monthly_factors(monthly_panel, n_factors):
 ```
 
 </div>
+</div>
 
 **Step 2: Aggregate factors to quarterly frequency**
 
@@ -142,6 +143,7 @@ def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
 ```
 
 </div>
+</div>
 
 **Step 3: MIDAS regression using factor as predictor**
 
@@ -166,6 +168,7 @@ def factor_augmented_midas(Y, F_monthly, K, n_factors=1):
     return estimate_midas(Y_aligned, X_factor)
 ```
 
+</div>
 </div>
 
 ---

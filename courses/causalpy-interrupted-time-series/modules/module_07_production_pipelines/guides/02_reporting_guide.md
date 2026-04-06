@@ -61,6 +61,7 @@ print(f"p-value:          {p_val:.4f}")
 ```
 
 </div>
+</div>
 
 The 95% CI means: "If we repeated this experiment many times, 95% of the CIs constructed this way would contain the true parameter." It does NOT mean "there is a 95% probability the true effect is in this range."
 
@@ -94,6 +95,7 @@ print(f"P(τ > 0):         {p_positive:.3f}")
 ```
 
 </div>
+</div>
 
 The 94% HDI means: "There is 94% posterior probability the true effect is in this range." This is the direct interpretation practitioners usually want.
 
@@ -126,6 +128,7 @@ print(f"  d = 0.8: large")
 ```
 
 </div>
+</div>
 
 ### Percentage Change
 
@@ -147,6 +150,7 @@ print(f"Effect as % of baseline: {pct_change:.1f}%")
 ```
 
 </div>
+</div>
 
 ### Number Needed to Treat (NNT)
 
@@ -167,6 +171,7 @@ nnt = 1 / tau_prob
 print(f"NNT: {nnt:.0f} individuals treated for 1 additional employment outcome")
 ```
 
+</div>
 </div>
 
 ---
@@ -215,6 +220,7 @@ print("-" * 70)
 print("All specifications show positive, significant effects.")
 ```
 
+</div>
 </div>
 
 ---
@@ -268,6 +274,7 @@ def forest_plot(results_list, title='Treatment Effect Estimates', ax=None):
 ```
 
 </div>
+</div>
 
 ### Bayesian Posterior Plot
 
@@ -317,6 +324,7 @@ def posterior_summary_plot(samples, true_value=None, title='Posterior Distributi
 ```
 
 </div>
+</div>
 
 ---
 
@@ -351,6 +359,7 @@ def roth_sensitivity_table(estimate, se, pre_trend_range):
 ```
 
 </div>
+</div>
 
 ### For RDD: Bandwidth Sensitivity Table
 
@@ -373,6 +382,7 @@ def bandwidth_sensitivity_table(rdd_results_by_bandwidth):
         print(f"  h={h:.2f}: τ = {est:+.3f} [{lo:+.3f}, {hi:+.3f}]{marker}")
 ```
 
+</div>
 </div>
 
 ---

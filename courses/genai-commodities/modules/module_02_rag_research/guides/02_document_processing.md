@@ -295,6 +295,7 @@ class DocumentAcquisition:
 ```
 
 </div>
+</div>
 
 ### PDF Processing with Table Extraction
 
@@ -410,6 +411,7 @@ Return JSON:
         return structured_df
 ```
 
+</div>
 </div>
 
 ### Data Validation Layer
@@ -532,6 +534,7 @@ class DataValidator:
         return True, ""
 ```
 
+</div>
 </div>
 
 ### Complete Processing Pipeline
@@ -662,6 +665,7 @@ class CommodityDocumentProcessor:
         return documents
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

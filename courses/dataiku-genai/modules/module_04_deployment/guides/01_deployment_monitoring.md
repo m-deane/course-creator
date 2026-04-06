@@ -86,6 +86,7 @@ endpoint_config = {
 ```
 
 </div>
+</div>
 
 ### Deployment Configuration
 
@@ -195,6 +196,7 @@ class MonitoredLLM:
 ```
 
 </div>
+</div>
 
 ### Dashboard Setup
 
@@ -253,6 +255,7 @@ dashboard = {
 }
 ```
 
+</div>
 </div>
 
 ## Alerting
@@ -345,6 +348,7 @@ def check_llm_health():
 ```
 
 </div>
+</div>
 
 ## Cost Management
 
@@ -419,6 +423,7 @@ class CostTracker:
 ```
 
 </div>
+</div>
 
 ### Budget Enforcement
 
@@ -464,6 +469,7 @@ class BudgetEnforcedLLM:
         return response
 ```
 
+</div>
 </div>
 
 ## Production Checklist

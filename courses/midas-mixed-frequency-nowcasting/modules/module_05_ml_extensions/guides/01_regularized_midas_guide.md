@@ -145,6 +145,7 @@ print(f"Number of nonzero coefficients: {np.sum(ridge_cv.coef_ != 0)}")  # Alway
 ```
 
 </div>
+</div>
 
 ---
 
@@ -227,6 +228,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -293,6 +295,7 @@ for name, model in models.items():
     print(f"{name}: RMSE={rmse:.4f}, Selected={nonzero}")
 ```
 
+</div>
 </div>
 
 ---

@@ -55,6 +55,7 @@ for var in ['college_nearby', 'mother_educ']:
 ```
 
 </div>
+</div>
 
 ### Handling Weak Instruments
 
@@ -87,6 +88,7 @@ ar_ci = KClass(k=1).fit_regularized(
 )
 ```
 
+</div>
 </div>
 
 ---
@@ -149,6 +151,7 @@ print(f"\nFirst stage F-statistic: {model_iv.first_stage.diagnostics['f.stat']:.
 ```
 
 </div>
+</div>
 
 ### Overidentification Test
 
@@ -173,6 +176,7 @@ else:
     print("Reject: at least one instrument may violate exclusion restriction")
 ```
 
+</div>
 </div>
 
 ---
@@ -221,6 +225,7 @@ print(f"ITS+DiD treatment effect: {tau:.3f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -268,6 +273,7 @@ print(f"  First stage jump: {jump_first_stage:.3f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -312,6 +318,7 @@ tau_rddid = model_rddid.params['above_cutoff:post']
 print(f"RD-DiD estimate: {tau_rddid:.3f}")
 ```
 
+</div>
 </div>
 
 ---

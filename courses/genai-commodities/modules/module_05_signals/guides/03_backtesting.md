@@ -118,6 +118,7 @@ for threshold in range(20, 80):
 ```
 
 </div>
+</div>
 Time: Seconds for thousands of tests
 
 **LLM-Based (Expensive):**
@@ -137,6 +138,7 @@ for date in dates:
     pnl = execute(signal, prices)
 ```
 
+</div>
 </div>
 Time: Hours for single test
 
@@ -163,6 +165,7 @@ for date in dates:
     pnl = execute(signal, prices)
 ```
 
+</div>
 </div>
 Time: Minutes, reusable across parameter tests
 
@@ -657,6 +660,7 @@ print(f"Average Win Rate: {np.mean([r.win_rate for r in wf_results])*100:.1f}%")
 print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

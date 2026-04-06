@@ -53,6 +53,7 @@ print("Variable names:", list(X.columns))
 ```
 
 </div>
+</div>
 
 The variable names in the design matrix become the names of the regression coefficients in the PyMC model (and thus in the ArviZ `InferenceData`).
 
@@ -108,6 +109,7 @@ def build_its_pymc_model(X, y):
 ```
 
 </div>
+</div>
 
 ### Step 3: Sampling
 
@@ -150,6 +152,7 @@ def compute_counterfactual(model_result, X_full, treatment_cols):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -191,6 +194,7 @@ print("Random variables:", pymc_model.basic_RVs)
 # pymc.model_to_graphviz(pymc_model)  # Requires graphviz
 ```
 
+</div>
 </div>
 
 ---
@@ -235,6 +239,7 @@ print("\nSample stats:", list(idata.sample_stats.data_vars))
 ```
 
 </div>
+</div>
 
 ---
 
@@ -269,6 +274,7 @@ with result.model:
         print(f"  {rv.name}")
 ```
 
+</div>
 </div>
 
 ---
@@ -334,6 +340,7 @@ class PoissonITSModel(cp.pymc_models.LinearRegression):
 ```
 
 </div>
+</div>
 
 ### Example: AR(1) Error Structure
 
@@ -386,6 +393,7 @@ class AR1ITS(cp.pymc_models.LinearRegression):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -429,6 +437,7 @@ plt.title("Prior Predictive Check")
 plt.show()
 ```
 
+</div>
 </div>
 
 ---

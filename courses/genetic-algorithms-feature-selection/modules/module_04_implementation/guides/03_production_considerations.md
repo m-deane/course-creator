@@ -141,6 +141,7 @@ ga.run()  # Best fitness: 0.89  ← Different!
 ```
 
 </div>
+</div>
 
 
 Why? Cross-validation shuffles differently, thread scheduling varies, floating-point operations non-deterministic.

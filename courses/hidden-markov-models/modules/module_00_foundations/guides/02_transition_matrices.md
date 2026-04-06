@@ -225,6 +225,7 @@ for method in ['eigenvalue', 'power', 'linear_solve']:
 ```
 
 </div>
+</div>
 
 ## Expected Hitting Times
 
@@ -290,6 +291,7 @@ for target in range(3):
                 print(f"  From state {i}: {h[i]:.2f} steps")
 ```
 
+</div>
 </div>
 
 ## Classification of States
@@ -361,6 +363,7 @@ print(f"(This chain has {len(classes)} communicating classes - it's reducible)")
 ```
 
 </div>
+</div>
 
 ### Periodicity
 
@@ -419,6 +422,7 @@ print(A_periodic)
 print(f"Period: {compute_period(A_periodic)}")
 ```
 
+</div>
 </div>
 
 ## Visualization
@@ -513,6 +517,7 @@ A = np.array([
 visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

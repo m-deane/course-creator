@@ -115,6 +115,7 @@ df = demonstrate_clustering_importance()
 
 
 </div>
+</div>
 
 ## Types of Clustering
 
@@ -159,6 +160,7 @@ fe_model = entity_clustering(df, 'y', ['x'], 'entity', 'time')
 
 
 </div>
+</div>
 
 ### 2. Time (One-Way) Clustering
 
@@ -191,6 +193,7 @@ def time_clustering(df, y_col, x_cols, entity_col, time_col):
 ```
 
 
+</div>
 </div>
 
 ### 3. Two-Way Clustering

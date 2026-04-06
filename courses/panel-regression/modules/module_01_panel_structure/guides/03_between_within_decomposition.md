@@ -118,6 +118,7 @@ for var in ['size', 'profitability']:
 
 
 </div>
+</div>
 
 ## Visualizing the Decomposition
 
@@ -204,6 +205,7 @@ plot_variance_decomposition(df, 'firm', 'profitability')
 
 
 </div>
+</div>
 
 ## Implications for Estimation
 
@@ -260,6 +262,7 @@ fe_coef, between_coef = illustrate_fe_within(df, 'profit_adj', 'size', 'firm', '
 ```
 
 
+</div>
 </div>
 
 ### When Between and Within Effects Differ

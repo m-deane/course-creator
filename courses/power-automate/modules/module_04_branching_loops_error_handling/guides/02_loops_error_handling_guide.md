@@ -292,6 +292,7 @@ The following implementation builds on the approach above:
 ```
 
 </div>
+</div>
 
 > **On screen:** Inside the Catch Scope, add a Compose action or a Send email action. In the body, click **Expression** and type `result('Try')[0]['error']['message']` to access the first error's message. This gives you the actual error text to include in your notification.
 

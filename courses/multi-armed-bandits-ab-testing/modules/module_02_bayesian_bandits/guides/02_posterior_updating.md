@@ -189,6 +189,7 @@ class BetaBernoulli:
 ```
 
 </div>
+</div>
 
 ### Normal-Normal Update
 
@@ -221,6 +222,7 @@ class NormalNormal:
         return np.random.normal(self.mu, self.sigma, size=n)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

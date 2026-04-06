@@ -251,6 +251,7 @@ def cartpole_features(state):
 ```
 
 </div>
+</div>
 
 ---
 

@@ -243,6 +243,7 @@ if p_value < 0.05:
 ```
 
 </div>
+</div>
 
 **Test 2: Rolling Mean Variance**
 
@@ -263,6 +264,7 @@ if variance_of_rolling_means > threshold:
     print("Non-stationary detected")
 ```
 
+</div>
 </div>
 
 ### Is My Environment Adversarial?
@@ -301,6 +303,7 @@ for arm_i in arms:
         print(f"Arm {arm_i} appears restless (decays when selected)")
 ```
 
+</div>
 </div>
 
 ## Commodity-Specific Guidelines

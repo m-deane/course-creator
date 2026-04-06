@@ -343,6 +343,7 @@ def fit_its_model(df, outcome, formula=None):
 ```
 
 </div>
+</div>
 
 ---
 

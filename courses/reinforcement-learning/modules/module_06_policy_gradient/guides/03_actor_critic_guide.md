@@ -149,10 +149,6 @@ For each episode:
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
@@ -197,12 +193,13 @@ graph TB
     PG --> AH
     VL --> CH
 
-    style AP fill:#4A90D9,color:#fff
-    style CV fill:#E8844A,color:#fff
-    style TD fill:#9B59B6,color:#fff
+    class TD cls_TD
+    class CV cls_CV
+    class AP cls_AP
+    classDef cls_TD fill:#9B59B6,color:#fff
+    classDef cls_CV fill:#E8844A,color:#fff
+    classDef cls_AP fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 The actor (blue) and critic (orange) can share a backbone encoder for efficiency, but their output heads and update rules remain fully independent.
 
@@ -239,10 +236,6 @@ A3C (Mnih et al., 2016) runs multiple parallel workers, each with its own copy o
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
@@ -263,14 +256,17 @@ graph TB
     W3 -- "Async gradient update" --> GN
     WN -- "Async gradient update" --> GN
 
-    style GN fill:#4A90D9,color:#fff
-    style W1 fill:#E8844A,color:#fff
-    style W2 fill:#E8844A,color:#fff
-    style W3 fill:#E8844A,color:#fff
-    style WN fill:#E8844A,color:#fff
+    class WN cls_WN
+    class W3 cls_W3
+    class W2 cls_W2
+    class W1 cls_W1
+    class GN cls_GN
+    classDef cls_WN fill:#E8844A,color:#fff
+    classDef cls_W3 fill:#E8844A,color:#fff
+    classDef cls_W2 fill:#E8844A,color:#fff
+    classDef cls_W1 fill:#E8844A,color:#fff
+    classDef cls_GN fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 **Key insight:** Asynchronous workers implicitly decorrelate their experience, acting like a distributed replay buffer without the off-policy complications.
 
@@ -463,6 +459,7 @@ def compute_gae(
     return torch.FloatTensor(advantages)
 ```
 
+</div>
 </div>
 
 ---

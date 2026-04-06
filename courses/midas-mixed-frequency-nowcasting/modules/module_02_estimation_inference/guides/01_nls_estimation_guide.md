@@ -193,6 +193,7 @@ def estimate_midas_profile(Y, X, weight_fn, theta0=(1.0, 5.0)):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -291,6 +292,7 @@ def nls_covariance(theta_hat, Y, X, objective_fn, eps=1e-4):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -373,6 +375,7 @@ def check_convergence(result, theta_hat, Y, X, objective_fn):
     return diagnostics
 ```
 
+</div>
 </div>
 
 ---

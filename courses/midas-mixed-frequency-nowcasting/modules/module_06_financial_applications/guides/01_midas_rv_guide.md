@@ -172,6 +172,7 @@ def plot_beta_weights(ax, K=22):
 ```
 
 </div>
+</div>
 
 ### 4.2 MIDAS-RV Estimator
 
@@ -288,6 +289,7 @@ def fit_midas_rv(rv_daily, rv_monthly, K=22, log_transform=True):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -330,6 +332,7 @@ def fit_har_rv(rv_daily):
     return beta, fitted, residuals, rmse
 ```
 
+</div>
 </div>
 
 ---

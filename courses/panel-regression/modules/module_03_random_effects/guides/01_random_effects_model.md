@@ -140,6 +140,7 @@ print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 
 
 </div>
+</div>
 
 ## Estimating Variance Components
 
@@ -213,6 +214,7 @@ for k, v in var_components.items():
 
 
 </div>
+</div>
 
 ## Time-Invariant Variables
 
@@ -245,6 +247,7 @@ print(re_with_invariant.summary.tables[1])
 ```
 
 
+</div>
 </div>
 
 ## The Mundlak Approach

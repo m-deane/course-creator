@@ -346,6 +346,7 @@ def test_stationarity_multiple_series(
 ```
 
 </div>
+</div>
 
 
 ### Transformation to Stationarity
@@ -589,6 +590,7 @@ def auto_make_stationary(
 ```
 
 </div>
+</div>
 
 ### GA Feature Selection with Stationarity Handling
 
@@ -736,6 +738,7 @@ def prepare_stationary_features(
     return X_stationary, transform_info
 ```
 
+</div>
 </div>
 
 ### Complete Example

@@ -13,157 +13,6 @@ Start here: the code below trains XLinear on the ETTm1 dataset in under five min
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-from neuralforecast import NeuralForecast
-from neuralforecast.models import XLinear
-from datasetsforecast.long_horizon import LongHorizon
-
-# Load ETTm1 — 7 variables, 15-minute intervals
-Y_df, X_df, S_df = LongHorizon.load(directory="data", group="ETTm1")
-freq = "15min"
-
-# Horizon and context window
-H = 96          # 24 hours ahead at 15-min resolution
-INPUT_SIZE = 96  # same as horizon — standard benchmark setting
-
-models = [
-    XLinear(
-        h=H,
-        input_size=INPUT_SIZE,
-        n_series=7,          # number of variables in ETTm1
-        hidden_size=512,
-        temporal_ff=256,
-        channel_ff=21,
-        head_dropout=0.5,
-        embed_dropout=0.2,
-        learning_rate=1e-4,
-        batch_size=32,
-        max_steps=2000,
-    )
-]
-
-nf = NeuralForecast(models=models, freq=freq)
-
-val_size = 11520   # standard ETTm1 validation split
-test_size = 11520  # standard ETTm1 test split
-
-cv_df = nf.cross_validation(df=Y_df, val_size=val_size, test_size=test_size)
-print(cv_df.head())
-```
-
-</div>
-
-<div class="callout-key">
-
-<strong>Key Concept:</strong> XLinear achieves transformer-competitive accuracy on long-horizon multivariate forecasting benchmarks while requiring a fraction of the compute. The architecture combines learned embeddings, two gating modules for temporal and cross-variable dependencies, and reversible instance normalization — all without attention mechanisms.
-
-</div>
-
-
----
-
-## 1. The Problem: Long-Horizon Multivariate Forecasting
-
-Forecasting a single time series 96 steps into the future is hard. Forecasting 7 correlated series simultaneously — where the temperature of one transformer predicts stress on another — is harder.
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> Forecasting a single time series 96 steps into the future is hard.
-
-</div>
-
-
-The benchmark dataset in this module is **ETTm1** (Electricity Transformer Temperature): 7 variables recorded every 15 minutes at a Chinese power station. The variables are:
-
-| Variable | Description |
-|---|---|
-| HUFL | High useful load |
-| HULL | High useless load |
-| MUFL | Medium useful load |
-| MULL | Medium useless load |
-| LUFL | Low useful load |
-| LULL | Low useless load |
-| OT | Oil temperature (target) |
-
-Long-horizon forecasting (h=96, 192, 336, 720) is the community benchmark because it exposes weaknesses that short-horizon models hide: error accumulation, distributional shift over time, and the inability to exploit cross-series patterns consistently.
-
----
-
-## 2. XLinear vs. Transformers: The Efficiency Case
-
-Transformer-based forecasters (Informer, Autoformer, PatchTST, iTransformer) dominate published benchmarks but carry significant costs:
-
-<div class="callout-key">
-
-<strong>Key Point:</strong> Transformer-based forecasters (Informer, Autoformer, PatchTST, iTransformer) dominate published benchmarks but carry significant costs:
-
-- **Quadratic attention:** O(L²) in sequence length for full at...
-
-</div>
-
-
-- **Quadratic attention:** O(L²) in sequence length for full attention
-- **Parameter count:** hundreds of millions for large variants
-- **Training time:** hours on multi-GPU clusters for full benchmarks
-
-XLinear makes a different bet: **linear layers with learned gating outperform attention for structured multivariate time series** when the architecture is designed to capture the right inductive biases.
-
-Benchmark performance on ETTm1 h=96 (MSE, lower is better):
-
-| Model | MSE | MAE | Compute |
-|---|---|---|---|
-| XLinear | **0.316** | **0.355** | Low |
-| TiDE | 0.364 | 0.387 | Low |
-| TSMixer | 0.351 | 0.373 | Low |
-| TimeMixer | 0.338 | 0.368 | Medium |
-| PatchTST | 0.329 | 0.367 | High |
-| NHITS | 0.345 | 0.380 | Low |
-
-XLinear matches or beats transformer accuracy at the compute cost of simpler linear models.
-
----
-
-
-<div class="compare">
-<div class="compare-card">
-<div class="header before">2. XLinear</div>
-<div class="body">
-
-See detailed comparison in the table above.
-
-</div>
-</div>
-<div class="compare-card">
-<div class="header after">Transformers: The Efficiency Case</div>
-<div class="body">
-
-See detailed comparison in the table above.
-
-</div>
-</div>
-</div>
-
-## 3. Architecture Overview
-
-
-<span class="filename">example.py</span>
-</div>
-<div class="callout-info">
-<strong>Info:</strong> example.py
-The following implementation builds on the approach above:
-The four architectural components each solve a distinct subproblem:
-1.
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -175,15 +24,19 @@ flowchart LR
     Head --> RevIN_inv["RevIN\n(denormalize)"]
     RevIN_inv --> Output["Forecasts\n(B × H × N)"]
 
-    style RevIN_fwd fill:#e8f4f8,stroke:#2196f3
-    style Embed fill:#fff3e0,stroke:#ff9800
-    style TGM fill:#e8f5e9,stroke:#4caf50
-    style VGM fill:#fce4ec,stroke:#e91e63
-    style Head fill:#f3e5f5,stroke:#9c27b0
-    style RevIN_inv fill:#e8f4f8,stroke:#2196f3
+    class RevIN_inv cls_RevIN_inv
+    class Head cls_Head
+    class VGM cls_VGM
+    class TGM cls_TGM
+    class Embed cls_Embed
+    class RevIN_fwd cls_RevIN_fwd
+    classDef cls_RevIN_inv fill:#e8f4f8,stroke:#2196f3
+    classDef cls_Head fill:#f3e5f5,stroke:#9c27b0
+    classDef cls_VGM fill:#fce4ec,stroke:#e91e63
+    classDef cls_TGM fill:#e8f5e9,stroke:#4caf50
+    classDef cls_Embed fill:#fff3e0,stroke:#ff9800
+    classDef cls_RevIN_fwd fill:#e8f4f8,stroke:#2196f3
 ```
-
-</div>
 
 The four architectural components each solve a distinct subproblem:
 
@@ -242,6 +95,7 @@ global_ctx = nn.Parameter(torch.randn(1, n_ctx_tokens, d_model) * 0.02)
 x_with_ctx = torch.cat([x_embedded, global_ctx.expand(B, -1, -1)], dim=1)
 ```
 
+</div>
 </div>
 
 The embedding layer effectively creates a unified token space where time steps and global context tokens coexist — the subsequent gating modules operate over this combined representation.

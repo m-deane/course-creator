@@ -171,6 +171,7 @@ class Population:
 ```
 
 </div>
+</div>
 
 
 ## Selection Operators
@@ -216,6 +217,7 @@ def select_parents(
     ]
 ```
 
+</div>
 </div>
 
 ### Roulette Wheel Selection
@@ -471,6 +473,7 @@ def generational_replacement(
     return Population(new_pop)
 ```
 
+</div>
 </div>
 
 ### Steady-State Replacement

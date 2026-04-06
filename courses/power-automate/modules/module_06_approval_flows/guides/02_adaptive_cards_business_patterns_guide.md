@@ -85,6 +85,7 @@ The following implementation builds on the approach above:
 ```
 
 </div>
+</div>
 
 ### Body Elements
 
@@ -112,6 +113,7 @@ The following implementation builds on the approach above:
 ```
 
 </div>
+</div>
 
 **FactSet** — Renders a label-value pair list, ideal for structured data:
 
@@ -137,6 +139,7 @@ The following implementation builds on the approach above:
 ```
 
 </div>
+</div>
 
 **Container** — Groups elements with optional background color and padding:
 
@@ -159,6 +162,7 @@ The following implementation builds on the approach above:
 }
 ```
 
+</div>
 </div>
 
 **Input.Text** — Collects text input inline:

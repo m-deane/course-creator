@@ -101,6 +101,7 @@ def extract_factors_pca(X, n_factors):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -172,6 +173,7 @@ def select_n_factors_bai_ng(X, max_factors=10):
     return np.argmin(ic_values) + 1, np.array(ic_values)
 ```
 
+</div>
 </div>
 
 ---

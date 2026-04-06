@@ -192,129 +192,6 @@ Return V, pi*
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-import numpy as np
-
-
-def value_iteration(P, R, gamma=0.99, theta=1e-8):
-    """
-    Value iteration algorithm (Sutton & Barto, Chapter 4).
-
-    Parameters
-    ----------
-    P     : ndarray of shape (n_states, n_actions, n_states)
-    R     : ndarray of shape (n_states, n_actions, n_states)
-    gamma : discount factor in [0, 1)
-    theta : convergence threshold
-
-    Returns
-    -------
-    V     : optimal value function, shape (n_states,)
-    pi    : optimal deterministic policy, shape (n_states,)
-    """
-    n_states, n_actions, _ = P.shape
-    V = np.zeros(n_states)
-
-    sweep = 0
-    while True:
-        delta = 0.0
-        for s in range(n_states):
-            v_old = V[s]
-            # Q(s, a) = sum_{s'} P[s,a,s'] * (R[s,a,s'] + gamma * V[s'])
-            q_vals = np.sum(P[s] * (R[s] + gamma * V[None, :]), axis=1)
-            V[s] = np.max(q_vals)        # Bellman optimality update
-            delta = max(delta, abs(v_old - V[s]))
-        sweep += 1
-        if delta < theta:
-            break
-
-    print(f"Value iteration converged in {sweep} sweeps.")
-
-    # Extract optimal policy (single greedy pass after convergence)
-    Q = np.sum(P * (R + gamma * V[None, None, :]), axis=2)
-    pi = np.argmax(Q, axis=1)
-
-    return V, pi
-
-
-# --- Vectorized version (faster for large state spaces) ---
-def value_iteration_vectorized(P, R, gamma=0.99, theta=1e-8):
-    """Vectorized value iteration — avoids Python for-loop over states."""
-    n_states = P.shape[0]
-    V = np.zeros(n_states)
-
-    for sweep in range(10_000):
-        # Q[s, a] = sum_{s'} P[s,a,s'] * (R[s,a,s'] + gamma * V[s'])
-        Q = np.einsum('ijk,ijk->ij', P, R + gamma * V[None, None, :])
-        V_new = Q.max(axis=1)
-        delta = np.max(np.abs(V_new - V))
-        V = V_new
-        if delta < theta:
-            print(f"Converged in {sweep + 1} sweeps.")
-            break
-
-    pi = np.argmax(Q, axis=1)
-    return V, pi
-```
-
-</div>
-
----
-
-## Policy Iteration vs Value Iteration: When to Use Which
-
-| Criterion | Policy Iteration | Value Iteration |
-|---|---|---|
-| State space size | Small to medium ($|\mathcal{S}| < 10^4$) | Medium to large |
-| Actions per state | Any | Many actions OK |
-| $\gamma$ close to 1 | Preferred (fewer iterations) | Many sweeps needed |
-| Memory | $O(|\mathcal{S}| + |\mathcal{S}||\mathcal{A}|)$ | Same |
-| Implementation complexity | Higher (two routines) | Lower (one loop) |
-| Convergence type | Finite (exact, no threshold) | Asymptotic (needs $\theta$) |
-| Practical speed | Often faster in iterations | Often faster in wall time |
-
-### Rule of Thumb
-
-- Use **policy iteration** when $\gamma$ is close to 1 or when you need an exact optimal policy in as few steps as possible.
-- Use **value iteration** when the state space is large, the per-state evaluation cost is high, or simplicity of implementation is a priority.
-
----
-
-
-<div class="compare">
-<div class="compare-card">
-<div class="header before">Policy Iteration</div>
-<div class="body">
-
-See detailed comparison in the table above.
-
-</div>
-</div>
-<div class="compare-card">
-<div class="header after">Value Iteration: When to Use Which</div>
-<div class="body">
-
-See detailed comparison in the table above.
-
-</div>
-</div>
-</div>
-
-## Mermaid: The Three DP Algorithms
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -325,12 +202,13 @@ flowchart TD
     BO --> VI["Value Iteration\nT* iterated (m=1 + improve)"]
     MPI -->|"m=1"| VI
     MPI -->|"m=inf"| PIt
-    style BE fill:#27ae60,color:#fff
-    style VI fill:#4a90d9,color:#fff
-    style PIt fill:#9b59b6,color:#fff
+    class PIt cls_PIt
+    class VI cls_VI
+    class BE cls_BE
+    classDef cls_PIt fill:#9b59b6,color:#fff
+    classDef cls_VI fill:#4a90d9,color:#fff
+    classDef cls_BE fill:#27ae60,color:#fff
 ```
-
-</div>
 
 Value iteration and policy iteration are endpoints of a continuous spectrum parametrized by $m$.
 

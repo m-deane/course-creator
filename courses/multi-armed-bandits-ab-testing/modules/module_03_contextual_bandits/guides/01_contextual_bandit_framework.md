@@ -158,6 +158,7 @@ arm = bandit.choose_arm(context)
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -251,6 +252,7 @@ def predict(self, context, arm):
     return model.predict([context])[0]
 ```
 
+</div>
 </div>
 
 ### 4. Regret Analysis

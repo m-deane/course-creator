@@ -102,6 +102,7 @@ Output: Narrative assessment with conviction
 ```
 
 </div>
+</div>
 
 **Step 3: Position Sizing**
 $$\text{Position Size} = \text{Base Size} \times S \times \min(1, \text{Kelly Fraction})$$
@@ -465,6 +466,7 @@ print(f"\nReasoning:\n{aggregate.reasoning}")
 ```
 
 </div>
+</div>
 
 ### Position Sizing from Signals
 
@@ -560,6 +562,7 @@ print(f"  Contracts: {position2['contracts']}")
 print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

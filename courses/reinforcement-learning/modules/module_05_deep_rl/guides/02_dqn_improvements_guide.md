@@ -74,60 +74,6 @@ The only change from vanilla DQN is two lines in the target computation:
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-# Vanilla DQN target
-max_next_q = target_net(next_states).max(dim=1).values
-
-# Double DQN target — decouple selection from evaluation
-with torch.no_grad():
-    # Step 1: online network selects the best action
-    next_actions = q_net(next_states).argmax(dim=1, keepdim=True)
-    # Step 2: target network evaluates that action
-    max_next_q = target_net(next_states).gather(1, next_actions).squeeze(1)
-
-targets = rewards + gamma * max_next_q * (1.0 - dones)
-```
-
-</div>
-
----
-
-## Improvement 2: Dueling DQN
-
-### The Problem: Conflated Value and Advantage
-
-Standard DQN outputs $Q(s, a; \theta)$ for each action directly. In many states, the choice of action matters very little: if an agent is far from any obstacle, all actions have nearly the same value. The network must still learn separate Q-values for each action, wasting representational capacity.
-
-### Formal Definition
-
-Wang et al. (2016) decompose the Q-function into two components:
-
-$$Q(s, a) = V(s) + A(s, a)$$
-
-- $V(s)$: the **state-value function** — how good is this state, regardless of action?
-- $A(s, a)$: the **advantage function** — how much better is action $a$ relative to the average action?
-
-The two streams share a convolutional feature extractor but have separate fully connected heads. To ensure **identifiability** (the decomposition $V + A$ is not unique without a constraint), the advantage is normalized by subtracting its mean:
-
-$$Q(s, a;\, \theta) = V(s;\, \theta_V) + \left(A(s, a;\, \theta_A) - \frac{1}{|\mathcal{A}|}\sum_{a'} A(s, a';\, \theta_A)\right)$$
-
-This constraint ensures that for the greedy action $a^* = \arg\max_a A(s, a; \theta_A)$, the advantage equals zero: $A(s, a^*; \theta_A) = 0$. This makes $V(s; \theta_V)$ a well-defined estimate of the state value.
-
-### Architecture Diagram
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -145,11 +91,11 @@ flowchart TD
     A_HEAD --> AGG
     AGG --> OUT
 
-    style S fill:#4A90D9,color:#fff
-    style OUT fill:#E8844A,color:#fff
+    class OUT cls_OUT
+    class S cls_S
+    classDef cls_OUT fill:#E8844A,color:#fff
+    classDef cls_S fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 ### Code Implementation
 
@@ -207,6 +153,7 @@ class DuelingQNetwork(nn.Module):
         return q
 ```
 
+</div>
 </div>
 
 ### Why It Helps
@@ -316,6 +263,7 @@ class SumTree:
         return self.tree[0]
 ```
 
+</div>
 </div>
 
 ---

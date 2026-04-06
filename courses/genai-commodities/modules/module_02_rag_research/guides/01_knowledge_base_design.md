@@ -372,6 +372,7 @@ Text: {text[:300]}..."""
 ```
 
 </div>
+</div>
 
 ### Example Usage
 
@@ -427,6 +428,7 @@ for chunk in results:
     print("---")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

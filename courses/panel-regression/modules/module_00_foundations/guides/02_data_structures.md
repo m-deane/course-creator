@@ -302,6 +302,7 @@ if __name__ == "__main__":
 
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -348,6 +349,7 @@ if __name__ == "__main__":
 
 
 </div>
+</div>
 
 **5. Missing Entity or Time Identifiers**
 - **Issue:** Forgetting to include entity_id or time columns in dataset.
@@ -378,6 +380,7 @@ if __name__ == "__main__":
   ```
 
 
+</div>
 </div>
 
 ## Connections

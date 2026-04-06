@@ -265,6 +265,7 @@ print(results)
 ```
 
 </div>
+</div>
 
 ## Directory Structure
 
@@ -339,6 +340,7 @@ def retry_with_backoff(max_retries=3):
 ```
 
 </div>
+</div>
 
 **2. Environment Variables Not Loading**
 - **Issue:** API keys not found even after setting in .env
@@ -367,6 +369,7 @@ client = chromadb.PersistentClient(path="./chroma_db")
 ```
 
 </div>
+</div>
 
 **4. Large Response Truncation**
 - **Issue:** LLM responses cut off mid-sentence
@@ -387,6 +390,7 @@ response = client.messages.create(
 )
 ```
 
+</div>
 </div>
 
 **5. JSON Parsing Failures**
@@ -420,6 +424,7 @@ def safe_json_parse(text):
         raise ValueError("No valid JSON found in response")
 ```
 
+</div>
 </div>
 
 ## Connections

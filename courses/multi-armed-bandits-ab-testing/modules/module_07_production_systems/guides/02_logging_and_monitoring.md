@@ -255,6 +255,7 @@ class BanditMonitor:
 ```
 
 </div>
+</div>
 
 **Commodity Application:**
 
@@ -309,6 +310,7 @@ for week in range(52):
 print(monitor.get_summary())
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -385,6 +387,7 @@ Setting thresholds too sensitive creates noise. Too loose and you miss real prob
        return arm
    ```
 
+</div>
 </div>
 
    Rewrite it with proper structured logging that would support debugging 6 months later.

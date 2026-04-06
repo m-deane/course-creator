@@ -145,6 +145,7 @@ def midas_aic_bic(Y, X_list, weight_fn, n_params_list):
 ```
 
 </div>
+</div>
 
 ### Practical Lag Selection
 
@@ -225,6 +226,7 @@ def ljung_box(residuals, n_lags=4):
     return Q, p_value
 ```
 
+</div>
 </div>
 
 ---
@@ -320,6 +322,7 @@ def expanding_window_cv(Y, X_dict, weight_fn_dict, min_train=30, horizon=1):
     return rmse_dict
 ```
 
+</div>
 </div>
 
 ---

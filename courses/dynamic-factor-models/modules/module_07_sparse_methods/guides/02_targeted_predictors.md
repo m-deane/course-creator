@@ -502,6 +502,7 @@ class TargetedPredictors:
 ```
 
 </div>
+</div>
 
 ### Example: Comparing Standard vs Targeted Factors
 
@@ -603,6 +604,7 @@ plt.savefig('targeting_results.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
 </div>
 
 ### Threshold Selection via Cross-Validation
@@ -732,6 +734,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -761,6 +764,7 @@ correlations = [pearsonr(X[:, j], y)[0] for j in range(N)]
 correlations = [pearsonr(X_train[:, j], y_train)[0] for j in range(N)]
 ```
 
+</div>
 </div>
 
 ### 2. Targeting Without Standardization
@@ -803,6 +807,7 @@ corr = pearsonr(X[:, j], y)[0]
 corr = pearsonr(X[:-h, j], y[h:])[0]
 ```
 
+</div>
 </div>
 
 ---

@@ -391,6 +391,7 @@ def walk_forward_feature_selection(
 ```
 
 </div>
+</div>
 
 
 ### Advanced Walk-Forward Strategies
@@ -557,6 +558,7 @@ def purged_walk_forward(
     pass
 ```
 
+</div>
 </div>
 
 ### Practical Example with Genetic Algorithm

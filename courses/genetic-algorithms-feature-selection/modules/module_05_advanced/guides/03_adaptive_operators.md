@@ -451,6 +451,7 @@ for strategy, result in results.items():
 ```
 
 </div>
+</div>
 
 
 ### Self-Adaptive GA

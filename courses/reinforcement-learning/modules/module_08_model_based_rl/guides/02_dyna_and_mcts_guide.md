@@ -137,182 +137,6 @@ The following implementation builds on the approach above:
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-import numpy as np
-from collections import defaultdict
-
-
-class DynaQ:
-    """
-    Dyna-Q agent for tabular MDPs.
-
-    Implements Sutton & Barto (2018) Algorithm 8.1.
-    States and actions must be hashable.
-    """
-
-    def __init__(
-        self,
-        action_space_size: int,
-        alpha: float = 0.1,
-        gamma: float = 0.95,
-        epsilon: float = 0.1,
-        n_planning_steps: int = 10,
-    ):
-        self.n_actions = action_space_size
-        self.alpha = alpha
-        self.gamma = gamma
-        self.epsilon = epsilon
-        self.n = n_planning_steps
-
-        # Q-table: state -> array of Q-values
-        self.Q = defaultdict(lambda: np.zeros(action_space_size))
-
-        # Deterministic model: (state, action) -> (reward, next_state)
-        self.model: dict[tuple, tuple] = {}
-
-        # Track which (state, action) pairs have been observed for planning
-        self.observed_sa: list[tuple] = []
-
-    def act(self, state) -> int:
-        """ε-greedy action selection."""
-        if np.random.random() < self.epsilon:
-            return np.random.randint(self.n_actions)
-        return int(np.argmax(self.Q[state]))
-
-    def update(self, state, action: int, reward: float, next_state):
-        """
-        One Dyna-Q step:
-          1. Real Q-update from the actual transition
-          2. Model learning: store (state, action) -> (reward, next_state)
-          3. n planning Q-updates from randomly sampled model transitions
-        """
-        # Step 1: Direct RL update (real experience)
-        td_target = reward + self.gamma * np.max(self.Q[next_state])
-        td_error = td_target - self.Q[state][action]
-        self.Q[state][action] += self.alpha * td_error
-
-        # Step 2: Model learning
-        if (state, action) not in self.model:
-            self.observed_sa.append((state, action))
-        self.model[(state, action)] = (reward, next_state)
-
-        # Step 3: Planning — n additional Q-updates from model
-        for _ in range(self.n):
-            # Sample a previously observed (state, action) pair uniformly
-            idx = np.random.randint(len(self.observed_sa))
-            s_sim, a_sim = self.observed_sa[idx]
-
-            # Query the model for the simulated transition
-            r_sim, s_next_sim = self.model[(s_sim, a_sim)]
-
-            # Standard Q-learning update on simulated experience
-            td_target_sim = r_sim + self.gamma * np.max(self.Q[s_next_sim])
-            td_error_sim = td_target_sim - self.Q[s_sim][a_sim]
-            self.Q[s_sim][a_sim] += self.alpha * td_error_sim
-```
-
-</div>
-
----
-
-## Formal Definition: Monte Carlo Tree Search (MCTS)
-
-### Setting
-
-MCTS operates from a **current state** $s_0$ and builds a search tree $\mathcal{T}$ by iterating four phases. It does not require a learned model — it requires a **simulator** (the real environment or a learned model) that can be queried with any $(s, a)$ pair.
-
-### The Four Phases
-
-#### Phase 1: Selection
-
-Starting from the root $s_0$, traverse the existing tree by selecting actions using the **UCT** (Upper Confidence bound for Trees) policy:
-
-$$\text{UCT}(s, a) = \bar{Q}(s, a) + c \sqrt{\frac{\ln N(s)}{N(s, a)}}$$
-
-| Symbol | Meaning |
-|--------|---------|
-| $\bar{Q}(s, a)$ | Mean return observed from $(s, a)$ across all simulations |
-| $N(s)$ | Total visit count for state $s$ |
-| $N(s, a)$ | Visit count for action $a$ in state $s$ |
-| $c > 0$ | Exploration coefficient (typical: $c = \sqrt{2}$ or tuned) |
-
-Continue selection until reaching a **leaf node** (an unexpanded state not yet in the tree).
-
-#### Phase 2: Expansion
-
-Add one or more child nodes to the selected leaf. Typically expand one new state-action pair chosen by the selection policy or uniformly at random.
-
-#### Phase 3: Simulation (Rollout)
-
-From the newly expanded node, run a **rollout** to a terminal state (or depth limit $H$) using a **rollout policy** $\pi_\text{roll}$ — typically a fast, simple policy (uniform random, or a learned heuristic). Collect the total return $G$.
-
-#### Phase 4: Backpropagation
-
-Propagate $G$ back through all nodes visited during selection and expansion:
-
-$$N(s) \leftarrow N(s) + 1, \quad N(s, a) \leftarrow N(s, a) + 1, \quad \bar{Q}(s, a) \leftarrow \bar{Q}(s, a) + \frac{G - \bar{Q}(s, a)}{N(s, a)}$$
-
-The incremental mean update ensures $\bar{Q}(s, a)$ is always the empirical mean of all returns observed from $(s, a)$.
-
-### Action Selection After Search
-
-After $K$ simulations (iterations of the four phases), select the action with the highest visit count from the root:
-
-$$a^* = \arg\max_a N(s_0, a)$$
-
-Visit counts are more robust than Q-values for final action selection because $N$ is less sensitive to outlier rollouts.
-
----
-
-## UCT Formula: Intuition
-
-The UCT formula balances two objectives:
-
-$$\underbrace{\bar{Q}(s, a)}_{\text{exploitation}} + \underbrace{c \sqrt{\frac{\ln N(s)}{N(s, a)}}}_{\text{exploration}}$$
-
-- **Exploitation term $\bar{Q}(s, a)$:** prefer actions with high estimated return.
-- **Exploration term:** the confidence interval width on $\bar{Q}(s, a)$. Actions visited rarely ($N(s,a)$ small relative to $N(s)$) get a large bonus — they could be better than they appear.
-
-The UCT bonus is derived from the UCB1 bandit algorithm applied to the tree. It provides a theoretical guarantee: the number of suboptimal action selections grows only logarithmically.
-
-**Choosing $c$:** $c = \sqrt{2}$ is the theoretical default (Kocsis & Szepesvári, 2006). In practice, $c$ is tuned per domain. Larger $c$ → more exploration, shorter but wider trees. Smaller $c$ → deeper exploitation of promising branches.
-
----
-
-## MCTS Diagram
-
-```
-            ROOT (s_0)
-           /    |    \
-          a1    a2    a3    ← Selection: UCT picks best unexplored leaf
-         /  \
-      s_11  s_12           ← Expansion: add new child node
-              |
-           [ROLLOUT]        ← Simulation: random play to terminal
-              |
-             G = 0.7        ← Backpropagation: update N, Q̄ on path to root
-
-After K iterations:
-  a* = argmax_a N(s_0, a)   ← Action with most visits wins
-```
-
----
-
-## Mermaid Diagram: MCTS Four Phases
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -346,13 +170,15 @@ flowchart TD
     BACK -->|"Repeat K times"| START
     BACK -->|"After K simulations"| ACT["Select a* = argmax N(s₀, a)"]
 
-    style SEL fill:#e8f4ff,stroke:#4A90D9
-    style EXP fill:#fff8e8,stroke:#D4A017
-    style SIM fill:#f0ffe8,stroke:#4A9D4A
-    style BACK fill:#ffe8f4,stroke:#D44A7A
+    class BACK cls_BACK
+    class SIM cls_SIM
+    class EXP cls_EXP
+    class SEL cls_SEL
+    classDef cls_BACK fill:#ffe8f4,stroke:#D44A7A
+    classDef cls_SIM fill:#f0ffe8,stroke:#4A9D4A
+    classDef cls_EXP fill:#fff8e8,stroke:#D4A017
+    classDef cls_SEL fill:#e8f4ff,stroke:#4A90D9
 ```
-
-</div>
 
 ---
 
@@ -522,6 +348,7 @@ def mcts_search(root_state, env_simulator, n_simulations: int, c: float = math.s
     return best_action
 ```
 
+</div>
 </div>
 
 ---

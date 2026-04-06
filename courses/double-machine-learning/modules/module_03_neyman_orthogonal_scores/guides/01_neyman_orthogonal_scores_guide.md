@@ -113,6 +113,7 @@ for nl in noise_levels:
 ```
 
 </div>
+</div>
 
 DML remains approximately unbiased even with substantial noise in the ML predictions. This is the orthogonality property at work — errors in $\hat{g}$ and $\hat{m}$ contribute only as a second-order product.
 
@@ -154,6 +155,7 @@ for nl in noise_levels:
           f"{dml_est - true_theta:<+12.3f} {naive_est - true_theta:<+12.3f}")
 ```
 
+</div>
 </div>
 
 The naive plug-in diverges as noise increases, while DML stays close to the true effect. The "double" residualisation is essential.

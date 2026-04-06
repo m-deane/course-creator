@@ -195,6 +195,7 @@ for t in range(1000):
 ```
 
 </div>
+</div>
 
 **Decaying ε variant:**
 
@@ -218,6 +219,7 @@ class DecayingEpsilonGreedy(EpsilonGreedyBandit):
         return super().select_action()
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -275,6 +277,7 @@ def select_action(self):
         return np.random.choice(max_actions)
 ```
 
+</div>
 </div>
 
 ### 5. Wrong Update Rule

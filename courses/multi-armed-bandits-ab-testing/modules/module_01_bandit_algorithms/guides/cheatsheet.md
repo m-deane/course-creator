@@ -45,6 +45,7 @@ epsilon_t = min(1.0, C / sqrt(t + 1))  # C ∈ [1, 10]
 ```
 
 </div>
+</div>
 
 **Optimal ε:** ε* ≈ (K/T)^(1/3) for T steps, K arms
 
@@ -72,6 +73,7 @@ N[a] += 1
 Q[a] += (reward - Q[a]) / N[a]
 ```
 
+</div>
 </div>
 
 **Standard constant:** c = √2
@@ -180,6 +182,7 @@ epsilon = 10 / sqrt(t + 1)
 epsilon = min(0.2, 100 / sqrt(t + 1))
 ```
 
+</div>
 </div>
 
 ### Exploration Constant (UCB1)

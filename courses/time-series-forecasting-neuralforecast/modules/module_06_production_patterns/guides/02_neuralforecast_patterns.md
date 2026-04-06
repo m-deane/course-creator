@@ -28,6 +28,7 @@ print(f"Device count: {torch.cuda.device_count()}")
 ```
 
 </div>
+</div>
 
 <div class="callout-key">
 
@@ -86,6 +87,7 @@ model = NHITS(
 ```
 
 </div>
+</div>
 
 ### 1b. DistributionLoss for Full Probabilistic Output
 
@@ -118,6 +120,7 @@ model_nb = NHITS(
 )
 ```
 
+</div>
 </div>
 
 **Choosing between MQLoss and DistributionLoss:**
@@ -182,6 +185,7 @@ model_cpu = NHITS(
 )
 ```
 
+</div>
 </div>
 
 ### 2b. Checkpointing During Training

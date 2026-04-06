@@ -167,6 +167,7 @@ for t in range(1000):
 ```
 
 </div>
+</div>
 
 **Sliding-Window UCB:**
 
@@ -214,6 +215,7 @@ class SlidingWindowUCB:
         self.history.append((arm, reward))
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -343,6 +345,7 @@ for date in trading_dates:
     allocate(commodity, capital)
 ```
 
+</div>
 </div>
 
 **Key insight:** Discount factor becomes a tunable parameter for regime sensitivity. Backtest with historical regime changes to calibrate.

@@ -130,6 +130,7 @@ person_id | year | wage | education | experience
 
 
 </div>
+</div>
 
 **Wide Format (Time Series View):**
 
@@ -148,6 +149,7 @@ person_id | wage_2019 | wage_2020 | wage_2021
 ```
 
 
+</div>
 </div>
 
 ### Memory Considerations
@@ -233,6 +235,7 @@ print(f"\nData preserved: {data_long_restored.shape == (N*T, 3)}")
 ```
 
 
+</div>
 </div>
 
 ### Multi-Index DataFrames

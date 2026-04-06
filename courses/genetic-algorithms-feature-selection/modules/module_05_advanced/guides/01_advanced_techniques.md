@@ -184,6 +184,7 @@ def run_nsga2(X, y, pop_size=100, n_generations=50):
 ```
 
 </div>
+</div>
 
 
 <div class="callout-insight">

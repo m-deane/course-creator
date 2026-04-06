@@ -243,6 +243,7 @@ class UCB1:
 ```
 
 </div>
+</div>
 
 **Usage:**
 
@@ -264,6 +265,7 @@ print(f"Final estimates: {ucb.q_estimates}")
 print(f"Pull counts: {ucb.action_counts}")
 ```
 
+</div>
 </div>
 
 **Variant: Different exploration constant:**
@@ -316,6 +318,7 @@ ucb = q + c * np.sqrt(np.log(counts) / counts)
 ucb = q + c * np.sqrt(np.log(t) / counts)
 ```
 
+</div>
 </div>
 
 **Why it matters:** The ln(t) term ensures the bonus grows (slowly) with total time, encouraging continuous exploration. Using ln(N(a)) would make the bonus shrink too fast.

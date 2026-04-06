@@ -189,6 +189,7 @@ print("Theoretical ACF for AR(1):", [phi**h for h in range(6)])
 ```
 
 </div>
+</div>
 
 ### Visualizing ACF
 
@@ -217,6 +218,7 @@ def plot_acf_pacf(y, lags=20, title=""):
 # Confidence bands at ±1.96/√T indicate significance at 5% level
 ```
 
+</div>
 </div>
 
 ---
@@ -306,6 +308,7 @@ y_ar2 = simulate_ar(phi, T=200, seed=42)
 ```
 
 </div>
+</div>
 
 ### Estimation
 
@@ -368,6 +371,7 @@ print(f"Selected lag order: {ar_results['best_lag']}")
 print(f"Estimated coefficients: {ar_results['best_model'].params}")
 ```
 
+</div>
 </div>
 
 ---
@@ -444,6 +448,7 @@ print(f"Selected lag order: {var_results.k_ar}")
 print(f"Estimated Phi:\n{var_results.coefs[0].round(3)}")
 ```
 
+</div>
 </div>
 
 ---

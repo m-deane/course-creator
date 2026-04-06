@@ -389,6 +389,7 @@ arm_stds = [5, 2]
 ```
 
 </div>
+</div>
 
 **Expected behavior:**
 - Risk-neutral: Prefers arm 0 (mean = 10)

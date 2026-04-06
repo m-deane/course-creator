@@ -134,6 +134,7 @@ df, cre_model = demonstrate_cre()
 
 
 </div>
+</div>
 
 ## Why CRE Works
 
@@ -231,6 +232,7 @@ visualize_cre_mechanics(df)
 
 
 </div>
+</div>
 
 ## Implementation Options
 
@@ -277,6 +279,7 @@ print(cre_ols_model.summary().tables[1])
 ```
 
 
+</div>
 </div>
 
 ### 2. Mixed Effects (Random Intercepts)

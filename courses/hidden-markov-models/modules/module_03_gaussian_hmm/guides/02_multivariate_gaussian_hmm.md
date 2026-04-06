@@ -176,6 +176,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ## Covariance Structures
 
@@ -277,6 +278,7 @@ def count_parameters(n_states, n_features, cov_type):
 compare_covariance_types()
 ```
 
+</div>
 </div>
 
 ## Using hmmlearn for Multivariate Data
@@ -398,6 +400,7 @@ model, obs, true_states = fit_multivariate_hmm_hmmlearn()
 ```
 
 </div>
+</div>
 
 ## Feature Engineering for HMMs
 
@@ -459,6 +462,7 @@ print(f"  Means: {features.mean(axis=0).round(4)}")
 print(f"  Stds:  {features.std(axis=0).round(4)}")
 ```
 
+</div>
 </div>
 
 ## Model Selection for Multivariate HMMs
@@ -522,6 +526,7 @@ import pandas as pd
 selection_results = select_multivariate_hmm(obs, max_states=4)
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

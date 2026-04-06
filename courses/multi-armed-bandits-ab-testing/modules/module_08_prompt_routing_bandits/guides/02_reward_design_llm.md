@@ -156,6 +156,7 @@ def task_completion_score(query, response):
 ```
 
 </div>
+</div>
 
 ### Metric 2: Extraction Accuracy
 **Question:** Did it correctly parse the data from the source document?
@@ -192,6 +193,7 @@ def extraction_accuracy(response, ground_truth):
         return 0.0  # Not even valid JSON
 ```
 
+</div>
 </div>
 
 ### Metric 3: Signal Quality
@@ -238,6 +240,7 @@ def signal_quality(response, actual_price_change):
     return max(reward, 0.0)
 ```
 
+</div>
 </div>
 
 ### Metric 4: Research Completeness

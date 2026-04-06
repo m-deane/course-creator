@@ -218,6 +218,7 @@ print("\nImplied covariance:\n", cov_implied.round(2))
 ```
 
 </div>
+</div>
 
 ---
 

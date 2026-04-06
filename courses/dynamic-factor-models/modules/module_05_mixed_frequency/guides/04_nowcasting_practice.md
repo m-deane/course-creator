@@ -200,6 +200,7 @@ print(f"  Latest GDP: {gdp_available.index[-1]} (value: {gdp_available.iloc[-1]:
 ```
 
 </div>
+</div>
 
 ---
 
@@ -363,6 +364,7 @@ print(f"\nMonthly data shape: {aligned['monthly'].shape}")
 print(f"Quarterly data shape: {aligned['quarterly'].shape}")
 ```
 
+</div>
 </div>
 
 ---
@@ -590,6 +592,7 @@ else:
 ```
 
 </div>
+</div>
 
 ---
 
@@ -721,6 +724,7 @@ plt.savefig('nowcast_evolution.png', dpi=150)
 print("Nowcast evolution plot saved to nowcast_evolution.png")
 ```
 
+</div>
 </div>
 
 ---
@@ -956,6 +960,7 @@ plt.savefig('backtest_results.png', dpi=150)
 print("\nBacktest results saved to backtest_results.png")
 ```
 
+</div>
 </div>
 
 ---

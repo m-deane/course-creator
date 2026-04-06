@@ -177,6 +177,7 @@ smoothed_probs = results.smoothed_marginal_probabilities
 ```
 
 </div>
+</div>
 
 ### Regime-Dependent Forecasting
 
@@ -233,6 +234,7 @@ def regime_forecast(
     return forecasts
 ```
 
+</div>
 </div>
 
 ## Hierarchical HMM
@@ -321,6 +323,7 @@ class HierarchicalHMM:
 ```
 
 </div>
+</div>
 
 ## Input-Output HMM
 
@@ -360,6 +363,7 @@ class InputOutputHMM:
         return stats.norm.pdf(observation, mean, std)
 ```
 
+</div>
 </div>
 
 ## Duration-Dependent HMM
@@ -408,6 +412,7 @@ class ExplicitDurationHMM:
         return np.dot(durations, self.duration_probs[state])
 ```
 
+</div>
 </div>
 
 ## Comparison of HMM Variants

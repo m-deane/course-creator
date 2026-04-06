@@ -210,6 +210,7 @@ for t in range(1000):
 ```
 
 </div>
+</div>
 
 **Advanced: Discounted Restless Bandit**
 
@@ -261,6 +262,7 @@ class DiscountedRestlessBandit:
         self.last_observed[arm] = self.t
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -397,6 +399,7 @@ for day in trading_days:
     # force us to check back.
 ```
 
+</div>
 </div>
 
 **Key insight:** The recency penalty `λ=0.02` means that after ~50 days without observing a commodity, the staleness penalty (0.02 × 50 = 1.0) becomes very large, forcing re-observation even if it was historically bad. This prevents the "ignore and forget" problem where an improving commodity is never reconsidered.

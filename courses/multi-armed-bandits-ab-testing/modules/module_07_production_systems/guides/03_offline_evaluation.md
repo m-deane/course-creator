@@ -218,6 +218,7 @@ class OfflineEvaluator:
 ```
 
 </div>
+</div>
 
 **Commodity Application:**
 
@@ -266,6 +267,7 @@ dr_value = evaluator.doubly_robust_estimate(new_policy, reward_model)
 print(f"DR estimate: {dr_value:.4f}")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -350,6 +352,7 @@ If new policy is very different from old policy, replay method discards most dat
        return total / len(data)
    ```
 
+</div>
 </div>
    Fix it to correctly implement IPS.
 

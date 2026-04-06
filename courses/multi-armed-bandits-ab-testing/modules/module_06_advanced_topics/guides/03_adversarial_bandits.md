@@ -235,6 +235,7 @@ for t in range(1000):
 ```
 
 </div>
+</div>
 
 **EXP3 with Bounded Rewards:**
 
@@ -258,6 +259,7 @@ normalized_reward = normalize_reward(reward, r_min, r_max)
 bandit.update(arm, normalized_reward)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls
@@ -417,6 +419,7 @@ for t in range(1000):
     # can't specifically widen spreads against you
 ```
 
+</div>
 </div>
 
 **Result:** Randomization prevents market makers from learning your pattern. They must quote competitive spreads on all exchanges, not just the ones you're likely to avoid.

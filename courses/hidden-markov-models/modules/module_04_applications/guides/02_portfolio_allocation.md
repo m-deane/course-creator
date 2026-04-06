@@ -257,6 +257,7 @@ for r in range(2):
 ```
 
 </div>
+</div>
 
 ## Dynamic Allocation Strategy
 
@@ -401,6 +402,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ## Risk Management with Regimes
 
@@ -543,6 +545,7 @@ scale = risk_manager.position_sizing(test_weights, max_var=0.02)
 print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

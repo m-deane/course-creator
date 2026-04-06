@@ -390,6 +390,7 @@ print(f"  At t=150 (post-break): {model.get_loadings(150)[0, 0]:.3f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -621,6 +622,7 @@ if len(regimes) >= 2:
     print(f"  Change: {regimes[1][0, 0] - regimes[0][0, 0]:.3f}")
 ```
 
+</div>
 </div>
 
 ---

@@ -345,6 +345,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -410,6 +411,7 @@ y_sim[100:110, [5, 7]] = np.nan  # Variables 5 and 7 missing
 # Kalman filter will skip these observations in the update step
 ```
 
+</div>
 </div>
 
 ---
@@ -624,6 +626,7 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
    ```
 
 </div>
+</div>
 
 8. **Simulate and Reconstruct**
 
@@ -643,6 +646,7 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
    ```
 
 </div>
+</div>
 
 9. **Missing Data Handling**
 
@@ -660,6 +664,7 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
    # 4. Compare to listwise deletion approach
    ```
 
+</div>
 </div>
 
 ### Extension

@@ -225,6 +225,7 @@ sentiment, and create a SharePoint list item with the results
 ```
 
 </div>
+</div>
 
 > **On screen:** Copilot generates a flow with: Outlook trigger, a placeholder for invoice processing, a placeholder for sentiment analysis, and a SharePoint create item action. It will likely not include all three AI Builder steps correctly — use this as a starting point and add the AI Builder actions manually.
 
@@ -282,6 +283,7 @@ under 100 words. Do not include a subject line.
 ```
 
 </div>
+</div>
 
 > **On screen:** When you click the "Vendor Name" field reference in your prompt, use the expression editor to reference the invoice extraction output. The output field name is typically `vendorName` — find it in dynamic content under the invoice extraction action.
 
@@ -334,6 +336,7 @@ with the attachment name and the error message instead of failing the flow
 ```
 
 </div>
+</div>
 
 
 <span class="filename">example.py</span>
@@ -348,6 +351,7 @@ Change the SharePoint list to also record the email subject line and the
 date the email was received
 ```
 
+</div>
 </div>
 
 You can also add conditional logic using natural language:

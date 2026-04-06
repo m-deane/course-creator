@@ -202,6 +202,7 @@ print(f"Best score: {best_score:.4f}")
 ```
 
 </div>
+</div>
 
 
 ### Time Series Feature Selection Problem
@@ -259,6 +260,7 @@ print(f"Need intelligent search strategy!")
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -305,6 +307,7 @@ for train_idx, test_idx in tscv.split(X):
     scores.append(score)
 ```
 
+</div>
 </div>
 
 ### Pitfall 2: Ignoring Feature Redundancy

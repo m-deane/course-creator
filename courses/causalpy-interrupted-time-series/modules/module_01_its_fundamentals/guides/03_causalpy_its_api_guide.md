@@ -41,6 +41,7 @@ import matplotlib.pyplot as plt
 ```
 
 </div>
+</div>
 
 ### Package Version Check
 
@@ -58,6 +59,7 @@ print(f"PyMC: {pm.__version__}")
 print(f"ArviZ: {az.__version__}")
 ```
 
+</div>
 </div>
 
 ---
@@ -137,6 +139,7 @@ def prepare_its_dataframe(
 ```
 
 </div>
+</div>
 
 ---
 
@@ -161,6 +164,7 @@ cp.InterruptedTimeSeries(
 )
 ```
 
+</div>
 </div>
 
 ### Formula Specification
@@ -196,6 +200,7 @@ formula = "y ~ 1 + t + treated + t_post + covariate_name"
 ```
 
 </div>
+</div>
 
 **Important:** Every variable named in the formula must exist as a column in `data`.
 
@@ -230,6 +235,7 @@ model = cp.pymc_models.LinearRegression(
 )
 ```
 
+</div>
 </div>
 
 ### Sampling Parameter Guidelines
@@ -279,6 +285,7 @@ result = cp.InterruptedTimeSeries(
 ```
 
 </div>
+</div>
 
 CausalPy will:
 1. Build the design matrix from the formula
@@ -315,6 +322,7 @@ print(summary)
 ```
 
 </div>
+</div>
 
 ### Raw Posterior Samples
 
@@ -341,6 +349,7 @@ beta_slope_samples = posterior["t_post"].values.flatten()
 ```
 
 </div>
+</div>
 
 ### Counterfactual Prediction
 
@@ -361,6 +370,7 @@ if "mu_cf" in result.idata.posterior:
     counterfactual_mean = result.idata.posterior["mu_cf"].mean(("chain", "draw"))
 ```
 
+</div>
 </div>
 
 ---
@@ -390,6 +400,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 The two-panel plot shows:
@@ -437,6 +448,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -474,6 +486,7 @@ if n_divergences > 10:
     print("WARNING: High divergences. Consider increasing target_accept or reparameterizing.")
 ```
 
+</div>
 </div>
 
 ---
@@ -540,6 +553,7 @@ def compute_cumulative_impact(
 ```
 
 </div>
+</div>
 
 ---
 
@@ -589,6 +603,7 @@ class InformativeITSModel(cp.pymc_models.LinearRegression):
             y_hat = pm.Normal("y_hat", mu=mu, sigma=sigma, observed=y_, dims=["obs"])
 ```
 
+</div>
 </div>
 
 ---
@@ -646,6 +661,7 @@ print(f"\nLevel change: {level_change.mean():.2f} (94% HDI: {az.hdi(level_change
 print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 ```
 
+</div>
 </div>
 
 ---

@@ -112,6 +112,7 @@ print(f"Cost: ${test_result['cost']:.4f}")
 ```
 
 </div>
+</div>
 
 ### Creating Prompts in Code (Alternative to GUI)
 
@@ -197,6 +198,7 @@ Format as structured markdown.''',
 ```
 
 </div>
+</div>
 
 ### Adding Test Cases
 
@@ -272,6 +274,7 @@ well above the five-year average of 72% for this time of year.'''
 ```
 
 </div>
+</div>
 
 ### Running All Tests
 
@@ -327,6 +330,7 @@ test_results = run_all_tests(analyzer_studio)
 print(test_results)
 ```
 
+</div>
 </div>
 
 ### Version Management
@@ -432,6 +436,7 @@ print(f"Cost difference: ${comparison['cost_diff']:.4f}")
 ```
 
 </div>
+</div>
 
 ### Deploying to Production
 
@@ -504,6 +509,7 @@ deployment = deploy_to_recipe(
 print(f"Deployed to recipe: {deployment['recipe_name']}")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

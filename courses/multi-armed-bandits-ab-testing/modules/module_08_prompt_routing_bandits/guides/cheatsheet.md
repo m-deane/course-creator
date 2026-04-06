@@ -114,6 +114,7 @@ def commodity_llm_reward(query, response, docs, ground_truth=None):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -162,6 +163,7 @@ context = [
 ```
 
 </div>
+</div>
 
 ---
 
@@ -200,6 +202,7 @@ class PromptRouter:
             self.beta[idx] += 1
 ```
 
+</div>
 </div>
 
 ### LinUCB (With Context)

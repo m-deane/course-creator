@@ -127,6 +127,7 @@ print(result.text)
 ```
 
 </div>
+</div>
 
 ### Advanced Variable Types
 
@@ -215,6 +216,7 @@ result = studio.complete(
 ```
 
 </div>
+</div>
 
 ### Conditional Variables
 
@@ -295,6 +297,7 @@ full_result = studio.complete(
 )
 ```
 
+</div>
 </div>
 
 ### Looping Over Lists
@@ -380,6 +383,7 @@ result = studio.complete(
 )
 ```
 
+</div>
 </div>
 
 ### Variable Validation and Preprocessing
@@ -501,6 +505,7 @@ except ValueError as e:
 ```
 
 </div>
+</div>
 
 ### Batch Processing with Variables
 
@@ -603,6 +608,7 @@ results = batch_process_with_variables(
 print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

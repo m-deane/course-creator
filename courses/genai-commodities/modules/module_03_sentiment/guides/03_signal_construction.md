@@ -432,6 +432,7 @@ class SignalConstructor:
 ```
 
 </div>
+</div>
 
 ### Signal Validation and Backtesting
 
@@ -564,6 +565,7 @@ class SignalValidator:
 ```
 
 </div>
+</div>
 
 ### Signal Portfolio Management
 
@@ -660,6 +662,7 @@ class SignalPortfolio:
         }
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

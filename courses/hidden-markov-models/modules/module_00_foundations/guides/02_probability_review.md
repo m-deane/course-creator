@@ -238,6 +238,7 @@ print(f"  P(Bull | -return) = {regime_model.posterior_bull_given_negative():.2%}
 ```
 
 </div>
+</div>
 
 ### Discrete Probability Distributions
 
@@ -304,6 +305,7 @@ print(f"  Sample sequence: {samples}")
 ```
 
 </div>
+</div>
 
 ### Continuous Distributions
 
@@ -369,6 +371,7 @@ print(f"P(return > 0 | Bear) = {1 - bear_returns.cdf(0):.2%}")
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -419,6 +422,7 @@ print(f"Direct product: {np.prod(probs)}")
 print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 ```
 
+</div>
 </div>
 
 ## Connections

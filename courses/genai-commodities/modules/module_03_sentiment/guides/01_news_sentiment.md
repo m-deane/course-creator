@@ -299,6 +299,7 @@ Return JSON:
 ```
 
 </div>
+</div>
 
 ## Building Sentiment Signals
 
@@ -362,6 +363,7 @@ def combine_with_price_momentum(
 ```
 
 </div>
+</div>
 
 ### Backtesting Framework
 
@@ -409,6 +411,7 @@ def backtest_sentiment_strategy(
 ```
 
 </div>
+</div>
 
 ## Handling Noise and False Signals
 
@@ -443,6 +446,7 @@ def confidence_weighted_sentiment(
     return weighted_sum / total_weight if total_weight > 0 else 0.0
 ```
 
+</div>
 </div>
 
 ### Source Quality Weighting
@@ -494,6 +498,7 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
     return weighted_sum / total_weight if total_weight > 0 else 0.0
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

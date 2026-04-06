@@ -532,6 +532,7 @@ for i in range(r):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -597,6 +598,7 @@ y_missing[100:110, [5, 7]] = np.nan  # Variables 5, 7 missing
 result_missing = kalman_filter(y_missing, Z, H, T, R, Q, a1, P1)
 ```
 
+</div>
 </div>
 
 ### Forecasting
@@ -682,6 +684,7 @@ print(f"Forecasted observations: {y_fc.shape}")
 print(f"Forecasted factors: {alpha_fc.shape}")
 ```
 
+</div>
 </div>
 
 ---
@@ -811,6 +814,7 @@ print(f"Forecasted factors: {alpha_fc.shape}")
    ```
 
 </div>
+</div>
 
 9. **Missing Data Experiment**
 
@@ -830,6 +834,7 @@ print(f"Forecasted factors: {alpha_fc.shape}")
    # Which produces best factor estimates (MSE vs true)?
    ```
 
+</div>
 </div>
 
 ### Extension

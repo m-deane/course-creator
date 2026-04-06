@@ -72,159 +72,6 @@ Not all hyperparameters are equally important. Tune in this order:
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-import torch
-import torch.optim as optim
-
-# Adam with recommended default — good starting point
-optimizer = optim.Adam(q_net.parameters(), lr=1e-4)
-
-# If training is unstable: reduce learning rate
-optimizer = optim.Adam(q_net.parameters(), lr=2.5e-5)
-
-# If using RMSProp (original Mnih 2015 paper):
-optimizer = optim.RMSprop(
-    q_net.parameters(),
-    lr=2.5e-4,
-    alpha=0.95,       # gradient squared decay
-    eps=0.01,         # numerical stability
-    momentum=0.0,
-)
-
-# Learning rate schedule — reduce after the exploration phase
-scheduler = optim.lr_scheduler.StepLR(
-    optimizer, step_size=500_000, gamma=0.5
-)
-```
-
-</div>
-
-### Discount Factor Selection
-
-The discount factor $\gamma$ determines the effective planning horizon:
-
-$$T_{\text{effective}} \approx \frac{1}{1 - \gamma}$$
-
-| $\gamma$ | Effective horizon | Use case |
-|----------|------------------|----------|
-| $0.9$ | 10 steps | Very short episodes, immediate-reward tasks |
-| $0.95$ | 20 steps | Standard short-horizon tasks |
-| $0.99$ | 100 steps | Default; most Atari and MuJoCo tasks |
-| $0.999$ | 1000 steps | Long-horizon planning tasks |
-
-Setting $\gamma$ too high for short episodes causes value estimates to become noise-dominated. Setting it too low causes the agent to be myopic.
-
----
-
-## Debugging Deep RL
-
-### The Four Diagnostic Metrics
-
-Log these four metrics from training step one:
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-class TrainingLogger:
-    """
-    Tracks the four most diagnostically useful metrics in deep RL training.
-
-    Episode return tracks policy quality.
-    Mean Q-value detects overestimation or collapse.
-    Gradient norm detects instability.
-    TD loss tracks learning progress.
-    """
-
-    def __init__(self):
-        self.episode_returns = []
-        self.mean_q_values = []
-        self.gradient_norms = []
-        self.td_losses = []
-        self.epsilons = []
-
-    def log_episode(self, episode_return: float, epsilon: float):
-        self.episode_returns.append(episode_return)
-        self.epsilons.append(epsilon)
-
-    def log_update(
-        self,
-        loss: float,
-        q_values: torch.Tensor,
-        model_parameters,
-    ):
-        self.td_losses.append(loss)
-        self.mean_q_values.append(q_values.mean().item())
-
-        # Compute gradient L2 norm across all parameters
-        total_norm = 0.0
-        for p in model_parameters:
-            if p.grad is not None:
-                total_norm += p.grad.detach().norm(2).item() ** 2
-        self.gradient_norms.append(total_norm ** 0.5)
-
-    def plot_diagnostics(self):
-        import matplotlib.pyplot as plt
-
-        fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-
-        axes[0, 0].plot(self._smooth(self.episode_returns))
-        axes[0, 0].set_title("Episode Return (smoothed)")
-        axes[0, 0].set_xlabel("Episode")
-
-        axes[0, 1].plot(self.mean_q_values)
-        axes[0, 1].set_title("Mean Q-Value")
-        axes[0, 1].set_xlabel("Update step")
-
-        axes[1, 0].plot(self.gradient_norms)
-        axes[1, 0].set_title("Gradient L2 Norm")
-        axes[1, 0].set_xlabel("Update step")
-        axes[1, 0].set_yscale("log")
-
-        axes[1, 1].plot(self.td_losses)
-        axes[1, 1].set_title("TD Loss")
-        axes[1, 1].set_xlabel("Update step")
-        axes[1, 1].set_yscale("log")
-
-        plt.tight_layout()
-        return fig
-
-    @staticmethod
-    def _smooth(values, window=50):
-        if len(values) < window:
-            return values
-        kernel = [1.0 / window] * window
-        return [
-            sum(values[max(0, i - window):i]) / min(i, window)
-            for i in range(1, len(values) + 1)
-        ]
-```
-
-</div>
-
-### Failure Mode Diagnosis
-
-Use the four diagnostics to identify which failure mode is active:
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -250,14 +97,17 @@ flowchart TD
     Q4 -->|Yes| D4
     Q4 -->|No| D5
 
-    style D1 fill:#F44336,color:#fff
-    style D2 fill:#E8844A,color:#fff
-    style D3 fill:#FFC107
-    style D4 fill:#4A90D9,color:#fff
-    style D5 fill:#4CAF50,color:#fff
+    class D5 cls_D5
+    class D4 cls_D4
+    class D3 cls_D3
+    class D2 cls_D2
+    class D1 cls_D1
+    classDef cls_D5 fill:#4CAF50,color:#fff
+    classDef cls_D4 fill:#4A90D9,color:#fff
+    classDef cls_D3 fill:#FFC107
+    classDef cls_D2 fill:#E8844A,color:#fff
+    classDef cls_D1 fill:#F44336,color:#fff
 ```
-
-</div>
 
 ### Common Failure Modes and Solutions
 
@@ -291,6 +141,7 @@ optimizer = optim.Adam(q_net.parameters(), lr=1e-5)
 nn.utils.clip_grad_norm_(q_net.parameters(), max_norm=10.0)
 ```
 
+</div>
 </div>
 
 **Failure Mode 2 — No improvement after many episodes**

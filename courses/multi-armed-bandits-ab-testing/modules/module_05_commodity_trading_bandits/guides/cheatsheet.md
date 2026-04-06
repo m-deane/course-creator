@@ -126,6 +126,7 @@ sector_mapping = {
 ```
 
 </div>
+</div>
 
 ### Granular Commodities (8-10 arms)
 
@@ -149,6 +150,7 @@ arms = [
 ]
 ```
 
+</div>
 </div>
 
 ### Strategy Factors (4-6 arms)
@@ -197,6 +199,7 @@ seasonal = seasonal_patterns[commodity][date.month]
 inv_pct = percentileofscore(historical_inv, current_inv)
 ```
 
+</div>
 </div>
 
 ### Simple Regime Classifier

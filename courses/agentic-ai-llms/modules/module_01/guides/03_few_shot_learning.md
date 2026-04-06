@@ -394,7 +394,7 @@ Action Items:"""
 
 ### Code Generation
 
-```python
+````python
 code_examples = """Generate Python functions from descriptions:
 
 Description: Check if a number is prime
@@ -419,7 +419,7 @@ def reverse_string(s: str) -> str:
 
 Description: {function_description}
 ```python"""
-```
+````
 
 ---
 

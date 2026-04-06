@@ -164,6 +164,7 @@ print(quarterly_unemp_avg.head())
 ```
 
 </div>
+</div>
 
 ---
 
@@ -283,6 +284,7 @@ print(f"Q1 flow (sum of 1,2,3): {quarterly_flow[0]}")
 print(f"Q1 stock (value at 3): {quarterly_stock[0]}")
 ```
 
+</div>
 </div>
 
 ---
@@ -421,6 +423,7 @@ print(f"High-freq loadings shape: {loadings['high_freq'].shape}")
 print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 ```
 
+</div>
 </div>
 
 ---

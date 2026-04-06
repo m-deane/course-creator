@@ -223,6 +223,7 @@ for i, arm in enumerate(arms):
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -322,6 +323,7 @@ def should_retire(arm_idx, avg_rewards, pulls, week):
 # should_retire(3, avg_rewards, pulls, 12) → True
 ```
 
+</div>
 </div>
 
 **Self-check:** Did you verify minimum pulls before retiring? (Don't retire arms you haven't given a fair shot.)

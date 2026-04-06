@@ -166,6 +166,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ### Properties
 
@@ -240,6 +241,7 @@ def almon_weights(n_lags, theta1, theta2):
     return raw / total
 ```
 
+</div>
 </div>
 
 ### Almon vs. Beta: Comparison
@@ -317,6 +319,7 @@ def step_weights(n_lags, deltas, group_size=None):
     return weights
 ```
 
+</div>
 </div>
 
 ### When to Use Step Functions

@@ -144,6 +144,7 @@ def get_vintage_data(series_id, vintage_date, start='2000-01-01'):
 ```
 
 </div>
+</div>
 
 ### 3.2 Ragged Edges
 
@@ -229,6 +230,7 @@ def handle_ragged_edge(df, target_date, method='last'):
 ```
 
 </div>
+</div>
 
 ### 3.3 Publication Lags
 
@@ -272,6 +274,7 @@ NOWCAST_VARIABLES = {
 }
 ```
 
+</div>
 </div>
 
 For each quarterly observation, construct the MIDAS design matrix by stacking monthly lags.

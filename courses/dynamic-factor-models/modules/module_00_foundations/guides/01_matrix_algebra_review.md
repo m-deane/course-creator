@@ -99,6 +99,7 @@ print(f"Trace of cov matrix: {np.trace(cov_matrix):.4f}")
 ```
 
 </div>
+</div>
 
 ### Why This Matters for Factor Models
 
@@ -195,6 +196,7 @@ print(f"Reconstruction error (rank-2): {reconstruction_error:.4f}")
 ```
 
 </div>
+</div>
 
 ### Why SVD for Factor Models?
 
@@ -274,6 +276,7 @@ is_pd, min_eig = check_positive_definite(A)
 print(f"Is PD: {is_pd}, min eigenvalue: {min_eig:.4f}")
 ```
 
+</div>
 </div>
 
 ---

@@ -142,6 +142,7 @@ connection_config = {
 ```
 
 </div>
+</div>
 
 ### OpenAI Setup
 
@@ -193,6 +194,7 @@ connection_config = {
 }
 ```
 
+</div>
 </div>
 
 ### Azure OpenAI Setup
@@ -249,6 +251,7 @@ connection_config = {
 ```
 
 </div>
+</div>
 
 ### Using Configured Connections
 
@@ -303,6 +306,7 @@ result = generate_with_fallback("Summarize this report: ...")
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -324,6 +328,7 @@ client = anthropic.Anthropic(api_key="sk-ant-api03-...")  # Exposed!
 ```
 
 </div>
+</div>
 
 **Solution:**
 
@@ -340,6 +345,7 @@ from dataiku.llm import LLM
 llm = LLM("claude-production")  # API key in secure storage
 ```
 
+</div>
 </div>
 
 ### 2. Incorrect Azure Deployment Names
@@ -363,6 +369,7 @@ response = llm.complete(
 ```
 
 </div>
+</div>
 
 **Solution:**
 
@@ -383,6 +390,7 @@ response = llm.complete(
 ```
 
 </div>
+</div>
 
 ### 3. Ignoring Provider-Specific Limits
 
@@ -401,6 +409,7 @@ for i in range(1000):
     llm.complete("...")  # May hit limits quickly
 ```
 
+</div>
 </div>
 
 **Solution:**
@@ -430,6 +439,7 @@ for i in range(1000):
 ```
 
 </div>
+</div>
 
 ### 4. Not Testing Connections
 
@@ -448,6 +458,7 @@ llm = LLM("new-connection")
 # Hope it works in production!
 ```
 
+</div>
 </div>
 
 **Solution:**
@@ -492,6 +503,7 @@ for conn in ["claude-production", "openai-gpt4", "azure-openai-prod"]:
 ```
 
 </div>
+</div>
 
 ### 5. Mixed Provider Assumptions
 
@@ -513,6 +525,7 @@ response = llm.complete(
 )
 ```
 
+</div>
 </div>
 
 **Solution:**
@@ -539,6 +552,7 @@ elif provider == "openai":
     response = llm.complete(prompt, user="user123")  # OpenAI format
 ```
 
+</div>
 </div>
 
 ## Connections to Other Topics
@@ -671,6 +685,7 @@ connection_name = get_appropriate_connection()
 llm = LLM(connection_name)
 ```
 
+</div>
 </div>
 </details>
 
@@ -808,6 +823,7 @@ response = router.generate_with_failover(
 )
 ```
 
+</div>
 </div>
 </details>
 

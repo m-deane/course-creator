@@ -123,6 +123,7 @@ configure_connection_access(
 ```
 
 </div>
+</div>
 
 ### Project-Level Quotas
 
@@ -180,6 +181,7 @@ set_project_llm_quota(
 )
 ```
 
+</div>
 </div>
 
 ### Cost Tracking and Reporting
@@ -270,6 +272,7 @@ print(user_usage.head(10))
 ```
 
 </div>
+</div>
 
 ### Audit Logging
 
@@ -343,6 +346,7 @@ error_logs = [log for log in recent_errors if log['status'] != 'success']
 print(f"Errors in last 24h: {len(error_logs)}")
 ```
 
+</div>
 </div>
 
 ### Rate Limiting Implementation
@@ -449,6 +453,7 @@ for prompt in batch_prompts:
         time.sleep(60)  # Wait before retrying
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

@@ -581,6 +581,7 @@ class FAVAR:
 ```
 
 </div>
+</div>
 
 ### Example: Monetary Policy Analysis
 
@@ -671,6 +672,7 @@ print(f"Total variance explained: {var_exp.sum():.3f}")
 print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 ```
 
+</div>
 </div>
 
 ---

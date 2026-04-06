@@ -208,6 +208,7 @@ print(psi)
 ```
 
 </div>
+</div>
 
 ## Log-Space Implementation
 
@@ -268,6 +269,7 @@ print(f"Log prob:  {log_prob:.4f}")
 print(f"Prob:      {np.exp(log_prob):.6e}")
 ```
 
+</div>
 </div>
 
 ## Gaussian HMM Viterbi
@@ -397,6 +399,7 @@ print(f"\nDecoding accuracy: {accuracy:.1%}")
 ```
 
 </div>
+</div>
 
 ## Viterbi vs Forward-Backward
 
@@ -477,6 +480,7 @@ gamma, viterbi, marginal = compare_viterbi_forward_backward(
 )
 ```
 
+</div>
 </div>
 
 ## Applications in Finance
@@ -567,6 +571,7 @@ def regime_detection_with_viterbi():
 regime_detection_with_viterbi()
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

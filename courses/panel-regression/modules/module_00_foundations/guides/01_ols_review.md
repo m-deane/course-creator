@@ -232,6 +232,7 @@ if __name__ == "__main__":
 
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -342,6 +343,7 @@ print("P and M are orthogonal:", np.allclose(P @ M, np.zeros((n, n))))
 ```
 
 
+</div>
 </div>
 </details>
 

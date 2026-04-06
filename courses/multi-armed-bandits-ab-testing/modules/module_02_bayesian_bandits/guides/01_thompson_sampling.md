@@ -158,6 +158,7 @@ for t in range(1000):
 ```
 
 </div>
+</div>
 
 **That's it.** 15 lines for a state-of-the-art bandit algorithm.
 

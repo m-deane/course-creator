@@ -111,6 +111,7 @@ print(f"  (True effect ≈ 0.80)")
 
 
 </div>
+</div>
 
 ## The Two-Way Transformation
 
@@ -177,6 +178,7 @@ print(f"  Investment coefficient: {manual_twfe.params['investment_dd']:.4f}")
 
 
 </div>
+</div>
 
 ## Visualizing Time Effects
 
@@ -230,6 +232,7 @@ plot_time_effects(fe_twoway, range(2010, 2025))
 ```
 
 
+</div>
 </div>
 
 ## When to Use Two-Way FE

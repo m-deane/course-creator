@@ -87,6 +87,7 @@ Workbook: Q4_Sales_Report.xlsx
 ```
 
 </div>
+</div>
 
 If your workbook does not have a Table, open it in Excel, select the data range including headers, and press **Ctrl+T** (or go to Insert → Table).
 
@@ -136,6 +137,7 @@ The following implementation builds on the approach above:
 ```
 
 </div>
+</div>
 
 **Advanced options:**
 
@@ -183,6 +185,7 @@ The following implementation builds on the approach above:
 ```
 
 </div>
+</div>
 
 <div class="callout-warning">
 
@@ -218,6 +221,7 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 └─────────────────────────────────────────────────────────────┘
 ```
 
+</div>
 </div>
 
 The `@row.index` token is available in the dynamic content from **List rows present in a table**. It is the row's position in the table, starting at 0.

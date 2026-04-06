@@ -169,10 +169,6 @@ Return V (approximately V^pi)
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -186,12 +182,13 @@ flowchart TD
     More -->|"No"| Check{"delta < theta?"}
     Check -->|"No"| Sweep
     Check -->|"Yes"| Done["Return V ≈ V^pi"]
-    style Init fill:#27ae60,color:#fff
-    style Done fill:#4a90d9,color:#fff
-    style Update fill:#e67e22,color:#fff
+    class Update cls_Update
+    class Done cls_Done
+    class Init cls_Init
+    classDef cls_Update fill:#e67e22,color:#fff
+    classDef cls_Done fill:#4a90d9,color:#fff
+    classDef cls_Init fill:#27ae60,color:#fff
 ```
-
-</div>
 
 ---
 
@@ -289,6 +286,7 @@ print("V^pi:", V_pi.round(3))
 # Expected: values decrease toward terminal state
 ```
 
+</div>
 </div>
 
 ---

@@ -266,6 +266,7 @@ comp_gauss = compare_distributions(data_gauss, "Gaussian Data")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -593,6 +594,7 @@ print(f"PCA: {Lambda_pca[0]}")
 print(f"Student-t: {t_model.Lambda[0]}")
 ```
 
+</div>
 </div>
 
 ---

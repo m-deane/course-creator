@@ -550,6 +550,7 @@ def all_agree(results: List[dict], tolerance: float = 0.01) -> bool:
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -579,6 +580,7 @@ def robust_table_extract(pdf_path: str) -> str:
 ```
 
 </div>
+</div>
 
 **2. Unit Confusion**
 - **Issue:** WASDE uses different units (bushels, metric tons, pounds)
@@ -600,6 +602,7 @@ UNIT_CONVERSIONS = {
 ```
 
 </div>
+</div>
 
 **3. Marketing Year Confusion**
 - **Issue:** Different commodities have different marketing year calendars
@@ -620,6 +623,7 @@ MARKETING_YEARS = {
 }
 ```
 
+</div>
 </div>
 
 **4. Revision Handling**
@@ -643,6 +647,7 @@ class WASDERevision:
     revision_direction: str  # 'upward' or 'downward'
 ```
 
+</div>
 </div>
 
 ## Connections

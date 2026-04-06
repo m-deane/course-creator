@@ -317,6 +317,7 @@ def identify_significant_lags(
 ```
 
 </div>
+</div>
 
 
 ### Multicollinearity Detection and Handling
@@ -443,6 +444,7 @@ def remove_redundant_lags(
     return X_reduced
 ```
 
+</div>
 </div>
 
 ## From ACF/PACF to GA Configuration
@@ -637,6 +639,7 @@ def lag_aware_mutation(
     return mutant
 ```
 
+</div>
 </div>
 
 ### Complete Example

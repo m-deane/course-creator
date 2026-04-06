@@ -282,6 +282,7 @@ print(f"True causal effect: 2.0")
 ```
 
 </div>
+</div>
 
 The naive model overstates the benefit of exercise because healthier people exercise more. The adjusted model recovers the true effect by controlling for baseline health — but only because we know from domain knowledge that baseline health is a confounder, not a mediator or collider.
 

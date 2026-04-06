@@ -73,6 +73,7 @@ print(baguettes.head(10))
 ```
 
 </div>
+</div>
 
 The following implementation builds on the approach above:
 
@@ -111,6 +112,7 @@ print("\nForecast columns:", forecast.columns.tolist())
 print(forecast)
 ```
 
+</div>
 </div>
 
 The output columns are:
@@ -183,6 +185,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 The fan chart looks informative. Each day has a plausible range. But there is a hidden problem.
 
@@ -225,6 +228,7 @@ print(f"Sum of daily point forecasts:  {weekly_point:.0f} baguettes")
 print(f"Naive 'buffer':                {weekly_80_naive - weekly_point:.0f} baguettes")
 ```
 
+</div>
 </div>
 
 This gives a specific number. It looks precise. It is wrong.

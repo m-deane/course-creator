@@ -135,6 +135,7 @@ df = demonstrate_re_assumption_violation()
 
 
 </div>
+</div>
 
 ### 2. Composite Error Structure
 
@@ -212,6 +213,7 @@ visualize_error_structure()
 ```
 
 
+</div>
 </div>
 
 ## GLS Estimation
@@ -293,6 +295,7 @@ compare_ols_gls_efficiency()
 ```
 
 
+</div>
 </div>
 
 ### The GLS Transformation

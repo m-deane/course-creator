@@ -314,6 +314,7 @@ for i in range(r):
 ```
 
 </div>
+</div>
 
 **Note:** PCA still provides reasonable factor estimates even ignoring dynamics, but dynamic methods (Kalman filter in next guide) will improve estimates by exploiting time-series structure.
 
@@ -398,6 +399,7 @@ print("\nCumulative responses at horizon 20:")
 print(cum_irf[-1])
 ```
 
+</div>
 </div>
 
 ---
@@ -520,6 +522,7 @@ print(cum_irf[-1])
    ```
 
 </div>
+</div>
 
 8. **VAR Estimation**
 
@@ -537,6 +540,7 @@ print(cum_irf[-1])
    # - Test residuals for autocorrelation
    ```
 
+</div>
 </div>
 
 9. **Model Comparison**
@@ -556,6 +560,7 @@ print(cum_irf[-1])
    # - Forecasting performance?
    ```
 
+</div>
 </div>
 
 ### Extension

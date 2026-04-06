@@ -195,6 +195,7 @@ for i, rate in enumerate(true_rates):
 ```
 
 </div>
+</div>
 
 **Output example:**
 ```

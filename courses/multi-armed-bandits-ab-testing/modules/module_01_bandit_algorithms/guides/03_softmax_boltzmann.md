@@ -218,6 +218,7 @@ class SoftmaxBandit:
 ```
 
 </div>
+</div>
 
 **Usage:**
 
@@ -242,6 +243,7 @@ print(f"Q̂: {bandit.q_estimates}")
 print(f"P: {probs}")
 ```
 
+</div>
 </div>
 
 **Decaying Temperature:**
@@ -297,6 +299,7 @@ class GradientBandit(SoftmaxBandit):
                 self.preferences[a] -= self.alpha * (reward - self.avg_reward) * self.probs[a]
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

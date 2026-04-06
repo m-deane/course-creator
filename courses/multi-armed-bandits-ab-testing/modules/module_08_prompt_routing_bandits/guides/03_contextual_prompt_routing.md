@@ -97,6 +97,7 @@ def classify_task_type(query):
 ```
 
 </div>
+</div>
 
 ### Feature 2: Commodity Sector
 
@@ -139,6 +140,7 @@ def classify_commodity_sector(query):
 ```
 
 </div>
+</div>
 
 ### Feature 3: Data Availability
 
@@ -173,6 +175,7 @@ def assess_data_availability(retrieved_docs, query):
         return 'low'
 ```
 
+</div>
 </div>
 
 ### Feature 4: User Preference

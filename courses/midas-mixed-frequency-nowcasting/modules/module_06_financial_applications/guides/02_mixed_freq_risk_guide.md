@@ -143,6 +143,7 @@ def backtest_var(returns, var_estimates, alpha=0.01):
 ```
 
 </div>
+</div>
 
 ### 1.4 Christoffersen's Conditional Coverage Test
 
@@ -198,6 +199,7 @@ def christoffersen_test(violations):
     return cc_stat, cc_pval
 ```
 
+</div>
 </div>
 
 ---
@@ -290,6 +292,7 @@ def midas_term_structure(factors_monthly, factors_daily, K_daily=22):
     return np.column_stack(nowcasts)
 ```
 
+</div>
 </div>
 
 ### 2.3 MIDAS Spread Nowcasting

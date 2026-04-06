@@ -196,6 +196,7 @@ print(results_twfe)
 
 
 </div>
+</div>
 
 ### Equivalent Using Dummies
 
@@ -222,6 +223,7 @@ print(results_lsdv.summary())
 ```
 
 
+</div>
 </div>
 
 ---
@@ -304,6 +306,7 @@ results = model.fit()
 ```
 
 
+</div>
 </div>
 
 ### 2. Misinterpreting R²

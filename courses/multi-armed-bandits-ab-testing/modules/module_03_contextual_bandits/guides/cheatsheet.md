@@ -97,6 +97,7 @@ class LinUCB:
 ```
 
 </div>
+</div>
 
 ## Feature Engineering Checklist
 
@@ -150,6 +151,7 @@ trend = (ma_short - ma_long) / ma_long
 ```
 
 </div>
+</div>
 
 **Macro Regime:**
 
@@ -167,6 +169,7 @@ vix_z = (vix - vix.mean()) / vix.std()
 macro = 0.5 * dollar_z + 0.5 * vix_z
 ```
 
+</div>
 </div>
 
 ## Parameter Selection Guide

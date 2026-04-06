@@ -261,6 +261,7 @@ Results:
 ```
 
 </div>
+</div>
 
 This pipeline class encapsulates the full DML workflow. Each method handles one phase: validation, model selection, estimation, sensitivity analysis, and reporting.
 

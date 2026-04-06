@@ -275,6 +275,7 @@ class DiDPipeline:
 ```
 
 </div>
+</div>
 
 ---
 
@@ -326,6 +327,7 @@ class CausalMonitor:
         }
 ```
 
+</div>
 </div>
 
 ---
@@ -390,6 +392,7 @@ def run_monthly_causal_update(data_path: Path, results_dir: Path):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -428,6 +431,7 @@ def create_run_manifest(df: pd.DataFrame, config: Dict, result: CausalPipelineRe
     return manifest
 ```
 
+</div>
 </div>
 
 ---

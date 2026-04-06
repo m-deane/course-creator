@@ -57,14 +57,17 @@ Both conditions together ensure that the only reason $Z$ correlates with $Y$ is 
 ## 3. The DAG Perspective
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     U["U (unobserved<br>ability)"] --> X["X (education)"]
     U --> Y["Y (wage)"]
     Z["Z (instrument:<br>college proximity)"] --> X
     X --> Y
 
-    style Z fill:#90EE90
-    style U fill:#FFB6C1
+    classDef instrument fill:#90EE90
+    classDef unobserved fill:#FFB6C1
+    class Z instrument
+    class U unobserved
 ```
 
 The instrument $Z$ satisfies:
@@ -146,6 +149,7 @@ print(f"First stage F-stat: {result.first_stage.diagnostics['f.stat']:.2f}")
 ```
 
 </div>
+</div>
 
 ### Why Not Just Run 2SLS Manually?
 
@@ -223,6 +227,7 @@ print(f"Standard error: {first_stage.bse['college_nearby']:.3f}")
 ```
 
 </div>
+</div>
 
 ### Testing Exclusion: Overidentification Test
 
@@ -249,6 +254,7 @@ print(f"J-statistic: {j_stat:.3f}, p-value: {j_pval:.3f}")
 # p > 0.05: instruments are jointly valid (under assumption that at least one is)
 ```
 
+</div>
 </div>
 
 ---

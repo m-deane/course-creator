@@ -503,6 +503,7 @@ else:
 ```
 
 </div>
+</div>
 
 ### Position Sizing with Calibrated Confidence
 
@@ -616,6 +617,7 @@ for scenario in scenarios:
     print(f"  Size Reduction: {(1 - cal_pos['position_pct']/uncal_pos['position_pct'])*100:.1f}%")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

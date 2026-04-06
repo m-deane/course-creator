@@ -90,6 +90,7 @@ print(f"  Overall ATE: {np.mean(tau):.2f}")
 ```
 
 </div>
+</div>
 
 ## How to Estimate CATE with CausalForestDML
 
@@ -122,6 +123,7 @@ for s, name in enumerate(['Energy', 'Metals', 'Agriculture']):
 ```
 
 </div>
+</div>
 
 ## How to Run BLP Analysis
 
@@ -150,6 +152,7 @@ ldml.fit(Y, D, X=X[:, :5], W=W)
 print(ldml.summary())
 ```
 
+</div>
 </div>
 
 The BLP summary shows which covariates significantly predict treatment effect heterogeneity.
@@ -188,6 +191,7 @@ gates_df = pd.DataFrame(gates)
 print(gates_df.to_string(index=False))
 ```
 
+</div>
 </div>
 
 GATES provides a simple visual test: if the group averages are flat, there is no heterogeneity. If they increase monotonically, the CATE model captures real variation.
@@ -238,6 +242,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 ## Connections

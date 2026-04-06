@@ -184,6 +184,7 @@ def compute_realized_volatility(returns, window=20):
 ```
 
 </div>
+</div>
 
 **Regime classification:**
 - Low vol: < 15% annualized
@@ -218,6 +219,7 @@ def compute_term_structure_slope(front_month, back_month):
     return (back_month - front_month) / front_month
 ```
 
+</div>
 </div>
 
 **Regime classification:**
@@ -256,6 +258,7 @@ def compute_trend_strength(prices, short_window=20, long_window=50):
     return (fast_ma - slow_ma) / slow_ma
 ```
 
+</div>
 </div>
 
 **Regime classification:**

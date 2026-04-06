@@ -146,6 +146,7 @@ class BaseLLMWrapper:
 ```
 
 </div>
+</div>
 
 ### JSON Extraction Wrapper
 
@@ -247,6 +248,7 @@ print(result)
 ```
 
 </div>
+</div>
 
 ### Retry and Fallback Wrapper
 
@@ -344,6 +346,7 @@ resilient_llm = RetryFallbackLLM(
 result = resilient_llm.complete("Summarize this report...")
 ```
 
+</div>
 </div>
 
 ### Cost-Optimized Router Wrapper
@@ -488,6 +491,7 @@ Analyze the following 10,000 word report and provide:
 result3 = cost_optimized.complete("...", force_tier='high')
 ```
 
+</div>
 </div>
 
 ### Domain-Specific Wrapper
@@ -638,6 +642,7 @@ print(f"Consensus: {comparison['consensus']}")
 ```
 
 </div>
+</div>
 
 ### Wrapper with Caching
 
@@ -718,6 +723,7 @@ result1 = cached_llm.complete("Analyze this report...")
 result2 = cached_llm.complete("Analyze this report...")  # Free!
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

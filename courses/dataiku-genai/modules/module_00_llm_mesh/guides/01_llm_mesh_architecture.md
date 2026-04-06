@@ -371,6 +371,7 @@ class LLMMesh:
 ```
 
 </div>
+</div>
 
 ### Using LLM Mesh in Dataiku
 
@@ -410,6 +411,7 @@ print(f"Cost: ${response.estimated_cost:.4f}")
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -440,6 +442,7 @@ llm = LLM(connection_name)
 ```
 
 </div>
+</div>
 
 ### 2. Ignoring Rate Limits
 
@@ -458,6 +461,7 @@ for text in large_dataset:
     response = llm.complete(text)  # No delay
 ```
 
+</div>
 </div>
 
 **Solution:**
@@ -487,6 +491,7 @@ with ThreadPoolExecutor(max_workers=5) as executor:
     results = executor.map(lambda t: process_with_backoff(t, llm), large_dataset)
 ```
 
+</div>
 </div>
 
 ### 3. No Error Handling
@@ -526,6 +531,7 @@ except Exception as e:
 ```
 
 </div>
+</div>
 
 ### 4. Not Monitoring Costs
 
@@ -544,6 +550,7 @@ for row in df.iterrows():
     llm.complete(row['long_text'])  # Could be expensive!
 ```
 
+</div>
 </div>
 
 **Solution:**
@@ -577,6 +584,7 @@ for row in df.iterrows():
 print(f"Total cost today: ${tracker.daily_total:.2f}")
 ```
 
+</div>
 </div>
 
 ## Connections to Other Topics
@@ -742,6 +750,7 @@ class ResilientLLMRouter:
 ```
 
 </div>
+</div>
 </details>
 
 ### Problem 3: Cost Optimization
@@ -869,6 +878,7 @@ def optimize_batch_processing(reviews, budget=50.0):
 # - Average cost: ~$0.005-0.006 per review
 ```
 
+</div>
 </div>
 </details>
 

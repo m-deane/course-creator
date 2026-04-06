@@ -269,6 +269,7 @@ print("\nFactors are completely different, but X is identical!")
 ```
 
 </div>
+</div>
 
 ### Implementing PCA Normalization
 
@@ -339,6 +340,7 @@ print(Lambda_hat.round(3))
 ```
 
 </div>
+</div>
 
 ### Sign Normalization
 
@@ -394,6 +396,7 @@ print(Lambda_signed[:3, :].round(3))
 ```
 
 </div>
+</div>
 
 ---
 
@@ -443,6 +446,7 @@ for j in range(r):
 # Factor 2: CPI, PPI, Wages → "Inflation"
 ```
 
+</div>
 </div>
 
 ---

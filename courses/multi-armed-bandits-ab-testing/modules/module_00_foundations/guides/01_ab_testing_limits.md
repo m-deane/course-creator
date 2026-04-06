@@ -158,6 +158,7 @@ regret = ab_test_simulation(p_A=0.05, p_B=0.08, n_trials=10000)
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -275,6 +276,7 @@ print(f"Total regret: {regret[-1]:.2f}")
 # Should show regret accumulating linearly
 ```
 
+</div>
 </div>
 
 **Expected behavior:** For round-robin allocation across K arms, regret should grow as T · (μ* - μ_avg) where μ* is the best arm mean and μ_avg is the average arm mean.

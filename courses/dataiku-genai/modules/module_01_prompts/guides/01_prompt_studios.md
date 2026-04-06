@@ -234,6 +234,7 @@ def evaluate_prompt_output(output: str, test_case: dict) -> dict:
 ```
 
 </div>
+</div>
 
 ## Version Control
 
@@ -288,6 +289,7 @@ def compare_prompt_versions(
 ```
 
 </div>
+</div>
 
 ## Deploying Prompts
 
@@ -338,6 +340,7 @@ output_dataset = dataiku.Dataset("analyzed_reports")
 output_dataset.write_with_schema(pd.DataFrame(results))
 ```
 
+</div>
 </div>
 
 ### LLM Recipe

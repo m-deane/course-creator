@@ -119,6 +119,7 @@ def estimate_umidas(Y, X):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -192,6 +193,7 @@ def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -257,6 +259,7 @@ def compare_midas_specifications(Y, X, labels=None):
     return results
 ```
 
+</div>
 </div>
 
 ### The Formal Comparison: AIC and BIC

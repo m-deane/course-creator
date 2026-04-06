@@ -444,6 +444,7 @@ Consider:
 ```
 
 </div>
+</div>
 
 ### Natural Gas Supply/Demand (Seasonal Model)
 
@@ -557,6 +558,7 @@ But magnitude depends on season."""
         return json.loads(response.content[0].text)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

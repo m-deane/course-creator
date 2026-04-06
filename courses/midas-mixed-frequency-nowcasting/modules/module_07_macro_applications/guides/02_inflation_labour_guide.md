@@ -131,6 +131,7 @@ def build_inflation_midas_features(
 ```
 
 </div>
+</div>
 
 ### 1.4 Core Inflation Nowcasting
 
@@ -167,6 +168,7 @@ def core_services_ar_forecast(core_cpi_monthly, h=1):
     return beta[0] + beta[1] * y[-1]
 ```
 
+</div>
 </div>
 
 ---
@@ -279,6 +281,7 @@ def build_labour_midas_features(
     return X
 ```
 
+</div>
 </div>
 
 ### 2.4 Relationship: Claims → Unemployment → Payrolls

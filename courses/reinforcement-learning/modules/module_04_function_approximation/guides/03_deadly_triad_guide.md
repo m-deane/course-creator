@@ -171,6 +171,7 @@ print(f"Expected update at w=0: {direction:.4f}")  # Positive → divergence
 ```
 
 </div>
+</div>
 
 ---
 
@@ -237,6 +238,7 @@ class ReplayBuffer:
 ```
 
 </div>
+</div>
 
 ### 5.2 Target Networks (Partially Mitigates)
 
@@ -271,6 +273,7 @@ def update_target_network_soft(online_params, target_params, tau=0.005):
         )
 ```
 
+</div>
 </div>
 
 ### 5.3 Gradient Correction Methods (Theoretically Sound)

@@ -179,10 +179,6 @@ This recursion is the foundation of the Bellman equations.
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
@@ -195,8 +191,6 @@ stateDiagram-v2
     s2 --> s2 : a=right, r=+1
     s2 --> [*] : a=stop, r=+10
 ```
-
-</div>
 
 *A 3-state MDP: states $\{s_0, s_1, s_2\}$, actions $\{$left, right, stop$\}$. Transitions shown with associated action and immediate reward.*
 
@@ -272,6 +266,7 @@ print("Expected reward from s1 taking 'left':",
       expected_reward(mdp, "s1", "left"))   # -1.0
 ```
 
+</div>
 </div>
 
 ---

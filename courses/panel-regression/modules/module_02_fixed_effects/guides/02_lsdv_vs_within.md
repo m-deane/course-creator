@@ -105,6 +105,7 @@ print(f"  Number of parameters: {len(lsdv_model.params)}")
 
 
 </div>
+</div>
 
 ### Extracting Entity Effects
 
@@ -131,6 +132,7 @@ for i, effect in enumerate(entity_effects_estimated[:5]):
 ```
 
 
+</div>
 </div>
 
 ## The Within Transformation
@@ -178,6 +180,7 @@ print(f"  x std error (unadjusted): {within_manual.bse['x_demean']:.4f}")
 ```
 
 
+</div>
 </div>
 
 ### Using linearmodels

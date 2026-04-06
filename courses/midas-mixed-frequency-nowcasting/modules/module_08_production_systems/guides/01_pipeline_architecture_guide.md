@@ -177,6 +177,7 @@ class PublicationCalendar:
 ```
 
 </div>
+</div>
 
 ### Standard Publication Lags
 
@@ -246,6 +247,7 @@ class PipelineScheduler:
             time.sleep(self.poll_interval)
 ```
 
+</div>
 </div>
 
 ---
@@ -356,6 +358,7 @@ class VintageDatabase:
         self.conn.commit()
 ```
 
+</div>
 </div>
 
 ### Data Acquisition Layer

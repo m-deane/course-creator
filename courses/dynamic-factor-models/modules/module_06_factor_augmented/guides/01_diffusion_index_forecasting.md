@@ -435,6 +435,7 @@ class DiffusionIndexForecaster:
 ```
 
 </div>
+</div>
 
 ### Example Application
 
@@ -491,6 +492,7 @@ for i, var_ratio in enumerate(di_model.explained_variance_ratio(), 1):
     print(f"  Factor {i}: {var_ratio:.3f}")
 ```
 
+</div>
 </div>
 
 ### Real Data Example: Forecasting GDP
@@ -599,6 +601,7 @@ print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -630,6 +633,7 @@ factors_train = pca.transform(X_train)
 factors_test = pca.transform(X_test)  # Uses only training loadings
 ```
 
+</div>
 </div>
 
 ### 2. Ignoring Forecast Horizon

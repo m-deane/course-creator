@@ -143,6 +143,7 @@ def build_state(prices: pd.DataFrame, holdings: np.ndarray, portfolio_value: flo
 ```
 
 </div>
+</div>
 
 ---
 
@@ -266,6 +267,7 @@ def trading_reward(
 ```
 
 </div>
+</div>
 
 ---
 
@@ -367,6 +369,7 @@ def walk_forward_backtest(
 ```
 
 </div>
+</div>
 
 ---
 
@@ -422,6 +425,7 @@ def rolling_zscore(series: pd.Series, window: int = 252) -> pd.Series:
     return (series - rolling_mean) / (rolling_std + 1e-8)
 ```
 
+</div>
 </div>
 
 **Use returns, not price levels.** Returns are stationary (approximately); prices are not. Neural networks trained on price levels overfit to the specific price range seen during training.

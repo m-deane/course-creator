@@ -311,6 +311,7 @@ def mc_control_epsilon_greedy(env, n_episodes=50_000, gamma=1.0,
 ```
 
 </div>
+</div>
 
 ---
 

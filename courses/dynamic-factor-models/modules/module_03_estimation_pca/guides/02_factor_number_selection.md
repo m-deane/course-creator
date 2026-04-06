@@ -603,6 +603,7 @@ print(f"\n  True value: r = {r_true}")
 ```
 
 </div>
+</div>
 
 ### Output (Representative)
 

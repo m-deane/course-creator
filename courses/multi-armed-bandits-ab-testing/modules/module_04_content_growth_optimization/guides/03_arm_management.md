@@ -264,6 +264,7 @@ for week in range(52):
 ```
 
 </div>
+</div>
 
 ## Commodity Trading Applications
 
@@ -414,6 +415,7 @@ assert should_retire(stats, 'B', min_pulls=50) == True  # B is worst and signifi
 assert should_retire(stats, 'C', min_pulls=50) == False  # C is competitive
 ```
 
+</div>
 </div>
 
 ### Problem 2: Design an Introduction Protocol (Conceptual)

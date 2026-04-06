@@ -95,6 +95,7 @@ def naive_reward(returns):
 ```
 
 </div>
+</div>
 
 **What it trains:**
 - Buy whatever went up last week
@@ -126,6 +127,7 @@ def sharpe_only_reward(returns, volatility):
 ```
 
 </div>
+</div>
 
 **What it trains:**
 - Avoid anything with high volatility
@@ -155,6 +157,7 @@ def win_rate_reward(returns):
     return 1.0 if returns > 0 else 0.0
 ```
 
+</div>
 </div>
 
 **What it trains:**

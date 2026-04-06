@@ -184,6 +184,7 @@ print(result)
 ```
 
 </div>
+</div>
 
 ### Handling Tables
 
@@ -236,6 +237,7 @@ Return JSON array with entries:
     return response.content[0].text
 ```
 
+</div>
 </div>
 
 ## Building a Complete Pipeline
@@ -339,6 +341,7 @@ Keep it concise (3-4 sentences total)."""
 ```
 
 </div>
+</div>
 
 ## Validation and Quality Control
 
@@ -380,6 +383,7 @@ def validate_wpsr_extraction(extracted: dict, api_data: dict) -> dict:
 ```
 
 </div>
+</div>
 
 ### Historical Comparison
 
@@ -406,6 +410,7 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
     return abs(change) <= max_changes.get(commodity, 10)
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

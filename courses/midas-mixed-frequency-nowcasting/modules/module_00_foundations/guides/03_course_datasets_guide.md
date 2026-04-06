@@ -63,6 +63,7 @@ fred = Fred(api_key=os.environ.get('FRED_API_KEY'))
 ```
 
 </div>
+</div>
 
 **Fallback (no API key required):**
 
@@ -82,6 +83,7 @@ gdp = pd.read_csv('resources/gdp_quarterly.csv', index_col=0, parse_dates=True)
 ip = pd.read_csv('resources/industrial_production_monthly.csv', index_col=0, parse_dates=True)
 ```
 
+</div>
 </div>
 
 ---
@@ -123,6 +125,7 @@ print(f"Date range: {gdp_growth.index[0]} to {gdp_growth.index[-1]}")
 print(f"Last value: {gdp_growth.iloc[-1]:.3f}%")
 ```
 
+</div>
 </div>
 
 ### Monthly Series (Primary Regressors)

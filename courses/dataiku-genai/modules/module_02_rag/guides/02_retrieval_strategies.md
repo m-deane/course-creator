@@ -88,6 +88,7 @@ class VectorRetriever:
 ```
 
 </div>
+</div>
 
 ### Distance Metrics
 
@@ -127,6 +128,7 @@ retrieval_config = {
 }
 ```
 
+</div>
 </div>
 
 ## Hybrid Retrieval
@@ -226,6 +228,7 @@ hybrid_config = {
 ```
 
 </div>
+</div>
 
 ## Query Expansion
 
@@ -297,6 +300,7 @@ Return only the alternative queries, one per line, without numbering."""
 ```
 
 </div>
+</div>
 
 ## Contextual Compression
 
@@ -349,6 +353,7 @@ Relevant excerpts (return only the relevant sentences, nothing else):"""
         return compressed
 ```
 
+</div>
 </div>
 
 ## Multi-Index Retrieval
@@ -455,6 +460,7 @@ multi_index_config = {
 ```
 
 </div>
+</div>
 
 ## Reranking
 
@@ -546,6 +552,7 @@ rerank_config = {
 ```
 
 </div>
+</div>
 
 ## Performance Optimization
 
@@ -594,6 +601,7 @@ class CachedRetriever:
         return results
 ```
 
+</div>
 </div>
 
 ## Key Takeaways

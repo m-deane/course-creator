@@ -332,6 +332,7 @@ class CommodityNewsAcquisition:
 ```
 
 </div>
+</div>
 
 ### Commodity Relevance Filtering
 
@@ -426,6 +427,7 @@ Consider NOT relevant if:
         return relevant_items
 ```
 
+</div>
 </div>
 
 ### Entity and Fact Extraction
@@ -523,6 +525,7 @@ Extract specific numbers where mentioned. Use standard units:
         )
 ```
 
+</div>
 </div>
 
 ### Complete News Processing Pipeline
@@ -682,6 +685,7 @@ class CommodityNewsProcessor:
         return min(1.0, score)
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

@@ -217,6 +217,7 @@ print(f"MSE: {objectives[0]:.4f}, Complexity: {objectives[1]:.4f}")
 ```
 
 </div>
+</div>
 
 
 ### NSGA-II with DEAP
@@ -334,6 +335,7 @@ for i, ind in enumerate(pareto_front[:5]):
           f"Complexity={complexity:.4f}")
 ```
 
+</div>
 </div>
 
 ### Hypervolume Calculation

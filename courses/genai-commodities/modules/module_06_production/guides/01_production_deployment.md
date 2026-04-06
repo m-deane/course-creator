@@ -229,6 +229,7 @@ def call_llm_with_circuit_breaker(prompt: str) -> str:
 ```
 
 </div>
+</div>
 
 ## Cost Management
 
@@ -321,6 +322,7 @@ def budgeted_llm_call(prompt: str, estimated_tokens: int) -> str:
 ```
 
 </div>
+</div>
 
 ### Caching Strategy
 
@@ -405,6 +407,7 @@ def cached_llm_call(prompt: str, model: str = "claude-sonnet-4-20250514") -> str
 ```
 
 </div>
+</div>
 
 ## Monitoring and Observability
 
@@ -487,6 +490,7 @@ class MetricsCollector:
 ```
 
 </div>
+</div>
 
 ### Alerting
 
@@ -566,6 +570,7 @@ alert_manager.add_rule(AlertRule(
 ))
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

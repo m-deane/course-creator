@@ -585,6 +585,7 @@ Examples:
 ```
 
 </div>
+</div>
 
 ### Hybrid Retrieval with Re-ranking
 
@@ -667,6 +668,7 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
         return reranked
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

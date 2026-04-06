@@ -186,6 +186,7 @@ if __name__ == "__main__":
 
 
 </div>
+</div>
 
 Run the test:
 
@@ -250,6 +251,7 @@ print(f"Linearmodels version: {linearmodels.__version__}")
 ```
 
 
+</div>
 </div>
 
 ## R Setup

@@ -143,6 +143,7 @@ class TileCoder:
 ```
 
 </div>
+</div>
 
 ---
 

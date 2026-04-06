@@ -260,6 +260,7 @@ print(f"Need {n} per variant, {2*n} total")
 ```
 
 </div>
+</div>
 
 ### Calculate Cumulative Regret
 
@@ -286,6 +287,7 @@ print(f"Total regret: {regret[-1]:.3f}")
 ```
 
 </div>
+</div>
 
 ### Simple Epsilon-Greedy
 
@@ -310,6 +312,7 @@ arm = epsilon_greedy(Q, epsilon=0.1)
 print(f"Chose arm {arm}")
 ```
 
+</div>
 </div>
 
 ---

@@ -197,6 +197,7 @@ Return JSON:
 ```
 
 </div>
+</div>
 
 ### EIA Report Agent
 
@@ -279,6 +280,7 @@ Focus on surprises vs expectations and their price implications."""
 ```
 
 </div>
+</div>
 
 ## Multi-Agent Systems
 
@@ -352,6 +354,7 @@ Provide:
 ```
 
 </div>
+</div>
 
 ### Example Multi-Agent Setup
 
@@ -386,6 +389,7 @@ synthesis = system.synthesize_results(results)
 print(synthesis)
 ```
 
+</div>
 </div>
 
 ## Scheduled Agent Execution
@@ -452,6 +456,7 @@ class AgentScheduler:
             time.sleep(60)
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

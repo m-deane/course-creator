@@ -399,6 +399,7 @@ def compute_is_ratio(episode_actions, episode_states,
 ```
 
 </div>
+</div>
 
 ---
 

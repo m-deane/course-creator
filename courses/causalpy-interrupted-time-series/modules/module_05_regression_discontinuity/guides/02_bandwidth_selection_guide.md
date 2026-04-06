@@ -90,6 +90,7 @@ print(f"95% CI: [{rdd_result.ci[0]:.3f}, {rdd_result.ci[1]:.3f}]")
 ```
 
 </div>
+</div>
 
 ### Alternative Bandwidth Selectors
 
@@ -163,6 +164,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ### Interpreting the Sensitivity Plot
 
@@ -208,6 +210,7 @@ for order in [1, 2, 3, 4]:
 ```
 
 </div>
+</div>
 
 ### The Standard Approach
 
@@ -244,6 +247,7 @@ for kernel in ['triangular', 'uniform', 'epanechnikov']:
     print(f"{kernel:<15}: τ = {result.coef[0]:.3f}, SE = {result.se[0]:.3f}")
 ```
 
+</div>
 </div>
 
 In practice, kernel choice rarely matters as much as bandwidth choice.
@@ -309,6 +313,7 @@ for donut in [0.01, 0.02, 0.05, 0.10]:
 ```
 
 </div>
+</div>
 
 If estimates are stable across donut widths, manipulation of the running variable is unlikely to be driving results.
 
@@ -368,6 +373,7 @@ ax.legend()
 plt.show()
 ```
 
+</div>
 </div>
 
 ---

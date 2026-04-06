@@ -246,6 +246,7 @@ class VolatilityRegimeModel:
 ```
 
 </div>
+</div>
 
 ## Asset Allocation with Regimes
 
@@ -310,6 +311,7 @@ class RegimeAwareAllocator:
         }
 ```
 
+</div>
 </div>
 
 ## Regime-Switching Risk Models
@@ -386,6 +388,7 @@ class RegimeSwitchingVaR:
 ```
 
 </div>
+</div>
 
 ## Practical Considerations
 
@@ -423,6 +426,7 @@ def expanding_window_regime(
     return regimes
 ```
 
+</div>
 </div>
 
 ### Multiple Random Starts
@@ -463,6 +467,7 @@ def fit_with_multiple_starts(
     return best_model
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

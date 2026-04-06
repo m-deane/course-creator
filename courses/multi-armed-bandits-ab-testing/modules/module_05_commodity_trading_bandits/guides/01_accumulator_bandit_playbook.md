@@ -233,6 +233,7 @@ if __name__ == "__main__":
 ```
 
 </div>
+</div>
 
 ## The 6-Step Accumulator Bandit Playbook
 

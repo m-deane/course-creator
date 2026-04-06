@@ -132,6 +132,7 @@ def compute_rolling_metrics(
 ```
 
 </div>
+</div>
 
 ### Interpreting Metrics
 
@@ -201,6 +202,7 @@ def test_forecast_bias(
     }
 ```
 
+</div>
 </div>
 
 For a production system, run this test monthly. Log the result; alert if `reject_null` is `True` for two consecutive months.
@@ -276,6 +278,7 @@ def chow_test(
     }
 ```
 
+</div>
 </div>
 
 ### CUSUM Test

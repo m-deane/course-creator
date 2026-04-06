@@ -112,6 +112,7 @@ print(f"Mean |resid_D| in-sample: {np.mean(np.abs(resid_D_insample)):.4f}")
 ```
 
 </div>
+</div>
 
 The in-sample residuals are too small because the random forest has memorised the training data.
 
@@ -153,6 +154,7 @@ print(f"\nCross-fitted DML:      {theta_cf:.2f}  (unbiased!)")
 print(f"Mean |resid_D| cross-fitted: {np.mean(np.abs(resid_D_cf)):.4f}")
 ```
 
+</div>
 </div>
 
 <div class="callout-warning">
@@ -199,6 +201,7 @@ print(f"Fold estimates:   {[f'{t:.3f}' for t in thetas_per_fold]}")
 ```
 
 </div>
+</div>
 
 ## How the Number of Folds Affects Results
 
@@ -226,6 +229,7 @@ for K in [2, 3, 5, 10, 20]:
     print(f"K={K:2d}: theta = {theta_k:.4f}")
 ```
 
+</div>
 </div>
 
 $K = 5$ is the default in most implementations and works well in practice. Larger $K$ uses more training data per fold but increases computation.

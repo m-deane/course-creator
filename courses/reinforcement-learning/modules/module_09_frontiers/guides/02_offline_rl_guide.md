@@ -89,10 +89,6 @@ The $\max_{a'}$ operator queries Q-values at $(s', a')$ pairs that the behavior 
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -103,11 +99,11 @@ flowchart TD
     Over --> Error["Q-value overestimation\nfor OOD actions"]
     Error --> BadPolicy["Policy exploits\noverestimated Q-values"]
     BadPolicy --> Deploy["Deployed policy\nperforms poorly"]
-    style Error fill:#d63031,color:#fff
-    style OOD fill:#d63031,color:#fff
+    class OOD cls_OOD
+    class Error cls_Error
+    classDef cls_OOD fill:#d63031,color:#fff
+    classDef cls_Error fill:#d63031,color:#fff
 ```
-
-</div>
 
 **The death spiral:** Q-values for OOD actions are overestimated → the greedy policy selects those actions → those actions have no supporting data → Q-values get even more inaccurate through bootstrapping → the policy becomes increasingly OOD.
 
@@ -136,89 +132,6 @@ where $\mu$ is a distribution that concentrates on high-Q actions (e.g., the cur
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-import torch
-import torch.nn.functional as F
-
-
-def cql_loss(q_net, target_q_net, batch: dict, alpha: float = 1.0, gamma: float = 0.99) -> torch.Tensor:
-    """
-    Conservative Q-Learning loss for offline RL.
-
-    The conservative penalty pushes Q-values down for policy actions
-    and up for dataset actions. Combined with standard Bellman error,
-    this yields a lower-bound Q-function that avoids overestimation.
-
-    Parameters
-    ----------
-    q_net        : Q-network being trained
-    target_q_net : Target network for stable Bellman backup
-    batch        : Dict with keys 's', 'a', 'r', 's_next', 'done'
-    alpha        : Conservative penalty weight
-    gamma        : Discount factor
-
-    Returns
-    -------
-    Total CQL loss (Bellman error + alpha * conservative penalty)
-    """
-    s, a, r, s_next, done = (
-        batch['s'], batch['a'], batch['r'], batch['s_next'], batch['done']
-    )
-
-    # --- Standard Bellman error ---
-    with torch.no_grad():
-        # Target uses behavior-cloned or current policy actions
-        a_next = q_net.get_action(s_next)                        # greedy action
-        q_target = r + gamma * (1 - done) * target_q_net(s_next, a_next)
-
-    q_pred = q_net(s, a)
-    bellman_error = F.mse_loss(q_pred, q_target)
-
-    # --- Conservative penalty ---
-    # Sample random actions (approximate the OOD distribution)
-    a_random = torch.randint(0, q_net.action_dim, (s.shape[0],))
-    q_random = q_net(s, a_random)                                 # Q for random actions
-    q_dataset = q_net(s, a)                                       # Q for dataset actions
-
-    # Penalize: push random-action Q down, pull dataset-action Q up
-    conservative_penalty = q_random.mean() - q_dataset.mean()
-
-    return bellman_error + alpha * conservative_penalty
-```
-
-</div>
-
----
-
-## Decision Transformer
-
-Decision Transformer (Chen et al., 2021) reframes offline RL as a **sequence modeling problem**, bypassing the distribution shift problem entirely by not using Bellman backups.
-
-### Key Idea
-
-Represent a trajectory as a sequence of (return-to-go, state, action) triples:
-
-$$\hat{R}_t = \sum_{t'=t}^{T} r_{t'} \quad \text{(return-to-go from step } t \text{)}$$
-
-Sequence: $(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \ldots, \hat{R}_T, s_T, a_T)$
-
-Train a GPT-style autoregressive Transformer to predict $a_t$ given the context $(\hat{R}_1, s_1, a_1, \ldots, \hat{R}_t, s_t)$.
-
-At inference, condition on a desired target return $\hat{R}_1 = R_{\text{target}}$, and the model generates actions that achieve it.
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -230,11 +143,11 @@ flowchart LR
     Tok1 & Tok2 & Tok3 & Tok4 & Tok5 --> TR["GPT\nTransformer"]
     TR --> Apred["Predict $a_2$"]
 
-    style TR fill:#4A90D9,color:#fff
-    style Apred fill:#6ab04c,color:#fff
+    class Apred cls_Apred
+    class TR cls_TR
+    classDef cls_Apred fill:#6ab04c,color:#fff
+    classDef cls_TR fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 **Advantages over CQL:**
 
@@ -302,6 +215,7 @@ def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:
     return (weight * u ** 2).mean()
 ```
 
+</div>
 </div>
 
 ---

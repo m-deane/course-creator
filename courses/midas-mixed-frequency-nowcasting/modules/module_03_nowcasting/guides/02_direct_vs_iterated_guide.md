@@ -139,6 +139,7 @@ def profile_sse_ar(theta, Y, X):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -294,6 +295,7 @@ def estimate_midas_direct(Y, X, starts=None):
 ```
 
 </div>
+</div>
 
 ---
 
@@ -334,6 +336,7 @@ def nowcast_panel(Y_train, Y_test, X_train_dict, X_test_dict):
     return nowcasts
 ```
 
+</div>
 </div>
 
 ---

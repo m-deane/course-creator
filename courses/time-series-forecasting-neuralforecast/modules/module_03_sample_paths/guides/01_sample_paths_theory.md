@@ -13,75 +13,6 @@ Start here: generating sample paths from a random walk in six lines.
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-rng = np.random.default_rng(42)
-
-# Simulate 200 sample paths of a random walk over 14 steps
-n_paths, horizon = 200, 14
-innovations = rng.normal(0, 1, size=(n_paths, horizon))
-paths = np.cumsum(innovations, axis=1)  # shape: (n_paths, horizon)
-
-# Each row is one plausible future trajectory
-print(f"Path shape: {paths.shape}")          # (200, 14)
-print(f"Path 0 first 5 steps: {paths[0, :5].round(2)}")
-
-# Answer a business question: P(cumulative sum > 10) after 14 steps
-prob = (paths.sum(axis=1) > 10).mean()
-print(f"P(total > 10 over 14 days) ≈ {prob:.3f}")
-```
-
-</div>
-
-<div class="callout-key">
-
-<strong>Key Concept:</strong> A probabilistic forecast gives you marginal distributions: the uncertainty around day 1, then day 2, then day 3, independently. A sample path gives you something more powerful — a single plausible trajectory for the entire forecast horizon, drawn from the joint distribution.
-
-</div>
-
-
----
-
-## 1. What Are Sample Paths?
-
-A sample path is one draw from the joint forecast distribution over the entire horizon.
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> A sample path is one draw from the joint forecast distribution over the entire horizon.
-
-</div>
-
-
-**Marginal distribution** for step $t$: $F_t(y) = P(y_{T+t} \leq y \mid \mathcal{F}_T)$
-
-This gives uncertainty for each step individually, as if all other steps do not exist.
-
-**Joint distribution** over the full horizon $H$: $F_{1:H}(y_1, \ldots, y_H) = P(Y_{T+1} \leq y_1, \ldots, Y_{T+H} \leq y_H \mid \mathcal{F}_T)$
-
-This encodes the correlations between steps — the temporal structure of uncertainty.
-
-A **sample path** $\omega^{(s)}$ is one draw from this joint distribution:
-
-$$\omega^{(s)} = \left(y_1^{(s)}, y_2^{(s)}, \ldots, y_H^{(s)}\right), \quad s = 1, \ldots, S$$
-
-Each path is internally consistent: if Monday is high, Tuesday in that path reflects the realistic follow-on, not an independent draw.
-
-
-<span class="filename">example.py</span>
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -97,8 +28,6 @@ flowchart LR
     PS --> STAT
     STAT --> ANSWER["Compute statistics\nover f(ω⁽¹⁾), ..., f(ω⁽ˢ⁾)"]
 ```
-
-</div>
 
 ---
 
@@ -173,6 +102,7 @@ print(f"80th percentile worst day: {worst_day_80:.1f}")
 ```
 
 </div>
+</div>
 
 ---
 
@@ -228,6 +158,7 @@ print(f"Sum of marginal 80th percentiles:   {marginal_80th_sum:.1f}")
 print(f"Overestimate by:                    {marginal_80th_sum - true_80th:.1f} units")
 ```
 
+</div>
 </div>
 
 With $\phi = 0.7$, the naive sum overstates the true 80th percentile — a practitioner following the marginal approach would over-order every week.

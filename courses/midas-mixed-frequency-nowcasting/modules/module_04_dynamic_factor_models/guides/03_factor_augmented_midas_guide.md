@@ -79,6 +79,7 @@ def load_monthly_panel(series_dict):
 ```
 
 </div>
+</div>
 
 ### Step 2: Extract Common Factor
 
@@ -135,6 +136,7 @@ def normalize_factor_sign(factors, loadings, reference_indicator):
 ```
 
 </div>
+</div>
 
 ### Step 3: Build MIDAS Matrix from Factor Series
 
@@ -188,6 +190,7 @@ def build_midas_matrix_from_factor(Y_quarterly, F_monthly, K, m=3):
     return np.array(rows_Y), np.array(rows_X)
 ```
 
+</div>
 </div>
 
 ### Step 4: Estimate FA-MIDAS

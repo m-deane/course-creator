@@ -202,6 +202,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ---
 
@@ -284,6 +285,7 @@ result = cp.DifferenceInDifferences(
 print(result.summary())
 ```
 
+</div>
 </div>
 
 The key coefficient is the interaction `period:treated`, which estimates the DiD treatment effect.

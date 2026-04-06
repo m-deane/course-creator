@@ -126,6 +126,7 @@ print(f"Features: {x}")  # [1, 0.5, -0.3, 0.25, -0.15, 0.09]
 ```
 
 </div>
+</div>
 
 ### 2.2 Fourier Basis
 
@@ -181,6 +182,7 @@ def fourier_alphas(coeffs, base_alpha):
     return np.where(norms == 0, base_alpha, base_alpha / norms)
 ```
 
+</div>
 </div>
 
 ### 2.3 Tile Coding (Deep Dive)
@@ -290,6 +292,7 @@ print(f"Feature vector: {x.shape} features, {int(x.sum())} active")
 ```
 
 </div>
+</div>
 
 #### Why Multiple Tilings?
 
@@ -332,6 +335,7 @@ def rbf_features(state, centers, sigma=1.0):
     return np.exp(-dists_sq / (2 * sigma**2))
 ```
 
+</div>
 </div>
 
 ---

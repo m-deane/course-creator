@@ -312,6 +312,7 @@ def train_reinforce(
 ```
 
 </div>
+</div>
 
 ---
 

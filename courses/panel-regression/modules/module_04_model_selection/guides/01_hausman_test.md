@@ -188,6 +188,7 @@ print(f"  Conclusion: {result['conclusion']}")
 
 
 </div>
+</div>
 
 ## Limitations of the Hausman Test
 
@@ -247,6 +248,7 @@ for corr in [0.0, 0.3, 0.5, 0.7]:
 
 
 </div>
+</div>
 
 ### 2. Variance Matrix Issues
 
@@ -300,6 +302,7 @@ else:
 ```
 
 
+</div>
 </div>
 
 ## Practical Decision Framework

@@ -13,86 +13,6 @@ Start here: the code below installs neuralforecast and verifies the installation
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-# Install the full nixtla forecasting stack
-# pip install neuralforecast datasetsforecast utilsforecast
-
-import neuralforecast
-import datasetsforecast
-import utilsforecast
-
-print(f"neuralforecast {neuralforecast.__version__}")
-print(f"datasetsforecast {datasetsforecast.__version__}")
-print(f"utilsforecast {utilsforecast.__version__}")
-print("Environment ready.")
-```
-
-</div>
-
-<div class="callout-key">
-
-<strong>Key Concept:</strong> Modern forecasting has moved well beyond producing a single number. This guide maps the forecasting landscape — point, probabilistic, and distributional approaches — and introduces the neuralforecast ecosystem that unifies all three in a single, consistent API.
-
-</div>
-
-
----
-
-## 1. Why Forecasting Matters for Business Decisions
-
-A point forecast says: "Demand tomorrow will be 142 units."
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> A point forecast says: "Demand tomorrow will be 142 units."
-
-A probabilistic forecast says: "Demand tomorrow will be 142 units, with a 90% interval of [118, 171]."
-
-These two statements lead to comple...
-
-</div>
-
-
-A probabilistic forecast says: "Demand tomorrow will be 142 units, with a 90% interval of [118, 171]."
-
-These two statements lead to completely different inventory decisions. The second statement lets a decision-maker ask: "What is the cost of stocking 118 versus 171 units, given this uncertainty?" The first statement hides that tradeoff entirely.
-
-**The three failure modes of point forecasting:**
-1. **Silent overconfidence** — the model has uncertainty but reports none; users plan as if the forecast is certain
-2. **Asymmetric costs ignored** — understocking a warehouse and overstocking it carry different costs; a point forecast cannot optimize for this
-3. **Cascade failures in pipelines** — upstream point forecasts feed downstream models, compounding hidden uncertainty at every step
-
-
-<div class="flow">
-<div class="flow-step mint">1. Silent overconfidence</div>
-<div class="flow-arrow">&#8594;</div>
-<div class="flow-step amber">2. Asymmetric costs ignored</div>
-<div class="flow-arrow">&#8594;</div>
-<div class="flow-step blue">3. Cascade failures in pipelines</div>
-</div>
-
----
-
-## 2. The Forecasting Taxonomy
-
-
-<span class="filename">example.py</span>
-</div>
-<div class="callout-key">
-<strong>Key Point:</strong> example.py
-The following implementation builds on the approach above:
----
-</div>
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -116,8 +36,6 @@ flowchart TD
     E --> E1["Monte Carlo trajectories"]
     E --> E2["Scenario analysis, risk simulation"]
 ```
-
-</div>
 
 ---
 
@@ -213,10 +131,6 @@ The following implementation builds on the approach above:
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
@@ -224,13 +138,15 @@ flowchart LR
     B -->|"Trains neural\nforecasting models"| C[utilsforecast]
     C -->|"Evaluates, aggregates,\nreconciles forecasts"| D[Business Decision]
 
-    style A fill:#e8f4f8
-    style B fill:#d4edda
-    style C fill:#fff3cd
-    style D fill:#f8d7da
+    class D cls_D
+    class C cls_C
+    class B cls_B
+    class A cls_A
+    classDef cls_D fill:#f8d7da
+    classDef cls_C fill:#fff3cd
+    classDef cls_B fill:#d4edda
+    classDef cls_A fill:#e8f4f8
 ```
-
-</div>
 
 **datasetsforecast** — A catalog of benchmark datasets (M4, M5, ETT, French Bakery, Tourism) ready in the nixtla `(unique_id, ds, y)` format. No ETL required.
 
@@ -275,6 +191,7 @@ print(f"Series count: {train['unique_id'].nunique()}")
 print(f"Rows: {len(train):,}")
 ```
 
+</div>
 </div>
 
 ---

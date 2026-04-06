@@ -117,10 +117,6 @@ Removing either the replay buffer or the target network reintroduces one pathway
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -134,11 +130,11 @@ flowchart TD
 
     S --> C1 --> C2 --> C3 --> FC --> OUT --> Q
 
-    style S fill:#4A90D9,color:#fff
-    style Q fill:#E8844A,color:#fff
+    class Q cls_Q
+    class S cls_S
+    classDef cls_Q fill:#E8844A,color:#fff
+    classDef cls_S fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 The network takes a state as input and outputs one Q-value per action simultaneously. At inference, the greedy action is $a^* = \arg\max_a Q(s, a; \theta)$.
 
@@ -349,6 +345,7 @@ class DQNAgent:
         return loss.item()
 ```
 
+</div>
 </div>
 
 ---

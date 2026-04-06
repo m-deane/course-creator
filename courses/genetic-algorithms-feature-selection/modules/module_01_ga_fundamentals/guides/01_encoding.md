@@ -270,6 +270,7 @@ def demo_binary_encoding():
 ```
 
 </div>
+</div>
 
 
 ### Integer Encoding Implementation
@@ -491,6 +492,7 @@ if __name__ == "__main__":
     compare_encodings()
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

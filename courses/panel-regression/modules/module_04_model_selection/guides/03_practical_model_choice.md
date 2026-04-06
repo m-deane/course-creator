@@ -295,6 +295,7 @@ print(results.summary.tables[1])
 
 
 </div>
+</div>
 
 ## Practical Considerations Beyond Tests
 
@@ -348,6 +349,7 @@ consider_research_question()
 ```
 
 
+</div>
 </div>
 
 ### 2. Data Characteristics
@@ -408,6 +410,7 @@ assess_data_characteristics(df, 'entity', 'time', ['x1', 'x2'])
 ```
 
 
+</div>
 </div>
 
 ### 3. Sample Selection Considerations

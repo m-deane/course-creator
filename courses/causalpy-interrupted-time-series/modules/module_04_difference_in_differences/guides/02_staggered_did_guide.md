@@ -105,6 +105,7 @@ att_gt.plot()
 ```
 
 </div>
+</div>
 
 ### Sun & Abraham (2021)
 
@@ -190,6 +191,7 @@ p_value = 1 - chi2.cdf(W, df=len(pre_indices))
 print(f"Pre-trend test: W = {W:.2f}, p = {p_value:.3f}")
 ```
 
+</div>
 </div>
 
 #### Roth (2022) Sensitivity Analysis
@@ -320,6 +322,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 ---

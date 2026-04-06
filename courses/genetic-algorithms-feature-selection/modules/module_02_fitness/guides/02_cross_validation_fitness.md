@@ -172,6 +172,7 @@ for chrom in test_chromosomes:
 ```
 
 </div>
+</div>
 
 
 ![Walk-Forward Timeline](./walk_forward_timeline.svg)
@@ -325,6 +326,7 @@ print(f"  CV Std: {details['cv_std']:.4f}")
 print(f"  Scores: {[f'{s:.4f}' for s in details['cv_scores']]}")
 ```
 
+</div>
 </div>
 
 ## Multi-Objective Fitness

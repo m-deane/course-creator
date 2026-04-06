@@ -143,6 +143,7 @@ class InventorySurpriseSignal:
 ```
 
 </div>
+</div>
 
 ### Production Forecast Signal
 
@@ -235,6 +236,7 @@ Report:
         return {'net_signal': 0}
 ```
 
+</div>
 </div>
 
 ## Sentiment-Based Signals
@@ -331,6 +333,7 @@ class NewsSentimentSignal:
 ```
 
 </div>
+</div>
 
 ## Signal Combination
 
@@ -402,6 +405,7 @@ class CommoditySignalAggregator:
         }
 ```
 
+</div>
 </div>
 
 ## Position Sizing
@@ -476,6 +480,7 @@ class PositionSizer:
         }
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

@@ -96,6 +96,7 @@ print(f"Naive OLS:       {naive.params[1]:.2f} (biased — confounders omitted)"
 ```
 
 </div>
+</div>
 
 The naive estimate is biased upward because demand conditions ($X_0$) drive both OPEC decisions and spreads. OLS attributes some of the demand effect to the production cut.
 
@@ -129,6 +130,7 @@ print(f"Standard error:        {ols_full.bse[1]:.2f} (massive uncertainty)")
 print(f"95% CI width:          {2 * 1.96 * ols_full.bse[1]:.2f}")
 ```
 
+</div>
 </div>
 
 With 200 controls and 1000 observations, OLS is unstable. The standard errors blow up because the model is overfitting to noise in the controls.
@@ -176,6 +178,7 @@ print(f"Standard error:            {fwl_result.bse[1]:.2f}")
 ```
 
 </div>
+</div>
 
 FWL gives the same result as OLS with controls, but it reveals the key insight: the treatment effect estimation is really about residuals.
 
@@ -220,6 +223,7 @@ print(f"Standard error:             {theta_dml.bse[1]:.2f}")
 print(f"True effect:                {true_effect:.2f}")
 ```
 
+</div>
 </div>
 
 This preview shows DML recovering the treatment effect even with 200 controls. The full DML procedure (Modules 02-04) adds cross-fitting and orthogonal scores to make this rigorous.
@@ -290,6 +294,7 @@ def verify_fwl_equivalence(Y, D, X):
     pass
 ```
 
+</div>
 </div>
 
 **3. Dimension Scaling:**

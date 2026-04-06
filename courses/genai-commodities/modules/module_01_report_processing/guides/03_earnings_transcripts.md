@@ -559,6 +559,7 @@ Format as concise bullet points.
 ```
 
 </div>
+</div>
 
 ## Common Pitfalls
 
@@ -585,6 +586,7 @@ def chunk_transcript(transcript: str) -> dict:
 ```
 
 </div>
+</div>
 
 **2. Jargon and Company-Specific Terms**
 - **Issue:** LLMs may misinterpret industry terminology
@@ -607,6 +609,7 @@ Term definitions:
 """
 ```
 
+</div>
 </div>
 
 **3. Forward-Looking vs. Historical Confusion**
@@ -632,6 +635,7 @@ Tag each data point with timeframe.
 ```
 
 </div>
+</div>
 
 **4. Inconsistent Guidance Formatting**
 - **Issue:** Companies express guidance differently (ranges, points, percentages)
@@ -652,6 +656,7 @@ def normalize_guidance(raw_value: str) -> dict:
     pass
 ```
 
+</div>
 </div>
 
 ## Connections

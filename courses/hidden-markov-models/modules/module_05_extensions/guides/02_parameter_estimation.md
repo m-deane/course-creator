@@ -381,6 +381,7 @@ plt.show()
 ```
 
 </div>
+</div>
 
 ## Multiple Random Restarts
 
@@ -427,6 +428,7 @@ def fit_with_restarts(observations, n_states, n_restarts=10):
 best_model, best_ll = fit_with_restarts(observations, n_states=2, n_restarts=5)
 ```
 
+</div>
 </div>
 
 ## Practical Considerations
@@ -492,6 +494,7 @@ discuss_training_issues()
 ```
 
 </div>
+</div>
 
 ### Using hmmlearn
 
@@ -537,6 +540,7 @@ def train_with_hmmlearn(observations, n_states=2):
 hmmlearn_model = train_with_hmmlearn(observations)
 ```
 
+</div>
 </div>
 
 <div class="callout-insight">

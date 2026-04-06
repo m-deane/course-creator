@@ -309,6 +309,7 @@ Examples:
 ```
 
 </div>
+</div>
 
 ### Aspect-Based Sentiment Analysis
 
@@ -393,6 +394,7 @@ For each aspect:
         return aspect_sentiments
 ```
 
+</div>
 </div>
 
 ### Sentiment Aggregation Across Sources
@@ -523,6 +525,7 @@ class SentimentAggregator:
 ```
 
 </div>
+</div>
 
 ### Example Usage
 
@@ -594,6 +597,7 @@ print(f"Confidence: {aggregate['confidence']:.2f}")
 print(f"Trend: {aggregate['trend']}")
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

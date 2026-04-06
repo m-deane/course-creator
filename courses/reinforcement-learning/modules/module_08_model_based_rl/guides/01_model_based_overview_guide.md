@@ -183,10 +183,6 @@ Three distinct ways to use a learned model:
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -208,11 +204,11 @@ flowchart TD
         MBUPDATE --> ENV2
     end
 
-    style MF fill:#f0f4ff,stroke:#4A90D9
-    style MB fill:#fff4f0,stroke:#E8844A
+    class MB cls_MB
+    class MF cls_MF
+    classDef cls_MB fill:#fff4f0,stroke:#E8844A
+    classDef cls_MF fill:#f0f4ff,stroke:#4A90D9
 ```
-
-</div>
 
 ---
 
@@ -285,6 +281,7 @@ def train_model(model, optimizer, buffer, batch_size: int = 256, epochs: int = 5
         optimizer.step()
 ```
 
+</div>
 </div>
 
 ---

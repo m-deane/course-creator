@@ -88,6 +88,7 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
 ```
 
 </div>
+</div>
 
 
 ### Greedy Search (Forward Selection)
@@ -137,6 +138,7 @@ def forward_selection(X, y, model_fn, max_features=None):
     return selected, best_score
 ```
 
+</div>
 </div>
 
 ### Why Greedy Fails

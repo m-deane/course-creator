@@ -159,6 +159,7 @@ print(f"Total cost: ${results['cost_usd'].sum():.2f}")
 ```
 
 </div>
+</div>
 
 ### Parallel Batch Processing
 
@@ -312,6 +313,7 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 ```
 
 </div>
+</div>
 
 ### Chunked Processing for Large Texts
 
@@ -447,6 +449,7 @@ output_df = process_with_chunking(
 dataiku.Dataset("processed_long_reports").write_with_schema(output_df)
 ```
 
+</div>
 </div>
 
 ### Pipeline with Error Handling and Monitoring
@@ -638,6 +641,7 @@ summary = pipeline.process_dataset(
 ```
 
 </div>
+</div>
 
 ### Incremental Processing Pattern
 
@@ -728,6 +732,7 @@ incremental_llm_processing(
 )
 ```
 
+</div>
 </div>
 
 ## Common Pitfalls

@@ -61,6 +61,7 @@ connection_config = {
 ```
 
 </div>
+</div>
 
 ### Step 3: Configure Model Parameters
 
@@ -84,6 +85,7 @@ model_settings = {
 }
 ```
 
+</div>
 </div>
 
 ## Provider-Specific Configuration
@@ -125,6 +127,7 @@ openai_config = {
 ```
 
 </div>
+</div>
 
 ### Azure OpenAI
 
@@ -153,6 +156,7 @@ azure_config = {
 }
 ```
 
+</div>
 </div>
 
 ### AWS Bedrock
@@ -187,6 +191,7 @@ bedrock_config = {
 }
 ```
 
+</div>
 </div>
 
 ## Connection Testing
@@ -230,6 +235,7 @@ result = test_llm_connection("openai-production")
 print(f"Connection status: {result['status']}")
 ```
 
+</div>
 </div>
 
 ### Latency Benchmarking
@@ -276,6 +282,7 @@ def benchmark_connection(connection_name, n_requests=10):
 ```
 
 </div>
+</div>
 
 ## Connection Groups and Fallbacks
 
@@ -310,6 +317,7 @@ connection_group = {
 }
 ```
 
+</div>
 </div>
 
 ### Automatic Failover
@@ -358,6 +366,7 @@ class LLMConnectionManager:
         return status
 ```
 
+</div>
 </div>
 
 ## Cost Tracking
@@ -419,6 +428,7 @@ class TokenUsageTracker:
 ```
 
 </div>
+</div>
 
 ## Security Best Practices
 
@@ -449,6 +459,7 @@ api_key = project.get_variable("OPENAI_API_KEY")  # From project variables
 llm = dataiku.LLMConnection("openai-production")
 ```
 
+</div>
 </div>
 
 ### Access Control

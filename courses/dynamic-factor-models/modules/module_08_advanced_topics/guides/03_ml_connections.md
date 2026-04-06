@@ -323,6 +323,7 @@ results = compare_pca_autoencoder(X_data, n_components=r_true)
 ```
 
 </div>
+</div>
 
 ---
 
@@ -611,6 +612,7 @@ results = compare_linear_deep_autoencoder(X_data, n_factors=r)
 ```
 
 </div>
+</div>
 
 ---
 
@@ -815,6 +817,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
 </div>
 
 ---

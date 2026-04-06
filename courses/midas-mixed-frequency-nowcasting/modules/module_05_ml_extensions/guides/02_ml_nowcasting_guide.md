@@ -130,6 +130,7 @@ def flat_stack_features(df_high, df_low, target_col, m=12):
 ```
 
 </div>
+</div>
 
 **Drawback**: With 20 monthly series and 12 lags, this produces 240 features. Trees handle this via feature importance, but interpretability suffers.
 
@@ -173,6 +174,7 @@ def summary_features(series_lags):
 ```
 
 </div>
+</div>
 
 This reduces 12 monthly lags to 10 features per series — a 17× reduction while preserving key temporal information.
 
@@ -212,6 +214,7 @@ def pca_embedding(lag_matrix, n_components=3):
     return embedding, pca
 ```
 
+</div>
 </div>
 
 For daily financial data, the first 3 principal components typically capture 80–95% of variance.

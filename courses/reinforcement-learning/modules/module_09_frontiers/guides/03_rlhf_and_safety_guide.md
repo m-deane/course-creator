@@ -44,22 +44,19 @@ RLHF became the standard approach for aligning large language models after Instr
 </div>
 The following implementation builds on the approach above:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SFT["Step 1: Supervised Fine-Tuning\nFine-tune pretrained LM on\nhigh-quality demonstration data"] --> RM["Step 2: Reward Model Training\nCollect human preference pairs;\ntrain a reward model $r_\phi(x, y)$"]
     RM --> PPO["Step 3: RL Fine-Tuning\nOptimize LM policy $\pi_\theta$ against\nreward model using PPO\n(with KL penalty to SFT policy)"]
 
-    style SFT fill:#4A90D9,color:#fff
-    style RM fill:#E8844A,color:#fff
-    style PPO fill:#6ab04c,color:#fff
+    class PPO cls_PPO
+    class RM cls_RM
+    class SFT cls_SFT
+    classDef cls_PPO fill:#6ab04c,color:#fff
+    classDef cls_RM fill:#E8844A,color:#fff
+    classDef cls_SFT fill:#4A90D9,color:#fff
 ```
-
-</div>
 
 ---
 
@@ -152,6 +149,7 @@ def reward_model_loss(reward_model, batch: dict) -> torch.Tensor:
     return loss
 ```
 
+</div>
 </div>
 
 ---
@@ -265,6 +263,7 @@ class LagrangianSafeRL:
         self.lambda_multiplier = max(0.0, self.lambda_multiplier + self.lr_lambda * constraint_violation)
 ```
 
+</div>
 </div>
 
 **Convergence:** Under standard regularity conditions, the primal-dual iterates converge to the optimal constrained policy.

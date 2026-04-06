@@ -104,6 +104,7 @@ print(f"\nPooled OLS Bias: {pooled.params['x'] - true_beta:.4f}")
 
 
 </div>
+</div>
 
 ### Why Does Bias Occur?
 
@@ -156,6 +157,7 @@ plt.show()
 ```
 
 
+</div>
 </div>
 
 ## Serial Correlation Problem
@@ -214,6 +216,7 @@ demonstrate_serial_correlation(df, 'entity', 'time', 'y', ['x'])
 ```
 
 
+</div>
 </div>
 
 ## Consequences for Inference

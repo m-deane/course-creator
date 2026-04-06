@@ -90,6 +90,7 @@ plt.show()
 
 
 </div>
+</div>
 
 ### Within vs Between Variation
 
@@ -184,6 +185,7 @@ for name, value in slopes.items():
 
 
 </div>
+</div>
 
 ## Testing for Entity Effects
 
@@ -269,6 +271,7 @@ f_stat, p_value = plot_entity_effects(df, 'entity', 'y')
 ```
 
 
+</div>
 </div>
 
 ### Testing for Time Effects

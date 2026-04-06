@@ -199,6 +199,7 @@ def conjugate_gradient(Av, b, n_iters=10, tol=1e-10):
 ```
 
 </div>
+</div>
 
 ---
 

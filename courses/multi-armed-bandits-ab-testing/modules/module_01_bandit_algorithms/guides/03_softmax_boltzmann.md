@@ -446,6 +446,8 @@ Don't mix the two.
 - **Cross-Entropy Loss:** Related to softmax probability updates
 - **Multinomial Logit Model:** Discrete choice theory in economics
 
+
+
 ## Practice Problems
 
 ### 1. Conceptual Understanding

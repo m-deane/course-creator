@@ -630,6 +630,8 @@ def good_roulette_negative(population):
     probs = shifted / shifted.sum()
 ```
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -657,6 +659,8 @@ def good_roulette_negative(population):
 <div class="callout-key">
 
 <strong>Key Takeaway:</strong> Tournament selection is the safest default. It works for both minimization and maximization, is insensitive to fitness scaling, and provides easily tunable selection pressure via tournament size.
+
+
 
 
 ## Practice Problems

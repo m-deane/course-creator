@@ -680,6 +680,8 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 **Insight:** Understanding state-space representation of dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Essential
@@ -721,6 +723,8 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 
 
 ---
+
+
 
 ## Cross-References
 

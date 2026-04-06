@@ -564,6 +564,8 @@ print(f"  SE: {model_wins.std_errors['x']:.4f}")
    If you study firm growth and drop firms that exit, what bias is introduced?
    How to correct?
 
+
+
 ## Further Reading
 
 **Missing Data Theory:**

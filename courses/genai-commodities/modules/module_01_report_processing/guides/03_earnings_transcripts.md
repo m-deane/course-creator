@@ -689,6 +689,8 @@ def normalize_guidance(raw_value: str) -> dict:
 **Insight:** Understanding processing earnings call transcripts for commodity mentions is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 - **Earnings Call Transcript Analysis in Finance:**
@@ -729,6 +731,8 @@ def normalize_guidance(raw_value: str) -> dict:
 
 
 ---
+
+
 
 ## Cross-References
 

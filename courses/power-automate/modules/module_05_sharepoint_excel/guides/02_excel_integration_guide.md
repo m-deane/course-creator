@@ -536,6 +536,8 @@ See detailed comparison in the table above.
 - **Related to:** Module 03 — Variables, expressions, and `formatDateTime`
 
 
+
+
 ## Practice Questions
 
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.

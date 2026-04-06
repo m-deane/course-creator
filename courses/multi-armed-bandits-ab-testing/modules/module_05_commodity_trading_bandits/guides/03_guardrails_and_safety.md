@@ -683,6 +683,8 @@ Guardrails should be tight by default, but can be loosened in specific scenarios
 - **Risk budgeting**: Allocating risk, not just capital
 - **Circuit breakers**: Market-wide trading halts (macro version)
 
+
+
 ## Practice Problems
 
 ### Problem 1: Design Guardrails

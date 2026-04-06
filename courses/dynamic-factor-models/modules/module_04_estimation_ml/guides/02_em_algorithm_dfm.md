@@ -674,6 +674,8 @@ if __name__ == '__main__':
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./02_em_algorithm_dfm_slides.md">

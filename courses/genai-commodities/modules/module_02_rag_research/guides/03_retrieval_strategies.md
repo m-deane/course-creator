@@ -760,6 +760,8 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
 **Insight:** Understanding retrieval strategies for commodity analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Information Retrieval:**
@@ -800,6 +802,8 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
 
 
 ---
+
+
 
 ## Cross-References
 

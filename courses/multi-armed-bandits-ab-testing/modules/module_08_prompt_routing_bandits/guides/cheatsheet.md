@@ -378,6 +378,8 @@ for query in requests:
 
 ---
 
+
+
 ## Further Reading
 
 - Original article: "Bandits for Prompts" by Shenggang Li

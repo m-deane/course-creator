@@ -504,6 +504,8 @@ print("\nDescriptive statistics:")
 print(financial_panel.describe())
 ```
 
+
+
 ## Key Takeaways
 
 1. **Long format is standard** for panel regression - one row per entity-time observation

@@ -743,6 +743,8 @@ class CommodityDocumentProcessor:
 **Insight:** Understanding processing commodity documents for rag systems is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **PDF Processing:**
@@ -781,6 +783,8 @@ class CommodityDocumentProcessor:
 
 
 ---
+
+
 
 ## Cross-References
 

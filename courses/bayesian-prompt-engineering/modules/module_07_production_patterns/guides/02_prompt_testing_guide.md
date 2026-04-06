@@ -321,6 +321,8 @@ Negative sensitivity is possible when a condition introduces conflicting evidenc
 
 ---
 
+
+
 ## The A/B Testing Framework
 
 ### When to Run an A/B Test
@@ -431,6 +433,8 @@ With fewer than 20 inputs, input variance dominates the comparison. You are meas
 
 ---
 
+
+
 ## Connections
 
 - **Builds on:** Guide 01 (production patterns — templates, injection, libraries), Module 3 (6-layer condition stack structure)
@@ -458,4 +462,5 @@ With fewer than 20 inputs, input variance dominates the comparison. You are meas
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving how to test and measure prompt quality, what would be your first three steps to apply the techniques from this guide?
+
 

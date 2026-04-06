@@ -200,6 +200,8 @@ GATES provides a simple visual test: if the group averages are flat, there is no
 <strong>Warning:</strong> CATE estimation requires large samples. With small samples, the CATE function overfits and the BLP/GATES tests are underpowered. A sample of 5,000+ is a reasonable starting point for reliable CATE estimation.
 
 
+
+
 ## How to Visualise Treatment Effect Heterogeneity
 
 
@@ -257,6 +259,8 @@ plt.show()
 - Causal forests (Athey and Wager, 2019)
 - Meta-learners (S-learner, T-learner, X-learner)
 - Sorted effects (Chernozhukov et al., 2018)
+
+
 
 ## Practice Problems
 

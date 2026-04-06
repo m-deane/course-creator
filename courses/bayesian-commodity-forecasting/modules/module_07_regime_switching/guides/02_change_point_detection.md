@@ -572,6 +572,8 @@ with pm.Model() as inventory_changepoint:
 
 ---
 
+
+
 ## Common Pitfalls
 
 ### 1. Over-Detection (False Positives)
@@ -665,6 +667,8 @@ Design a "gradual transition" change point model for the introduction of biofuel
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving bayesian change point detection, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

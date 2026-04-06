@@ -645,6 +645,8 @@ You're forecasting copper prices with a GP model (100 inducing points, 5 kernel 
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -654,6 +656,8 @@ You're forecasting copper prices with a GP model (100 inducing points, 5 kernel 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving hamiltonian monte carlo for bayesian inference, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

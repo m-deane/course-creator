@@ -528,6 +528,8 @@ You're forecasting diesel and jet fuel prices. Both are distillates refined from
 2. Given a real-world scenario involving hierarchical models for energy commodities, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Gelman, A. & Hill, J. (2006)**. *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.

@@ -806,6 +806,8 @@ validator = WalkForwardValidator(expanding=True)
 validator = WalkForwardValidator(expanding=False)
 ```
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -829,6 +831,8 @@ validator = WalkForwardValidator(expanding=False)
 - Temporal validation in causal inference
 - Concept drift detection
 - Regime change detection
+
+
 
 ## Practice Problems
 

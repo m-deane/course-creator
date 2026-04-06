@@ -741,6 +741,8 @@ k|u| - \frac{1}{2}k^2 & |u| > k
 **Insight:** Understanding non-gaussian factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Summary
 
 **Key Takeaways:**
@@ -769,6 +771,8 @@ The final guide explores connections between factor models and machine learningâ
 
 
 ---
+
+
 
 ## Cross-References
 

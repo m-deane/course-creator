@@ -558,6 +558,8 @@ class SurrogateFitness:
 5. **Surrogate models** reduce computational cost by predicting fitness cheaply and only computing exact fitness when uncertain
 
 
+
+
 ## Practice Problems
 
 1. **NSGA-II Domination**

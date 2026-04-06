@@ -480,6 +480,8 @@ class PositionSizer:
 **Insight:** Understanding trading signal generation with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Structured signals** - convert LLM outputs to numeric signals with confidence
@@ -506,6 +508,8 @@ class PositionSizer:
 
 
 ---
+
+
 
 ## Cross-References
 

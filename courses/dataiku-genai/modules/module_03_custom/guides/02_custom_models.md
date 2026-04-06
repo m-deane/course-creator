@@ -763,6 +763,8 @@ result2 = cached_llm.complete("Analyze this report...")  # Free!
 - Middleware architectures
 - Error handling and resilience patterns
 
+
+
 ## Practice Problems
 
 1. **Validation Wrapper**

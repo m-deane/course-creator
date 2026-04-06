@@ -303,6 +303,8 @@ class LoopController:
 <strong>Pitfall 4 — No error handling:</strong> Single tool failure crashes the agent. Wrap tool execution in try/catch, provide error feedback to model.
 
 
+
+
 ## Practice Questions
 
 1. **Implement:** Build an agent with a calculator tool. Have it solve multi-step math problems.

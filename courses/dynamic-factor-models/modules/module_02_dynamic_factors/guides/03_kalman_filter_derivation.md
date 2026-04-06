@@ -854,6 +854,8 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 **Insight:** Understanding kalman filter is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Essential
@@ -899,6 +901,8 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 
 
 ---
+
+
 
 ## Cross-References
 

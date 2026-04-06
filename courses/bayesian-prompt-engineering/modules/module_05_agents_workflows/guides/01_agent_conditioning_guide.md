@@ -385,6 +385,8 @@ Not every condition is relevant at every step. Over-stuffing contexts degrades a
 2. Given a real-world scenario involving agent conditioning: how bayesian conditions flow through multi-step workflows, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 - Anthropic: "Building effective agents" (contexts and memory patterns)

@@ -302,6 +302,8 @@ The naive model overstates the benefit of exercise because healthier people exer
 - **Related to:** Randomized controlled trials, econometrics, epidemiology
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

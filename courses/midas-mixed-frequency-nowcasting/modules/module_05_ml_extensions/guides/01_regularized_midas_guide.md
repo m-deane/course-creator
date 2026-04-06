@@ -497,6 +497,8 @@ where $\hat{k}(\lambda)$ is the effective degrees of freedom (number of nonzero 
 
 ---
 
+
+
 ## Summary
 
 Regularized MIDAS extends classical MIDAS to the high-dimensional setting by adding penalty terms that control coefficient magnitude and sparsity:

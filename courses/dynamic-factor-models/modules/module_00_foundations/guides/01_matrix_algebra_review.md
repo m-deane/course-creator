@@ -363,6 +363,8 @@ This simplifies expected value calculations in factor models.
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./01_matrix_algebra_review_slides.md">

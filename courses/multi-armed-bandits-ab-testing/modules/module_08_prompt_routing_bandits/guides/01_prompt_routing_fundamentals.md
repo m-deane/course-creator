@@ -384,6 +384,8 @@ A prompt router does the same thing — but with prompt templates instead of hum
 - **GenAI for Commodities:** Prompt routing is part of production RAG system architecture
 - **Bayesian Commodity Forecasting:** Same Bayesian updating logic, different application
 
+
+
 ## Practice Problems
 
 ### Problem 1: Prompt Arm Design

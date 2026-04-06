@@ -507,6 +507,8 @@ When designing a reward for your commodity bandit:
 - **Portfolio optimization**: Modern Portfolio Theory objectives
 - **Reinforcement learning**: Reward shaping in RL
 
+
+
 ## Practice Problems
 
 ### Problem 1: Design Your Reward

@@ -461,6 +461,8 @@ Apply Kalman filter to:
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -470,6 +472,8 @@ Apply Kalman filter to:
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving the kalman filter: optimal bayesian updating for linear-gaussian systems, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading
@@ -506,6 +510,8 @@ Apply Kalman filter to:
 **Next:** Implement stochastic volatility models using the Kalman filter in `03_stochastic_volatility_pymc.ipynb`
 
 ---
+
+
 
 ## Cross-References
 

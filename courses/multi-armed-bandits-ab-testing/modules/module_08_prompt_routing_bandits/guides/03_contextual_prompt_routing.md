@@ -569,6 +569,8 @@ The math is identical. The application is different.
 **Leads to:**
 - **Guide 04:** Real-world case studies of contextual routing in commodity systems
 
+
+
 ## Practice Problems
 
 ### Problem 1: Feature Engineering

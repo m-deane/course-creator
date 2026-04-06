@@ -359,6 +359,8 @@ negative_map = torch.relu(-heatmap_signed)
 2. Given a real-world scenario involving guide 01: gradcam, guided gradcam, and layergradcam, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 GradCAM provides fast, spatially coherent class activation maps by weighting convolutional feature maps by their gradient importance. Its key properties:

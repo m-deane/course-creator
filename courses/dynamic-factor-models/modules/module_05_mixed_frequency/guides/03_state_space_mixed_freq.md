@@ -669,6 +669,8 @@ for n_months in [1, 2, 3]:
 **Insight:** Understanding state-space mixed-frequency dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Summary
 
 **Key Takeaways:**
@@ -694,6 +696,8 @@ The final guide covers nowcasting practice, including ragged-edge evaluation, re
 
 
 ---
+
+
 
 ## Cross-References
 

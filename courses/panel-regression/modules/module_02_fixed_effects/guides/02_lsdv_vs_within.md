@@ -383,6 +383,8 @@ print("\nRecommended specification:")
 print(final_model.summary.tables[1])
 ```
 
+
+
 ## Key Takeaways
 
 1. **LSDV and within give identical coefficients** - they solve the same problem

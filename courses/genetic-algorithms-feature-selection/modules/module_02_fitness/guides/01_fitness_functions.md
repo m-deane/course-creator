@@ -535,6 +535,8 @@ class CachedFitnessEvaluator:
 5. **Cache evaluations** - same chromosome should return same fitness
 
 
+
+
 ## Practice Problems
 
 ### Problem 1: Fitness Function Design Exercise

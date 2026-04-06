@@ -478,6 +478,8 @@ def safe_json_parse(text):
 **Insight:** Understanding environment setup for genai commodities trading is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 - **Anthropic API Documentation:** https://docs.anthropic.com/
@@ -513,6 +515,8 @@ def safe_json_parse(text):
 
 
 ---
+
+
 
 ## Cross-References
 

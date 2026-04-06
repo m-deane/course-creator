@@ -276,6 +276,8 @@ Some heads specialize in: next-token attention, previous-token attention, [CLS]-
 2. Given a real-world scenario involving attention weights vs. integrated gradients: why they disagree, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 | Method | Theoretical basis | Practical speed | Use case |

@@ -376,6 +376,8 @@ See [Guardrails Guide](03_guardrails_and_safety.md) for implementations.
 - **Risk parity**: Alternative allocation framework (static, not adaptive)
 - **Kelly criterion**: Optimal bet sizing (related but different objective)
 
+
+
 ## Practice Problems
 
 ### Problem 1: Core vs Bandit Split

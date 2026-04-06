@@ -693,6 +693,8 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 <strong>Key Takeaway:</strong> Diversity-based adaptation is the most robust strategy: measure population diversity, increase mutation when diversity drops, decrease when diversity is high. This simple feedback loop eliminates 80% of the parameter tuning burden.
 
 
+
+
 ## Practice Problems
 
 1. **Diversity Calculation**

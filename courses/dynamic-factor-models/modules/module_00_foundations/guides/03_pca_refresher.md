@@ -506,6 +506,8 @@ print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 **Insight:** Understanding principal component analysis refresher is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 - Jolliffe, I.T. (2002). *Principal Component Analysis*, 2nd ed. Springer.
@@ -526,6 +528,8 @@ print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 
 
 ---
+
+
 
 ## Cross-References
 

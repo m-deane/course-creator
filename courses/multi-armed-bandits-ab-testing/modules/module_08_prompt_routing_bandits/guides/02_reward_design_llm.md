@@ -547,6 +547,8 @@ A reward designed for data extraction will fail for trading signal generation.
 - **Guide 03:** Contextual routing uses reward as the optimization target
 - **Guide 04:** Case studies show reward design in real commodity systems
 
+
+
 ## Practice Problems
 
 ### Problem 1: Design a Reward Function

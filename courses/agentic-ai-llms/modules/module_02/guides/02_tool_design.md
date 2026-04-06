@@ -683,6 +683,8 @@ def test_tool_behavior(tool_name: str, test_cases: list[dict]) -> dict:
 *Tool design is UX design for AI. Your tools are the interface between natural language intent and programmatic action. Design them thoughtfully.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

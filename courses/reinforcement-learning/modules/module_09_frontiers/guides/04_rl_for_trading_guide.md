@@ -533,6 +533,8 @@ A policy trained in a bull market may fail catastrophically in a bear market. Re
 ---
 
 
+
+
 ## Practice Questions
 
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.

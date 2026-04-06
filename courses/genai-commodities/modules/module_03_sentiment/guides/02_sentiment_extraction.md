@@ -686,6 +686,8 @@ print(f"Trend: {aggregate['trend']}")
 **Insight:** Understanding extracting sentiment from commodity text is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Sentiment Analysis Fundamentals:**
@@ -722,6 +724,8 @@ print(f"Trend: {aggregate['trend']}")
 
 
 ---
+
+
 
 ## Cross-References
 

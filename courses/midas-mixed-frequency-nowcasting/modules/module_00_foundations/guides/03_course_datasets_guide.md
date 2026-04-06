@@ -427,6 +427,8 @@ ip_quarterly_periods = ip_monthly.index.to_period('Q')
 
 ---
 
+
+
 ## Further Reading
 
 - FRED Documentation: https://fred.stlouisfed.org/docs/api/fred/

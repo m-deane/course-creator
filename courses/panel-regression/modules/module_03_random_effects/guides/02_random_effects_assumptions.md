@@ -519,6 +519,8 @@ breusch_pagan_lm_test(df_example, 'entity', 'y', ['x'])
 | Entity effect correlated with X | ✗ No (use FE) |
 | Hausman test rejects RE | ✗ No (use FE) |
 
+
+
 ## Key Takeaways
 
 1. **RE assumes $E[u_i|X_{it}] = 0$** - entity effects uncorrelated with regressors

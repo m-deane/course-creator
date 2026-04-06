@@ -568,6 +568,8 @@ print(cum_irf[-1])
 **Insight:** Understanding from static to dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Essential
@@ -609,6 +611,8 @@ print(cum_irf[-1])
 
 
 ---
+
+
 
 ## Cross-References
 

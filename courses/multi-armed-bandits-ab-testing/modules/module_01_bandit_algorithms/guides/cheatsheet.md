@@ -485,6 +485,8 @@ Numerical errors (NaN, inf):
 - [ ] UCB: add small constant to denominator (N + 1e-10)
 - [ ] Check reward normalization (should be bounded)
 
+
+
 ## One-Page Visual Summary
 
 ```

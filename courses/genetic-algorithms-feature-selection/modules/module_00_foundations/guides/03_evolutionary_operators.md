@@ -537,6 +537,8 @@ The introduction stated that removing any operator "breaks the system." Here is 
 
 The three-operator system works because selection provides direction, crossover provides speed (via building block combination), and mutation provides insurance (against diversity loss). The balance between them -- controlled by tournament size, crossover probability, and mutation rate -- determines whether the GA converges quickly to a good solution or gets stuck.
 
+
+
 ## Key Takeaways
 
 <div class="callout-key">
@@ -556,6 +558,8 @@ The three-operator system works because selection provides direction, crossover 
 6. **Adaptive operators** can improve performance by responding to population state
 
 7. **All three operators are necessary** -- removing any one causes a specific, predictable failure mode
+
+
 
 
 ## Practice Problems

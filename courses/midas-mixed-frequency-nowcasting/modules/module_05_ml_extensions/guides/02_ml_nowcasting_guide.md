@@ -695,6 +695,8 @@ def midas_features_for_ml(beta_weights, x_high_lags):
 
 ---
 
+
+
 ## Summary
 
 Machine learning methods extend MIDAS nowcasting to nonlinear settings:

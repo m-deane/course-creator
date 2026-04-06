@@ -526,6 +526,8 @@ test_cases = [
 *Prompting is a skill that improves with practice. Start simple, test systematically, and iterate based on failures. The best prompts emerge from understanding how the model interprets your instructions.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

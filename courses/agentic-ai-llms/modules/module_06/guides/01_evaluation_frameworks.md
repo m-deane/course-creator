@@ -589,6 +589,8 @@ def generate_evaluation_report(results: dict) -> str:
 *Evaluation is not optional—it's how you prove your agent works. Build evaluation into your development cycle and run it continuously.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

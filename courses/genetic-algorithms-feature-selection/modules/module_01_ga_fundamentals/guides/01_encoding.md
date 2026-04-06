@@ -594,6 +594,8 @@ def fast_crossover(parent1, parent2):
 
 **When integer is wrong**: Complex crossover/mutation logic needed
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -616,6 +618,8 @@ def fast_crossover(parent1, parent2):
 - Permutation encoding (for ordered problems)
 - Real-valued encoding (for continuous parameters)
 - Tree encoding (for genetic programming)
+
+
 
 ## Practice Problems
 

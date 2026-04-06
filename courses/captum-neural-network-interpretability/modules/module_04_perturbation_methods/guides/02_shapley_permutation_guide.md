@@ -418,6 +418,8 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
 2. Given a real-world scenario involving guide 02: shapley values and permutation feature importance, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 1. **Shapley values** are the unique attribution satisfying Efficiency, Symmetry, Dummy, and Additivity axioms

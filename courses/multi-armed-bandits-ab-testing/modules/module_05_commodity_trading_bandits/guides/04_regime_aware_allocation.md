@@ -677,6 +677,8 @@ See **Hidden Markov Models course** in this repo for full HMM implementation.
 - **State-space models**: Latent state dynamics
 - **Transfer learning**: Knowledge across related regimes
 
+
+
 ## Practice Problems
 
 ### Problem 1: Design Regime Classifier

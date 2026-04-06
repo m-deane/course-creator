@@ -606,6 +606,8 @@ Include a summary of both stages: who approved, when, and any comments.
 ---
 
 
+
+
 ## Practice Questions
 
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.

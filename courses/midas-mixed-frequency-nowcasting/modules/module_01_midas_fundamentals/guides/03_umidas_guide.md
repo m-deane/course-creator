@@ -391,6 +391,8 @@ def estimate_regularized_umidas(Y, X, method='ridge'):
 
 ---
 
+
+
 ## Further Reading
 
 - Foroni, C., Marcellino, M., & Schumacher, C. (2015). "Unrestricted mixed data sampling (MIDAS): MIDAS regressions with unrestricted lag polynomials." *Journal of the Royal Statistical Society: Series A*, 178(1), 57–82.

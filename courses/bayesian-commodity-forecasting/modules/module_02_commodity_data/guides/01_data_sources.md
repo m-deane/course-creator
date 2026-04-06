@@ -382,6 +382,8 @@ data/
 2. Given a real-world scenario involving commodity data sources guide, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 - EIA API Documentation: https://www.eia.gov/opendata/

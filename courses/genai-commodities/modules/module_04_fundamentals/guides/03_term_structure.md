@@ -627,6 +627,8 @@ def analyze_curve_evolution(futures_data, dates):
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./03_term_structure_slides.md">

@@ -440,6 +440,8 @@ test_cases = [
 **Insight:** Understanding prompt engineering for commodity analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Structure prompts clearly** with context, task, constraints, and output format
@@ -468,6 +470,8 @@ test_cases = [
 
 
 ---
+
+
 
 ## Cross-References
 

@@ -361,6 +361,8 @@ def bootstrap_se(boot_dist, param_names=None):
 
 ---
 
+
+
 ## Practice Problems
 
 1. A MIDAS residual series has autocorrelation $\hat{\rho}_1 = 0.25$ at lag 1. How does this affect OLS standard errors relative to true standard errors? (Hint: derive the approximate inflation factor under AR(1) errors.)

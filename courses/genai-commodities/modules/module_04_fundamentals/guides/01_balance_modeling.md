@@ -492,6 +492,8 @@ Return JSON:
 **Insight:** Understanding supply/demand balance modeling with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Balance = Price** - supply/demand balances are the fundamental driver
@@ -518,6 +520,8 @@ Return JSON:
 
 
 ---
+
+
 
 ## Cross-References
 

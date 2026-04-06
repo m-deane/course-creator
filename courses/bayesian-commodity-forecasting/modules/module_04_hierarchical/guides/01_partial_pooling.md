@@ -288,6 +288,8 @@ Always examine how much shrinkage occurred—extreme shrinkage may indicate mode
 2. Given a real-world scenario involving partial pooling: the logic of hierarchical models, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Gelman & Hill** *Data Analysis Using Regression and Multilevel/Hierarchical Models* — Definitive reference

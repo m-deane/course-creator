@@ -508,6 +508,8 @@ print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 **Insight:** Understanding temporal aggregation in mixed-frequency models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Summary
 
 **Key Takeaways:**
@@ -533,6 +535,8 @@ The next guide introduces MIDAS regression, which provides flexible weighting sc
 
 
 ---
+
+
 
 ## Cross-References
 

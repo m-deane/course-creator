@@ -380,6 +380,8 @@ plt.show()
 
 ---
 
+
+
 ## 6. Validating Model Behavior: Does It Make Business Sense?
 
 Attributions are only useful if you check them against domain knowledge. Run through this checklist after generating attributions:

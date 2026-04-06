@@ -374,6 +374,8 @@ staleness = t - last_observed
 scores = means - lambda_penalty * staleness
 ```
 
+
+
 ## Further Reading Pointers
 
 - **Non-Stationary:** Garivier & Moulines (2011), "On Upper-Confidence Bound Policies for Switching Bandit Problems"

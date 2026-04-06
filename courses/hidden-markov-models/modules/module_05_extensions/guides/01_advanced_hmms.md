@@ -424,6 +424,8 @@ class ExplicitDurationHMM:
 **Insight:** Understanding advanced hmm variants is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Sticky HMMs** prevent excessive regime switching
@@ -450,6 +452,8 @@ class ExplicitDurationHMM:
 
 
 ---
+
+
 
 ## Cross-References
 

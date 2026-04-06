@@ -520,6 +520,8 @@ compare_dynamic_panel_methods(true_rho=0.6, N=100, T=10)
 | 20 ≤ T < 50 | Low | FE often acceptable |
 | T ≥ 50 | Minimal | Standard FE is fine |
 
+
+
 ## Key Takeaways
 
 1. **Nickell bias is always negative** - FE underestimates persistence

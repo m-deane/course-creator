@@ -262,6 +262,8 @@ Use this to design your memory system:
 <strong>Pitfall 4 — Wrong form for the function:</strong> Using RAG for rapidly-changing task state, or context for static knowledge. Match memory form to function using the matrix above.
 
 
+
+
 ## Practice Questions
 
 1. **Conceptual:** You're building a customer support agent. Map each of these to a memory type: (a) product documentation, (b) customer's name and account info, (c) current ticket being discussed, (d) past interactions with this customer.

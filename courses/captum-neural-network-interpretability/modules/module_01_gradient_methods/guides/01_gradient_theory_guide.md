@@ -306,6 +306,8 @@ None of these methods satisfies both axioms. This motivates Integrated Gradients
 
 ---
 
+
+
 ## 6. The Noisy Gradient Problem
 
 Gradients of deep networks are notoriously noisy. The gradient at a specific input is highly sensitive to local perturbations, producing "salt and pepper" noise in saliency maps.
@@ -358,6 +360,8 @@ SmoothGrad is covered in depth in Module 02 (Notebook 03).
 
 ---
 
+
+
 ## Common Pitfalls
 
 - **Confusing saliency with importance:** Saliency measures local sensitivity, not global importance. A feature with small gradient can still be important if the model is far from saturation.
@@ -387,6 +391,8 @@ SmoothGrad is covered in depth in Module 02 (Notebook 03).
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving gradient-based attribution methods: theory, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

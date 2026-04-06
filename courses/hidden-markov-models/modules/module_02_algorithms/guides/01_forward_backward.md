@@ -376,6 +376,8 @@ def forward_vectorized(
 **Insight:** Understanding forward-backward algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Forward algorithm** computes P(O|λ) efficiently via dynamic programming
@@ -402,6 +404,8 @@ def forward_vectorized(
 
 
 ---
+
+
 
 ## Cross-References
 

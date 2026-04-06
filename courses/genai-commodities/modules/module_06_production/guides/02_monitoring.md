@@ -789,6 +789,8 @@ if final_status['drift']:
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./02_monitoring_slides.md">

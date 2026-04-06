@@ -284,6 +284,8 @@ CausalPy uses PyMC, which uses the **No-U-Turn Sampler (NUTS)** by default. NUTS
 - **Related to:** Bayesian statistics, MCMC, ArviZ
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

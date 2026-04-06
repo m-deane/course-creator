@@ -932,6 +932,8 @@ def rolling_stationarity_test(series, window=100):
     pass
 ```
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -955,6 +957,8 @@ def rolling_stationarity_test(series, window=100):
 - Granger causality
 - ARIMA modeling
 - Regime-switching models
+
+
 
 ## Practice Problems
 

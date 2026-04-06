@@ -584,6 +584,8 @@ plt.show()
 2. Given a real-world scenario involving regime-switching volatility models, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Foundational:**
@@ -617,6 +619,8 @@ plt.show()
 *"Volatility isn't constant—it switches between regimes. Model both calm and crisis periods to capture true risk."*
 
 ---
+
+
 
 ## Cross-References
 

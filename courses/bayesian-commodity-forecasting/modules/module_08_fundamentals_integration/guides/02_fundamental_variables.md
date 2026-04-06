@@ -619,6 +619,8 @@ for i, idx in enumerate(sorted_idx):
 2. Given a real-world scenario involving fundamental variables in commodity forecasting, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Economic Theory:**
@@ -650,6 +652,8 @@ for i, idx in enumerate(sorted_idx):
 *"Fundamentals explain why prices move. Integrating them transforms forecasting from pattern recognition to economic reasoning."*
 
 ---
+
+
 
 ## Cross-References
 

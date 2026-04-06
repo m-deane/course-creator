@@ -900,6 +900,8 @@ print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 **Insight:** Understanding structural identification in factor-augmented models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## 9. Further Reading
 
 ### Identification Theory
@@ -956,6 +958,8 @@ print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 
 
 ---
+
+
 
 ## Cross-References
 

@@ -414,6 +414,8 @@ plot_markov_chain(mc, states[:100])
 **Insight:** Understanding markov chains foundations is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Markov property** enables tractable analysis of sequential data
@@ -440,6 +442,8 @@ plot_markov_chain(mc, states[:100])
 
 
 ---
+
+
 
 ## Cross-References
 

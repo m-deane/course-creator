@@ -238,6 +238,8 @@ model = XLinear(
 
 ---
 
+
+
 ## 5. Hyperparameter Tuning Workflow
 
 XLinear has five hyperparameters that materially affect accuracy. Tune them in this order:
@@ -316,6 +318,8 @@ model = XLinear(h=96, input_size=96, n_series=7,
 ```
 
 ---
+
+
 
 ## 6. Dataset Preparation for XLinear
 

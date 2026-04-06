@@ -297,6 +297,8 @@ class AgentMemory:
 <strong>Pitfall 3 — No evolution:</strong> Memories become stale and contradictory. Implement decay, consolidation, and pruning.
 
 
+
+
 ## Practice Questions
 
 1. **Design:** Create a formation policy for a customer support agent. What should be remembered? What filtered out?

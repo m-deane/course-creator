@@ -112,6 +112,8 @@ beta[arm] += 1
 
 *Normal-Normal: τ₁ = τ₀ + n/σ², μ₁ = (τ₀μ₀ + nμ̂/σ²)/τ₁, σ₁² = 1/τ₁
 
+
+
 ## Posterior Update Formulas
 
 <div class="callout-warning">
@@ -156,6 +158,8 @@ Posterior: λ ~ Gamma(α₀ + Σxᵢ, β₀ + n)
 Mean: α/β
 Variance: α/β²
 ```
+
+
 
 ## Thompson Sampling vs UCB
 
@@ -325,6 +329,8 @@ import arviz as az
 3. **Check for degenerate posteriors** — Very small variance means over-confidence
 4. **Compare to empirical means** — Posterior means should match sample means (eventually)
 5. **Set random seed** — Reproducibility for debugging
+
+
 
 ## Further Reading
 

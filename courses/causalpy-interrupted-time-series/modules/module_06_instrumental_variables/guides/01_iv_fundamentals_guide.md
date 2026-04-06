@@ -314,3 +314,4 @@ The exclusion restriction cannot be tested — it requires theoretical justifica
 ---
 
 **Next:** [02 — Advanced Designs: 2SLS, Weak Instruments, Combined Designs](02_advanced_designs_guide.md)
+

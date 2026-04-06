@@ -295,6 +295,8 @@ Notice: 89% of traffic went to the best variant (B) by the end.
 - **Creator Bandit Playbook (Guide 01):** Same framework, different domain — conversions instead of content engagement
 - **Arm Management (Guide 03):** How to add new landing pages without disrupting the bandit
 
+
+
 ## Practice Problems
 
 ### Problem 1: Calculate Opportunity Cost (Quantitative)

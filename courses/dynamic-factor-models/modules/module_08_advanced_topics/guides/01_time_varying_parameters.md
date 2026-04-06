@@ -810,6 +810,8 @@ The next guide explores non-Gaussian factor models—relaxing normality to handl
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./01_time_varying_parameters_slides.md">

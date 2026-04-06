@@ -581,6 +581,8 @@ Marginal quantiles (what MQLoss produces) sit at step 3. They are necessary — 
 
 ---
 
+
+
 ## Key Takeaways
 
 1. **Marginal quantiles describe per-step uncertainty** — they are correct for single-step decisions.

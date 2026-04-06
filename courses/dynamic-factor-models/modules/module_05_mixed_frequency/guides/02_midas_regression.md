@@ -574,6 +574,8 @@ where $\hat{F}_t$ are factors extracted from many high-frequency predictors.
 **Insight:** Understanding midas regression is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Summary
 
 **Key Takeaways:**
@@ -599,6 +601,8 @@ The next guide integrates MIDAS concepts into state-space DFMs, showing how to e
 
 
 ---
+
+
 
 ## Cross-References
 

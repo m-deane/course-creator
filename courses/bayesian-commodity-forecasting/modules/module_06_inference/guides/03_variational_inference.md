@@ -532,6 +532,8 @@ with torch.no_grad():
 2. Given a real-world scenario involving variational inference for bayesian models, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Foundational Papers:**
@@ -565,6 +567,8 @@ with torch.no_grad():
 *"Variational inference trades sampling for optimization: instead of exploring the posterior, find the best simple approximation. Faster but approximate."*
 
 ---
+
+
 
 ## Cross-References
 

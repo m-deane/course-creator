@@ -390,6 +390,8 @@ A common pitfall: evaluating nowcasts against revised GDP rather than advance GD
 
 ---
 
+
+
 ## Summary
 
 GDP nowcasting in practice requires:

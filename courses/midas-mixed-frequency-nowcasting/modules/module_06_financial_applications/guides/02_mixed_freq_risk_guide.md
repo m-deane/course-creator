@@ -491,6 +491,8 @@ For daily RV computed from intraday data:
 
 ---
 
+
+
 ## Summary
 
 Mixed-frequency risk models apply MIDAS to three important financial applications:

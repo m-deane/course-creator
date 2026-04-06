@@ -329,6 +329,8 @@ GP uncertainty may not increase fast enough outside training range.
 2. Given a real-world scenario involving gaussian process fundamentals, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Rasmussen & Williams** *Gaussian Processes for Machine Learning* — Free online, definitive reference

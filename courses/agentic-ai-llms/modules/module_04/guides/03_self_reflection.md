@@ -421,6 +421,8 @@ Synthesize the best response considering both perspectives:"""
 *Self-reflection transforms agents from single-shot responders to iterative improvers. The best agents question their own outputs.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

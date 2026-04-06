@@ -542,6 +542,8 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 - **Symptom**: Cannot compute $\hat{R}$, miss multimodality
 - **Solution**: Always run ≥4 chains from dispersed initial values
 
+
+
 ## Connections
 
 **Builds on:**
@@ -617,6 +619,8 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 2. Given a real-world scenario involving convergence diagnostics for mcmc, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Foundational:**
@@ -648,6 +652,8 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 *"Convergence diagnostics ensure your MCMC samples are reliable. No diagnostics = no trust in posterior inference."*
 
 ---
+
+
 
 ## Cross-References
 

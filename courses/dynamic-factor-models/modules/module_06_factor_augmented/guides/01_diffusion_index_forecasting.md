@@ -724,6 +724,8 @@ factors_test = pca.transform(X_test)  # Uses only training loadings
 **Insight:** Understanding diffusion index forecasting is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## 10. Further Reading
 
 ### Foundational Papers
@@ -769,6 +771,8 @@ factors_test = pca.transform(X_test)  # Uses only training loadings
 
 
 ---
+
+
 
 ## Cross-References
 

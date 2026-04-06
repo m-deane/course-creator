@@ -488,6 +488,8 @@ def backtest_bandit(data, bandit, reward_func, rebalance_freq='W'):
 - [Guardrails](03_guardrails_and_safety.md) - Safety constraints
 - [Regime-Aware](04_regime_aware_allocation.md) - Contextual extensions
 
+
+
 ## Quick Start
 
 **Fastest path to working system:**

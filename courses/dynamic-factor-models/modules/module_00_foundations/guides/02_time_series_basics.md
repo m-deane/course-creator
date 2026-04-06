@@ -524,6 +524,8 @@ This enables:
 **Insight:** Understanding time series basics for factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 - Hamilton, J.D. (1994). *Time Series Analysis*. Princeton. Chapters 2-3, 10-11.
@@ -544,6 +546,8 @@ This enables:
 
 
 ---
+
+
 
 ## Cross-References
 

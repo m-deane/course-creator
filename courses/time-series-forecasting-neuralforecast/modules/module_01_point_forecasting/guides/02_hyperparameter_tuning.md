@@ -306,6 +306,8 @@ model = NHITS(h=7, input_size=28, max_steps=2000, learning_rate=1e-4)
 
 ---
 
+
+
 ## Cross-Validation: Honest Evaluation
 
 A train/test split on a time series is deceptive — the model never saw the "future" during training, but a single test window may be unrepresentative. Rolling window cross-validation gives a better picture.

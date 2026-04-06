@@ -704,6 +704,8 @@ Based on these historical patterns, provide analysis as JSON:
 **Insight:** Understanding storage analysis for commodities with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Crude Oil Storage:**
@@ -740,6 +742,8 @@ Based on these historical patterns, provide analysis as JSON:
 
 
 ---
+
+
 
 ## Cross-References
 

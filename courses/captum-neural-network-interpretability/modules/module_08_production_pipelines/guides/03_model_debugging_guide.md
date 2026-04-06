@@ -555,6 +555,8 @@ def generate_attribution_report(
 
 ---
 
+
+
 ## 9. Monitoring Attribution Drift
 
 Attribution patterns shift when the data distribution shifts. Monitoring attribution statistics over time detects distribution drift before accuracy degrades.
@@ -632,6 +634,8 @@ class AttributionDriftMonitor:
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -641,6 +645,8 @@ class AttributionDriftMonitor:
 1. Explain in your own words the key difference between the concepts covered in "Why Attribution-Based Debugging?" and why it matters in practice.
 
 2. Given a real-world scenario involving model debugging with attribution methods, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Summary

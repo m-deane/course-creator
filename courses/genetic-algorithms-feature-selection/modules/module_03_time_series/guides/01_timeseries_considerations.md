@@ -454,6 +454,8 @@ def ga_with_lag_features(X, y, feature_names, max_lag=5):
 5. **Multi-horizon testing** ensures robust feature selection
 
 
+
+
 ## Practice Problems
 
 ### Problem 1: Conceptual — Identifying Look-Ahead Bias

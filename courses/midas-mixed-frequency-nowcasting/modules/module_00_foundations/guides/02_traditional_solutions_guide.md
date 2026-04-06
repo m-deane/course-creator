@@ -385,6 +385,8 @@ The bias is zero only if the true weight function happens to equal the imposed a
 
 ---
 
+
+
 ## Further Reading
 
 - Chow, G., & Lin, A. (1971). "Best linear unbiased interpolation, distribution, and extrapolation of time series by related series." *Review of Economics and Statistics*, 53(4), 372–375.

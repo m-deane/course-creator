@@ -369,3 +369,4 @@ The `epsilon` parameter defines the neighbourhood of the cutoff used for the tre
 ---
 
 **Next:** [02 — Bandwidth Selection and Sensitivity Analysis](02_bandwidth_selection_guide.md)
+

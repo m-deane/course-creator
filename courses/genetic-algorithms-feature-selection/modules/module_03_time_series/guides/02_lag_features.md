@@ -842,6 +842,8 @@ lags = list(range(1, 8))
 lags = list(range(1, 8)) + [30, 60, 90, 365]  # Daily data
 ```
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -865,6 +867,8 @@ lags = list(range(1, 8)) + [30, 60, 90, 365]  # Daily data
 - Vector autoregression (VAR)
 - Distributed lag models
 - Impulse response functions
+
+
 
 ## Practice Problems
 

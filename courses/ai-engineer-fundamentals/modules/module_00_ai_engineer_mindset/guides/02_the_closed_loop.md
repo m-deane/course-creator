@@ -355,6 +355,8 @@ return graceful_failure("Max iterations reached")
 <strong>Pitfall 3 — Memory Bloat:</strong> Storing everything fills context and slows retrieval. Use selective storage, summarization, and decay policies.
 
 
+
+
 ## Implementation Skeleton
 
 

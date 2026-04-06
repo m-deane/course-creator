@@ -571,6 +571,8 @@ print(df_with_lags[['entity_id', 'time', 'y', 'y_lag1', 'y_lag2']].head(15))
 **Key insight:** Using `.groupby(entity_col).shift()` ensures lags are computed within each entity, preventing "leakage" across entities.
 </details>
 
+
+
 ## Further Reading
 
 **Essential:**

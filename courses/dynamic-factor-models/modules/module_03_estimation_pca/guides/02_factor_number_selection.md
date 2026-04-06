@@ -820,6 +820,8 @@ Selecting the number of factors is a model selection problem requiring trade-off
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./02_factor_number_selection_slides.md">

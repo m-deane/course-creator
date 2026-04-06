@@ -678,6 +678,8 @@ class WASDERevision:
 **Insight:** Understanding parsing usda agricultural reports is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 - **USDA WASDE Archives:** https://www.usda.gov/oce/commodity/wasde/
@@ -714,6 +716,8 @@ class WASDERevision:
 
 
 ---
+
+
 
 ## Cross-References
 

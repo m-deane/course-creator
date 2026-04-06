@@ -737,6 +737,8 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 **Insight:** Understanding backtesting llm-generated signals is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Backtesting Fundamentals:**
@@ -777,6 +779,8 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 
 
 ---
+
+
 
 ## Cross-References
 

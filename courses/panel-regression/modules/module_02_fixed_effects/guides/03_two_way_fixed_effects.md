@@ -428,6 +428,8 @@ print("\nModel Comparison:")
 print(comparison)
 ```
 
+
+
 ## Key Takeaways
 
 1. **TWFE controls for common shocks** that affect all entities in a time period

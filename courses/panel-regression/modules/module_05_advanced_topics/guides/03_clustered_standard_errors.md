@@ -532,6 +532,8 @@ PRACTICAL RECOMMENDATIONS FOR CLUSTERING:
 clustering_recommendations()
 ```
 
+
+
 ## Key Takeaways
 
 1. **Always cluster** standard errors in panel data

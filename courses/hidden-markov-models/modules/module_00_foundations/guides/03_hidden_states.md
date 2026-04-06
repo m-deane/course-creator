@@ -574,6 +574,8 @@ problems.learning(observations)
 **Insight:** Understanding hidden states is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Foundational Papers
@@ -635,6 +637,8 @@ problems.learning(observations)
 
 
 ---
+
+
 
 ## Cross-References
 

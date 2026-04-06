@@ -428,6 +428,8 @@ for ind, obj in zip(pareto_front[:5], pareto_objectives[:5]):
 <strong>Warning:</strong> Multi-objective fitness returns a tuple, not a scalar. Ensure your GA is configured for multi-objective optimization (e.g., NSGA-II) before using Pareto fitness. Passing a tuple to a single-objective GA will crash or silently produce wrong results.
 
 
+
+
 ## Regularized Fitness
 
 Incorporate L1/L2 regularization concepts:
@@ -627,6 +629,8 @@ for k, v in stats.items():
 5. **Caching** dramatically speeds up GA with repeated evaluations
 
 6. **Regularization** can be incorporated into fitness for smoother landscapes
+
+
 
 
 ## Practice Problems

@@ -352,6 +352,8 @@ Point estimates of regimes ignore classification uncertainty.
 2. Given a real-world scenario involving hidden markov model fundamentals, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Rabiner** "A Tutorial on HMMs" (1989) — Classic introduction

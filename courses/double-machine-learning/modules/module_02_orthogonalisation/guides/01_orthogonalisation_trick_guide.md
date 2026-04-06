@@ -191,6 +191,8 @@ DML handles the nonlinear relationships (sin, squared terms, interactions) that 
 <strong>Warning:</strong> The residualisation must be done out-of-sample (cross-fitting). Using in-sample ML predictions creates overfitting bias that contaminates the treatment effect. Module 04 covers why this matters and how cross-fitting fixes it.
 
 
+
+
 ## Why This Works: The Orthogonality Intuition
 
 The key insight is geometric. After residualisation:
@@ -225,6 +227,8 @@ Point 3 is the orthogonality property that gives DML its name. Module 03 formali
 - Robinson (1988) semiparametric efficiency
 - Partially linear regression in biostatistics
 - Control function approach in econometrics
+
+
 
 ## Practice Problems
 

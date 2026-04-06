@@ -296,6 +296,8 @@ for text in examples:
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
 
+
+
 ## Further Reading
 
 - **"Attention Is All You Need"** (Vaswani et al., 2017) - Original transformer paper

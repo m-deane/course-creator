@@ -278,6 +278,8 @@ class NormalNormal:
 - Sufficient statistics: α and β fully summarize all Bernoulli observations
 - Sequential Bayes: Yesterday's posterior is today's prior
 
+
+
 ## Practice Problems
 
 ### Problem 1: Hand calculation

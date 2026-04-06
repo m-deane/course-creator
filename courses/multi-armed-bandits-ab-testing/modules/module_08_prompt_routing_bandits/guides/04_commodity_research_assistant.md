@@ -638,6 +638,8 @@ class MultiCommoditySignalRouter:
 - **Module 5 (Commodity Trading):** Same domain (commodities), different application (prompts vs allocation)
 - **Module 7 (Production Systems):** These case studies show production deployment patterns
 
+
+
 ## Next Steps
 
 After understanding these case studies:

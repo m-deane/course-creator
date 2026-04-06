@@ -524,6 +524,8 @@ market_hmm.visualize_emissions()
 **Insight:** Understanding hmm parameters is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Three parameter sets** fully specify an HMM: $\lambda = (\pi, A, B)$
@@ -552,6 +554,8 @@ market_hmm.visualize_emissions()
 
 
 ---
+
+
 
 ## Cross-References
 

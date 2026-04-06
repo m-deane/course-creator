@@ -463,6 +463,8 @@ Do you need quarterly groupings?
 
 ---
 
+
+
 ## Further Reading
 
 - Ghysels, E., Sinko, A., & Valkanov, R. (2007). "MIDAS regressions: Further results and new directions." *Econometric Reviews*, 26(1), 53–90. [Weight function taxonomy]

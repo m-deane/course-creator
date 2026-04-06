@@ -387,6 +387,8 @@ The inventory-price relationship varies:
 2. Given a real-world scenario involving storage theory: economic foundations of commodity pricing, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Working, H.** "The Theory of Price of Storage" (1949) — Original theory

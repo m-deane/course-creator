@@ -745,6 +745,8 @@ class SignalPortfolio:
 **Insight:** Understanding building trading signals from commodity sentiment is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Trading Signal Design:**
@@ -781,6 +783,8 @@ class SignalPortfolio:
 
 
 ---
+
+
 
 ## Cross-References
 

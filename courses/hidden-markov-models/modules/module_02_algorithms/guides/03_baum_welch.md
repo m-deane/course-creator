@@ -777,6 +777,8 @@ def initialize_with_kmeans(observations, n_states):
 **Insight:** Understanding baum-welch algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Foundational Papers
@@ -831,6 +833,8 @@ def initialize_with_kmeans(observations, n_states):
 
 
 ---
+
+
 
 ## Cross-References
 

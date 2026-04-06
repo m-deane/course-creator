@@ -649,6 +649,8 @@ print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 - Data validation patterns
 - Parallel processing techniques
 
+
+
 ## Practice Problems
 
 1. **Variable Type Exploration**

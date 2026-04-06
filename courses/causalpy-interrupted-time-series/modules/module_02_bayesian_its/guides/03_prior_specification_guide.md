@@ -308,6 +308,8 @@ In this example, all three priors give essentially the same conclusion. The data
 - **Related to:** Gelman's prior recommendations, Stan prior choice wiki
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

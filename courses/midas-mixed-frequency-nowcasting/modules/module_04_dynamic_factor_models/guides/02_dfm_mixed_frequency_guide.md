@@ -244,6 +244,8 @@ Each release contributes "news" proportional to:
 
 ---
 
+
+
 ## Practice Problems
 
 1. For a monthly panel with N=5 indicators (IP, employment, retail sales, consumer confidence, PMI) and T_months=300, write out the dimensions of $\mathbf{F}$, $\mathbf{\Lambda}$, and $\mathbf{e}$ for a q=2 factor model.

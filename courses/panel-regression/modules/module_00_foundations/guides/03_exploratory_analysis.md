@@ -568,6 +568,8 @@ def panel_eda_report(df, entity_col, time_col, outcome_var, predictors):
 panel_eda_report(df, 'entity', 'time', 'y', ['x', 'z'])
 ```
 
+
+
 ## Key Takeaways
 
 1. **Always visualize trajectories** - Plot individual entity paths to understand heterogeneity

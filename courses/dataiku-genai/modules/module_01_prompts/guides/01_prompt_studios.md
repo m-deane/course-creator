@@ -369,6 +369,8 @@ Use the visual LLM Recipe for simpler cases:
 
 
 
+
+
 ## Resources
 
 <a class="link-card" href="../notebooks/01_prompt_creation.ipynb">

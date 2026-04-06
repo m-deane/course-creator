@@ -776,6 +776,8 @@ print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 **Insight:** Understanding factor-augmented vector autoregression (favar) is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## 9. Further Reading
 
 ### Foundational Papers
@@ -821,6 +823,8 @@ print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 
 
 ---
+
+
 
 ## Cross-References
 

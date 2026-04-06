@@ -774,6 +774,8 @@ class CommodityNewsProcessor:
 **Insight:** Understanding processing commodity news for sentiment analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **News APIs and Data Sources:**
@@ -813,6 +815,8 @@ class CommodityNewsProcessor:
 
 
 ---
+
+
 
 ## Cross-References
 

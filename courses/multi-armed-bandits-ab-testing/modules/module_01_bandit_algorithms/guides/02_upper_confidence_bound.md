@@ -397,6 +397,8 @@ But note: This breaks UCB1's theoretical guarantees.
 - **Upper Confidence Trees (UCT):** UCB for game tree search (AlphaGo)
 - **Gittins Index:** Optimal solution for discounted infinite-horizon bandits
 
+
+
 ## Practice Problems
 
 ### 1. Conceptual Understanding

@@ -631,6 +631,8 @@ USDA forecasts ending stocks at 1.2 billion bushels (stocks-to-use = 8%, very ti
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -640,6 +642,8 @@ USDA forecasts ending stocks at 1.2 billion bushels (stocks-to-use = 8%, very ti
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving hierarchical models for agricultural commodities, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

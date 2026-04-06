@@ -620,6 +620,8 @@ Semi-gradient TD does not follow the gradient of any objective function. This me
 
 ---
 
+
+
 ## Practice Problems
 
 1. **Feature count.** A mountain car has 2 state dimensions. Using tile coding with 8 tilings and 8 tiles per dimension, how many total features? How many are non-zero for any given state? What is the memory footprint at 4 bytes per float?

@@ -398,6 +398,8 @@ draw_dag(
 - **Related to:** Structural equation models, graphical models, do-calculus
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

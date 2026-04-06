@@ -455,6 +455,8 @@ simulate_measurement_error()
 | Sensitivity to measurement error | Lower | Higher |
 | Time-invariant effects | Identifiable | Not identifiable |
 
+
+
 ## Key Takeaways
 
 1. **Panel data = Between + Within** variation - understand both before modeling

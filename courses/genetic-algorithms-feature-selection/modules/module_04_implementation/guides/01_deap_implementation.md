@@ -407,6 +407,8 @@ def setup_timeseries_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
     return toolbox
 ```
 
+
+
 ## Parallel Evaluation
 
 ```python
@@ -502,6 +504,8 @@ plot_evolution(result['history'])
 5. **Parallel evaluation** speeds up fitness computation linearly with cores
 
 6. **Parameter choices matter** -- pop_size, mutation_rate, crossover_prob, and tournament_size interact as a system, not independently
+
+
 
 
 ## Practice Problems

@@ -650,6 +650,8 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 **Insight:** Understanding signal generation frameworks with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Signal Generation:**
@@ -688,6 +690,8 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 
 
 ---
+
+
 
 ## Cross-References
 

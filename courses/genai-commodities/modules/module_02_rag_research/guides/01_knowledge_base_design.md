@@ -518,6 +518,8 @@ for chunk in results:
 **Insight:** Understanding knowledge base design for commodity research is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 **Vector Databases for Time-Series Data:**
@@ -554,6 +556,8 @@ for chunk in results:
 
 
 ---
+
+
 
 ## Cross-References
 

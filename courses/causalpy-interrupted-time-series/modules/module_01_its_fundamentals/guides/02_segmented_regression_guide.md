@@ -477,6 +477,8 @@ formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 - **Related to:** Time series regression, structural break tests, HAC standard errors
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

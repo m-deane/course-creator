@@ -409,6 +409,8 @@ print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 
 
 
+
+
 ## Resources
 
 <a class="link-card" href="../notebooks/01_first_connection.ipynb">

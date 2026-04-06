@@ -350,6 +350,8 @@ def compare_midas_fa_midas(Y_quarterly, ip_monthly, monthly_panel,
 
 ---
 
+
+
 ## Practice Problems
 
 1. Sketch the FA-MIDAS expanding-window algorithm. At step $t$ (estimating on quarters 1 to $t-1$, predicting quarter $t$): (a) what data goes into the PCA? (b) how is the factor for the test quarter computed? (c) where is look-ahead bias possible?

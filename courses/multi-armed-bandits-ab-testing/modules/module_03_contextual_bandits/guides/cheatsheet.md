@@ -362,6 +362,8 @@ UCB_a(x) = x^T θ̂_a + α · σ_a(x)
 Regret(T) = O(d√(T log T))
 ```
 
+
+
 ## Code Snippets
 
 **Feature normalization:**

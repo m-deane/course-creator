@@ -854,6 +854,8 @@ def good_mutation(individual, min_features=1):
     return mutant
 ```
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -877,6 +879,8 @@ def good_mutation(individual, min_features=1):
 - Linkage learning
 - Island models (migration as crossover-like operator)
 - Memetic algorithms (local search as "smart mutation")
+
+
 
 ## Practice Problems
 

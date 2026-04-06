@@ -301,6 +301,8 @@ Low sensitivity = that condition is redundant or already implied by other condit
 
 ---
 
+
+
 ## Pattern 5: Organizational Prompt Libraries
 
 ### The Problem with Shared Folders
@@ -439,4 +441,5 @@ Layer 5 (facts) should come from the user. Injecting pre-defined facts overrides
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving production patterns: bayesian prompting at scale, what would be your first three steps to apply the techniques from this guide?
+
 

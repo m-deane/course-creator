@@ -291,6 +291,8 @@ You cannot evaluate a policy by running it in the environment (offline setting).
 ---
 
 
+
+
 ## Practice Questions
 
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.

@@ -759,6 +759,8 @@ def initialize_from_kmeans(model, observations):
 **Insight:** Understanding em for gaussian hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Key Papers
@@ -807,6 +809,8 @@ def initialize_from_kmeans(model, observations):
 
 
 ---
+
+
 
 ## Cross-References
 

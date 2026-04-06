@@ -496,6 +496,8 @@ Alternatively, for a historical simulation approach, MIDAS-RV provides the volat
 
 ---
 
+
+
 ## Summary
 
 MIDAS-RV is the canonical model for forecasting multi-period volatility using high-frequency daily RV data:

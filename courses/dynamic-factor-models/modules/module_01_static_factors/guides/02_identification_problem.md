@@ -518,6 +518,8 @@ for j in range(r):
 **Insight:** Understanding the factor model identification problem is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Foundational
@@ -557,6 +559,8 @@ for j in range(r):
 
 
 ---
+
+
 
 ## Cross-References
 

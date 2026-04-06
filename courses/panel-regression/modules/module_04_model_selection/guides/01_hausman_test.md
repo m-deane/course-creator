@@ -359,6 +359,8 @@ A unified approach that nests FE and RE:
 2. Get FE coefficients on time-varying variables
 3. Get RE efficiency on time-invariant variables
 
+
+
 ## Key Takeaways
 
 1. **Hausman test** compares FE and RE to detect correlation between effects and regressors

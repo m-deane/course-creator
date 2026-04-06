@@ -421,6 +421,8 @@ For most practical purposes, IG at 50 steps is the best balance.
 
 ---
 
+
+
 ## 6. Layer Integrated Gradients for Text
 
 For transformer models, token-level attribution requires `LayerIntegratedGradients`:
@@ -525,6 +527,8 @@ def visualize_token_attribution(tokens, attributions, title=""):
 
 ---
 
+
+
 ## Common Pitfalls
 
 - **Using a meaningful baseline "for convenience":** A baseline that already contains your expected signal (e.g., using a low-quality image as baseline for quality classification) will inflate attribution of features unique to the higher-quality image.
@@ -554,6 +558,8 @@ def visualize_token_attribution(tokens, attributions, title=""):
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving baselines, convergence, and noisetunnel, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

@@ -225,6 +225,8 @@ For this course, we use the current final vintage (as downloaded from FRED) and 
 
 ---
 
+
+
 ## Practice Problems
 
 1. At the "1-month nowcast" point for 2024Q3, which months of industrial production are available? Which are missing? Write out the ragged-edge MIDAS matrix for K=6.

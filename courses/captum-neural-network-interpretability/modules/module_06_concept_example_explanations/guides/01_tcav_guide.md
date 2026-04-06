@@ -295,6 +295,8 @@ TCAV and attribution methods are **complementary**:
 2. Given a real-world scenario involving tcav: testing with concept activation vectors, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 | Step | Description | Key Formula |

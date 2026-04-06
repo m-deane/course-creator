@@ -164,6 +164,8 @@ The naive plug-in diverges as noise increases, while DML stays close to the true
 <strong>Warning:</strong> The orthogonal score requires residualising BOTH $Y$ and $D$. Residualising only one gives a non-orthogonal moment condition that is sensitive to first-stage errors. This is why the method is called "Double" ML — both nuisance functions must be estimated.
 
 
+
+
 ## How to Interpret the Score Function
 
 The orthogonal score for the partially linear model can be written as:
@@ -196,6 +198,8 @@ This is the familiar residual-on-residual formula, but the score function reveal
 - Semiparametric efficiency bounds (DML achieves the bound)
 - Doubly robust estimation in biostatistics
 - Targeted maximum likelihood estimation (TMLE)
+
+
 
 ## Practice Problems
 

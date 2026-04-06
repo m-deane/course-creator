@@ -181,6 +181,8 @@ The partial $R^2$ measures how much additional predictive power the instrument a
 - Local average treatment effect (LATE)
 - Weak instrument robust inference
 
+
+
 ## Practice Problems
 
 ### Implementation

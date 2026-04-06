@@ -623,6 +623,8 @@ plt.show()
 2. Given a real-world scenario involving forecast evaluation for bayesian models, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Forecast Evaluation Theory:**
@@ -657,6 +659,8 @@ plt.show()
 *"Forecast evaluation should assess both accuracy and uncertainty. A perfect mean forecast with mis-calibrated intervals is still a bad forecast."*
 
 ---
+
+
 
 ## Cross-References
 

@@ -465,6 +465,8 @@ def save_checkpoint(agent, step: int, checkpoint_dir: str):
 ---
 
 
+
+
 ## Practice Questions
 
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.

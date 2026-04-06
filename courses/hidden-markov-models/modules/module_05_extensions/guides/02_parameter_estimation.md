@@ -542,6 +542,8 @@ hmmlearn_model = train_with_hmmlearn(observations)
 **Insight:** Understanding hmm parameter estimation is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Baum-Welch is EM for HMMs** - E-step computes state probabilities, M-step updates parameters
@@ -570,6 +572,8 @@ hmmlearn_model = train_with_hmmlearn(observations)
 
 
 ---
+
+
 
 ## Cross-References
 

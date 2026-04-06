@@ -300,6 +300,8 @@ Run several chains from different starting points:
 2. Given a real-world scenario involving mcmc foundations: from metropolis to modern samplers, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Gelman et al.** *BDA* Chapter 11 — Comprehensive MCMC treatment

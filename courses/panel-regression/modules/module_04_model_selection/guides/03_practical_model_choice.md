@@ -528,6 +528,8 @@ def create_comparison_table(df, y_col, x_cols, entity_col, time_col):
 comparison = create_comparison_table(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
+
+
 ## Key Takeaways
 
 1. **Follow the decision tree** but don't be mechanical about it

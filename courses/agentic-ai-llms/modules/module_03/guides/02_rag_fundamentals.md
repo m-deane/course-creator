@@ -650,6 +650,8 @@ Score (just the number):"""
 *RAG transforms LLMs from closed knowledge systems to open retrieval engines. Master this pattern—it's the foundation for most production agent systems.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

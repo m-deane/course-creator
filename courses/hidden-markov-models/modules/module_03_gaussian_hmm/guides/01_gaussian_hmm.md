@@ -395,6 +395,8 @@ print(result['regime_stats'])
 **Insight:** Understanding gaussian hmms for continuous observations is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Gaussian HMMs** handle continuous observations naturally
@@ -421,6 +423,8 @@ print(result['regime_stats'])
 
 
 ---
+
+
 
 ## Cross-References
 

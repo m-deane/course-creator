@@ -467,6 +467,8 @@ def fit_with_multiple_starts(
 **Insight:** Understanding financial applications of hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Market regimes** naturally map to HMM states (bull/bear)
@@ -493,6 +495,8 @@ def fit_with_multiple_starts(
 
 
 ---
+
+
 
 ## Cross-References
 

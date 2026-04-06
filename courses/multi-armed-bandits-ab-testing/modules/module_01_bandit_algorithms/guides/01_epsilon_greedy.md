@@ -314,6 +314,8 @@ q_new = q_old + 0.1 * (reward - q_old)  # Forgets old data
 - **Regret analysis:** How to measure algorithm performance
 - **Stationary vs. non-stationary:** When fixed ε outperforms decaying ε
 
+
+
 ## Practice Problems
 
 ### 1. Conceptual Understanding

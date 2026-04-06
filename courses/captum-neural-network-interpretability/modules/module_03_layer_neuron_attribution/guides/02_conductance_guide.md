@@ -418,6 +418,8 @@ All three share the same mathematical foundation (IG integral), completeness pro
 2. Given a real-world scenario involving guide 02: layer conductance, neuron conductance, and internal influence, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 1. **Internal Influence** = gradient of output w.r.t. hidden activations (fast, no integration)

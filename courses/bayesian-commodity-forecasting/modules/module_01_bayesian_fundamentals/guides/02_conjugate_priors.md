@@ -398,6 +398,8 @@ Derive the posterior for the Normal-Normal case from scratch using Bayes' theore
 2. Given a real-world scenario involving conjugate priors: analytical bayesian updates, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Murphy, K.** *Machine Learning: A Probabilistic Perspective* - Chapter 3 for conjugate families

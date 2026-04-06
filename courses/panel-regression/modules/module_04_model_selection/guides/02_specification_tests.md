@@ -482,6 +482,8 @@ def run_all_specification_tests(df, y_col, x_cols, entity_col, time_col):
 all_results = run_all_specification_tests(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
+
+
 ## Key Takeaways
 
 1. **F-test and BP-LM** help choose between pooled and panel models

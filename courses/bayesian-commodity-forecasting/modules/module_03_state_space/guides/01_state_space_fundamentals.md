@@ -303,6 +303,8 @@ You have weekly natural gas prices with occasional missing values (holidays). Ex
 2. Given a real-world scenario involving state space fundamentals, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **Durbin & Koopman** *Time Series Analysis by State Space Methods* — Definitive reference

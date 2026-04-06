@@ -306,6 +306,8 @@ print(f"FE beta (x): {fe_results.params['x']:.4f}")
 | Fewer parameters | Doesn't estimate $N-1$ dummies |
 | Extrapolation | Can predict for new entities |
 
+
+
 ## Summary
 
 The random effects model provides efficient estimation when entity effects are uncorrelated with regressors:

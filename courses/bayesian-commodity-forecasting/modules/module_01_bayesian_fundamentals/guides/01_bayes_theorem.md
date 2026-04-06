@@ -258,6 +258,8 @@ Starting with Beta(1,1) prior, you observe: success, success, failure, success. 
 2. Given a real-world scenario involving bayes' theorem: the foundation of bayesian inference, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 1. **McElreath, Ch. 2** - "Small Worlds and Large Worlds" - Excellent intuitive introduction

@@ -245,6 +245,8 @@ Is the state space small and discrete?
 
 ---
 
+
+
 ## Quick Reference: Algorithms and Their Triad Status
 
 | Algorithm | FA | Bootstrap | Off-Policy | Converges? |

@@ -410,6 +410,8 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
 **Insight:** Understanding parsing eia petroleum reports is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **EIA API is primary source** - Use API for numerical accuracy
@@ -436,6 +438,8 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
 
 
 ---
+
+
 
 ## Cross-References
 

@@ -457,6 +457,8 @@ A complete synthetic control report includes:
 - **Related to:** Difference-in-differences (SC is a generalization), randomization inference
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

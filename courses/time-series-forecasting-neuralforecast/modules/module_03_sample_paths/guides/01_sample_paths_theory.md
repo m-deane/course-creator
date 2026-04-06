@@ -202,6 +202,8 @@ print(f"P(stock-out within 4 days):    {p_stockout:.3f}")
 
 ---
 
+
+
 ## 5. Sample Paths vs. Quantile Forecasts: A Visual Comparison
 
 ```python

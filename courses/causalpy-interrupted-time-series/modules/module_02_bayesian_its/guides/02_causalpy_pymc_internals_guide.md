@@ -476,6 +476,8 @@ The source is available at: https://github.com/pymc-labs/CausalPy
 - **Related to:** PyMC documentation, ArviZ documentation, formulaic documentation
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

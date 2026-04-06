@@ -549,6 +549,8 @@ print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 **Insight:** Understanding regime-based portfolio allocation is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Regime-specific parameters** differ significantly - optimize for each
@@ -577,6 +579,8 @@ print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 
 
 ---
+
+
 
 ## Cross-References
 

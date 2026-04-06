@@ -560,6 +560,8 @@ seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -569,6 +571,8 @@ seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving seasonality analysis in commodity markets, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

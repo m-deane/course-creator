@@ -616,6 +616,8 @@ def diverse_mutation(individual, indpb=0.05):
 <strong>Key Takeaway:</strong> The "knee point" of the Pareto front -- where further feature reduction causes disproportionate accuracy loss -- is usually the best practical choice. It represents the point of diminishing returns for model simplification.
 
 
+
+
 ## Practice Problems
 
 ### Problem 1: Manual Pareto Front

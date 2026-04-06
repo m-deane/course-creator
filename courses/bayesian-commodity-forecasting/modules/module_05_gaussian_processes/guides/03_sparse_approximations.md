@@ -528,6 +528,8 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 2. Given a real-world scenario involving sparse approximations for gaussian processes, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Foundational Papers:**
@@ -559,6 +561,8 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 *"Sparse approximations make GPs practical for large datasets by learning a small set of inducing points that summarize the essential structure of the data."*
 
 ---
+
+
 
 ## Cross-References
 

@@ -534,6 +534,8 @@ Answer the question with full awareness of these conditions. If a variable has m
 
 ---
 
+
+
 ## Putting It Together: The Full Layer Map
 
 | Claude API Feature | Condition Stack Layer | What it specifies |
@@ -572,6 +574,8 @@ If you pass switch variables as prose ("keep in mind the user is a corporation")
 
 ---
 
+
+
 ## Connections
 
 - **Builds on:** Guide 01 (condition decay and structured handoffs)
@@ -603,6 +607,8 @@ If you pass switch variables as prose ("keep in mind the user is a corporation")
 1. Explain in your own words the key difference between the concepts covered in "Learning Objectives" and why it matters in practice.
 
 2. Given a real-world scenario involving claude-specific conditioning patterns, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

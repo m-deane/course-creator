@@ -431,6 +431,8 @@ High SHAP values at lag 7 and lag 14 confirm that the model has learned weekly s
 
 ---
 
+
+
 ## 8. Losses in neuralforecast
 
 The loss function is a first-class model component — passing a different loss object changes the forecast type without modifying any other code.

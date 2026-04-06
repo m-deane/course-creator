@@ -616,6 +616,8 @@ print(f"RF selected: {len(rf_features)}")
 print(f"Combined: {len(combined)}")
 ```
 
+
+
 ## Connections
 
 <div class="callout-info">
@@ -639,6 +641,8 @@ print(f"Combined: {len(combined)}")
 - **Model selection**: Choosing between model types
 - **Ensemble methods**: Feature importance from multiple models
 - **Dimensionality reduction**: PCA, autoencoders as alternatives
+
+
 
 ## Practice Problems
 

@@ -285,6 +285,8 @@ if result['p_value'] < 0.05:
 | Serial correlation | Wrong standard errors | Clustered SE |
 | Heteroskedasticity | Wrong standard errors | Robust SE |
 
+
+
 ## Key Takeaways
 
 1. **Pooled OLS ignores panel structure**, treating all observations as independent draws

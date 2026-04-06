@@ -450,6 +450,8 @@ plot_sentiment_dashboard(multi_df, 'oil')
 **Insight:** Understanding aggregating sentiment signals for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Normalize scores** across sources before aggregating
@@ -478,6 +480,8 @@ plot_sentiment_dashboard(multi_df, 'oil')
 
 
 ---
+
+
 
 ## Cross-References
 

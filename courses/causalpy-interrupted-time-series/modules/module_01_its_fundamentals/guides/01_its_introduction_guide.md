@@ -358,6 +358,8 @@ def fit_its_model(df, outcome, formula=None):
 - **Related to:** Difference-in-Differences (Module 04), Regression Discontinuity (Module 05)
 
 
+
+
 ## Practice Questions
 
 ### Question 1: Conceptual Check

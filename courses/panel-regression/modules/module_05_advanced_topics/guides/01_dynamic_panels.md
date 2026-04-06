@@ -384,6 +384,8 @@ Rejection suggests some instruments are invalid.
 2. **Weak instruments**: Large T helps; use System GMM
 3. **AR(2) rejection**: Model misspecification; add more lags
 
+
+
 ## Key Takeaways
 
 1. **Dynamic panels** with lagged dependent variables create endogeneity

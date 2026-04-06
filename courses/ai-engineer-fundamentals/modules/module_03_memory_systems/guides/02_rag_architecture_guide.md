@@ -262,6 +262,8 @@ def hybrid_search(query: str, k: int = 5, alpha: float = 0.5) -> list:
 
 Extract only query-relevant portions from retrieved chunks to reduce context window usage.
 
+
+
 ## Common Pitfalls
 
 <div class="callout-danger">
@@ -282,6 +284,8 @@ Extract only query-relevant portions from retrieved chunks to reduce context win
 <div class="callout-warning">
 
 <strong>Pitfall 4 — Retrieving too much:</strong> Context window pollution, slower generation, higher cost. Retrieve more, rerank to less. Quality over quantity.
+
+
 
 
 ## Evaluation Metrics

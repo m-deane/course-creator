@@ -575,6 +575,8 @@ Commodity markets have structural breaks (new supply sources, policy changes).
 
 ---
 
+
+
 ## Connections
 
 **Builds on:**
@@ -625,6 +627,8 @@ You want to forecast copper prices using time + inventory + Chinese PMI. What ke
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -634,6 +638,8 @@ You want to forecast copper prices using time + inventory + Chinese PMI. What ke
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving kernel design for commodity time series, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

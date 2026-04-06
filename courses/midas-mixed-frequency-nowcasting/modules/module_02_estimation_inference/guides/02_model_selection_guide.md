@@ -366,6 +366,8 @@ Recommendation: Beta MIDAS with K=12 lags (P=4 quarterly lags).
 
 ---
 
+
+
 ## Practice Problems
 
 1. You have $T = 80$ observations and are choosing between $P = 2$ (K=6, BIC penalty = $4 \times \ln 80 \approx 17.6$) and $P = 4$ (K=12, same 4 parameters, same BIC penalty). How much must SSE decrease from $P=2$ to $P=4$ to justify the extra lags under BIC?

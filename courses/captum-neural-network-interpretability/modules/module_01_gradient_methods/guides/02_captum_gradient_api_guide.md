@@ -669,6 +669,8 @@ def normalize_attribution(attr_np, percentile=99):
 2. Given a real-world scenario involving captum gradient api: practical usage, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 - Captum API docs for gradient methods: captum.ai/api/#attribution — Full parameter documentation.

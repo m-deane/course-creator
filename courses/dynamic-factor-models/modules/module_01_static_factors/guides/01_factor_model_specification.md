@@ -360,6 +360,8 @@ Enables structural analysis without committing to specific observables.
 
 ---
 
+
+
 ## Cross-References
 
 <a class="link-card" href="./01_factor_model_specification_slides.md">

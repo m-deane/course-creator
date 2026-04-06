@@ -408,6 +408,8 @@ attr_meta = fa.attribute(
 2. Given a real-world scenario involving guide 01: occlusion and feature ablation, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 1. **Perturbation methods** directly measure the causal effect of removing features — no gradients required

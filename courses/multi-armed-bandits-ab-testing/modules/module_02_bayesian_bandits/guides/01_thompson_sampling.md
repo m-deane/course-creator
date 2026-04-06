@@ -215,6 +215,8 @@ for t in range(1000):
 - Posterior predictive distribution: marginalizing over parameter uncertainty
 - Information theory: Thompson Sampling performs information-directed sampling
 
+
+
 ## Practice Problems
 
 ### Problem 1: Implement from scratch

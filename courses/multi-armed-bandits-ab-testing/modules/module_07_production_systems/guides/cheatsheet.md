@@ -242,6 +242,8 @@ class ProductionBanditSystem:
 **Investigate within 24h when:** Entropy < 0.5, reward < baseline - 2σ, drift detected
 **Review weekly:** All other metrics, policy performance, arm distribution
 
+
+
 ## Further Reading
 
 - **Papers:** Dudík et al. (2011) "Doubly Robust Policy Evaluation", Li et al. (2010) "Contextual Bandits"

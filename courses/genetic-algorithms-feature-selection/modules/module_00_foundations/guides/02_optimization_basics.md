@@ -349,6 +349,8 @@ Where $G$ = generations, $N$ = population size, $T_{eval}$ = fitness evaluation 
 <strong>Practical rule:</strong> If you have 20-100 features and suspect feature interactions matter (they usually do in time series), start with a GA. If you have > 100, filter first to ~50-100, then apply a GA. If you have < 20, exhaustive search gives you the guaranteed-best answer.
 
 
+
+
 ## Mathematical Framework
 
 ### Optimization Formulation
@@ -401,6 +403,8 @@ Prediction Error
 4. **GAs are well-suited** for binary feature selection problems
 
 5. **No free lunch** - algorithm choice depends on problem structure
+
+
 
 
 ## Practice Problems

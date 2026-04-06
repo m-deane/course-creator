@@ -570,6 +570,8 @@ alert_manager.add_rule(AlertRule(
 **Insight:** Understanding production deployment for commodity gen ai is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Reliability first** - retries, circuit breakers, and graceful degradation
@@ -596,6 +598,8 @@ alert_manager.add_rule(AlertRule(
 
 
 ---
+
+
 
 ## Cross-References
 

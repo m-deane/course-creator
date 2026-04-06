@@ -459,6 +459,8 @@ df_full, cre_full = full_cre_example()
 | Built-in Hausman test | ✗ | ✗ | ✓ |
 | Flexibility | Low | Low | High |
 
+
+
 ## Key Takeaways
 
 1. **CRE bridges FE and RE** by explicitly modeling the correlation between entity effects and regressors

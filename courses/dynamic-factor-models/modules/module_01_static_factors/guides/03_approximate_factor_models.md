@@ -656,6 +656,8 @@ diagnostics = check_weak_dependence(X, threshold=0.3)
 **Insight:** Understanding approximate factor models and large-n theory is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Foundational Theory
@@ -708,6 +710,8 @@ diagnostics = check_weak_dependence(X, threshold=0.3)
 
 
 ---
+
+
 
 ## Cross-References
 

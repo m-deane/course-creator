@@ -747,6 +747,8 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 <strong>Key Takeaway:</strong> Custom operators that respect feature group structure (e.g., keeping all one-hot encoded columns together) converge 2-5x faster than standard operators. The investment in operator design pays off quickly for domain-specific problems.
 
 
+
+
 ## Practice Problems
 
 1. **Operator Design**

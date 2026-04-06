@@ -216,6 +216,8 @@ You're not building a model. You're building a system that:
 <strong>Warning:</strong> "I'll just use a long context window..." — Long context is expensive and doesn't scale. You need hierarchical memory with intelligent retrieval.
 
 
+
+
 ## Practice Questions
 
 1. **Conceptual:** List three ways a "model-only" chatbot would fail in a customer support scenario that a full system could handle.

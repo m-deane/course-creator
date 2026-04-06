@@ -238,6 +238,8 @@ The single factor $f_t$ captures the common business cycle component. By constru
 
 ---
 
+
+
 ## Practice Problems
 
 1. The first principal component of a (T=100, N=20) data matrix explains 35% of total variance. How much variance do the first 3 PCs explain if each subsequent PC explains half as much as the previous?

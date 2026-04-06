@@ -541,6 +541,8 @@ Which provides uncertainty estimates? Which adapts fastest to regime changes?
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -550,6 +552,8 @@ Which provides uncertainty estimates? Which adapts fastest to regime changes?
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving stochastic volatility models for commodities, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

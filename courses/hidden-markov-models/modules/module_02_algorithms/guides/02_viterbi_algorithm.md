@@ -571,6 +571,8 @@ regime_detection_with_viterbi()
 **Insight:** Understanding the viterbi algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Viterbi finds the most likely state sequence** - not marginal maxima
@@ -599,6 +601,8 @@ regime_detection_with_viterbi()
 
 
 ---
+
+
 
 ## Cross-References
 

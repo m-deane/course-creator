@@ -379,6 +379,8 @@ For most practical use cases, **TracInCPFast** (when checkpoints exist) or **Sim
 2. Given a real-world scenario involving influence functions, tracin, and tracincpfast, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 | Concept | Description |

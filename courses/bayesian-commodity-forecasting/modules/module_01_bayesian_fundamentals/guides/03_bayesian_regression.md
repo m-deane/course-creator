@@ -341,6 +341,8 @@ c) Investigate why prior and data differ
 
 ---
 
+
+
 ## Practice Questions
 
 <div class="callout-info">
@@ -350,6 +352,8 @@ c) Investigate why prior and data differ
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving bayesian regression, what would be your first three steps to apply the techniques from this guide?
+
+
 
 
 ## Further Reading

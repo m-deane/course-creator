@@ -443,6 +443,8 @@ Assistant: [ideal output]
 *The system prompt is your agent's DNA. Invest time in getting it right—everything else builds on this foundation.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

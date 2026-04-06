@@ -268,6 +268,8 @@ This unification is one of SHAP's major theoretical contributions.
 2. Given a real-world scenario involving shap theory: shapley values and kernelshap, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 | Concept | Key Formula |

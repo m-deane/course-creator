@@ -346,6 +346,8 @@ Arrows indicate conditional dependencies.
 **Insight:** Understanding hmm framework and definition is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **HMMs extend Markov chains** by adding an emission layer
@@ -372,6 +374,8 @@ Arrows indicate conditional dependencies.
 
 
 ---
+
+
 
 ## Cross-References
 

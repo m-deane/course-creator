@@ -403,6 +403,8 @@ When comparing layer importance across texts of different length, normalize by s
 2. Given a real-world scenario involving layer-wise attribution in transformers, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 | Method | What it measures | Output |

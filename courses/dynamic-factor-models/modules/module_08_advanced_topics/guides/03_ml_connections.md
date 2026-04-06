@@ -959,6 +959,8 @@ plt.show()
 **Insight:** Understanding machine learning connections to factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Summary
 
 **Key Takeaways:**
@@ -1008,6 +1010,8 @@ You've now completed a comprehensive journey through factor models:
 
 
 ---
+
+
 
 ## Cross-References
 

@@ -772,6 +772,8 @@ Step 2 (VAR OLS) can parallelize across equations (estimate each factor separate
 **Insight:** Understanding stock-watson two-step estimator is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Summary
 
 The Stock-Watson two-step estimator provides a simple, fast, and asymptotically valid method for estimating dynamic factor models:
@@ -806,6 +808,8 @@ The Stock-Watson two-step estimator provides a simple, fast, and asymptotically 
 
 
 ---
+
+
 
 ## Cross-References
 

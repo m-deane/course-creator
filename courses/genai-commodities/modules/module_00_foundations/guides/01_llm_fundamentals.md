@@ -431,6 +431,8 @@ Text: {text}
 **Insight:** Understanding llm fundamentals for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **LLMs excel at unstructured data** - converting text to tradeable signals
@@ -457,6 +459,8 @@ Text: {text}
 
 
 ---
+
+
 
 ## Cross-References
 

@@ -526,6 +526,8 @@ selection_results = select_multivariate_hmm(obs, max_states=4)
 **Insight:** Understanding multivariate gaussian hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Multivariate HMMs** model joint distributions of multiple features
@@ -554,6 +556,8 @@ selection_results = select_multivariate_hmm(obs, max_states=4)
 
 
 ---
+
+
 
 ## Cross-References
 

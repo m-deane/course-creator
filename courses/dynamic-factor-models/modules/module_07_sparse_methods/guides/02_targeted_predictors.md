@@ -871,6 +871,8 @@ corr = pearsonr(X[:-h, j], y[h:])[0]
 **Insight:** Understanding targeted predictors is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## 9. Further Reading
 
 ### Foundational Paper
@@ -916,6 +918,8 @@ corr = pearsonr(X[:-h, j], y[h:])[0]
 
 
 ---
+
+
 
 ## Cross-References
 

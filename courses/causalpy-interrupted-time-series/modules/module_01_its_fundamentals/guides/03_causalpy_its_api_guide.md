@@ -678,6 +678,8 @@ print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 - **Leads to:** Notebooks 1–3 in this module, Bayesian ITS internals (Module 02)
 - **Related to:** ArviZ documentation, PyMC documentation
 
+
+
 ## Reference: CausalPy API Summary
 
 | Attribute/Method | Type | Description |

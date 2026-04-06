@@ -880,6 +880,8 @@ The next module explores Factor-Augmented models (FAR, FAVAR), which use extract
 **Insight:** Understanding nowcasting practice is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Appendix: Code Integration Example
 
 
@@ -970,6 +972,8 @@ print("\nBacktest results saved to backtest_results.png")
 
 
 ---
+
+
 
 ## Cross-References
 

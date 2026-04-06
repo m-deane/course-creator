@@ -498,6 +498,8 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
 **Insight:** Understanding news sentiment analysis for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Commodity sentiment differs from general sentiment** - supply increases are bearish, demand increases are bullish
@@ -524,6 +526,8 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
 
 
 ---
+
+
 
 ## Cross-References
 

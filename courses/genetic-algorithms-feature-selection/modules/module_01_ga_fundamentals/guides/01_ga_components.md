@@ -511,6 +511,8 @@ def steady_state_replacement(
 5. **Elitism** preserves best solutions across generations
 
 
+
+
 ## Practice Problems
 
 ### Problem 1: Conceptual — Algorithm Flow

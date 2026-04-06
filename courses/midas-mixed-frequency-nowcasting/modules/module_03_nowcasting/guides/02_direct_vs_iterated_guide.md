@@ -378,6 +378,8 @@ Always check all three conditions before adding AR terms.
 
 ---
 
+
+
 ## Practice Problems
 
 1. Write out the MIDAS-AR(1) profile SSE function for a model with AR lag $\rho$ as a free parameter. Show that the profile can still be solved by a 2D optimization over $(\theta_1, \theta_2)$ with $(α, \rho, \beta)$ solved by OLS.

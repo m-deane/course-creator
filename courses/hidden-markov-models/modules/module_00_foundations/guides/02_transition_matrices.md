@@ -517,6 +517,8 @@ visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 **Insight:** Understanding transition matrices and state dynamics is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Transition matrices encode state dynamics** - row $i$ gives probabilities of next state given current state $i$
@@ -543,6 +545,8 @@ visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 
 
 ---
+
+
 
 ## Cross-References
 

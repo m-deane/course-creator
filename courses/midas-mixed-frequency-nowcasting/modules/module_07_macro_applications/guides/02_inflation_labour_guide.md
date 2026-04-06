@@ -389,6 +389,8 @@ where $x$ contains the common predictors. The key benefit: if payrolls surprise 
 
 ---
 
+
+
 ## Summary
 
 Inflation and labour market nowcasting exploit specific high-frequency signals:

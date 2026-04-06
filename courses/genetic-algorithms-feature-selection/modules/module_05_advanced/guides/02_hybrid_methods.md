@@ -648,6 +648,8 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 <strong>Key Takeaway:</strong> Memetic algorithms (GA + local search) are the practical gold standard for feature selection. The GA finds promising regions, local search polishes each candidate to its local optimum. This combination typically finds solutions in 2-5x fewer evaluations than either method alone.
 
 
+
+
 ## Practice Problems
 
 1. **Budget Allocation**

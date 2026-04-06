@@ -552,6 +552,8 @@ for i, name in enumerate(bma.model_names):
 - **Symptom:** Not actually doing BMA, still model selecting
 - **Solution:** Use BMA when weights are split; model selection only when dominant weight (>0.9)
 
+
+
 ## Connections
 
 **Builds on:**
@@ -626,6 +628,8 @@ for i, name in enumerate(bma.model_names):
 2. Given a real-world scenario involving bayesian model averaging for commodity forecasting, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Further Reading
 
 **Foundational:**
@@ -659,6 +663,8 @@ for i, name in enumerate(bma.model_names):
 *"BMA doesn't pick the 'best' model—it uses all models weighted by their plausibility, capturing model uncertainty ignored by selection."*
 
 ---
+
+
 
 ## Cross-References
 

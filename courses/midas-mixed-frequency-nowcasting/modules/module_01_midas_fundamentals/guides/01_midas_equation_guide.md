@@ -398,6 +398,8 @@ The gain is larger when:
 
 ---
 
+
+
 ## Further Reading
 
 - Ghysels, E., Santa-Clara, P., & Valkanov, R. (2006). "Predicting volatility: Getting the most out of return data sampled at different frequencies." *Journal of Econometrics*, 131(1–2), 59–95.

@@ -505,6 +505,8 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 **Insight:** Understanding probability review for hidden markov models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Further Reading
 
 ### Essential References
@@ -562,6 +564,8 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 
 
 ---
+
+
 
 ## Cross-References
 

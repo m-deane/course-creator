@@ -575,6 +575,8 @@ debate_result = moderator.run_debate("The impact of AI on employment")
 *Multi-agent systems multiply capabilities. Choose patterns that match your problem structure and let agents collaborate effectively.*
 
 
+
+
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

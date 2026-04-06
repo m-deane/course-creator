@@ -714,6 +714,8 @@ print(f"  Test accuracy: {test_score:.4f}")
 <strong>Key Takeaway:</strong> Fitness caching alone can provide 30-50% speedup for typical GA runs. Combined with parallelization (4-8 cores), you can achieve 5-10x wall-clock reduction, making GA feature selection feasible for production ML pipelines.
 
 
+
+
 ## Practice Problems
 
 1. **Speedup Calculation**

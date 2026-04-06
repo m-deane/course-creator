@@ -428,6 +428,8 @@ def pooled_ols_diagnostic(df, y_col, x_cols, entity_col, time_col):
 pooled_ols_diagnostic(df, 'y', ['x'], 'entity', 'time')
 ```
 
+
+
 ## Key Takeaways
 
 1. **Pooled OLS ignores panel structure** and can lead to biased estimates when X correlates with entity effects

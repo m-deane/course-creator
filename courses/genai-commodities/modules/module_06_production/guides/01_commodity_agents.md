@@ -456,6 +456,8 @@ class AgentScheduler:
 **Insight:** Understanding building commodity trading agents is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## Key Takeaways
 
 1. **Agents automate research** - tools + LLM reasoning = autonomous analysis
@@ -482,6 +484,8 @@ class AgentScheduler:
 
 
 ---
+
+
 
 ## Cross-References
 

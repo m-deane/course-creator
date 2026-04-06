@@ -676,6 +676,8 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
 2. Given a real-world scenario involving building an interpretability api with fastapi and captum, what would be your first three steps to apply the techniques from this guide?
 
 
+
+
 ## Summary
 
 | Component | Responsibility |

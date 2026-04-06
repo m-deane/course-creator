@@ -841,6 +841,8 @@ score = model.score(X_test, y_test)  # Honest estimate
 **Insight:** Understanding high-dimensional regression is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## 11. Further Reading
 
 ### Foundational Papers
@@ -891,6 +893,8 @@ score = model.score(X_test, y_test)  # Honest estimate
 
 
 ---
+
+
 
 ## Cross-References
 

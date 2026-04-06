@@ -542,6 +542,8 @@ print(f"\nSpeedup (wide vs long for lags): {time_long_lag/time_wide_lag:.1f}x")
    What happens with `.pivot()`? How to fix with `.pivot_table()`?
    Which aggregation function: mean, sum, first, last?
 
+
+
 ## Further Reading
 
 **Pandas Documentation:**

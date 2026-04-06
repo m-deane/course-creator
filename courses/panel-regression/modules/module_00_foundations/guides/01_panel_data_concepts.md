@@ -277,6 +277,8 @@ print(f"Between share: {variation['between_share']:.1%}")
 print(f"Within share: {variation['within_share']:.1%}")
 ```
 
+
+
 ## Key Takeaways
 
 1. **Panel data** combines cross-sectional and time series dimensions with the same entities observed repeatedly

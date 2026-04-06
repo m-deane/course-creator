@@ -837,6 +837,8 @@ y_ahead = y[h:T_eff + h]  # Properly aligned
 **Insight:** Understanding three-pass regression filter is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
 
+
+
 ## 9. Further Reading
 
 ### Foundational Paper
@@ -890,6 +892,8 @@ y_ahead = y[h:T_eff + h]  # Properly aligned
 
 
 ---
+
+
 
 ## Cross-References
 

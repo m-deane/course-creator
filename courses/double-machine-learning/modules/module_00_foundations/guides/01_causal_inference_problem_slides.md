@@ -26,6 +26,10 @@ DML breaks this tradeoff by using **ML for prediction** and **econometrics for i
 
 <!-- Speaker notes: This is the central tension of the entire course. Traditional econometrics handles a handful of controls well. Machine learning handles hundreds of predictors well. But neither alone gives you a valid causal estimate with many controls. DML combines them — ML predicts, econometrics infers. -->
 
+<div class="callout-info">
+Info: econometrics for inference
+</div>
+
 ---
 
 ## The Causal Inference Tradeoff
@@ -51,13 +55,11 @@ Few Controls (OLS)          Many Controls (OLS)         DML Approach
 **Question:** What is the causal effect of OPEC production cuts on crude oil calendar spreads?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     X["Controls X<br/>Global demand, inventories,<br/>shipping rates, refinery utilisation"] --> D["Treatment D<br/>OPEC production cut<br/>(million bbl/day)"]
     X --> Y["Outcome Y<br/>WTI 1-3 month<br/>calendar spread"]
     D -->|"θ = causal effect"| Y
-    style D fill:#4a9eff,color:#fff
-    style Y fill:#ff6b6b,color:#fff
-    style X fill:#ffa94d,color:#fff
 ```
 
 <!-- Speaker notes: This is our running example. OPEC does not cut production randomly — they respond to market conditions (demand, inventories, geopolitics). These same conditions also affect calendar spreads directly. So the naive correlation between cuts and spreads mixes the causal effect with confounding. We need to partial out the confounders to isolate theta. -->
@@ -149,6 +151,7 @@ $$\hat{\theta}_{FWL} = \frac{\tilde{D}'\tilde{Y}}{\tilde{D}'\tilde{D}}$$
 ## FWL Visually
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Step1["Step 1: Residualise"]
         Y["Y (spread)"] --> OLS_Y["OLS on X"]
@@ -161,7 +164,6 @@ flowchart LR
         RD --> Final
         Final --> Theta["θ̂ = causal effect"]
     end
-    style Theta fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This diagram is the template for the entire course. Step 1 removes confounding by partialling out X from both Y and D. Step 2 runs a simple regression on the residuals. In DML, we replace the Step 1 OLS boxes with ML models (random forests, gradient boosting, neural nets) and add cross-fitting to prevent overfitting. The rest of the course builds on this exact pipeline. -->
@@ -194,6 +196,10 @@ Replace OLS first stages with ML:
 </div>
 
 <!-- Speaker notes: This side-by-side comparison captures the entire conceptual leap. FWL uses OLS in the first stage, which limits you to linear relationships and low-dimensional X. DML uses any ML model, which handles nonlinearity and high dimensions. But swapping OLS for ML introduces two new problems: overfitting bias and sensitivity to first-stage errors. Cross-fitting and orthogonal scores solve these. Modules 02-04 cover each in detail. -->
+
+<div class="callout-key">
+Key Point: + cross-fitting + orthogonal scores
+</div>
 
 ---
 
@@ -241,6 +247,11 @@ print(f"SE:           {theta_dml.bse[1]:.2f}")      # Tight!
 
 <!-- Speaker notes: This is the most common mistake in applied work. Researchers run Lasso, take the selected variables, and run OLS as if no selection happened. The problem is twofold: Lasso may drop confounders that are important for D even if they are weak predictors of Y, and the standard errors ignore the selection step entirely. Module 01 covers this in detail with a full simulation. -->
 
+<div class="callout-insight">
+Insight:  (ignore selection uncertainty)
+
+</div>
+
 ---
 
 ## Pitfall 2: Plug-in Bias
@@ -256,6 +267,11 @@ where $s_n$ is the error in $\hat{m}(X)$. This bias does **not** vanish fast eno
 **DML fix:** Neyman orthogonal scores make the bias proportional to $r_n \cdot s_n$ (product of errors), which vanishes fast enough.
 
 <!-- Speaker notes: This is subtle but critical. If you just plug in ML predictions and residualise, the estimation error in your ML models contaminates the treatment effect. The contamination is first-order, meaning it does not shrink fast enough for root-n inference. Orthogonal scores make the contamination second-order (a product of two small errors), which does vanish. Module 03 covers the math in detail. -->
+
+<div class="callout-warning">
+Warning:  vanish fast enough for valid inference.
+
+</div>
 
 ---
 
@@ -276,6 +292,7 @@ where $s_n$ is the error in $\hat{m}(X)$. This bias does **not** vanish fast eno
 ## The DML Solution: Three Key Ideas
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     P["Problem: High-dimensional confounding"] --> S1["Solution 1: ML Residualisation<br/>Use flexible ML for nuisance functions"]
     P --> S2["Solution 2: Neyman Orthogonal Scores<br/>Robust to first-stage estimation errors"]
@@ -283,7 +300,6 @@ flowchart TD
     S1 --> DML["Double/Debiased ML<br/>Valid inference with many controls"]
     S2 --> DML
     S3 --> DML
-    style DML fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This diagram summarises the three pillars of DML that the course will build one by one. Module 02 covers ML residualisation (the orthogonalisation trick). Module 03 covers Neyman orthogonal scores (why DML is robust). Module 04 covers cross-fitting (eliminating overfitting). Modules 05-09 then apply these ideas to specific models and production settings. -->
@@ -319,15 +335,12 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OLS["OLS with few controls"] -->|"Omitted variable bias"| Bad1["Biased θ̂"]
     OLS2["OLS with many controls"] -->|"Variance explosion"| Bad2["Imprecise θ̂"]
     Lasso["Lasso + OLS"] -->|"Post-selection bias"| Bad3["Invalid inference"]
     DML["DML"] -->|"ML + orthogonality + cross-fitting"| Good["Valid θ̂ with tight CI"]
-    style Bad1 fill:#f66,color:#fff
-    style Bad2 fill:#f66,color:#fff
-    style Bad3 fill:#f66,color:#fff
-    style Good fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This is the punchline of the entire deck. Three common approaches all fail for different reasons. DML succeeds by combining ML flexibility with econometric rigour. The rest of the course teaches you exactly how and why each component works, and how to implement it in production. Next up: Module 01 dives deep into why Lasso plus OLS produces invalid causal estimates. -->

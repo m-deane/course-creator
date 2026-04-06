@@ -26,19 +26,22 @@ ML first stages handle nonlinear instrument-treatment relationships.
 
 <!-- Speaker notes: The selection-on-observables assumption in Modules 02-06 requires that all confounders are in X. In many commodity markets, this is unrealistic — market sentiment, insider information, and private expectations are unobserved confounders. PLIV addresses this by using an instrument: a variable that affects the treatment but has no direct effect on the outcome. The classic example is weather as an instrument for agricultural supply. -->
 
+<div class="callout-info">
+Info: all confounders are observed
+</div>
+
 ---
 
 ## The IV DAG
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Z["Z: Instrument<br/>(weather anomaly)"] -->|"Relevance"| D["D: Treatment<br/>(shipping volume)"]
     U["U: Unobserved<br/>(market sentiment)"] -->|"Confounding"| D
     U -->|"Confounding"| Y["Y: Outcome<br/>(price spread)"]
     D -->|"θ: causal"| Y
     Z -.->|"Exclusion: NO direct effect"| Y
-    style Z fill:#6f6,color:#fff
-    style U fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The DAG shows the three key elements. Z (weather) affects D (shipping volume) through relevance. U (market sentiment) confounds both D and Y. The exclusion restriction says Z does not directly affect Y — weather affects prices only through its effect on shipping volume. If these conditions hold, PLIV identifies the causal effect theta even though U is unobserved. -->
@@ -125,6 +128,11 @@ print(pliv.summary)
 
 <!-- Speaker notes: This table provides commodity-specific examples of instrumental variables. The key challenge is finding instruments that satisfy both relevance (affects treatment) and exclusion (no direct effect on outcome). Weather is the most common instrument in commodity research because it is plausibly exogenous to market sentiment. Pipeline outages work similarly for oil supply studies. The exclusion restriction — that the instrument only affects the outcome through the treatment — cannot be tested statistically. It must be justified by domain knowledge. -->
 
+<div class="callout-key">
+Key Point:  | Affects shipping, not prices directly |
+| Crop production | 
+</div>
+
 ---
 
 ## PLIV vs Classical 2SLS
@@ -154,11 +162,18 @@ print(pliv.summary)
 
 <!-- Speaker notes: The comparison between 2SLS and PLIV mirrors the comparison between OLS and DML. 2SLS uses linear first stages, which miss nonlinear relationships between instruments and treatment. PLIV uses ML first stages that capture arbitrary functional forms. In commodity markets, the relationship between weather and shipping volume is often nonlinear — extreme weather has disproportionate effects. PLIV handles this naturally. The weakness diagnostic shifts from the F-statistic to partial R-squared, which extends naturally to ML first stages. -->
 
+<div class="callout-insight">
+Insight:  $D = r(X, Z) + V$
+- Nonlinear relationships captured
+- Works with 
+</div>
+
 ---
 
 ## Weak Instrument Warning Signs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Check["Check instrument strength"] --> PR["Partial R² > 0.05?"]
     PR -->|"Yes"| Strong["Strong instrument<br/>Trust PLIV results"]
@@ -167,8 +182,6 @@ flowchart TD
     Weak --> Unstable["Point estimate unstable<br/>across specifications"]
     Wide --> Action["Consider:<br/>1. Stronger instrument<br/>2. Bounds analysis<br/>3. Report PLR + PLIV"]
     Unstable --> Action
-    style Strong fill:#6f6,color:#fff
-    style Weak fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: Weak instruments are the main failure mode of IV estimation. This flowchart provides a diagnostic workflow. Start by computing the partial R-squared. If it exceeds 0.05, the instrument is likely strong enough. If not, check whether the confidence interval is much wider than PLR's (a ratio above 3 is concerning) and whether the point estimate is stable across nuisance model specifications. If the instrument is weak, consider finding a stronger one, using partial identification bounds, or reporting both PLR and PLIV results side by side. -->
@@ -203,14 +216,17 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Endo["Endogenous D<br/>(unobserved confounding)"] -->|"PLR fails"| Bias["Biased θ̂"]
     Endo -->|"Add instrument Z"| PLIV["PLIV"]
     PLIV --> ML["ML first stages<br/>(nonlinear Z→D)"]
     ML --> CF["Cross-fitting"]
     CF --> Valid["Valid θ̂"]
-    style Bias fill:#f66,color:#fff
-    style Valid fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: When treatment is endogenous, PLR is biased regardless of how good the ML models are — you cannot control for what you cannot observe. PLIV solves this by adding an instrument that provides exogenous variation. The ML first stages handle nonlinear relationships between the instrument and treatment, and cross-fitting prevents overfitting. -->
+
+<div class="callout-warning">
+Warning: DML-IV requires the same identification assumptions as standard IV (relevance, exclusion, independence) PLUS the DML regularity conditions. It does not weaken IV assumptions.
+</div>

@@ -1,10 +1,18 @@
 # Why OLS Fails with High-Dimensional Controls
 
+> **Reading time:** ~5 min | **Module:** 1 — Ols Limitations | **Prerequisites:** Module 0 — Causal Inference Problem
+
 ## In Brief
 
 You will learn why the obvious fix for high-dimensional confounding — using Lasso to select variables, then running OLS — produces biased treatment effects and invalid confidence intervals. The post-selection inference problem is fundamental, not a fixable nuance.
 
-> 💡 **Key Insight:** Lasso selects variables that predict the outcome $Y$ well, not variables that confound the treatment $D$. Dropping a confounder of $D$ that is a weak predictor of $Y$ reintroduces omitted variable bias — and the standard errors do not account for the selection step.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Lasso selects variables that predict the outcome $Y$ well, not variables that confound the treatment $D$. Dropping a confounder of $D$ that is a weak predictor of $Y$ reintroduces omitted variable bias — and the standard errors do not account for the selection step.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn why the obvious fix for high-dimensional confounding — using Lasso to select variables, then running OLS — produces biased treatment effects and invalid confidence intervals. The post-selection inference problem is fundamental, not a fixable nuance.
+</div>
 
 ## Visual Explanation
 
@@ -32,6 +40,12 @@ $$\hat{\beta}_{Lasso} = \arg\min_\beta \frac{1}{2n}\|Y - X\beta\|^2 + \lambda\|\
 The penalty $\lambda\|\beta\|_1$ shrinks coefficients toward zero. Variables with small but nonzero effects get dropped entirely. The treatment coefficient $\theta$ is shrunk along with everything else.
 
 In commodity markets, consider estimating the effect of carbon tax increases on power generation costs. Many controls (weather, fuel prices, demand, renewable capacity) have small but real confounding effects. Lasso may drop some of these, reintroducing bias.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -65,11 +79,19 @@ print(f"  X3 selected: {3 in selected}")
 print(f"  X7 selected: {7 in selected}")
 ```
 
+</div>
+
 Lasso selects based on prediction of $Y$. Variables like $X_1$ and $X_7$ confound $D$ but may be weak predictors of $Y$ — Lasso drops them, reintroducing bias.
 
 ## Why Post-Selection OLS Gives Invalid Inference
 
 After Lasso selection, running OLS on the selected variables ignores the uncertainty from the selection step:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Step 2: OLS on Lasso-selected variables
@@ -88,11 +110,21 @@ in_ci = post_lasso_ols.conf_int()[1][0] <= true_effect <= post_lasso_ols.conf_in
 print(f"True effect in CI:      {in_ci}")
 ```
 
-> ⚠️ **Warning:** The standard errors from post-selection OLS are WRONG. They ignore the model selection step, producing confidence intervals that are too narrow. The actual coverage of "95% CIs" from post-Lasso OLS is often 60-80% — far below the nominal 95%.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> The standard errors from post-selection OLS are WRONG. They ignore the model selection step, producing confidence intervals that are too narrow. The actual coverage of "95% CIs" from post-Lasso OLS is often 60-80% — far below the nominal 95%.
+</div>
 
 ## How to Demonstrate the Coverage Problem
 
 Run a Monte Carlo simulation to check actual coverage:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def coverage_simulation(n_sims=500, n=1000, p=200, true_theta=1.5):
@@ -131,6 +163,8 @@ print(f"Actual coverage:   {coverage:.1%}")
 print(f"Mean bias:         {bias:+.3f}")
 ```
 
+</div>
+
 The actual coverage is substantially below 95%, confirming that post-Lasso OLS inference is invalid.
 
 ## How the Double Selection Fix Works (Preview)
@@ -142,6 +176,12 @@ Belloni, Chernozhukov, and Hansen (2014) proposed "double selection" — run Las
 3. Union of both sets → controls for OLS
 
 This ensures confounders of $D$ are not dropped, even if they are weak predictors of $Y$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Double selection
@@ -164,9 +204,15 @@ print(f"\nDouble selection OLS: {double_sel_ols.params[1]:.2f} (SE: {double_sel_
 print(f"True effect:         {true_effect:.2f}")
 ```
 
+</div>
+
 Double selection improves over single Lasso, but DML goes further — it replaces the linear Lasso with any ML model and adds orthogonal scores for robustness.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 00: The causal inference problem and FWL theorem
@@ -193,9 +239,25 @@ Explain why Lasso selecting variables for $Y$ is not the same as selecting confo
 **2. Coverage Simulation:**
 Extend the coverage simulation to compare three methods: (a) post-Lasso OLS, (b) double selection OLS, (c) DML with random forests. Plot coverage rates for each. Which achieves nominal 95% coverage?
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compare_coverage(n_sims=200, n=1000, p=200, true_theta=1.5):
     """Compare coverage of three estimation methods."""
     # Your implementation here
     pass
 ```
+
+</div>
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_regularisation_bias_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

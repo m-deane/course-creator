@@ -1,10 +1,18 @@
 # Instrumental Variables with DML
 
+> **Reading time:** ~5 min | **Module:** 7 — Instrumental Variables | **Prerequisites:** Modules 0-4, IV concepts
+
 ## In Brief
 
 You will learn how to combine instrumental variables with DML using the Partially Linear IV (PLIV) model. When treatment is endogenous (correlated with unobservable confounders), standard DML fails. PLIV uses an instrument $Z$ that affects $Y$ only through $D$, with ML first stages replacing the traditional linear 2SLS.
 
-> 💡 **Key Insight:** Classical 2SLS uses linear first stages that miss nonlinear relationships between the instrument and the endogenous treatment. PLIV replaces these with ML models while preserving the IV identification strategy. The result: valid causal estimates even when the first-stage relationship is complex and controls are high-dimensional.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Classical 2SLS uses linear first stages that miss nonlinear relationships between the instrument and the endogenous treatment. PLIV replaces these with ML models while preserving the IV identification strategy. The result: valid causal estimates even when the first-stage relationship is complex and controls are high-dimensional.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn how to combine instrumental variables with DML using the Partially Linear IV (PLIV) model. When treatment is endogenous (correlated with unobservable confounders), standard DML fails.
+</div>
 
 ## Visual Explanation
 
@@ -33,6 +41,12 @@ $$Y = \theta D + g_0(X) + \epsilon, \quad E[\epsilon | Z, X] = 0$$
 $$D = r_0(X) + h_0(Z, X) + V$$
 
 where $Z$ is the instrument, $g_0(X)$ captures control effects on $Y$, and $r_0(X) + h_0(Z, X)$ captures how controls and the instrument predict $D$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -66,7 +80,15 @@ print(f"Corr(D, U): {np.corrcoef(D, U)[0,1]:.3f} (endogenous!)")
 print(f"Corr(Z, U): {np.corrcoef(Z, U)[0,1]:.3f} (instrument exogenous)")
 ```
 
+</div>
+
 ## How to Estimate PLIV with doubleml
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 df = pd.DataFrame(X, columns=col_names)
@@ -91,9 +113,19 @@ print(pliv.summary)
 print(f"\nTrue effect: {true_theta}")
 ```
 
-> ⚠️ **Warning:** Weak instruments (low correlation between $Z$ and $D$) produce unreliable estimates with wide confidence intervals. Check the first-stage F-statistic (or its ML analogue) before trusting PLIV results.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> Weak instruments (low correlation between $Z$ and $D$) produce unreliable estimates with wide confidence intervals. Check the first-stage F-statistic (or its ML analogue) before trusting PLIV results.
+</div>
 
 ## How to Check Instrument Strength
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.metrics import r2_score
@@ -114,9 +146,15 @@ print(f"Partial R² of Z: {partial_r2:.3f}")
 print(f"Instrument is {'STRONG' if partial_r2 > 0.05 else 'WEAK'}")
 ```
 
+</div>
+
 The partial $R^2$ measures how much additional predictive power the instrument adds beyond the controls. Values below 0.05 suggest a weak instrument.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 05: PLR with `doubleml`
@@ -140,3 +178,11 @@ Simulate data with varying instrument strength (coefficient on Z from 0.1 to 1.0
 
 **2. OLS vs PLIV:**
 Show that OLS is biased (endogeneity) while PLIV recovers the true effect when the instrument is valid.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_iv_with_dml_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

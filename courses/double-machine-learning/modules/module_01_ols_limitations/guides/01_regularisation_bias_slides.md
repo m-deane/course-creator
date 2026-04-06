@@ -31,6 +31,7 @@ Dropping a confounder of $D$ reintroduces omitted variable bias.
 ## The Post-Selection Inference Trap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Step1["Step 1: Lasso on Y"]
         L["Lasso selects<br/>X1, X3, X5<br/>(predict Y well)"]
@@ -43,7 +44,6 @@ flowchart LR
     end
     Step1 --> Step2
     Step2 --> Problem
-    style Problem fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: Walk through the diagram. Lasso in step 1 selects variables based on their predictive power for Y. X2 is a strong confounder of D but a weak predictor of Y after controlling for other variables, so Lasso drops it. Step 2 runs OLS without X2, which means the omitted variable bias from X2 contaminates the treatment effect estimate. The standard errors from step 2 also ignore the selection uncertainty from step 1. -->
@@ -121,6 +121,10 @@ The SE is wrong because it **ignores the selection step** — treats selected va
 
 <!-- Speaker notes: The standard error from this regression assumes the model was specified a priori. But we selected variables using the same data, which introduces a form of data snooping. The true uncertainty is larger than reported because the model itself is random — different data would select different variables. This is why the coverage of the reported 95% CI is often only 60-80%. -->
 
+<div class="callout-insight">
+Insight: ignores the selection step
+</div>
+
 ---
 
 ## Coverage Failure: Monte Carlo Evidence
@@ -135,6 +139,11 @@ The SE is wrong because it **ignores the selection step** — treats selected va
 
 <!-- Speaker notes: This table summarises Monte Carlo results from the simulation in the guide. Post-Lasso OLS has dramatically undercovered confidence intervals. Double selection improves things by also selecting confounders of D, but still falls short of nominal coverage. DML achieves near-nominal coverage because orthogonal scores and cross-fitting properly account for the ML estimation step. This is the strongest argument for DML over post-selection methods. -->
 
+<div class="callout-warning">
+Warning:  |
+| Double Selection | 95% | 
+</div>
+
 ---
 
 ## The Double Selection Fix
@@ -146,13 +155,13 @@ The SE is wrong because it **ignores the selection step** — treats selected va
 3. OLS with $D$ and $S_Y \cup S_D$ as controls
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Y["Y ~ X (Lasso)"] --> SY["S_Y: predictors of Y"]
     D["D ~ X (Lasso)"] --> SD["S_D: confounders of D"]
     SY --> Union["S_Y ∪ S_D"]
     SD --> Union
     Union --> OLS["OLS: Y ~ D + X_{union}"]
-    style Union fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: Double selection runs Lasso twice — once for Y and once for D. The union ensures confounders of D are included even if they are weak predictors of Y. This is a substantial improvement over single selection. But it still relies on Lasso's linear model being correct, and the standard errors still do not fully account for the selection step. DML generalises this by replacing Lasso with any ML model and adding orthogonal scores for robustness. -->
@@ -209,20 +218,26 @@ flowchart TD
 
 <!-- Speaker notes: This deck establishes why naive variable selection fails for causal inference, motivating the need for DML's more principled approach. Module 02 shows how to replace selection with residualisation using flexible ML. Module 03 explains why orthogonal scores make DML robust to ML estimation errors that plague post-selection methods. -->
 
+<div class="callout-key">
+Key Point: The DML solution is to apply regularisation only to the nuisance parameters (confounders), never to the treatment variable. This is achieved through the orthogonalisation trick.
+</div>
+
 ---
 
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Lasso["Lasso + OLS"] -->|"Drops confounders of D"| Bias["Biased θ̂"]
     Lasso -->|"Ignores selection"| BadSE["Invalid SEs"]
     DS["Double Selection"] -->|"Keeps confounders"| Better["Less bias"]
     DS -->|"Still linear"| Limited["Limited flexibility"]
     DML["DML"] -->|"Any ML + orthogonality"| Valid["Valid θ̂ + SEs"]
-    style Bias fill:#f66,color:#fff
-    style BadSE fill:#f66,color:#fff
-    style Valid fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The visual summary captures the progression from naive Lasso selection (broken) through double selection (improved but limited) to DML (rigorous). The key message is that prediction-oriented variable selection is fundamentally the wrong tool for causal inference. DML reframes the problem: instead of selecting variables, use ML to flexibly partial out confounders while protecting inference with orthogonal scores. -->
+
+<div class="callout-danger">
+Danger: Lasso and Ridge shrink ALL coefficients toward zero, including the treatment effect. This regularisation bias means you cannot use penalised regression directly for causal inference.
+</div>

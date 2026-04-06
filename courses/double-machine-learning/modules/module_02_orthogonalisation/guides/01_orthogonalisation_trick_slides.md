@@ -26,11 +26,18 @@ This is Robinson's (1988) partially linear model, powered by modern ML.
 
 <!-- Speaker notes: The fundamental insight is that we do not need to select variables. Instead, we let ML explain as much as it can about both Y and D using the controls X. Whatever correlation remains between the residuals — the parts ML cannot explain — is the causal effect of D on Y. This is a complete paradigm shift from variable selection to residualisation. -->
 
+<div class="callout-info">
+Info:  both $Y$ and $D$ using ML, then estimates $\theta$ from the residuals.
+
+> 
+</div>
+
 ---
 
 ## The DML Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Step1["Step 1: Residualise"]
         Y["Y (spread)"] --> ML_Y["ML: ĝ(X)"]
@@ -42,7 +49,6 @@ flowchart LR
         RY --> OLS["θ̂ = Σ(D̃·Ỹ) / Σ(D̃²)"]
         RD --> OLS
     end
-    style OLS fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This pipeline diagram is the visual anchor for the entire course. Step 1 trains two ML models — one predicting Y from X, one predicting D from X — and computes residuals. Step 2 runs a simple ratio to get the treatment effect. The magic is that this simple ratio produces a valid causal estimate even with hundreds of controls and nonlinear confounding, provided we use cross-fitting (Module 04). -->
@@ -108,6 +114,11 @@ def manual_dml(Y, D, X, n_folds=5):
 ```
 
 <!-- Speaker notes: Walk through the code line by line. The KFold loop implements cross-fitting — training on one fold, predicting on another. The treatment effect is a simple ratio of cross-products to sum of squares. The standard error uses the heteroskedasticity-robust formula. This is the complete DML algorithm. Everything else in the course is about understanding why this works and how to extend it. -->
+
+<div class="callout-key">
+Key Point: 2) /
+                 (np.mean(resid_D
+</div>
 
 ---
 
@@ -193,6 +204,11 @@ because $V = D - m_0(X)$ is orthogonal to functions of $X$.
 
 <!-- Speaker notes: This slide helps practitioners decide when to use DML versus standard OLS. In commodity markets, most relationships are nonlinear: inventory effects are asymmetric, demand and supply interact, and seasonal patterns are complex. DML handles all of these naturally through the ML first stages. If you have a simple low-dimensional linear setup, OLS is fine. But in practice, commodity markets almost always have enough complexity to benefit from DML. -->
 
+<div class="callout-insight">
+Insight:  |
+| $p/n > 0.2$ | Noisy | Stable | 
+</div>
+
 ---
 
 ## Connections
@@ -223,6 +239,7 @@ because $V = D - m_0(X)$ is orthogonal to functions of $X$.
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FWL["FWL: OLS residualisation"] -->|"Replace OLS with ML"| DML["DML: ML residualisation"]
     DML --> R1["Ỹ = Y - ĝ(X)"]
@@ -230,8 +247,10 @@ flowchart TD
     R1 --> Theta["θ̂ = slope(Ỹ ~ D̃)"]
     R2 --> Theta
     Theta -->|"Valid because"| Orth["Orthogonality: errors in ĝ, m̂<br/>don't bias θ̂"]
-    style Theta fill:#6f6,color:#fff
-    style Orth fill:#4a9eff,color:#fff
 ```
 
 <!-- Speaker notes: The visual summary shows the flow from FWL to DML. Replace OLS with ML in the first stage, compute residuals, estimate theta from the residual regression. The orthogonality property ensures that ML errors do not contaminate the treatment effect. This is the foundation that the rest of the course builds on. -->
+
+<div class="callout-danger">
+Danger: Residualising only the outcome (not the treatment) gives the Frisch-Waugh-Lovell result for OLS but NOT a valid DML estimator. Both must be residualised.
+</div>

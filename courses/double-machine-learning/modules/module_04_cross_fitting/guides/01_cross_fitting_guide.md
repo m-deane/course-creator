@@ -1,10 +1,18 @@
 # Cross-Fitting and Sample Splitting
 
+> **Reading time:** ~5 min | **Module:** 4 — Cross Fitting | **Prerequisites:** Module 3 — Neyman Orthogonal Scores
+
 ## In Brief
 
 You will learn why training ML models on the same data used for inference creates overfitting bias, and how K-fold cross-fitting eliminates it. Cross-fitting is the second pillar of DML (alongside orthogonal scores) — without it, even orthogonal estimators can be biased.
 
-> 💡 **Key Insight:** In-sample ML predictions are too good — the model has partially memorised the training data. This makes residuals artificially small, which inflates the treatment effect. Cross-fitting ensures all predictions are genuinely out-of-sample, removing overfitting bias without sacrificing efficiency.
+<div class="callout-insight">
+<strong>Key Insight:</strong> In-sample ML predictions are too good — the model has partially memorised the training data. This makes residuals artificially small, which inflates the treatment effect. Cross-fitting ensures all predictions are genuinely out-of-sample, removing overfitting bias without sacrificing efficiency.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn why training ML models on the same data used for inference creates overfitting bias, and how K-fold cross-fitting eliminates it. Cross-fitting is the second pillar of DML (alongside orthogonal scores) — without it, even orthogonal estimators can be biased.
+</div>
 
 ## Visual Explanation
 
@@ -21,6 +29,31 @@ Result: Every observation has an OUT-OF-SAMPLE prediction.
         No observation was used to train its own predictor.
 ```
 
+<div class="compare">
+<div class="compare-card">
+<div class="header before">In-Sample Prediction (Biased)</div>
+<div class="body">
+
+- Model partially memorises training data
+- Residuals artificially small
+- Treatment effect estimate inflated
+- Bias does not vanish with more data
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Cross-Fitted Prediction (Unbiased)</div>
+<div class="body">
+
+- Every observation predicted out-of-sample
+- Residuals reflect genuine prediction error
+- Treatment effect correctly estimated
+- Converges at parametric rate
+
+</div>
+</div>
+</div>
+
 ## Why In-Sample Predictions Create Bias
 
 In a commodity context, suppose you are estimating the effect of inventory releases on oil futures spreads, with 50 market controls. If your random forest trains on all 2,000 observations and then predicts on the same data, it partially memorises each observation. This creates a subtle but damaging bias.
@@ -34,6 +67,12 @@ This means $\tilde{Y}_i = Y_i - \hat{g}_{in}(X_i) \approx \text{small number}$. 
 $$\hat{\theta} = \frac{\sum \tilde{D}_i \tilde{Y}_i}{\sum \tilde{D}_i^2}$$
 
 With artificially small $\tilde{D}_i$ in the denominator, $\hat{\theta}$ is inflated.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -62,6 +101,8 @@ print(f"In-sample DML:         {theta_insample:.2f}  (biased!)")
 print(f"Mean |resid_D| in-sample: {np.mean(np.abs(resid_D_insample)):.4f}")
 ```
 
+</div>
+
 The in-sample residuals are too small because the random forest has memorised the training data.
 
 ## How Cross-Fitting Fixes the Problem
@@ -72,6 +113,12 @@ Cross-fitting uses K-fold sample splitting. For each fold $k$:
 3. Compute residuals for fold $k$
 
 Then concatenate all out-of-sample residuals and estimate $\theta$:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Cross-fitting (CORRECT)
@@ -94,7 +141,11 @@ print(f"\nCross-fitted DML:      {theta_cf:.2f}  (unbiased!)")
 print(f"Mean |resid_D| cross-fitted: {np.mean(np.abs(resid_D_cf)):.4f}")
 ```
 
-> ⚠️ **Warning:** Simple sample splitting (50/50 train/test) also works but wastes half the data for inference. Cross-fitting uses all observations for both training and prediction, achieving full efficiency. Always use cross-fitting over simple splitting.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> Simple sample splitting (50/50 train/test) also works but wastes half the data for inference. Cross-fitting uses all observations for both training and prediction, achieving full efficiency. Always use cross-fitting over simple splitting.
+</div>
 
 ## How DML1 and DML2 Differ
 
@@ -107,6 +158,12 @@ $$\hat{\theta}_{DML1} = \frac{1}{K}\sum_{k=1}^K \hat{\theta}_k \quad \text{where
 $$\hat{\theta}_{DML2} = \frac{\sum_{i=1}^n \tilde{D}_i \tilde{Y}_i}{\sum_{i=1}^n \tilde{D}_i^2}$$
 
 DML2 is generally preferred — it is more stable and recommended by the `doubleml` package.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # DML1: average fold-specific estimates
@@ -125,7 +182,15 @@ print(f"DML2 (pooled):    {theta_dml2:.4f}")
 print(f"Fold estimates:   {[f'{t:.3f}' for t in thetas_per_fold]}")
 ```
 
+</div>
+
 ## How the Number of Folds Affects Results
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 for K in [2, 3, 5, 10, 20]:
@@ -143,9 +208,15 @@ for K in [2, 3, 5, 10, 20]:
     print(f"K={K:2d}: theta = {theta_k:.4f}")
 ```
 
+</div>
+
 $K = 5$ is the default in most implementations and works well in practice. Larger $K$ uses more training data per fold but increases computation.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 02: The orthogonalisation trick
@@ -169,3 +240,11 @@ Run 100 simulations comparing in-sample DML to cross-fitted DML. Plot the distri
 
 **2. DML1 vs DML2:**
 Run 100 simulations comparing DML1 and DML2. Which has lower variance? Which is more robust to small fold sizes?
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_cross_fitting_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

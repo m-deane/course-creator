@@ -43,6 +43,10 @@ Where $r_n$ = error in $\hat{g}(X)$, $s_n$ = error in $\hat{m}(X)$.
 
 <!-- Speaker notes: This table is the most important comparison in the course. The naive approach — just plug in ML predictions without the orthogonal score structure — has first-order sensitivity to ML errors. DML's orthogonal score reduces this to second-order. The practical implication is enormous: you do not need perfect ML models, just reasonably good ones. This is why DML works with off-the-shelf random forests and gradient boosting without extensive hyperparameter tuning. -->
 
+<div class="callout-key">
+Key Point: $\text{Bias} \propto r_n \times s_n$
+</div>
+
 ---
 
 ## The Orthogonal Score Function
@@ -64,6 +68,7 @@ Small errors in $\hat{\eta} = (\hat{g}, \hat{m})$ do not affect $E[\psi]$ to fir
 ## Geometric Intuition
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Naive["Naive Plug-in"]
         N1["Error in ĝ(X)"] -->|"First-order effect"| NB["Bias in θ̂"]
@@ -73,8 +78,6 @@ flowchart TD
         D2["Error in m̂(X)"] -->|"×"| Product
         Product -->|"Second-order"| DB["Tiny bias in θ̂"]
     end
-    style NB fill:#f66,color:#fff
-    style DB fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The diagram shows the key difference. In the naive approach, error in g-hat directly affects the treatment effect estimate. In DML, the error in g-hat only affects theta-hat through its product with the error in m-hat. Since both errors are small (because ML is decent), their product is very small. This is like the difference between a first-order and second-order Taylor approximation — the second-order term is much smaller. -->
@@ -177,6 +180,10 @@ rather than $\propto 0.4$ (naive) — a substantial reduction.
 
 <!-- Speaker notes: This slide connects the theory to practice. In energy markets, you rarely get very high R-squared for predicting spreads or production decisions from observable controls. The signal-to-noise ratio is low. But the orthogonality property means you do not need high R-squared. You need both models to be reasonably good, and their product of errors to be small enough. This is almost always satisfied with standard gradient boosting on commodity data. The practical message: do not over-tune your ML models. Focus on getting both to a reasonable level. -->
 
+<div class="callout-warning">
+Warning: Not every moment condition is Neyman orthogonal. The DML framework specifically constructs score functions with this property -- do not assume arbitrary estimating equations are orthogonal.
+</div>
+
 ---
 
 ## Connections
@@ -202,18 +209,25 @@ rather than $\propto 0.4$ (naive) — a substantial reduction.
 
 <!-- Speaker notes: This deck provides the theoretical justification for the residualisation approach introduced in Module 02. The orthogonal score guarantees robustness to first-stage errors. But there is one more piece needed: cross-fitting, which eliminates overfitting bias. Module 04 covers that. Together, orthogonal scores and cross-fitting are the two pillars that make DML rigorously valid. -->
 
+<div class="callout-key">
+Key Point: Without orthogonality, ML estimation errors in the nuisance functions propagate directly into the treatment effect estimate, destroying inference validity.
+</div>
+
 ---
 
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     ML["ML errors<br/>ĝ ≈ g₀, m̂ ≈ m₀"] -->|"Naive"| First["First-order bias<br/>Bias ∝ error"]
     ML -->|"Orthogonal Score"| Second["Second-order bias<br/>Bias ∝ error²"]
     First --> Invalid["Invalid inference"]
     Second --> Valid["Valid inference<br/>√n-consistent"]
-    style Invalid fill:#f66,color:#fff
-    style Valid fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The visual summary captures the entire message. ML models are imperfect — they have estimation errors. The naive approach translates these errors linearly into bias. The orthogonal score translates them quadratically, which is negligible for root-n inference. This is why DML produces valid confidence intervals while naive ML plug-in methods do not. Next up: Module 04 on cross-fitting, the other essential ingredient. -->
+
+<div class="callout-insight">
+Insight: Neyman orthogonality means the score function is insensitive to small errors in nuisance parameter estimation -- this is what allows ML (which has slow convergence) to be used in the first stage.
+</div>

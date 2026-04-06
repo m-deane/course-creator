@@ -1,10 +1,18 @@
 # Interactive Regression Models
 
+> **Reading time:** ~5 min | **Module:** 6 — Interactive Regression | **Prerequisites:** Module 5 — PLR
+
 ## In Brief
 
 You will learn how to estimate causal effects of binary treatments using the Interactive Regression Model (IRM), which extends DML to handle heterogeneous treatment effects and propensity score nuisance functions. The IRM estimates both ATE and ATTE using `doubleml.DoubleMLIRM`.
 
-> 💡 **Key Insight:** When treatment is binary (sanctions on/off, policy adopted/not), the PLR model is too restrictive because it assumes a constant treatment effect. The IRM allows the treatment effect to vary with covariates by modelling both the outcome function AND the propensity score.
+<div class="callout-insight">
+<strong>Key Insight:</strong> When treatment is binary (sanctions on/off, policy adopted/not), the PLR model is too restrictive because it assumes a constant treatment effect. The IRM allows the treatment effect to vary with covariates by modelling both the outcome function AND the propensity score.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn how to estimate causal effects of binary treatments using the Interactive Regression Model (IRM), which extends DML to handle heterogeneous treatment effects and propensity score nuisance functions. The IRM estimates both ATE and ATTE using `doubleml.DoubleMLIRM`.
+</div>
 
 ## Visual Explanation
 
@@ -32,6 +40,12 @@ $$\psi_{ATE} = g(1, X) - g(0, X) + \frac{D(Y - g(1,X))}{m(X)} - \frac{(1-D)(Y - 
 This score is orthogonal — errors in $\hat{g}$ and $\hat{m}$ contribute only as products.
 
 In the commodity example: sanctions impact on shipping freight rates. Treatment $D$ is whether a shipping route is under sanctions (binary), outcome $Y$ is the freight rate premium, and controls $X$ include route distance, vessel type, cargo type, insurance costs, and port infrastructure.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -63,7 +77,15 @@ print(f"True ATTE: {true_atte:.3f}")
 print(f"Treatment prevalence: {D.mean():.1%}")
 ```
 
+</div>
+
 ## How to Estimate ATE and ATTE
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 df = pd.DataFrame(X, columns=col_names)
@@ -92,9 +114,19 @@ print("\nATTE Results:")
 print(irm_atte.summary)
 ```
 
-> ⚠️ **Warning:** The `trimming_threshold` parameter drops observations with extreme propensity scores (very close to 0 or 1). Without trimming, the AIPW score can be numerically unstable. Set to 0.01-0.05 depending on your treatment prevalence.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> The `trimming_threshold` parameter drops observations with extreme propensity scores (very close to 0 or 1). Without trimming, the AIPW score can be numerically unstable. Set to 0.01-0.05 depending on your treatment prevalence.
+</div>
 
 ## How to Diagnose Propensity Score Quality
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -120,9 +152,15 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 Good overlap between treated and untreated propensity distributions is essential for IRM.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 05: PLR with `doubleml`
@@ -147,3 +185,11 @@ Simulate a scenario where ATE and ATTE differ substantially (treated units have 
 
 **2. Propensity Score Overlap:**
 Simulate a scenario with poor overlap (propensity scores near 0 or 1). Show that trimming matters by comparing results with `trimming_threshold=0.01` vs `0.1`.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_interactive_regression_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -1,10 +1,18 @@
 # Heterogeneous Treatment Effects
 
+> **Reading time:** ~5 min | **Module:** 8 — Heterogeneous Effects | **Prerequisites:** Modules 0-5
+
 ## In Brief
 
 You will learn how to estimate Conditional Average Treatment Effects (CATE) — how treatment effects vary across individuals — using `econml.dml.DML`. Beyond the average effect, CATE reveals WHO benefits most from a treatment. BLP and GATES analyses provide formal tests for heterogeneity.
 
-> 💡 **Key Insight:** The ATE tells you the treatment works on average. CATE tells you FOR WHOM it works best. In commodity markets, this means identifying which sectors, regions, or time periods are most affected by inventory surprises, policy changes, or supply shocks.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The ATE tells you the treatment works on average. CATE tells you FOR WHOM it works best. In commodity markets, this means identifying which sectors, regions, or time periods are most affected by inventory surprises, policy changes, or supply shocks.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn how to estimate Conditional Average Treatment Effects (CATE) — how treatment effects vary across individuals — using `econml.dml.DML`. Beyond the average effect, CATE reveals WHO benefits most from a treatment.
+</div>
 
 ## Visual Explanation
 
@@ -33,6 +41,12 @@ The approach:
 3. Use a flexible final-stage model (forest, linear) to estimate $\tau(X)$
 
 Commodity example: heterogeneous effects of inventory surprises on commodity futures across sectors. Some sectors (energy) are highly sensitive to inventory news, while others (precious metals) are barely affected.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -68,7 +82,15 @@ print(f"  Agriculture: {np.mean(tau[sector == 2]):.2f}")
 print(f"  Overall ATE: {np.mean(tau):.2f}")
 ```
 
+</div>
+
 ## How to Estimate CATE with CausalForestDML
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # CausalForestDML: nonparametric CATE estimation
@@ -90,9 +112,17 @@ for s, name in enumerate(['Energy', 'Metals', 'Agriculture']):
           f"Est: {np.mean(cate_hat[mask]):.2f}")
 ```
 
+</div>
+
 ## How to Run BLP Analysis
 
 Best Linear Projection (BLP) tests whether CATE varies with observable characteristics:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # BLP: project CATE onto covariates
@@ -109,11 +139,19 @@ ldml.fit(Y, D, X=X[:, :5], W=W)
 print(ldml.summary())
 ```
 
+</div>
+
 The BLP summary shows which covariates significantly predict treatment effect heterogeneity.
 
 ## How to Run GATES Analysis
 
 Group Average Treatment Effects (GATES) sorts observations by estimated CATE and computes group averages:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # GATES: sort by estimated CATE, compute group means
@@ -137,11 +175,21 @@ gates_df = pd.DataFrame(gates)
 print(gates_df.to_string(index=False))
 ```
 
+</div>
+
 GATES provides a simple visual test: if the group averages are flat, there is no heterogeneity. If they increase monotonically, the CATE model captures real variation.
 
-> ⚠️ **Warning:** CATE estimation requires large samples. With small samples, the CATE function overfits and the BLP/GATES tests are underpowered. A sample of 5,000+ is a reasonable starting point for reliable CATE estimation.
+<div class="callout-warning">
+<strong>Warning:</strong> CATE estimation requires large samples. With small samples, the CATE function overfits and the BLP/GATES tests are underpowered. A sample of 5,000+ is a reasonable starting point for reliable CATE estimation.
+</div>
 
 ## How to Visualise Treatment Effect Heterogeneity
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -173,7 +221,13 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 05: PLR for average effects
@@ -196,3 +250,11 @@ Compare `CausalForestDML` to `LinearDML` for CATE estimation. When does the line
 
 **2. Sample Size Sensitivity:**
 Run CATE estimation with n in {500, 1000, 2000, 5000, 10000}. Plot the RMSE of CATE estimates against sample size.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_heterogeneous_effects_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

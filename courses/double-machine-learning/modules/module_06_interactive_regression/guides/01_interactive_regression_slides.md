@@ -26,6 +26,10 @@ IRM estimates both ATE and ATTE using doubly robust AIPW scores.
 
 <!-- Speaker notes: The PLR model from Module 05 works well for continuous treatments with constant effects. But when treatment is binary — like whether a shipping route is sanctioned — you want the effect to potentially vary across units. Some routes may be more affected than others based on their characteristics. The IRM handles this by modelling both the outcome function and the propensity score. -->
 
+<div class="callout-info">
+Info:  treatment effect. IRM allows effects to 
+</div>
+
 ---
 
 ## PLR vs IRM
@@ -69,18 +73,22 @@ $$\psi_{ATE} = \underbrace{g(1, X) - g(0, X)}_{\text{outcome model}} + \underbra
 ## Commodity Example: Sanctions on Freight Rates
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     X["Controls X<br/>Route distance, vessel type,<br/>cargo, insurance, ports"] --> D["Treatment D<br/>Sanctions<br/>(binary: 0 or 1)"]
     X --> Y["Outcome Y<br/>Freight rate<br/>premium"]
     D -->|"Heterogeneous effect"| Y
-    style D fill:#4a9eff,color:#fff
-    style Y fill:#ff6b6b,color:#fff
 ```
 
 **ATE:** Average effect across all routes
 **ATTE:** Average effect on sanctioned routes specifically
 
 <!-- Speaker notes: Sanctions affect different routes differently. A route through the Strait of Hormuz under sanctions sees a larger freight premium than a route in the Mediterranean, because of the strategic chokepoint. The ATE averages across all routes, while ATTE focuses on the routes that were actually sanctioned. ATTE is more relevant for policy evaluation: what was the actual impact on sanctioned routes? -->
+
+<div class="callout-key">
+Key Point:  Average effect across all routes
+
+</div>
 
 ---
 
@@ -137,6 +145,11 @@ Good overlap is essential for IRM:
 
 <!-- Speaker notes: This decision table helps practitioners choose between PLR and IRM. PLR is simpler and works for continuous treatments. IRM is needed when treatment is binary and you want to estimate both ATE and ATTE. The key practical difference is that IRM requires a classifier for the propensity score and needs reasonable overlap between treated and untreated groups. If overlap is poor, IRM can be unstable. -->
 
+<div class="callout-insight">
+Insight: ) |
+| Estimands | ATE only | 
+</div>
+
 ---
 
 ## ATE vs ATTE: Which to Report?
@@ -152,6 +165,10 @@ $$\theta_{ATTE} = E[Y(1) - Y(0) | D=1]$$
 Report ATTE for policy evaluation, ATE for counterfactual analysis.
 
 <!-- Speaker notes: The choice between ATE and ATTE depends on the question. If a regulator asks what would happen if we sanctioned all routes, ATE is the answer. If they ask what was the impact on routes we actually sanctioned, ATTE is the answer. In commodity markets, ATTE is often more relevant because the treated units are self-selected — OPEC cuts production when conditions warrant it, sanctions target specific routes for strategic reasons. The difference between ATE and ATTE reveals selection effects. -->
+
+<div class="callout-warning">
+Warning:  (Average Treatment Effect): average over 
+</div>
 
 ---
 
@@ -200,13 +217,13 @@ $$\text{AIPW weight} = \frac{D}{m(X)} \quad \text{explodes when } m(X) \to 0$$
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PLR["PLR: Constant θ"] --> IRM["IRM: Heterogeneous effects"]
     IRM --> ATE["ATE: All units"]
     IRM --> ATTE["ATTE: Treated units"]
     IRM --> AIPW["AIPW Score:<br/>Doubly robust"]
     AIPW --> Valid["Valid inference<br/>with ML nuisance"]
-    style Valid fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: IRM generalises PLR to binary treatments with heterogeneous effects. It estimates both ATE and ATTE using the doubly robust AIPW score. The propensity score is an additional nuisance function estimated with a classifier. Diagnostics for overlap and trimming are essential for reliable results. -->

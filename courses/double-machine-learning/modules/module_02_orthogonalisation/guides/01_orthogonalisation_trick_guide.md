@@ -1,12 +1,30 @@
 # The Orthogonalisation Trick
 
+> **Reading time:** ~5 min | **Module:** 2 — Orthogonalisation | **Prerequisites:** Module 1 — OLS Limitations
+
 ## In Brief
 
 You will learn Robinson's partially linear model and implement the residual-on-residual regression that forms the core of DML. The orthogonalisation trick partials out confounders using ML, then estimates the treatment effect from the cleaned-up residuals in about 30 lines of Python.
 
-> 💡 **Key Insight:** Instead of selecting which controls to include, DML residualises BOTH the outcome and the treatment using ML. The treatment effect lives in the correlation between residuals — everything ML explains is confounding, everything left over is the causal signal.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Instead of selecting which controls to include, DML residualises BOTH the outcome and the treatment using ML. The treatment effect lives in the correlation between residuals — everything ML explains is confounding, everything left over is the causal signal.
+</div>
 
-## Visual Explanation
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn Robinson's partially linear model and implement the residual-on-residual regression that forms the core of DML. The orthogonalisation trick partials out confounders using ML, then estimates the treatment effect from the cleaned-up residuals in about 30 lines of Python.
+</div>
+
+## The Orthogonalisation Pipeline
+
+<div class="flow">
+<div class="flow-step blue">1. ML predicts Y from X</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. ML predicts D from X</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step mint">3. Compute residuals</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. OLS on residuals</div>
+</div>
 
 ```
 THE DML PIPELINE (Orthogonalisation)
@@ -28,6 +46,10 @@ THE DML PIPELINE (Orthogonalisation)
               └───────────┘
 ```
 
+<div class="callout-warning">
+<strong>Warning:</strong> If you only residualise the outcome (Y) but not the treatment (D), you get the Frisch-Waugh-Lovell result for OLS but NOT a valid DML estimator. Both must be residualised to achieve orthogonality.
+</div>
+
 ## How Robinson's Partially Linear Model Works
 
 The partially linear model (Robinson, 1988) assumes:
@@ -47,6 +69,12 @@ $$\tilde{Y} = \theta \tilde{D} + \epsilon$$
 This is the residual-on-residual regression. The treatment effect $\theta$ is the slope of the regression of outcome residuals on treatment residuals.
 
 ## How to Implement DML in 30 Lines
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -99,9 +127,17 @@ def manual_dml(Y, D, X, n_folds=5):
     return theta, se
 ```
 
+</div>
+
 This function implements the full DML algorithm with cross-fitting. Each fold trains ML models on training data and predicts on held-out data, ensuring all residuals are out-of-sample.
 
 ## How to Apply It to Weather Shocks on Natural Gas
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 np.random.seed(42)
@@ -134,9 +170,13 @@ print(f"\nOLS estimate:  {ols_model.params[1]:.2f}")
 print(f"OLS SE:        {ols_model.bse[1]:.3f}")
 ```
 
+</div>
+
 DML handles the nonlinear relationships (sin, squared terms, interactions) that OLS misses. The ML first stages capture these patterns, and the residuals isolate the causal signal.
 
-> ⚠️ **Warning:** The residualisation must be done out-of-sample (cross-fitting). Using in-sample ML predictions creates overfitting bias that contaminates the treatment effect. Module 04 covers why this matters and how cross-fitting fixes it.
+<div class="callout-warning">
+<strong>Warning:</strong> The residualisation must be done out-of-sample (cross-fitting). Using in-sample ML predictions creates overfitting bias that contaminates the treatment effect. Module 04 covers why this matters and how cross-fitting fixes it.
+</div>
 
 ## Why This Works: The Orthogonality Intuition
 
@@ -153,6 +193,10 @@ The residuals $\tilde{D}$ are **orthogonal** to the space spanned by $X$ (by con
 Point 3 is the orthogonality property that gives DML its name. Module 03 formalises this with Neyman orthogonal scores.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 00: FWL theorem and the residual-on-residual idea
@@ -177,3 +221,11 @@ Modify `manual_dml` to accept any sklearn regressor. Run it with: (a) LinearRegr
 
 **2. In-Sample vs Out-of-Sample:**
 Run DML with in-sample predictions (no cross-fitting) vs out-of-sample predictions. Plot the bias across 100 simulations for each approach.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_orthogonalisation_trick_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

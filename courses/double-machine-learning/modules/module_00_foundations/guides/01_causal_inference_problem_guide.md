@@ -1,33 +1,65 @@
 # The Causal Inference Problem
 
+> **Reading time:** ~6 min | **Module:** 0 — Foundations | **Prerequisites:** OLS regression, basic causal inference concepts
+
 ## In Brief
 
 You will learn why naive regression fails for causal inference when controls are high-dimensional, and how partialling out confounders with machine learning while preserving valid statistical inference forms the foundation of Double/Debiased Machine Learning.
 
-> 💡 **Key Insight:** OLS forces you to choose between two bad options — omit confounders and get bias, or include too many and get variance explosion. DML breaks this tradeoff by using ML for prediction and econometrics for inference, keeping the best of both worlds.
+<div class="callout-insight">
+<strong>Key Insight:</strong> OLS forces you to choose between two bad options — omit confounders and get bias, or include too many and get variance explosion. DML breaks this tradeoff by using ML for prediction and econometrics for inference, keeping the best of both worlds.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> DML separates two tasks -- ML handles high-dimensional confounders, while econometric theory preserves valid inference on the causal parameter. This "best of both worlds" approach breaks the bias-variance tradeoff that plagues OLS.
+</div>
+
+## The DML Approach in Three Steps
+
+<div class="flow">
+<div class="flow-step blue">1. Partial Out Confounders</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Orthogonalise</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step mint">3. Cross-Fit for Inference</div>
+</div>
 
 ## Visual Explanation
 
-```
-THE CAUSAL INFERENCE TRADEOFF
+<div class="compare">
+<div class="compare-card">
+<div class="header before">OLS: Few Controls (Bias)</div>
+<div class="body">
 
-Few Controls (OLS)          Many Controls (OLS)         DML Approach
-┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-│ ✗ Omitted var    │      │ ✗ Overfitting    │      │ ✓ ML handles     │
-│   bias           │      │ ✗ Variance       │      │   high-dim X     │
-│ ✗ Confounders    │      │   explosion      │      │ ✓ Orthogonality  │
-│   distort θ      │      │ ✗ Multicollin.   │      │   protects θ     │
-│                  │      │                  │      │ ✓ Cross-fitting   │
-│ Bias: HIGH       │      │ Variance: HIGH   │      │   removes overfit │
-│ Variance: LOW    │      │ Bias: LOW        │      │                  │
-└──────────────────┘      └──────────────────┘      └──────────────────┘
-```
+- Omitted variable bias
+- Confounders distort treatment effect
+- Low variance but wrong answer
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">DML: ML + Econometrics</div>
+<div class="body">
+
+- ML handles high-dimensional X
+- Orthogonality protects treatment estimate
+- Cross-fitting removes overfitting bias
+
+</div>
+</div>
+</div>
 
 ## How Naive Regression Goes Wrong
 
 Consider estimating the effect of OPEC production cuts on crude oil calendar spreads. The treatment $D$ is the size of the production cut (million barrels/day), the outcome $Y$ is the 1-3 month WTI calendar spread, and the controls $X$ include global demand indicators, inventory levels, shipping rates, refinery utilisation, and dozens more.
 
 Here is what happens when you run OLS with too few controls:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -53,11 +85,19 @@ print(f"True effect:     {true_effect:.2f}")
 print(f"Naive OLS:       {naive.params[1]:.2f} (biased — confounders omitted)")
 ```
 
+</div>
+
 The naive estimate is biased upward because demand conditions ($X_0$) drive both OPEC decisions and spreads. OLS attributes some of the demand effect to the production cut.
 
 ## Why Adding More Controls Breaks Your Estimate
 
 Now add all controls. With 5 controls this works fine, but watch what happens when we scale to realistic dimensions:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Scale up: 200 controls (realistic for commodity markets)
@@ -77,9 +117,13 @@ print(f"Standard error:        {ols_full.bse[1]:.2f} (massive uncertainty)")
 print(f"95% CI width:          {2 * 1.96 * ols_full.bse[1]:.2f}")
 ```
 
+</div>
+
 With 200 controls and 1000 observations, OLS is unstable. The standard errors blow up because the model is overfitting to noise in the controls.
 
-> ⚠️ **Warning:** Adding more controls to OLS does NOT always reduce bias. When $p/n$ is large, OLS suffers from regularisation bias (if you penalise) or variance explosion (if you don't). DML solves both problems simultaneously.
+<div class="callout-warning">
+<strong>Warning:</strong> Adding more controls to OLS does NOT always reduce bias. When $p/n$ is large, OLS suffers from regularisation bias (if you penalise) or variance explosion (if you don't). DML solves both problems simultaneously.
+</div>
 
 ## How Frisch-Waugh-Lovell Solves the Problem (in Theory)
 
@@ -92,6 +136,12 @@ $$\tilde{D} = D - \hat{\Pi}_D X \quad \text{(residualise treatment)}$$
 $$\hat{\theta}_{FWL} = \frac{\tilde{D}'\tilde{Y}}{\tilde{D}'\tilde{D}} \quad \text{(regress residuals)}$$
 
 In commodity terms: strip out everything that global demand, inventories, and other controls explain about both the production cut and the spread. Whatever correlation remains between the residuals IS the causal effect.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # FWL with 5 controls (works perfectly)
@@ -109,6 +159,8 @@ print(f"FWL estimate (5 controls): {fwl_result.params[1]:.2f}")
 print(f"Standard error:            {fwl_result.bse[1]:.2f}")
 ```
 
+</div>
+
 FWL gives the same result as OLS with controls, but it reveals the key insight: the treatment effect estimation is really about residuals.
 
 ## Where OLS Stops and DML Begins
@@ -122,6 +174,12 @@ $$\tilde{D} = D - \hat{m}(X) \quad \text{where } \hat{m} \approx E[D|X] \text{ (
 $$\hat{\theta}_{DML} = \frac{\tilde{D}'\tilde{Y}}{\tilde{D}'\tilde{D}}$$
 
 The critical addition: cross-fitting and Neyman orthogonal scores ensure that ML estimation errors in $\hat{g}$ and $\hat{m}$ do not contaminate the treatment effect $\hat{\theta}$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.ensemble import RandomForestRegressor
@@ -144,9 +202,15 @@ print(f"Standard error:             {theta_dml.bse[1]:.2f}")
 print(f"True effect:                {true_effect:.2f}")
 ```
 
+</div>
+
 This preview shows DML recovering the treatment effect even with 200 controls. The full DML procedure (Modules 02-04) adds cross-fitting and orthogonal scores to make this rigorous.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - OLS regression and the omitted variables bias formula
@@ -178,6 +242,12 @@ You estimate the effect of carbon tax increases on power generation fuel mix. Yo
 **2. FWL vs OLS Equivalence:**
 Implement the FWL decomposition and verify it gives identical point estimates to OLS with controls:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def verify_fwl_equivalence(Y, D, X):
     """
@@ -198,5 +268,15 @@ def verify_fwl_equivalence(Y, D, X):
     pass
 ```
 
+</div>
+
 **3. Dimension Scaling:**
 Run the OLS-with-controls estimator for $p \in \{10, 50, 100, 200, 500\}$ with $n=1000$ fixed. Plot the standard error of $\hat{\theta}$ against $p$. At what ratio $p/n$ does OLS become unreliable?
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_causal_inference_problem_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

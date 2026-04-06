@@ -1,10 +1,18 @@
 # Production DML Pipeline
 
+> **Reading time:** ~5 min | **Module:** 9 — Production Pipeline | **Prerequisites:** Modules 0-8
+
 ## In Brief
 
 You will learn how to design an end-to-end DML pipeline for production use, including data validation, nuisance model selection with cross-validation, sensitivity analysis, and automated reporting. This module takes DML from research notebooks to deployable code.
 
-> 💡 **Key Insight:** A production DML pipeline needs four layers beyond the core estimator: data validation (catch problems before they corrupt results), model selection (systematic comparison of nuisance models), sensitivity analysis (how robust is the result?), and reporting (communicate results to stakeholders who do not understand DML internals).
+<div class="callout-insight">
+<strong>Key Insight:</strong> A production DML pipeline needs four layers beyond the core estimator: data validation (catch problems before they corrupt results), model selection (systematic comparison of nuisance models), sensitivity analysis (how robust is the result?), and reporting (communicate results to stakeholders who do not understand DML internals).
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn how to design an end-to-end DML pipeline for production use, including data validation, nuisance model selection with cross-validation, sensitivity analysis, and automated reporting. This module takes DML from research notebooks to deployable code.
+</div>
 
 ## Visual Explanation
 
@@ -23,6 +31,12 @@ Data → Validate → Select Models → Estimate → Sensitivity → Report
 ## How to Build a Production Pipeline Class
 
 The pipeline below is designed for commodity market causal analysis — estimating effects like carbon price changes on generation mix, sanctions on freight rates, or inventory surprises on futures spreads. It handles the full workflow from raw data to stakeholder-ready reports.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -239,11 +253,19 @@ Results:
         return report
 ```
 
+</div>
+
 This pipeline class encapsulates the full DML workflow. Each method handles one phase: validation, model selection, estimation, sensitivity analysis, and reporting.
 
-> ⚠️ **Warning:** Production pipelines should log all decisions (model selection, trimming, dropped observations) for reproducibility. Include the random seed, library versions, and data hash in every report.
+<div class="callout-warning">
+<strong>Warning:</strong> Production pipelines should log all decisions (model selection, trimming, dropped observations) for reproducibility. Include the random seed, library versions, and data hash in every report.
+</div>
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - All prior modules (00-08)
@@ -261,3 +283,11 @@ Add IRM estimation alongside PLR. The pipeline should automatically detect binar
 
 **2. Repeated Cross-Fitting:**
 Add a method that runs DML 10 times with different random seeds and reports the median estimate with interquartile range.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_production_pipeline_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

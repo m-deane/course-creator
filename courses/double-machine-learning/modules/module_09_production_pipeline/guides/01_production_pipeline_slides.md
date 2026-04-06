@@ -27,18 +27,24 @@ A production pipeline needs **four layers** beyond the core estimator:
 
 <!-- Speaker notes: Most DML tutorials stop after estimation. But in production, estimation is maybe 20% of the work. The other 80% is making sure the data is clean, the model is well-chosen, the result is robust, and the output is interpretable by people who do not know what an orthogonal score is. This module covers the full pipeline. -->
 
+<div class="callout-info">
+Info:  beyond the core estimator:
+
+1. 
+</div>
+
 ---
 
 ## Pipeline Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Data["Raw Data"] --> Val["Validate"]
     Val --> Sel["Select Models"]
     Sel --> Est["Estimate"]
     Est --> Sens["Sensitivity"]
     Sens --> Rep["Report"]
-    style Rep fill:#6f6,color:#fff
 ```
 
 Each stage has specific checks and outputs.
@@ -148,6 +154,11 @@ Include: estimate, CI, p-value, nuisance model, sensitivity flag, data dimension
 
 <!-- Speaker notes: This table catalogues the most common ways a production DML pipeline can fail. Silent bias from missing confounders is the most dangerous because everything looks correct but the estimate is wrong. Stale models fail when market regimes shift, which happens regularly in commodity markets. Data drift means the feature distributions change over time, which can degrade ML prediction quality. Each failure mode has a specific prevention strategy that should be built into the pipeline. -->
 
+<div class="callout-insight">
+Insight:  | Missing confounder | Domain expert review |
+| 
+</div>
+
 ---
 
 ## Commodity Production Example
@@ -196,11 +207,16 @@ Report:  "Carbon price increase of 1 EUR/tonne reduces
 
 <!-- Speaker notes: This module wraps up the entire course. You have learned the theory (Modules 00-04), the practice (Modules 05-08), and now the production engineering (Module 09). The pipeline class from the guide is a starting point — extend it with IRM, PLIV, CATE, and your specific validation needs. The key principle is: automate everything, validate everything, and log everything. -->
 
+<div class="callout-warning">
+Warning: Changing the ML learner (e.g., switching from random forest to gradient boosting) can change the treatment effect estimate. Document and justify learner choices.
+</div>
+
 ---
 
 ## Course Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M0["00: Causal Inference Problem"] --> M1["01: OLS Limitations"]
     M1 --> M2["02: Orthogonalisation"]
@@ -213,7 +229,10 @@ flowchart TD
     M6 --> M9["09: Production Pipeline"]
     M7 --> M9
     M8 --> M9
-    style M9 fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This diagram shows the complete course structure. Modules 00-04 build the theoretical foundation. Module 05 is the practical turning point with doubleml. Modules 06-08 extend to different models and estimands. Module 09 wraps everything into production code. The course takes you from understanding why OLS fails to deploying a production DML pipeline. -->
+
+<div class="callout-key">
+Key Point: A production DML pipeline must be reproducible -- pin ML model versions, random seeds, and cross-fitting fold assignments.
+</div>

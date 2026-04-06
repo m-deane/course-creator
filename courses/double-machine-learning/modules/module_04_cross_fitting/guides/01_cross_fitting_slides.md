@@ -26,6 +26,12 @@ Cross-fitting ensures all predictions are genuinely **out-of-sample**.
 
 <!-- Speaker notes: The core problem is simple. When a random forest trains on observation i and then predicts observation i, it partially memorises that observation. The prediction is biased toward the true value, making the residual artificially small. In the treatment effect formula, small treatment residuals in the denominator inflate theta-hat. Cross-fitting solves this by ensuring every prediction is made by a model that never saw that observation during training. -->
 
+<div class="callout-info">
+Info:  — the model has memorised the training data.
+
+> 
+</div>
+
 ---
 
 ## Cross-Fitting Algorithm
@@ -50,12 +56,12 @@ Fold 5: [TEST  TRAIN TRAIN TRAIN TRAIN]   → predictions for fold 1
 ## Why In-Sample Predictions Are Biased
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Train["Train RF on ALL data"] --> Predict["Predict on SAME data"]
     Predict --> Small["Residuals artificially small<br/>RF memorises training data"]
     Small --> Denom["Small D̃ in denominator"]
     Denom --> Inflate["θ̂ = Σ(D̃·Ỹ)/Σ(D̃²)<br/>INFLATED"]
-    style Inflate fill:#f66,color:#fff
 ```
 
 With in-sample predictions:
@@ -180,6 +186,7 @@ $$\hat{\theta}_{RCF} = \frac{1}{R}\sum_{r=1}^R \hat{\theta}^{(r)}$$
 ## Complete DML Algorithm Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Data["Data: Y, D, X"] --> Split["Split into K folds"]
     Split --> Loop["For each fold k:"]
@@ -190,10 +197,13 @@ flowchart TD
     Pool --> Theta["θ̂ = Σ(D̃·Ỹ) / Σ(D̃²)"]
     Theta --> SE["Robust SE"]
     SE --> CI["95% CI"]
-    style CI fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This diagram summarises the complete DML algorithm that we have built over Modules 02-04. Start with data, split into K folds, for each fold train the ML models on the other folds and predict on the held-out fold, compute residuals, pool all residuals, and compute the treatment effect. The standard error uses the heteroskedasticity-robust formula. This is exactly what the doubleml library implements internally, which we will use starting in Module 05. -->
+
+<div class="callout-insight">
+Insight: Cross-fitting is conceptually similar to cross-validation but serves a fundamentally different purpose: removing overfitting bias from the nuisance parameter estimates.
+</div>
 
 ---
 
@@ -220,18 +230,24 @@ flowchart TD
 
 <!-- Speaker notes: Cross-fitting completes the theoretical foundation of DML. Combined with orthogonal scores from Module 03, it ensures valid root-n inference with ML nuisance estimates. Module 05 uses the doubleml package which implements cross-fitting automatically. Module 09 covers production considerations like optimal K selection and repeated cross-fitting for stability. -->
 
+<div class="callout-key">
+Key Point: K=5 folds is the standard choice for cross-fitting. Using more folds increases variance; fewer folds increases bias from smaller training sets.
+</div>
+
 ---
 
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     IS["In-sample predictions"] -->|"Overfitting bias"| Bad["Inflated θ̂"]
     SS["Simple splitting (50/50)"] -->|"Wastes 50% data"| OK["Correct but inefficient"]
     CF["K-fold cross-fitting"] -->|"All data used"| Good["Correct AND efficient"]
-    style Bad fill:#f66,color:#fff
-    style OK fill:#ffa94d,color:#fff
-    style Good fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: Three approaches: in-sample (biased), simple splitting (unbiased but wasteful), and cross-fitting (unbiased and efficient). Cross-fitting is strictly better than both alternatives and is always the recommended approach. With orthogonal scores from Module 03 and cross-fitting from this module, we now have the complete DML framework. Module 05 puts it all together with the doubleml package. -->
+
+<div class="callout-danger">
+Danger: In-sample ML predictions create overfitting bias that does NOT vanish with more data. Cross-fitting is not optional -- it is essential.
+</div>

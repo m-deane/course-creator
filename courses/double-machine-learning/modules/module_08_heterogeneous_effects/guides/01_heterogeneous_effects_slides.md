@@ -58,6 +58,7 @@ ATE tells you the treatment **works on average**. CATE tells you **for whom** it
 ## CATE Estimation Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Stage1["Stage 1: DML Residualisation"]
         Y_r["Ỹ = Y - ĝ(X)"]
@@ -68,7 +69,6 @@ flowchart LR
     end
     Stage1 --> Stage2
     Stage2 --> CATE["τ̂(xᵢ) for each i"]
-    style CATE fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The pipeline has two stages. Stage 1 is standard DML residualisation — remove the confounding using ML. Stage 2 models the residual-on-residual relationship as a function of X using a causal forest or other flexible model. The result is a CATE estimate for each observation, which you can then analyse by subgroup, plot, or use for targeting. -->
@@ -122,6 +122,7 @@ This insight drives sector allocation during inventory release events.
 **GATES (Group Average Treatment Effects):** Sorts by estimated CATE, tests for monotonicity.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CATE["τ̂(Xᵢ)"] --> Sort["Sort by τ̂"]
     Sort --> G1["Q1: lowest 20%"]
@@ -130,10 +131,13 @@ flowchart LR
     Sort --> G4["Q4"]
     Sort --> G5["Q5: highest 20%"]
     G1 --> Test["Test: G5 > G1?"]
-    style Test fill:#4a9eff,color:#fff
 ```
 
 <!-- Speaker notes: BLP projects the CATE onto observable covariates and tests which ones significantly predict heterogeneity. GATES is a simpler diagnostic: sort observations by their estimated CATE, divide into quintiles, and compute the average effect in each group. If the groups show a clear monotone pattern (low to high), the CATE model is capturing real heterogeneity. If the groups are flat, there may be no meaningful heterogeneity. -->
+
+<div class="callout-info">
+Info: BLP (Best Linear Projection):
+</div>
 
 ---
 
@@ -160,6 +164,7 @@ print(ldml.summary())  # Coefficients on X
 ## From CATE to Trading Decisions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CATE["τ̂(Xᵢ)"] --> Classify["Classify:<br/>high/medium/low effect"]
     Classify --> High["High effect<br/>→ Increase exposure"]
@@ -168,7 +173,6 @@ flowchart LR
     High --> Portfolio["Portfolio<br/>allocation"]
     Medium --> Portfolio
     Low --> Portfolio
-    style Portfolio fill:#6f6,color:#fff
 ```
 
 **Commodity application:** Before an inventory release:
@@ -192,6 +196,10 @@ flowchart LR
 > CATE estimation is more data-hungry than ATE. With small samples, report ATE and check for heterogeneity using BLP before attempting CATE.
 
 <!-- Speaker notes: CATE estimation requires substantially more data than ATE because you are estimating a function rather than a single number. The causal forest needs enough observations in each leaf to estimate local treatment effects reliably. With fewer than 2000 observations, CATE estimates tend to be noisy and GATES tests are underpowered. In commodity applications, this means you need several years of daily data or a large cross-section. If sample size is limited, start with ATE and use BLP to test for heterogeneity before investing in full CATE estimation. -->
+
+<div class="callout-warning">
+Warning: Searching for subgroups with large treatment effects is a multiple testing problem. Always use honest splitting (separate discovery and estimation samples).
+</div>
 
 ---
 
@@ -218,17 +226,25 @@ flowchart LR
 
 <!-- Speaker notes: CATE estimation is the most actionable output of the DML framework for commodity traders. Knowing that energy is 4x more sensitive than metals to inventory surprises directly informs trading strategy. Module 09 wraps CATE estimation into a production pipeline with automated BLP/GATES reporting and visualisation. -->
 
+<div class="callout-key">
+Key Point: GATES (Group Average Treatment Effects) and CLAN (Classification Analysis) are the two primary tools for exploring treatment effect heterogeneity in the DML framework.
+</div>
+
 ---
 
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     ATE["ATE: θ = 0.5<br/>(one number)"] -->|"Not enough for targeting"| CATE["CATE: τ(X)<br/>(varies by unit)"]
     CATE --> BLP["BLP: which X matters?"]
     CATE --> GATES["GATES: sorted groups"]
     CATE --> Target["Targeted strategies<br/>by sector/region/time"]
-    style Target fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The visual summary shows the progression from average effects to heterogeneous effects to targeted strategies. ATE is a single number. CATE is a function. BLP and GATES are diagnostics. The practical payoff is targeted trading strategies that exploit the heterogeneity. -->
+
+<div class="callout-insight">
+Insight: Heterogeneous treatment effects reveal WHO benefits most from an intervention. This is the difference between "the drug works on average" and "the drug works for patients over 60 with condition X."
+</div>

@@ -1,10 +1,18 @@
 # Partially Linear Models in Practice
 
+> **Reading time:** ~5 min | **Module:** 5 — Partially Linear Models | **Prerequisites:** Modules 0-4
+
 ## In Brief
 
 You will learn how to estimate causal effects using `doubleml.DoubleMLPLR` end-to-end, including data preparation, nuisance model selection, hyperparameter tuning, and inference. This module takes you from manual DML (Module 02) to production-ready estimation with a battle-tested library.
 
-> 💡 **Key Insight:** The `doubleml` package handles cross-fitting, orthogonal scores, and standard errors automatically. Your job is to choose good nuisance ML models and validate the results — the library handles the econometric machinery.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The `doubleml` package handles cross-fitting, orthogonal scores, and standard errors automatically. Your job is to choose good nuisance ML models and validate the results — the library handles the econometric machinery.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn how to estimate causal effects using `doubleml.DoubleMLPLR` end-to-end, including data preparation, nuisance model selection, hyperparameter tuning, and inference. This module takes you from manual DML (Module 02) to production-ready estimation with a battle-tested library.
+</div>
 
 ## Visual Explanation
 
@@ -22,6 +30,12 @@ Data(Y, D, X) → DoubleMLData → DoubleMLPLR(ml_l, ml_m) → .fit() → .summa
 ## How to Set Up a PLR Pipeline with doubleml
 
 The commodity example: estimating the causal effect of carbon price policy changes on power generation fuel mix. Treatment $D$ is the carbon price change, outcome $Y$ is the coal share of generation, and controls $X$ include gas prices, renewable capacity, demand, weather, and 45 other market variables.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -60,11 +74,19 @@ dml_data = DoubleMLData(df,
 print(dml_data)
 ```
 
+</div>
+
 The `DoubleMLData` object organises your data into the Y, D, X structure that DML requires.
 
 ## How to Choose Nuisance Models
 
 The two nuisance models predict $E[Y|X]$ and $E[D|X]$. These are pure prediction tasks — use whatever ML model predicts best.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Option 1: Random Forest (good default)
@@ -84,9 +106,19 @@ ml_l_lasso = LassoCV(cv=5, random_state=42)
 ml_m_lasso = LassoCV(cv=5, random_state=42)
 ```
 
-> ⚠️ **Warning:** The nuisance models should be tuned for PREDICTION accuracy, not for interpretability. A poorly tuned nuisance model produces noisy residuals, which widens confidence intervals (though orthogonality protects against bias). Use cross-validated prediction scores to select the best model.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> The nuisance models should be tuned for PREDICTION accuracy, not for interpretability. A poorly tuned nuisance model produces noisy residuals, which widens confidence intervals (though orthogonality protects against bias). Use cross-validated prediction scores to select the best model.
+</div>
 
 ## How to Fit and Interpret Results
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Fit PLR with gradient boosting nuisance models
@@ -105,9 +137,17 @@ print(f"95% CI: [{dml_plr.confint().iloc[0, 0]:.4f}, {dml_plr.confint().iloc[0, 
 print(f"p-value: {dml_plr.pval[0]:.4f}")
 ```
 
+</div>
+
 The `summary` output includes the coefficient, standard error, t-statistic, and p-value. The confidence intervals use the normal approximation justified by DML's asymptotic theory.
 
 ## How to Compare Nuisance Model Choices
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 results = {}
@@ -127,9 +167,17 @@ for name, ml_l, ml_m in [
     print(f"{name:<20} theta={dml.coef[0]:.4f}  SE={dml.se[0]:.4f}")
 ```
 
+</div>
+
 If all nuisance models give similar treatment effects, the result is robust. If they differ substantially, the nonlinearity of confounding matters and you should prefer the most flexible model.
 
 ## How to Visualise Confidence Intervals
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -154,7 +202,13 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Modules 02-04: Orthogonalisation, scores, cross-fitting
@@ -174,3 +228,11 @@ Run PLR with random forests using `n_estimators` in {50, 100, 200, 500}. Plot th
 
 **2. Repeated Cross-Fitting:**
 Run PLR 10 times with different `random_state` values for the cross-fitting. Plot the distribution of estimates. How much variability comes from the fold assignment?
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_plr_in_practice_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

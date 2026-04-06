@@ -1,10 +1,18 @@
 # Neyman Orthogonal Scores
 
+> **Reading time:** ~5 min | **Module:** 3 — Neyman Orthogonal Scores | **Prerequisites:** Module 2 — Orthogonalisation
+
 ## In Brief
 
 You will learn why DML uses Neyman orthogonal score functions to achieve robustness against first-stage ML estimation errors. The orthogonal score $\psi(W; \theta_0, \eta_0)$ is insensitive to small perturbations in the nuisance parameter $\eta$, which means imperfect ML models still produce valid treatment effect estimates.
 
-> 💡 **Key Insight:** A naive plug-in estimator has bias proportional to the first-stage ML error. The orthogonal score makes bias proportional to the PRODUCT of two errors — outcome model error times treatment model error — which vanishes much faster. This is the "double" in Double Machine Learning.
+<div class="callout-insight">
+<strong>Key Insight:</strong> A naive plug-in estimator has bias proportional to the first-stage ML error. The orthogonal score makes bias proportional to the PRODUCT of two errors — outcome model error times treatment model error — which vanishes much faster. This is the "double" in Double Machine Learning.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> You will learn why DML uses Neyman orthogonal score functions to achieve robustness against first-stage ML estimation errors. The orthogonal score $\psi(W; \theta_0, \eta_0)$ is insensitive to small perturbations in the nuisance parameter $\eta$, which means imperfect ML models still produce vali...
+</div>
 
 ## Visual Explanation
 
@@ -41,6 +49,12 @@ This derivative being zero is the formal statement that small perturbations of $
 ## How to See Orthogonality in Action
 
 Consider estimating the effect of OPEC production announcements on crude oil calendar spreads. Even with imperfect ML models for the nuisance functions (predicting spreads and production from market controls), DML's orthogonal score keeps the treatment effect estimate approximately unbiased.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -91,11 +105,19 @@ for nl in noise_levels:
     print(f"{nl:<15.1f} {theta_hat:<15.3f} {theta_hat - true_theta:<+10.3f}")
 ```
 
+</div>
+
 DML remains approximately unbiased even with substantial noise in the ML predictions. This is the orthogonality property at work — errors in $\hat{g}$ and $\hat{m}$ contribute only as a second-order product.
 
 ## How the Naive Plug-in Fails
 
 Compare the orthogonal score to a naive plug-in that only residualises $Y$ (not $D$):
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def naive_plugin(Y, D, X, noise_level=0.0):
@@ -123,9 +145,13 @@ for nl in noise_levels:
           f"{dml_est - true_theta:<+12.3f} {naive_est - true_theta:<+12.3f}")
 ```
 
+</div>
+
 The naive plug-in diverges as noise increases, while DML stays close to the true effect. The "double" residualisation is essential.
 
-> ⚠️ **Warning:** The orthogonal score requires residualising BOTH $Y$ and $D$. Residualising only one gives a non-orthogonal moment condition that is sensitive to first-stage errors. This is why the method is called "Double" ML — both nuisance functions must be estimated.
+<div class="callout-warning">
+<strong>Warning:</strong> The orthogonal score requires residualising BOTH $Y$ and $D$. Residualising only one gives a non-orthogonal moment condition that is sensitive to first-stage errors. This is why the method is called "Double" ML — both nuisance functions must be estimated.
+</div>
 
 ## How to Interpret the Score Function
 
@@ -140,6 +166,10 @@ $$\theta = \frac{E[(D - m_0(X))(Y - g_0(X))]}{E[(D - m_0(X))^2]}$$
 This is the familiar residual-on-residual formula, but the score function reveals WHY it is robust: the Gateaux derivative with respect to $\eta = (g, m)$ vanishes at the true values, making the estimator locally insensitive to nuisance estimation errors.
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Module 02: The orthogonalisation trick and residual-on-residual regression
@@ -166,3 +196,11 @@ Explain in your own words why residualising only $Y$ (not $D$) produces a biased
 
 **2. Sensitivity Plot:**
 Create a figure with two panels: (a) DML bias vs noise level, (b) naive plug-in bias vs noise level. Run 50 simulations at each noise level and plot mean bias with error bars.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_neyman_orthogonal_scores_notebook.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

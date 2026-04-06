@@ -31,12 +31,12 @@ The library handles the econometric machinery.
 ## The `doubleml` Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Data["DataFrame"] --> DMLData["DoubleMLData<br/>(y, d, x)"]
     DMLData --> PLR["DoubleMLPLR<br/>(ml_l, ml_m)"]
     PLR --> Fit[".fit()"]
     Fit --> Results[".summary<br/>θ̂, SE, CI, p-value"]
-    style Results fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The pipeline is four steps: create a DataFrame, wrap it in DoubleMLData specifying which columns are Y, D, and X, instantiate DoubleMLPLR with your chosen ML models, and call fit. The summary gives you everything you need: the treatment effect, standard error, confidence interval, and p-value. The library handles all the internal cross-fitting and score computation. -->
@@ -152,6 +152,12 @@ print(f"95% CI:  {dml_plr.confint().values[0]}")
 
 <!-- Speaker notes: When multiple nuisance model choices give similar treatment effects, you can be confident the result is robust. If they disagree substantially, it suggests the confounding structure matters and you should investigate further — perhaps the linear Lasso cannot capture important nonlinearities. In practice, gradient boosting and random forests usually agree closely, which is reassuring. -->
 
+<div class="callout-info">
+Info:  |
+
+> All models agree → result is 
+</div>
+
 ---
 
 ## Diagnostics: Checking Nuisance Model Fit
@@ -195,6 +201,10 @@ Key hyperparameters by model type:
 
 <!-- Speaker notes: Hyperparameter tuning for DML nuisance models follows standard ML practices. The goal is to maximise out-of-sample prediction accuracy for both Y and D. Use cross-validated scores to select hyperparameters. A common mistake is to under-tune the models, which leads to noisy residuals and wide confidence intervals. The treatment effect itself is protected by orthogonality, but poor prediction quality inflates the standard error. In practice, gradient boosting with 200 trees, max_depth 5, and learning rate 0.1 is a robust starting point. -->
 
+<div class="callout-insight">
+Insight: DoubleML's PLR implementation handles the entire pipeline -- cross-fitting, orthogonal score computation, and inference -- in three lines of code.
+</div>
+
 ---
 
 ## Connections
@@ -219,18 +229,26 @@ Key hyperparameters by model type:
 
 <!-- Speaker notes: This module is the practical turning point of the course. You now have a production tool for estimating causal effects with many controls. Modules 06-08 extend this to binary treatments, instrumental variables, and heterogeneous effects. Module 09 wraps everything into a production pipeline with validation and diagnostics. -->
 
+<div class="callout-warning">
+Warning: If the treatment effect is actually heterogeneous (varies with X), the PLR model estimates a weighted average that may not match any subgroup's true effect.
+</div>
+
 ---
 
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Manual["Manual DML<br/>(Module 02)"] -->|"Automate with"| DML["doubleml.DoubleMLPLR"]
     DML --> CF["Cross-fitting ✓"]
     DML --> OS["Orthogonal scores ✓"]
     DML --> SE["Robust SEs ✓"]
     DML --> Result["Valid θ̂ with CI"]
-    style Result fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: The doubleml library automates everything from Modules 02-04. Cross-fitting, orthogonal scores, and robust standard errors are all handled internally. You provide the data, choose ML models, and call fit. The result is a valid treatment effect with confidence intervals. This is the workhorse tool for the rest of the course. -->
+
+<div class="callout-key">
+Key Point: The Partially Linear Regression model assumes the treatment enters linearly but allows arbitrary nonlinearity in the control variables. This is the workhorse DML model.
+</div>

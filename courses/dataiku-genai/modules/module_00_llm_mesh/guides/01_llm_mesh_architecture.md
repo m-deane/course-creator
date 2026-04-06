@@ -1,12 +1,20 @@
 # LLM Mesh Architecture
 
+> **Reading time:** ~12 min | **Module:** 0 — Llm Mesh | **Prerequisites:** Basic Python, familiarity with LLM concepts
+
 ## In Brief
 
 Dataiku LLM Mesh is an abstraction layer that provides unified access to multiple Large Language Model providers through a single, governed interface. It centralizes configuration, cost tracking, access control, and monitoring while allowing seamless switching between providers without code changes.
 
-> 💡 **Key Insight:** **The core value proposition:** LLM Mesh transforms enterprise LLM usage from fragmented, ungoverned API calls scattered across projects into a centralized, auditable, cost-managed platform that enables experimentation while maintaining control.
+<div class="callout-insight">
+<strong>Key Insight:</strong> **The core value proposition:** LLM Mesh transforms enterprise LLM usage from fragmented, ungoverned API calls scattered across projects into a centralized, auditable, cost-managed platform that enables experimentation while maintaining control.
+</div>
 
 Think of LLM Mesh as a "router" sitting between your applications and multiple LLM providers—it handles authentication, load balancing, fallback, cost tracking, and compliance while presenting a simple, unified API to developers.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Dataiku LLM Mesh is an abstraction layer that provides unified access to multiple Large Language Model providers through a single, governed interface. It centralizes configuration, cost tracking, access control, and monitoring while allowing seamless switching between providers without code changes.
+</div>
 
 ## Formal Definition
 
@@ -21,31 +29,52 @@ Think of LLM Mesh as a "router" sitting between your applications and multiple L
 
 The architecture follows a **middleware pattern** where the mesh intercepts all LLM requests, applies governance policies, routes to providers, and captures telemetry before returning responses.
 
+## How LLM Mesh Works
+
+<div class="flow">
+<div class="flow-step blue">1. Application Request</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Mesh Routes & Governs</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step mint">3. Provider Executes</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Telemetry Captured</div>
+</div>
+
 ## Intuitive Explanation
 
-### The Problem Without LLM Mesh
+### Without vs. With LLM Mesh
 
-> ⚠️ **Without LLM Mesh:**
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Without LLM Mesh</div>
+<div class="body">
 
-Imagine an organization where:
-- Team A uses OpenAI directly, hardcoding API keys in scripts
-- Team B uses Anthropic with keys in environment variables
-- Team C uses Azure OpenAI with yet another authentication method
-- Nobody knows the total monthly LLM spend
-- No visibility into who's using which models
-- Switching providers requires code changes across dozens of projects
+- Hardcoded API keys scattered across projects
+- No visibility into total LLM spend
+- Switching providers requires code changes everywhere
 - No consistent error handling or retry logic
+- Ungoverned, unauditable usage
 
-### The Solution With LLM Mesh
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">With LLM Mesh</div>
+<div class="body">
 
-Now imagine a central "LLM traffic control center":
-- All teams connect through one interface
-- Administrators configure provider connections once
-- Usage automatically tracked by team, project, and user
-- Switch from GPT-4 to Claude by changing one setting
-- Automatic failover if primary provider is down
+- All teams connect through one governed interface
+- Usage tracked by team, project, and user
+- Switch providers by changing one setting
+- Automatic failover and load balancing
 - Centralized audit logs for compliance
-- Budget alerts when spending approaches limits
+
+</div>
+</div>
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> Without centralized LLM governance, organizations routinely discover 3-5x more LLM spend than expected, scattered across teams with no audit trail or access control.
+</div>
 
 ### Architecture Diagram
 
@@ -93,6 +122,12 @@ Now imagine a central "LLM traffic control center":
 ## Code Implementation
 
 ### Basic Architecture Components
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Conceptual implementation showing key architecture components
@@ -322,7 +357,15 @@ class LLMMesh:
         return response
 ```
 
+</div>
+
 ### Using LLM Mesh in Dataiku
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # In a Dataiku Python recipe or notebook
@@ -351,6 +394,8 @@ print(f"Cost: ${response.estimated_cost:.4f}")
 # - Tracked metrics
 ```
 
+</div>
+
 ## Common Pitfalls
 
 ### 1. Hardcoding Connection Names
@@ -362,6 +407,12 @@ llm = LLM("claude-production")
 ```
 
 **Solution:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Good - use project variables
 import dataiku
@@ -370,16 +421,32 @@ connection_name = project.get_variable("llm_connection", "claude-production")
 llm = LLM(connection_name)
 ```
 
+</div>
+
 ### 2. Ignoring Rate Limits
 
 **Problem:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Will hit rate limits quickly
 for text in large_dataset:
     response = llm.complete(text)  # No delay
 ```
 
+</div>
+
 **Solution:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -398,6 +465,8 @@ with ThreadPoolExecutor(max_workers=5) as executor:
     results = executor.map(lambda t: process_with_backoff(t, llm), large_dataset)
 ```
 
+</div>
+
 ### 3. No Error Handling
 
 **Problem:**
@@ -407,6 +476,12 @@ data = json.loads(response.text)  # What if not valid JSON?
 ```
 
 **Solution:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 try:
     response = llm.complete(prompt, max_tokens=200)
@@ -425,16 +500,32 @@ except Exception as e:
     raise
 ```
 
+</div>
+
 ### 4. Not Monitoring Costs
 
 **Problem:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # No cost awareness
 for row in df.iterrows():
     llm.complete(row['long_text'])  # Could be expensive!
 ```
 
+</div>
+
 **Solution:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from dataiku.monitoring import CostTracker
 
@@ -456,6 +547,8 @@ for row in df.iterrows():
 
 print(f"Total cost today: ${tracker.daily_total:.2f}")
 ```
+
+</div>
 
 ## Connections to Other Topics
 
@@ -538,6 +631,12 @@ LLM Mesh (return path)
 <details>
 <summary>Solution</summary>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class ResilientLLMRouter:
     def __init__(self):
@@ -608,6 +707,8 @@ class ResilientLLMRouter:
             f"All LLM connections failed. Last error: {last_error}"
         )
 ```
+
+</div>
 </details>
 
 ### Problem 3: Cost Optimization
@@ -618,6 +719,12 @@ class ResilientLLMRouter:
 
 <details>
 <summary>Solution</summary>
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def optimize_batch_processing(reviews, budget=50.0):
@@ -726,6 +833,8 @@ def optimize_batch_processing(reviews, budget=50.0):
 # - ~20-30% use Sonnet (complex/nuanced cases)
 # - Average cost: ~$0.005-0.006 per review
 ```
+
+</div>
 </details>
 
 ## Further Reading
@@ -749,3 +858,11 @@ def optimize_batch_processing(reviews, budget=50.0):
 - Guide 03: Governance (access control and compliance)
 - Module 3: Custom Applications (programmatic LLM Mesh usage)
 - Module 4: Deployment (production monitoring and alerting)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_first_connection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -1,10 +1,18 @@
 # Custom LLM Applications in Dataiku
 
+> **Reading time:** ~5 min | **Module:** 3 — Custom | **Prerequisites:** Module 2 — RAG, Python programming
+
 ## Python Recipes with LLMs
 
 Dataiku Python recipes provide full flexibility for custom LLM applications.
 
 ### Basic LLM Recipe
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Python Recipe: process_reports
@@ -58,9 +66,17 @@ output_df = pd.DataFrame(results)
 output_dataset.write_with_schema(output_df)
 ```
 
+</div>
+
 ## Batch Processing Patterns
 
 ### Parallel Processing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -110,7 +126,15 @@ output_df = pd.DataFrame(results)
 dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 ```
 
+</div>
+
 ### Chunked Processing for Large Datasets
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -158,9 +182,17 @@ def process_in_chunks(input_name: str, output_name: str, chunk_size: int = 100):
 process_in_chunks("large_reports", "summarized_reports")
 ```
 
+</div>
+
 ## Building Custom Endpoints
 
 ### API Node Endpoint
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">api_endpoint.py</span>
+</div>
 
 ```python
 # api_endpoint.py - Deploy as API endpoint
@@ -208,7 +240,15 @@ def api_handler(request):
     }
 ```
 
+</div>
+
 ### Webapp Backend
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">webapp_backend.py</span>
+</div>
 
 ```python
 # webapp_backend.py - For Dataiku Webapp
@@ -263,9 +303,17 @@ def get_history():
     return jsonify({'messages': messages})
 ```
 
+</div>
+
 ## Complex Pipelines
 
 ### Multi-Stage Processing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -353,9 +401,17 @@ output_df = pd.DataFrame(results)
 dataiku.Dataset("trading_signals").write_with_schema(output_df)
 ```
 
+</div>
+
 ## Error Handling
 
 ### Robust Processing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -408,6 +464,8 @@ class RobustLLMProcessor:
         }
 ```
 
+</div>
+
 ## Key Takeaways
 
 1. **Python recipes** provide full flexibility for custom LLM logic
@@ -419,3 +477,16 @@ class RobustLLMProcessor:
 4. **API endpoints** expose LLM capabilities as services
 
 5. **Error handling** is essential for production reliability
+
+<div class="callout-key">
+<strong>Key Concept:</strong> 5. **Error handling** is essential for production reliability
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_python_llm_calls.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -25,18 +25,18 @@ math: mathjax
 > The real power of LLMs in data pipelines comes from treating them as **transformation steps** -- not standalone applications. You gain automatic dependency tracking, version control, scheduling, monitoring, and governance that would require extensive custom engineering otherwise.
 
 <!-- Speaker notes: Read the insight aloud, then expand with an example from the audience's domain. -->
+
 ---
 
 ## The Assembly Line Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RAW[Raw Reports<br/>Dataset] --> PRE[Preprocess<br/>Clean + Chunk]
     PRE --> LLM[LLM Processing<br/>Extract + Analyze]
     LLM --> VAL[Validate<br/>Check + Enrich]
     VAL --> OUT[Structured Output<br/>Dataset]
-
-    style LLM fill:#4CAF50,color:#fff
 ```
 
 | Assembly Line | Data Pipeline |
@@ -102,6 +102,7 @@ dataiku.Dataset("analyzed_reports").write_with_schema(results)
 ## Pipeline Flow in Dataiku
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Input[Data Sources]
         DS1[(EIA Reports)]
@@ -131,8 +132,6 @@ graph TB
     VALID --> OUT1
     VALID --> OUT2
     OUT1 --> DASH
-
-    style LLM fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Full pipeline diagram showing data flow from three sources through merge, clean, LLM analysis, and validation to outputs and dashboards. -->
@@ -189,6 +188,7 @@ class BatchLLMProcessor:
 ## Scaling Strategy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SIZE{Dataset Size?}
     SIZE -->|< 100 rows| SEQ[Sequential<br/>Simple loop]
@@ -198,8 +198,6 @@ flowchart TD
     SEQ --> MON[Monitor: tokens, cost]
     PAR --> MON
     CHUNK --> MON
-
-    style MON fill:#4CAF50,color:#fff
 ```
 
 | Dataset Size | Strategy | Workers | Est. Time (1s/row) |
@@ -222,6 +220,7 @@ flowchart TD
 ## Handling Documents That Exceed Context Limits
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DOC[Long Document<br/>20K tokens] --> CHUNK[Chunk<br/>3K tokens each<br/>200 token overlap]
     CHUNK --> C1[Chunk 1<br/>Analysis]
@@ -234,8 +233,6 @@ flowchart LR
     C3 --> SYNTH
     C4 --> SYNTH
     SYNTH --> FINAL[Final Analysis]
-
-    style SYNTH fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Chunk-and-synthesize pattern. Long documents are split into chunks, each analyzed independently, then a synthesis LLM call combines the results. -->
@@ -332,6 +329,7 @@ class RobustLLMPipeline:
 ## Pipeline Monitoring Dashboard
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Pipeline[RobustLLMPipeline]
         PROC[Process Rows] --> MET[Collect Metrics]
@@ -357,8 +355,6 @@ graph TB
     TOK --> A1
     ERR --> A2
     LAT --> A3
-
-    style Pipeline fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Visual showing metrics flowing from the pipeline into monitoring dashboards and alerts. Cost, error rate, and latency alerts catch issues early. -->
@@ -412,11 +408,17 @@ def incremental_llm_processing(input_name, output_name,
 ```
 
 <!-- Speaker notes: Incremental processing pattern. Check the timestamp of the last processed record, process only new ones, append to output. Saves massive cost on daily runs. -->
+
+<div class="callout-warning">
+Warning: Pipeline steps that call LLMs should always have fallback behaviour defined -- provider outages are common and should not crash your workflow.
+</div>
+
 ---
 
 ## Incremental vs Full Processing
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Full[Full Reprocessing]
         FA[All 10K rows] --> FB[Process all]
@@ -428,8 +430,6 @@ flowchart LR
         IB --> IC[Process 50 only]
         IC --> ID[Append to output]
     end
-
-    style Incremental fill:#e8f5e9
 ```
 
 | Approach | Daily Run (50 new) | Cost/Day |
@@ -438,6 +438,11 @@ flowchart LR
 | **Incremental** | 50 rows | ~$0.25 |
 
 <!-- Speaker notes: The cost comparison is compelling: $50/day for full reprocessing vs $0.25/day for incremental. This is often the single biggest cost optimization. -->
+
+<div class="callout-key">
+Key Point: Use Dataiku scenarios to orchestrate LLM pipelines with retry logic, error handling, and quality checks between steps.
+</div>
+
 ---
 
 ## Five Common Pitfalls
@@ -451,6 +456,11 @@ flowchart LR
 | **No observability** | Black-box pipelines | Log tokens, costs, latency |
 
 <!-- Speaker notes: Key pitfall: 'Sequential processing' -- days for large datasets. ThreadPoolExecutor is the fix. Always parallelize batch LLM operations. -->
+
+<div class="callout-insight">
+Insight: The most effective LLM pipelines in Dataiku chain multiple steps: retrieve context, construct prompt, generate response, validate output, and store results.
+</div>
+
 ---
 
 ## Key Takeaways
@@ -465,3 +475,7 @@ flowchart LR
 > Production LLM pipelines need the same engineering rigor as any data pipeline.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-warning">
+Warning: LLMs as transformation steps
+</div>

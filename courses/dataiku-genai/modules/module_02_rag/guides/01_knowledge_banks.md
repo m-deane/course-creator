@@ -1,6 +1,22 @@
 # Knowledge Banks for RAG Applications
 
+> **Reading time:** ~5 min | **Module:** 2 — Rag | **Prerequisites:** Module 1 — Prompt Studios
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Knowledge Banks are Dataiku's managed RAG pipeline -- they handle document ingestion, chunking, embedding, and vector retrieval so you can ground LLM outputs in your organisation's actual data without building infrastructure from scratch.
+</div>
+
 ## What are Knowledge Banks?
+
+<div class="flow">
+<div class="flow-step blue">1. Ingest Documents</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Chunk Text</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step mint">3. Embed Vectors</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Retrieve & Generate</div>
+</div>
 
 Knowledge Banks are Dataiku's managed solution for Retrieval-Augmented Generation (RAG):
 
@@ -56,6 +72,12 @@ knowledge_bank:
 
 ### Programmatic Creation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import dataiku
 from dataiku.knowledge_bank import KnowledgeBank
@@ -81,9 +103,17 @@ kb.build()
 print(f"Knowledge bank created with {kb.document_count} documents")
 ```
 
+</div>
+
 ## Chunking Strategies
 
 ### Fixed Size Chunking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Simple fixed-size chunks
@@ -94,7 +124,15 @@ chunking_config = {
 }
 ```
 
+</div>
+
 ### Semantic Chunking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Chunk by semantic boundaries
@@ -106,7 +144,15 @@ chunking_config = {
 }
 ```
 
+</div>
+
 ### Document-Specific Chunking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Different strategies by document type
@@ -136,9 +182,17 @@ def custom_chunker(document: dict) -> list:
         return [{'text': c} for c in splitter.split_text(content)]
 ```
 
+</div>
+
 ## Querying Knowledge Banks
 
 ### Basic Retrieval
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.knowledge_bank import KnowledgeBank
@@ -158,7 +212,15 @@ for result in results:
     print("---")
 ```
 
+</div>
+
 ### Filtered Retrieval
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Filter by metadata
@@ -175,7 +237,15 @@ results = kb.search(
 )
 ```
 
+</div>
+
 ### Hybrid Search
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Combine vector and keyword search
@@ -188,9 +258,17 @@ results = kb.search(
 )
 ```
 
+</div>
+
 ## RAG Pipeline
 
 ### Complete RAG Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -268,7 +346,15 @@ print(f"Answer: {result['answer']}")
 print(f"\nSources used: {len(result['sources'])}")
 ```
 
+</div>
+
 ### Evaluation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def evaluate_rag_response(
@@ -314,9 +400,17 @@ Return just a number 1-5."""
     }
 ```
 
+</div>
+
 ## Maintaining Knowledge Banks
 
 ### Incremental Updates
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def update_knowledge_bank(kb_name: str, new_documents: list):
@@ -337,7 +431,15 @@ def update_knowledge_bank(kb_name: str, new_documents: list):
     return kb.document_count
 ```
 
+</div>
+
 ### Scheduled Refresh
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # In a Dataiku scenario
@@ -371,6 +473,8 @@ def refresh_kb():
     print(f"KB now has {kb.document_count} documents")
 ```
 
+</div>
+
 ## Key Takeaways
 
 1. **Knowledge Banks manage** the full RAG pipeline: chunking, embedding, storage, retrieval
@@ -382,3 +486,11 @@ def refresh_kb():
 4. **Hybrid search** combines semantic and keyword matching for better results
 
 5. **Regular maintenance** keeps the knowledge bank current and accurate
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_kb_creation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -1,10 +1,18 @@
 # Integrating LLMs into Dataiku Pipelines
 
+> **Reading time:** ~11 min | **Module:** 3 — Custom | **Prerequisites:** Module 2 — RAG, Python programming
+
 ## In Brief
 
 LLM integration into Dataiku data pipelines transforms unstructured text into structured, actionable data at scale. By embedding LLM processing steps alongside traditional ETL operations, you create end-to-end workflows that combine data engineering and generative AI capabilities in a unified, governed environment.
 
-> 💡 **Key Insight:** The real power of LLMs in data pipelines comes from treating them as transformation steps—not standalone applications. When LLMs process data as it flows through pipelines, you gain automatic dependency tracking, version control, scheduling, monitoring, and governance that would require extensive custom engineering otherwise.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The real power of LLMs in data pipelines comes from treating them as transformation steps—not standalone applications. When LLMs process data as it flows through pipelines, you gain automatic dependency tracking, version control, scheduling, monitoring, and governance that would require extensive custom engineering otherwise.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> LLM integration into Dataiku data pipelines transforms unstructured text into structured, actionable data at scale. By embedding LLM processing steps alongside traditional ETL operations, you create end-to-end workflows that combine data engineering and generative AI capabilities in a unified, go...
+</div>
 
 ## Formal Definition
 
@@ -60,6 +68,12 @@ Think of a manufacturing assembly line: raw materials enter, pass through variou
 ## Code Implementation
 
 ### Basic LLM Recipe Integration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Python Recipe: process_reports_with_llm
@@ -137,7 +151,15 @@ print(f"Total tokens: {results['tokens_used'].sum()}")
 print(f"Total cost: ${results['cost_usd'].sum():.2f}")
 ```
 
+</div>
+
 ### Parallel Batch Processing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Python Recipe: parallel_llm_processing
@@ -280,7 +302,15 @@ output_df = processor.process_batch(
 dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 ```
 
+</div>
+
 ### Chunked Processing for Large Texts
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Python Recipe: chunk_and_process
@@ -406,7 +436,15 @@ output_df = process_with_chunking(
 dataiku.Dataset("processed_long_reports").write_with_schema(output_df)
 ```
 
+</div>
+
 ### Pipeline with Error Handling and Monitoring
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Python Recipe: robust_pipeline_integration
@@ -586,7 +624,15 @@ summary = pipeline.process_dataset(
 )
 ```
 
+</div>
+
 ### Incremental Processing Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Python Recipe: incremental_llm_processing
@@ -667,6 +713,8 @@ incremental_llm_processing(
 )
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Not Handling Dataset Size**
@@ -695,6 +743,10 @@ incremental_llm_processing(
 - Create monitoring dashboards for production pipelines
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - LLM Mesh Python integration (Module 0, Module 3.1)
@@ -747,3 +799,11 @@ incremental_llm_processing(
 - **Blog Post**: "Building Reliable LLM Pipelines at Scale" - Production patterns from real deployments (representative of industry practices)
 
 - **Research**: "Batch Processing Optimization for LLM Workloads" - Techniques for efficient large-scale processing (representative of ongoing optimization work)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_python_llm_calls.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

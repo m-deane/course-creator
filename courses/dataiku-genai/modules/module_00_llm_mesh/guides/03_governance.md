@@ -1,10 +1,18 @@
 # Governance and Access Control in LLM Mesh
 
+> **Reading time:** ~8 min | **Module:** 0 — Llm Mesh | **Prerequisites:** Basic Python, familiarity with LLM concepts
+
 ## In Brief
 
 LLM Mesh governance enables centralized control over LLM access, cost tracking, and usage policies across your organization. It provides visibility into who uses LLMs, how much they cost, and ensures compliance with security policies.
 
-> 💡 **Key Insight:** Enterprise Gen AI requires governance layer that balances innovation with control. LLM Mesh provides this through connection-level access control, project-based quotas, and comprehensive audit trails without requiring changes to application code.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Enterprise Gen AI requires governance layer that balances innovation with control. LLM Mesh provides this through connection-level access control, project-based quotas, and comprehensive audit trails without requiring changes to application code.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> LLM Mesh governance enables centralized control over LLM access, cost tracking, and usage policies across your organization. It provides visibility into who uses LLMs, how much they cost, and ensures compliance with security policies.
+</div>
 
 ## Formal Definition
 
@@ -48,6 +56,12 @@ Think of LLM Mesh governance like corporate credit card management. Each employe
 ## Code Implementation
 
 ### Setting Up Access Control
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -101,7 +115,15 @@ configure_connection_access(
 )
 ```
 
+</div>
+
 ### Project-Level Quotas
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def set_project_llm_quota(
@@ -149,7 +171,15 @@ set_project_llm_quota(
 )
 ```
 
+</div>
+
 ### Cost Tracking and Reporting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from datetime import datetime, timedelta
@@ -228,7 +258,15 @@ print(f"\nTop users by cost:")
 print(user_usage.head(10))
 ```
 
+</div>
+
 ### Audit Logging
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def query_audit_logs(
@@ -292,7 +330,15 @@ error_logs = [log for log in recent_errors if log['status'] != 'success']
 print(f"Errors in last 24h: {len(error_logs)}")
 ```
 
+</div>
+
 ### Rate Limiting Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -388,6 +434,8 @@ for prompt in batch_prompts:
         time.sleep(60)  # Wait before retrying
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Not Setting Up Alerts**
@@ -416,6 +464,10 @@ for prompt in batch_prompts:
 - Consider data residency requirements when choosing providers
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - LLM Mesh architecture and setup (Module 0.1)
@@ -469,3 +521,11 @@ for prompt in batch_prompts:
 - **NIST AI Risk Management Framework**: [AI RMF 1.0](https://www.nist.gov/itl/ai-risk-management-framework) - Comprehensive governance framework for AI systems
 
 - **Research Paper**: "Measuring and Managing LLM Costs at Scale" - Practical patterns from companies running production LLM applications (fictional but representative of real-world challenges)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_first_connection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -1,10 +1,18 @@
 # Webapp Integration for Gen AI Applications
 
+> **Reading time:** ~11 min | **Module:** 4 — Deployment | **Prerequisites:** Modules 0-3
+
 ## In Brief
 
 Dataiku webapps provide a framework for building interactive user interfaces that integrate LLM capabilities. By combining Dataiku's visual webapp builder with LLM Mesh, you create production-ready Gen AI applications with authentication, governance, and monitoring built-in—without managing infrastructure.
 
-> 💡 **Key Insight:** The best Gen AI applications hide complexity from users. A well-designed webapp transforms complex LLM interactions into simple, intuitive interfaces that non-technical users can leverage. Dataiku webapps handle the infrastructure, security, and deployment so you can focus on user experience and business logic.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The best Gen AI applications hide complexity from users. A well-designed webapp transforms complex LLM interactions into simple, intuitive interfaces that non-technical users can leverage. Dataiku webapps handle the infrastructure, security, and deployment so you can focus on user experience and business logic.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Dataiku webapps provide a framework for building interactive user interfaces that integrate LLM capabilities. By combining Dataiku's visual webapp builder with LLM Mesh, you create production-ready Gen AI applications with authentication, governance, and monitoring built-in—without managing infra...
+</div>
 
 ## Formal Definition
 
@@ -60,6 +68,12 @@ Think of Dataiku webapps like building a custom dashboard in Tableau or PowerBI,
 ## Code Implementation
 
 ### Basic Webapp Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backend.py</span>
+</div>
 
 ```python
 # backend.py - Dataiku Webapp Backend
@@ -129,6 +143,8 @@ def health_check():
     """Health check endpoint."""
     return jsonify({'status': 'healthy'})
 ```
+
+</div>
 
 ```html
 <!-- frontend.html - Dataiku Webapp Frontend -->
@@ -356,6 +372,12 @@ def health_check():
 
 ### Chatbot Interface
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backend.py</span>
+</div>
+
 ```python
 # backend.py - Chatbot Backend
 from dataiku.llm import ChatSession
@@ -439,6 +461,8 @@ def chat_history():
 
     return jsonify({'history': history})
 ```
+
+</div>
 
 ```html
 <!-- frontend.html - Chatbot UI -->
@@ -596,6 +620,12 @@ def chat_history():
 
 ### Streaming Responses
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backend.py</span>
+</div>
+
 ```python
 # backend.py - Streaming Responses
 from flask import Response, stream_with_context
@@ -632,6 +662,8 @@ def stream_analysis():
         mimetype='text/event-stream'
     )
 ```
+
+</div>
 
 ```javascript
 // Frontend - Handle streaming
@@ -700,6 +732,10 @@ async function streamAnalysis() {
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 **Builds on:**
 - LLM Mesh configuration (Module 0)
 - Custom model wrappers (Module 3.2)
@@ -753,3 +789,11 @@ async function streamAnalysis() {
 - **Blog Post**: "Building Production-Ready LLM Webapps" - Best practices from real deployments (representative of industry patterns)
 
 - **Research**: "User Experience Patterns for Generative AI Applications" - Emerging UX design principles for Gen AI (representative of current UX research)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_api_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

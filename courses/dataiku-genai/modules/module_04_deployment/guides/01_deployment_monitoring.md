@@ -1,5 +1,7 @@
 # Deployment and Monitoring in Dataiku
 
+> **Reading time:** ~6 min | **Module:** 4 — Deployment | **Prerequisites:** Modules 0-3
+
 ## Deployment Options
 
 ### API Node Deployment
@@ -24,6 +26,12 @@ Deploy LLM applications as REST APIs:
 ```
 
 ### Creating an API Service
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # In Dataiku API Designer
@@ -73,6 +81,8 @@ endpoint_config = {
     ]
 }
 ```
+
+</div>
 
 ### Deployment Configuration
 
@@ -125,6 +135,12 @@ Dataiku automatically tracks:
 
 ### Custom Metrics
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import dataiku
 from dataiku.llm import LLM
@@ -173,9 +189,17 @@ class MonitoredLLM:
             raise
 ```
 
+</div>
+
 ### Dashboard Setup
 
 Create monitoring dashboard in Dataiku:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">dashboard_config.py</span>
+</div>
 
 ```python
 # dashboard_config.py
@@ -222,6 +246,8 @@ dashboard = {
 }
 ```
 
+</div>
+
 ## Alerting
 
 ### Alert Configuration
@@ -266,6 +292,12 @@ alerts:
 
 ### Programmatic Alerts
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from dataiku.monitoring import AlertManager
 
@@ -303,9 +335,17 @@ def check_llm_health():
         )
 ```
 
+</div>
+
 ## Cost Management
 
 ### Cost Tracking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -367,7 +407,15 @@ class CostTracker:
         }
 ```
 
+</div>
+
 ### Budget Enforcement
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class BudgetEnforcedLLM:
@@ -403,6 +451,8 @@ class BudgetEnforcedLLM:
         return response
 ```
 
+</div>
+
 ## Production Checklist
 
 ### Pre-Deployment
@@ -436,3 +486,16 @@ class BudgetEnforcedLLM:
 4. **Cost management** prevents budget overruns
 
 5. **Production checklist** ensures nothing is missed before go-live
+
+<div class="callout-key">
+<strong>Key Concept:</strong> 5. **Production checklist** ensures nothing is missed before go-live
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_api_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

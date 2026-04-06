@@ -25,11 +25,13 @@ math: mathjax
 > The power of production LLM applications comes from separating **prompt logic** (the template) from **prompt data** (the variables). This separation enables batch processing, A/B testing, and maintainability -- turning prompts from one-off scripts into **engineered software components**.
 
 <!-- Speaker notes: Read the insight aloud, then expand with an example from the audience's domain. -->
+
 ---
 
 ## The Mail Merge Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Template[Prompt Template]
         T["Analyze this {{commodity}}<br/>market report:<br/>{{report_text}}"]
@@ -47,8 +49,6 @@ flowchart LR
     D1 --> O1
     D2 --> O2
     D3 --> O3
-
-    style Template fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: The mail merge analogy is immediately intuitive. One template, many outputs. Ask: 'Who has used mail merge?' Then connect to prompt templates. -->
@@ -65,6 +65,12 @@ flowchart LR
 | **Boolean** | `{{include_forecast}}` | `true / false` |
 
 <!-- Speaker notes: Five variable types cover most use cases. String is by far the most common. Emphasize that lists and objects enable multi-source prompts. -->
+
+<div class="callout-key">
+Key Point:  | `{{commodity}}` | `"crude_oil"` |
+| 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -136,14 +142,13 @@ print(result.text)
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     VAR[Variable Values] --> SUB[Substitution<br/>Engine]
     TPL[Prompt Template] --> SUB
     SUB --> PROMPT[Final Prompt]
     PROMPT --> LLM[LLM API]
     LLM --> OUT[Response]
-
-    style SUB fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: This is the execution flow. Variables are substituted before the prompt hits the LLM. The substitution engine handles all types. -->
@@ -198,6 +203,7 @@ variables = [
 ## Variable Validation Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INPUT[Raw Variable Values] --> REQ{Required<br/>Present?}
     REQ -->|No| ERR1[Error: Missing Required]
@@ -209,8 +215,6 @@ flowchart TD
     RANGE -->|No| ERR3[Error: Out of Range]
     RANGE -->|Yes| PREPROCESS[Preprocess<br/>trim, lowercase]
     PREPROCESS --> READY[Validated Variables]
-
-    style READY fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Walk through the flowchart. Each check is a potential failure point. Validation happens before the LLM call -- fail fast, save tokens. -->
@@ -329,13 +333,12 @@ Provide a synthesized view that:
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S1[EIA Report] --> LOOP[Template Loop]
     S2[IEA Report] --> LOOP
     S3[Industry Report] --> LOOP
     LOOP --> SYNTH[Synthesized Analysis]
-
-    style SYNTH fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Quick code example. Point out the important patterns. -->
@@ -432,6 +435,7 @@ def batch_process_with_variables(
 ## Batch Processing Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TB
     DS[(Input Dataset<br/>100 rows)] --> SPLIT[Split into Batches]
     SPLIT --> W1[Worker 1<br/>Rows 1-20]
@@ -447,11 +451,14 @@ flowchart TB
     W5 --> MERGE
 
     MERGE --> OUT[(Output Dataset<br/>With LLM Results)]
-
-    style MERGE fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Visual overview of the parallel processing architecture. Five workers process 20 rows each simultaneously. The merge step combines results. -->
+
+<div class="callout-insight">
+Insight: Template variables turn static prompts into reusable pipelines. A single well-designed template can replace dozens of hardcoded prompts.
+</div>
+
 ---
 
 ## Five Common Pitfalls
@@ -465,6 +472,12 @@ flowchart TB
 | **Ignoring variable size** | Context limit exceeded | Validate max length, truncate |
 
 <!-- Speaker notes: Walk through each pitfall. 'No input validation' is the most dangerous -- garbage in, garbage out. 'Overusing variables' makes prompts unstable. -->
+
+<div class="callout-insight">
+Insight:  | Runtime errors, poor outputs | Schema-based validation |
+| 
+</div>
+
 ---
 
 ## Key Takeaways
@@ -479,3 +492,8 @@ flowchart TB
 > One template, thousands of executions -- that is the power of template variables.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-warning">
+Warning:  separate prompt logic from data using `{{variable}}` syntax
+2. 
+</div>

@@ -1,5 +1,7 @@
 # LLM Mesh Setup and Configuration
 
+> **Reading time:** ~5 min | **Module:** 0 — Llm Mesh | **Prerequisites:** Basic Python, familiarity with LLM concepts
+
 ## What is LLM Mesh?
 
 Dataiku LLM Mesh provides a unified interface to multiple LLM providers:
@@ -91,6 +93,12 @@ resource_name: your-resource-name
 
 ### Basic Usage
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import dataiku
 from dataiku.llm import LLM
@@ -106,7 +114,15 @@ response = llm.complete(
 print(response.text)
 ```
 
+</div>
+
 ### Chat Interface
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM, ChatSession
@@ -133,7 +149,15 @@ for message in chat.messages:
     print(f"{message.role}: {message.content[:100]}...")
 ```
 
+</div>
+
 ### Structured Output
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -160,9 +184,17 @@ data = json.loads(response.text)
 print(data)
 ```
 
+</div>
+
 ## Connection Management
 
 ### Listing Available Connections
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -180,7 +212,15 @@ for conn in llm_connections:
     print(f"Name: {conn['name']}, Provider: {conn.get('params', {}).get('provider')}")
 ```
 
+</div>
+
 ### Connection Testing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def test_llm_connection(connection_name: str) -> dict:
@@ -209,9 +249,17 @@ for conn_name in ['anthropic-claude', 'openai-gpt4']:
     print(f"{conn_name}: {result['status']}")
 ```
 
+</div>
+
 ## Model Routing
 
 ### Automatic Failover
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -238,7 +286,15 @@ router = LLMRouter("anthropic-claude", "openai-gpt4")
 result = router.complete("Summarize recent OPEC decisions")
 ```
 
+</div>
+
 ### Cost-Based Routing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 MODEL_COSTS = {
@@ -273,6 +329,8 @@ def select_model_by_budget(
     return viable_models[0][0]
 ```
 
+</div>
+
 ## Access Control
 
 ### Project-Level Permissions
@@ -297,6 +355,12 @@ llm_permissions:
 
 ### Usage Quotas
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from dataiku.llm import LLM, UsageTracker
 
@@ -313,6 +377,8 @@ print(f"Tokens used: {tracker.total_tokens}")
 print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 ```
 
+</div>
+
 ## Key Takeaways
 
 1. **LLM Mesh centralizes** all LLM interactions through a single governed layer
@@ -324,3 +390,16 @@ print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 4. **Access control** enables fine-grained permissions by group
 
 5. **Failover routing** improves reliability across providers
+
+<div class="callout-key">
+<strong>Key Concept:</strong> 5. **Failover routing** improves reliability across providers
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_first_connection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

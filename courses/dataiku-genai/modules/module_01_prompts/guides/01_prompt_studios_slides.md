@@ -41,6 +41,7 @@ math: mathjax
 ## Prompt Studios Components
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     PS[Prompt Studios]
     PS --> VE[Visual Editor<br/>System + User Prompts]
@@ -48,8 +49,6 @@ graph TB
     PS --> TH[Test Harness<br/>Multiple Test Cases]
     PS --> VC[Version Control<br/>Diff Comparison]
     PS --> DI[Deployment Integration<br/>Export to Recipes]
-
-    style PS fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Five pillars. Each one maps to a stage of the prompt development lifecycle. We'll cover all five in this deck. -->
@@ -63,6 +62,7 @@ graph TB
 3. Click **+ New Prompt**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Open Project] --> B[Lab Menu]
     B --> C[Prompt Studios]
@@ -71,8 +71,6 @@ flowchart LR
     E --> F[Write Prompt]
     F --> G[Add Test Cases]
     G --> H[Deploy]
-
-    style D fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Walk through the UI navigation. Three clicks to get started. The interface has three panels: settings (left), editor (center), and test output (bottom). -->
@@ -82,6 +80,7 @@ flowchart LR
 ## Interface Layout
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph UI[Prompt Studio Interface]
         subgraph LEFT[Left Panel]
@@ -99,8 +98,6 @@ graph TB
             OUT[Output Preview<br/>Results Display]
         end
     end
-
-    style UI fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Left panel sets model parameters and defines variables. Center is where you write prompts. Bottom is for testing and output review. Spend most of your time in center + bottom. -->
@@ -191,6 +188,7 @@ OUTPUT FORMAT: JSON only, no explanation.
 | **Comparison** | Compare multiple sources | Synthesis with citations |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Patterns[Prompt Patterns]
         EX[Extraction<br/>Structured data from text]
@@ -201,11 +199,14 @@ graph TB
     EX --> JSON[JSON Output]
     AN --> MD[Markdown Report]
     CO --> DIFF[Agreement/Disagreement]
-
-    style Patterns fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Choose your pattern based on the output type you need. Extraction for pipelines (JSON), Analysis for reports (markdown), Comparison for multi-source intelligence. -->
+
+<div class="callout-info">
+Info:  | Pull numbers from reports | JSON with fields |
+| 
+</div>
 
 ---
 
@@ -293,6 +294,7 @@ def evaluate_prompt_output(output, test_case):
 ## Test-Driven Prompt Development
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TC[Define Test Cases<br/>Expected Inputs + Outputs] --> RUN[Run Tests]
     RUN --> EVAL{All Pass?}
@@ -304,8 +306,6 @@ flowchart TD
     DEP -->|Yes| DEPLOY[Deploy to Recipe]
     DEP -->|No| MORE[Add More Tests]
     MORE --> RUN
-
-    style VER fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Write tests first, then iterate the prompt until tests pass. This is TDD for prompts. The loop is fast because Prompt Studios provides immediate feedback. -->
@@ -394,6 +394,7 @@ for _, row in df.iterrows():
 ## Deployment Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PS[Prompt Studio] --> |Deploy| REC[Python Recipe]
     REC --> IN[(Input Dataset<br/>commodity_reports)]
@@ -404,11 +405,13 @@ flowchart LR
         MAP --> LLM[LLM Call]
         LLM --> STORE[Store result]
     end
-
-    style PS fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: The flow is: tested prompt -> recipe -> dataset. This is the core production pattern for batch LLM processing in Dataiku. -->
+
+<div class="callout-key">
+Key Point: Prompt Studio provides version control for prompts -- always save working prompts before experimenting with changes.
+</div>
 
 ---
 
@@ -424,6 +427,11 @@ flowchart LR
 
 <!-- Speaker notes: Quick reference for the most common mistakes. The first one -- no test cases -- is by far the most dangerous. Everything else can be fixed; untested prompts in production cause silent quality degradation. -->
 
+<div class="callout-insight">
+Insight:  | Regressions undetected | Add 3-5 cases minimum |
+| 
+</div>
+
 ---
 
 ## Key Takeaways
@@ -437,3 +445,8 @@ flowchart LR
 > Design visually, test systematically, deploy confidently.
 
 <!-- Speaker notes: Recap the five pillars from the opening. Next up: template variables deep-dive (02) and testing iteration (03). -->
+
+<div class="callout-warning">
+Warning:  enables rapid prompt iteration without writing code
+2. 
+</div>

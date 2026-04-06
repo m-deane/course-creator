@@ -1,10 +1,18 @@
 # Using Template Variables in Prompt Studios
 
+> **Reading time:** ~10 min | **Module:** 1 — Prompts | **Prerequisites:** Module 0 — LLM Mesh setup
+
 ## In Brief
 
 Template variables enable dynamic content injection into prompts using `{{variable_name}}` syntax. They transform single-purpose prompts into reusable templates that can process thousands of inputs without code modification.
 
-> 💡 **Key Insight:** The power of production LLM applications comes from separating prompt logic (the template) from prompt data (the variables). This separation enables batch processing, A/B testing, and maintainability—turning prompts from one-off scripts into engineered software components.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The power of production LLM applications comes from separating prompt logic (the template) from prompt data (the variables). This separation enables batch processing, A/B testing, and maintainability—turning prompts from one-off scripts into engineered software components.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Template variables enable dynamic content injection into prompts using `{{variable_name}}` syntax. They transform single-purpose prompts into reusable templates that can process thousands of inputs without code modification.
+</div>
 
 ## Formal Definition
 
@@ -49,6 +57,12 @@ Template variables work like mail merge in email—you write one template letter
 ## Code Implementation
 
 ### Basic Variable Usage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku import PromptStudio
@@ -105,7 +119,15 @@ result = studio.complete(
 print(result.text)
 ```
 
+</div>
+
 ### Advanced Variable Types
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import json
@@ -183,7 +205,15 @@ result = studio.complete(
 )
 ```
 
+</div>
+
 ### Conditional Variables
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def create_conditional_prompt():
@@ -254,7 +284,15 @@ full_result = studio.complete(
 )
 ```
 
+</div>
+
 ### Looping Over Lists
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def create_multi_source_analyzer():
@@ -329,7 +367,15 @@ result = studio.complete(
 )
 ```
 
+</div>
+
 ### Variable Validation and Preprocessing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from typing import Any, Dict
@@ -439,7 +485,15 @@ except ValueError as e:
     print(f"Validation error: {e}")
 ```
 
+</div>
+
 ### Batch Processing with Variables
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -532,6 +586,8 @@ results = batch_process_with_variables(
 print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Not Validating Variable Inputs**
@@ -560,6 +616,10 @@ print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 - Consider preprocessing to summarize long inputs
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Prompt Studio basics (Module 1.1)
@@ -613,3 +673,11 @@ print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 - **Blog Post**: "Template Variables Best Practices for LLM Applications" - Patterns from production systems (fictional but representative)
 
 - **Research**: "Prompt Programming for Large Language Models" - Formal treatment of prompt as programmable interfaces (representative of current research direction)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_prompt_creation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

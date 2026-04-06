@@ -53,11 +53,17 @@ class VectorRetriever:
 > The embedding model maps text to high-dimensional vectors where **similar meanings are nearby**.
 
 <!-- Speaker notes: The VectorRetriever is the simplest retrieval pattern. Embed the query, search by similarity. Good for conceptual queries, weaker for exact term matching. -->
+
+<div class="callout-info">
+Info: similar meanings are nearby
+</div>
+
 ---
 
 ## Distance Metrics
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Q[Query Vector] --> COS[Cosine Similarity<br/>Angle between vectors]
     Q --> EUC[Euclidean Distance<br/>Straight-line distance]
@@ -66,8 +72,6 @@ graph LR
     COS --> USE1[Best for: Normalized embeddings]
     EUC --> USE2[Best for: Dense clusters]
     DOT --> USE3[Best for: Pre-normalized vectors]
-
-    style COS fill:#4CAF50,color:#fff
 ```
 
 $$\text{cosine}(a, b) = \frac{a \cdot b}{\|a\| \|b\|}$$
@@ -99,6 +103,12 @@ retrieval_config = {
 | **HNSW** | Very fast | Very good | High |
 
 <!-- Speaker notes: HNSW is the production default -- very fast with high accuracy. Flat is for small datasets where exact results matter. IVF is the middle ground. -->
+
+<div class="callout-key">
+Key Point:  | Slow | Perfect | Low |
+| 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -111,6 +121,7 @@ retrieval_config = {
 ## Combining Vector and Keyword Search
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TB
     Q[User Query] --> VS[Vector Search<br/>Semantic matching<br/>Weight: 0.7]
     Q --> KS[Keyword Search<br/>BM25 matching<br/>Weight: 0.3]
@@ -120,8 +131,6 @@ flowchart TB
 
     CAND --> SCORE[Combined Scoring<br/>vector_score * 0.7 + keyword_score * 0.3]
     SCORE --> TOP[Top K Results]
-
-    style SCORE fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Hybrid retrieval diagram. Both search methods contribute candidates. Combined scoring with configurable weights produces the final ranking. -->
@@ -187,6 +196,12 @@ class HybridRetriever:
 > Start with **hybrid** (70/30 vector/keyword) and tune weights based on evaluation.
 
 <!-- Speaker notes: Quick reference table. Vector for 'what affects oil prices?', keyword for 'WTI CL1 settlement price', hybrid for everything in between. -->
+
+<div class="callout-insight">
+Insight:  | Conceptual queries | "What affects oil prices?" |
+| 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -199,6 +214,7 @@ class HybridRetriever:
 ## Expanding Queries for Better Recall
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     ORIG["crude oil inventory<br/>report"] --> LLM[LLM Expander]
     LLM --> E1["petroleum stockpile<br/>weekly data"]
@@ -211,8 +227,6 @@ flowchart LR
     E3 --> SEARCH
     SEARCH --> DEDUP[Deduplicate +<br/>Re-rank]
     DEDUP --> RESULTS[Improved Results]
-
-    style SEARCH fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Query expansion uses the LLM to generate alternative phrasings. This improves recall for ambiguous queries like 'crude inventory' vs 'petroleum stockpile'. -->
@@ -274,12 +288,11 @@ Return one alternative per line, no numbering."""
 ## Reducing Noise in Retrieved Content
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CHUNKS[Retrieved Chunks<br/>~500 tokens each] --> COMP[Contextual Compressor<br/>LLM extraction]
     COMP --> REL[Relevant Sentences<br/>Only what matters]
     REL --> CTX[Compact Context<br/>for Generation]
-
-    style COMP fill:#4CAF50,color:#fff
 ```
 
 ```python
@@ -325,6 +338,7 @@ Relevant excerpts:"""
 ## Searching Across Knowledge Banks
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     Q[Query] --> MI[MultiIndexRetriever]
 
@@ -343,8 +357,6 @@ graph TB
     KB3 --> MERGE
 
     MERGE --> RESULT[Top K Results]
-
-    style MERGE fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Multi-index retrieval searches across multiple knowledge banks with weighted scoring. Useful when information spans company docs, industry reports, and news. -->
@@ -389,6 +401,12 @@ class MultiIndexRetriever:
 | **Source Balanced** | Equal representation |
 
 <!-- Speaker notes: Three merge strategies for multi-index results. Merge gives best relevance. Round robin ensures diversity. Source balanced guarantees representation. -->
+
+<div class="callout-warning">
+Warning:  | Best overall relevance |
+| 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -401,12 +419,11 @@ class MultiIndexRetriever:
 ## Two-Stage Retrieval
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Q[Query] --> R1[Stage 1: Retrieve<br/>Fast, broad<br/>Top 20 candidates]
     R1 --> R2[Stage 2: Rerank<br/>Precise, slower<br/>Cross-encoder scoring]
     R2 --> TOP[Top 5 Results<br/>High precision]
-
-    style R2 fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Reranking is the precision booster. Stage 1 retrieves broadly (fast), Stage 2 reranks precisely (slower). The cross-encoder or LLM scores relevance more accurately. -->
@@ -529,6 +546,7 @@ class CachedRetriever:
 ## Retrieval Strategy Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START[Choose Strategy] --> Q1{Exact terms<br/>important?}
     Q1 -->|Yes| HYB[Hybrid Search]
@@ -549,8 +567,6 @@ flowchart TD
     MULTI --> DONE
     RERANK --> DONE
     EXPAND --> DONE
-
-    style DONE fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: The decision tree ties everything together. Start at the top and follow the questions. Most production systems end up with hybrid + reranking + caching. -->

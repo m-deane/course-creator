@@ -1,10 +1,18 @@
 # Getting Started with Prompt Studios
 
+> **Reading time:** ~9 min | **Module:** 1 — Prompts | **Prerequisites:** Module 0 — LLM Mesh setup
+
 ## In Brief
 
 Prompt Studios is Dataiku's visual interface for designing, testing, and versioning prompts without writing code. It provides a structured environment for prompt development with built-in testing, variable templating, and one-click deployment to production recipes.
 
-> 💡 **Key Insight:** The fastest way to iterate on prompts is through visual testing with immediate feedback. Prompt Studios eliminates the code-test-debug cycle by providing inline execution, variable substitution, and version comparison—reducing prompt development time from hours to minutes.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The fastest way to iterate on prompts is through visual testing with immediate feedback. Prompt Studios eliminates the code-test-debug cycle by providing inline execution, variable substitution, and version comparison—reducing prompt development time from hours to minutes.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Prompt Studios is Dataiku's visual interface for designing, testing, and versioning prompts without writing code. It provides a structured environment for prompt development with built-in testing, variable templating, and one-click deployment to production recipes.
+</div>
 
 ## Formal Definition
 
@@ -62,6 +70,12 @@ Think of Prompt Studios like a specialized IDE for prompt engineering. Just as y
 
 ### Accessing Prompt Studios Programmatically
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import dataiku
 from dataiku import PromptStudio
@@ -90,7 +104,15 @@ print(f"Tokens: {test_result['usage']['total_tokens']}")
 print(f"Cost: ${test_result['cost']:.4f}")
 ```
 
+</div>
+
 ### Creating Prompts in Code (Alternative to GUI)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def create_prompt_studio(
@@ -165,7 +187,15 @@ Format as structured markdown.''',
 )
 ```
 
+</div>
+
 ### Adding Test Cases
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def add_test_case(
@@ -230,7 +260,15 @@ well above the five-year average of 72% for this time of year.'''
 )
 ```
 
+</div>
+
 ### Running All Tests
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def run_all_tests(studio: PromptStudio) -> pd.DataFrame:
@@ -276,7 +314,15 @@ test_results = run_all_tests(analyzer_studio)
 print(test_results)
 ```
 
+</div>
+
 ### Version Management
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def create_version(
@@ -370,7 +416,15 @@ print(f"Token difference: {comparison['token_diff']}")
 print(f"Cost difference: ${comparison['cost_diff']:.4f}")
 ```
 
+</div>
+
 ### Deploying to Production
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def deploy_to_recipe(
@@ -433,6 +487,8 @@ deployment = deploy_to_recipe(
 print(f"Deployed to recipe: {deployment['recipe_name']}")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Not Using Test Cases**
@@ -461,6 +517,10 @@ print(f"Deployed to recipe: {deployment['recipe_name']}")
 - Include meaningful version notes explaining what changed and why
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - LLM Mesh setup and connections (Module 0)
@@ -519,3 +579,11 @@ print(f"Deployed to recipe: {deployment['recipe_name']}")
 - **Research Paper**: "Large Language Models Are Human-Level Prompt Engineers" (Zhou et al., 2023) - Automatic prompt optimization techniques
 
 - **Blog Post**: "From Prototype to Production: Prompt Development Workflow" - Industry patterns for systematic prompt engineering (fictional but representative)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_prompt_creation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

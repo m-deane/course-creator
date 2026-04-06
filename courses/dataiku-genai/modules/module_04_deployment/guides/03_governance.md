@@ -1,10 +1,18 @@
 # Deployment Governance for Gen AI Applications
 
+> **Reading time:** ~11 min | **Module:** 4 — Deployment | **Prerequisites:** Modules 0-3
+
 ## In Brief
 
 Deployment governance ensures Gen AI applications run reliably, securely, and cost-effectively in production. It encompasses deployment pipelines, monitoring, cost management, access control, compliance tracking, and incident response—transforming experimental LLM prototypes into enterprise-grade production systems.
 
-> 💡 **Key Insight:** Production Gen AI requires treating LLM applications with the same rigor as traditional software: version control, automated testing, staged deployments, monitoring, alerting, and rollback capabilities. The difference is that Gen AI governance also includes unique concerns like prompt versioning, token budgets, model drift, and output quality monitoring.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Production Gen AI requires treating LLM applications with the same rigor as traditional software: version control, automated testing, staged deployments, monitoring, alerting, and rollback capabilities. The difference is that Gen AI governance also includes unique concerns like prompt versioning, token budgets, model drift, and output quality monitoring.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Deployment governance ensures Gen AI applications run reliably, securely, and cost-effectively in production. It encompasses deployment pipelines, monitoring, cost management, access control, compliance tracking, and incident response—transforming experimental LLM prototypes into enterprise-grade...
+</div>
 
 ## Formal Definition
 
@@ -70,6 +78,12 @@ Think of deployment governance like air traffic control for Gen AI applications.
 ### Deployment Configuration
 
 The `DeploymentConfig` dataclass centralizes all environment-specific settings — token limits, monitoring flags, cost budgets — so the same codebase can run safely in dev, staging, and production without hardcoded values scattered across the application.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">deployment_config.py</span>
+</div>
 
 ```python
 # deployment_config.py
@@ -178,7 +192,15 @@ def get_config(env: Environment) -> DeploymentConfig:
     return CONFIGS[env]
 ```
 
+</div>
+
 ### Deployment Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">deployment_pipeline.py</span>
+</div>
 
 ```python
 # deployment_pipeline.py
@@ -384,7 +406,15 @@ else:
     print("Deployment failed")
 ```
 
+</div>
+
 ### Production Monitoring
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">monitoring.py</span>
+</div>
 
 ```python
 # monitoring.py
@@ -649,6 +679,8 @@ monitor = ProductionMonitor(config)
 monitor.run_monitoring_cycle()
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: No Staged Rollout**
@@ -677,6 +709,10 @@ monitor.run_monitoring_cycle()
 - Separate development and production permissions
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - LLM Mesh governance (Module 0.3)
@@ -731,3 +767,11 @@ monitor.run_monitoring_cycle()
 - **Blog Post**: "Production LLM Governance at Scale" - Real-world governance frameworks (representative of enterprise practices)
 
 - **Research**: "Operational Patterns for Production Machine Learning Systems" - Academic treatment of ML operations (applicable to Gen AI)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_api_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

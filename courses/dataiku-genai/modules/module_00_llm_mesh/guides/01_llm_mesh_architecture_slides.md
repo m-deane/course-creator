@@ -30,18 +30,20 @@ Think of it as an **air traffic control system** sitting between your applicatio
 
 <!-- Speaker notes: The air traffic control analogy works well here -- one control tower managing many airlines (providers), routing flights (requests), and ensuring safety (governance). Ask learners: "How many different LLM providers does your team use today?" -->
 
+<div class="callout-info">
+Info: provider-agnostic orchestration layer
+</div>
+
 ---
 
 ## The Problem Without LLM Mesh
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Team A] -->|Hardcoded keys| O[OpenAI]
     B[Team B] -->|Env variables| AN[Anthropic]
     C[Team C] -->|Different auth| AZ[Azure OpenAI]
-    style A fill:#f99
-    style B fill:#f99
-    style C fill:#f99
 ```
 
 - No visibility into total monthly LLM spend
@@ -55,6 +57,7 @@ graph TD
 ## The Solution With LLM Mesh
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Team A] --> M[LLM Mesh]
     B[Team B] --> M
@@ -62,7 +65,6 @@ graph TD
     M -->|Managed| O[OpenAI]
     M -->|Managed| AN[Anthropic]
     M -->|Managed| AZ[Azure OpenAI]
-    style M fill:#4CAF50,color:#fff
 ```
 
 - All teams connect through **one interface**
@@ -84,6 +86,7 @@ graph TD
 ## Architecture Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph DSS[Dataiku DSS Platform]
         PA[Project A<br/>Recipes] --> LM
@@ -198,6 +201,7 @@ class GovernanceLayer:
 ## Request Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant App as Application
     participant Gov as Governance
@@ -247,6 +251,10 @@ timeout_seconds: 120
 ```
 
 <!-- Speaker notes: This is the admin-level configuration. Note the secrets reference -- never hardcode API keys. The rate limits here are per-connection, not per-user. -->
+
+<div class="callout-key">
+Key Point: Administration > Connections > + New Connection > LLM
+</div>
 
 ---
 
@@ -371,6 +379,13 @@ router = LLMRouter("anthropic-claude", "openai-gpt4")
 
 <!-- Speaker notes: This is a simple two-connection failover. In production, you'd chain more connections. The key insight: because LLM Mesh abstracts providers, the failover code is provider-agnostic. -->
 
+<div class="callout-insight">
+Insight: kwargs):
+        try:
+            return self.primary.complete(
+                prompt, 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -413,6 +428,18 @@ llm = LLM(connection)
 </div>
 
 <!-- Speaker notes: Hardcoded names break when moving between environments (dev/staging/prod). Project variables let admins change the connection without touching code. -->
+
+<div class="callout-warning">
+Warning: 
+```python
+# Hardcoded connection
+llm = LLM("claude-production")
+```
+
+</div>
+<div>
+
+</div>
 
 ---
 
@@ -482,6 +509,7 @@ for row in df.iterrows():
 ## How LLM Mesh Connects to Other Topics
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     API[API Fundamentals] --> LM[LLM Mesh<br/>Architecture]
     DSS[Dataiku Basics] --> LM
@@ -490,7 +518,6 @@ graph LR
     LM --> RAG[Module 2:<br/>RAG / Knowledge Banks]
     LM --> CUS[Module 3:<br/>Custom Applications]
     LM --> DEP[Module 4:<br/>Deployment]
-    style LM fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: LLM Mesh is the foundation for everything that follows. Every module builds on the patterns we've covered here. -->

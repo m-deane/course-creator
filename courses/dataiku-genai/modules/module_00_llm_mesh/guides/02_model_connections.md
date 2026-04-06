@@ -1,5 +1,7 @@
 # Configuring LLM Connections in Dataiku
 
+> **Reading time:** ~5 min | **Module:** 0 — Llm Mesh | **Prerequisites:** Basic Python, familiarity with LLM concepts
+
 ## Overview
 
 Dataiku's LLM Mesh provides a unified interface to connect various LLM providers. This guide covers setting up and managing these connections.
@@ -33,6 +35,12 @@ Administration → Connections → LLM Mesh
 
 ### Step 2: Create New Connection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Conceptual API structure (actual UI-based)
 connection_config = {
@@ -49,7 +57,15 @@ connection_config = {
 }
 ```
 
+</div>
+
 ### Step 3: Configure Model Parameters
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 model_settings = {
@@ -63,9 +79,17 @@ model_settings = {
 }
 ```
 
+</div>
+
 ## Provider-Specific Configuration
 
 ### OpenAI
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # OpenAI connection configuration
@@ -93,7 +117,15 @@ openai_config = {
 }
 ```
 
+</div>
+
 ### Azure OpenAI
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Azure OpenAI requires deployment-specific configuration
@@ -112,7 +144,15 @@ azure_config = {
 }
 ```
 
+</div>
+
 ### AWS Bedrock
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # AWS Bedrock uses IAM authentication
@@ -136,9 +176,17 @@ bedrock_config = {
 }
 ```
 
+</div>
+
 ## Connection Testing
 
 ### Health Check
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # In Dataiku Python recipe or notebook
@@ -169,7 +217,15 @@ result = test_llm_connection("openai-production")
 print(f"Connection status: {result['status']}")
 ```
 
+</div>
+
 ### Latency Benchmarking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -204,9 +260,17 @@ def benchmark_connection(connection_name, n_requests=10):
     }
 ```
 
+</div>
+
 ## Connection Groups and Fallbacks
 
 ### Load Balancing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Configure connection group for redundancy
@@ -229,7 +293,15 @@ connection_group = {
 }
 ```
 
+</div>
+
 ### Automatic Failover
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class LLMConnectionManager:
@@ -267,9 +339,17 @@ class LLMConnectionManager:
         return status
 ```
 
+</div>
+
 ## Cost Tracking
 
 ### Token Usage Monitoring
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class TokenUsageTracker:
@@ -317,9 +397,17 @@ class TokenUsageTracker:
         }
 ```
 
+</div>
+
 ## Security Best Practices
 
 ### API Key Management
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # NEVER hardcode API keys
@@ -337,6 +425,8 @@ api_key = project.get_variable("OPENAI_API_KEY")  # From project variables
 # Or use connection directly (key handled internally)
 llm = dataiku.LLMConnection("openai-production")
 ```
+
+</div>
 
 ### Access Control
 
@@ -363,3 +453,16 @@ Connection Security Settings:
 5. **Connection groups** enable load balancing and redundancy
 
 6. **Test connections** thoroughly before production deployment
+
+<div class="callout-key">
+<strong>Key Concept:</strong> 6. **Test connections** thoroughly before production deployment
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_first_connection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

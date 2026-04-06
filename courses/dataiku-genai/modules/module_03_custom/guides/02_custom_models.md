@@ -1,10 +1,18 @@
 # Custom Model Wrappers in Dataiku
 
+> **Reading time:** ~12 min | **Module:** 3 — Custom | **Prerequisites:** Module 2 — RAG, Python programming
+
 ## In Brief
 
 Custom model wrappers extend Dataiku's LLM Mesh to add preprocessing, postprocessing, routing logic, or integration with custom endpoints. They enable advanced patterns like retry logic, response parsing, multi-model ensembles, and specialized prompt templates while maintaining compatibility with Dataiku's standard LLM interfaces.
 
-> 💡 **Key Insight:** Production LLM applications require more than just API calls—they need error handling, response validation, cost optimization, and domain-specific logic. Custom wrappers provide a clean abstraction layer that encapsulates this complexity, making advanced LLM patterns reusable across projects without duplicating code.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Production LLM applications require more than just API calls—they need error handling, response validation, cost optimization, and domain-specific logic. Custom wrappers provide a clean abstraction layer that encapsulates this complexity, making advanced LLM patterns reusable across projects without duplicating code.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Custom model wrappers extend Dataiku's LLM Mesh to add preprocessing, postprocessing, routing logic, or integration with custom endpoints. They enable advanced patterns like retry logic, response parsing, multi-model ensembles, and specialized prompt templates while maintaining compatibility with...
+</div>
 
 ## Formal Definition
 
@@ -51,6 +59,12 @@ Think of custom model wrappers like middleware in web development. Just as middl
 ## Code Implementation
 
 ### Basic Wrapper Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -124,7 +138,15 @@ class BaseLLMWrapper:
         return result
 ```
 
+</div>
+
 ### JSON Extraction Wrapper
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class JSONExtractorLLM(BaseLLMWrapper):
@@ -215,7 +237,15 @@ print(result)
 # {'inventory_change': -5.2, 'sentiment': 'bullish', 'key_factors': [...]}
 ```
 
+</div>
+
 ### Retry and Fallback Wrapper
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import logging
@@ -303,7 +333,15 @@ resilient_llm = RetryFallbackLLM(
 result = resilient_llm.complete("Summarize this report...")
 ```
 
+</div>
+
 ### Cost-Optimized Router Wrapper
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class CostOptimizedLLM(BaseLLMWrapper):
@@ -437,7 +475,15 @@ Analyze the following 10,000 word report and provide:
 result3 = cost_optimized.complete("...", force_tier='high')
 ```
 
+</div>
+
 ### Domain-Specific Wrapper
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class CommodityAnalysisLLM(BaseLLMWrapper):
@@ -576,7 +622,15 @@ comparison = commodity_llm.compare_reports(
 print(f"Consensus: {comparison['consensus']}")
 ```
 
+</div>
+
 ### Wrapper with Caching
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import hashlib
@@ -647,6 +701,8 @@ result1 = cached_llm.complete("Analyze this report...")
 result2 = cached_llm.complete("Analyze this report...")  # Free!
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Not Handling Errors Gracefully**
@@ -675,6 +731,10 @@ result2 = cached_llm.complete("Analyze this report...")  # Free!
 - Implement TTL (time-to-live) for cached responses
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - LLM Mesh setup and Python integration (Module 0)
@@ -728,3 +788,11 @@ result2 = cached_llm.complete("Analyze this report...")  # Free!
 - **Blog Post**: "Production LLM Engineering Patterns" - Real-world wrapper patterns from industry (representative of current practices)
 
 - **Research**: "LLM Middleware: Abstractions for Production Language Model Applications" - Emerging research on LLM infrastructure layers (representative of ongoing work)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_python_llm_calls.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

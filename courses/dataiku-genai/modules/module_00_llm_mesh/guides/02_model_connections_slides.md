@@ -43,6 +43,7 @@ Think of provider setup like configuring a company's **phone system**:
 ## What a Provider Connection Encapsulates
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     PC[Provider Connection]
     PC --> Auth[Authentication<br/>API keys, OAuth, Managed Identity]
@@ -275,6 +276,7 @@ def benchmark_connection(name, n_requests=10):
 ## Load Balancing Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     App[Application] --> CG[Connection Group]
 
@@ -285,8 +287,6 @@ graph TB
 
     P --> OAI[OpenAI API]
     B --> AZR[Azure API]
-
-    style CG fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Connection groups let you split traffic between providers. Weights control the distribution under normal conditions. Priority determines failover order. -->
@@ -313,6 +313,7 @@ def generate_with_fallback(prompt, **kwargs):
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     R[Request] --> C1[Claude Primary]
     C1 -->|Fail| C2[GPT-4 Secondary]
@@ -414,6 +415,10 @@ provider = get_provider_type("openai-gpt4")
 
 <!-- Speaker notes: Code continues on the next slide. -->
 
+<div class="callout-insight">
+Insight: Connection-level default parameters (temperature, max_tokens) can be overridden per-call, giving you sensible defaults without losing flexibility.
+</div>
+
 ---
 
 ## (continued)
@@ -433,11 +438,16 @@ elif provider == "openai":
 
 <!-- Speaker notes: This is why the abstraction layer matters. Ideally, use only the common parameters that work across providers. Provider-specific features should be isolated behind a conditional. -->
 
+<div class="callout-warning">
+Warning: API keys stored in LLM connections are encrypted at rest but visible to project administrators. Use separate connections for different security zones.
+</div>
+
 ---
 
 ## Security Best Practices
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[API Key Management] --> B[Use Dataiku Secrets]
     B --> C["${secrets.OPENAI_API_KEY}"]
@@ -453,6 +463,10 @@ graph TD
 
 <!-- Speaker notes: Security summary slide. Secrets management, fine-grained access control, and audit logging are the three pillars. Module 4 covers governance in more depth. -->
 
+<div class="callout-key">
+Key Point: Configure multiple connections to the same model for redundancy. LLM Mesh can automatically failover if the primary connection is unavailable.
+</div>
+
 ---
 
 ## Key Takeaways
@@ -467,3 +481,7 @@ graph TD
 > Like a phone system: employees just pick up the phone. The infrastructure handles routing.
 
 <!-- Speaker notes: Recap. The phone system analogy ties back to the opening. Next up: governance -- who can use what, and how much. -->
+
+<div class="callout-info">
+Info: Each LLM connection in Dataiku specifies provider, model, authentication, and default parameters. Test connections immediately after creation.
+</div>

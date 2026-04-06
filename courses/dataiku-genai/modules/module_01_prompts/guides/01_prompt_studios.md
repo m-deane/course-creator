@@ -1,5 +1,7 @@
 # Dataiku Prompt Studios
 
+> **Reading time:** ~5 min | **Module:** 1 — Prompts | **Prerequisites:** Module 0 — LLM Mesh setup
+
 ## Overview
 
 Prompt Studios provides a visual interface for designing, testing, and iterating on prompts without writing code.
@@ -179,6 +181,12 @@ expected:
 
 ### Automated Evaluation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def evaluate_prompt_output(output: str, test_case: dict) -> dict:
     """Evaluate prompt output against test case."""
@@ -217,6 +225,8 @@ def evaluate_prompt_output(output: str, test_case: dict) -> dict:
     return results
 ```
 
+</div>
+
 ## Version Control
 
 ### Saving Versions
@@ -234,6 +244,12 @@ Version History:
 ```
 
 ### Comparing Versions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Compare outputs between prompt versions
@@ -260,6 +276,8 @@ def compare_prompt_versions(
     }
 ```
 
+</div>
+
 ## Deploying Prompts
 
 ### From Prompt Studio to Recipe
@@ -267,6 +285,12 @@ def compare_prompt_versions(
 1. Click **Deploy to Recipe**
 2. Select target recipe type (Python, LLM Recipe)
 3. Configure input datasets
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Auto-generated recipe code
@@ -301,6 +325,8 @@ output_dataset = dataiku.Dataset("analyzed_reports")
 output_dataset.write_with_schema(pd.DataFrame(results))
 ```
 
+</div>
+
 ### LLM Recipe
 
 Use the visual LLM Recipe for simpler cases:
@@ -322,3 +348,16 @@ Use the visual LLM Recipe for simpler cases:
 4. **Version control** tracks prompt evolution
 
 5. **Direct deployment** moves prompts to production recipes
+
+<div class="callout-key">
+<strong>Key Concept:</strong> 5. **Direct deployment** moves prompts to production recipes
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_prompt_creation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

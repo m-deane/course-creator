@@ -25,11 +25,13 @@ math: mathjax
 > Production LLM applications require more than just API calls -- they need error handling, response validation, cost optimization, and domain-specific logic. Custom wrappers provide a clean abstraction layer that encapsulates this complexity, making advanced LLM patterns **reusable across projects**.
 
 <!-- Speaker notes: Read the insight aloud, then expand with an example from the audience's domain. -->
+
 ---
 
 ## The Middleware Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     APP[Your Application Code] --> WRAP[Custom Model Wrapper]
 
@@ -46,8 +48,6 @@ graph TB
         G[GPT-4]
         A[Azure]
     end
-
-    style WRAP fill:#4CAF50,color:#fff
 ```
 
 > Just as web middleware handles auth, logging, and errors, LLM wrappers handle retries, parsing, and validation.
@@ -93,19 +93,23 @@ class BaseLLMWrapper:
 ```
 
 <!-- Speaker notes: The base class defines three extension points: preprocess, postprocess, and complete. All specialized wrappers inherit from this. -->
+
+<div class="callout-key">
+Key Point: kwargs):
+        processed_prompt, processed_kwargs = self.preprocess(prompt, 
+</div>
+
 ---
 
 ## Wrapper Extension Points
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     IN[Input Prompt] --> PRE[preprocess<br/>Add instructions<br/>Validate input<br/>Set defaults]
     PRE --> LLM[LLM Call<br/>via LLM Mesh]
     LLM --> POST[postprocess<br/>Parse JSON<br/>Validate output<br/>Transform]
     POST --> OUT[Processed Result]
-
-    style PRE fill:#e3f2fd
-    style POST fill:#e8f5e9
 ```
 
 | Extension Point | What You Can Do |
@@ -191,6 +195,7 @@ print(result)
 ## RetryFallbackLLM
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     REQ[Request] --> P1[Primary: Claude]
     P1 -->|Success| RES[Response]
@@ -199,9 +204,6 @@ flowchart TD
     P2 -->|Fail x3| P3[Fallback 2: Azure]
     P3 -->|Success| RES
     P3 -->|Fail x3| ERR[All Failed Error]
-
-    style RES fill:#4CAF50,color:#fff
-    style ERR fill:#f44336,color:#fff
 ```
 
 <!-- Speaker notes: Retry and fallback flowchart. Three retries per connection, then move to the next fallback. This provides production-grade resilience. -->
@@ -258,6 +260,7 @@ class RetryFallbackLLM(BaseLLMWrapper):
 ## CostOptimizedLLM
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     REQ[Request] --> EST[Estimate Complexity]
     EST --> |Simple task<br/>short prompt| LOW[Haiku<br/>$0.25/1M input]
@@ -267,8 +270,6 @@ flowchart TD
     LOW --> RES[Response]
     MED --> RES
     HIGH --> RES
-
-    style EST fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Cost router that sends simple tasks to cheap models and complex tasks to expensive ones. The decision tree shows the routing logic. -->
@@ -437,17 +438,23 @@ class CachedLLM(BaseLLMWrapper):
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     REQ[Request] --> CHK{Cache Hit?}
     CHK -->|Yes| RES[Cached Response<br/>Cost: $0]
     CHK -->|No| LLM[LLM Call<br/>Cost: $$]
     LLM --> STORE[Store in Cache]
     STORE --> RES
-
-    style RES fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Caching wrapper uses SHA-256 hash of prompt + temperature as cache key. Cache hit returns instantly at zero cost. Essential for repeated queries. -->
+
+<div class="callout-insight">
+Insight: kwargs):
+        if use_cache:
+            key = self._cache_key(prompt, 
+</div>
+
 ---
 
 ## Wrapper Selection Guide
@@ -463,6 +470,12 @@ flowchart LR
 > Wrappers can be **composed**: `CachedLLM(RetryFallbackLLM(JSONExtractorLLM(...)))`
 
 <!-- Speaker notes: Quick reference for choosing the right wrapper. Key insight: wrappers compose -- you can nest CachedLLM around RetryFallbackLLM around JSONExtractorLLM. -->
+
+<div class="callout-warning">
+Warning:  | Need structured data from LLM |
+| 
+</div>
+
 ---
 
 ## Key Takeaways
@@ -477,3 +490,7 @@ flowchart LR
 > Write the wrapper once, use it everywhere -- consistent behavior across all LLM interactions.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-key">
+Key Point: Custom models in Dataiku can wrap any LLM pipeline -- use this to create domain-specific models that combine retrieval, prompting, and post-processing.
+</div>

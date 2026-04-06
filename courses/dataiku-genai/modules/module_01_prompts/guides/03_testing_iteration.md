@@ -1,10 +1,18 @@
 # Testing and Iterating on Prompts
 
+> **Reading time:** ~11 min | **Module:** 1 — Prompts | **Prerequisites:** Module 0 — LLM Mesh setup
+
 ## In Brief
 
 Systematic prompt testing and iteration transforms prompt engineering from trial-and-error into an engineering discipline. By measuring outputs against success criteria, tracking metrics across versions, and applying structured improvement methods, you can reliably build prompts that perform well in production.
 
-> 💡 **Key Insight:** The best prompt is rarely the first prompt. Systematic iteration—test, measure, hypothesize improvement, implement, retest—yields 2-3x better results than ad-hoc experimentation. The key is defining clear success criteria upfront and measuring every change against them.
+<div class="callout-insight">
+<strong>Key Insight:</strong> The best prompt is rarely the first prompt. Systematic iteration—test, measure, hypothesize improvement, implement, retest—yields 2-3x better results than ad-hoc experimentation. The key is defining clear success criteria upfront and measuring every change against them.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Systematic prompt testing and iteration transforms prompt engineering from trial-and-error into an engineering discipline. By measuring outputs against success criteria, tracking metrics across versions, and applying structured improvement methods, you can reliably build prompts that perform well...
+</div>
 
 ## Formal Definition
 
@@ -79,6 +87,12 @@ Think of prompt iteration like recipe development. You don't create the perfect 
 ## Code Implementation
 
 ### Defining Success Criteria
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from typing import Dict, List, Callable
@@ -206,7 +220,15 @@ def estimate_tokens(text: str) -> int:
     return len(text) // 4
 ```
 
+</div>
+
 ### Test Suite Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -313,7 +335,15 @@ the five-year average and 125 Bcf higher than last year at this time.'''
 baseline_results = test_suite.run_all_tests()
 ```
 
+</div>
+
 ### Version Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku import PromptStudio
@@ -392,7 +422,15 @@ comparison = compare_prompt_versions(
 print(comparison)
 ```
 
+</div>
+
 ### Systematic Iteration Process
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class PromptIterator:
@@ -559,7 +597,15 @@ JSON output: inventory_change (number), sentiment (bullish/bearish/neutral), key
 best = iterator.get_best_version()
 ```
 
+</div>
+
 ### Regression Testing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def run_regression_tests(
@@ -631,6 +677,8 @@ else:
     print("Regressions detected - do not deploy")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Testing Too Few Cases**
@@ -659,6 +707,10 @@ else:
 - Set acceptable thresholds for production deployment
 
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 **Builds on:**
 - Prompt Studio basics (Module 1.1)
@@ -715,3 +767,11 @@ else:
 - **Blog Post**: "The Prompt Engineering Testing Pyramid" - Adapting software testing concepts to prompts (fictional but representative of emerging practices)
 
 - **Tool**: "PromptFoo" - Open-source tool for prompt evaluation and comparison (real tool worth exploring)
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_prompt_creation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

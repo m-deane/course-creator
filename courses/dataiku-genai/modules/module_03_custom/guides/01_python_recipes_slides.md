@@ -62,6 +62,7 @@ output_dataset.write_with_schema(pd.DataFrame(results))
 ## Recipe Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     IN[(Input Dataset<br/>raw_reports)] --> RECIPE[Python Recipe<br/>LLM Processing]
     RECIPE --> OUT[(Output Dataset<br/>processed_reports)]
@@ -72,8 +73,6 @@ flowchart LR
         LLM --> PARSE[Parse Response]
         PARSE --> WRITE[Write Results]
     end
-
-    style RECIPE fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Visual overview of the recipe flow. Input dataset flows through prompt building, LLM call, response parsing, and output writing. -->
@@ -128,6 +127,7 @@ with ThreadPoolExecutor(max_workers=5) as executor:
 ## Parallel vs Sequential
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Processing Time Comparison
     dateFormat X
@@ -245,6 +245,7 @@ def api_handler(request):
 ## Application Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Clients
         WEB[Web App]
@@ -263,8 +264,6 @@ graph TB
     DASH --> EP
     EP --> KB
     EP --> LLM
-
-    style EP fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Architecture showing clients connecting to the Dataiku API Node. The endpoint orchestrates Knowledge Bank and LLM Mesh behind a single API. -->
@@ -316,6 +315,7 @@ def chat():
 ## CommodityAnalysisPipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     REP[Report Text] --> S1[Stage 1<br/>Extract]
     S1 --> S2[Stage 2<br/>Analyze]
@@ -325,8 +325,6 @@ flowchart LR
     S1 -.->|JSON| D1[commodity<br/>metrics<br/>timeframe]
     S2 -.->|JSON| D2[trend<br/>drivers<br/>outlook]
     S3 -.->|JSON| D3[direction<br/>confidence<br/>risk]
-
-    style S3 fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Visual representation of a three-stage pipeline. Each stage produces structured JSON that feeds the next stage. -->
@@ -372,6 +370,11 @@ class CommodityAnalysisPipeline:
 ```
 
 <!-- Speaker notes: Three-stage pipeline implementation. Each stage is a separate LLM call with specific extraction or analysis goals. The process method chains them together. -->
+
+<div class="callout-warning">
+Warning: Long-running LLM calls in recipes should implement timeout handling and partial result caching to avoid losing work on failures.
+</div>
+
 ---
 
 ## Error Handling: RobustLLMProcessor
@@ -393,6 +396,10 @@ class RobustLLMProcessor:
 
 <!-- Speaker notes: Code continues on the next slide. -->
 
+<div class="callout-key">
+Key Point: Use `dataiku.api_node_client()` for calling LLM endpoints in recipes. This automatically handles authentication, retries, and usage tracking.
+</div>
+
 ---
 
 ## (continued)
@@ -411,6 +418,11 @@ class RobustLLMProcessor:
 ```
 
 <!-- Speaker notes: Production error handling pattern. Retries with exponential backoff. JSON validation with automatic prompt correction. Returns structured success/error results. -->
+
+<div class="callout-insight">
+Insight: Python recipes in Dataiku execute within the project's managed code environment, giving you access to all LLM Mesh connections without manual API key management.
+</div>
+
 ---
 
 ## Key Takeaways
@@ -425,3 +437,8 @@ class RobustLLMProcessor:
 > Python recipes are the bridge between Prompt Studios and production-grade LLM applications.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-info">
+Info:  provide full flexibility for custom LLM logic in Dataiku
+2. 
+</div>

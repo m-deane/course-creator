@@ -25,11 +25,17 @@ math: mathjax
 > Production Gen AI requires the same rigor as traditional software -- version control, automated testing, staged deployments, monitoring, and rollback -- plus unique concerns like **prompt versioning**, **token budgets**, **model drift**, and **output quality monitoring**.
 
 <!-- Speaker notes: Emphasize the unique Gen AI governance concerns: prompt versioning, token budgets, model drift, and output quality. These are on top of standard software governance. -->
+
+<div class="callout-info">
+Info: output quality monitoring
+</div>
+
 ---
 
 ## Governance Framework Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DEV[Development<br/>Environment] -->|Tests pass<br/>Code review| STAGE[Staging<br/>Environment]
     STAGE -->|Integration tests<br/>Performance tests<br/>Approval required| PROD[Production<br/>Environment]
@@ -42,9 +48,6 @@ flowchart TD
 
     MON -->|Anomaly detected| ALERT[Alerting]
     ALERT --> INCIDENT[Incident Response<br/>Rollback if needed]
-
-    style PROD fill:#4CAF50,color:#fff
-    style ALERT fill:#f44336,color:#fff
 ```
 
 <!-- Speaker notes: The full governance framework from dev through staging to production, with continuous monitoring feeding back to incident response. -->
@@ -109,6 +112,7 @@ class DeploymentConfig:
 ## Config by Environment
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph DEV[Development]
         D1[5 concurrent]
@@ -132,10 +136,6 @@ graph LR
     end
 
     DEV --> STAGE --> PROD
-
-    style DEV fill:#e3f2fd
-    style STAGE fill:#fff3e0
-    style PROD fill:#e8f5e9
 ```
 
 | Setting | Dev | Staging | Prod |
@@ -158,6 +158,7 @@ graph LR
 ## Pre-Deployment Checks
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START[Start Deployment] --> C1{LLM Connection<br/>Available?}
     C1 -->|Yes| C2{Prompt Version<br/>Exists?}
@@ -172,9 +173,6 @@ flowchart TD
     GATE -->|Yes| APPROVE{Manual<br/>Approval}
     APPROVE -->|Approved| DEPLOY
     APPROVE -->|Rejected| FAIL
-
-    style DEPLOY fill:#4CAF50,color:#fff
-    style FAIL fill:#f44336,color:#fff
 ```
 
 <!-- Speaker notes: Flowchart showing the four checks before deployment. Each check must pass before proceeding. The approval gate is required for staging and production. -->
@@ -230,6 +228,7 @@ class DeploymentPipeline:
 ## Rollback Procedure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Pipeline
     participant Log as Deployment Log
@@ -319,6 +318,7 @@ class ProductionMonitor:
 ## Metrics Collection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Collection[Metrics Collection]
         LOGS[(Usage Logs)] --> FILTER[Filter to Time Window]
@@ -350,9 +350,6 @@ graph TB
     LAT --> CHECK
     CHECK --> SEND
     CHECK --> LOG
-
-    style Collection fill:#e3f2fd
-    style Actions fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Full metrics collection and alerting flow. Collection feeds five metric types, which feed threshold checks, which trigger notifications and logging. -->
@@ -386,6 +383,11 @@ def run_monitoring_cycle(self):
 | Request volume | Requests / hour | > 2x historical avg |
 
 <!-- Speaker notes: Simple four-step monitoring cycle. Collect metrics, check alerts, send notifications, log metrics. Schedule as a recurring job at 5-minute intervals. -->
+
+<div class="callout-danger">
+Danger: Without cost tracking per connection, a single misconfigured pipeline can consume your entire monthly LLM budget in hours.
+</div>
+
 ---
 
 ## Five Common Pitfalls
@@ -399,6 +401,12 @@ def run_monitoring_cycle(self):
 | **Over-permissive access** | Security/audit risk | Least privilege + separate envs |
 
 <!-- Speaker notes: Key pitfall: 'No rollback plan' -- always test rollback before you need it. The cost of a broken production deployment is far higher than the cost of testing rollback. -->
+
+<div class="callout-key">
+Key Point:  | Broken production | Dev -> staging -> prod pipeline |
+| 
+</div>
+
 ---
 
 ## Key Takeaways
@@ -413,3 +421,8 @@ def run_monitoring_cycle(self):
 > Governance transforms experimental Gen AI prototypes into enterprise-grade systems.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-insight">
+Insight:  per environment ensures appropriate limits and controls
+2. 
+</div>

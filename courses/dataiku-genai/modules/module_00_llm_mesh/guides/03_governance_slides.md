@@ -47,6 +47,7 @@ math: mathjax
 ## Governance Components
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph GOV[LLM Mesh Governance Layer]
         AC[Access Control<br/>Groups, Projects, Connections]
@@ -55,8 +56,6 @@ graph TB
     end
 
     GOV --> API[LLM API Calls<br/>Governed and Monitored]
-
-    style GOV fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Three pillars: who can use what (access control), how much it costs (cost tracking), and what happened (audit logging). We'll cover each in detail. -->
@@ -173,6 +172,7 @@ def get_llm_usage_report(project_key=None, group_by='user'):
 ## Cost Visibility Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[LLM Request] --> B[Token Count]
     B --> C[Cost Calculation]
@@ -180,8 +180,6 @@ flowchart LR
     D --> E[Usage Reports]
     D --> F[Budget Alerts]
     D --> G[Dashboard]
-
-    style D fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Every request flows through this pipeline. The recording happens asynchronously so it doesn't add latency. Reports, alerts, and dashboards all read from the same metrics store. -->
@@ -291,6 +289,10 @@ class RateLimitedLLM:
 
 <!-- Speaker notes: First half of the rate limiter -- tracks requests and tokens in a sliding 60-second window. The deque-based approach is memory efficient. This is client-side protection on top of server-side limits. -->
 
+<div class="callout-info">
+Info: Governance controls are applied at the LLM Mesh layer, not in application code. Developers call the LLM as usual; the mesh transparently enforces all policies.
+</div>
+
 ---
 
 ## Rate Limiter: Token Tracking
@@ -308,6 +310,7 @@ class RateLimitedLLM:
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     REQ[Incoming Request] --> CHK{Check Rate Limit}
     CHK -->|Under limit| EXEC[Execute LLM Call]
@@ -318,6 +321,10 @@ flowchart TD
 ```
 
 <!-- Speaker notes: The complete() method wraps the LLM call with rate limit checks. In production, add a sleep-and-retry loop instead of raising immediately. The estimated_tokens parameter helps predict whether the request will exceed the token limit. -->
+
+<div class="callout-danger">
+Danger: Without cost tracking per connection, a single misconfigured pipeline can consume your entire monthly LLM budget in hours.
+</div>
 
 ---
 
@@ -341,6 +348,11 @@ flowchart TD
 
 <!-- Speaker notes: The second pitfall is counterintuitive -- governance should enable, not block. Start with soft limits and monitoring, then tighten based on actual usage patterns. -->
 
+<div class="callout-info">
+Info:  | Discover overages after the fact | Alert at 75-80% threshold |
+| 
+</div>
+
 ---
 
 ## Key Takeaways
@@ -354,3 +366,8 @@ flowchart TD
 > Governance enables innovation by providing guardrails, not roadblocks.
 
 <!-- Speaker notes: Recap the five pillars. The quote at the end is the key message: governance is an enabler, not a blocker. Next up: Module 1 -- Prompt Studios. -->
+
+<div class="callout-key">
+Key Point:  uses groups, projects, and connections for fine-grained permissions
+2. 
+</div>

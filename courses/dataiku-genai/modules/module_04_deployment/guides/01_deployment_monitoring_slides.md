@@ -23,6 +23,7 @@ math: mathjax
 ## Deployment Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph API[Dataiku API Node]
         EP1[Endpoint 1<br/>Q&A API]
@@ -40,8 +41,6 @@ graph TB
     LB --> C1
     LB --> C2
     LB --> C3
-
-    style LB fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: API Node architecture with load balancer and multiple containers. This is Dataiku's production deployment pattern for LLM services. -->
@@ -186,6 +185,7 @@ class MonitoredLLM:
 ## Monitoring Dashboard
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Dashboard[LLM Operations Dashboard]
         T1[Requests 24h<br/>Sum counter]
@@ -205,8 +205,6 @@ graph TB
     LLM --> T3
     LOG --> T4
     LOG --> T5
-
-    style Dashboard fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Dashboard layout with five panels. Requests and tokens are counters, latency is a timeseries, error rate and cost are rates. All sourced from LLM calls and usage logs. -->
@@ -250,6 +248,7 @@ alerts:
 ## Programmatic Alerts
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     COLLECT[Collect Metrics<br/>5-min window] --> CHECK{Check Thresholds}
     CHECK -->|Error rate > 5%| CRIT[Critical Alert<br/>Email + Slack]
@@ -263,10 +262,6 @@ flowchart TD
     LOG --> WAIT[Wait 5 minutes]
     NOTIFY --> WAIT
     WAIT --> COLLECT
-
-    style CRIT fill:#f44336,color:#fff
-    style WARN1 fill:#ff9800,color:#fff
-    style WARN2 fill:#ff9800,color:#fff
 ```
 
 <!-- Speaker notes: Alert flow diagram. Metrics collected, thresholds checked, notifications sent. The 5-minute cycle is a good balance between responsiveness and noise. -->
@@ -314,20 +309,23 @@ class CostTracker:
 ```
 
 <!-- Speaker notes: CostTracker with per-model pricing. Note: these prices will change -- add a 'verify current pricing' step to your deployment checklist. -->
+
+<div class="callout-danger">
+Danger: Production LLM endpoints without rate limiting and cost caps can generate unbounded charges from automated or adversarial usage.
+</div>
+
 ---
 
 ## BudgetEnforcedLLM
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     REQ[Request] --> CHK{Within Budget?}
     CHK -->|Yes| LLM[LLM Call]
     CHK -->|No| REJECT[Reject Request<br/>Budget Exceeded]
     LLM --> RECORD[Record Cost]
     RECORD --> RES[Response]
-
-    style REJECT fill:#f44336,color:#fff
-    style RES fill:#4CAF50,color:#fff
 ```
 
 ```python
@@ -348,6 +346,11 @@ class BudgetEnforcedLLM:
 ```
 
 <!-- Speaker notes: Budget enforcement wrapper that rejects requests when the daily budget is exceeded. The flowchart shows the check-before-call pattern. -->
+
+<div class="callout-key">
+Key Point: Set up automated alerts for latency spikes, cost anomalies, and output quality degradation before going to production.
+</div>
+
 ---
 
 ## Production Checklist
@@ -380,6 +383,11 @@ class BudgetEnforcedLLM:
 </div>
 
 <!-- Speaker notes: Pre-deployment and post-deployment checklists. Print this slide as a reference card. Every item matters. -->
+
+<div class="callout-warning">
+Warning: LLM outputs can degrade silently over time as provider models are updated. Monitoring response quality is as important as monitoring uptime.
+</div>
+
 ---
 
 ## Key Takeaways
@@ -394,3 +402,8 @@ class BudgetEnforcedLLM:
 > Production LLM applications need monitoring from day one -- not as an afterthought.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-info">
+Info:  provides scalable deployment for LLM applications as REST services
+2. 
+</div>

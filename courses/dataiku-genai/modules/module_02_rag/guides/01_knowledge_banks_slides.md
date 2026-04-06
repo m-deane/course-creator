@@ -23,14 +23,13 @@ math: mathjax
 ## The RAG Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DOCS[Documents<br/>PDFs, Text, HTML] --> CHUNK[Chunking<br/>~500 tokens]
     CHUNK --> EMBED[Embedding<br/>1536 dimensions]
     EMBED --> STORE[Vector Store<br/>FAISS / Pinecone]
     STORE --> QUERY[Query +<br/>Retrieve]
     QUERY --> GEN[Generate<br/>Answer]
-
-    style STORE fill:#4CAF50,color:#fff
 ```
 
 > Knowledge Banks manage this entire pipeline as a single managed resource in Dataiku.
@@ -76,6 +75,7 @@ kb.build()
 </div>
 
 <!-- Speaker notes: Two paths: UI for quick setup, code for automation. The programmatic approach is better for reproducible pipelines. -->
+
 ---
 
 ## Knowledge Bank Configuration
@@ -113,6 +113,7 @@ knowledge_bank:
 ## Choosing a Chunking Method
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DOC[Document] --> TYPE{Document Type?}
     TYPE -->|Uniform text| FIXED[Fixed Size<br/>500 tokens, 50 overlap]
@@ -122,8 +123,6 @@ flowchart TD
     FIXED --> IDX[Index]
     SEM --> IDX
     CUSTOM --> IDX
-
-    style IDX fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Decision tree for chunking strategy. Fixed for uniform text, semantic for structured documents, custom for mixed types. -->
@@ -166,6 +165,12 @@ chunking_config = {
 </div>
 
 <!-- Speaker notes: Side-by-side code and trade-off table. Fixed is the safe default. Semantic is better when you need to preserve paragraph meaning. -->
+
+<div class="callout-key">
+Key Point:  | Simple, predictable | May split mid-sentence |
+| 
+</div>
+
 ---
 
 ## Document-Specific Chunking
@@ -216,6 +221,7 @@ def custom_chunker(document: dict) -> list:
 ## Retrieval Methods
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     Q[User Query] --> VEC[Vector Search<br/>Semantic similarity]
     Q --> KW[Keyword Search<br/>BM25 matching]
@@ -227,8 +233,6 @@ graph TB
 
     RES --> FILT[Metadata Filtering<br/>Date, type, commodity]
     FILT --> CTX[Context for LLM]
-
-    style HYB fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Three search types: vector (meaning), keyword (exact terms), hybrid (best of both). Hybrid is the production default. -->
@@ -294,6 +298,12 @@ results = kb.search(
 | **Hybrid** | Best of both | Production use |
 
 <!-- Speaker notes: Hybrid search with configurable weights. 70/30 vector/keyword is a good starting point. Required keywords ensure critical terms appear. -->
+
+<div class="callout-insight">
+Insight:  | Understands meaning | Conceptual queries |
+| 
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -349,6 +359,7 @@ QUESTION: {question}"""
 ## RAG Pipeline Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant User
     participant RAG as CommodityRAG
@@ -452,17 +463,21 @@ def refresh_kb():
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     NEW[New Documents] --> ADD[Add to KB]
     ADD --> REBUILD[Incremental Rebuild]
     REBUILD --> READY[Updated Index]
     READY --> SCHED[Schedule Daily]
     SCHED --> NEW
-
-    style REBUILD fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: Knowledge bank maintenance pattern. Incremental rebuild is key -- don't re-embed everything when you add new documents. -->
+
+<div class="callout-key">
+Key Point: Chunk size and overlap are the two most impactful parameters for RAG quality. Start with 500 tokens / 50 overlap and tune based on retrieval relevance.
+</div>
+
 ---
 
 ## Key Takeaways
@@ -476,3 +491,8 @@ flowchart LR
 > Knowledge Banks turn your documents into an intelligent, searchable knowledge layer.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-warning">
+Warning:  manage the full RAG pipeline: chunking, embedding, storage, retrieval
+2. 
+</div>

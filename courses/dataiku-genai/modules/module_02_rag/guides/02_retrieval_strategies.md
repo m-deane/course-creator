@@ -1,12 +1,49 @@
 # Retrieval Strategies for RAG in Dataiku
 
+> **Reading time:** ~6 min | **Module:** 2 — Rag | **Prerequisites:** Module 1 — Prompt Studios
+
+<div class="callout-key">
+<strong>Key Concept:</strong> RAG quality is 80% retrieval quality. The best LLM in the world produces hallucinations if it receives irrelevant or incomplete context. Optimising retrieval is the highest-leverage investment in any RAG system.
+</div>
+
 ## Introduction
 
 Effective retrieval is critical for RAG performance. This guide covers strategies for optimizing document retrieval in Dataiku's Knowledge Banks.
 
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Naive Retrieval</div>
+<div class="body">
+
+- Single embedding similarity search
+- Fixed chunk size for all documents
+- No metadata filtering
+- Misses multi-hop reasoning
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Optimised Retrieval</div>
+<div class="body">
+
+- Hybrid search (vector + keyword)
+- Adaptive chunking by document type
+- Metadata filters narrow search space
+- Re-ranking for relevance
+
+</div>
+</div>
+</div>
+
 ## Embedding-Based Retrieval
 
 ### Vector Similarity Search
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Conceptual implementation within Dataiku
@@ -43,7 +80,15 @@ class VectorRetriever:
         ]
 ```
 
+</div>
+
 ### Distance Metrics
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -73,9 +118,17 @@ retrieval_config = {
 }
 ```
 
+</div>
+
 ## Hybrid Retrieval
 
 Combine vector search with keyword matching:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class HybridRetriever:
@@ -161,9 +214,17 @@ hybrid_config = {
 }
 ```
 
+</div>
+
 ## Query Expansion
 
 Improve retrieval by expanding the original query:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class QueryExpander:
@@ -222,9 +283,17 @@ Return only the alternative queries, one per line, without numbering."""
 # results = expander.retrieve_with_expansion("crude oil inventory report", retriever)
 ```
 
+</div>
+
 ## Contextual Compression
 
 Reduce retrieved content to most relevant portions:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class ContextualCompressor:
@@ -265,9 +334,17 @@ Relevant excerpts (return only the relevant sentences, nothing else):"""
         return compressed
 ```
 
+</div>
+
 ## Multi-Index Retrieval
 
 Search across multiple knowledge banks:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class MultiIndexRetriever:
@@ -360,9 +437,17 @@ multi_index_config = {
 }
 ```
 
+</div>
+
 ## Reranking
 
 Improve result quality with a reranking model:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class Reranker:
@@ -441,9 +526,17 @@ rerank_config = {
 }
 ```
 
+</div>
+
 ## Performance Optimization
 
 ### Caching
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class CachedRetriever:
@@ -480,6 +573,8 @@ class CachedRetriever:
         return results
 ```
 
+</div>
+
 ## Key Takeaways
 
 1. **Hybrid retrieval** combines strengths of vector and keyword search
@@ -493,3 +588,11 @@ class CachedRetriever:
 5. **Reranking** significantly improves precision
 
 6. **Caching** is essential for production performance
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_kb_creation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

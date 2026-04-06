@@ -44,6 +44,7 @@ math: mathjax
 ## Prompt Iteration Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DEF[Define Success Criteria] --> TC[Create Test Cases<br/>5-10 examples]
     TC --> BASE[Baseline v1.0<br/>Measure performance]
@@ -60,8 +61,6 @@ flowchart TD
     end
 
     LOOP --> DEPLOY[Production Deployment]
-
-    style BASE fill:#4CAF50,color:#fff
 ```
 
 <!-- Speaker notes: The iteration loop is the core workflow. Define success criteria first, then iterate. Each change is a hypothesis to test. -->
@@ -119,6 +118,7 @@ class PromptEvaluator:
 ## Criteria Types
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     EVAL[PromptEvaluator]
 
@@ -135,14 +135,16 @@ graph TB
 
     EVAL --> Required
     EVAL --> Weighted
-
-    style Required fill:#ffcdd2
-    style Weighted fill:#e8f5e9
 ```
 
 > **Required** criteria cause total failure. **Weighted** criteria contribute to a quality score.
 
 <!-- Speaker notes: Two categories: required (red, binary pass/fail) and weighted (green, scored). Required criteria gate deployment. Weighted criteria guide improvement. -->
+
+<div class="callout-info">
+Info:  criteria cause total failure. 
+</div>
+
 ---
 
 ## Setting Up Evaluation Criteria
@@ -273,6 +275,7 @@ Average latency: 1.8s
 ## Comparing Prompt Versions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Dev as Developer
     participant VA as Version A
@@ -340,17 +343,21 @@ def compare_prompt_versions(studio, version_a, version_b, test_suite):
 ## The PromptIterator
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     V1[v1.0 Baseline<br/>Score: 0.65] -->|Add structure| V2[v1.1 Structured<br/>Score: 0.78]
     V2 -->|Add examples| V3[v1.2 Few-shot<br/>Score: 0.88]
     V3 -->|Optimize tokens| V4[v1.3 Optimized<br/>Score: 0.85]
-
-    style V3 fill:#4CAF50,color:#fff
 ```
 
 > Change **one dimension per iteration**. Track the hypothesis for each change.
 
 <!-- Speaker notes: Visual history of iteration. Note v1.3 scores lower than v1.2 -- optimizing for tokens can hurt quality. Choose the version that matches your priority. -->
+
+<div class="callout-key">
+Key Point: one dimension per iteration
+</div>
+
 ---
 
 ## Iteration Examples
@@ -365,6 +372,12 @@ flowchart LR
 > v1.2 is best for quality. v1.3 is best for cost. Choose based on your priority.
 
 <!-- Speaker notes: Data table showing the trade-off. v1.2 is best for quality, v1.3 for cost. In production, quality usually wins unless you have strict budget constraints. -->
+
+<div class="callout-insight">
+Insight:  | 1,356 | $0.0068 |
+| v1.3 | Concise prompt reduces tokens | 0.85 | 
+</div>
+
 ---
 
 ## Iteration Code Pattern
@@ -455,6 +468,7 @@ def run_regression_tests(studio, current_version,
 ## Regression Test Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     NEW[New Version] --> LOAD[Load Baseline + New]
     LOAD --> RUN[Run Test Suite on Both]
@@ -463,9 +477,6 @@ flowchart TD
     CHK -->|Yes| PASS[Safe to Deploy]
     CHK -->|No| FAIL[Regressions Detected]
     FAIL --> FIX[Fix Issues Before Deploy]
-
-    style PASS fill:#4CAF50,color:#fff
-    style FAIL fill:#f44336,color:#fff
 ```
 
 <!-- Speaker notes: Walk through the flowchart. The 5% degradation threshold is a good starting point. Adjust based on your quality requirements. -->
@@ -482,6 +493,12 @@ flowchart TD
 | **Ignoring cost/latency** | Expensive or slow prompts | Track tokens, cost, latency per version |
 
 <!-- Speaker notes: Key pitfall: 'Multiple changes at once' -- you can't isolate what helped. One change per iteration is the rule. -->
+
+<div class="callout-warning">
+Warning:  | Missed edge cases | 10-15 cases minimum |
+| 
+</div>
+
 ---
 
 ## Key Takeaways

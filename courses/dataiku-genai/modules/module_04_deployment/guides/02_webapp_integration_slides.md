@@ -30,6 +30,7 @@ math: mathjax
 ## Full Stack Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Frontend[Frontend - Browser]
         HTML[HTML + CSS]
@@ -55,8 +56,6 @@ graph TB
     BL --> KB
     BL --> DS
     EP -->|JSON responses| JS
-
-    style Backend fill:#e8f5e9
 ```
 
 <!-- Speaker notes: Walk through the three layers: frontend (HTML/JS), backend (Flask), and services (LLM Mesh, Knowledge Bank, Datasets). Data flows down from frontend and back up. -->
@@ -117,6 +116,7 @@ Return JSON: sentiment, key_metrics, summary, confidence"""
 ## Frontend: User Interface
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Input[Input Panel]
         SEL[Commodity Selector]
@@ -142,9 +142,6 @@ flowchart LR
     FETCH --> METRICS
     FETCH --> SUMMARY
     FETCH --> COST
-
-    style Processing fill:#e3f2fd
-    style Output fill:#e8f5e9
 ```
 
 <!-- Speaker notes: UI flow diagram. Input panel collects data, processing shows a spinner, output panel displays results. Note the token/cost info for transparency. -->
@@ -242,6 +239,7 @@ def chat():
 ## Chatbot Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant User
     participant Frontend
@@ -343,6 +341,7 @@ async function sendMessage() {
 ## Server-Sent Events (SSE)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Backend[Backend]
         GEN[Generator Function]
@@ -370,8 +369,6 @@ flowchart LR
     C2 --> READER
     C3 --> READER
     READER --> OUTPUT
-
-    style SSE fill:#e3f2fd
 ```
 
 <!-- Speaker notes: SSE streaming architecture. The generator function yields chunks as they arrive from the LLM. The frontend reader processes them in real-time. -->
@@ -437,6 +434,10 @@ async function streamAnalysis() {
 
 <!-- Speaker notes: Code continues on the next slide. -->
 
+<div class="callout-warning">
+Warning: Never expose raw LLM responses to end users without output validation. Implement guardrails for format, content safety, and factual grounding.
+</div>
+
 ---
 
 ## (continued)
@@ -464,6 +465,11 @@ async function streamAnalysis() {
 </div>
 
 <!-- Speaker notes: Backend uses Flask's stream_with_context with a generator. Frontend parses SSE lines, extracts JSON data, and appends content to the output element. -->
+
+<div class="callout-key">
+Key Point: Always implement client-side loading indicators for LLM calls -- response latency is inherently variable and users need feedback.
+</div>
+
 ---
 
 ## Five Common Pitfalls
@@ -477,6 +483,11 @@ async function streamAnalysis() {
 | **No usage monitoring** | Cannot optimize | Log tokens, costs per user |
 
 <!-- Speaker notes: Key pitfall: 'No session management' -- all chat history is lost on restart. Use a persistent store (database, dataset) for production. -->
+
+<div class="callout-info">
+Info: Dataiku webapps can embed LLM-powered features using the standard API endpoint pattern -- no special SDK required beyond the REST client.
+</div>
+
 ---
 
 ## Key Takeaways
@@ -491,3 +502,8 @@ async function streamAnalysis() {
 > Dataiku webapps let you build production Gen AI interfaces without managing infrastructure.
 
 <!-- Speaker notes: Recap the main points. Ask if there are questions before moving to the next topic. -->
+
+<div class="callout-key">
+Key Point:  handle LLM calls, input validation, and response formatting
+2. 
+</div>

@@ -439,31 +439,64 @@ def render_markdown_file(file_path: Path):
 
 
 def _render_mixed_content(text: str):
-    """Render mixed markdown + HTML content, splitting HTML component blocks
-    into styled_html() calls, LaTeX into st.latex(), and markdown into
-    st.markdown() calls."""
-    # First, split out custom HTML component blocks
-    html_block_pattern = re.compile(
-        r'(<div\s+class="(?:code-window|callout-\w+|flow|compare)[^"]*".*?</div>\s*</div>|'
-        r'<div\s+class="(?:code-window|callout-\w+|flow|compare)[^"]*">.*?</div>)',
-        re.DOTALL,
-    )
+    """Render mixed markdown + HTML content.
 
-    parts = html_block_pattern.split(text)
-    for part in parts:
-        part = part.strip()
-        if not part:
-            continue
-        if html_block_pattern.match(part):
-            styled_html(part)
+    Strategy: walk through lines, accumulate markdown text, and when we
+    encounter an HTML component block (code-window, callout-*, flow, compare)
+    flush the accumulated markdown, then render the HTML block with styled_html().
+    This avoids regex issues with code blocks inside HTML divs.
+    """
+    _COMPONENT_CLASSES = ("code-window", "callout-", "flow", "compare")
+    lines = text.split("\n")
+    md_buffer = []
+    html_buffer = []
+    html_depth = 0  # track nested div depth inside a component block
+
+    def flush_markdown():
+        chunk = "\n".join(md_buffer).strip()
+        md_buffer.clear()
+        if chunk:
+            _render_markdown_chunk(chunk)
+
+    def flush_html():
+        chunk = "\n".join(html_buffer).strip()
+        html_buffer.clear()
+        if chunk:
+            styled_html(chunk)
+
+    for line in lines:
+        stripped = line.strip()
+
+        if html_depth > 0:
+            # We're inside an HTML component block — accumulate
+            html_buffer.append(line)
+            html_depth += stripped.count("<div")
+            html_depth -= stripped.count("</div>")
+            if html_depth <= 0:
+                html_depth = 0
+                flush_html()
+        elif any(
+            f'class="{cls}' in stripped
+            for cls in _COMPONENT_CLASSES
+        ) and stripped.startswith("<div"):
+            # Starting a new HTML component block
+            flush_markdown()
+            html_buffer.append(line)
+            html_depth = stripped.count("<div") - stripped.count("</div>")
+            if html_depth <= 0:
+                html_depth = 0
+                flush_html()
         else:
-            _render_markdown_with_latex(part)
+            md_buffer.append(line)
+
+    # Flush remaining
+    flush_markdown()
+    if html_buffer:
+        flush_html()
 
 
-def _render_markdown_with_latex(text: str):
-    """Render markdown text, extracting $$...$$ LaTeX blocks and rendering
-    them with st.latex() so complex LaTeX (array, text, etc.) works."""
-    # Split on block LaTeX: $$...$$
+def _render_markdown_chunk(text: str):
+    """Render a chunk of pure markdown, extracting $$...$$ LaTeX blocks."""
     latex_pattern = re.compile(r'(\$\$.*?\$\$)', re.DOTALL)
     segments = latex_pattern.split(text)
     for seg in segments:
@@ -471,7 +504,6 @@ def _render_markdown_with_latex(text: str):
         if not seg_stripped:
             continue
         if seg_stripped.startswith('$$') and seg_stripped.endswith('$$'):
-            # Extract inner LaTeX, render with st.latex
             inner = seg_stripped[2:-2].strip()
             st.latex(inner)
         else:
@@ -659,19 +691,20 @@ def get_file_type_from_path(file_path: str) -> str:
 # ---------------------------------------------------------------------------
 
 def render_sidebar(courses: dict):
-    """Render the dark sidebar with course/module navigation tree and progress."""
+    """Render sidebar with course/module navigation tree."""
     current_slug = st.session_state.get("course_slug", "")
+    current_module = st.session_state.get("module_dir", "")
     search = st.session_state.get("search", "").lower()
 
     with st.sidebar:
-        styled_html('<p class="sidebar-title">\U0001f393 Course Browser</p>')
+        st.markdown("### \U0001f393 Course Browser")
 
         # Home button
         if st.button("\U0001f3e0  Home", key="sidebar_home", use_container_width=True):
             nav_to("home")
             st.rerun()
 
-        styled_html('<hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin: 0.75rem 0;">')
+        st.divider()
 
         # Search
         st.text_input(
@@ -681,65 +714,75 @@ def render_sidebar(courses: dict):
             label_visibility="collapsed",
         )
 
-        styled_html('<hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin: 0.75rem 0;">')
-
-        # Course navigation tree
+        # Course navigation tree — each course is an expander
         for slug, course in courses.items():
             if search and search not in slug and search not in course["title"].lower():
                 continue
 
             icon = COURSE_ICONS.get(slug, "\U0001f4d6")
             is_active = slug == current_slug
+            stats = course["stats"]
 
-            if is_active and course["modules"]:
-                # Active course with collapsible module tree
-                styled_html(f'<div class="sidebar-active-course">{icon} {course["title"]}</div>')
-                # Show modules as indented buttons
-                for mod in course["modules"]:
-                    mod_num = get_module_number(mod["dir_name"])
-                    mod_title = get_module_clean_title(mod)
-                    short_label = f"  {mod_num}. {mod_title}"
-                    if st.button(
-                        short_label,
-                        key=f"sidebar_mod_{slug}_{mod['dir_name']}",
-                        use_container_width=True,
-                    ):
-                        nav_to("module", course_slug=slug, module_dir=mod["dir_name"])
-                        st.rerun()
+            with st.expander(
+                f"{icon} {course['title']}",
+                expanded=is_active,
+            ):
+                # Course stats
+                st.caption(
+                    f"{stats['modules']} modules \u2022 "
+                    f"{stats['slides']} slides \u2022 "
+                    f"{stats['notebooks']} notebooks"
+                )
 
-                # Progress bar for active course
-                visited, total = get_course_progress(courses, slug)
-                pct = int((visited / total * 100) if total > 0 else 0)
-                styled_html(f"""
-                <div class="progress-container">
-                    <div class="progress-label">Progress</div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="width: {pct}%;"></div>
-                    </div>
-                    <div class="progress-text">{visited}/{total} pages visited</div>
-                </div>
-                """)
-            else:
-                # Inactive course — single button
-                label = f"{icon} {course['title']}"
+                # Course overview button
+                btn_type = "primary" if is_active else "secondary"
                 if st.button(
-                    label,
+                    "\U0001f4cb Course Overview",
                     key=f"nav_{slug}",
                     use_container_width=True,
+                    type=btn_type,
                 ):
                     nav_to("course", course_slug=slug)
                     st.rerun()
 
-        styled_html('<hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin: 0.75rem 0;">')
+                # Module list
+                if course["modules"]:
+                    for mod in course["modules"]:
+                        mod_num = get_module_number(mod["dir_name"])
+                        mod_title = get_module_clean_title(mod)
+                        is_current_mod = (is_active and mod["dir_name"] == current_module)
 
-        with st.expander("About"):
-            st.markdown(
-                "**Practical-first courses** producing professional-grade "
-                "educational materials across ML, GenAI, econometrics, and "
-                "trading systems.\n\n"
-                "Content includes Marp slide decks, Jupyter notebooks, "
-                "Python templates, and markdown guides."
-            )
+                        n_guides = len(mod["content"].get("guides", []))
+                        n_notebooks = len(mod["content"].get("notebooks", []))
+                        n_slides = len(mod["slides"])
+
+                        # Module button — highlighted if current
+                        prefix = "\u25b6 " if is_current_mod else "\u00a0\u00a0 "
+                        label = f"{prefix}{mod_num}. {mod_title}"
+                        if st.button(
+                            label,
+                            key=f"sidebar_mod_{slug}_{mod['dir_name']}",
+                            use_container_width=True,
+                            type="primary" if is_current_mod else "secondary",
+                        ):
+                            nav_to("module", course_slug=slug, module_dir=mod["dir_name"])
+                            st.rerun()
+
+                        # Content counts for current module
+                        if is_current_mod:
+                            st.caption(
+                                f"\u00a0\u00a0\u00a0\u00a0"
+                                f"{n_slides} slides \u2022 "
+                                f"{n_guides} guides \u2022 "
+                                f"{n_notebooks} notebooks"
+                            )
+
+                # Progress for active course
+                if is_active:
+                    visited, total = get_course_progress(courses, slug)
+                    pct = int((visited / total * 100) if total > 0 else 0)
+                    st.progress(pct / 100, text=f"Progress: {visited}/{total} pages")
+
 
 
 # ---------------------------------------------------------------------------

@@ -70,12 +70,10 @@ A commodity document processing pipeline is a function **P: D_raw → D_structur
 ### Document Acquisition Layer
 
 
-<span class="filename">from.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
 
 ```python
 import requests
@@ -300,12 +298,10 @@ class DocumentAcquisition:
 ### PDF Processing with Table Extraction
 
 
-<span class="filename">pdfprocessor.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">pdfprocessor.py</span>
 
 ```python
 from anthropic import Anthropic
@@ -417,12 +413,10 @@ Return JSON:
 ### Data Validation Layer
 
 
-<span class="filename">datavalidator.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">datavalidator.py</span>
 
 ```python
 from typing import List, Tuple
@@ -540,12 +534,10 @@ class DataValidator:
 ### Complete Processing Pipeline
 
 
-<span class="filename">class.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
 
 ```python
 import io

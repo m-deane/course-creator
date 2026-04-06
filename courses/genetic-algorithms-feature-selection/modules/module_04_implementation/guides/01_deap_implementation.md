@@ -67,12 +67,10 @@ DEAP's toolbox pattern is what makes it powerful for research and prototyping. W
 ### Defining Types
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -95,12 +93,10 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 ### Creating the Toolbox
 
 
-<span class="filename">setup_toolbox.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">setup_toolbox.py</span>
 
 ```python
 def setup_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
@@ -242,12 +238,10 @@ print(f"Best fitness: {result['fitness']:.4f}")
 ## Custom Evolution Loop
 
 
-<span class="filename">custom_ga.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">custom_ga.py</span>
 
 ```python
 def custom_ga(

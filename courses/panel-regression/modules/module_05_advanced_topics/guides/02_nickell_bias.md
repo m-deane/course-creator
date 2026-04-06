@@ -38,12 +38,10 @@ The problem: $\tilde{y}_{i,t-1}$ is correlated with $\tilde{\epsilon}_{it}$ beca
 - Therefore $\tilde{y}_{i,t-1}$ depends on $\epsilon_{it}$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -80,13 +78,15 @@ def demonstrate_nickell_bias(true_rho=0.5, n_simulations=100):
                     })
                     y_prev = y
 
+```
+
 <div class="callout-insight">
 
 **Insight:** The Nickell bias is small when T is large relative to N, which is the opposite of the typical panel setting. In short panels (T < 10), the bias can be severe enough to reverse the sign of the lagged dependent variable coefficient.
 
 </div>
 
-
+```python
             df = pd.DataFrame(data)
             df_panel = df.set_index(['entity', 'time'])
 
@@ -167,12 +167,10 @@ Key insights:
 - Bias is larger when true ρ is larger
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def plot_bias_magnitude():
@@ -241,12 +239,10 @@ plot_bias_magnitude()
 Use deeper lags as instruments for the differenced equation.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from linearmodels.iv import IV2SLS

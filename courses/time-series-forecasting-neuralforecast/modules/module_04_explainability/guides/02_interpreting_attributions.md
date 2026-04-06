@@ -9,8 +9,6 @@ Running `.explain()` returns an `explanations` dictionary with attribution tenso
 Start by parsing the dictionary:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -18,6 +16,7 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # After fitting and calling .explain()
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
 
@@ -28,8 +27,11 @@ baseline_pred = explanations["baseline_predictions"]  # baseline model output
 print("insample shape:      ", insample.shape)
 print("futr_exog shape:     ", futr_exog.shape)
 print("baseline_pred shape: ", baseline_pred.shape)
+
 # insample shape:       (1, 28, 1, 1, 56, 2)
+
 # futr_exog shape:      (1, 28, 1, 1, 84, 2)
+
 # baseline_pred shape:  (1, 28, 1, 1)
 ```
 
@@ -74,8 +76,6 @@ The last dimension always contains two values: the actual input value at that la
 ### Extracting Lag Attributions
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -87,16 +87,21 @@ import numpy as np
 
 # Select: batch=0, all horizon steps, series=0, output=0, all lags, attribution column (index 1)
 lag_attributions = insample[0, :, 0, 0, :, 1]
+
 # Shape: (horizon, input_size) = (28, 56)
+
 # lag_attributions[h, l] = attribution of lag l for forecast step h
 
 lag_values = insample[0, :, 0, 0, :, 0]
+
 # Shape: (28, 56)
+
 # lag_values[h, l] = actual value of lag l (what the model saw)
 
 # Most important lag for each forecast step
 most_important_lag = np.argmax(np.abs(lag_attributions), axis=1)
 print("Most important lag per forecast step:", most_important_lag)
+
 # Typical output: [0 0 0 0 1 0 ...] — lag 0 (most recent) is usually dominant
 ```
 
@@ -140,8 +145,6 @@ Future exogenous features span the full `input_size + horizon` window because th
 ### Extracting Feature Attributions
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -149,6 +152,7 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Feature index mapping (matches futr_exog_list order)
 FEATURE_NAMES = ["published", "is_holiday"]
 PUBLISHED_IDX = 0
@@ -157,12 +161,15 @@ IS_HOLIDAY_IDX = 1
 # Select all forecast steps, all positions, specific feature
 published_attr = futr_exog[0, :, 0, 0, :, PUBLISHED_IDX]
 holiday_attr   = futr_exog[0, :, 0, 0, :, IS_HOLIDAY_IDX]
+
 # Shape of each: (horizon, input_size+horizon) = (28, 84)
 
 # Attribution for the published feature at forecast positions (last h positions)
+
 # input_size = 56, horizon = 28, so positions 56..83 are the forecast window
 input_size = 56
 published_future_attr = published_attr[:, input_size:]
+
 # Shape: (28, 28) — forecast_step × forecast_position
 
 # Total attribution per feature, summed over positions and steps
@@ -188,13 +195,10 @@ A heatmap with forecast steps on the y-axis and lag positions on the x-axis reve
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -393,7 +397,9 @@ Attributions are only useful if you check them against domain knowledge. Run thr
 **Completeness check (Integrated Gradients only):**
 
 ```python
+
 # Verify: insample attributions + futr_exog attributions ≈ prediction - baseline
+
 # (Only holds approximately because insample covers the endogenous component)
 forecast_step = 0
 predicted_value = float(fcsts_df["NHITS"].iloc[forecast_step])
@@ -406,6 +412,7 @@ reconstructed = baseline_value + total_insample_attr + total_exog_attr
 print(f"Predicted:     {predicted_value:.1f}")
 print(f"Reconstructed: {reconstructed:.1f}")
 print(f"Difference:    {abs(predicted_value - reconstructed):.2f}")
+
 # Should be near zero for Integrated Gradients
 ```
 

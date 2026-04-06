@@ -106,12 +106,10 @@ Total allocation = 0.8 * core + 0.2 * bandit
 
 ### Broad Sectors (5 arms)
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 arms = ['Energy', 'Metals', 'Grains', 'Softs', 'Livestock']
@@ -130,12 +128,10 @@ sector_mapping = {
 
 ### Granular Commodities (8-10 arms)
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 arms = [
@@ -170,14 +166,13 @@ arms = [
 ### Feature Engineering Recipes
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # 1. Realized Volatility (20-day)
 vol = returns.rolling(20).std() * np.sqrt(252)
 
@@ -368,6 +363,7 @@ IMPLEMENT & BACKTEST
 Track these metrics for your bandit allocator:
 
 ```python
+
 # Returns
 total_return = (final_value - initial_value) / initial_value
 annualized_return = (1 + total_return) ** (252 / n_days) - 1

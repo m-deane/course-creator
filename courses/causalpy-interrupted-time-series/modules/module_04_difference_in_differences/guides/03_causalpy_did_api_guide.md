@@ -42,19 +42,19 @@ CausalPy's `DifferenceInDifferences` expects a `pandas.DataFrame` with:
 ### Preparing Your Data
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
 import numpy as np
 
 # Example: Card & Krueger (1994) style minimum wage data
+
 # New Jersey (treated) vs Pennsylvania (control)
+
 # Before and after NJ minimum wage increase in 1992
 
 nj_data = pd.DataFrame({
@@ -88,12 +88,10 @@ print(f"\nGroup counts:\n{nj_data.groupby(['state', 'period']).size()}")
 ### Basic Syntax
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -123,14 +121,13 @@ The formula must include:
 You can add covariates to control for observed differences:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # With covariates
 result = cp.DifferenceInDifferences(
     data=nj_data,
@@ -147,12 +144,10 @@ result = cp.DifferenceInDifferences(
 ### Using the Frequentist Backend
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.linear_model import LinearRegression as SKLinReg
@@ -194,14 +189,13 @@ For the Bayesian backend, you get:
 ### Accessing the Posterior
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Get the posterior samples for the treatment effect
 treatment_effect_samples = result.idata.posterior["post:treated"].values.flatten()
 
@@ -234,12 +228,10 @@ CausalPy's DiD plot shows:
 ### Customising the Plot
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -272,12 +264,10 @@ plt.show()
 ### Trace Plots for Diagnostics
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import arviz as az
@@ -310,15 +300,15 @@ By default, CausalPy uses weakly informative priors:
 ### Specifying Custom Priors
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Suppose we believe the treatment effect is small and positive
+
 # based on economic theory (min wage increases employment slightly or is neutral)
 result_informative = cp.DifferenceInDifferences(
     data=nj_data,
@@ -343,14 +333,13 @@ result_informative = cp.DifferenceInDifferences(
 ### Prior Sensitivity Analysis
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compare three prior specifications
 prior_configs = [
     {"post:treated": {"dist": "Normal", "kwargs": {"mu": 0, "sigma": 2}}},   # tight
@@ -396,14 +385,13 @@ plt.show()
 ### Posterior Predictive Check
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Does the model generate data that looks like the observed data?
 with result.model:
     ppc = pm.sample_posterior_predictive(result.idata)
@@ -419,6 +407,7 @@ plt.show()
 ### Convergence Diagnostics
 
 ```python
+
 # R-hat should be < 1.01 for convergence
 print(az.summary(result.idata)[["mean", "sd", "hdi_3%", "hdi_97%", "r_hat", "ess_bulk"]])
 ```
@@ -434,12 +423,10 @@ If $\hat{R} > 1.01$:
 ## 8. Complete Worked Example
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -546,7 +533,6 @@ The key to correct usage is:
 **Next:** [Module 05 — Regression Discontinuity](../../module_05_regression_discontinuity/guides/01_rdd_fundamentals_guide.md)
 
 </div>
-
 
 
 ## Resources

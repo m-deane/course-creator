@@ -168,6 +168,7 @@ Be specific and cite exact figures from each report.
 4. Run and evaluate
 
 ```yaml
+
 # Test case definition
 test_name: "EIA Weekly Report - Bullish Draw"
 variables:
@@ -188,12 +189,10 @@ expected:
 ### Automated Evaluation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def evaluate_prompt_output(output: str, test_case: dict) -> dict:
@@ -256,14 +255,13 @@ Version History:
 ### Comparing Versions
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compare outputs between prompt versions
 def compare_prompt_versions(
     prompt_v1: str,
@@ -300,14 +298,13 @@ def compare_prompt_versions(
 3. Configure input datasets
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Auto-generated recipe code
 import dataiku
 from dataiku.llm import LLM
@@ -370,7 +367,6 @@ Use the visual LLM Recipe for simpler cases:
 <strong>Key Concept:</strong> 5. **Direct deployment** moves prompts to production recipes
 
 </div>
-
 
 
 ## Resources

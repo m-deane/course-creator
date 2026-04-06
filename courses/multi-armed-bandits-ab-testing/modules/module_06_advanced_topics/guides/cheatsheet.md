@@ -222,14 +222,13 @@ Practical:
 
 **Test 1: Split-Sample Comparison**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Split data in half
 first_half_mean = rewards[:T//2].mean(axis=0)
 second_half_mean = rewards[T//2:].mean(axis=0)
@@ -247,12 +246,10 @@ if p_value < 0.05:
 
 **Test 2: Rolling Mean Variance**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 rolling_means = pd.Series(rewards).rolling(50).mean()
@@ -284,12 +281,10 @@ else:
 
 **Test: Correlation Between Selection and Reward**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 for arm_i in arms:

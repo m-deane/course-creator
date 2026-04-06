@@ -69,13 +69,10 @@ In practice, GradientSHAP:
 ## 3. GradientSHAP in Captum
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -99,6 +96,7 @@ attributions, delta = grad_shap.attribute(
     stdevs=0.0,          # optional Gaussian noise for SmoothGrad variant
     return_convergence_delta=True,
 )
+
 # delta: convergence error (should be close to 0)
 print(f"Convergence delta: {delta.mean().item():.4f}")
 ```
@@ -172,15 +170,13 @@ Consider a sigmoid activation with:
 - $\sigma(5) \approx 0.993$, $\sigma(0) = 0.5$
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Gradient at saturated input: near zero (vanishing gradient)
 gradient = sigma(5) * (1 - sigma(5)) ≈ 0.007
 gradient_attribution = gradient * (5 - 0) = 0.035
@@ -201,13 +197,10 @@ DeepLIFT correctly attributes the large change in output to the input difference
 ## 6. DeepLIFT in Captum
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -218,7 +211,9 @@ deep_lift = DeepLift(model)
 
 # Single reference baseline (e.g., zero or mean of training data)
 baseline = torch.zeros(1, num_features)
+
 # Alternative: use mean baseline
+
 # baseline = X_train.mean(dim=0, keepdim=True)
 
 x_test = X_test[[0]]
@@ -254,13 +249,10 @@ $$\phi_i^{\text{DeepLIFT-SHAP}} = \frac{1}{n_{bg}} \sum_{k=1}^{n_{bg}} C_{\Delta
 This runs DeepLIFT once per background sample, then averages. For $n_{bg} = 50$ background samples, this requires 50 forward-backward passes — much cheaper than KernelSHAP's hundreds of passes but more expensive than single-baseline DeepLIFT.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import DeepLiftShap
@@ -301,15 +293,13 @@ BatchNorm statistics differ between training and eval mode. Always ensure `model
 Residual connections in ResNets/Transformers require the `DeepLiftShap` variant which handles skip connections more robustly.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # For models with residual connections
 from captum.attr import DeepLiftShap
 
@@ -347,13 +337,10 @@ attrs = DeepLiftShap(model).attribute(
 ### For Tabular Data
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -384,13 +371,10 @@ plt.savefig("gradient_vs_deeplift_attributions.png", dpi=150, bbox_inches="tight
 ### For Images
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import visualization as viz
@@ -422,15 +406,13 @@ fig, _ = viz.visualize_image_attr_multiple(
 When comparing methods, always check that attributions are on the same scale:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Normalize by L2 norm for fair comparison
 def normalize_attrs(attrs):
     norm = attrs.norm().item()

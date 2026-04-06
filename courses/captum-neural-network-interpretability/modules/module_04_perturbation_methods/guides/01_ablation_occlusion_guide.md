@@ -71,13 +71,10 @@ For a 224×224 image with window size 15×15 and stride 8: approximately $28 \ti
 ## 3. Captum Occlusion API
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import Occlusion
@@ -93,6 +90,7 @@ attributions = occ.attribute(
     sliding_window_shapes=(3, 15, 15),  # Window size (covers all channels)
     baselines=0                   # Baseline value (scalar or tensor)
 )
+
 # attributions: (1, 3, 224, 224) — same shape as input
 ```
 
@@ -111,13 +109,10 @@ attributions = occ.attribute(
 ### Postprocessing for Visualization
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -170,13 +165,10 @@ Occlusion uses a sliding window to define feature groups. **Feature Ablation** g
 Feature Ablation is the most general perturbation method in Captum:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import FeatureAblation
@@ -191,6 +183,7 @@ attributions = fa.attribute(
 )
 
 # Option 2: Ablate feature groups using a mask
+
 # mask[i, j] = k means pixel (i,j) belongs to group k
 mask = get_superpixel_mask(input_tensor)  # (1, 1, 224, 224) with integer group IDs
 attributions_grouped = fa.attribute(
@@ -199,6 +192,7 @@ attributions_grouped = fa.attribute(
     baselines=0,
     feature_mask=mask       # One value per group
 )
+
 # attributions_grouped: (1, 1, 224, 224) with one value per group
 ```
 
@@ -218,14 +212,10 @@ For images, superpixel segmentation provides semantically meaningful feature gro
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from skimage.segmentation import slic
@@ -273,13 +263,10 @@ Superpixel ablation produces cleaner heatmaps than pixel-level occlusion: each c
 For tabular models, Feature Ablation is the standard perturbation attribution method. Each feature is ablated individually:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -287,6 +274,7 @@ import torch.nn as nn
 import pandas as pd
 
 # Assume wine_model: nn.Module, input shape (1, 11)
+
 # And a wine quality prediction task
 
 # Feature names
@@ -306,6 +294,7 @@ attr = fa.attribute(
     baselines=baseline,   # "Typical wine" as reference
     target=None           # No target class for regression
 )
+
 # attr: (1, 11) — importance of each feature
 
 # Bar chart of feature importances
@@ -366,15 +355,13 @@ The baseline choice changes what question you're asking. Always select the basel
 For models with multiple input modalities (e.g., image + metadata):
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Model with two inputs: image and metadata vector
 def multimodal_model(image, metadata):
     img_feat = vision_encoder(image)

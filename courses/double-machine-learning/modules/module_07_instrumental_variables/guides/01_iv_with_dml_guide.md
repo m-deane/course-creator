@@ -48,12 +48,10 @@ $$D = r_0(X) + h_0(Z, X) + V$$
 where $Z$ is the instrument, $g_0(X)$ captures control effects on $Y$, and $r_0(X) + h_0(Z, X)$ captures how controls and the instrument predict $D$.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -93,12 +91,10 @@ print(f"Corr(Z, U): {np.corrcoef(Z, U)[0,1]:.3f} (instrument exogenous)")
 ## How to Estimate PLIV with doubleml
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 df = pd.DataFrame(X, columns=col_names)
@@ -135,12 +131,10 @@ print(f"\nTrue effect: {true_theta}")
 ## How to Check Instrument Strength
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.metrics import r2_score

@@ -127,12 +127,10 @@ Imagine predicting stock prices. In reality, you can only use data up to today t
 ### Basic Walk-Forward Validation
 
 
-<span class="filename">__init__.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__init__.py</span>
 
 ```python
 import numpy as np
@@ -397,12 +395,10 @@ def walk_forward_feature_selection(
 ### Advanced Walk-Forward Strategies
 
 
-<span class="filename">advanced_walk_forward.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">advanced_walk_forward.py</span>
 
 ```python
 class AdaptiveWalkForward:
@@ -753,12 +749,14 @@ if __name__ == "__main__":
 **Problem**: Trains on future data to predict past.
 
 ```python
+
 # WRONG - trains on future to predict past!
 from sklearn.model_selection import cross_val_score
 scores = cross_val_score(model, X, y, cv=5)  # DON'T DO THIS
 
 # RIGHT - respects temporal order
 validator = WalkForwardValidator(n_splits=5, expanding=True)
+
 # Use validator.split() to get proper time-ordered splits
 ```
 
@@ -767,6 +765,7 @@ validator = WalkForwardValidator(n_splits=5, expanding=True)
 **Problem**: Autocorrelation leaks information from test to train.
 
 ```python
+
 # Bad - no gap, last training sample influences first test sample
 validator = WalkForwardValidator(gap=0)
 
@@ -785,6 +784,7 @@ validator = WalkForwardValidator(gap=10)  # Skip 10 samples
 **Problem**: Test set too small for reliable estimates.
 
 ```python
+
 # Bad - only 10 test samples
 validator = WalkForwardValidator(n_splits=10, test_size=10)
 
@@ -797,6 +797,7 @@ validator = WalkForwardValidator(n_splits=5, test_size=100)
 **Problem**: Old data not relevant to recent patterns.
 
 ```python
+
 # Bad for non-stationary series (e.g., data with concept drift)
 validator = WalkForwardValidator(expanding=True)
 

@@ -166,13 +166,10 @@ $$P(S_t = k | Y_{1:T}) = \frac{\alpha_t(k) \cdot \beta_t(k)}{\sum_j \alpha_t(j) 
 ### Basic HMM Class
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np

@@ -50,13 +50,10 @@ flowchart TB
 ### Stage 1: Goal Interpretation
 
 
-<span class="filename">goal_interpretation.txt</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">goal_interpretation.txt</span>
 
 ```
 Input:  "Book me a table for 4 at an Italian restaurant tomorrow at 7pm"
@@ -80,13 +77,10 @@ What the system must understand:
 ### Stage 2: Context Building
 
 
-<span class="filename">context_builder.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">context_builder.py</span>
 
 ```python
 def build_context(goal, memory, retriever):
@@ -133,13 +127,10 @@ The model uses context to decide what to do:
 **ReAct Pattern Example:**
 
 
-<span class="filename">react_trace.txt</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">react_trace.txt</span>
 
 ```
 Thought: I need to find Italian restaurants with availability tomorrow at 7pm.
@@ -160,13 +151,10 @@ Thought: Task complete. I'll summarize for the user.
 ### Stage 4: Act (Execute Tools)
 
 
-<span class="filename">tool_executor.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tool_executor.py</span>
 
 ```python
 class ToolExecutor:
@@ -196,13 +184,10 @@ class ToolExecutor:
 ### Stage 5: Observe Results
 
 
-<span class="filename">observer.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">observer.py</span>
 
 ```python
 def observe(action_result, expected_outcome):
@@ -223,13 +208,10 @@ def observe(action_result, expected_outcome):
 ### Stage 6: Evaluate
 
 
-<span class="filename">evaluator.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evaluator.py</span>
 
 ```python
 def evaluate(goal, observations, constraints):
@@ -249,13 +231,10 @@ def evaluate(goal, observations, constraints):
 ### Stage 7: Update Memory
 
 
-<span class="filename">memory_update.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">memory_update.py</span>
 
 ```python
 def update_memory(memory, interaction):
@@ -304,13 +283,10 @@ Main agent: Coordinate overall task
 ### Loops Must Be Bounded
 
 
-<span class="filename">bounded_loop.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bounded_loop.py</span>
 
 ```python
 MAX_ITERATIONS = 10
@@ -380,13 +356,10 @@ return graceful_failure("Max iterations reached")
 ## Implementation Skeleton
 
 
-<span class="filename">closed_loop_agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">closed_loop_agent.py</span>
 
 ```python
 class ClosedLoopAgent:

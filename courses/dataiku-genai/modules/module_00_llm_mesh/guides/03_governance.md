@@ -63,12 +63,10 @@ Think of LLM Mesh governance like corporate credit card management. Each employe
 ### Setting Up Access Control
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import dataiku
@@ -128,12 +126,10 @@ configure_connection_access(
 ### Project-Level Quotas
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def set_project_llm_quota(
@@ -187,12 +183,10 @@ set_project_llm_quota(
 ### Cost Tracking and Reporting
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from datetime import datetime, timedelta
@@ -277,12 +271,10 @@ print(user_usage.head(10))
 ### Audit Logging
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def query_audit_logs(
@@ -352,12 +344,10 @@ print(f"Errors in last 24h: {len(error_logs)}")
 ### Rate Limiting Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM

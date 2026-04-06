@@ -229,6 +229,7 @@ print(f"  Lambda: {Lambda.shape} (N x r)")
 ### Visualizing Factor Dynamics
 
 ```python
+
 # Plot factor dynamics
 fig, axes = plt.subplots(2, 1, figsize=(12, 6), sharex=True)
 
@@ -267,12 +268,10 @@ plt.show()
 ### Comparing Static vs Dynamic Estimation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.decomposition import PCA
@@ -283,6 +282,7 @@ F_static = pca.fit_transform(X)
 Lambda_static = pca.components_.T
 
 # Compare true vs static estimated factors
+
 # (Need to solve rotation/identification problem)
 from scipy.linalg import orthogonal_procrustes
 
@@ -337,12 +337,10 @@ So: $\frac{\partial F_{t+h}}{\partial \eta_t} = \Phi^h$
 ### Implementation
 
 
-<span class="filename">compute_irf.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_irf.py</span>
 
 ```python
 def compute_irf(Phi, horizons=20):
@@ -506,9 +504,6 @@ print(cum_irf[-1])
 
 7. **Simulation Study**
 
-<span class="filename">example.py</span>
-</div>
-
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -526,9 +521,6 @@ print(cum_irf[-1])
 
 8. **VAR Estimation**
 
-<span class="filename">example.py</span>
-</div>
-
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -544,9 +536,6 @@ print(cum_irf[-1])
 </div>
 
 9. **Model Comparison**
-
-<span class="filename">example.py</span>
-</div>
 
    <div class="code-window">
 <div class="code-header">

@@ -32,9 +32,6 @@ Train NHITS with quantile loss on the French Bakery dataset and look at what you
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -51,6 +48,7 @@ from neuralforecast.models import NHITS
 from neuralforecast.losses.pytorch import MQLoss
 
 # ── Load French Bakery data ──────────────────────────────────────────────────
+
 # Daily baguette sales across multiple bakery locations
 url = "https://raw.githubusercontent.com/nicholasjmorales/French-Bakery-Daily-Transactional-Dataset/main/Bakery_sales.csv"
 raw = pd.read_csv(url, parse_dates=["date"])
@@ -78,8 +76,6 @@ print(baguettes.head(10))
 The following implementation builds on the approach above:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -87,8 +83,11 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # ── Train NHITS with quantile loss ───────────────────────────────────────────
+
 # MQLoss(level=[80, 90]) requests two symmetric prediction intervals
+
 # This produces 4 columns: lo-80, hi-80, lo-90, hi-90
 
 model = NHITS(
@@ -146,14 +145,13 @@ $$P(Y_t \leq q_t^{0.8}) = 0.80$$
 This is what NHITS produces for each day. It is correct and useful. For a single-day decision — "should I order enough inventory to cover today's demand at 80% service level?" — this is exactly what you need.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # ── Visualize the marginal prediction intervals ───────────────────────────────
 fig, ax = plt.subplots(figsize=(12, 5))
 
@@ -211,14 +209,13 @@ A natural (wrong) answer: sum up the 80th percentile for each da...
 A natural (wrong) answer: sum up the 80th percentile for each day.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # ── The naive (wrong) approach ────────────────────────────────────────────────
 weekly_80_naive = forecast["NHITS-hi-80"].sum()
 weekly_point = forecast["NHITS"].sum()
@@ -251,6 +248,8 @@ graph TD
         note1["Each day is independent\nNo cross-day correlation"]
     end
 
+```
+
 <div class="callout-key">
 
 <strong>Key Point:</strong> The **joint distribution** $F_{1:H}(y_1, \ldots, y_H)$ describes the probability of all outcomes together:
@@ -261,7 +260,7 @@ When yo...
 
 </div>
 
-
+```mermaid
     subgraph Joint["Joint Distribution (what we need)"]
         J["P(Y_Mon ≤ q₁, Y_Tue ≤ q₂, ..., Y_Sun ≤ q₇) = 0.80"]
         note2["All 7 days together\nCaptures temporal correlation"]
@@ -338,6 +337,7 @@ Worse: if you try to compute, say, the probability that total weekly demand exce
 ## Concrete Demonstration: The Numbers Don't Lie
 
 ```python
+
 # ── Simulate the failure with real-world numbers ──────────────────────────────
 np.random.seed(42)
 
@@ -349,6 +349,7 @@ n_simulations = 50_000
 n_days = 7
 
 # Case 1: Independent days (zero temporal correlation)
+
 # This is what MQLoss implicitly assumes between time steps
 independent_days = np.random.normal(
     loc=daily_mean,
@@ -358,6 +359,7 @@ independent_days = np.random.normal(
 weekly_totals_independent = independent_days.sum(axis=1)
 
 # Case 2: Highly correlated days (e.g., weather or event drives the whole week)
+
 # A common shock plus individual noise
 common_shock = np.random.normal(0, daily_std * 0.7, size=(n_simulations, 1))
 individual_noise = np.random.normal(0, daily_std * 0.3, size=(n_simulations, n_days))
@@ -389,6 +391,7 @@ print(f"  vs correlated:  +{sum_of_q80 - true_q80_correlated:,.0f} baguettes "
 Visualize the distributions to make the gap between marginal and joint quantiles visible:
 
 ```python
+
 # ── Visualize the distributions to make the gap visible ──────────────────────
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -473,7 +476,9 @@ For a 7-day horizon:
 To answer multi-period questions correctly, we need the **joint distribution** of outcomes across the entire horizon. The cleanest way to represent a joint distribution is through **sample paths** — simulated trajectories that preserve temporal correlation.
 
 ```python
+
 # ── Preview: what sample paths look like ─────────────────────────────────────
+
 # (Detailed in Module 3 — this is just the teaser)
 np.random.seed(0)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))

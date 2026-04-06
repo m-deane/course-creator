@@ -199,12 +199,10 @@ Information criteria approximate leave-one-out cross-validation error. For facto
 ### Complete Implementation
 
 
-<span class="filename">factornumberselector.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">factornumberselector.py</span>
 
 ```python
 import numpy as np
@@ -548,7 +546,9 @@ class FactorNumberSelector:
 
 
 # ============================================================================
+
 # Demonstration
+
 # ============================================================================
 
 def simulate_with_known_factors(T=300, N=80, r_true=4, noise_ratio=0.5, seed=123):

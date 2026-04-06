@@ -75,15 +75,15 @@ Similarly, LLM Mesh provider setup centralizes all LLM infrastructure management
 ### Anthropic Claude Setup
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Administrative setup (done via UI or API)
+
 # This is the conceptual structure - actual setup is done in Dataiku UI
 
 connection_config = {
@@ -147,12 +147,10 @@ connection_config = {
 ### OpenAI Setup
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 connection_config = {
@@ -200,12 +198,10 @@ connection_config = {
 ### Azure OpenAI Setup
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 connection_config = {
@@ -256,14 +252,13 @@ connection_config = {
 ### Using Configured Connections
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # In a Dataiku Python recipe or notebook
 import dataiku
 from dataiku.llm import LLM
@@ -314,14 +309,13 @@ result = generate_with_fallback("Summarize this report: ...")
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # NEVER DO THIS
 import anthropic
 client = anthropic.Anthropic(api_key="sk-ant-api03-...")  # Exposed!
@@ -332,14 +326,13 @@ client = anthropic.Anthropic(api_key="sk-ant-api03-...")  # Exposed!
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Use Dataiku connection - API key managed securely
 from dataiku.llm import LLM
 llm = LLM("claude-production")  # API key in secure storage
@@ -352,14 +345,13 @@ llm = LLM("claude-production")  # API key in secure storage
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Azure requires deployment name, not model name
 llm = LLM("azure-openai-prod")
 response = llm.complete(
@@ -373,14 +365,13 @@ response = llm.complete(
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Use deployment name configured in Azure
 llm = LLM("azure-openai-prod")
 response = llm.complete(
@@ -396,14 +387,13 @@ response = llm.complete(
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Different providers have different rate limits
 for i in range(1000):
     llm.complete("...")  # May hit limits quickly
@@ -414,12 +404,10 @@ for i in range(1000):
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import time
@@ -445,16 +433,16 @@ for i in range(1000):
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Deploying without testing
 llm = LLM("new-connection")
+
 # Hope it works in production!
 ```
 
@@ -463,12 +451,10 @@ llm = LLM("new-connection")
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def test_connection(connection_name):
@@ -509,14 +495,13 @@ for conn in ["claude-production", "openai-gpt4", "azure-openai-prod"]:
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Anthropic-specific parameter used with OpenAI
 llm = LLM("openai-gpt4")
 response = llm.complete(
@@ -530,14 +515,13 @@ response = llm.complete(
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Check provider before using provider-specific features
 def get_provider_type(connection_name):
     client = dataiku.api_client()
@@ -586,14 +570,13 @@ elif provider == "openai":
 <summary>Solution</summary>
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Connection 1: Claude for Data Scientists
 claude_config = {
     "name": "claude-ds",
@@ -699,14 +682,13 @@ llm = LLM(connection_name)
 <summary>Solution</summary>
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Three regional connections
 azure_configs = [
     {

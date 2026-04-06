@@ -216,12 +216,10 @@ Factors represent these common shocks. Forecasting with factors means forecastin
 ### Basic Diffusion Index Forecast
 
 
-<span class="filename">diffusionindexforecaster.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">diffusionindexforecaster.py</span>
 
 ```python
 import numpy as np
@@ -440,14 +438,13 @@ class DiffusionIndexForecaster:
 ### Example Application
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Generate synthetic data
 np.random.seed(123)
 T, N = 300, 50
@@ -498,18 +495,17 @@ for i, var_ratio in enumerate(di_model.explained_variance_ratio(), 1):
 ### Real Data Example: Forecasting GDP
 
 
-<span class="filename">load_fredmd_example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">load_fredmd_example.py</span>
 
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Example with FRED-MD data structure
+
 # (In practice, load from FRED-MD database)
 def load_fredmd_example():
     """
@@ -616,14 +612,13 @@ print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 **Solution:** Use only training data to estimate factors. Transform test data using training-period loadings.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WRONG
 factors_all = PCA().fit_transform(X_all)  # Uses future data!
 

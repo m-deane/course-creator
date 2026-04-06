@@ -89,12 +89,10 @@ A solution is represented as a variable-length vector $\mathbf{v} = [i_1, i_2, .
 ### Binary Encoding Implementation
 
 
-<span class="filename">__post_init__.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__post_init__.py</span>
 
 ```python
 import numpy as np
@@ -276,12 +274,10 @@ def demo_binary_encoding():
 ### Integer Encoding Implementation
 
 
-<span class="filename">integer_encoding.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">integer_encoding.py</span>
 
 ```python
 @dataclass
@@ -504,6 +500,7 @@ if __name__ == "__main__":
 **Solution**: Always enforce minimum feature constraint.
 
 ```python
+
 # Bad
 def bad_mutation(individual):
     mutant = individual.copy()
@@ -540,6 +537,7 @@ def good_mutation(individual, min_features=1):
 **Solution**: Always validate uniqueness after operations.
 
 ```python
+
 # Bad
 def bad_integer_mutation(individual):
     mutant = individual.copy()
@@ -571,6 +569,7 @@ def good_integer_mutation(individual):
 **Problem**: Using Python loops instead of NumPy vectorization.
 
 ```python
+
 # Bad - 100x slower
 def slow_crossover(parent1, parent2):
     child = []

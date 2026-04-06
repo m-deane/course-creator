@@ -26,13 +26,15 @@ The skill of prompt engineering, viewed through information theory, is **maximiz
 
 ```
 Answer distribution for "How should I handle this situation?" (no context):
+```
+
 <div class="callout-key">
 
 <strong>Key Point:</strong> Answer distribution for "How should I handle this situation?" (no context):
 
 </div>
 
-
+```
  Possible answers (representative):
  |
  | [corporate law] [family law] [crim defense] [contract] [IP] [employment]

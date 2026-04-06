@@ -9,8 +9,6 @@ This guide is a hands-on tour of the neuralforecast API. By the end, you will ha
 Start here: load the dataset and inspect its structure.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -76,9 +74,6 @@ The `NeuralForecast` class is the entry point for everything. It wraps one or mo
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -154,8 +149,6 @@ NHITS decomposes a time series into multiple frequency components using hierarch
 A linear model trained across all series simultaneously. Extremely fast and interpretable. Use it as a baseline before any neural model.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -195,14 +188,13 @@ neuralforecast's `.predict()` method generates out-of-sample forecasts for the n
 neuralforecast's `.predict()` method generates out-of-sample forecasts for the next `h` steps after the last observed date. To evaluate on held-out data, split before fitting.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Split: hold out last 7 days per series for evaluation
 horizon = 7
 train = df.groupby('unique_id').apply(
@@ -249,9 +241,13 @@ nf.fit(df=train)
 forecasts = nf.predict()
 
 print(forecasts.head())
+
 #   unique_id          ds  NHITS-q-0.1  NHITS-q-0.5  NHITS-q-0.9
+
 # 0  baguette  2022-11-14        98.4        131.2        164.0
+
 # 1  baguette  2022-11-15        87.1        118.5        149.8
+
 # ...
 ```
 
@@ -318,7 +314,9 @@ cv_results = nf.cross_validation(
 )
 
 print(cv_results.head())
+
 #   unique_id          ds     cutoff  y  NHITS-q-0.1  NHITS-q-0.5  NHITS-q-0.9
+
 # 0  baguette  2022-10-03  2022-09-26 ...
 ```
 
@@ -359,6 +357,7 @@ Sample paths are Monte Carlo draws from the predictive distribution. They answer
 - Risk capital calculation by running P&L through simulated demand trajectories
 
 ```python
+
 # Generate 200 sample paths for the next 7 days
 sample_paths = nf.predict(
     futr_df=None,
@@ -367,6 +366,7 @@ sample_paths = nf.predict(
 )
 
 # sample_paths shape: (n_series * horizon, n_samples + 2)
+
 # Columns: unique_id, ds, sample_0, sample_1, ..., sample_199
 print(sample_paths.shape)
 
@@ -399,10 +399,12 @@ plt.show()
 
 
 ```python
+
 # Compute SHAP-based explanations
 explanations = nf.explain(df=train)
 
 # explanations is a dict: {model_name: DataFrame}
+
 # Columns: unique_id, ds, lag_1, lag_2, ..., lag_{input_size}
 nhits_shap = explanations['NHITS']
 print(nhits_shap.head())

@@ -47,12 +47,10 @@ This score is orthogonal — errors in $\hat{g}$ and $\hat{m}$ contribute only a
 In the commodity example: sanctions impact on shipping freight rates. Treatment $D$ is whether a shipping route is under sanctions (binary), outcome $Y$ is the freight rate premium, and controls $X$ include route distance, vessel type, cargo type, insurance costs, and port infrastructure.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -90,12 +88,10 @@ print(f"Treatment prevalence: {D.mean():.1%}")
 ## How to Estimate ATE and ATTE
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 df = pd.DataFrame(X, columns=col_names)
@@ -136,18 +132,17 @@ print(irm_atte.summary)
 ## How to Diagnose Propensity Score Quality
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
 
 # Get propensity score predictions
 ml_m = RandomForestClassifier(200, random_state=42)
+
 # Propensity scores from the fitted model
 propensity_hat = irm_ate.models['ml_m']['sanctions'][0][0].predict_proba(X)[:, 1]
 

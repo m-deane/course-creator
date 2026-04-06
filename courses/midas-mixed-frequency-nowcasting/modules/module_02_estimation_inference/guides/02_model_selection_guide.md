@@ -66,12 +66,10 @@ where $k(K) = 4$ for restricted Beta MIDAS (regardless of $K$!) or $k(K) = K + 1
 **Critical observation:** For restricted MIDAS, $k$ does not grow with $K$! The SSE decreases as $K$ grows (more lags can fit better), but the penalty stays constant at 4 parameters. This means BIC will select the largest $K$ that provides meaningful SSE reduction.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -191,12 +189,10 @@ $$y_t = \alpha + \sum_{p=1}^{P_y} \rho_p y_{t-p} + \beta \sum_{j=0}^{K-1} w_j(\t
 3. Compare MIDAS vs. MIDAS-AR by BIC
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from scipy.stats import chi2
@@ -236,12 +232,10 @@ def ljung_box(residuals, n_lags=4):
 The most reliable model selection method for forecasting: evaluate out-of-sample performance using the actual time ordering.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def expanding_window_cv(Y, X_dict, weight_fn_dict, min_train=30, horizon=1):

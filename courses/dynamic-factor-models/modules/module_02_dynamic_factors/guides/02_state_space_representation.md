@@ -256,12 +256,10 @@ print(T)
 ### Simulating from State-Space Form
 
 
-<span class="filename">simulate_statespace.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">simulate_statespace.py</span>
 
 ```python
 def simulate_statespace(Z, H, T, R, Q, T_periods, alpha_0=None, P_0=None):
@@ -396,14 +394,13 @@ State-space representation handles missing data elegantly:
 
 **Implementation:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Mark missing values as np.nan
 y_sim[50:60, 3] = np.nan  # Variable 3 missing for periods 50-60
 y_sim[100:110, [5, 7]] = np.nan  # Variables 5 and 7 missing
@@ -508,6 +505,7 @@ Legend:
 **Example of error:**
 
 ```python
+
 # WRONG: Identity in wrong position
 T[r:2*r, 0:r] = np.eye(r)  # Should be T[r:2*r, r:2*r]
 ```
@@ -604,9 +602,6 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 
 7. **Build State-Space from Scratch**
 
-<span class="filename">example.py</span>
-</div>
-
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -630,9 +625,6 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 
 8. **Simulate and Reconstruct**
 
-<span class="filename">example.py</span>
-</div>
-
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -649,9 +641,6 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 </div>
 
 9. **Missing Data Handling**
-
-<span class="filename">example.py</span>
-</div>
 
    <div class="code-window">
 <div class="code-header">

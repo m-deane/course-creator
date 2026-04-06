@@ -57,13 +57,10 @@ Both get you there, but optimization saves time and money.
 ### Cost Optimization: Model Routing
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from anthropic import Anthropic
@@ -220,6 +217,7 @@ long_doc = "..." # 10,000 tokens
 query = "What does the document say about revenue?"
 
 relevant_context = optimizer.extract_relevant_context(query, long_doc, max_context_tokens=500)
+
 # Now only ~500 tokens instead of 10,000 = 95% reduction
 ```
 
@@ -402,7 +400,9 @@ response = agent.execute("Write a long essay")  # Wait... wait... [full essay]
 
 # Streaming: see words as they're generated
 agent.execute_streaming("Write a long essay")  # The... essay... begins... with...
+
 # Perceived latency: 100ms (time to first token)
+
 # Actual latency: still 2s, but feels faster
 ```
 
@@ -477,7 +477,9 @@ response, metrics = agent.execute(
     context=ten_thousand_word_document
 )
 print(f"Cost: ${metrics['cost']:.4f}, Latency: {metrics['latency_ms']:.0f}ms")
+
 # Cost: $0.02 (context compressed, routed to Sonnet)
+
 # Latency: 800ms
 
 # Repeated call
@@ -486,7 +488,9 @@ response, metrics = agent.execute(
     context=ten_thousand_word_document
 )
 print(f"Cost: ${metrics['cost']:.4f}, Latency: {metrics['latency_ms']:.0f}ms")
+
 # Cost: $0.00 (cache hit)
+
 # Latency: 5ms
 ```
 
@@ -496,15 +500,13 @@ print(f"Cost: ${metrics['cost']:.4f}, Latency: {metrics['latency_ms']:.0f}ms")
 **Problem:** Optimizing before measuring impact.
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # DON'T: Optimize everything immediately
 optimize_every_single_call()
 
@@ -521,6 +523,7 @@ optimize_that_bottleneck()
 **Problem:** Serving stale data when freshness matters.
 
 ```python
+
 # DON'T: Cache everything forever
 cache.set(key, value, ttl=FOREVER)
 
@@ -534,6 +537,7 @@ cache.set("user_specific", value, ttl=300)  # 5 minutes
 **Problem:** Optimizing cost at expense of quality.
 
 ```python
+
 # DON'T: Always use cheapest model
 model = "claude-haiku"  # Even for complex tasks
 
@@ -550,6 +554,7 @@ else:
 **Problem:** Parallelizing dependent operations.
 
 ```python
+
 # DON'T: Parallelize dependent steps
 results = await asyncio.gather(
     get_data(),       # Step 2 needs this

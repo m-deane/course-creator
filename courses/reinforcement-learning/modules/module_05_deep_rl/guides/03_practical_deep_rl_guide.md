@@ -68,8 +68,6 @@ Not all hyperparameters are equally important. Tune in this order:
 ### Learning Rate Selection
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -122,14 +120,13 @@ Causes:
 
 Solutions:
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Ensure target network is present and synced
 assert target_net is not None
 assert steps_done % C == 0  # verify sync is happening
@@ -155,11 +152,13 @@ Causes:
 
 Solutions:
 ```python
+
 # Check that training hasn't started on a tiny buffer
 assert len(buffer) >= batch_size * 10, \
     f"Buffer has {len(buffer)} transitions — too few to train"
 
 # Use reward shaping for sparse rewards
+
 # (shape carefully to avoid unintended behavior)
 shaped_reward = reward + 0.01 * distance_reduction
 
@@ -178,6 +177,7 @@ Causes:
 
 Solutions:
 ```python
+
 # Increase buffer capacity
 buffer = ReplayBuffer(capacity=500_000)  # up from default
 
@@ -195,7 +195,9 @@ Cause: the reward function does not actually capture the intended behavior.
 
 This is not a training bug — it requires redesigning the reward function. Some diagnostic checks:
 ```python
+
 # Always visualize the agent's behavior directly
+
 # Don't trust the return metric alone
 
 def evaluate_visually(agent, env, n_episodes=3):

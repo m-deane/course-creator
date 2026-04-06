@@ -72,12 +72,10 @@ The table below summarizes the six fitness function approaches in this guide. Us
 ### Cross-Validation Error
 
 
-<span class="filename">cv_fitness.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cv_fitness.py</span>
 
 ```python
 import numpy as np
@@ -199,12 +197,10 @@ def pareto_fitness(
 ### Walk-Forward Validation
 
 
-<span class="filename">walk_forward_fitness.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_fitness.py</span>
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit
@@ -478,12 +474,10 @@ def fitness_with_uncertainty(
 ### Caching Fitness Evaluations
 
 
-<span class="filename">cached_fitness.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">cached_fitness.py</span>
 
 ```python
 from functools import lru_cache

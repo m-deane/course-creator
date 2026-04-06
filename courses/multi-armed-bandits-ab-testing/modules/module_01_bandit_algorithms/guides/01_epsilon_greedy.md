@@ -158,12 +158,10 @@ Think of epsilon-greedy as a commodity trader with a simple rule:
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -199,12 +197,10 @@ for t in range(1000):
 
 **Decaying ε variant:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class DecayingEpsilonGreedy(EpsilonGreedyBandit):
@@ -259,12 +255,10 @@ epsilon = lambda t: min(1.0, 10 / np.sqrt(t + 1))  # Decays as 1/√t
 
 **Fix:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def select_action(self):
@@ -343,6 +337,7 @@ You're allocating capital across 5 commodity sectors (Energy, Metals, Agricultur
 
 **Suggested approach:**
 ```python
+
 # Conservative: explore ~10% of the time early, decay to 1% by end
 epsilon = lambda t: max(0.01, 0.2 * (1 - t/252))
 

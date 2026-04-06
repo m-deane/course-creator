@@ -43,12 +43,10 @@ This:
 - Provides a natural Hausman test
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -83,13 +81,15 @@ def demonstrate_cre():
             # Y depends on X, u_i, and z_i
             y = 3 + true_beta * x + 0.8 * z_i + u_i + np.random.normal(0, 0.5)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Random effects assumes the unobserved entity effect is uncorrelated with regressors. When this holds, RE is more efficient than FE because it uses both within- and between-entity variation.
 
 </div>
 
-
+```python
             data.append({
                 'entity': i, 'time': t,
                 'x': x, 'y': y, 'z': z_i
@@ -154,12 +154,10 @@ Including $\bar{X}_i$ in the model:
 3. **Time-invariant variables** remain estimable (unlike FE)
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def visualize_cre_mechanics(df):
@@ -239,12 +237,10 @@ visualize_cre_mechanics(df)
 ### 1. OLS with Group Means
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def cre_ols(df, y_col, x_cols, z_cols, entity_col):

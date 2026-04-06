@@ -162,6 +162,7 @@ In every causal analysis, document:
 ### Template
 
 ```markdown
+
 ## Causal Design
 
 **Research Question:** What is the effect of [treatment] on [outcome] for [population]?

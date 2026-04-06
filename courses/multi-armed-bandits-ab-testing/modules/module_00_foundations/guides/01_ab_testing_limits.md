@@ -111,12 +111,10 @@ In commodity trading: You have two crude oil trading strategies. A/B testing kee
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -239,12 +237,10 @@ You run a 4-week A/B test on two crude oil inventory signals. Week 1-2: Signal A
 Implement a function that calculates cumulative regret for any allocation strategy given true arm means:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def calculate_regret(arm_means, choices, rewards=None):
@@ -273,6 +269,7 @@ arm_means = [0.05, 0.08, 0.06]  # Three strategies
 ab_test_choices = [0, 1, 2] * 1000  # Round-robin allocation
 regret = calculate_regret(arm_means, ab_test_choices)
 print(f"Total regret: {regret[-1]:.2f}")
+
 # Should show regret accumulating linearly
 ```
 

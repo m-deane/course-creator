@@ -69,12 +69,10 @@ Think of selection as choosing participants for a breeding program:
 ### Tournament Selection
 
 
-<span class="filename">copy.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">copy.py</span>
 
 ```python
 import numpy as np
@@ -174,12 +172,10 @@ def adaptive_tournament_selection(
 ### Roulette Wheel Selection
 
 
-<span class="filename">roulette_wheel_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_wheel_selection.py</span>
 
 ```python
 def roulette_wheel_selection(
@@ -294,12 +290,10 @@ def stochastic_universal_sampling(
 ### Rank Selection
 
 
-<span class="filename">rank_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rank_selection.py</span>
 
 ```python
 def rank_selection(
@@ -570,6 +564,7 @@ After seeing all three operators and understanding selection pressure, here is a
 **Problem**: Using raw fitness for roulette wheel in minimization problems.
 
 ```python
+
 # Bad - higher fitness gets higher probability!
 def bad_roulette(population):
     fitnesses = np.array([ind.fitness for ind in population])
@@ -590,6 +585,7 @@ def good_roulette(population):
 **Problem**: Selecting same individual multiple times in tournament.
 
 ```python
+
 # Bad - can select same individual twice
 tournament = [population[np.random.randint(len(population))]
               for _ in range(k)]
@@ -618,6 +614,7 @@ def adaptive_pressure_selection(population, generation, max_gen):
 **Problem**: Roulette wheel fails with negative fitnesses.
 
 ```python
+
 # Bad - negative probabilities!
 def bad_roulette_negative(population):
     fitnesses = np.array([ind.fitness for ind in population])

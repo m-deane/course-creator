@@ -174,8 +174,6 @@ where $V(S_t)$ is estimated by a learned baseline network (trained on the same t
 ## Code Snippet
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

@@ -139,8 +139,6 @@ The sequence $\pi_0, \pi_1, \ldots$ must terminate in a finite number of steps a
 ## The Policy Iteration Cycle
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -195,8 +193,6 @@ Return pi, V
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -269,9 +265,12 @@ def policy_iteration(P, R, gamma=0.99, theta=1e-8):
 
 
 # --- Frozen Lake 4x4 example (simplified, no slippage) ---
+
 # Build a small deterministic gridworld to demonstrate
 n_states, n_actions = 16, 4  # 4x4 grid, actions: 0=up,1=down,2=left,3=right
+
 # (Transition and reward matrices would be defined based on grid structure)
+
 # pi_star, V_star = policy_iteration(P, R, gamma=0.99)
 ```
 

@@ -25,6 +25,7 @@ Standard HMMs assume all states transition with equal probability regardless of 
 **Info:** Before reaching for a more complex variant, identify which assumption the standard HMM violates in your data — then choose the extension that fixes exactly that assumption.
 
 </div>
+
 ## Sticky HMM
 
 Standard HMMs may switch states too frequently. Sticky HMMs increase self-transition probability:
@@ -109,12 +110,10 @@ Each regime $s_t$ has its own intercept, AR coefficient, and volatility.
 ### Implementation with statsmodels
 
 
-<span class="filename">fit_markov_switching_ar.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_markov_switching_ar.py</span>
 
 ```python
 import numpy as np
@@ -182,12 +181,10 @@ smoothed_probs = results.smoothed_marginal_probabilities
 ### Regime-Dependent Forecasting
 
 
-<span class="filename">regime_forecast.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_forecast.py</span>
 
 ```python
 def regime_forecast(
@@ -252,12 +249,10 @@ Observations
 ### Conceptual Implementation
 
 
-<span class="filename">hierarchicalhmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hierarchicalhmm.py</span>
 
 ```python
 class HierarchicalHMM:
@@ -330,12 +325,10 @@ class HierarchicalHMM:
 Include exogenous variables that affect transitions or emissions:
 
 
-<span class="filename">inputoutputhmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">inputoutputhmm.py</span>
 
 ```python
 class InputOutputHMM:
@@ -371,12 +364,10 @@ class InputOutputHMM:
 Standard HMMs have geometric duration distribution. Explicit duration models allow arbitrary distributions:
 
 
-<span class="filename">explicitdurationhmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">explicitdurationhmm.py</span>
 
 ```python
 class ExplicitDurationHMM:

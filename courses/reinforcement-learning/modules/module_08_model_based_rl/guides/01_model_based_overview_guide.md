@@ -179,8 +179,6 @@ Three distinct ways to use a learned model:
 ## Pipeline Diagram
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -215,8 +213,6 @@ flowchart TD
 ## Code Snippet: Minimal Model Training Loop
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

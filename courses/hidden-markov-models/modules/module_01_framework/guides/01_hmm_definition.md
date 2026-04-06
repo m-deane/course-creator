@@ -135,15 +135,15 @@ class DiscreteHMM:
 ### Example: Weather HMM
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Hidden states: Sunny (0), Rainy (1)
+
 # Observations: Walk (0), Shop (1), Clean (2)
 
 # Transition probabilities
@@ -182,12 +182,10 @@ For a state sequence $Q = q_1, q_2, ..., q_T$ and observations $O = o_1, o_2, ..
 $$P(O, Q | \lambda) = \pi_{q_1} \cdot b_{q_1}(o_1) \cdot \prod_{t=2}^{T} a_{q_{t-1}, q_t} \cdot b_{q_t}(o_t)$$
 
 
-<span class="filename">joint_probability.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">joint_probability.py</span>
 
 ```python
 def joint_probability(
@@ -219,12 +217,10 @@ print(f"Joint probability: {jp:.2e}")
 ### Log Probability (Numerical Stability)
 
 
-<span class="filename">log_joint_probability.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">log_joint_probability.py</span>
 
 ```python
 def log_joint_probability(
@@ -298,21 +294,23 @@ Arrows indicate conditional dependencies.
 ### Market Regime Detection
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # 2-state model: Bull vs Bear
+
 # Observations: Daily returns
 
 # Bull market: higher mean, lower volatility
+
 # Bear market: lower mean, higher volatility
 
 # For continuous observations, use Gaussian HMM
+
 # B[state] defines mean and variance for each state
 ```
 
@@ -322,18 +320,19 @@ Arrows indicate conditional dependencies.
 ### Volatility Regimes
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # 2-state model: Low Vol vs High Vol
+
 # Observations: Realized volatility
 
 # State 0: Low volatility regime
+
 # State 1: High volatility regime
 ```
 

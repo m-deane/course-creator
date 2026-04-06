@@ -80,14 +80,13 @@ These are the fundamental building blocks. Any aggregate estimand (overall ATT, 
 - *Not-yet-treated:* units that haven't been treated *yet* at time $t$. Larger sample, but assumes no anticipation.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Using the csdid package (Python port)
 from csdid import ATTgt
 
@@ -171,12 +170,10 @@ An event study plot displays treatment effects over time relative to treatment a
 Test $H_0: \beta_{-5} = \beta_{-4} = \ldots = \beta_{-2} = 0$ (excluding $\beta_{-1}$ which is normalised):
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from scipy.stats import chi2
@@ -242,12 +239,10 @@ $$\theta^{cal}(t) = \sum_{g \leq t} w_g \cdot ATT(g, t)$$
 ## 7. Worked Example: Staggered Adoption in Python
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -283,6 +278,7 @@ for u, g in enumerate(cohort):
 df = pd.DataFrame(rows)
 
 # Event study: aggregate ATT(g,t) by event time
+
 # Use never-treated as control
 never_treated = df[df["cohort"] == np.inf].copy()
 never_treated_means = never_treated.groupby("period")["outcome"].mean()
@@ -382,7 +378,6 @@ plt.show()
 **Next:** [03 — CausalPy DiD API](03_causalpy_did_api_guide.md)
 
 </div>
-
 
 
 ## Resources

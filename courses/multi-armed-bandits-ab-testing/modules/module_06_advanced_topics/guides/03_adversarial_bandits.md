@@ -39,13 +39,15 @@ Adversarial Bandit (rewards chosen to hurt you):
 Arm A:   ●─●──●───●─○───○──○──○  (adversary makes A bad when you pick it)
 Arm B:   ○──○─○────●──●─●──●  (adversary makes B good when you avoid it)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 
 </div>
 
-
+```
          If you always select A → adversary makes A terrible
          If you switch to B → adversary makes B terrible
          Solution: RANDOMIZE to be unpredictable
@@ -152,12 +154,10 @@ Dividing by `p` corrects this bias (importance sampling).
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -242,12 +242,10 @@ for t in range(1000):
 The above assumes rewards in `[0, 1]`. For arbitrary ranges `[r_min, r_max]`:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def normalize_reward(reward, r_min, r_max):
@@ -387,14 +385,13 @@ What signals would trigger the switch? How would you prevent oscillation between
 **EXP3 Solution:**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Initialize EXP3 for 3 exchanges
 bandit = EXP3(n_arms=3)
 bandit.set_horizon(T=1000)

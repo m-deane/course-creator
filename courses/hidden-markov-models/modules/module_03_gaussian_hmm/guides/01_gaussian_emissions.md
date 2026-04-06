@@ -92,12 +92,10 @@ print(f"Variances: {np.sqrt(model.covars_).flatten()}")
 ## Regime Detection Pipeline
 
 
-<span class="filename">regimedetector.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimedetector.py</span>
 
 ```python
 class RegimeDetector:
@@ -178,12 +176,10 @@ for label, stats in detector.get_regime_stats().items():
 Use information criteria to select optimal number of states:
 
 
-<span class="filename">select_n_states.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_n_states.py</span>
 
 ```python
 def select_n_states(returns: np.ndarray, max_states: int = 5) -> dict:
@@ -240,12 +236,10 @@ print(f"\nBest number of states (BIC): {best_n}")
 ### Covariance Type
 
 
-<span class="filename">compare_covariance_types.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_covariance_types.py</span>
 
 ```python
 def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
@@ -281,12 +275,10 @@ def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
 ## Visualization
 
 
-<span class="filename">plot_regime_detection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_regime_detection.py</span>
 
 ```python
 def plot_regime_detection(returns, predicted_states, state_probs, dates=None):
@@ -336,12 +328,10 @@ plot_regime_detection(returns, predicted_states, state_probs)
 ## Real-World Application
 
 
-<span class="filename">regime_analysis.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_analysis.py</span>
 
 ```python
 import yfinance as yf

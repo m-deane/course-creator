@@ -43,14 +43,13 @@ FRED is the primary source for macroeconomic data. The St. Louis Fed maintains o
 **API Access:**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Install: pip install fredapi
 from fredapi import Fred
 
@@ -68,12 +67,10 @@ fred = Fred(api_key=os.environ.get('FRED_API_KEY'))
 **Fallback (no API key required):**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -102,12 +99,10 @@ ip = pd.read_csv('resources/industrial_production_monthly.csv', index_col=0, par
 **How to download:**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -143,6 +138,7 @@ print(f"Last value: {gdp_growth.iloc[-1]:.3f}%")
 **How to download:**
 
 ```python
+
 # Industrial Production
 ip_raw = fred.get_series('INDPRO', observation_start='2000-01-01')
 ip_growth = ip_raw.pct_change() * 100  # month-over-month growth
@@ -152,6 +148,7 @@ payrolls = fred.get_series('PAYEMS', observation_start='2000-01-01')
 payrolls_chg = payrolls.diff()  # monthly change
 
 # Handle the alignment: monthly series needs to be mapped to quarterly periods
+
 # We'll do this in the notebooks using pandas Period indexing
 ip_quarterly_index = ip_growth.resample('QE').last().index
 print(f"IP available through: {ip_growth.index[-1]}")
@@ -240,10 +237,13 @@ An important distinction for realistic evaluation:
 - **Real-time (vintage) data:** What was available at a specific point in time. Use for honest backtesting.
 
 ```python
+
 # FRED-MD (McCracken & Ng) provides vintage data
+
 # Available at: https://research.stlouisfed.org/econ/mccracken/fred-databases/
 
 # For this course, we use current-vintage data and note the caveat:
+
 # "In-sample fit will overstate real-time performance due to data revisions."
 ```
 
@@ -387,6 +387,7 @@ def build_midas_matrix(y_low, x_high, n_lags, freq_ratio):
 **Pitfall 1: Misaligned frequencies.** When combining quarterly and monthly series, ensure dates align to the same quarter-end convention. Use `pd.Period` for unambiguous alignment.
 
 ```python
+
 # Convert monthly series to quarterly Period for alignment
 ip_monthly = pd.read_csv('resources/industrial_production_monthly.csv',
                           index_col=0, parse_dates=True).squeeze()

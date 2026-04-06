@@ -42,13 +42,10 @@ Tool calling (also called function calling) lets LLMs decide when to invoke exte
 ### Code Implementation
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -167,13 +164,10 @@ print(answer)
 Tools use JSON Schema to define their parameters:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 tool = {
@@ -215,6 +209,7 @@ tool = {
 ### Common Schema Types
 
 ```python
+
 # String with constraints
 {
     "type": "string",
@@ -262,13 +257,10 @@ tool = {
 ### Providing Multiple Tools
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 tools = [
@@ -319,10 +311,13 @@ The model selects tools based on:
 3. **Specificity**: More specific tools preferred when applicable
 
 ```python
+
 # Query: "What's 15% of 84.50?"
+
 # → Model selects: calculate(expression="0.15 * 84.50")
 
 # Query: "What's the weather in Paris and what's 20% of the temperature?"
+
 # → Model might call both tools sequentially
 ```
 
@@ -333,13 +328,10 @@ The model selects tools based on:
 Some models can request multiple tools at once:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def run_agent_parallel(user_message: str) -> str:
@@ -382,6 +374,7 @@ def run_agent_parallel(user_message: str) -> str:
 
 
 # Query: "What's the weather in Tokyo and New York?"
+
 # Model might call get_weather twice in parallel
 ```
 
@@ -430,15 +423,13 @@ async def execute_tools_parallel(tool_calls: list) -> list:
 ### Forcing Tool Use
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Force the model to use a specific tool
 response = client.messages.create(
     model="claude-3-5-sonnet-20241022",
@@ -481,13 +472,10 @@ response = client.messages.create(
 ## Understanding Stop Reasons
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 response = client.messages.create(...)
@@ -514,13 +502,10 @@ elif response.stop_reason == "stop_sequence":
 ## Streaming with Tools
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def stream_with_tools(user_message: str):
@@ -557,15 +542,13 @@ def stream_with_tools(user_message: str):
 ### Success Results
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Return structured data
 tool_results.append({
     "type": "tool_result",
@@ -583,6 +566,7 @@ tool_results.append({
 ### Error Results
 
 ```python
+
 # Return error information
 tool_results.append({
     "type": "tool_result",
@@ -611,13 +595,10 @@ def truncate_result(result: str, max_length: int = 10000) -> str:
 ## Complete Agent Example
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class ToolAgent:

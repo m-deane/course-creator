@@ -105,12 +105,10 @@ Every operator in Modules 1-5 takes and returns `Individual` or `Population` obj
 ### Implementation
 
 
-<span class="filename">selected_features.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">selected_features.py</span>
 
 ```python
 import numpy as np
@@ -179,12 +177,10 @@ class Population:
 ### Tournament Selection
 
 
-<span class="filename">tournament_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
 
 ```python
 def tournament_selection(
@@ -441,12 +437,10 @@ def swap_mutation(
 ### Generational Replacement
 
 
-<span class="filename">replacement_strategies.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">replacement_strategies.py</span>
 
 ```python
 def generational_replacement(

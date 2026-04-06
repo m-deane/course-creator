@@ -56,12 +56,10 @@ This derivative being zero is the formal statement that small perturbations of $
 Consider estimating the effect of OPEC production announcements on crude oil calendar spreads. Even with imperfect ML models for the nuisance functions (predicting spreads and production from market controls), DML's orthogonal score keeps the treatment effect estimate approximately unbiased.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -74,6 +72,7 @@ p = 20
 true_theta = 1.0
 
 # Simulate: OPEC production impact on calendar spreads
+
 # X represents macro indicators, inventories, shipping rates, etc.
 X = np.random.randn(n, p)
 D = 0.5 * X[:, 0] + 0.3 * X[:, 1] + np.random.randn(n) * 0.5
@@ -122,12 +121,10 @@ DML remains approximately unbiased even with substantial noise in the ML predict
 Compare the orthogonal score to a naive plug-in that only residualises $Y$ (not $D$):
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def naive_plugin(Y, D, X, noise_level=0.0):

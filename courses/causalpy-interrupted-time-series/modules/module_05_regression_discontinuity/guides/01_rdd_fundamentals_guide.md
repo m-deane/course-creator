@@ -140,12 +140,10 @@ This is the **local linear regression** estimator. It:
 - Reduces boundary bias compared to global polynomials
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -192,14 +190,13 @@ The IK bandwidth minimises the asymptotic mean squared error of the local linear
 - The outcome variance
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Using rdrobust package
 from rdrobust import rdrobust, rdbwselect
 
@@ -226,18 +223,17 @@ If units can precisely control their running variable value and prefer to be tre
 **Detection:** Histogram density test (McCrary test)
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from rdrobust import rddensity
 
 density_test = rddensity(df['running_var'], c=0)
 print(density_test.summary())
+
 # p > 0.05: no significant discontinuity in density (good)
 ```
 
@@ -253,17 +249,16 @@ If another variable also jumps discontinuously at the cutoff, you cannot separat
 **Detection:** Run the RDD on **baseline covariates** — they should show no jump at the cutoff.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 for covariate in ['age', 'income', 'prior_score']:
     rdd_covariate = rdrobust(y=df[covariate], x=df['running_var'], c=0)
     print(f"{covariate}: τ = {rdd_covariate.coef[0]:.3f}, p = {rdd_covariate.pv[0]:.3f}")
+
 # All should have p >> 0.05 (no jump in covariates)
 ```
 
@@ -303,12 +298,10 @@ This local nature is both a strength (high internal validity) and a weakness (li
 ## 10. CausalPy RDD: Quick Look
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -371,7 +364,6 @@ The `epsilon` parameter defines the neighbourhood of the cutoff used for the tre
 - Gelman & Imbe...
 
 </div>
-
 
 
 ---

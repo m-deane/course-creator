@@ -17,13 +17,10 @@ Self-reflection enables agents to critique their own outputs, identify errors, a
 ### Basic Critique-Revise Loop
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def reflect_and_revise(task: str, max_iterations: int = 3) -> str:
@@ -154,13 +151,10 @@ Reflection (be specific about what went wrong and how to fix it):"""
 ### Self-Consistency Check
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def check_consistency(task: str, response: str, n_checks: int = 3) -> dict:
@@ -258,13 +252,10 @@ Claims:"""
 ### Quality Critique
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 QUALITY_CRITIQUE = """Evaluate this response on these dimensions:
@@ -325,13 +316,10 @@ Be concrete and actionable."""
 ### Critic Agent
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class CriticAgent:

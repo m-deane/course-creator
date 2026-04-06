@@ -43,12 +43,10 @@ Given current parameters, compute:
 Update parameters using expected statistics.
 
 
-<span class="filename">baumwelchtrainer.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">baumwelchtrainer.py</span>
 
 ```python
 import numpy as np
@@ -386,12 +384,10 @@ plt.show()
 ## Multiple Random Restarts
 
 
-<span class="filename">fit_with_restarts.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_with_restarts.py</span>
 
 ```python
 def fit_with_restarts(observations, n_states, n_restarts=10):
@@ -436,12 +432,10 @@ best_model, best_ll = fit_with_restarts(observations, n_states=2, n_restarts=5)
 ### Avoiding Local Minima
 
 
-<span class="filename">discuss_training_issues.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">discuss_training_issues.py</span>
 
 ```python
 def discuss_training_issues():
@@ -499,12 +493,10 @@ discuss_training_issues()
 ### Using hmmlearn
 
 
-<span class="filename">train_with_hmmlearn.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">train_with_hmmlearn.py</span>
 
 ```python
 from hmmlearn import hmm

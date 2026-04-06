@@ -163,12 +163,10 @@ One bad year affects all years for that entity.
 ### Detecting Missing Patterns
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -206,6 +204,7 @@ data_mcar.loc[mcar_mask, 'y'] = np.nan
 print(f"\nMCAR: {mcar_mask.sum()} missing observations ({mcar_mask.mean()*100:.1f}%)")
 
 # Introduce MAR missingness (depends on x)
+
 # Low x values more likely to be missing
 mar_prob = 1 / (1 + np.exp(data['x']))  # Logistic function
 mar_mask = np.random.random(N * T) < mar_prob * 0.3  # Scale to ~10% missing
@@ -215,6 +214,7 @@ data_mar.loc[mar_mask, 'y'] = np.nan
 print(f"MAR: {mar_mask.sum()} missing observations ({mar_mask.mean()*100:.1f}%)")
 
 # Introduce MNAR missingness (depends on y itself)
+
 # High y values more likely to be missing
 mnar_prob = 1 / (1 + np.exp(-data['y'] + data['y'].mean()))
 mnar_mask = np.random.random(N * T) < mnar_prob * 0.15
@@ -256,12 +256,10 @@ print("\nMissing patterns visualization saved to missing_patterns.png")
 ### Testing for Missing Data Bias
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -322,14 +320,13 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
 ### Handling Unbalanced Panels
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Create strongly unbalanced panel
 obs_per_entity = np.random.randint(3, T+1, N)  # 3 to T observations per entity
 data_unbalanced = []

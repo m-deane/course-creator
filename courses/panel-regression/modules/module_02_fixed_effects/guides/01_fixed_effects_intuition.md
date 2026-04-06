@@ -159,12 +159,10 @@ Then averaged across entities
 ## Implementation in Python
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -201,12 +199,10 @@ print(results_twfe)
 ### Equivalent Using Dummies
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import statsmodels.formula.api as smf
@@ -290,14 +286,13 @@ The FE coefficient $\beta$ represents:
 Standard errors should be clustered by entity:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Correct
 results = model.fit(cov_type='clustered', cluster_entity=True)
 
@@ -316,6 +311,7 @@ FE R² is the "within R²"—variation explained within entities. It's typically
 ### 3. Including Time-Invariant Variables
 
 ```python
+
 # This will fail or give unexpected results
 model = PanelOLS.from_formula(
     'y ~ x1 + gender + EntityEffects',  # gender is time-invariant
@@ -334,6 +330,7 @@ $$H_0: \alpha_1 = \alpha_2 = ... = \alpha_n$$
 Reject → Entity effects are significant → FE is warranted
 
 ```python
+
 # Compare pooled OLS to FE
 from scipy import stats
 
@@ -348,6 +345,7 @@ $$H_0: \text{Random effects is consistent}$$
 Reject → Use Fixed Effects
 
 ```r
+
 # In R
 hausman_test <- phtest(fe_model, re_model)
 print(hausman_test)

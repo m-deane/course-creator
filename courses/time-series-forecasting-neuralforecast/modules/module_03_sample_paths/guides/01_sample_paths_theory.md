@@ -9,8 +9,6 @@ A probabilistic forecast gives you marginal distributions: the uncertainty aroun
 Start here: generating sample paths from a random walk in six lines.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -65,8 +63,6 @@ This framework is universal. The function $f$ can be:
 - A complex business rule (trigger reorder when cumulative demand exceeds safety stock)
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -74,6 +70,7 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # The universal Monte Carlo template
 def answer_business_question(paths, f, quantile=0.80):
     """
@@ -128,14 +125,13 @@ $$Q_{0.8}\left(\sum_{t=1}^H y_t\right) \neq \sum_{t=1}^H Q_{0.8}(y_t)$$
 The gap between these two quantities depends on the inter-step correlation. For positively correlated series (common in demand), the right side overestimates. For negatively correlated series (mean-reverting), it underestimates. The only correct approach uses the joint distribution — which sample paths provide.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Demonstrate the inequality concretely
 rng = np.random.default_rng(42)
 n_paths, H = 10_000, 7
@@ -287,6 +283,7 @@ nf = NeuralForecast(models=[model], freq="D")
 nf.fit(df_train)
 
 # Generate 100 sample paths
+
 # Returns DataFrame with columns: unique_id, ds, sample_1, ..., sample_100
 paths_df = nf.models[0].simulate(
     futr_df=None,

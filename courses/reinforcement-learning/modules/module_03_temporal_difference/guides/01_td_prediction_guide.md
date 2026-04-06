@@ -176,8 +176,6 @@ TD(0) uses a **one-step backup**: only one transition is observed before updatin
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

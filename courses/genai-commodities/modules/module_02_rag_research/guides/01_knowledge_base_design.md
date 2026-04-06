@@ -50,12 +50,10 @@ A commodity knowledge base is a tuple **KB = (D, C, E, M)** where:
 ### Basic Knowledge Base Structure
 
 
-<span class="filename">from.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
 
 ```python
 from dataclasses import dataclass
@@ -377,12 +375,10 @@ Text: {text[:300]}..."""
 ### Example Usage
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from datetime import datetime, timedelta

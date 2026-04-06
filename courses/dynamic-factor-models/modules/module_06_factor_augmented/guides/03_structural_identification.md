@@ -240,12 +240,10 @@ Structural Shock              State Variables              All Variables
 ### Structural FAVAR Class
 
 
-<span class="filename">structuralfavar.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">structuralfavar.py</span>
 
 ```python
 import numpy as np
@@ -694,12 +692,10 @@ class StructuralFAVAR:
 ### Example: Monetary Policy Shock
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -747,6 +743,7 @@ sfavar_chol.fit(X)
 irf_state_chol, irf_obs_chol = sfavar_chol.structural_irf(horizon=30, shock_index=4)
 
 # 2. Sign restrictions
+
 # Contractionary monetary shock: policy rate up, real activity down
 sign_restrictions = {
     4: {  # Shock index 4 (policy shock)

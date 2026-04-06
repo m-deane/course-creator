@@ -234,12 +234,10 @@ We can never simultaneously observe both potential outcomes for the same unit. T
 ## Code Example: Prediction vs. Causal Inference
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -258,6 +256,7 @@ treatment_prob = 1 / (1 + np.exp(-2 * baseline_health))
 exercise = np.random.binomial(1, treatment_prob, n)
 
 # Outcome: health improves with both baseline health AND exercise
+
 # True causal effect of exercise is 2 units
 health_outcome = 3 * baseline_health + 2 * exercise + np.random.normal(0, 1, n)
 
@@ -271,12 +270,14 @@ df = pd.DataFrame({
 model_naive = LinearRegression()
 model_naive.fit(df[["exercise"]], df["health_outcome"])
 print(f"Naive estimate of exercise effect: {model_naive.coef_[0]:.2f}")
+
 # Will be biased upward because exercise correlates with baseline health
 
 # Adjusted model (controls for confounder)
 model_adjusted = LinearRegression()
 model_adjusted.fit(df[["exercise", "baseline_health"]], df["health_outcome"])
 print(f"Adjusted estimate of exercise effect: {model_adjusted.coef_[0]:.2f}")
+
 # Closer to the true causal effect of 2.0
 print(f"True causal effect: 2.0")
 ```

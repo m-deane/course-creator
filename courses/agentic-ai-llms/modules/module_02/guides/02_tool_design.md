@@ -19,15 +19,13 @@ Well-designed tools are the difference between agents that work reliably and age
 Each tool should do one thing well:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: Tool does too many things
 {
     "name": "manage_user",
@@ -77,6 +75,7 @@ Each tool should do one thing well:
 Use verbs that describe the action:
 
 ```python
+
 # Bad: Vague or noun-based names
 "user"           # What does this do?
 "data"           # Too generic
@@ -104,6 +103,7 @@ Naming conventions:
 Write descriptions that explain when to use AND when not to use:
 
 ```python
+
 # Bad: Too brief
 {
     "name": "search_web",
@@ -218,13 +218,10 @@ Non-required parameters should have sensible defaults:
 Use enums and ranges to limit possible values:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 {
@@ -379,15 +376,13 @@ Use `anyOf` or `oneOf` for mutually exclusive options:
 ### Group Related Tools
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Database tools
 database_tools = [
     {"name": "db_query", ...},
@@ -447,13 +442,10 @@ More tools = more tokens + more confusion:
 ### Template for Tool Descriptions
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def create_tool_description(
@@ -512,13 +504,10 @@ search_tool = {
 Build validation into your tool execution:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def execute_book_flight(origin: str, destination: str, departure_date: str, **kwargs):
@@ -602,13 +591,10 @@ def execute_tool(name: str, arguments: dict) -> dict:
 ### Tool Schema Validation
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import jsonschema

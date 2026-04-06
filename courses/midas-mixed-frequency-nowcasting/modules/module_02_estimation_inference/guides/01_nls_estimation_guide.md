@@ -77,12 +77,10 @@ where $\mathbf{M}(θ) = \mathbf{I} - \mathbf{P}_{[\mathbf{1}, \tilde{\mathbf{x}}
 This reduces the problem from optimizing over 4 parameters to optimizing over 2 ($θ_1, θ_2$).
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -219,12 +217,10 @@ $$\text{Var}(\hat{θ}) = T^{-1} \hat{\mathbf{Q}}^{-1} \hat{\mathbf{S}} \hat{\mat
 where $\hat{\mathbf{S}}$ is the Newey-West estimator of the long-run variance of the gradient.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -311,12 +307,10 @@ Common causes and remedies:
 **4. Objective function not smooth:** Numerical issues in beta PDF evaluation at extreme parameters. Solution: use midpoint evaluation $(j+0.5)/K$ and ensure $\theta > 0$.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def check_convergence(result, theta_hat, Y, X, objective_fn):

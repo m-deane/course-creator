@@ -109,13 +109,10 @@ Portfolio VaR requires correlation structure. Hierarchical models provide:
 ### Basic Crude Oil Hierarchy
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -214,13 +211,10 @@ print("Estimated:", trace.posterior['grade_intercept'].mean(dim=['chain', 'draw'
 Refining adds value to crude oil. Model the spread hierarchically.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as crack_spread_model:
@@ -277,16 +271,13 @@ This ensures gasoline and crude forecasts are consistent (no arbitrage opportuni
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Regional hubs: Henry Hub (benchmark), Chicago, NY, California
 hubs = ['Henry_Hub', 'Chicago', 'NY', 'California']
 n_hubs = len(hubs)
@@ -356,13 +347,10 @@ with pm.Model() as gas_regional:
 During crises, crude grades converge (arbitrage opportunities shrink).
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as dynamic_correlation:
@@ -412,15 +400,13 @@ with pm.Model() as dynamic_correlation:
 ### Compare Hierarchical vs. Independent Models
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Independent model (no pooling)
 with pm.Model() as independent:
     for g in range(n_grades):
@@ -467,13 +453,10 @@ If markets are truly independent (e.g., WTI vs. lumber), hierarchy hurts.
 WTI-Brent spread cannot exceed tanker cost (~$5/bbl). Add constraints:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 spread = pm.Deterministic('spread', brent_price - wti_price)

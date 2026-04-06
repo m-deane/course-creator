@@ -55,15 +55,13 @@ Large number of examples (10-100+):
 Include examples that cover the range of expected inputs:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: All similar examples
 examples = [
     ("I love it!", "Positive"),
@@ -124,13 +122,10 @@ examples = [
 ### Basic Structure
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def create_few_shot_prompt(examples: list[tuple], task: str) -> str:
@@ -234,13 +229,10 @@ Reasoning:"""
 Choose examples most similar to the input:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import numpy as np
@@ -335,13 +327,10 @@ def select_diverse_examples(
 ### JSON Output
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 json_examples = """Examples of entity extraction:
@@ -428,15 +417,13 @@ Description: {function_description}
 ### 1. Inconsistent Formatting
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: Format varies between examples
 examples = [
     ("good movie", "POSITIVE"),
@@ -458,6 +445,7 @@ examples = [
 ### 2. Examples Too Easy
 
 ```python
+
 # Bad: Only obvious cases
 examples = [
     ("I LOVE IT!!!", "Positive"),
@@ -475,6 +463,7 @@ examples = [
 ### 3. Missing Critical Patterns
 
 ```python
+
 # Bad: No example of handling invalid input
 examples = [
     ("Calculate 2+2", "4"),
@@ -516,13 +505,10 @@ Research and practice suggest:
 ### Few-Shot + System Prompt
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 system = """You are a customer support classifier.
@@ -563,13 +549,10 @@ Thought:"""
 ## Testing Few-Shot Prompts
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def evaluate_few_shot(

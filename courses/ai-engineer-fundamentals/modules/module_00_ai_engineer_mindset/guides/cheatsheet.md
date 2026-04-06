@@ -113,13 +113,10 @@ What kind of information?
 ### ReAct Agent Loop
 
 
-<span class="filename">react_pattern.txt</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">react_pattern.txt</span>
 
 ```
 Thought: [reasoning about the task]
@@ -229,15 +226,13 @@ Action: finish(answer)
 ## Quick Commands
 
 
-<span class="filename">quick_commands.sh</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">quick_commands.sh</span>
 
 ```bash
+
 # Fine-tune with LoRA
 python -m trl.scripts.sft --model_name meta-llama/Llama-2-7b-hf \
   --dataset_name your_dataset --peft_lora_r 8

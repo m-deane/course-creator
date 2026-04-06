@@ -131,12 +131,10 @@ Test:                                            [first test]─────
 ### Stationarity Testing
 
 
-<span class="filename">__str__.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__str__.py</span>
 
 ```python
 import numpy as np
@@ -352,12 +350,10 @@ def test_stationarity_multiple_series(
 ### Transformation to Stationarity
 
 
-<span class="filename">stationarity_transforms.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stationarity_transforms.py</span>
 
 ```python
 def make_stationary(
@@ -595,12 +591,10 @@ def auto_make_stationary(
 ### GA Feature Selection with Stationarity Handling
 
 
-<span class="filename">stationary_fitness.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stationary_fitness.py</span>
 
 ```python
 def stationary_feature_selection_fitness(
@@ -882,6 +876,7 @@ if __name__ == "__main__":
 **Problem**: Selected features work in training but fail in production.
 
 ```python
+
 # Bad - no stationarity check
 fitness = mean_squared_error(y_true, y_pred)
 
@@ -894,6 +889,7 @@ fitness = mse + alpha * n_nonstationary_features
 **Problem**: Differencing stationary data introduces unnecessary complexity.
 
 ```python
+
 # Bad - blindly difference everything
 X_diff = np.diff(X, axis=0)
 
@@ -912,6 +908,7 @@ X_stat, info = auto_make_stationary(X)
 **Problem**: Regression on mixed stationarity can give spurious results.
 
 ```python
+
 # Bad - mix of levels and differences
 X_mixed = np.column_stack([price, np.diff(volume)])
 
@@ -924,6 +921,7 @@ X_all_diff = np.column_stack([np.diff(price), np.diff(volume)])
 **Problem**: Series appears non-stationary due to regime change.
 
 ```python
+
 # Solution: Test for structural breaks
 from statsmodels.stats.diagnostic import breaks_cusumolsresid
 

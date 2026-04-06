@@ -25,6 +25,7 @@ Large Language Models are neural networks trained to predict text that can be re
 **Info:** In commodity markets, the value is in extracting structured signals from unstructured text at scale — not in conversation. Every EIA report, USDA crop condition update, and analyst note is a structured signal waiting to be unlocked.
 
 </div>
+
 ## Introduction
 
 Large Language Models (LLMs) transform how we process unstructured commodity market data. By the end of this guide, you will extract structured commodity intelligence from unstructured market reports using an LLM API.
@@ -222,12 +223,10 @@ Text: {text}
 Provide examples for complex extractions:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 FEW_SHOT_PROMPT = """
@@ -265,12 +264,10 @@ Now extract from:
 For complex reasoning:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 REASONING_PROMPT = """
@@ -326,12 +323,10 @@ API costs accumulate quickly with long documents:
 4. **Cache responses**: Avoid duplicate processing
 
 
-<span class="filename">get_cache_key.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">get_cache_key.py</span>
 
 ```python
 import hashlib
@@ -360,12 +355,10 @@ def cached_extraction(cache_key, text, prompt_template):
 Always validate LLM outputs:
 
 
-<span class="filename">inventoryreport.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">inventoryreport.py</span>
 
 ```python
 from pydantic import BaseModel, validator
@@ -411,12 +404,10 @@ LLMs may fabricate data. Mitigate with:
 4. **Cross-validation**: Compare multiple model outputs
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 ANTI_HALLUCINATION_PROMPT = """

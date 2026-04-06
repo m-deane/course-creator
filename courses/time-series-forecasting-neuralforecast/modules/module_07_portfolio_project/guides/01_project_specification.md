@@ -36,9 +36,6 @@ Design and implement a **demand forecasting system** that goes from raw time ser
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -93,8 +90,6 @@ Train either NHITS or XLinear using `MQLoss`. Your trained model must:
 - Produce quantile forecasts at minimum levels [10, 50, 90]
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -125,8 +120,6 @@ Use `.simulate()` to generate at least 200 sample paths over the full forecast h
 - Be visualized as a fan chart or spaghetti plot
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -172,15 +165,14 @@ Run `.explain()` on your trained model and report:
 - One sentence interpreting the most important feature in business terms
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 explanations = nf.models[0].explain(df=df_test, level=90)
+
 # explanations: dict with keys 'attributions', 'feature_names'
 ```
 
@@ -298,6 +290,7 @@ Milestone 4: Top attribution: lag_7 (0.42 mean absolute attribution)
 ## Dataset Loading Reference
 
 ```python
+
 # Option 1: French Bakery (fastest to load, recommended for prototyping)
 import pandas as pd
 
@@ -310,6 +303,7 @@ df = pd.read_csv(url, parse_dates=["ds"])
 # Option 2: M5 via datasetsforecast (large — use a subset)
 from datasetsforecast.m5 import M5
 df_m5, *_ = M5.load("./data/")
+
 # Subset to 10 series to start
 series_sample = df_m5["unique_id"].unique()[:10]
 df = df_m5[df_m5["unique_id"].isin(series_sample)].copy()

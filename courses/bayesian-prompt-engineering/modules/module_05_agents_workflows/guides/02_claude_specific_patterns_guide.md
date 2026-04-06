@@ -33,13 +33,10 @@ By the end of this guide you will be able to:
 Every Claude API call has this structure:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 client.messages.create(
@@ -79,13 +76,10 @@ This matters for agents because:
 ### What belongs in the system prompt
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 SYSTEM_PROMPT = """You are a legal contract analyst operating under these persistent conditions:
@@ -127,13 +121,10 @@ Prefilling means providing the beginning of the assistant's response. Claude com
 This is a direct manipulation of the posterior over outputs. Instead of asking Claude to format its response a certain way (Layer 6 instruction), you start it in that format and it continues.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 response = client.messages.create(
@@ -144,7 +135,9 @@ response = client.messages.create(
         {"role": "assistant", "content": '{"conditions_present": ['}  # Prefill
     ]
 )
+
 # Claude continues from: '{"conditions_present": ['
+
 # Result: valid JSON output, no instruction required
 ```
 
@@ -163,15 +156,13 @@ Prefilling is especially powerful in multi-agent systems where output format mus
 ### Practical prefill patterns
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Constrain to JSON
 {"role": "assistant", "content": "{"}
 
@@ -206,13 +197,10 @@ Think of tool descriptions as Layer 4 (Constraints) of the condition stack, but 
 
 Weak tool description (facts only):
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 {
@@ -232,13 +220,10 @@ Weak tool description (facts only):
 
 Strong tool description (constraints embedded):
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 {
@@ -285,13 +270,10 @@ The pattern: require every agent to return a JSON object that includes both its 
 ### Designing the condition-carrying output schema
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 AGENT_OUTPUT_SCHEMA = {
@@ -334,13 +316,10 @@ AGENT_OUTPUT_SCHEMA = {
 ### Using the schema with Claude's tool_use feature
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import anthropic
@@ -405,13 +384,10 @@ The complete pattern for passing switch variables between two Claude agents.
 ### Agent 1: Condition Extractor
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 EXTRACTOR_SYSTEM = """You are a condition extraction specialist.
@@ -476,13 +452,10 @@ def extract_conditions(question: str, client: anthropic.Anthropic) -> dict:
 ### Agent 2: Conditional Answerer
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 ANSWERER_SYSTEM = """You are a conditional reasoning specialist.

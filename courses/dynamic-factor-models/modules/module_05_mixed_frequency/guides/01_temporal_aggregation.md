@@ -65,12 +65,10 @@ where superscript $(H)$ denotes high frequency, $(L)$ denotes low frequency.
 ### Code Implementation
 
 
-<span class="filename">aggregate_flow.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">aggregate_flow.py</span>
 
 ```python
 import numpy as np
@@ -205,12 +203,10 @@ Each row selects the last month of each quarter.
 ### Code Implementation
 
 
-<span class="filename">create_aggregation_matrix.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_aggregation_matrix.py</span>
 
 ```python
 def create_aggregation_matrix(n_high, n_low, m, agg_type='flow'):
@@ -316,12 +312,10 @@ With constraints:
 ### Code Implementation
 
 
-<span class="filename">constrainedmixedfrequencydfm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">constrainedmixedfrequencydfm.py</span>
 
 ```python
 class ConstrainedMixedFrequencyDFM:

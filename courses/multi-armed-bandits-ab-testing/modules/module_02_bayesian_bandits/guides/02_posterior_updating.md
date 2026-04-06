@@ -49,13 +49,15 @@ Posterior: Beta(2+3, 2+1) = Beta(5, 3)
 More peaked, shifted right
 (More confident, higher mean)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 
 </div>
 
-
+```
 After 100 observations: 58 successes, 42 failures
 Posterior: Beta(60, 44)
          |█|
@@ -151,12 +153,10 @@ The strong prior acts like you've already seen 18 trades (10-1 + 10-1). Five new
 ### Beta-Bernoulli Update
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -194,12 +194,10 @@ class BetaBernoulli:
 ### Normal-Normal Update
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class NormalNormal:

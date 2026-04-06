@@ -22,13 +22,10 @@
 ### Structured Logging
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import structlog
@@ -75,6 +72,7 @@ class ProductionAgent:
             raise
 
 # Logs output as JSON for easy parsing
+
 # {"event": "request_started", "agent_id": "agent-123", "request_id": "req-456", ...}
 ```
 
@@ -473,15 +471,13 @@ def protected_endpoint(user_id, query):
 - Use structured logging for efficient querying
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: Log everything
 logger.debug(f"Full prompt: {prompt}")  # Expensive!
 

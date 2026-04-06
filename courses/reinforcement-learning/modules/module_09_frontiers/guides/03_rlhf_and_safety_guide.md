@@ -40,8 +40,6 @@ RLHF became the standard approach for aligning large language models after Instr
 ### The Three-Step Pipeline
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -91,8 +89,6 @@ where $y_w$ is the preferred ("won") response and $y_l$ is the less preferred ("
 **Architecture:** Typically the SFT model with a linear head replacing the final token prediction head. The linear head outputs a scalar reward for the full response.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -229,8 +225,6 @@ $$\pi_{k+1} = \arg\max_\pi \mathcal{L}(\pi, \lambda_k)$$
 $$\lambda_{k+1} = \max\left(0, \lambda_k + \alpha_\lambda \left(J_C(\pi_k) - d\right)\right)$$
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

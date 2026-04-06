@@ -117,12 +117,10 @@ Generate 5 signals for the same context:
 ### Confidence Calibration Framework
 
 
-<span class="filename">confidencecalibrator.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">confidencecalibrator.py</span>
 
 ```python
 import numpy as np
@@ -508,12 +506,10 @@ else:
 ### Position Sizing with Calibrated Confidence
 
 
-<span class="filename">calibratedpositionsizer.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">calibratedpositionsizer.py</span>
 
 ```python
 class CalibratedPositionSizer:

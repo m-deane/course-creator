@@ -71,18 +71,17 @@ where $m$ is the frequency ratio (e.g., $m=3$ for monthly-to-quarterly, $m=65$ f
 Monthly industrial production growth $x_\tau^M$ aggregated to quarterly:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
 import numpy as np
 
 # Monthly IP growth observations within a quarter
+
 # Quarter 2020Q1: Jan, Feb, Mar
 monthly_ip = pd.Series(
     [0.003, -0.012, -0.065],  # Jan, Feb, Mar 2020
@@ -134,15 +133,15 @@ $$C \hat{y}^H = y^L$$
 The GLS solution provides minimum-variance interpolated values consistent with the aggregation constraint.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Conceptual illustration of Chow-Lin interpolation
+
 # In practice, use statsmodels or the tempdisagg R package (via rpy2)
 
 import numpy as np
@@ -238,12 +237,10 @@ $$x_\tau^M = \mu + \sum_{j=1}^{J} \phi_j x_{\tau-j}^M + \eta_\tau$$
 Then aggregate the forecasted monthly values to form $\hat{\tilde{x}}_t^Q$ and plug into Step 1.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd

@@ -145,12 +145,10 @@ The **regularization path** shows which features are eliminated at each $\lambda
 ### Filter Method: Mutual Information
 
 
-<span class="filename">filter_selection_mi.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">filter_selection_mi.py</span>
 
 ```python
 import numpy as np
@@ -226,12 +224,10 @@ Now that we have seen how filters evaluate features independently using statisti
 ### Wrapper Method: Forward Selection
 
 
-<span class="filename">forward_selection_wrapper.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_selection_wrapper.py</span>
 
 ```python
 from sklearn.linear_model import LinearRegression
@@ -321,12 +317,10 @@ Wrapper methods give us interaction-aware selection, but they require explicitly
 ### Embedded Method: Lasso
 
 
-<span class="filename">lasso_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">lasso_selection.py</span>
 
 ```python
 from sklearn.linear_model import LassoCV, Lasso
@@ -526,6 +520,7 @@ plt.tight_layout()
 
 **Example:**
 ```python
+
 # XOR problem: y = x1 XOR x2
 X = np.random.randint(0, 2, size=(1000, 2))
 y = (X[:, 0] != X[:, 1]).astype(int)
@@ -533,6 +528,7 @@ y = (X[:, 0] != X[:, 1]).astype(int)
 # Individual correlations are zero
 print(f"Corr(x1, y): {np.corrcoef(X[:, 0], y)[0, 1]:.4f}")
 print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")
+
 # Both ~0, but BOTH features are necessary!
 ```
 
@@ -552,6 +548,7 @@ print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")
 
 **How to avoid:**
 ```python
+
 # WRONG: Single train/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 best_score = -inf
@@ -596,6 +593,7 @@ for train_idx, test_idx in KFold(5).split(X):
 
 **How to avoid:** Use wrapper methods or multiple embedded methods:
 ```python
+
 # Combine multiple embedded methods
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LassoCV

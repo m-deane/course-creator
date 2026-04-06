@@ -60,13 +60,15 @@ Arm C: [0.40 ███████████ 0.60] ← UCB = 0.60 (wide but no
 UCB picks arm C (highest upper bound)
 Deterministic: Always C until bound shrinks
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Thompson Sampling is often called probability matching because it selects each arm with probability equal to the posterior probability that it is optimal. This natural calibration is why it tends to outperform in practice.
 
 </div>
 
-
+```
 Thompson Sampling Posteriors:
 Arm A: Beta(50, 55)    |█|
 Arm B: Beta(53, 52)      |█|

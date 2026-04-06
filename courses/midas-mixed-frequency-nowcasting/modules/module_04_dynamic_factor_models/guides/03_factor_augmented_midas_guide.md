@@ -39,12 +39,10 @@ The factor acts as a noise-reduced aggregate of all available monthly indicators
 ### Step 1: Load and Standardize the Monthly Panel
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -84,12 +82,10 @@ def load_monthly_panel(series_dict):
 ### Step 2: Extract Common Factor
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def extract_factors(panel_std, n_factors=1, verbose=True):
@@ -141,12 +137,10 @@ def normalize_factor_sign(factors, loadings, reference_indicator):
 ### Step 3: Build MIDAS Matrix from Factor Series
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def build_midas_matrix_from_factor(Y_quarterly, F_monthly, K, m=3):

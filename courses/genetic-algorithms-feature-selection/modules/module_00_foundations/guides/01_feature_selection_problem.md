@@ -121,12 +121,10 @@ This creates a Pareto frontier: improving one objective may worsen others.
 ### Naive Exhaustive Search
 
 
-<span class="filename">exhaustive_feature_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">exhaustive_feature_selection.py</span>
 
 ```python
 import numpy as np
@@ -208,12 +206,10 @@ print(f"Best score: {best_score:.4f}")
 ### Time Series Feature Selection Problem
 
 
-<span class="filename">time_series_features.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">time_series_features.py</span>
 
 ```python
 import pandas as pd
@@ -279,14 +275,13 @@ print(f"Need intelligent search strategy!")
 **How to avoid:**
 
 
-<span class="filename">proper_cv_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">proper_cv_selection.py</span>
 
 ```python
+
 # WRONG: Feature selection before CV
 selected = select_features(X, y)  # Uses all data
 cv_score = cross_val_score(model, X[:, selected], y, cv=5)
@@ -318,6 +313,7 @@ for train_idx, test_idx in tscv.split(X):
 
 **How to avoid:** Add correlation penalty or constraint:
 ```python
+
 # Check feature correlations
 corr_matrix = np.corrcoef(X.T)
 

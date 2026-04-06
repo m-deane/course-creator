@@ -19,13 +19,10 @@
 
 ### Basic Claude API Call
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -83,15 +80,13 @@ with client.messages.stream(
 ## Temperature Guide
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Factual, deterministic (Q&A, extraction, classification)
 temperature=0.0
 
@@ -113,15 +108,13 @@ temperature=1.0
 - **Context overflow** - Always count tokens before sending. Use `tiktoken` (OpenAI) or Anthropic's count API
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Count tokens before sending
 token_count = client.count_tokens(text)
 if token_count > max_context:
@@ -134,6 +127,7 @@ if token_count > max_context:
 - **Output token limits** - Set `max_tokens` explicitly; models won't complete responses without it
 
 ```python
+
 # Bad: might truncate mid-sentence
 max_tokens=100
 

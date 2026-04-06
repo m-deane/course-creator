@@ -110,12 +110,10 @@ $$\hat{y}_t^{(h)} = \hat{\alpha} + \hat{\beta} \sum_{j=h}^{K-1} \frac{w_j(\hat{\
 where $h$ is the number of missing months at the "ragged edge". This re-weights the observed data to maintain the correct shape.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def midas_nowcast_ragged(alpha, beta, theta1, theta2, X_current, h_missing, K):

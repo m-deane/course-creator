@@ -120,12 +120,10 @@ print(hmm.A.round(3))
 ### Ergodicity and Stationarity
 
 
-<span class="filename">analyze_transition_matrix.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_transition_matrix.py</span>
 
 ```python
 def analyze_transition_matrix(A):
@@ -196,12 +194,10 @@ For discrete observations $o \in \{1, ..., M\}$:
 $$b_i(o) = P(O_t = o | S_t = i)$$
 
 
-<span class="filename">discretehmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">discretehmm.py</span>
 
 ```python
 class DiscreteHMM(HMMParameters):
@@ -259,12 +255,10 @@ For continuous observations:
 $$b_i(o) = \mathcal{N}(o; \mu_i, \sigma_i^2)$$
 
 
-<span class="filename">gaussianhmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussianhmm.py</span>
 
 ```python
 class GaussianHMM(HMMParameters):
@@ -366,12 +360,10 @@ gauss_hmm.visualize_emissions()
 ### Ensuring Valid Parameters
 
 
-<span class="filename">validate_hmm_parameters.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">validate_hmm_parameters.py</span>
 
 ```python
 def validate_hmm_parameters(pi, A, B=None, means=None, covars=None):
@@ -458,12 +450,10 @@ validate_hmm_parameters(
 ### Financial Market Example
 
 
-<span class="filename">create_market_regime_hmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_market_regime_hmm.py</span>
 
 ```python
 def create_market_regime_hmm():

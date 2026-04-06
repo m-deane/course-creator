@@ -71,19 +71,19 @@ Long format "slices" this cube horizontally (by time) and stacks the slices on t
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
 import numpy as np
 
 # ============================================================================
+
 # Creating Panel Data from Scratch
+
 # ============================================================================
 
 def create_panel_data(n_entities=100, n_periods=10, seed=42):
@@ -133,7 +133,9 @@ def create_panel_data(n_entities=100, n_periods=10, seed=42):
 
 
 # ============================================================================
+
 # Converting Between Long and Wide Format
+
 # ============================================================================
 
 def long_to_wide(df, entity_col='entity_id', time_col='time', value_cols=None):
@@ -219,7 +221,9 @@ def wide_to_long(df_wide, entity_col='entity_id', stub_names=None,
 
 
 # ============================================================================
+
 # Panel Data Indexing
+
 # ============================================================================
 
 def set_panel_index(df, entity_col='entity_id', time_col='time'):
@@ -247,7 +251,9 @@ def set_panel_index(df, entity_col='entity_id', time_col='time'):
 
 
 # ============================================================================
+
 # Example Usage
+
 # ============================================================================
 
 if __name__ == "__main__":
@@ -333,9 +339,6 @@ if __name__ == "__main__":
 - **Consequence:** Sorting fails; time operations produce errors.
 - **Solution:** Standardize time format before analysis:
 
-<span class="filename">example.py</span>
-</div>
-
   <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -364,9 +367,6 @@ if __name__ == "__main__":
 **6. Implicit vs Explicit Panel Structure**
 - **Issue:** Assuming data is panel when it's actually repeated cross-sections (different entities each period).
 - **Detection:** Check if same entities appear in multiple periods:
-
-<span class="filename">example.py</span>
-</div>
 
   <div class="code-window">
 <div class="code-header">

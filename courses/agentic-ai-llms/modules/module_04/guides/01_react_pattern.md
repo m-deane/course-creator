@@ -37,13 +37,10 @@ Final Answer: [Response to user]
 ### Basic Implementation
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -170,13 +167,10 @@ print(answer)
 Leveraging native tool calling for cleaner implementation:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -294,13 +288,10 @@ result = agent.run("Calculate 15% of 847.50 and tell me if it's more than 100")
 ### Structured Logging
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from dataclasses import dataclass, field
@@ -420,13 +411,10 @@ class TracingReActAgent(ReActAgent):
 ### ReAct with Memory
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class ReActWithMemory(ReActAgent):
@@ -503,13 +491,10 @@ If the answer is correct, confirm it."""
 ### Explicit Reasoning Instructions
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 DETAILED_REACT_SYSTEM = """You are an AI assistant that solves problems systematically.
@@ -562,13 +547,10 @@ Final Answer: After 10 years, your investment would grow to approximately $1,647
 ## Error Handling in ReAct
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class RobustReActAgent(ReActAgent):

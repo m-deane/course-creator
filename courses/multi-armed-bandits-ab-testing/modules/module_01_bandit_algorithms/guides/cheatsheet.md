@@ -22,14 +22,13 @@
 
 ### Epsilon-Greedy
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Action selection
 if random() < epsilon:
     action = random_arm()
@@ -53,9 +52,8 @@ epsilon_t = min(1.0, C / sqrt(t + 1))  # C ∈ [1, 10]
 
 ### UCB1
 
-<span class="filename">example.py</span>
-</div>
 <div class="callout-insight">
+
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 </div>
 
@@ -64,6 +62,7 @@ epsilon_t = min(1.0, C / sqrt(t + 1))  # C ∈ [1, 10]
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Action selection (after pulling each arm once)
 ucb_values = Q + c * sqrt(log(t) / (N + 1e-10))
 action = argmax(ucb_values)
@@ -84,6 +83,7 @@ Q[a] += (reward - Q[a]) / N[a]
 
 ### Softmax (Boltzmann)
 ```python
+
 # Action selection (numerically stable)
 q_max = max(Q)
 exp_q = exp((Q - q_max) / tau)
@@ -164,14 +164,13 @@ tau_t = tau_0 / log(t + 2)
 
 **Decay schedule:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Aggressive (fast decay)
 epsilon = 1 / sqrt(t + 1)
 
@@ -209,6 +208,7 @@ epsilon = min(0.2, 100 / sqrt(t + 1))
 ```python
 q_range = Q.max() - Q.min()
 effective_scale = q_range / tau
+
 # Target: 1 < effective_scale < 5
 ```
 
@@ -262,6 +262,7 @@ E[R_T] = Ω(√(KT))
 
 **Pitfall:** Not breaking ties in argmax
 ```python
+
 # WRONG: Always picks first arm when tied
 action = argmax(values)
 
@@ -273,6 +274,7 @@ action = random.choice(best_actions)
 
 **Pitfall:** Using exponential moving average instead of sample mean
 ```python
+
 # WRONG (for stationary problems)
 Q[a] = 0.9 * Q[a] + 0.1 * reward  # Forgets old data
 
@@ -285,11 +287,13 @@ Q[a] += (reward - Q[a]) / N[a]
 
 **Pitfall:** Not initializing properly
 ```python
+
 # WRONG: Negative rewards break UCB/Softmax
 Q = [0, 0, 0, 0, 0]  # If rewards can be negative
 
 # CORRECT: Optimistic initialization or normalization
 Q = [10, 10, 10, 10, 10]  # Encourages early exploration
+
 # OR normalize rewards to [0, 1]
 ```
 
@@ -305,16 +309,19 @@ Q = [10, 10, 10, 10, 10]  # Encourages early exploration
 
 **Pitfall:** Division by zero when N[a]=0
 ```python
+
 # WRONG
 ucb = Q + c * sqrt(log(t) / N)  # N=0 → inf
 
 # CORRECT
 ucb = Q + c * sqrt(log(t) / (N + 1e-10))
+
 # OR pull each arm once initially
 ```
 
 **Pitfall:** Using ln(N[a]) instead of ln(t)
 ```python
+
 # WRONG
 ucb = Q + c * sqrt(log(N) / N)  # Bonus shrinks too fast
 
@@ -329,6 +336,7 @@ ucb = Q + c * sqrt(log(t) / N)  # t = total time
 
 **Pitfall:** Numerical overflow
 ```python
+
 # WRONG
 probs = exp(Q / tau) / sum(exp(Q / tau))  # Overflow if Q large
 
@@ -396,7 +404,9 @@ class Softmax:
 
 ### Energy Sector Selection (5 commodities)
 ```python
+
 # Commodities: WTI, Brent, Nat Gas, Heating Oil, Gasoline
+
 # Reward = daily return (%)
 
 bandit = UCB1(K=5)
@@ -408,7 +418,9 @@ for day in range(252):  # 1 trading year
 
 ### Cross-Asset Hedging (4 instruments)
 ```python
+
 # Instruments: Futures, Options, Swaps, Basis Swaps
+
 # Reward = -portfolio_variance (minimize risk)
 
 bandit = EpsilonGreedy(K=4, epsilon=0.1)
@@ -420,7 +432,9 @@ for week in range(52):
 
 ### Adaptive Basket Allocation (10 sectors)
 ```python
+
 # Sectors: Energy, Metals, Grains, Softs, Livestock, ...
+
 # Reward = Sharpe ratio
 
 bandit = Softmax(K=10, tau=0.5)

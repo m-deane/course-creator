@@ -74,13 +74,10 @@ This visibility makes debugging and optimization possible.
 ### Structured Logging
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import logging
@@ -442,6 +439,7 @@ class ObservableAgent:
 ### Integration with Observability Platforms
 
 ```python
+
 # Example: Sending to OpenTelemetry
 from opentelemetry import trace, metrics
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
@@ -480,15 +478,13 @@ class OTelAgentObservability:
 **Problem:** Can't debug because critical information isn't logged.
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # DON'T: Minimal logging
 logger.info("Agent executed")
 
@@ -512,6 +508,7 @@ logger.log_event(
 **Problem:** Logs are noisy and expensive to store.
 
 ```python
+
 # DON'T: Log everything verbatim
 logger.info(f"Full prompt: {ten_thousand_character_prompt}")
 
@@ -523,6 +520,7 @@ logger.info(f"Prompt: {prompt[:200]}... (length: {len(prompt)})")
 **Problem:** Can't query or analyze logs.
 
 ```python
+
 # DON'T: Unstructured strings
 logger.info(f"LLM call took {latency}ms and cost ${cost}")
 
@@ -538,6 +536,7 @@ logger.info(json.dumps({
 **Problem:** Errors logged without context for reproduction.
 
 ```python
+
 # DON'T: Minimal error logging
 logger.error(str(e))
 

@@ -134,13 +134,10 @@ $$S_t = \sum_{k=1}^K \left[ a_k \sin\left(\frac{2\pi k t}{m}\right) + b_k \cos\l
 ### 1. Visual Inspection
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -150,6 +147,7 @@ import seaborn as sns
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 # Load data (example: natural gas prices)
+
 # Assume df with 'date' and 'price' columns
 df['month'] = df['date'].dt.month
 df['year'] = df['date'].dt.year
@@ -172,15 +170,13 @@ plt.show()
 ### 2. Classical Decomposition
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Ensure time series index
 ts = df.set_index('date')['price']
 
@@ -206,13 +202,10 @@ seasonal_pattern = decomposition.seasonal
 ### 3. Seasonal Dummies Regression
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import statsmodels.api as sm
@@ -241,13 +234,10 @@ print(seasonal_effects)
 ### 4. Fourier Seasonal Model
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def fourier_terms(t, period, K):
@@ -286,13 +276,10 @@ seasonal_fourier = fourier_model.predict(X)
 ### 5. Bayesian Seasonal Model (PyMC)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -383,15 +370,13 @@ Dec   │ +$2.00 │ Heating demand rises
 
 **Example:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # BAD: Assume fixed seasonal pattern
 seasonal_avg = df.groupby('month')['price'].mean()
 
@@ -413,19 +398,18 @@ seasonal_avg = df.groupby('month')['price'].mean()
 
 **Test:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Check for unit root (trend) vs stationary seasonality
 from statsmodels.tsa.stattools import adfuller
 adf_result = adfuller(df['price'])
 print(f"ADF p-value: {adf_result[1]:.4f}")
+
 # p < 0.05 → stationary (no trend), seasonality possible
 ```
 
@@ -447,13 +431,10 @@ print(f"ADF p-value: {adf_result[1]:.4f}")
 
 **Fix:** Adjust for calendar effects
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 df['trading_days'] = df.groupby('month')['date'].transform('count')
@@ -473,18 +454,17 @@ df['price_per_day'] = df['price'] / df['trading_days']
 
 **Test:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Plot seasonal variance over time
 df['seasonal_var'] = df.groupby('year')['price'].transform('std')
 plt.plot(df.groupby('year')['price'].mean(), df.groupby('year')['seasonal_var'].mean(), 'o')
+
 # If positive slope → multiplicative
 ```
 
@@ -563,13 +543,10 @@ Implement a Bayesian hierarchical model where:
 
 **PyMC structure:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 seasonal_year[year, month] ~ Normal(seasonal_mean[month], tau)

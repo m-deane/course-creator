@@ -9,8 +9,6 @@ This guide covers the patterns that bridge the gap between a working notebook an
 Each pattern is self-contained — copy the snippet, adapt the parameters, use it.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -18,12 +16,15 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Quickcheck: confirm your environment supports GPU training
 import torch
 print(f"PyTorch {torch.__version__}")
 print(f"CUDA available: {torch.cuda.is_available()}")
 print(f"Device count: {torch.cuda.device_count()}")
+
 # Expected on a GPU instance: CUDA available: True
+
 # Expected on CPU-only: CUDA available: False  (still works, just slower)
 ```
 
@@ -55,8 +56,6 @@ NeuralForecast ships `MQLoss` (quantile), `DistributionLoss` (full distribution)
 Stockout costs more than overstock. Express this by weighting upper quantiles.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -71,11 +70,14 @@ from neuralforecast.losses.pytorch import MQLoss
 symmetric = MQLoss(quantiles=[0.1, 0.5, 0.9])
 
 # Asymmetric: more resolution in the upper tail
+
 # Useful when understocking is more costly than overstocking
 asymmetric = MQLoss(quantiles=[0.5, 0.7, 0.8, 0.85, 0.9, 0.95])
 
 # The loss function does not change — only the quantiles requested change.
+
 # MQLoss trains N quantile heads simultaneously; more upper quantiles
+
 # give finer-grained resolution where it matters most.
 
 model = NHITS(
@@ -94,8 +96,6 @@ model = NHITS(
 `DistributionLoss` fits a parametric distribution (Normal, StudentT, NegativeBinomial) instead of individual quantiles. Use this when you need sample paths or when demand follows a known distributional family.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -109,6 +109,7 @@ from neuralforecast.losses.pytorch import DistributionLoss
 normal_loss = DistributionLoss(distribution="Normal", level=[80, 90])
 
 # NegativeBinomial — appropriate for count data (units sold)
+
 # Handles zero-inflated demand common in slow-moving SKUs
 nb_loss = DistributionLoss(distribution="NegativeBinomial", level=[80, 90])
 
@@ -150,12 +151,10 @@ NeuralForecast uses PyTorch Lightning, which auto-detects GPU.
 NeuralForecast uses PyTorch Lightning, which auto-detects GPU. Override if needed.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from neuralforecast.models import NHITS
@@ -214,7 +213,9 @@ model = NHITS(
 )
 
 # NeuralForecast saves checkpoints automatically.
+
 # To resume from a checkpoint after a crash:
+
 # model = NHITS.load_from_checkpoint("/tmp/nf_checkpoints/...")
 ```
 
@@ -266,6 +267,7 @@ from neuralforecast.models import NHITS
 from neuralforecast.losses.pytorch import MQLoss
 
 # Construct a multi-series DataFrame
+
 # Each (unique_id, ds) pair must be unique
 def build_multi_series_df(series_dict: dict[str, pd.Series]) -> pd.DataFrame:
     """
@@ -389,6 +391,7 @@ model = NHITS(
 ### 4a. Weights & Biases Integration
 
 ```python
+
 # pip install wandb
 import wandb
 from neuralforecast.models import NHITS
@@ -420,8 +423,11 @@ model = NHITS(
 )
 
 # For full wandb integration, use the WandbLogger from pytorch_lightning:
+
 # from pytorch_lightning.loggers import WandbLogger
+
 # wandb_logger = WandbLogger(project="bakery-forecasting")
+
 # trainer_kwargs={"logger": wandb_logger}
 ```
 

@@ -73,12 +73,10 @@ $$\text{Var}_{HAC}(\hat{\alpha}, \hat{\beta}) = (Z^\top Z)^{-1} \hat{S}_{NW} (Z^
 where $Z_t = (1, \tilde{x}_t(\hat{\theta}))$.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -198,12 +196,10 @@ F-test comparing restricted (OLS-aggregate) to unrestricted (MIDAS) SSE:
 $$F = \frac{(SSE_R - SSE_U) / 2}{SSE_U / (T-4)} \sim F_{2, T-4}$$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def test_equal_weights(Y, X, midas_result, beta_weights_fn):
@@ -247,12 +243,10 @@ def test_equal_weights(Y, X, midas_result, beta_weights_fn):
 For small samples or when asymptotic theory is unreliable, bootstrap inference:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def bootstrap_midas(Y, X, beta_weights_fn, n_bootstrap=499, seed=42):

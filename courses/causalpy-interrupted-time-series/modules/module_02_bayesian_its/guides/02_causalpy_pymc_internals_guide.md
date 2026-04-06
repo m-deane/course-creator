@@ -25,12 +25,10 @@ CausalPy's `InterruptedTimeSeries` class does four things: (1) builds the design
 CausalPy uses `formulaic` (a Python port of R's formula parser) to build the design matrix from your formula string.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import formulaic
@@ -62,12 +60,10 @@ The variable names in the design matrix become the names of the regression coeff
 The `LinearRegression` model object builds the PyMC model. The actual PyMC code is roughly:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -123,14 +119,13 @@ After sampling, CausalPy computes the counterfactual predictions by:
 3. Storing the counterfactual predictions in the `InferenceData`
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Conceptual version of counterfactual computation
 def compute_counterfactual(model_result, X_full, treatment_cols):
     """
@@ -161,12 +156,10 @@ def compute_counterfactual(model_result, X_full, treatment_cols):
 After fitting, the PyMC model is accessible at `result.model`:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -191,6 +184,7 @@ print(type(pymc_model))  # <class 'pymc.model.Model'>
 print("Random variables:", pymc_model.basic_RVs)
 
 # Access the model graph
+
 # pymc.model_to_graphviz(pymc_model)  # Requires graphviz
 ```
 
@@ -204,24 +198,29 @@ print("Random variables:", pymc_model.basic_RVs)
 CausalPy stores all results in an ArviZ `InferenceData` object at `result.idata`. This is a structured container with multiple groups:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Explore the InferenceData structure
 idata = result.idata
 print(idata)
 
 # Main groups:
+
 # - posterior: samples from the posterior
+
 # - prior: samples from the prior (if prior predictive was run)
+
 # - posterior_predictive: predictions from the posterior
+
 # - observed_data: the data used to fit the model
+
 # - sample_stats: NUTS diagnostics (divergences, tree depth, etc.)
+
 # - log_likelihood: pointwise log-likelihood for LOO-CV
 
 # Access posterior samples
@@ -233,8 +232,11 @@ print("\nObserved data variables:", list(idata.observed_data.data_vars))
 
 # Access sample statistics (NUTS diagnostics)
 print("\nSample stats:", list(idata.sample_stats.data_vars))
+
 # 'diverging': boolean array marking divergences
+
 # 'energy': NUTS energy diagnostic
+
 # 'tree_depth': how deep each NUTS tree was
 ```
 
@@ -248,19 +250,20 @@ print("\nSample stats:", list(idata.sample_stats.data_vars))
 PyMC can visualize the model as a Bayesian network:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
 
 # Visualize the model graph
+
 # Requires: pip install graphviz python-graphviz
+
 # graph = pm.model_to_graphviz(result.model)
+
 # graph.render("its_model_graph", format="png")
 
 # Alternatively, print the model's free variables
@@ -288,12 +291,10 @@ The cleanest way to extend CausalPy for custom needs is to subclass `cp.pymc_mod
 ITS models for count data (hospital admissions, crime counts, accident numbers) often fit better with a Poisson or Negative Binomial likelihood.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -331,11 +332,17 @@ class PoissonITSModel(cp.pymc_models.LinearRegression):
 
 
 # Usage
+
 # result = cp.InterruptedTimeSeries(
+
 #     data=df,
+
 #     treatment_time=t_star,
+
 #     formula="count_outcome ~ 1 + t + treated + t_post",
+
 #     model=PoissonITSModel(sample_kwargs={"draws": 1000, "tune": 1000, "chains": 4}),
+
 # )
 ```
 
@@ -345,12 +352,10 @@ class PoissonITSModel(cp.pymc_models.LinearRegression):
 ### Example: AR(1) Error Structure
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class AR1ITS(cp.pymc_models.LinearRegression):
@@ -402,12 +407,10 @@ class AR1ITS(cp.pymc_models.LinearRegression):
 CausalPy supports prior predictive sampling through the underlying PyMC model:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -420,6 +423,7 @@ with result.model:
     )
 
 # The prior predictive is also stored in idata if you run it before sampling
+
 # Access as: prior_pred.prior_predictive["y_hat"]
 
 import arviz as az

@@ -71,13 +71,10 @@ Stability captures the **reproducibility** of the prompt. A prompt with stabilit
 The most interpretable stability metric for prose outputs:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def jaccard_similarity(text_a: str, text_b: str) -> float:
@@ -147,13 +144,10 @@ A prompt with consistent length variance (say, 120±15 tokens) is producing stru
 Length variance is a fast, cheap diagnostic to run before committing to a full stability test.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import statistics
@@ -198,13 +192,10 @@ This metric requires you to specify the key entities in advance — which terms 
 - Generic vocabulary overlap is insufficient (two outputs can use the same common words but reference different specific procedures)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def entity_consistency(outputs: list[str], key_entities: list[str]) -> float:
@@ -247,13 +238,10 @@ A prompt asking for "a numbered action list with deadlines" should produce numbe
 Structure consistency is the fastest metric to compute and the most diagnostic for Layer 6 problems.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import re

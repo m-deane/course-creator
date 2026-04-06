@@ -28,12 +28,10 @@ This guide covers:
 ### Estimating Regime-Specific Statistics
 
 
-<span class="filename">regimeawareportfolio.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeawareportfolio.py</span>
 
 ```python
 import numpy as np
@@ -262,12 +260,10 @@ for r in range(2):
 ## Dynamic Allocation Strategy
 
 
-<span class="filename">dynamicregimeallocator.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">dynamicregimeallocator.py</span>
 
 ```python
 class DynamicRegimeAllocator:
@@ -407,12 +403,10 @@ plt.show()
 ## Risk Management with Regimes
 
 
-<span class="filename">regimeawareriskmanager.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeawareriskmanager.py</span>
 
 ```python
 class RegimeAwareRiskManager:

@@ -225,15 +225,15 @@ For a given DAG, there may be multiple valid adjustment sets. The **minimal adju
 **Software tools:** The `dagitty` Python package (or the web tool at dagitty.net) can compute minimal adjustment sets, test conditional independencies, and suggest testable implications of your DAG.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Using dagitty to check adjustment sets
+
 # Install: pip install dagitty-python
 from dagitty import get_adjustment_sets
 
@@ -246,6 +246,7 @@ dag {
 """
 
 # dagitty computes what to adjust for
+
 # adjustment_sets = get_adjustment_sets(dag, "Treatment", "Outcome")
 ```
 
@@ -292,12 +293,10 @@ A step-by-step process:
 ## Code Example: Drawing DAGs
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import networkx as nx

@@ -14,14 +14,13 @@
 
 ### Beta-Bernoulli (Binary Rewards)
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Initialize
 alpha = np.ones(K)  # Successes + 1
 beta = np.ones(K)   # Failures + 1
@@ -42,14 +41,13 @@ else:
 
 ### Gaussian (Continuous Rewards, Known Variance)
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Initialize
 mu = np.zeros(K)        # Posterior means
 sigma = np.ones(K)      # Posterior std devs
@@ -70,14 +68,13 @@ sigma[arm] = np.sqrt(1 / tau_post)
 
 ### Poisson (Count Data)
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Initialize
 alpha = np.ones(K)      # Shape parameter
 beta = np.ones(K)       # Rate parameter
@@ -176,6 +173,7 @@ Variance: α/β²
 
 ### Uninformative Priors
 ```python
+
 # Beta-Bernoulli: Uniform prior
 alpha, beta = 1, 1  # Beta(1,1) = Uniform(0,1)
 
@@ -188,6 +186,7 @@ alpha, beta = 0.5, 0  # Uninformative
 
 ### Informative Priors
 ```python
+
 # Beta with mean μ and strength n
 def beta_from_mean_strength(mu, n):
     alpha = n * mu
@@ -230,6 +229,7 @@ beta = 1 + sum(failures)
 
 ### Reset on Change Detection
 ```python
+
 # Detect if posterior mean shifts significantly
 if abs(mu_new - mu_old) > threshold:
     alpha, beta = 1, 1  # Reset to prior
@@ -250,6 +250,7 @@ if abs(mu_new - mu_old) > threshold:
 
 ### Portfolio Allocation (Gaussian Returns)
 ```python
+
 # 3 commodities: WTI, Gold, Corn
 mu = np.array([0.0, 0.0, 0.0])       # Prior mean returns
 sigma = np.array([0.05, 0.05, 0.05]) # Prior uncertainty
@@ -267,6 +268,7 @@ mu[allocate_to], sigma[allocate_to] = normal_update(
 
 ### Signal Selection (Bernoulli Wins)
 ```python
+
 # 4 trading signals: Momentum, Mean-Rev, Carry, Breakout
 alpha = np.ones(4)
 beta = np.ones(4)
@@ -295,6 +297,7 @@ else:
 ## Quick Reference: Python Libraries
 
 ```python
+
 # Core
 import numpy as np
 from scipy.stats import beta, gamma, norm

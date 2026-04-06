@@ -143,12 +143,10 @@ Imagine you're a commodity research firm testing two landing pages for your week
 Complete Thompson Sampling conversion optimizer:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np

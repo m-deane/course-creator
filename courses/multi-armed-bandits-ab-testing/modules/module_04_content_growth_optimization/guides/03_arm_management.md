@@ -189,12 +189,10 @@ Imagine you run a commodity trading newsletter with 6 content types (arms). Afte
 Complete arm management system with retirement and introduction:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -378,12 +376,10 @@ for week in range(52):
 
 ### Problem 1: Implement Retirement Logic (Code)
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def should_retire(arm_stats, arm_id, min_pulls=50):

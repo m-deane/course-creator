@@ -108,13 +108,10 @@ This is crucial for time series: we update beliefs as each new observation arriv
 ### Simple Example: Estimating a Probability
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -129,6 +126,7 @@ successes, trials = 7, 10
 failures = trials - successes
 
 # Posterior: Beta(alpha + successes, beta + failures)
+
 # This is the conjugate update for Beta-Binomial
 alpha_post = alpha_prior + successes
 beta_post = beta_prior + failures
@@ -162,13 +160,10 @@ print(f"95% credible interval: [{post_dist.ppf(0.025):.3f}, {post_dist.ppf(0.975
 ### PyMC Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm

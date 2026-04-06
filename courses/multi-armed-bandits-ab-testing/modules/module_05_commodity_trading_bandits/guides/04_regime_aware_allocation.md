@@ -164,12 +164,10 @@ The contextual bandit is the same idea, but:
 **Why it matters:** High-vol and low-vol regimes require different strategies.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_realized_volatility(returns, window=20):
@@ -200,12 +198,10 @@ def compute_realized_volatility(returns, window=20):
 **Why it matters:** Contango vs backwardation affects carry returns.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_term_structure_slope(front_month, back_month):
@@ -236,12 +232,10 @@ def compute_term_structure_slope(front_month, back_month):
 **Why it matters:** Trending vs mean-reverting markets need different allocations.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_trend_strength(prices, short_window=20, long_window=50):
@@ -574,41 +568,60 @@ See **Hidden Markov Models course** in this repo for full HMM implementation.
 ### Example 1: Energy Commodity in Different Regimes
 
 ```python
+
 # Historical performance of WTI:
 
 # REGIME: LOW_VOL_UPTREND (2017-2018)
+
 # - Avg weekly return: +0.5%
+
 # - Volatility: 12%
+
 # - Best arms: WTI (momentum), Copper (growth)
+
 # → Bandit learns to overweight WTI in this regime
 
 # REGIME: HIGH_VOL_DOWNTREND (2020 COVID)
+
 # - Avg weekly return: -2.0%
+
 # - Volatility: 45%
+
 # - Best arms: Gold (safe haven), Grains (defensive)
+
 # → Bandit learns to underweight WTI in this regime
 
 # REGIME: BACKWARDATION (2021 reopening)
+
 # - Avg weekly return: +1.2%
+
 # - Volatility: 20%
+
 # - Best arms: WTI (positive roll), Copper (recovery)
+
 # → Bandit learns roll yield is meaningful
 ```
 
 ### Example 2: Multi-Regime Portfolio
 
 ```python
+
 # Portfolio with regime-aware allocation:
 
 # January 2024: HIGH_VOL_NEUTRAL
+
 # → Allocation: 15% WTI, 30% Gold, 25% Copper, 20% NatGas, 10% Corn
 
 # March 2024: LOW_VOL_UPTREND (regime shift)
+
 # → Allocation: 35% WTI, 15% Gold, 30% Copper, 10% NatGas, 10% Corn
+
 # → Shifted toward cyclical commodities
 
 # May 2024: BACKWARDATION_ENERGY (another shift)
+
 # → Allocation: 40% WTI, 10% Gold, 20% Copper, 25% NatGas, 5% Corn
+
 # → Captured roll yield in energy
 ```
 

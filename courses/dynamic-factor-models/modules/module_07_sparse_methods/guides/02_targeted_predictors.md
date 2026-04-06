@@ -224,12 +224,10 @@ Standard Factors (r=5)
 ### Basic Targeted Predictors Implementation
 
 
-<span class="filename">targetedpredictors.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">targetedpredictors.py</span>
 
 ```python
 import numpy as np
@@ -507,14 +505,13 @@ class TargetedPredictors:
 ### Example: Comparing Standard vs Targeted Factors
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Generate data with sparse relevance structure
 np.random.seed(789)
 T, N = 200, 60
@@ -610,12 +607,10 @@ plt.show()
 ### Threshold Selection via Cross-Validation
 
 
-<span class="filename">select_threshold_cv.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_threshold_cv.py</span>
 
 ```python
 def select_threshold_cv(X, y, n_factors=5, thresholds=None,
@@ -749,14 +744,13 @@ plt.show()
 **Solution:** Compute correlations only on training data.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WRONG
 correlations = [pearsonr(X[:, j], y)[0] for j in range(N)]
 
@@ -792,14 +786,13 @@ correlations = [pearsonr(X_train[:, j], y_train)[0] for j in range(N)]
 **Solution:** Compute correlation with $y_{t+h}$ matching forecast horizon.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WRONG for h-step forecast
 corr = pearsonr(X[:, j], y)[0]
 

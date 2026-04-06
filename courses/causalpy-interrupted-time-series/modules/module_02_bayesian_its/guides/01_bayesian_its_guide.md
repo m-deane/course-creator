@@ -110,12 +110,10 @@ A 94% HDI says: "Given the data and our priors, we assign 94% probability to the
 This is a direct probability statement about the parameter. The HDI contains the most probable values — unlike a confidence interval, it is the narrowest interval containing the specified probability.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import arviz as az
@@ -162,12 +160,10 @@ where $Y_t^{obs}$ is the observed outcome and $Y_t(0)$ is the counterfactual.
 Before fitting the model to data, check that the prior is reasonable by sampling from it and examining the implied distribution of outcomes.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm

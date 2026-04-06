@@ -313,6 +313,7 @@ def kalman_filter(y, Z, H, T, R, Q, a1, P1):
 ### Testing the Implementation
 
 ```python
+
 # Use state-space model from previous guide
 from scipy.linalg import solve_discrete_lyapunov
 
@@ -493,14 +494,13 @@ def kalman_smoother(result_filter, T):
 ### Comparing Filtered vs Smoothed
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Run smoother
 alpha_smoothed, P_smoothed = kalman_smoother(result, T)
 
@@ -581,14 +581,13 @@ State-space framework handles missing data naturally.
 
 **Example:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Mark missing observations
 y_missing = y.copy()
 y_missing[50:60, 3] = np.nan  # Variable 3 missing
@@ -616,12 +615,10 @@ $$\hat{y}_{T+h|T} = Z \hat{\alpha}_{T+h|T}$$
 
 **Implementation:**
 
-<span class="filename">forecast_statespace.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forecast_statespace.py</span>
 
 ```python
 def forecast_statespace(result_filter, Z, T, R, Q, horizons):
@@ -798,9 +795,6 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 
 8. **Diagnostic Checks**
 
-<span class="filename">example.py</span>
-</div>
-
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
@@ -817,9 +811,6 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 </div>
 
 9. **Missing Data Experiment**
-
-<span class="filename">example.py</span>
-</div>
 
    <div class="code-window">
 <div class="code-header">

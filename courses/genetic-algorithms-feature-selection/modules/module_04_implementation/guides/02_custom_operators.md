@@ -155,14 +155,13 @@ Child:    [0, 1, 0, 1, 1]  ✓ (LA, income, age)
 - Focus search on promising features
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Feature importances from random forest
 importances = [0.15, 0.12, 0.10, 0.05, 0.03, ..., 0.001]
 

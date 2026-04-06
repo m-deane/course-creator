@@ -151,12 +151,10 @@ Report text:
 ### Example Extraction
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 sample_text = """
@@ -191,12 +189,10 @@ print(result)
 EIA reports contain data tables. Extract with specific prompts:
 
 
-<span class="filename">parse_eia_table.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">parse_eia_table.py</span>
 
 ```python
 def parse_eia_table(table_text, table_type='inventory'):
@@ -245,12 +241,10 @@ Return JSON array with entries:
 ### End-to-End WPSR Processing
 
 
-<span class="filename">from.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
 
 ```python
 import json
@@ -348,12 +342,10 @@ Keep it concise (3-4 sentences total)."""
 ### Cross-Checking Extractions
 
 
-<span class="filename">validate_wpsr_extraction.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">validate_wpsr_extraction.py</span>
 
 ```python
 def validate_wpsr_extraction(extracted: dict, api_data: dict) -> dict:
@@ -388,12 +380,10 @@ def validate_wpsr_extraction(extracted: dict, api_data: dict) -> dict:
 ### Historical Comparison
 
 
-<span class="filename">check_reasonable_change.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_reasonable_change.py</span>
 
 ```python
 def check_reasonable_change(current: float, change: float, commodity: str) -> bool:

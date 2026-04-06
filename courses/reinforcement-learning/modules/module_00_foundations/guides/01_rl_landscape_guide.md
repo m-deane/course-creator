@@ -123,8 +123,6 @@ See detailed comparison in the table above.
 ## The Agent-Environment Interaction Loop
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -181,8 +179,6 @@ At each discrete time step $t$:
 ## Code Snippet: The Interaction Loop
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

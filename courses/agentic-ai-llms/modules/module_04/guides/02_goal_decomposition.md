@@ -19,13 +19,10 @@ Complex goals require breaking down into manageable subtasks. Goal decomposition
 Start with the goal, recursively break into subtasks:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -258,13 +255,10 @@ Return as JSON array:
 ### Sequential Execution
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class SequentialExecutor:
@@ -397,13 +391,10 @@ class ParallelExecutor:
 ### Create Plan, Then Execute
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class PlanAndExecuteAgent:
@@ -505,13 +496,10 @@ Provide a final summary of what was accomplished."""
 ## Adaptive Replanning
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class AdaptivePlanAgent:

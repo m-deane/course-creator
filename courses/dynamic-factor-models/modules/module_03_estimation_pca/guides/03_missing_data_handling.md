@@ -212,12 +212,10 @@ Same rate as complete-data PCA! The key requirement: missingness proportion does
 ### Complete EM-PCA Implementation
 
 
-<span class="filename">empca.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">empca.py</span>
 
 ```python
 import numpy as np
@@ -476,7 +474,9 @@ class EMPCA:
 
 
 # ============================================================================
+
 # Comparison of Imputation Methods
+
 # ============================================================================
 
 def compare_imputation_methods(X_true, missing_pct=0.20, r=3, seed=456):
@@ -568,7 +568,9 @@ def compare_imputation_methods(X_true, missing_pct=0.20, r=3, seed=456):
 
 
 # ============================================================================
+
 # Demonstration
+
 # ============================================================================
 
 # Simulate complete data

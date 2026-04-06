@@ -109,8 +109,6 @@ The simplest MARL approach: each agent runs a standard single-agent RL algorithm
 **Cons:** The environment is non-stationary from each agent's perspective (other agents are learning simultaneously), breaking convergence guarantees. Q-values estimated during early training become stale as other agents' policies change.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -173,8 +171,6 @@ When agents can send messages, the effective observation of agent $i$ becomes $(
 | Timing | Synchronous vs. asynchronous |
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

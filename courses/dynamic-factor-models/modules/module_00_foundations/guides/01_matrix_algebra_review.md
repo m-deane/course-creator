@@ -51,12 +51,10 @@ where:
 ### Code Implementation
 
 
-<span class="filename">eigendecomposition_symmetric.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">eigendecomposition_symmetric.py</span>
 
 ```python
 import numpy as np
@@ -148,12 +146,10 @@ SVD decomposes a data matrix into three parts:
 ### Code Implementation
 
 
-<span class="filename">svd_decomposition.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">svd_decomposition.py</span>
 
 ```python
 def svd_decomposition(X, n_components=None):
@@ -233,12 +229,10 @@ Covariance matrices must be PSD (and typically PD in practice):
 ### Code Implementation
 
 
-<span class="filename">check_positive_definite.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_positive_definite.py</span>
 
 ```python
 def check_positive_definite(A, tol=1e-10):

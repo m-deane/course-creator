@@ -82,12 +82,10 @@ where $d_j$ are singular values of $X$. As $\lambda \to 0$, df approaches rank($
 ### 2.4 Python Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -186,12 +184,10 @@ where $r_{-j} = y - X_{-j}\hat{\beta}_{-j}$ is the partial residual and $\mathca
 ### 3.5 Python Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.linear_model import Lasso, LassoCV
@@ -253,12 +249,10 @@ $$\hat{\beta}^{\text{EN}} = \arg\min_{\beta} \left\{ \frac{1}{T}\|y - X\beta\|_2
 ### 4.3 Python Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.linear_model import ElasticNetCV, ElasticNet
@@ -329,6 +323,7 @@ The $\sqrt{|g|}$ factor adjusts for group size (larger groups are penalised prop
 ### 5.4 Implementation with group_lasso
 
 ```python
+
 # Install: pip install group-lasso
 from group_lasso import GroupLasso
 import numpy as np
@@ -375,6 +370,7 @@ def fit_group_lasso_midas(X, y, K, m, reg=0.05):
 
 # Example: 10 monthly indicators, 12 lags each
 K, m = 10, 12
+
 # X_gl has shape (T, 120)
 model_gl, selected = fit_group_lasso_midas(X_gl, y, K, m, reg=0.1)
 print(f"Selected indicators: {selected}")
@@ -400,7 +396,9 @@ The `midasml` Python package (Babii, Ghysels, Striaukas 2021) provides MIDAS-spe
 3. **Semi-parametric MIDAS**: Nonparametric lag weights estimated with penalization
 
 ```python
+
 # Conceptual midasml workflow (install: pip install midasml)
+
 # from midasml import MIDASQuantileReg, MIDASReg
 
 # The Legendre projection approach:
@@ -419,6 +417,7 @@ def legendre_projection(lags, degree=3):
     return basis
 
 # After projection, apply group Lasso on polynomial coefficients
+
 # This enforces smooth lag profiles while allowing sparsity
 ```
 

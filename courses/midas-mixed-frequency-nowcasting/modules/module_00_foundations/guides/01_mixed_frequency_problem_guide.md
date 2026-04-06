@@ -99,12 +99,10 @@ With weights $w_j > 0$, $\sum w_j = 1$. Better, but weights must be specified a 
 Consider quarterly GDP growth regressed on quarterly-averaged industrial production growth (IP). The within-quarter pattern of IP carries information: if IP accelerates through a quarter, that is a different signal than the same average with IP decelerating. Simple aggregation conflates these two patterns.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -118,6 +116,7 @@ ip_decelerating = np.array([0.5, 0.3, 0.1, 0.6, 0.4, 0.2])  # falling
 
 print(f"Q1 average (accelerating): {ip_accelerating[:3].mean():.3f}")
 print(f"Q1 average (decelerating): {ip_decelerating[:3].mean():.3f}")
+
 # Both equal 0.300 — identical after aggregation
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 4))

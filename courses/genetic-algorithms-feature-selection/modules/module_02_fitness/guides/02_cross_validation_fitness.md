@@ -26,12 +26,10 @@ For feature selection, fitness must evaluate how well selected features predict 
 ### Basic Structure
 
 
-<span class="filename">__init__.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">__init__.py</span>
 
 ```python
 import numpy as np
@@ -229,12 +227,10 @@ The `CVFitnessEvaluator` above uses standard k-fold cross-validation, which rand
 For financial applications, use time-aware CV:
 
 
-<span class="filename">timeseries_fitness.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">timeseries_fitness.py</span>
 
 ```python
 class TimeSeriesFitnessEvaluator(CVFitnessEvaluator):
@@ -296,6 +292,7 @@ class TimeSeriesFitnessEvaluator(CVFitnessEvaluator):
 
 
 # Example with time series data
+
 # Simulate time series features and target
 n_samples = 500
 X_ts = np.random.randn(n_samples, 30)

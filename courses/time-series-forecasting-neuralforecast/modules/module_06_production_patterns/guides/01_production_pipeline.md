@@ -9,8 +9,6 @@ This guide shows how to build a complete, production-ready forecasting pipeline 
 Start here: the pipeline below runs end-to-end on the French Bakery dataset and answers "How many baguettes should we order for next week at an 80% service level?"
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -41,9 +39,8 @@ Each stage is a method on `ForecastPipeline`. This makes unit testing trivial an
 ## 3. The ForecastPipeline Class
 
 
-<span class="filename">example.py</span>
-</div>
 <div class="callout-info">
+
 <strong>Info:</strong> example.py
 The following implementation builds on the approach above:
 ---
@@ -286,12 +283,10 @@ The choice of model depends on three factors: series length, available features,
 **Decision rule:**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def select_model(series_length: int, n_features: int, needs_explanation: bool) -> str:
@@ -410,6 +405,7 @@ gantt
 ## 6. Running the Complete Pipeline
 
 ```python
+
 # Load data
 url = "https://raw.githubusercontent.com/nixtla/transfer-learning-time-series/main/datasets/french_bakery/bakery.csv"
 raw = pd.read_csv(url, parse_dates=["date"])

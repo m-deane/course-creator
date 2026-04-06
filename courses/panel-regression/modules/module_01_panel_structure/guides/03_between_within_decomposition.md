@@ -34,12 +34,10 @@ Where:
 $$Var(X) = Var_{between}(\bar{X}_i) + Var_{within}(X_{it} - \bar{X}_i)$$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -67,13 +65,15 @@ def variance_decomposition(df, entity_col, variable):
     var_between = between.var()
     var_within = within.var()
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
 
 </div>
 
-
+```python
     return {
         'total': var_total,
         'between': var_between,
@@ -129,13 +129,10 @@ for var in ['size', 'profitability']:
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def plot_variance_decomposition(df, entity_col, variable, n_sample=10):
@@ -216,12 +213,10 @@ $$\tilde{y}_{it} = y_{it} - \bar{y}_i$$
 FE uses only within-entity changes over time.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from linearmodels.panel import PanelOLS

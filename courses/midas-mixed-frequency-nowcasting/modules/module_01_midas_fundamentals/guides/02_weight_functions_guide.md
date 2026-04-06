@@ -74,12 +74,10 @@ where $f_{\text{Beta}}(x; \theta_1, \theta_2) = \frac{x^{\theta_1-1}(1-x)^{\thet
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -201,12 +199,10 @@ Parameters $\theta_1, \theta_2 \in \mathbb{R}$ (no positivity constraint — eas
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def almon_weights(n_lags, theta1, theta2):
@@ -276,12 +272,10 @@ where groups $s = 1, 2, \ldots, S$ partition $\{0, 1, \ldots, K-1\}$ and $\delta
 - Group 4: $j \in \{9, 10, 11\}$ (three quarters back) — weight $\delta_4$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def step_weights(n_lags, deltas, group_size=None):

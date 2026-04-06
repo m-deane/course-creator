@@ -206,8 +206,6 @@ For linear approximators, the feature vector $\mathbf{x}(s)$ determines what inf
 ### Feature Engineering Process
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

@@ -5,9 +5,8 @@
 ## Start Here: See the Impact of input_size
 
 
-<span class="filename">example.py</span>
-</div>
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 The following implementation builds on the approach above:
 Run this first.
@@ -95,8 +94,6 @@ For `h=7`:
 With weekly data and `h=7`, an `input_size=28` gives the model four complete weekly cycles. The NHITS MaxPool layers can extract the weekly pattern at multiple scales. If you are forecasting daily bakery sales and the summer slowdown matters, extend to `input_size=112` or `input_size=365` to give the model access to annual patterns.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -104,6 +101,7 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Short horizon — keep lookback tight
 model_short = NHITS(h=7, input_size=14, max_steps=500)
 
@@ -159,8 +157,6 @@ $$x_{\text{scaled}} = \frac{x - \text{median}(x)}{\text{IQR}(x)}$$
 A single Christmas surge does not distort the normalization for the entire series.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -168,6 +164,7 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Compare scalers on bakery data
 from neuralforecast import NeuralForecast
 from neuralforecast.models import NHITS
@@ -202,12 +199,10 @@ The loss function determines what the model minimizes during training, which dir
 ### Available Loss Functions
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from neuralforecast.losses.pytorch import MAE, MSE, MQLoss, HuberLoss
@@ -285,6 +280,7 @@ See detailed comparison in the table above.
 `max_steps` is the number of gradient descent steps during training. NeuralForecast uses the full dataset (with windowing) at each step.
 
 ```python
+
 # Fast experimentation
 model_fast = NHITS(h=7, input_size=28, max_steps=200)
 
@@ -304,6 +300,7 @@ The default `learning_rate=1e-3` works well for NHITS in most settings. Reduce i
 - You are using a very large model (`mlp_units` > 1024)
 
 ```python
+
 # Lower lr for larger models or when default lr causes instability
 model = NHITS(h=7, input_size=28, max_steps=2000, learning_rate=1e-4)
 ```
@@ -338,6 +335,7 @@ nf = NeuralForecast(
 )
 
 # n_windows: number of test windows
+
 # step_size: how many steps to advance between windows (default = h)
 cv_df = nf.cross_validation(
     df=df,
@@ -346,14 +344,18 @@ cv_df = nf.cross_validation(
 )
 
 print(cv_df.columns.tolist())
+
 # ['unique_id', 'ds', 'cutoff', 'y', 'NHITS']
 ```
 
 ### Reading the Cross-Validation Output
 
 ```python
+
 # cv_df has one row per (series, date, window)
+
 # 'cutoff' tells you when the training data ended for that window
+
 # 'y' is the actual value; 'NHITS' is the predicted value
 
 from utilsforecast.losses import mae, mse
@@ -373,7 +375,9 @@ print(per_window)
 When calling `nf.fit()` directly (not `cross_validation`), you can hold out a validation set for early stopping and a test set for final evaluation:
 
 ```python
+
 # val_size: number of steps held out for validation (used for early stopping)
+
 # test_size: number of steps held out for final evaluation
 nf.fit(df, val_size=14, test_size=7)
 ```

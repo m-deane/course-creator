@@ -165,8 +165,6 @@ Return V (approximately V^pi)
 ### Mermaid Flowchart
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -195,8 +193,6 @@ flowchart TD
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -260,8 +256,11 @@ def policy_evaluation(
 
 
 # --- Simple 4-state chain example ---
+
 # States: 0, 1, 2, 3 (terminal)
+
 # Actions: 0=left, 1=right (deterministic)
+
 # Policy: always go right (pi[s,1]=1)
 
 n_s, n_a = 4, 2
@@ -283,6 +282,7 @@ for s in range(n_s):
 
 V_pi = policy_evaluation(pi, P, R, gamma=0.9)
 print("V^pi:", V_pi.round(3))
+
 # Expected: values decrease toward terminal state
 ```
 

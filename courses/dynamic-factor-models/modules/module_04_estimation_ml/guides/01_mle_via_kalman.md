@@ -169,12 +169,10 @@ Usually computed numerically via finite differences.
 ### Complete Likelihood Function
 
 
-<span class="filename">kalman_filter_likelihood.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">kalman_filter_likelihood.py</span>
 
 ```python
 import numpy as np

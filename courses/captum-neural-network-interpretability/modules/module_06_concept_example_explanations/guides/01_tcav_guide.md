@@ -127,13 +127,10 @@ The quality of TCAV results depends heavily on the concept dataset.
 ## 6. Captum TCAV Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -186,15 +183,13 @@ scores = tcav.interpret(
 ### Reading the Scores
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # scores is a dict: layer -> concept_name -> TCAV score
 for layer, concept_scores in scores.items():
     for concept_name, score in concept_scores.items():
@@ -226,13 +221,10 @@ Layer: layer4, Concept: 4-legged, TCAV: 0.731  ← model uses leg structure
 Running TCAV on multiple layers reveals at which depth the concept is encoded:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 tcav = TCAV(

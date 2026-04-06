@@ -181,8 +181,6 @@ The backward pass for computing $G_t$ is a key implementation detail — it avoi
 ## Python Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

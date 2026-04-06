@@ -21,13 +21,10 @@
 ### Basic Supervisor Pattern
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class Supervisor:
@@ -244,15 +241,13 @@ class AgentTeam:
 - Track progress metrics (new information per round)
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: Unlimited debate
 while not consensus:
     for agent in agents:
@@ -315,6 +310,7 @@ for round in range(max_rounds):
 - Reduce protocol verbosity
 
 ```python
+
 # Bad: Synchronous one-by-one messaging
 for peer in peers:
     response = peer.send_and_wait(message)

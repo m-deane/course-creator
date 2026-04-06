@@ -138,13 +138,10 @@ This is practical because:
 TracIn requires model checkpoints saved during training:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -176,13 +173,10 @@ for epoch in range(50):
 ### Running TracInCPFast
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.influence import TracInCPFast
@@ -209,6 +203,7 @@ proponents = tracin.influence(
     additional_forward_args=None,
     unpack_inputs=True,
 )
+
 # proponents: (influences, indices) for most helpful training examples
 ```
 
@@ -223,13 +218,10 @@ proponents = tracin.influence(
 Captum also provides `SimilarityInfluence`, which finds training examples most similar to a test input in the model's learned representation space:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.influence import SimilarityInfluence
@@ -272,15 +264,13 @@ The most useful TracIn analysis finds:
 - May reveal contradictory information in the training set
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Get both proponents and opponents
 influences, train_indices = tracin.influence(
     inputs=(test_input, test_target),
@@ -322,15 +312,13 @@ High self-influence examples are "difficult" — the model had high loss on them
 - Ambiguous examples near the decision boundary
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compute self-influence for all training examples
 self_influences = tracin.self_influence(
     inputs=train_loader,

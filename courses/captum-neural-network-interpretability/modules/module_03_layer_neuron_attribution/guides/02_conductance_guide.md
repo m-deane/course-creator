@@ -79,13 +79,10 @@ Summing over neurons $j$ in layer $l$ and applying the FTC to the layer activati
 ## 4. Captum Layer Conductance API
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import LayerConductance
@@ -104,7 +101,9 @@ attr = lc.attribute(
     target=class_idx,      # Target class
     n_steps=50
 )
+
 # attr shape: (1, C, H, W) for convolutional layers
+
 # attr shape: (1, N)       for fully connected layers
 ```
 
@@ -120,15 +119,13 @@ For a convolutional layer (e.g., `model.layer3[-1]`):
 - Aggregate to compare layers:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Total conductance of this layer (sum of absolute values)
 layer_total_conductance = attr.abs().sum().item()
 
@@ -150,13 +147,10 @@ channel_importance = attr.abs().mean(dim=(-2, -1)).squeeze()  # (1024,)
 The completeness property allows fair comparison across layers:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 layers_to_examine = {
@@ -217,10 +211,8 @@ This is the same formula as Layer Conductance, but interpreted at the level of a
 ## 7. Captum Neuron Conductance API
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
 <div class="callout-key">
+
 <strong>Key Point:</strong> from captum.attr import NeuronConductance
 </div>
 
@@ -237,6 +229,7 @@ target_layer = model.layer4[-1]
 nc = NeuronConductance(model, target_layer)
 
 # Conductance for a specific neuron
+
 # For a conv layer, neuron index is (channel, height, width)
 neuron_attr = nc.attribute(
     input_tensor,
@@ -245,6 +238,7 @@ neuron_attr = nc.attribute(
     baselines=baseline,
     n_steps=50
 )
+
 # neuron_attr: (1, 3, 224, 224) — attribution on INPUT for this neuron
 ```
 
@@ -257,13 +251,10 @@ Neuron Conductance returns the *input attribution* for a single intermediate neu
 ### Finding the Most Important Neurons
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def top_neurons_for_prediction(model, layer, input_tensor, baseline,
@@ -307,15 +298,13 @@ def top_neurons_for_prediction(model, layer, input_tensor, baseline,
 Before computing conductance, it is useful to understand the distribution of activations in each layer. Neurons with zero activation have zero conductance regardless of weights.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Get activations without computing attribution
 activations = {}
 
@@ -374,13 +363,10 @@ Activation patching is popular in mechanistic interpretability research (circuit
 Captum also provides `InternalInfluence`, which is the simpler gradient-based internal attribution (no integration):
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import InternalInfluence
@@ -391,6 +377,7 @@ attr = ii.attribute(
     input_tensor,
     target=class_idx
 )
+
 # Gradient of output w.r.t. layer activations
 ```
 

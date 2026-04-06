@@ -178,8 +178,6 @@ where $u_{t+k}$ is the actual reward, $z_{t+k}$ is the bootstrapped target value
 ## MuZero Architecture Diagram
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -265,8 +263,6 @@ Model-based methods achieve $10\times$–$50\times$ sample efficiency improvemen
 ## Python Implementation: World Model Components
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

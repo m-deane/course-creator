@@ -131,9 +131,6 @@ Power Automate exposes the full create-read-update-delete set for SharePoint lis
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid

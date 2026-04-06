@@ -87,13 +87,10 @@ This is a **Student's t-distribution** with interpretable parameters, giving nat
 ### Basic Bayesian Regression with PyMC
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -136,15 +133,13 @@ print(az.hdi(trace, hdi_prob=0.95))
 ### Prediction with Uncertainty
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Posterior predictive distribution
 with model:
     pm.sample_posterior_predictive(trace, extend_inferencedata=True)
@@ -204,15 +199,13 @@ As prior gets weaker, posterior → MLE
 
 **Example:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # BAD: Very tight prior with only 10 data points
 beta = pm.Normal('beta', mu=0, sigma=0.1)  # σ=0.1 very tight!
 ```
@@ -222,15 +215,13 @@ beta = pm.Normal('beta', mu=0, sigma=0.1)  # σ=0.1 very tight!
 
 **Solution:** Use weakly informative priors unless you have strong domain knowledge
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # GOOD: Regularizing but not dominating
 beta = pm.Normal('beta', mu=0, sigma=10)  # Allows data to speak
 ```
@@ -304,13 +295,10 @@ Given data on natural gas prices and heating degree days (HDD):
 
 **Starter code:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm

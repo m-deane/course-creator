@@ -30,13 +30,15 @@ Arm B:    ░░░░░░░░░░░░  (worse)          █████
                                     but algorithm is stuck on Arm A
                                     (too much historical evidence)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 
 </div>
 
-
+```
 Discounted Thompson Sampling (ADAPTS):
 Time:     0 ─────────── 500 ─────────── 1000 ─────────── 1500 ────→
 Arm A:    ████████████                   → detects decline → switches
@@ -118,12 +120,10 @@ Imagine driving with GPS directions. If the GPS uses traffic data from last week
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -172,12 +172,10 @@ for t in range(1000):
 **Sliding-Window UCB:**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from collections import deque
@@ -319,14 +317,13 @@ With γ=0.95 (half-life ~14 days), post-crash data quickly dominated. Algorithm 
 
 **Implementation:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Pseudo-code
 returns_dict = load_commodity_returns(['WTI', 'NATGAS', 'HEAT'])
 

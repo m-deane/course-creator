@@ -9,8 +9,6 @@ NeuralForecast's `.simulate()` uses the Gaussian Copula method to generate sampl
 Start with the complete working example, then study each step in detail.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -40,8 +38,6 @@ NHITS trained with `MQLoss(level=[80, 90])` produces, for each horizon step $t$,
 These are **marginal** quantile forecasts: the distribution of step $t$ conditioned only on history, without reference to other steps.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -49,10 +45,13 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Inspect the marginal quantile forecasts
 forecasts = nf.predict()
 print(forecasts.columns.tolist())
+
 # ['unique_id', 'ds', 'NHITS', 'NHITS-lo-90', 'NHITS-lo-80',
+
 #  'NHITS-hi-80', 'NHITS-hi-90']
 
 # These are the quantile estimates for each step
@@ -86,12 +85,10 @@ $$\Delta y_t = y_t - y_{t-1}$$
 $$\Delta y_t = \phi \cdot \Delta y_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma^2)$$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from scipy.stats import pearsonr
@@ -309,6 +306,7 @@ def inverse_quantile_transform(
     return paths
 
 # Example: extract quantile forecasts from model output
+
 # (In practice, neuralforecast.simulate() handles this internally)
 quantile_levels = np.array([0.05, 0.10, 0.20, 0.30, 0.40, 0.50,
                              0.60, 0.70, 0.80, 0.90, 0.95])
@@ -408,6 +406,7 @@ A well-generated set of paths should satisfy three properties:
 
 
 ```python
+
 # Validation checks
 paths = paths_array  # from nf.models[0].simulate()
 

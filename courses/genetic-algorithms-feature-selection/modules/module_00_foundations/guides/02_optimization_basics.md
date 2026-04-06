@@ -49,12 +49,10 @@ This combinatorial explosion makes exhaustive search infeasible.
 ### Exhaustive Search
 
 
-<span class="filename">exhaustive_search.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">exhaustive_search.py</span>
 
 ```python
 from itertools import combinations
@@ -94,12 +92,10 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
 ### Greedy Search (Forward Selection)
 
 
-<span class="filename">forward_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_selection.py</span>
 
 ```python
 def forward_selection(X, y, model_fn, max_features=None):
@@ -163,7 +159,9 @@ Greedy follows steepest descent → lands in local optimum
 **Example: XOR Problem**
 
 ```python
+
 # Features A and B are useless alone
+
 # But A XOR B is highly predictive
 
 np.random.seed(42)
@@ -178,9 +176,13 @@ y = (A ^ B) + 0.1 * np.random.randn(n)  # XOR with noise
 X = np.column_stack([A, B, C])
 
 # Greedy selection would struggle because:
+
 # - A alone: correlation with y ≈ 0
+
 # - B alone: correlation with y ≈ 0
+
 # - C alone: correlation with y ≈ 0
+
 # - {A, B} together: high predictive power
 ```
 

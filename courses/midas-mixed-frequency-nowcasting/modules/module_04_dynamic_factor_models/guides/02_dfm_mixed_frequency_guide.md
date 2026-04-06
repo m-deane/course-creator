@@ -85,12 +85,10 @@ For the course, we use a simplified two-step approach that avoids full Kalman fi
 
 **Step 1: Extract factors from monthly panel**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def extract_monthly_factors(monthly_panel, n_factors):
@@ -113,12 +111,10 @@ def extract_monthly_factors(monthly_panel, n_factors):
 
 **Step 2: Aggregate factors to quarterly frequency**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
@@ -147,12 +143,10 @@ def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
 
 **Step 3: MIDAS regression using factor as predictor**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def factor_augmented_midas(Y, F_monthly, K, n_factors=1):

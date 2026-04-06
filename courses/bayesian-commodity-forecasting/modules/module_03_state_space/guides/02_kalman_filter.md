@@ -128,13 +128,10 @@ $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 ### Simple Local Level Model
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -194,6 +191,7 @@ H_true = 4.0  # Observation variance
 
 # True states (random walk)
 alpha_true = np.cumsum(np.random.randn(T) * np.sqrt(Q_true))
+
 # Observations
 y = alpha_true + np.random.randn(T) * np.sqrt(H_true)
 
@@ -231,18 +229,16 @@ print(f"Mean squared error: {np.mean((np.array(kf.filtered_states) - alpha_true)
 ### Commodity Application: Filtering Oil Prices
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
 
 # Assume we have daily oil prices
+
 # We'll filter them to extract the underlying level
 
 def filter_commodity_prices(prices, Q=0.5, H=2.0):
@@ -261,7 +257,9 @@ def filter_commodity_prices(prices, Q=0.5, H=2.0):
     return np.array(filtered)
 
 # Example usage
+
 # prices = fetch_wti_prices()  # Your data here
+
 # smooth_prices = filter_commodity_prices(prices)
 ```
 
@@ -315,15 +313,13 @@ Uncertainty Evolution:
 
 **Example:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Too small Q, too large H → Filter stuck, doesn't adapt
 kf = KalmanFilter(H=100, Q=0.01, ...)
 
@@ -376,16 +372,14 @@ kf = KalmanFilter(H=0.01, Q=100, ...)
 
 **Check:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 innovations = y - predictions
+
 # Should be uncorrelated, zero-mean, constant variance
 from statsmodels.graphics.tsaplots import plot_acf
 plot_acf(innovations)  # Should show no significant lags

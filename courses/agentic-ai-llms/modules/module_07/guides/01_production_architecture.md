@@ -55,13 +55,10 @@ Production agents face challenges prototypes never see: high load, network failu
 `ProductionAgent` wraps the core agent loop with input validation, caching, structured error handling, and metrics collection—solving the gap between a working prototype and a system that can handle real load, malformed inputs, and partial failures without crashing. It uses `AgentConfig` to centralise all tunable parameters so deployment settings never live inside business logic.
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from dataclasses import dataclass
@@ -170,13 +167,10 @@ class ProductionAgent:
 Prevent cascading failures:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from datetime import datetime, timedelta
@@ -315,13 +309,10 @@ class BulkheadAgent:
 ### Rate Limiting
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from collections import defaultdict
@@ -408,13 +399,10 @@ class PriorityQueue:
 ### FastAPI Agent Service
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -538,13 +526,10 @@ spec:
 ### Structured Error Responses
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from enum import Enum

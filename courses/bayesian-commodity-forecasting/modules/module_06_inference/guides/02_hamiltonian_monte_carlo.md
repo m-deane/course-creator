@@ -123,13 +123,10 @@ Energy complex hierarchy: global factor → product factors → individual marke
 ### Basic HMC for Crude Oil State Space Model
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -220,13 +217,10 @@ Where $\theta_-, \theta_+$ are endpoints of trajectory, $p_-, p_+$ are momenta.
 **Optimal:** Acceptance rate ≈ 0.65 for high-dimensional problems
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 trace = pm.sample(
@@ -257,13 +251,10 @@ trace = pm.sample(
 - More computation per step but better exploration
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 trace = pm.sample(
@@ -306,13 +297,10 @@ trace_dense = pm.sample(
 
 **Centered (bad):**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 h[t] = mu + phi * (h[t-1] - mu) + sigma_eta * eta[t]
@@ -325,13 +313,10 @@ When $\sigma_\eta \to 0$, posterior becomes funnel-shaped (hard for HMC).
 
 **Non-centered (good):**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 h_raw[t] = phi * h_raw[t-1] + eta[t]  # eta ~ N(0, 1)
@@ -343,13 +328,10 @@ h[t] = mu + sigma_eta * h_raw[t]
 
 **Implementation:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as sv_noncentered:
@@ -403,13 +385,10 @@ with pm.Model() as sv_noncentered:
 **Fixes:**
 1. Increase `target_accept` (smaller step size):
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
-   <div class="code-window">
+<div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
    trace = pm.sample(1000, tune=2000, target_accept=0.95)
@@ -432,13 +411,10 @@ with pm.Model() as sv_noncentered:
 
 **Check:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 ess = az.ess(trace)
@@ -477,13 +453,10 @@ $$\text{E-BFMI} = \frac{\mathbb{E}[\text{Var}(\Delta E)]}{\text{Var}(E)}$$
 
 **Check:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 bfmi = az.bfmi(trace)
@@ -502,15 +475,13 @@ print(f"E-BFMI: {bfmi}")
 ## HMC for Hierarchical Commodity Model
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Energy complex hierarchy with HMC
 n_grades = 5
 n_obs = 200

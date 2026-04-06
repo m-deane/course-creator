@@ -85,8 +85,6 @@ $$Q(s, a) \leftarrow r + \gamma \max_{a'} Q(s', a')$$
 The $\max_{a'}$ operator queries Q-values at $(s', a')$ pairs that the behavior policy never visited. These Q-values are extrapolated by the function approximator in an unconstrained way.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -128,8 +126,6 @@ where $\mu$ is a distribution that concentrates on high-Q actions (e.g., the cur
 - The penalty strength $\alpha$ controls how conservative the policy is.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -177,12 +173,10 @@ where $\mathcal{L}_2^\tau(u) = |\tau - \mathbf{1}(u < 0)| \cdot u^2$ is the asym
 For $\tau \to 1$, $V(s)$ approaches $\max_{a \in \mathcal{D}(s)} Q(s, a)$ — the maximum over **dataset actions only**, not over all possible actions.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:

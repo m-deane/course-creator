@@ -86,17 +86,17 @@ This prompt worked well for open-ended research questions ("Analyze the crude oi
 
 **Reward function:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def research_bot_reward(query, response, retrieved_docs, ground_truth=None):
     # Primary: task completion
     completion = task_completion_score(query, response)
+
+```
 
 <div class="callout-insight">
 
@@ -104,7 +104,7 @@ def research_bot_reward(query, response, retrieved_docs, ground_truth=None):
 
 </div>
 
-
+```python
     # Guardrail 1: Hallucination detection (critical!)
     hallucination_penalty = 0.0
     claims = extract_factual_claims(response)
@@ -150,14 +150,13 @@ After 2 weeks of production use (500 queries):
 ### Implementation Code
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Initialize router
 prompts = [generic, evidence_only, structured, quantitative, clarify]
 router = CommodityPromptRouter(prompts)
@@ -275,12 +274,10 @@ A single prompt was optimized for tables but terrible at narratives.
 
 **Reward function:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def eia_extraction_reward(section_type, response, ground_truth):

@@ -117,12 +117,10 @@ You should be able to explain why the feature might matter.
 
 ### Recipe 1: Volatility Regime
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_volatility_regime(prices, window=20):
@@ -143,12 +141,10 @@ def compute_volatility_regime(prices, window=20):
 
 ### Recipe 2: Term Structure Indicator
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_term_structure(front_price, back_price):
@@ -167,12 +163,10 @@ def compute_term_structure(front_price, back_price):
 
 ### Recipe 3: Seasonality Features
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_seasonality(date):
@@ -307,6 +301,7 @@ Use when data has outliers.
 
 ### Handling Missing Values
 ```python
+
 # Forward fill (use last known value)
 features = features.fillna(method='ffill')
 

@@ -153,8 +153,6 @@ Cliff Walking is a canonical gridworld that illustrates the on-policy vs off-pol
 ## Diagram: SARSA Control Loop
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -179,8 +177,6 @@ The crucial implementation detail: $A_{t+1}$ is chosen *before* the SARSA update
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

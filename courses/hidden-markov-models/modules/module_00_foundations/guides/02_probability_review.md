@@ -104,12 +104,10 @@ $$P(q_{t+1}, q_{t+2}, ... | q_t) = P(q_{t+1} | q_t) \cdot P(q_{t+2} | q_{t+1}) \
 ## Code Implementation
 
 
-<span class="filename">regimeinference.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeinference.py</span>
 
 ```python
 import numpy as np
@@ -243,12 +241,10 @@ print(f"  P(Bull | -return) = {regime_model.posterior_bull_given_negative():.2%}
 ### Discrete Probability Distributions
 
 
-<span class="filename">discreteprobdist.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">discreteprobdist.py</span>
 
 ```python
 class DiscreteProbDist:
@@ -310,12 +306,10 @@ print(f"  Sample sequence: {samples}")
 ### Continuous Distributions
 
 
-<span class="filename">gaussiandistribution.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussiandistribution.py</span>
 
 ```python
 from scipy import stats
@@ -401,14 +395,13 @@ print(f"P(return > 0 | Bear) = {1 - bear_returns.cdf(0):.2%}")
    - log(a × b) = log(a) + log(b)
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Bad: Numerical underflow
 probs = [0.01] * 100
 product = np.prod(probs)  # → 0.0 (underflow!)

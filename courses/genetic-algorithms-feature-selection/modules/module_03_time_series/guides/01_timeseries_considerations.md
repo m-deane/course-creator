@@ -56,12 +56,10 @@ If you have built GA feature selection for cross-sectional data (e.g., predictin
 ### Walk-Forward Validation
 
 
-<span class="filename">walk_forward_split.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">walk_forward_split.py</span>
 
 ```python
 import numpy as np
@@ -110,12 +108,10 @@ for i, (train, test) in enumerate(splits):
 ### Purged K-Fold
 
 
-<span class="filename">purged_kfold.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">purged_kfold.py</span>
 
 ```python
 def purged_kfold(
@@ -216,12 +212,10 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
 ### Rolling Feature Selection
 
 
-<span class="filename">rolling_feature_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">rolling_feature_selection.py</span>
 
 ```python
 def rolling_feature_selection(

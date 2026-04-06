@@ -75,14 +75,13 @@ Think of Dataiku webapps like building a custom dashboard in Tableau or PowerBI,
 ### Basic Webapp Structure
 
 
-<span class="filename">backend.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backend.py</span>
 
 ```python
+
 # backend.py - Dataiku Webapp Backend
 import dataiku
 from dataiku.llm import LLM
@@ -157,12 +156,10 @@ def health_check():
 The frontend HTML connects to the backend endpoints and renders the analysis results:
 
 
-<span class="filename">frontend.html</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">frontend.html</span>
 
 ```html
 <!-- frontend.html - Dataiku Webapp Frontend -->
@@ -394,14 +391,13 @@ The frontend HTML connects to the backend endpoints and renders the analysis res
 ### Chatbot Interface
 
 
-<span class="filename">backend.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backend.py</span>
 
 ```python
+
 # backend.py - Chatbot Backend
 from dataiku.llm import ChatSession
 
@@ -491,12 +487,10 @@ def chat_history():
 The chatbot frontend manages conversation state and renders the message history:
 
 
-<span class="filename">frontend.html</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">frontend.html</span>
 
 ```html
 <!-- frontend.html - Chatbot UI -->
@@ -658,14 +652,13 @@ The chatbot frontend manages conversation state and renders the message history:
 ### Streaming Responses
 
 
-<span class="filename">backend.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backend.py</span>
 
 ```python
+
 # backend.py - Streaming Responses
 from flask import Response, stream_with_context
 import json
@@ -708,12 +701,10 @@ def stream_analysis():
 The frontend JavaScript reads from the event stream and updates the UI incrementally:
 
 
-<span class="filename">frontend.js</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">frontend.js</span>
 
 ```javascript
 // Frontend - Handle streaming

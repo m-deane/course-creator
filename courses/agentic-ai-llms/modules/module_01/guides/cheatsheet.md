@@ -19,13 +19,10 @@
 
 ### Effective System Prompt Structure
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 system_prompt = """You are a [IDENTITY/ROLE].
@@ -53,6 +50,7 @@ Available tools:
 
 ### Chain-of-Thought Prompting
 ```python
+
 # Zero-shot CoT
 user_prompt = """
 Question: {question}
@@ -131,13 +129,10 @@ prompt = template.substitute(
 
 - [ ] **Be specific** - Vague prompts get vague results
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
-  <div class="code-window">
+<div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
   # Vague
@@ -182,13 +177,10 @@ prompt = template.substitute(
 
 - **System prompt length** - Counts against context window; keep focused and concise
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
-  <div class="code-window">
+<div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
   # Bad: 5000 token system prompt

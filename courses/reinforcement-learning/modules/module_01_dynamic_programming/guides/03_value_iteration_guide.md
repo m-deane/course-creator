@@ -188,8 +188,6 @@ Return V, pi*
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid

@@ -272,8 +272,6 @@ result('Try')
 This returns an array of action results from the Try Scope. Each result object contains:
 
 
-<span class="filename">example.json</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

@@ -54,13 +54,15 @@ SETUP:
   Binary reward: conversion (1) or not (0)
   Prior: Beta(1, 1) for each variant
 
+```
+
 <div class="callout-insight">
 
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 
 </div>
 
-
+```
 ALGORITHM:
   For each visitor t:
     1. Sample: θ̃_k ~ Beta(α_k, β_k) for all variants

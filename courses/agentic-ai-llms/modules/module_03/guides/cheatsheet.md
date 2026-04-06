@@ -20,13 +20,10 @@
 
 ### Basic Conversation Memory (Buffer)
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class ConversationBuffer:
@@ -159,6 +156,7 @@ answer = rag_query("How many employees does the company have?")
 
 ### Document Chunking Strategies
 ```python
+
 # Fixed-size chunking with overlap
 def chunk_text_fixed(text, chunk_size=500, overlap=50):
     chunks = []
@@ -283,15 +281,13 @@ def manage_context_window(messages, max_tokens=180000, model="claude-3-5-sonnet-
 
 ### Chunk Size Guidelines
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Use case based chunking
 CHUNK_SIZES = {
     "qa": 400,              # Question answering
@@ -313,6 +309,7 @@ OVERLAP = {
 
 ### Metadata for Filtering
 ```python
+
 # Add metadata to improve retrieval
 collection.add(
     documents=["Document text..."],
@@ -373,21 +370,22 @@ Question: {question}"""
 - **Embedding model consistency** - Always use same embedding model for indexing and querying
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: Different models
+
 # Index with: text-embedding-3-small
+
 # Query with: text-embedding-ada-002
 
 # Good: Same model
 EMBEDDING_MODEL = "text-embedding-3-small"
+
 # Use everywhere
 ```
 
@@ -397,20 +395,25 @@ EMBEDDING_MODEL = "text-embedding-3-small"
 - **Chunk size too large** - Dilutes relevant information
 
 ```python
+
 # Bad: 5000 token chunks (too much irrelevant context)
+
 # Good: 400-1000 token chunks (focused context)
 ```
 
 - **Chunk size too small** - Loses surrounding context
 
 ```python
+
 # Bad: 50 token chunks (fragments sentences)
+
 # Good: 200-400 token minimum for coherent meaning
 ```
 
 - **No overlap in chunking** - Splits concepts across chunks
 
 ```python
+
 # Bad: No overlap
 chunks = [text[0:500], text[500:1000], ...]
 
@@ -421,6 +424,7 @@ chunks = [text[0:500], text[450:950], ...]
 - **Ignoring metadata** - Harder to filter and debug
 
 ```python
+
 # Bad: No metadata
 collection.add(documents=[doc], ids=["1"])
 
@@ -435,6 +439,7 @@ collection.add(
 - **Top-k too low** - Misses relevant context
 
 ```python
+
 # Bad: Only retrieve 1 document
 results = collection.query(query, n_results=1)
 
@@ -445,6 +450,7 @@ results = collection.query(query, n_results=5)
 - **Context position bias** - LLMs pay more attention to start/end of context
 
 ```python
+
 # Solution: Put most relevant retrieved docs at start and end
 context = f"{most_relevant}\n\n{other_docs}\n\n{second_most_relevant}"
 ```
@@ -452,6 +458,7 @@ context = f"{most_relevant}\n\n{other_docs}\n\n{second_most_relevant}"
 - **Stale embeddings** - Documents updated but embeddings not refreshed
 
 ```python
+
 # Solution: Track document versions
 metadata = {
     "doc_id": "123",
@@ -467,9 +474,11 @@ if doc_updated_since(last_embed_time):
 - **Vector database memory** - Large collections consume RAM
 
 ```python
+
 # Solution: Use persistent storage
 client = chromadb.PersistentClient(path="/path/to/db")
 
 # Or use cloud vector DB for production
+
 # Pinecone, Weaviate, Qdrant, etc.
 ```

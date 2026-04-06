@@ -128,9 +128,8 @@ where $\tau(S, A)$ is the number of real time steps since $(S, A)$ was last exec
 ## Python Implementation: Dyna-Q
 
 
-<span class="filename">example.py</span>
-</div>
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 The following implementation builds on the approach above:
 ---
@@ -238,8 +237,6 @@ See detailed comparison in the table above.
 ## Code Snippet: MCTS Core Loop
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

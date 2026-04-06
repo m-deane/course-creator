@@ -411,12 +411,10 @@ Transcript:
 ## Complete Pipeline
 
 
-<span class="filename">from.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
 
 ```python
 from dataclasses import dataclass
@@ -567,12 +565,10 @@ Format as concise bullet points.
 - **Issue:** Full transcripts often exceed LLM context limits
 - **Solution:** Chunk intelligently by section (prepared remarks, Q&A)
 
-<span class="filename">chunk_transcript.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">chunk_transcript.py</span>
 
 ```python
 def chunk_transcript(transcript: str) -> dict:
@@ -592,12 +588,10 @@ def chunk_transcript(transcript: str) -> dict:
 - **Issue:** LLMs may misinterpret industry terminology
 - **Solution:** Provide glossary in prompt
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 INDUSTRY_GLOSSARY = """
@@ -616,12 +610,10 @@ Term definitions:
 - **Issue:** Mixing past results with future guidance
 - **Solution:** Explicit temporal extraction
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 prompt = """
@@ -641,12 +633,10 @@ Tag each data point with timeframe.
 - **Issue:** Companies express guidance differently (ranges, points, percentages)
 - **Solution:** Normalize to standard format
 
-<span class="filename">normalize_guidance.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">normalize_guidance.py</span>
 
 ```python
 def normalize_guidance(raw_value: str) -> dict:

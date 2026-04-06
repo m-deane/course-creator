@@ -95,12 +95,10 @@ for source, stats in normalizer.source_stats.items():
 Recent sentiment matters more:
 
 
-<span class="filename">timeweightedsentiment.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">timeweightedsentiment.py</span>
 
 ```python
 class TimeWeightedSentiment:
@@ -152,12 +150,10 @@ print(f"Unweighted sentiment: {result['unweighted_sentiment']:.4f}")
 ### Reliability-Based Aggregation
 
 
-<span class="filename">sourceweightedsentiment.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sourceweightedsentiment.py</span>
 
 ```python
 class SourceWeightedSentiment:
@@ -211,12 +207,10 @@ print(f"Source-weighted sentiment: {result['weighted_sentiment']:.4f}")
 ### Creating a Composite Index
 
 
-<span class="filename">commoditysentimentindex.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">commoditysentimentindex.py</span>
 
 ```python
 class CommoditySentimentIndex:
@@ -306,12 +300,10 @@ print(f"\nComposite Index: {index_results['composite_index']:.4f}")
 ### Identifying Market Sentiment Regimes
 
 
-<span class="filename">sentimentregimedetector.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sentimentregimedetector.py</span>
 
 ```python
 class SentimentRegimeDetector:
@@ -388,12 +380,10 @@ print(regimes.value_counts())
 ## Visualization
 
 
-<span class="filename">plot_sentiment_dashboard.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_sentiment_dashboard.py</span>
 
 ```python
 import matplotlib.pyplot as plt

@@ -123,14 +123,13 @@ Over 5000 evaluations with 20% cache hit rate → 1000 evaluations saved!
 
 **Non-Reproducible Run:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Run 1
 np.random.seed(42)
 ga.run()  # Best fitness: 0.87
@@ -148,6 +147,7 @@ Why? Cross-validation shuffles differently, thread scheduling varies, floating-p
 
 **Reproducible Run:**
 ```python
+
 # Fix ALL randomness sources
 np.random.seed(42)
 random.seed(42)

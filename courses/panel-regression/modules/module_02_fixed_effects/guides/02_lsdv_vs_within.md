@@ -56,12 +56,10 @@ where $D_{ij} = 1$ if $i = j$, else 0.
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -86,12 +84,15 @@ for i in range(n_entities):
 
 df = pd.DataFrame(data)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Fixed effects are not a method -- they are a way of thinking about unobserved heterogeneity. The within-transformation eliminates time-invariant confounders, which is the single most important advantage of panel data.
 
 </div>
 
+```python
 
 # LSDV: Include entity dummies explicitly
 lsdv_model = smf.ols('y ~ x + C(entity)', data=df).fit()
@@ -110,19 +111,19 @@ print(f"  Number of parameters: {len(lsdv_model.params)}")
 ### Extracting Entity Effects
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Extract entity fixed effects from LSDV
 entity_dummies = [col for col in lsdv_model.params.index if 'entity' in col]
 entity_effects_estimated = lsdv_model.params[entity_dummies]
 
 # Reference category effect (absorbed in intercept)
+
 # Entity 0 is reference, its effect = intercept - grand mean of other effects
 reference_effect = lsdv_model.params['Intercept']
 
@@ -156,14 +157,13 @@ Then estimate: $\tilde{y}_{it} = \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Manual within transformation
 df['y_mean'] = df.groupby('entity')['y'].transform('mean')
 df['x_mean'] = df.groupby('entity')['x'].transform('mean')
@@ -186,6 +186,7 @@ print(f"  x std error (unadjusted): {within_manual.bse['x_demean']:.4f}")
 ### Using linearmodels
 
 ```python
+
 # Using linearmodels PanelOLS
 df_panel = df.set_index(['entity', 'time'])
 
@@ -222,6 +223,7 @@ Proof outline:
 ### Standard Error Differences
 
 ```python
+
 # Standard errors differ!
 print("\n" + "="*50)
 print("STANDARD ERROR COMPARISON")
@@ -236,6 +238,7 @@ The within transformation loses degrees of freedom ($N-1$ for entity effects), w
 $$SE_{adjusted} = SE_{unadjusted} \times \sqrt{\frac{NT - K}{NT - N - K}}$$
 
 ```python
+
 # Manual degrees of freedom correction
 N = df['entity'].nunique()
 T = df['time'].nunique()
@@ -286,8 +289,11 @@ print(f"\nManually corrected SE: {within_se_corrected:.6f}")
 ### Use LSDV When:
 
 ```python
+
 # 1. You need entity effects
+
 # 2. N is small (< 100 entities)
+
 # 3. You want interactions with entity
 
 # Example: Entity-specific slopes
@@ -298,11 +304,15 @@ print("Entity-specific slopes model estimated")
 ### Use Within Transformation When:
 
 ```python
+
 # 1. Large N (hundreds or thousands of entities)
+
 # 2. Only care about coefficients, not effects
+
 # 3. Computational efficiency matters
 
 # Example: Large panel
+
 # Within transformation handles this easily
 large_df = pd.concat([df.assign(entity=df['entity'] + i*n_entities) for i in range(100)])
 large_df = large_df.set_index(['entity', 'time'])
@@ -361,6 +371,7 @@ print(entity_effects_recovered.head())
 4. **For standard errors**: Always cluster by entity
 
 ```python
+
 # Recommended approach
 final_model = PanelOLS(
     df_panel['y'],

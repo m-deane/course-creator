@@ -67,12 +67,10 @@ If you use the same prompt for all four:
 
 **How to extract:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def classify_task_type(query):
@@ -113,12 +111,10 @@ Different sectors have different:
 
 **How to extract:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def classify_commodity_sector(query):
@@ -150,12 +146,10 @@ When retrieval is sparse (0-1 documents), evidence-only prompts will just say "n
 
 **How to measure:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def assess_data_availability(retrieved_docs, query):
@@ -395,6 +389,7 @@ class CommodityPromptRouter:
 **Usage:**
 
 ```python
+
 # Initialize with prompt templates
 prompts = [
     "Structured extraction prompt...",

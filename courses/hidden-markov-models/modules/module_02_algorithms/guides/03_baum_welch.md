@@ -463,12 +463,10 @@ print(f"\nState prediction accuracy: {accuracy:.2%}")
 ### Visualization
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -521,12 +519,10 @@ plt.show()
    - Select model with highest final likelihood
 
 
-<span class="filename">fit_with_multiple_initializations.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_with_multiple_initializations.py</span>
 
 ```python
 def fit_with_multiple_initializations(observations, n_states, n_inits=10):
@@ -556,12 +552,10 @@ def fit_with_multiple_initializations(observations, n_states, n_inits=10):
    - Solution: Use log-space computation or scaling
 
 
-<span class="filename">forward_scaled.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_scaled.py</span>
 
 ```python
 def forward_scaled(self, observations):
@@ -597,12 +591,10 @@ def forward_scaled(self, observations):
    - Solution: Use BIC/AIC for model selection
 
 
-<span class="filename">compute_bic.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_bic.py</span>
 
 ```python
 def compute_bic(log_likelihood, n_params, n_observations):
@@ -645,12 +637,10 @@ def select_num_states(observations, max_states=5):
    - Better: K-means clustering of observations for initial state assignment
 
 
-<span class="filename">initialize_with_kmeans.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">initialize_with_kmeans.py</span>
 
 ```python
 from sklearn.cluster import KMeans

@@ -100,12 +100,10 @@ Parameters: $(α, ρ, β, θ_1, θ_2)$ — five free parameters.
 Estimation: Profile NLS over $(θ_1, θ_2)$ with $(α, ρ, β)$ solved by regressing $y_t$ on $(1, y_{t-1}, \tilde{x}_t(\theta))$.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def profile_sse_ar(theta, Y, X):
@@ -170,12 +168,10 @@ Marcellino, Stock, and Watson (2006) find that for quarterly US GDP, direct fore
 For a $h$-period horizon nowcast using the direct MIDAS approach:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -304,12 +300,10 @@ def estimate_midas_direct(Y, X, starts=None):
 For a complete nowcasting exercise, estimate one model per horizon ($h = 0, 1, 2$ missing months) and report the resulting RMSE by horizon:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def nowcast_panel(Y_train, Y_test, X_train_dict, X_test_dict):

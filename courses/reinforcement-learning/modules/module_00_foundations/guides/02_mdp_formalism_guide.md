@@ -175,8 +175,6 @@ This recursion is the foundation of the Bellman equations.
 ## MDP State Transition Diagram
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -199,8 +197,6 @@ stateDiagram-v2
 ## Python Code: MDP as a Dictionary
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -212,6 +208,7 @@ from typing import Dict, Tuple, List
 import numpy as np
 
 # MDP defined as p(s', r | s, a)
+
 # Format: mdp[state][action] = list of (probability, next_state, reward) tuples
 MDP = Dict[str, Dict[str, List[Tuple[float, str, float]]]]
 

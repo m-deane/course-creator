@@ -41,12 +41,10 @@ Understanding these operators is essential for effective GA design.
 ### Tournament Selection
 
 
-<span class="filename">tournament_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tournament_selection.py</span>
 
 ```python
 import numpy as np
@@ -94,12 +92,10 @@ print(f"Fitness: {sum(selected)}")
 ### Roulette Wheel Selection
 
 
-<span class="filename">roulette_wheel.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">roulette_wheel.py</span>
 
 ```python
 def roulette_wheel_selection(population, fitness_scores):
@@ -370,12 +366,10 @@ print(f"Mutated:  {mutated_perm}")
 For feature selection, chromosomes are binary vectors where 1 = feature selected:
 
 
-<span class="filename">feature_selection_operators.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">feature_selection_operators.py</span>
 
 ```python
 class FeatureSelectionOperators:

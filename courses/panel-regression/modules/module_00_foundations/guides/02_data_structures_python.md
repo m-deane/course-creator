@@ -21,12 +21,10 @@ This guide covers how to structure, manipulate, and prepare panel data in Python
 The most common format for panel data analysis. Each row represents one observation of one entity at one time period.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -74,15 +72,13 @@ Variables spread across columns by time period. Common in downloaded datasets bu
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Example: Wide format
 wide_data = pd.DataFrame({
     'firm_id': [1, 2, 3],
@@ -169,14 +165,13 @@ print(long_converted)
 ### Creating a Proper Panel Index
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Set MultiIndex for panel structure
 panel_data = long_data.copy()
 panel_data = panel_data.set_index(['firm_id', 'year'])
@@ -194,6 +189,7 @@ print(f"Index levels: {panel_data.index.nlevels}")
 ### Accessing Data in Panel Structure
 
 ```python
+
 # Access specific entity
 print("Firm 1 data:")
 print(panel_data.loc[1])
@@ -210,6 +206,7 @@ print(panel_data.loc[(2, 2021)])
 ### Iterating Over Entities
 
 ```python
+
 # Group by entity
 for firm_id, group in panel_data.groupby(level='firm_id'):
     print(f"\nFirm {firm_id}:")
@@ -272,6 +269,7 @@ print(f"Periods: {balance_check['n_periods']}")
 ### Creating Unbalanced Panel for Testing
 
 ```python
+
 # Create unbalanced panel (remove some observations)
 unbalanced_data = long_data.drop([2, 7])  # Remove firm 1's 2022 and firm 3's 2021
 
@@ -440,6 +438,7 @@ print(f"  Is balanced: {panel.balanced}")
 ### Accessing Panel Properties
 
 ```python
+
 # Entity and time information
 print("Entities:", panel.entities[:5])  # First 5 entities
 print("Time periods:", panel.time[:3])  # First 3 time periods
@@ -459,6 +458,7 @@ print("As DataFrame:\n", panel.dataframe.head())
 
 
 ```python
+
 # Simulate realistic financial panel data
 np.random.seed(42)
 

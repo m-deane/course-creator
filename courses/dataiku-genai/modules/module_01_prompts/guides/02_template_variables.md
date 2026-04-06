@@ -64,12 +64,10 @@ Template variables work like mail merge in email—you write one template letter
 ### Basic Variable Usage
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku import PromptStudio
@@ -132,12 +130,10 @@ print(result.text)
 ### Advanced Variable Types
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import json
@@ -221,12 +217,10 @@ result = studio.complete(
 ### Conditional Variables
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def create_conditional_prompt():
@@ -303,12 +297,10 @@ full_result = studio.complete(
 ### Looping Over Lists
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def create_multi_source_analyzer():
@@ -319,6 +311,7 @@ def create_multi_source_analyzer():
     template = """Synthesize insights from multiple {{commodity}} reports:
 
 {{#each sources}}
+
 ## Source: {{this.name}}
 Report Date: {{this.date}}
 
@@ -389,12 +382,10 @@ result = studio.complete(
 ### Variable Validation and Preprocessing
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from typing import Any, Dict
@@ -510,12 +501,10 @@ except ValueError as e:
 ### Batch Processing with Variables
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd

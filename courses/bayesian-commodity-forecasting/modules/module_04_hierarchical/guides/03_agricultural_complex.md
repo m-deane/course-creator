@@ -143,13 +143,10 @@ Farmers choose what to plant based on relative profitability.
 ### Basic Grain Complex Hierarchy
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -167,6 +164,7 @@ crop_names = ['Corn', 'Wheat', 'Soybeans']
 global_ag = np.cumsum(np.random.normal(0, 0.5, n_months)) + 4.5  # $/bushel baseline
 
 # Category: All are grains/oilseeds (simplified)
+
 # Crop-specific parameters
 crop_intercepts = np.array([0.0, 1.5, 5.0])  # Wheat premium, Soybean premium
 crop_loadings = np.array([1.0, 0.85, 0.90])  # Corn tracks perfectly, others less
@@ -258,17 +256,17 @@ for c, crop in enumerate(crop_names):
 ### Economic Constraint: Farmer Planting Decisions
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Data: corn and soybean prices, planted acres
+
 # Farmers maximize: π = P_corn * Yield_corn * Acres_corn + P_soy * Yield_soy * Acres_soy
+
 # Subject to: Acres_corn + Acres_soy = Total_acres
 
 with pm.Model() as corn_soy_competition:
@@ -316,6 +314,7 @@ with pm.Model() as corn_soy_competition:
                                   return_inferencedata=True)
 
 # Forecast: What happens if soy prices spike?
+
 # Model predicts farmers shift to soybeans → corn prices rise (less supply)
 ```
 
@@ -329,13 +328,10 @@ with pm.Model() as corn_soy_competition:
 ### Brazil and Argentina Production
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as regional_soy:
@@ -419,13 +415,10 @@ with pm.Model() as regional_soy:
 ### Nonlinear Price-Stock Relationship
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as stocks_to_use:
@@ -481,13 +474,10 @@ with pm.Model() as stocks_to_use:
 Economic theory: Corn/Soy price ratio should stay in reasonable range.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as ratio_constrained:
@@ -564,15 +554,13 @@ US corn harvest (Oct) and Brazil corn harvest (Mar) shouldn't use same seasonal 
 ## Model Comparison
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compare hierarchical vs. independent models
 with pm.Model() as independent_crops:
     for c, crop in enumerate(crop_names):

@@ -20,13 +20,10 @@
 ### Basic ReAct Loop
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def react_loop(query, tools, max_steps=10):
@@ -146,15 +143,13 @@ def adaptive_plan_execute(goal, tools):
 - Implement early stopping when no new information gained
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: No loop detection
 while not done:
     action = decide_action()
@@ -203,6 +198,7 @@ while not done and steps < MAX_STEPS:
 - Validate observations match expected format
 
 ```python
+
 # Bad: Raw observation in prompt
 prompt = f"Observation: {tool_output}\nThought:"
 

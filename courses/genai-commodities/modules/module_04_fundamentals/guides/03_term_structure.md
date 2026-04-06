@@ -114,12 +114,10 @@ Positive in backwardation (near contract more expensive), negative in contango.
 ### Term Structure Extraction and Analysis
 
 
-<span class="filename">termstructureanalyzer.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">termstructureanalyzer.py</span>
 
 ```python
 import pandas as pd
@@ -413,12 +411,10 @@ plt.show()
 ### Curve Evolution Analysis
 
 
-<span class="filename">analyze_curve_evolution.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_curve_evolution.py</span>
 
 ```python
 def analyze_curve_evolution(futures_data, dates):

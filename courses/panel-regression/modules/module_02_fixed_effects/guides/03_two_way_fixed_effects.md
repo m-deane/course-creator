@@ -43,12 +43,10 @@ Without time FE, these confound the X-Y relationship.
 ### Example: Investment and Growth
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -64,13 +62,15 @@ n_years = 15
 # Macroeconomic shocks (affect all firms)
 time_shocks = np.random.normal(0, 2, n_years)  # e.g., recessions, booms
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Fixed effects are not a method -- they are a way of thinking about unobserved heterogeneity. The within-transformation eliminates time-invariant confounders, which is the single most important advantage of panel data.
 
 </div>
 
-
+```python
 data = []
 for i in range(n_firms):
     firm_effect = np.random.normal(0, 3)
@@ -91,6 +91,7 @@ df = pd.DataFrame(data)
 df_panel = df.set_index(['firm', 'year'])
 
 # Compare specifications
+
 # 1. Entity FE only
 fe_entity = PanelOLS(df_panel['growth'], df_panel[['investment']],
                      entity_effects=True).fit()
@@ -136,12 +137,10 @@ where:
 ### Manual Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def double_demean(df, entity_col, time_col, variables):
@@ -183,12 +182,10 @@ print(f"  Investment coefficient: {manual_twfe.params['investment_dd']:.4f}")
 ## Visualizing Time Effects
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def plot_time_effects(model_results, year_range):
@@ -316,6 +313,7 @@ Sometimes time fixed effects are too flexible. Consider:
 $$y_{it} = \alpha_i + \gamma t + X_{it}\beta + \epsilon_{it}$$
 
 ```python
+
 # Add linear time trend
 df['trend'] = df['year'] - df['year'].min()
 df_panel_trend = df.set_index(['firm', 'year'])
@@ -336,6 +334,7 @@ print(f"  Trend: {fe_trend.params['trend']:.4f}")
 $$y_{it} = \alpha_i + \gamma_i t + X_{it}\beta + \epsilon_{it}$$
 
 ```python
+
 # Entity-specific trends (more demanding)
 df['entity_trend'] = df['firm'].astype(str) + '_' + df['trend'].astype(str)
 
@@ -397,6 +396,7 @@ illustrate_twfe_problem()
 ### Recommended Specification
 
 ```python
+
 # Full two-way fixed effects with clustered SEs
 final_twfe = PanelOLS(
     df_panel['growth'],

@@ -22,13 +22,10 @@
 ### Input Validation Guardrails
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class InputGuardrails:
@@ -363,15 +360,13 @@ def evaluate_rag_system(rag_agent, test_dataset):
 - Layer guardrails (warn vs block)
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Bad: Binary blocking
 if contains_sensitive_word(input):
     raise BlockedError()

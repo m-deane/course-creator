@@ -114,12 +114,10 @@ $$\boxed{\mathbf{w} \leftarrow \mathbf{w} + \alpha \, \delta_t \, \mathbf{x}(S_t
 5. **Learning rate:** $\alpha = \alpha_0 / n$, with $\alpha_0 \in [0.1, 0.5]$.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class TileCoder:

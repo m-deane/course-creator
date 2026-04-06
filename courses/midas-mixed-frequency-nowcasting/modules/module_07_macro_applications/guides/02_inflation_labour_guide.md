@@ -62,12 +62,10 @@ $$\pi^E_t = \mu + \phi_1 \sum_{j=0}^{K_d-1} B_1(j) \Delta \log P^{\text{oil}}_{t
 Typical $R^2$ for the energy component nowcast: 0.6–0.8 (daily energy prices are highly informative for monthly energy CPI).
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def build_inflation_midas_features(
@@ -88,13 +86,15 @@ def build_inflation_midas_features(
     for date in target_dates:
         row = {}
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
 
 </div>
 
-
+```python
         # Daily oil lags
         d_avail_oil = daily_oil_ret[daily_oil_ret.index < date]
         if len(d_avail_oil) < K_daily:
@@ -143,12 +143,10 @@ Core services (the "super-core") are the hardest to nowcast because:
 **Practical approach**: Use a simple AR model for core services and MIDAS for energy/food.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def core_services_ar_forecast(core_cpi_monthly, h=1):
@@ -214,12 +212,10 @@ A MIDAS-X model can incorporate several of these simultaneously.
 ### 2.3 Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def build_labour_midas_features(

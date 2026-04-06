@@ -58,13 +58,10 @@ A static prompt is a fully-written condition stack stored as a string. It works,
 A parameterized template separates **structure** from **values**. The structure is the 6-layer condition stack. The values are injected at call time.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 template = ConditionStack(
@@ -150,13 +147,10 @@ Dynamic condition injection means the system automatically pulls conditions from
 ### A Concrete Injector
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class ConditionInjector:

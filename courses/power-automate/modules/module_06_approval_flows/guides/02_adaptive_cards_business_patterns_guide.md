@@ -66,9 +66,6 @@ The `body` array contains the v...
 </div>
 
 
-
-<span class="filename">example.json</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -94,8 +91,6 @@ The `body` array contains the visible content of the card. Key element types:
 **TextBlock** — Displays text with formatting control:
 
 
-<span class="filename">example.json</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -118,8 +113,6 @@ The following implementation builds on the approach above:
 **FactSet** — Renders a label-value pair list, ideal for structured data:
 
 
-<span class="filename">example.json</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -144,12 +137,10 @@ The following implementation builds on the approach above:
 **Container** — Groups elements with optional background color and padding:
 
 
-<span class="filename">example.json</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
 
 ```json
 {

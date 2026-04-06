@@ -104,12 +104,10 @@ Panel data enables analysis of:
 Every entity observed in every period:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -123,8 +121,11 @@ balanced = pd.DataFrame({
 
 # Check balance
 print(balanced.groupby('entity').size())
+
 # A    3
+
 # B    3
+
 # C    3
 ```
 
@@ -136,14 +137,13 @@ print(balanced.groupby('entity').size())
 Some entity-period combinations missing:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Unbalanced panel (firm C missing 2021)
 unbalanced = pd.DataFrame({
     'entity': ['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C'],
@@ -152,8 +152,11 @@ unbalanced = pd.DataFrame({
 })
 
 # Missing value implications
+
 # - Is missingness random (MCAR)?
+
 # - Related to observables (MAR)?
+
 # - Related to unobservables (MNAR)? ← Selection bias!
 ```
 
@@ -188,12 +191,10 @@ $$u_{it} = \alpha_i + \lambda_t + \epsilon_{it}$$
 ### Using pandas MultiIndex
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd

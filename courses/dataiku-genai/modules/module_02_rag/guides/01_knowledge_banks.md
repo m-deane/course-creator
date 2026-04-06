@@ -77,12 +77,10 @@ knowledge_bank:
 ### Programmatic Creation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import dataiku
@@ -117,14 +115,13 @@ print(f"Knowledge bank created with {kb.document_count} documents")
 ### Fixed Size Chunking
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Simple fixed-size chunks
 chunking_config = {
     "method": "fixed",
@@ -139,14 +136,13 @@ chunking_config = {
 ### Semantic Chunking
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Chunk by semantic boundaries
 chunking_config = {
     "method": "semantic",
@@ -162,14 +158,13 @@ chunking_config = {
 ### Document-Specific Chunking
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Different strategies by document type
 def custom_chunker(document: dict) -> list:
     """Custom chunking based on document type."""
@@ -205,12 +200,10 @@ def custom_chunker(document: dict) -> list:
 ### Basic Retrieval
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.knowledge_bank import KnowledgeBank
@@ -236,14 +229,13 @@ for result in results:
 ### Filtered Retrieval
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Filter by metadata
 results = kb.search(
     query="OPEC production decisions",
@@ -264,14 +256,13 @@ results = kb.search(
 ### Hybrid Search
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Combine vector and keyword search
 results = kb.search(
     query="crude inventory draw",
@@ -290,12 +281,10 @@ results = kb.search(
 ### Complete RAG Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM
@@ -379,12 +368,10 @@ print(f"\nSources used: {len(result['sources'])}")
 ### Evaluation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def evaluate_rag_response(
@@ -438,12 +425,10 @@ Return just a number 1-5."""
 ### Incremental Updates
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def update_knowledge_bank(kb_name: str, new_documents: list):
@@ -470,14 +455,13 @@ def update_knowledge_bank(kb_name: str, new_documents: list):
 ### Scheduled Refresh
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # In a Dataiku scenario
 import dataiku
 from dataiku.knowledge_bank import KnowledgeBank

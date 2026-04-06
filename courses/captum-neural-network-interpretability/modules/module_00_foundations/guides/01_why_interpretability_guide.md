@@ -178,14 +178,10 @@ The following demonstrates how a model can achieve good accuracy while learning 
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -199,6 +195,7 @@ model = models.resnet50(pretrained=True)
 model.eval()
 
 # A real-world scenario: the model achieves 94% accuracy on test set
+
 # But without interpretability, we don't know if it's using the right features
 
 # With captum, we can ask: what did the model "look at"?
@@ -207,7 +204,9 @@ from captum.attr import IntegratedGradients
 ig = IntegratedGradients(model)
 
 # For a given image, compute which pixels influenced the prediction
+
 # attribution shows the "evidence" the model used
+
 # Without this, we only know the prediction, not the reasoning
 ```
 

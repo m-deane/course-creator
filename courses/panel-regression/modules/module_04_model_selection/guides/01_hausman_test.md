@@ -89,12 +89,10 @@ Under H0: $H \sim \chi^2(K)$ where $K$ is the number of time-varying regressors.
 ### Using linearmodels
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -200,12 +198,10 @@ Low power when:
 - True difference is small
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def hausman_power_simulation(N, T, correlation, n_sims=500):
@@ -272,14 +268,13 @@ $$y_{it} = x_{it}'\beta + \bar{x}_i'\gamma + \alpha_i + \epsilon_{it}$$
 Test: $H_0: \gamma = 0$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Mundlak test
 data_flat = data.reset_index()
 data_flat['x_mean'] = data_flat.groupby('entity')['x'].transform('mean')

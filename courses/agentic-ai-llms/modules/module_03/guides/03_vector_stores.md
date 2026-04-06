@@ -50,13 +50,10 @@ Vector stores are databases optimized for similarity search over embeddings. The
 Best for: Development, small-medium datasets, serverless
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import chromadb
@@ -65,6 +62,7 @@ from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunct
 
 # Initialize
 client = chromadb.Client()  # In-memory
+
 # client = chromadb.PersistentClient(path="./chroma_db")  # Persistent
 
 # Create collection with embedding function
@@ -223,15 +221,13 @@ results = client.search(
 Most common index for vector search:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # ChromaDB HNSW settings
 collection = client.create_collection(
     name="documents",
@@ -257,6 +253,7 @@ collection = client.create_collection(
 Good for very large datasets:
 
 ```python
+
 # Pinecone with IVF
 pc.create_index(
     name="large-docs",
@@ -274,6 +271,7 @@ pc.create_index(
 Exact search, best for small datasets:
 
 ```python
+
 # FAISS flat index
 import faiss
 
@@ -291,15 +289,13 @@ distances, indices = index.search(query_embedding, k=5)
 ### Filter Patterns
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # ChromaDB filtering
 results = collection.query(
     query_texts=["electric vehicles"],
@@ -337,6 +333,7 @@ results = client.search(
 ### Metadata Schema Design
 
 ```python
+
 # Good metadata design
 metadata = {
     "source": "company_wiki",
@@ -364,13 +361,10 @@ metadata = {
 ### Document Processing Pipeline
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from dataclasses import dataclass
@@ -507,13 +501,10 @@ class VectorStoreManager:
 ### Embedding Caching
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import diskcache

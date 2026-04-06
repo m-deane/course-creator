@@ -119,13 +119,10 @@ Options pricing, VaR calculation, and position sizing require volatility forecas
 ### Basic Stochastic Volatility Model in PyMC
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -245,13 +242,10 @@ plt.show()
 Negative returns increase volatility more than positive returns (especially in energy).
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as sv_leverage:
@@ -286,13 +280,10 @@ with pm.Model() as sv_leverage:
 Natural gas volatility peaks in summer (cooling) and winter (heating).
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as sv_seasonal:
@@ -318,13 +309,10 @@ with pm.Model() as sv_seasonal:
 Commodity returns have fatter tails than normal.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as sv_student:
@@ -371,15 +359,13 @@ $$h_{t+k} | h_t \sim \mathcal{N}\left(\mu + \phi^k(h_t - \mu), \frac{\sigma_\eta
 As $k \to \infty$, this converges to the stationary distribution.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Forecast volatility from PyMC trace
 def forecast_volatility(trace, last_h, periods=20):
     """
@@ -428,13 +414,10 @@ def forecast_volatility(trace, last_h, periods=20):
 Compare SV specifications using LOO-CV:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as sv_basic:
@@ -469,15 +452,13 @@ Lower LOO = better out-of-sample predictive performance.
 Standard SV models can have poor geometry. Use non-centered parameterization:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Bad: Centered
 h[t] = mu + phi * (h[t-1] - mu) + sigma_eta * eta[t]
 

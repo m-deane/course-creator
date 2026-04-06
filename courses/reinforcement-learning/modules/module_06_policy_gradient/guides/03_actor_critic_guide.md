@@ -145,8 +145,6 @@ For each episode:
 ## Architecture: Actor-Critic Network
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -232,8 +230,6 @@ A3C (Mnih et al., 2016) runs multiple parallel workers, each with its own copy o
 ### A3C Architecture
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -310,8 +306,6 @@ This is the same backward recurrence as return computation, with $\gamma\lambda$
 ## Code Snippet
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

@@ -123,13 +123,10 @@ For commodity price models:
 ### Comprehensive Diagnostic Suite
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -336,13 +333,10 @@ print(az.summary(trace, hdi_prob=0.95))
 ### Detecting Specific Issues
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def diagnose_convergence_issues(trace):
@@ -446,13 +440,10 @@ for rec in issues['recommendations']:
 ### Automated Resampling
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def sample_until_converged(model, max_attempts=3, initial_draws=1000):

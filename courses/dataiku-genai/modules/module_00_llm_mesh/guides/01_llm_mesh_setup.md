@@ -48,6 +48,7 @@ Dataiku LLM Mesh provides a unified interface to multiple LLM providers:
 3. Select **Anthropic Claude**
 
 ```yaml
+
 # Connection settings
 connection_name: anthropic-claude
 provider: anthropic
@@ -95,12 +96,10 @@ resource_name: your-resource-name
 ### Basic Usage
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import dataiku
@@ -123,12 +122,10 @@ print(response.text)
 ### Chat Interface
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM, ChatSession
@@ -161,12 +158,10 @@ for message in chat.messages:
 ### Structured Output
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM
@@ -201,12 +196,10 @@ print(data)
 ### Listing Available Connections
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import dataiku
@@ -230,12 +223,10 @@ for conn in llm_connections:
 ### Connection Testing
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def test_llm_connection(connection_name: str) -> dict:
@@ -272,12 +263,10 @@ for conn_name in ['anthropic-claude', 'openai-gpt4']:
 ### Automatic Failover
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM
@@ -310,12 +299,10 @@ result = router.complete("Summarize recent OPEC decisions")
 ### Cost-Based Routing
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 MODEL_COSTS = {
@@ -364,6 +351,7 @@ In Dataiku, configure access at the project level:
 3. Configure per-connection permissions
 
 ```yaml
+
 # Project security settings
 llm_permissions:
   - connection: anthropic-claude
@@ -378,12 +366,10 @@ llm_permissions:
 ### Usage Quotas
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM, UsageTracker
@@ -421,7 +407,6 @@ print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 <strong>Key Concept:</strong> 5. **Failover routing** improves reliability across providers
 
 </div>
-
 
 
 ## Resources

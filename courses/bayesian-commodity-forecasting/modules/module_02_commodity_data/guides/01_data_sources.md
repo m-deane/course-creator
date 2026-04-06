@@ -49,13 +49,10 @@ The most market-moving energy report in the world.
 
 **Python Retrieval:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -133,13 +130,10 @@ World Agricultural Supply and Demand Estimates - the most important agricultural
 
 **Retrieval via USDA NASS API:**
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import requests
@@ -241,13 +235,10 @@ def get_usda_nass(commodity, year, api_key):
 ### Yahoo Finance (yfinance)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import yfinance as yf
@@ -260,6 +251,7 @@ zc = yf.download('ZC=F', start='2020-01-01')  # Corn
 zs = yf.download('ZS=F', start='2020-01-01')  # Soybeans
 
 # Continuous front-month contracts
+
 # Note: These roll automatically but may have gaps
 ```
 
@@ -269,13 +261,10 @@ zs = yf.download('ZS=F', start='2020-01-01')  # Soybeans
 ### FRED (Federal Reserve)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from fredapi import Fred
@@ -318,13 +307,10 @@ fedfunds = fred.get_series('FEDFUNDS')  # Fed funds rate
 **Critical:** When backtesting, only use data available at the time.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def get_available_data(date, release_schedule):

@@ -41,13 +41,10 @@ flowchart TB
 ### 1. Interpret Goal
 
 
-<span class="filename">interpret.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">interpret.py</span>
 
 ```python
 def interpret_goal(user_message: str, context: list) -> str:
@@ -71,13 +68,10 @@ def interpret_goal(user_message: str, context: list) -> str:
 The LLM chooses whether to call a tool, and if so, which one.
 
 
-<span class="filename">decide.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">decide.py</span>
 
 ```python
 import anthropic
@@ -110,13 +104,10 @@ def decide_action(messages: list, tools: list) -> dict:
 ### 3. Execute Tool
 
 
-<span class="filename">execute.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">execute.py</span>
 
 ```python
 import json
@@ -146,13 +137,10 @@ def execute_tool(tool_name: str, tool_input: dict, tool_registry: dict) -> str:
 ### 4. Observe Result
 
 
-<span class="filename">observe.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">observe.py</span>
 
 ```python
 def observe_result(tool_use_id: str, result: str) -> dict:
@@ -175,13 +163,10 @@ def observe_result(tool_use_id: str, result: str) -> dict:
 ### 5. Complete Agent Loop
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -258,13 +243,10 @@ The agent loop should terminate when:
 | **Cost limit** | Token budget exhausted |
 
 
-<span class="filename">loop_controller.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">loop_controller.py</span>
 
 ```python
 class LoopController:

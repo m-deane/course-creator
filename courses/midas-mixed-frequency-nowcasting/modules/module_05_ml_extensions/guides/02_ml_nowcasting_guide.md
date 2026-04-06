@@ -76,12 +76,10 @@ Three approaches, from simplest to most sophisticated:
 The simplest approach: for each high-frequency predictor, include lags $x_{t-1}, x_{t-2}, \ldots, x_{t-m}$ as separate features.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -139,12 +137,10 @@ def flat_stack_features(df_high, df_low, target_col, m=12):
 Aggregate the lag window into economically meaningful statistics:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def summary_features(series_lags):
@@ -183,12 +179,10 @@ This reduces 12 monthly lags to 10 features per series — a 17× reduction whil
 For large daily datasets (e.g., 65 trading days per quarter), embeddings via PCA or autoencoders compress high-dimensional lag windows:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.decomposition import PCA

@@ -5,9 +5,8 @@
 ## Start Here: Training NHITS in 60 Seconds
 
 
-<span class="filename">example.py</span>
-</div>
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 The following implementation builds on the approach above:
 Run this first.

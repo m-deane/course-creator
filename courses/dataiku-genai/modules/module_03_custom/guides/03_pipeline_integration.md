@@ -75,14 +75,13 @@ Think of a manufacturing assembly line: raw materials enter, pass through variou
 ### Basic LLM Recipe Integration
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Python Recipe: process_reports_with_llm
 import dataiku
 from dataiku.llm import LLM
@@ -164,14 +163,13 @@ print(f"Total cost: ${results['cost_usd'].sum():.2f}")
 ### Parallel Batch Processing
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Python Recipe: parallel_llm_processing
 import dataiku
 from dataiku.llm import LLM
@@ -318,14 +316,13 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 ### Chunked Processing for Large Texts
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Python Recipe: chunk_and_process
 from typing import List
 
@@ -455,14 +452,13 @@ dataiku.Dataset("processed_long_reports").write_with_schema(output_df)
 ### Pipeline with Error Handling and Monitoring
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Python Recipe: robust_pipeline_integration
 import dataiku
 from dataiku.llm import LLM
@@ -646,14 +642,13 @@ summary = pipeline.process_dataset(
 ### Incremental Processing Pattern
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Python Recipe: incremental_llm_processing
 import dataiku
 from datetime import datetime, timedelta

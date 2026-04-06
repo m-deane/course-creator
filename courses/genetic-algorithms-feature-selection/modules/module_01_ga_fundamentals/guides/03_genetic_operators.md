@@ -109,12 +109,10 @@ The offspring inherits all three building blocks and outperforms both parents. T
 ### Crossover Operators
 
 
-<span class="filename">copy.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">copy.py</span>
 
 ```python
 import numpy as np
@@ -367,12 +365,10 @@ This is why adaptive mutation rates (higher later in the run) can be effective: 
 ### Mutation Operators
 
 
-<span class="filename">mutation_operators.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">mutation_operators.py</span>
 
 ```python
 def bit_flip_mutation(
@@ -552,12 +548,10 @@ def inversion_mutation(
 ### Combined Operators and Analysis
 
 
-<span class="filename">combined_operators.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">combined_operators.py</span>
 
 ```python
 def apply_genetic_operators(
@@ -795,6 +789,7 @@ if __name__ == "__main__":
 **Problem**: High mutation rate destroys good solutions (becomes random search).
 
 ```python
+
 # Bad - mutation rate of 0.5 means 50% of bits flip!
 mutant = bit_flip_mutation(individual, mutation_rate=0.5)
 
@@ -810,11 +805,13 @@ mutant = bit_flip_mutation(individual, mutation_rate=1/n)
 **Problem**: No clones preserved, loses good solutions.
 
 ```python
+
 # Bad - always crossover
 child1, child2 = uniform_crossover(p1, p2, crossover_prob=1.0)
 
 # Good - probabilistic application
 child1, child2 = uniform_crossover(p1, p2, crossover_prob=0.8)
+
 # 20% of time, returns clones of parents
 ```
 
@@ -829,6 +826,7 @@ child1, child2 = uniform_crossover(p1, p2, crossover_prob=0.8)
 **Problem**: Using single-point for unordered features.
 
 ```python
+
 # Bad for feature selection (positional bias)
 child1, child2 = single_point_crossover(p1, p2)
 
@@ -839,6 +837,7 @@ child1, child2 = uniform_crossover(p1, p2)
 ### 4. Not Enforcing Constraints After Mutation
 
 ```python
+
 # Bad - might create invalid solution
 def bad_mutation(individual):
     mutant = individual.copy()

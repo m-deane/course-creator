@@ -48,12 +48,10 @@ $\beta_2$ (level change) and $\beta_3$ (slope change) are the causal parameters 
 Compute the standard deviation and range of the pre-intervention outcome:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 pre_std = df.loc[df["treated"] == 0, "outcome"].std()
@@ -82,12 +80,10 @@ For a smoking ban on AMI rates:
 Before fitting, sample from the prior and generate hypothetical outcomes. Ask: "Do these look like plausible data from my system?"
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -190,6 +186,7 @@ prior_beta2 = pm.Normal("beta2", mu=0, sigma=y_pre_std)
 If domain knowledge strongly suggests the direction (e.g., a safety intervention can only reduce accidents):
 
 ```python
+
 # Informative prior: effect is probably negative, within 0 to -2*sigma
 prior_beta2 = pm.Normal("beta2", mu=-y_pre_std / 2, sigma=y_pre_std)
 ```
@@ -225,12 +222,10 @@ If all three give similar posteriors, the result is prior-robust. If they differ
 - The prior is genuinely strong (informative)
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp

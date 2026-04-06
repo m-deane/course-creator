@@ -58,13 +58,10 @@ The orchestrator routes work to the right specialist. Each specialist has:
 ### Basic Specialization Pattern
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from anthropic import Anthropic
@@ -309,15 +306,13 @@ legal_agent = factory.create_specialist(
 **Problem:** Creating too many narrow specialists creates coordination overhead.
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # DON'T: Too many specialists
 agents = [
     FileReaderAgent(),
@@ -342,6 +337,7 @@ agents = [
 **Problem:** Overlapping responsibilities cause confusion.
 
 ```python
+
 # DON'T: Overlapping roles
 research_agent.system_prompt = "Research and write code..."
 code_agent.system_prompt = "Research best practices and implement..."
@@ -355,6 +351,7 @@ code_agent.system_prompt = "Implement based on research provided."
 **Problem:** Specialists exist but don't collaborate effectively.
 
 ```python
+
 # DON'T: Agents working in isolation
 result1 = research_agent.execute(task)
 result2 = code_agent.execute(task)  # Ignores research!
@@ -368,6 +365,7 @@ code = code_agent.execute(f"Implement based on: {research}")
 **Problem:** Specialist lacks tools to fulfill its role.
 
 ```python
+
 # DON'T: Research agent without search
 ResearchAgent(tools=[])  # Can't actually research!
 

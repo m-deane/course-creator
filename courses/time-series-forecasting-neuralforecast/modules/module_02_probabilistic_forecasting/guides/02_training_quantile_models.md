@@ -24,12 +24,10 @@ NeuralForecast produces probabilistic forecasts by training with a loss function
 ## Start Here: Training with MQLoss
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -117,14 +115,13 @@ Which simplifies to:
 $$\rho_q(u) = u \cdot (q - \mathbf{1}[u < 0])$$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # ── Visualize the pinball loss for different quantiles ────────────────────────
 def pinball_loss(u, q):
     """Pinball loss for quantile q and residual u = y - yhat."""
@@ -206,14 +203,13 @@ $$\mathcal{L}_{\text{MQ}} = \frac{1}{H \cdot |Q|} \sum_{t=1}^{H} \sum_{q \in Q} 
 where $Q$ is the set of quantile levels and $H$ is the forecast horizon.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # ── Compare single vs multi-quantile training ─────────────────────────────────
 from neuralforecast.losses.pytorch import QuantileLoss
 
@@ -236,8 +232,11 @@ model_multi = NHITS(
 )
 
 # MQLoss trains one network that simultaneously outputs all quantiles.
+
 # QuantileLoss trains a separate prediction for a single quantile.
+
 # For multiple levels, MQLoss is more efficient and produces consistent quantiles
+
 # (they won't cross because they share the same internal representation).
 print("MQLoss level=[50, 80, 90] trains quantiles:")
 print("  q ∈ {0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95}")
@@ -254,14 +253,13 @@ print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 NeuralForecast uses a consistent naming convention for quantile output columns:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # ── Decode output column names ────────────────────────────────────────────────
 print("Column naming convention: {model}-{lo|hi}-{level}")
 print()
@@ -303,7 +301,9 @@ for level in [80, 90]:
 Fan charts layer multiple prediction intervals to show the full uncertainty shape.
 
 ```python
+
 # ── Build a fan chart with multiple quantile levels ───────────────────────────
+
 # Train with more levels for a smoother fan
 model_fan = NHITS(
     h=14,
@@ -362,8 +362,11 @@ plt.show()
 Verify that the quantiles are properly ordered (no crossings where a tighter interval is wider than a broader one):
 
 ```python
+
 # ── Check: are the quantiles non-crossing? ────────────────────────────────────
+
 # A well-trained MQLoss model should not have crossing quantiles
+
 # (where a tighter interval is wider than a broader one)
 
 crossings = (
@@ -378,6 +381,7 @@ print("A value of 0 means quantiles are properly ordered (no crossings).")
 ## Effect of level= Settings: More Levels = Smoother Uncertainty
 
 ```python
+
 # ── Compare sparse vs dense quantile coverage ─────────────────────────────────
 configs = {
     "2 levels [80, 90]": [80, 90],
@@ -465,6 +469,7 @@ model_negbinom = NHITS(
 For bakery data (positive counts, potentially right-skewed), `DistributionLoss("NegativeBinomial")` is often more appropriate. For general real-valued data, MQLoss is the safer default.
 
 ```python
+
 # ── Compare coverage: MQLoss vs DistributionLoss ──────────────────────────────
 models_compare = [
     NHITS(h=7, input_size=28, loss=MQLoss(level=[80, 90]),
@@ -533,6 +538,7 @@ MQLoss gives you well-calibrated marginal quantiles. For single-step decisions, 
 For multi-step decisions, you need to take one more step.
 
 ```python
+
 # ── The preview: what MQLoss cannot do ───────────────────────────────────────
 print("MQLoss CAN answer:")
 print("  'What is the 80th percentile of Monday demand?'  →  forecast['NHITS-hi-80'][0]")

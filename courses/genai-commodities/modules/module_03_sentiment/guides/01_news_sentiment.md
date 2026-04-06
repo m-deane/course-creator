@@ -244,12 +244,10 @@ Return JSON:
 ### Government Reports
 
 
-<span class="filename">analyze_government_report_surprise.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_government_report_surprise.py</span>
 
 ```python
 def analyze_government_report_surprise(
@@ -306,12 +304,10 @@ Return JSON:
 ### Creating Trading Signals
 
 
-<span class="filename">create_sentiment_signal.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_sentiment_signal.py</span>
 
 ```python
 import pandas as pd
@@ -368,12 +364,10 @@ def combine_with_price_momentum(
 ### Backtesting Framework
 
 
-<span class="filename">backtest_sentiment_strategy.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backtest_sentiment_strategy.py</span>
 
 ```python
 def backtest_sentiment_strategy(
@@ -418,12 +412,10 @@ def backtest_sentiment_strategy(
 ### Confidence-Weighted Averaging
 
 
-<span class="filename">confidence_weighted_sentiment.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">confidence_weighted_sentiment.py</span>
 
 ```python
 def confidence_weighted_sentiment(
@@ -452,12 +444,10 @@ def confidence_weighted_sentiment(
 ### Source Quality Weighting
 
 
-<span class="filename">source_weighted_sentiment.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">source_weighted_sentiment.py</span>
 
 ```python
 SOURCE_QUALITY = {

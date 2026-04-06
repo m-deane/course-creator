@@ -157,12 +157,10 @@ The key is **actionable alerts**. Don't just track 50 metrics — identify the 5
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import json
@@ -259,14 +257,13 @@ class BanditMonitor:
 
 **Commodity Application:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Weekly commodity allocation with logging
 logger = BanditLogger("commodity_decisions.jsonl")
 monitor = BanditMonitor(window_size=12)  # 12 weeks
@@ -372,9 +369,6 @@ Setting thresholds too sensitive creates noise. Too loose and you miss real prob
    What's happening? Is this necessarily bad? What would you investigate next?
 
 4. **Code Review:** What's missing from this logging approach?
-
-<span class="filename">example.py</span>
-</div>
 
    <div class="code-window">
 <div class="code-header">

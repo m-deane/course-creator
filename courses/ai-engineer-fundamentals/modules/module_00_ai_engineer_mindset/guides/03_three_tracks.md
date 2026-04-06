@@ -68,15 +68,13 @@ flowchart TB
 ### Key Skills
 
 
-<span class="filename">track_a_skills.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">track_a_skills.py</span>
 
 ```python
+
 # Track A engineers can:
 
 # 1. Load and inspect models
@@ -129,15 +127,13 @@ tokens_needed = 20 * num_parameters  # Chinchilla optimal
 ### Key Skills
 
 
-<span class="filename">track_b_skills.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">track_b_skills.py</span>
 
 ```python
+
 # Track B engineers can:
 
 # 1. Implement preference optimization
@@ -204,15 +200,13 @@ def regression_test(model_v1, model_v2, test_cases):
 ### Key Skills
 
 
-<span class="filename">track_c_skills.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">track_c_skills.py</span>
 
 ```python
+
 # Track C engineers can:
 
 # 1. Build production RAG systems

@@ -77,13 +77,10 @@ $$\phi_i = \sum_j \text{IG}_{i,j}$$
 Captum's `LayerIntegratedGradients` applies IG at a specific layer — the embedding layer:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -117,13 +114,10 @@ lig = LayerIntegratedGradients(
 ## 4. Baseline Construction
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def create_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
@@ -157,13 +151,10 @@ def create_mask_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
 ## 5. Computing Token Attributions End-to-End
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -212,6 +203,7 @@ attributions, delta = lig.attribute(
     n_steps=50,
     return_convergence_delta=True,
 )
+
 # attributions shape: (1, seq_len, hidden_size)
 
 # Aggregate to token-level: sum over embedding dim
@@ -234,14 +226,10 @@ The standard visualization uses colored text: green for positive attributions, r
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -323,15 +311,13 @@ Best practice: Exclude or minimize special token attributions when communicating
 After computing per-embedding-dimension attributions, several aggregation methods give different insights:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Method 1: Sum across embedding dim (signed, preserves direction)
 token_attrs_sum = attributions.sum(dim=-1)
 
@@ -376,13 +362,10 @@ Transformers handle long-range dependencies. Attribution at the token level may 
 BERT uses WordPiece tokenization, splitting words into subwords. "Unhappy" might become ["un", "##happy"]. Attribution should be aggregated back to the word level for readability.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def aggregate_subword_attributions(tokens, token_attrs, tokenizer):

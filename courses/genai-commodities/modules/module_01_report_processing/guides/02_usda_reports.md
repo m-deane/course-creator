@@ -516,12 +516,10 @@ def validate_wasde_changes(current: WASDEData, previous: WASDEData) -> dict:
 ### Multi-Model Consensus
 
 
-<span class="filename">consensus_parsing.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">consensus_parsing.py</span>
 
 ```python
 def consensus_parsing(table_text: str, commodity: str, n_runs: int = 3) -> dict:
@@ -558,12 +556,10 @@ def all_agree(results: List[dict], tolerance: float = 0.01) -> bool:
 - **Issue:** PyPDF2 mangles complex tables with merged cells
 - **Solution:** Use multiple PDF libraries (pdfplumber, tabula-py) and combine results
 
-<span class="filename">robust_table_extract.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">robust_table_extract.py</span>
 
 ```python
 import pdfplumber
@@ -586,12 +582,10 @@ def robust_table_extract(pdf_path: str) -> str:
 - **Issue:** WASDE uses different units (bushels, metric tons, pounds)
 - **Solution:** Always extract and validate units
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 UNIT_CONVERSIONS = {
@@ -608,12 +602,10 @@ UNIT_CONVERSIONS = {
 - **Issue:** Different commodities have different marketing year calendars
 - **Solution:** Track marketing year definitions
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 MARKETING_YEARS = {
@@ -630,12 +622,10 @@ MARKETING_YEARS = {
 - **Issue:** USDA frequently revises prior estimates
 - **Solution:** Track revisions explicitly
 
-<span class="filename">class.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
 
 ```python
 @dataclass

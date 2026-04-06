@@ -125,15 +125,13 @@ These disagree on negation, adversarial inputs, and compositional sentences. Use
 ### Baseline Selection for Text
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # BERT-family: PAD baseline
 baseline = torch.full_like(input_ids, tokenizer.pad_token_id)
 
@@ -166,15 +164,13 @@ baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 ### Baseline for Tabular Data
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Option 1: Zero vector (if features are normalized)
 baseline = torch.zeros_like(inputs)
 
@@ -185,6 +181,7 @@ baseline = train_features.mean(dim=0, keepdim=True).expand_as(inputs)
 baseline = train_features.median(dim=0).values.unsqueeze(0).expand_as(inputs)
 
 # Option 4: Distribution sample (GradientSHAP)
+
 # Use 50-100 random training examples as background
 background = train_features[torch.randperm(len(train_features))[:100]]
 ```
@@ -251,15 +248,13 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 **Only IG satisfies all three requirements.**
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compliance-grade configuration
 ig = IntegratedGradients(model)
 attrs, delta = ig.attribute(
@@ -315,18 +310,16 @@ The baseline is as important as the method. It defines the reference point: "Wha
 For GradientSHAP and DeepLIFTSHAP, provide 50-200 background samples:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import GradientShap
 
 grad_shap = GradientShap(model)
+
 # background: (n_background, *input_shape)
 background = train_data[torch.randperm(len(train_data))[:100]]
 attrs, delta = grad_shap.attribute(

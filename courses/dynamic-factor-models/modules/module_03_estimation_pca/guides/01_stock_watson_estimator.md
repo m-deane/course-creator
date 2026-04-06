@@ -167,12 +167,10 @@ $$R_i^2 = \frac{\hat{\lambda}_i' \hat{\lambda}_i}{\text{Var}(X_i)} = \frac{\sum_
 ### Complete Implementation from Scratch
 
 
-<span class="filename">stockwatsonestimator.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stockwatsonestimator.py</span>
 
 ```python
 import numpy as np
@@ -435,7 +433,9 @@ class StockWatsonEstimator:
 
 
 # ============================================================================
+
 # Demonstration
+
 # ============================================================================
 
 def simulate_dfm(T=200, N=50, r=3, p=1, noise_ratio=0.5, seed=42):
@@ -508,6 +508,7 @@ avg_r2 = np.mean(model.variable_r_squared())
 print(f"\nAverage R-squared: {avg_r2:.1%}")
 
 # Align factors to true factors (resolve rotation)
+
 # Use Procrustes alignment: minimize ||F_true - F_hat @ H||
 from scipy.linalg import orthogonal_procrustes
 H, _ = orthogonal_procrustes(model.F_hat, F_true)
@@ -563,12 +564,10 @@ First forecast:
 ### Using with scikit-learn API
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from sklearn.decomposition import PCA
@@ -583,6 +582,7 @@ pca = PCA(n_components=3)
 F_hat_sklearn = pca.fit_transform(X_scaled)
 
 # Step 2: Estimate VAR manually
+
 # (Similar to our implementation above)
 ```
 

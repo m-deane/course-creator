@@ -45,6 +45,7 @@ Proper environment setup ensures reproducible panel data analysis with the right
 Using `venv` (built-in):
 
 ```bash
+
 # Navigate to your project directory
 cd /path/to/your/project
 
@@ -52,8 +53,10 @@ cd /path/to/your/project
 python3 -m venv panel_env
 
 # Activate environment
+
 # On macOS/Linux:
 source panel_env/bin/activate
+
 # On Windows:
 panel_env\Scripts\activate
 ```
@@ -61,6 +64,7 @@ panel_env\Scripts\activate
 Using `conda` (alternative):
 
 ```bash
+
 # Create environment with Python 3.10
 conda create -n panel_env python=3.10
 
@@ -71,6 +75,7 @@ conda activate panel_env
 ### Step 2: Install Core Packages
 
 ```bash
+
 # Upgrade pip
 pip install --upgrade pip
 
@@ -95,12 +100,10 @@ pip install pytest black isort mypy
 Create a test script `test_installation.py`:
 
 
-<span class="filename">test_installation.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">test_installation.py</span>
 
 ```python
 """Test that all required packages are installed and working."""
@@ -219,6 +222,7 @@ Linearmodels: 5.3
 Install and configure Jupyter:
 
 ```bash
+
 # Install Jupyter
 pip install jupyter jupyterlab
 
@@ -235,12 +239,10 @@ In Jupyter, verify the kernel:
 - Run test cell:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import sys
@@ -261,6 +263,7 @@ print(f"Linearmodels version: {linearmodels.__version__}")
 Open R or RStudio and run:
 
 ```r
+
 # Install core panel data package
 install.packages("plm")
 
@@ -286,6 +289,7 @@ install.packages("clubSandwich")  # Cluster-robust inference
 Create test script `test_installation.R`:
 
 ```r
+
 # Test R Environment Setup for Panel Data Analysis
 
 test_imports <- function() {
@@ -390,12 +394,14 @@ error: command 'gcc' failed with exit status 1
 
 **Solution (macOS):**
 ```bash
+
 # Install Xcode Command Line Tools
 xcode-select --install
 ```
 
 **Solution (Linux):**
 ```bash
+
 # Ubuntu/Debian
 sudo apt-get install build-essential python3-dev
 
@@ -439,6 +445,7 @@ install.packages("plm")
 **Solution:**
 
 ```bash
+
 # Activate your environment
 source panel_env/bin/activate  # or conda activate panel_env
 
@@ -527,6 +534,7 @@ panel_regression_project/
 Create `.gitignore`:
 
 ```
+
 # Virtual environments
 panel_env/
 venv/
@@ -580,6 +588,7 @@ Before starting the course, verify:
 
 **Activate environment:**
 ```bash
+
 # venv
 source panel_env/bin/activate  # macOS/Linux
 panel_env\Scripts\activate     # Windows
@@ -601,6 +610,7 @@ pip install --upgrade linearmodels statsmodels pandas
 
 **Export environment:**
 ```bash
+
 # For pip
 pip freeze > requirements.txt
 
@@ -610,6 +620,7 @@ conda env export > environment.yml
 
 **Recreate environment on another machine:**
 ```bash
+
 # From requirements.txt
 pip install -r requirements.txt
 

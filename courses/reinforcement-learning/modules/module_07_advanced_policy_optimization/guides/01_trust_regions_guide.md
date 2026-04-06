@@ -98,8 +98,6 @@ Computing $F^{-1}$ directly costs $O(d^2)$ in memory and $O(d^3)$ in time for a 
 After computing the update direction $x = F^{-1}g$, a **backtracking line search** finds the largest step size that satisfies the KL constraint and achieves a positive surrogate objective improvement.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

@@ -149,12 +149,10 @@ Larger hypervolume = better Pareto approximation.
 ### Basic Multi-Objective Fitness
 
 
-<span class="filename">multi_objective_fitness.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multi_objective_fitness.py</span>
 
 ```python
 import numpy as np
@@ -223,12 +221,10 @@ print(f"MSE: {objectives[0]:.4f}, Complexity: {objectives[1]:.4f}")
 ### NSGA-II with DEAP
 
 
-<span class="filename">nsga2_feature_selection.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nsga2_feature_selection.py</span>
 
 ```python
 from deap import base, creator, tools, algorithms
@@ -420,12 +416,19 @@ creator.create("Individual3D", list, fitness=creator.Fitness3D)
 from mpl_toolkits.mplot3d import Axes3D
 
 # (Run NSGA-II with 3-objective fitness, then:)
+
 # fig = plt.figure(figsize=(12, 9))
+
 # ax = fig.add_subplot(111, projection='3d')
+
 # ax.scatter(obj1_values, obj2_values, obj3_values, c='red', s=100)
+
 # ax.set_xlabel('MSE')
+
 # ax.set_ylabel('Number of Features')
+
 # ax.set_zlabel('Total Cost')
+
 # plt.title('3D Pareto Front')
 ```
 
@@ -526,6 +529,7 @@ for strategy in ['accuracy', 'sparse', 'balanced', 'knee']:
 
 **How to avoid:**
 ```python
+
 # WRONG: Single weighted objective
 def weighted_fitness(individual, X, y, w1=0.7, w2=0.3):
     mse, complexity = multi_objective_fitness(individual, X, y)
@@ -545,10 +549,15 @@ def multi_obj_fitness(individual, X, y):
 
 **How to avoid:** Use NSGA-II's non-dominated sorting:
 ```python
+
 # NSGA-II automatically ranks by domination
+
 # Rank 0: Non-dominated (Pareto front)
+
 # Rank 1: Dominated only by Rank 0
+
 # Rank 2: Dominated by Rank 0 and 1
+
 # etc.
 
 # Selection preferentially keeps lower ranks
@@ -563,7 +572,9 @@ pop = toolbox.select(pop, len(pop))  # NSGA-II selection
 
 **How to avoid:** Use crowding distance to maintain spread:
 ```python
+
 # NSGA-II uses crowding distance to prefer isolated solutions
+
 # When comparing individuals with same rank, prefer higher crowding distance
 
 # You can also use diversity-preserving operators

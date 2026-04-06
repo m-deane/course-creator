@@ -247,12 +247,10 @@ Probabilities must sum to 100%. Justify each scenario with data.
 Here's a minimal prompt routing bandit in ~15 lines:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -283,14 +281,13 @@ class PromptRouter:
 
 **Usage:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Define your prompt arms
 prompts = [
     "Structured extraction prompt...",

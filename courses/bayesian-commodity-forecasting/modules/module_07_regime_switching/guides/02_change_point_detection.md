@@ -95,15 +95,13 @@ Each era has distinct characteristics (mean price, volatility). Change point det
 **Example:** Pre/post-shale oil volatility
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WTI volatility regimes
 pre_shale = oil_returns['2000':'2009'].std()  # ~0.03 daily
 post_shale = oil_returns['2015':'2019'].std()  # ~0.02 daily
@@ -153,13 +151,10 @@ Change point detection identifies when this shift occurred and uncertainty aroun
 ### Basic Mean-Shift Detection
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -255,14 +250,10 @@ plt.show()
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as multiple_changepoints:
@@ -316,13 +307,10 @@ print("Change points (std):", tau_post.std(axis=(0, 1)))
 Useful for identifying risk regime shifts (e.g., pre/post-crisis volatility).
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as variance_changepoint:
@@ -380,13 +368,10 @@ For real-time detection (new data arrives daily).
 $$p(r_t | y_{1:t}) \propto \sum_{r_{t-1}} p(r_t | r_{t-1}) p(y_t | r_t, y_{1:t-1}) p(r_{t-1} | y_{1:t-1})$$
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -490,15 +475,13 @@ print(f"Detected change points: {detected_changepoints}")
 ### Bayes Factor for Change Point Model vs. No-Change Model
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Model 1: No change point (constant mean/variance)
 with pm.Model() as no_change:
     mu = pm.Normal('mu', 65, 10)
@@ -508,6 +491,7 @@ with pm.Model() as no_change:
     trace_no_change = pm.sample(1000, tune=1000, return_inferencedata=True)
 
 # Model 2: Change point model (from earlier)
+
 # (already fitted as 'changepoint_model')
 
 # Compare via LOO
@@ -518,7 +502,9 @@ comparison = az.compare({
 print(comparison)
 
 # Interpretation:
+
 # - If change point model has much lower LOO → evidence for regime change
+
 # - If similar LOO → insufficient evidence
 ```
 
@@ -537,14 +523,10 @@ print(comparison)
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 with pm.Model() as inventory_changepoint:
@@ -580,6 +562,7 @@ with pm.Model() as inventory_changepoint:
                          return_inferencedata=True)
 
 # Interpretation: When did inventory-price relationship change?
+
 # Example: Shale revolution weakened inventory signal (more flexible supply)
 ```
 

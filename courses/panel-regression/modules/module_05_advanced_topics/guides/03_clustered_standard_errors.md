@@ -29,12 +29,10 @@ $$Var(\hat{\beta}) = (X'X)^{-1} \left(\sum_{g} X_g' \hat{u}_g \hat{u}_g' X_g\rig
 where $g$ indexes clusters (entities).
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -63,13 +61,15 @@ def demonstrate_clustering_importance():
         error_prev = 0
         rho_error = 0.7  # Serial correlation
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
 
 </div>
 
-
+```python
         for t in range(T):
             x = np.random.normal(5, 1)
             # Correlated errors
@@ -131,12 +131,10 @@ df = demonstrate_clustering_importance()
 The most common approach for panel data.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def entity_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -167,12 +165,10 @@ fe_model = entity_clustering(df, 'y', ['x'], 'entity', 'time')
 For cross-sectional correlation across entities.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def time_clustering(df, y_col, x_cols, entity_col, time_col):

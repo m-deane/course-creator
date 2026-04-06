@@ -19,13 +19,10 @@
 
 ### Basic Tool Definition (Claude)
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 tools = [
@@ -224,15 +221,13 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 
 ### Good Tool Names
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Use clear verbs
 "search_documents"    # Good
 "doc_search"          # Okay
@@ -248,6 +243,7 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 
 ### Good Tool Descriptions
 ```python
+
 # Bad: Vague
 "description": "Searches for stuff"
 
@@ -288,13 +284,10 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 
 - [ ] **Input validation** - Validate all parameters against schema
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
-  <div class="code-window">
+<div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
   from jsonschema import validate
@@ -367,13 +360,10 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 
 - **Tool description quality** - LLM relies heavily on description to choose tools
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
-  <div class="code-window">
+<div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
   # Bad: LLM won't know when to use this

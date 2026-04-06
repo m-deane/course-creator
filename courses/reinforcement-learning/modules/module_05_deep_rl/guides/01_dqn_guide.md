@@ -113,8 +113,6 @@ Removing either the replay buffer or the target network reintroduces one pathway
 ## Neural Network Architecture
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -185,8 +183,6 @@ For episode = 1, 2, ..., M:
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

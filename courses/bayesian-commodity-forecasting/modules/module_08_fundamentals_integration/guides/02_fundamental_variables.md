@@ -118,13 +118,10 @@ Bayesian model learns:
 ### Fundamental Variable Selection
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -275,13 +272,10 @@ fundamentals.summary()
 ### Bayesian Linear Model with Fundamentals
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def fit_fundamental_model(prices, fundamentals):
@@ -379,13 +373,10 @@ plt.show()
 ### Non-Linear Fundamental Effects
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def fit_nonlinear_fundamental_model(prices, fundamentals):
@@ -477,13 +468,10 @@ plt.show()
 ### Variable Importance via Posterior Predictive
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compute_variable_importance(trace, X, var_names):

@@ -79,12 +79,10 @@ Consider nowcasting Q1 2024 GDP on March 15, 2024:
 ### Code Implementation: Vintage Tracker
 
 
-<span class="filename">vintagedatamanager.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">vintagedatamanager.py</span>
 
 ```python
 import pandas as pd
@@ -241,12 +239,10 @@ GDP             Quarterly    Q4 2023
 ### Code Implementation: Ragged-Edge Dataset
 
 
-<span class="filename">raggededgedataset.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">raggededgedataset.py</span>
 
 ```python
 class RaggedEdgeDataset:
@@ -394,12 +390,10 @@ $$\text{RMSFE}_j = \sqrt{\frac{1}{T} \sum_{t=1}^{T} \left(Y_t - \hat{Y}_{t|t+j}\
 ### Code Implementation: Real-Time Backtest
 
 
-<span class="filename">realtimebacktest.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">realtimebacktest.py</span>
 
 ```python
 class RealTimeBacktest:
@@ -635,12 +629,10 @@ else:
 ### Code Implementation: Nowcast Tracker
 
 
-<span class="filename">nowcasttracker.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nowcasttracker.py</span>
 
 ```python
 class NowcastTracker:
@@ -888,18 +880,18 @@ The next module explores Factor-Augmented models (FAR, FAVAR), which use extract
 ## Appendix: Code Integration Example
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Complete workflow: Real-time nowcasting evaluation
 
 # 1. Load vintage data
 vintage_mgr = VintageDataManager()
+
 # ... populate with historical vintages ...
 
 # 2. Define evaluation period

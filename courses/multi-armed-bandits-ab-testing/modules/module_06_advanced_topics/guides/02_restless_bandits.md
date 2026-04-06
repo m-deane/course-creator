@@ -136,12 +136,10 @@ Whittle index balances these: "Friend B's life is changing rapidly (high volatil
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -217,12 +215,10 @@ for t in range(1000):
 Combine recency penalty with exponential discounting:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class DiscountedRestlessBandit:
@@ -366,14 +362,13 @@ Which arm should have a higher Whittle index (higher priority)? Why?
 **Restless Bandit Solution:**
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Initialize with recency penalty
 bandit = GreedyRestlessBandit(n_arms=5, recency_penalty=0.02)
 

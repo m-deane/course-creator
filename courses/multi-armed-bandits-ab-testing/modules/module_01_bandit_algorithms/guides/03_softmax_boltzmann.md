@@ -181,12 +181,10 @@ Softs:        exp(0.2/0.5) / Z = $2K   (2%)
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -222,12 +220,10 @@ class SoftmaxBandit:
 
 **Usage:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 bandit = SoftmaxBandit(k_arms=5, tau=0.5)
@@ -262,12 +258,10 @@ class DecayingSoftmax(SoftmaxBandit):
 
 **Preference-based variant (add learning to preferences):**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class GradientBandit(SoftmaxBandit):
@@ -311,6 +305,7 @@ class GradientBandit(SoftmaxBandit):
 
 **Fix:** Subtract the maximum Q̂ before exponentiating (log-sum-exp trick):
 ```python
+
 # WRONG (can overflow)
 probs = np.exp(q / tau) / np.sum(np.exp(q / tau))
 
@@ -329,6 +324,7 @@ probs = exp_q / np.sum(exp_q)
 
 **Fix:** Normalize Q̂ values to a consistent range, or scale τ appropriately:
 ```python
+
 # Normalize Q̂ to [0, 1]
 q_norm = (q - q.min()) / (q.max() - q.min() + 1e-10)
 probs = softmax(q_norm / tau)
@@ -357,8 +353,11 @@ probs = softmax(q_norm / tau)
 q_range = q.max() - q.min()
 effective_scale = q_range / tau
 print(f"Effective scale: {effective_scale:.2f}")
+
 # Should be in range [1, 5] for good exploration-exploitation balance
+
 # < 1: too much exploration (random)
+
 # > 5: too much exploitation (deterministic)
 ```
 
@@ -505,6 +504,7 @@ How would you use softmax for this?
 
 **Suggested approach:**
 ```python
+
 # Convert Q̂ to portfolio weights
 def allocate_capital(q_estimates, tau=0.5, total_capital=1e6):
     # Softmax probabilities

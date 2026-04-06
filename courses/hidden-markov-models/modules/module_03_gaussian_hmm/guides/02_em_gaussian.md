@@ -139,12 +139,10 @@ This is the maximum likelihood estimate given soft assignments!
 ### Complete Gaussian HMM with EM
 
 
-<span class="filename">gaussianhmm.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussianhmm.py</span>
 
 ```python
 import numpy as np
@@ -528,6 +526,7 @@ print(f"\nTransition Matrix:")
 print(model.A)
 
 # Compute accuracy
+
 # Map predicted states to true states (account for label switching)
 if np.mean(predicted_states == true_states) < 0.5:
     predicted_states = 1 - predicted_states
@@ -583,6 +582,7 @@ plt.show()
    - Solution: Add small regularization to diagonal
 
 ```python
+
 # In M-step
 self.covars[i] += 1e-6 * np.eye(self.D)  # Regularization
 ```
@@ -593,6 +593,7 @@ self.covars[i] += 1e-6 * np.eye(self.D)  # Regularization
    - **Spherical**: Single variance per state (most constrained)
 
 ```python
+
 # Start with diagonal, use full only if needed
 model = GaussianHMM(n_states=2, covariance_type='diag')
 ```
@@ -603,12 +604,10 @@ model = GaussianHMM(n_states=2, covariance_type='diag')
    - Solution: Identify states by learned parameters (e.g., highest mean = bull)
 
 
-<span class="filename">identify_states.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">identify_states.py</span>
 
 ```python
 def identify_states(model):
@@ -630,12 +629,10 @@ def identify_states(model):
    - Better: K-means initialization
 
 
-<span class="filename">initialize_from_kmeans.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">initialize_from_kmeans.py</span>
 
 ```python
 from sklearn.cluster import KMeans

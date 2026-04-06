@@ -212,12 +212,10 @@ $$P(\tau_t > 0 | \text{data}) = P(Y_t(1) > Y_t(0) | \text{data})$$
 — the probability that the treatment had a positive effect. This is a natural causal statement that is awkward in frequentist frameworks but natural in Bayesian ones.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -227,6 +225,7 @@ import matplotlib.pyplot as plt
 np.random.seed(42)
 
 t_post = np.arange(1, 11)
+
 # Observed post-intervention outcomes
 y_observed = 50 + 2 * t_post + np.random.normal(0, 3, 10)
 

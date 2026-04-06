@@ -19,12 +19,10 @@ $$y_{it} = \beta_0 + x_{it}'\beta + \epsilon_{it}$$
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -137,12 +135,10 @@ $$\rho = \frac{\sigma_\alpha^2}{\sigma_\alpha^2 + \sigma_\epsilon^2}$$
 This measures the proportion of variance due to entity effects.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def estimate_intraclass_correlation(data, y_col, entity_col):
@@ -186,14 +182,13 @@ This leads to:
 Cluster standard errors at the entity level to account for within-entity correlation:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Pooled OLS with clustered standard errors
 from linearmodels.panel import PooledOLS
 

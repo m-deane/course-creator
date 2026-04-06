@@ -101,13 +101,10 @@ For commodity forecasting:
 ### Basic BMA Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pymc as pm
@@ -366,13 +363,10 @@ plt.show()
 ### Forecast Comparison: Individual Models vs BMA
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compare_forecast_performance(y_true, X_test, bma):
@@ -430,6 +424,7 @@ X3_test = np.random.normal(0, 1, n_test)
 y_test = 50 + 2*X1_test - 1*X2_test + np.random.normal(0, 2, n_test)
 
 # Note: Full implementation would require modifying models to accept new X
+
 # This is a conceptual illustration
 
 print("\nForecast Performance:")
@@ -444,13 +439,10 @@ print(f"  BMA Coverage: {results['coverage']:.2%}")
 ### Pseudo-BMA with Stacking
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def pseudo_bma_stacking(traces, y_holdout):

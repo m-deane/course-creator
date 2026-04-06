@@ -122,12 +122,10 @@ $$Y_i = \alpha + \beta \hat{X}_i + \delta W_i + \epsilon_i$$
 The coefficient $\hat{\beta}$ from Stage 2 is the 2SLS estimate of the causal effect.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -211,14 +209,13 @@ Each instrument works because it shifts the endogenous variable (education, fami
 The first stage F-statistic tests whether the instruments are jointly significant in predicting the endogenous variable. A conventional rule of thumb: F > 10 for a single instrument. More formally, use the effective F-statistic from Olea & Pflueger (2013).
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Check first stage F-statistic
 first_stage = smf.ols('education ~ college_nearby + experience + female', data=df).fit()
 print(f"First stage F-stat: {first_stage.fvalue:.2f}")
@@ -236,14 +233,13 @@ If you have more instruments than endogenous variables (overidentified), you can
 **Caveat:** The test requires assuming at least one instrument is valid to identify the causal effect of the others. You cannot test all instruments simultaneously.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Sargan-Hansen J-test (overidentification)
 from linearmodels.iv import IV2SLS
 
@@ -251,6 +247,7 @@ result = IV2SLS(...).fit()
 j_stat = result.wooldridge_overid   # test statistic
 j_pval = result.wooldridge_overid_pvalue
 print(f"J-statistic: {j_stat:.3f}, p-value: {j_pval:.3f}")
+
 # p > 0.05: instruments are jointly valid (under assumption that at least one is)
 ```
 
@@ -312,7 +309,6 @@ The exclusion restriction cannot be tested — it requires theoretical justifica
 - Imbens & Rosenbaum (2005)...
 
 </div>
-
 
 
 ---

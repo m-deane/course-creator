@@ -67,8 +67,6 @@ For almost all business automation, use **Excel Online (Business)**.
 The Excel connector operates exclusively on **named Tables** (Insert → Table in Excel). It cannot read from raw cell ranges or worksheets without a Table. A Table gives every column a programmatic name, which Power Automate uses to map values.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -111,8 +109,6 @@ Retrieves all rows from a named table. This is the primary read action.
 > **On screen:** Click **+ New step** → search **Excel Online (Business)** → select **List rows present in a table**.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -159,8 +155,6 @@ Appends a new row to the bottom of the table.
 > **On screen:** Select **Add a row into a table**. After selecting Location, Library, File, and Table, a field appears for each column in the table.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -200,12 +194,10 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 > **On screen:** Select **Update a row**. Enter Location, Library, File, Table, and the **Row ID** — an integer retrieved from a previous **List rows** or **Get a row** action.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐

@@ -17,25 +17,25 @@ LLMs process each request independently—they don't remember previous conversat
 ### Each API Call is Stateless
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # Call 1
 response = client.messages.create(
     messages=[{"role": "user", "content": "My name is Alice."}]
 )
+
 # Response: "Nice to meet you, Alice!"
 
 # Call 2 - No memory of Call 1
 response = client.messages.create(
     messages=[{"role": "user", "content": "What's my name?"}]
 )
+
 # Response: "I don't know your name. You haven't told me."
 ```
 
@@ -45,6 +45,7 @@ response = client.messages.create(
 ### Solution: Maintain Message History
 
 ```python
+
 # Maintain conversation history
 conversation = []
 
@@ -56,6 +57,7 @@ conversation.append({"role": "assistant", "content": response.content[0].text})
 # Turn 2 - Include full history
 conversation.append({"role": "user", "content": "What's my name?"})
 response = client.messages.create(messages=conversation)
+
 # Response: "Your name is Alice."
 ```
 
@@ -68,13 +70,10 @@ response = client.messages.create(messages=conversation)
 Keep all messages in order:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class BufferMemory:
@@ -240,13 +239,10 @@ class TokenLimitedMemory:
 ### Combining Short and Long-term Memory
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 class HybridMemory:
@@ -329,13 +325,10 @@ class HybridMemory:
 ### Estimating Token Usage
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def estimate_tokens(text: str) -> int:
@@ -430,13 +423,10 @@ class DynamicContextManager:
 ### System Prompt + History
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def build_conversation(
@@ -496,13 +486,10 @@ def inject_context(messages: list[dict], context: str, position: str = "start") 
 ### Saving and Loading Memory
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import json

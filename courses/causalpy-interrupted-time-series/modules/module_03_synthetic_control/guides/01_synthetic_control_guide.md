@@ -108,12 +108,10 @@ The synthetic control estimate is credible only if the pre-intervention fit is g
 
 **Assessing pre-intervention fit:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -168,14 +166,13 @@ Not all available units should be included in the donor pool. Exclude units that
 
 **Practical donor pool construction:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Example: selecting donor states for a California tobacco analysis
 all_states = ["AL", "AK", "AZ", ..., "WY"]  # 50 states
 
@@ -197,12 +194,10 @@ CausalPy's `SyntheticControl` class uses a Bayesian approach to weight estimatio
 a Dirichlet prior on the weights and estimating the posterior distribution of the counterfactual.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -244,12 +239,10 @@ $$\hat{\alpha}_t = Y_{1t} - \sum_j w_j^* Y_{jt}$$
 
 For a pointwise effect estimate with uncertainty bounds:
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np

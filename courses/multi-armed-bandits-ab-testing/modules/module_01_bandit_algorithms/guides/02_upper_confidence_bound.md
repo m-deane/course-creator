@@ -205,12 +205,10 @@ Where uncertainty bonus = "how wrong could I be, given how little I've traded th
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -247,12 +245,10 @@ class UCB1:
 
 **Usage:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 ucb = UCB1(k_arms=5)
@@ -270,6 +266,7 @@ print(f"Pull counts: {ucb.action_counts}")
 
 **Variant: Different exploration constant:**
 ```python
+
 # Conservative (less exploration)
 ucb = UCB1(k_arms=5, c=1.0)
 
@@ -303,14 +300,13 @@ ucb_values = q + c * np.sqrt(np.log(t) / (counts + 1e-10))
 ### 3. Wrong Time Index
 **Problem:** Using N(a) instead of t in the logarithm:
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WRONG
 ucb = q + c * np.sqrt(np.log(counts) / counts)
 
@@ -340,6 +336,7 @@ return np.random.choice(best_actions)
 
 **Fix:** Use discounted UCB or a sliding window:
 ```python
+
 # Exponential recency weighting (α=0.1)
 q_new = (1-α)*q_old + α*reward  # Instead of sample mean
 
@@ -463,6 +460,7 @@ Your UCB1 implementation keeps pulling the same arm forever after t=100. What co
 
 **Common bug:**
 ```python
+
 # WRONG: bonus doesn't grow with time
 ucb = q + np.sqrt(2 / counts)
 

@@ -44,12 +44,10 @@ $$P(O | \lambda) = \sum_{i=1}^{K} \alpha_T(i)$$
 ### Implementation
 
 
-<span class="filename">forward.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward.py</span>
 
 ```python
 import numpy as np
@@ -113,12 +111,10 @@ print(f"Forward variables:\n{alpha}")
 For long sequences, $\alpha_t(i)$ underflows. Use scaling factors:
 
 
-<span class="filename">forward_scaled.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_scaled.py</span>
 
 ```python
 def forward_scaled(
@@ -176,12 +172,10 @@ $$\beta_t(i) = \sum_{j=1}^{K} a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)$$
 ### Implementation
 
 
-<span class="filename">backward.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backward.py</span>
 
 ```python
 def backward(
@@ -256,12 +250,10 @@ $$= \frac{\alpha_t(i) \cdot a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)}{P(O 
 ### Implementation
 
 
-<span class="filename">compute_posteriors.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_posteriors.py</span>
 
 ```python
 def compute_posteriors(
@@ -336,12 +328,10 @@ Combined:      P(qₜ=i | O) ∝ α(i) × β(i)
 ## Vectorized Implementation
 
 
-<span class="filename">forward_vectorized.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_vectorized.py</span>
 
 ```python
 def forward_vectorized(

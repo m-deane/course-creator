@@ -61,12 +61,10 @@ where $\mathbf{X} = [1, x_{m\cdot 1}, x_{m\cdot 1 - 1}, \ldots, x_{m\cdot 1 - (K
 This is **computationally much simpler** than nonlinear least squares — no optimization required.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -162,12 +160,10 @@ The right side is zero when the restriction is correctly specified, and nonzero 
 **Rule of thumb:** Use restricted MIDAS when $K/T > 0.1$ (more than 10% of sample size in parameters). Use U-MIDAS when $K/T < 0.05$ (fewer than 5%).
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
@@ -200,12 +196,10 @@ def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
 ## Comparing U-MIDAS and Restricted MIDAS
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np

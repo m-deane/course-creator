@@ -210,8 +210,6 @@ This flow processes incoming emails from vendors: it extracts invoice data from 
 Start from the Copilot prompt on the Home page:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -262,8 +260,6 @@ Add another AI Builder action: **Create text with GPT using a prompt**.
 In the prompt field, write:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -322,8 +318,6 @@ After building a flow manually or with Copilot, you can use the Copilot panel to
 **Example modifications you can ask for:**
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -339,12 +333,10 @@ with the attachment name and the error message instead of failing the flow
 </div>
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```text
 Change the SharePoint list to also record the email subject line and the

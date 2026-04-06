@@ -19,12 +19,10 @@ Before running panel regressions, thorough exploratory analysis helps you unders
 ### Individual Time Series Plots
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -95,12 +93,10 @@ plt.show()
 ### Within vs Between Variation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def plot_within_between(df, entity_col, x_col, y_col):
@@ -109,13 +105,15 @@ def plot_within_between(df, entity_col, x_col, y_col):
     """
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
 
 </div>
 
-
+```python
     # 1. Raw scatter (total variation)
     ax1 = axes[0]
     ax1.scatter(df[x_col], df[y_col], alpha=0.5)
@@ -199,12 +197,10 @@ for name, value in slopes.items():
 ### Visual Test: Entity Mean Differences
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def plot_entity_effects(df, entity_col, y_col):

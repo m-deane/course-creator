@@ -66,13 +66,10 @@ flowchart TB
 </div>
 
 
-<span class="filename">context_manager.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">context_manager.py</span>
 
 ```python
 class ContextManager:
@@ -109,13 +106,10 @@ class ContextManager:
 </div>
 
 
-<span class="filename">basic_rag.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">basic_rag.py</span>
 
 ```python
 from chromadb import Client
@@ -161,13 +155,10 @@ def retrieve(query: str, k: int = 5) -> list:
 </div>
 
 
-<span class="filename">long_term_memory.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">long_term_memory.py</span>
 
 ```python
 class LongTermMemory:

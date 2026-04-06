@@ -9,8 +9,6 @@ Multivariate forecasting feeds all correlated series simultaneously into a singl
 Start here: the code below trains univariate NHITS and multivariate XLinear on ETTm1 and compares their accuracy.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -87,14 +85,13 @@ See detailed comparison in the table above.
 The following implementation builds on the approach above:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # n_series must match the number of unique_ids in your DataFrame
 n_unique = Y_df["unique_id"].nunique()
 print(f"Dataset has {n_unique} series — set n_series={n_unique}")
@@ -140,18 +137,21 @@ Gated output: h_TGM × gate       — element-wise multiplication
 The gate values at inference time tell you which series are most informative:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # (Illustrative — requires model internals access)
+
 # A gate near 1.0 means "this series is highly informative"
+
 # A gate near 0.0 means "this series is suppressed"
+
 # For ETTm1, VGM typically assigns high gates to HUFL and MUFL
+
 # for predicting OT (oil temperature), consistent with physics
 ```
 
@@ -180,6 +180,7 @@ Known only up to the forecast origin — cannot be projected into the fu...
 Known only up to the forecast origin — cannot be projected into the future.
 
 ```python
+
 # Example: yesterday's spot price (known, but not known for tomorrow)
 model = XLinear(
     h=96, input_size=96, n_series=7,
@@ -192,6 +193,7 @@ model = XLinear(
 Known for both the lookback window and the forecast horizon — calendar features, scheduled events.
 
 ```python
+
 # Example: hour of day, day of week, holiday flag
 model = XLinear(
     h=96, input_size=96, n_series=7,
@@ -204,6 +206,7 @@ model = XLinear(
 Time-invariant features — series metadata like station ID, product category, geographic location.
 
 ```python
+
 # Example: transformer capacity rating (constant per series)
 model = XLinear(
     h=96, input_size=96, n_series=7,
@@ -215,6 +218,7 @@ model = XLinear(
 **How XLinear incorporates exogenous features:** All exogenous features are projected through the embedding layer alongside the endogenous variables. The VGM then gates all channels — both endogenous and exogenous — jointly. This means exogenous features that are not informative for forecasting will receive low VGM gate values and contribute minimally to predictions.
 
 ```python
+
 # Full example with calendar features on ETTm1
 import pandas as pd
 
@@ -262,6 +266,7 @@ baseline = XLinear(
 `hidden_size` is the single most impactful parameter. It controls the embedding dimension $d_{model}$, which flows through all four components.
 
 ```python
+
 # Compare three settings
 for hs in [256, 512, 1024]:
     model = XLinear(h=96, input_size=96, n_series=7,
@@ -278,6 +283,7 @@ Guideline: 512 is optimal for 7-series datasets. Use 256 for 2–3 series (less 
 If validation loss diverges from training loss after step 2, increase `head_dropout`:
 
 ```python
+
 # Typical search
 for hd in [0.2, 0.3, 0.5, 0.7]:
     model = XLinear(..., head_dropout=hd, max_steps=2000)
@@ -301,7 +307,9 @@ Guideline: `input_size = h` (same as horizon) is the benchmark standard. Increas
 Only tune these after steps 2–4 are fixed. They have smaller effect than `hidden_size`:
 
 ```python
+
 # Proportional scaling: temporal_ff ≈ hidden_size // 2
+
 # channel_ff ≥ n_series (never set lower)
 model = XLinear(h=96, input_size=96, n_series=7,
                 hidden_size=512, temporal_ff=256, channel_ff=21, ...)
@@ -327,6 +335,7 @@ HUFL      | 2016-07-01 00:15  | 5.761
 XLinear's multivariate mode requires that all `n_series` series have **identical timestamps** — every unique_id must appear at every time step. Missing timestamps break batch construction.
 
 ```python
+
 # Verify alignment before training
 from datasetsforecast.long_horizon import LongHorizon
 
@@ -335,6 +344,7 @@ Y_df, _, _ = LongHorizon.load(directory="data", group="ETTm1")
 # Check: all series have same timestamps
 timestamps_per_series = Y_df.groupby("unique_id")["ds"].count()
 print(timestamps_per_series)
+
 # Should show identical counts for all 7 series
 
 # Check: no missing timestamps
@@ -351,8 +361,10 @@ print(f"Dataset: {Y_df['unique_id'].nunique()} series × {timestamps_per_series.
 The `.cross_validation()` output contains columns for each model's forecasts:
 
 ```python
+
 # cv_df columns: unique_id, ds, cutoff, y, XLinear, NHITS (if both trained)
 print(cv_df.columns.tolist())
+
 # ['unique_id', 'ds', 'cutoff', 'y', 'XLinear']
 
 # Compute metrics per series using utilsforecast
@@ -364,6 +376,7 @@ test_df = cv_df[cv_df["cutoff"] == cv_df["cutoff"].max()]
 
 eval_df = evaluate(test_df, metrics=[mae, mse], models=["XLinear"])
 print(eval_df)
+
 # Rows: metric × unique_id, Col: XLinear value
 
 # Per-series breakdown

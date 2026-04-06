@@ -33,13 +33,10 @@ Different LLM providers offer distinct trade-offs in capability, cost, latency, 
 - Fewer fine-tuning options
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import anthropic
@@ -111,6 +108,7 @@ print(response.choices[0].message.content)
 - More operational complexity
 
 ```python
+
 # Using Ollama for local inference
 import requests
 
@@ -169,13 +167,10 @@ print(response.json()["response"])
 ### Abstraction Layer
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 from abc import ABC, abstractmethod
@@ -312,13 +307,10 @@ print(f"Tokens used: {response.input_tokens + response.output_tokens}")
 Use cheaper models for simple tasks, expensive models for complex ones:
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 def route_to_model(query: str, complexity: str = "auto") -> LLMProvider:
@@ -375,19 +367,17 @@ def chat_with_cache(provider_name: str, messages: list[Message]) -> str:
 ### Environment Variables (Recommended)
 
 ```bash
+
 # .env file
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 ```
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import os
@@ -427,13 +417,10 @@ anthropic_key = get_api_key("prod/anthropic-api-key")
 ## Rate Limiting and Retries
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import time

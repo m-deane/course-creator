@@ -193,12 +193,10 @@ With normalization:
 ### Demonstrating Rotational Indeterminacy
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -274,12 +272,10 @@ print("\nFactors are completely different, but X is identical!")
 ### Implementing PCA Normalization
 
 
-<span class="filename">pca_normalization.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">pca_normalization.py</span>
 
 ```python
 def pca_normalization(X, r):
@@ -345,12 +341,10 @@ print(Lambda_hat.round(3))
 ### Sign Normalization
 
 
-<span class="filename">sign_normalize.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sign_normalize.py</span>
 
 ```python
 def sign_normalize(F, Lambda, reference_variables):
@@ -385,6 +379,7 @@ def sign_normalize(F, Lambda, reference_variables):
 
 
 # Example: Force Factor 1 to load positively on variable 0
+
 # and Factor 2 to load positively on variable 5
 F_signed, Lambda_signed = sign_normalize(
     F_hat, Lambda_hat,
@@ -414,14 +409,13 @@ print(Lambda_signed[:3, :].round(3))
 ### Example: Macro Factor Identification
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # After PCA extraction
 variable_names = [
     "GDP", "Employment", "Hours", "Investment",
@@ -442,7 +436,9 @@ for j in range(r):
     print(loading_df.head(5))
 
 # Output might show:
+
 # Factor 1: GDP, Employment, Hours, Investment → "Real Activity"
+
 # Factor 2: CPI, PPI, Wages → "Inflation"
 ```
 

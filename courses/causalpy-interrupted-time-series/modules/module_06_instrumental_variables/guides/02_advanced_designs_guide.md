@@ -28,12 +28,10 @@ The conventional threshold is **F > 10** for a single instrument (Stock, Wright 
 For multiple instruments, use the **Angrist-Pischke** (AP) F-statistic for each instrument individually, and the **effective F-statistic** (Olea & Pflueger, 2013) for the joint first stage.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import statsmodels.formula.api as smf
@@ -67,15 +65,15 @@ for var in ['college_nearby', 'mother_educ']:
 | Find a stronger instrument | Best solution if available |
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Anderson-Rubin confidence intervals (weak-instrument robust)
+
 # Using the ivmodels package
 from ivmodels import KClass, AncestralInstruments
 
@@ -98,12 +96,10 @@ ar_ci = KClass(k=1).fit_regularized(
 ### Setup with Two Instruments
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -158,14 +154,13 @@ print(f"\nFirst stage F-statistic: {model_iv.first_stage.diagnostics['f.stat']:.
 With two instruments and one endogenous variable (overidentified), test whether the instruments give consistent estimates:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Sargan-Hansen J-test
 j_stat = model_iv.wooldridge_overid
 j_pval = model_iv.wooldridge_overid_pvalue
@@ -200,12 +195,10 @@ where $f(t)$ allows different pre-period trends for the treated group.
 - Combined: control group removes common shocks; time series provides rich pre-period
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import statsmodels.formula.api as smf
@@ -242,15 +235,15 @@ The fuzzy RDD estimator is:
 $$\tau_{fuzzy} = \frac{\lim_{x\downarrow c} E[Y \mid X=x] - \lim_{x\uparrow c} E[Y \mid X=x]}{\lim_{x\downarrow c} E[D \mid X=x] - \lim_{x\uparrow c} E[D \mid X=x]}$$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Fuzzy RDD as local IV
+
 # Stage 1: Effect of cutoff crossing on treatment probability
 first_stage_rdd = smf.ols(
     'enrolled ~ above_cutoff + x_centered + above_cutoff:x_centered',
@@ -294,14 +287,13 @@ The parameter $\tau$ captures:
 - After removing pre-existing differences and common time trends
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # RD-DiD: panel with pre and post periods
 df['above_cutoff'] = (df['running_var'] >= cutoff).astype(int)
 df['post'] = (df['period'] == 'post').astype(int)
@@ -386,7 +378,6 @@ graph TD
 **Next:** [Module 06 Notebooks](../notebooks/)
 
 </div>
-
 
 
 ## Resources

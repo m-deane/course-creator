@@ -9,8 +9,6 @@ XLinear achieves transformer-competitive accuracy on long-horizon multivariate f
 Start here: the code below trains XLinear on the ETTm1 dataset in under five minutes.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -80,8 +78,6 @@ $$\mathbf{E} = \mathbf{X} \mathbf{W}_e + \mathbf{b}_e, \quad \mathbf{W}_e \in \m
 **Global context tokens.** This is the key innovation borrowed from vision transformers: a small set of learnable vectors (`[CLS]`-style tokens) are concatenated to the sequence. These tokens are not tied to any time step — they aggregate global information across the entire window and act as a summary representation that both TGM and VGM can attend to.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -89,7 +85,9 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+
 # Conceptual illustration of global context token injection
+
 # In XLinear, these are learned parameters initialized from N(0, 0.02)
 global_ctx = nn.Parameter(torch.randn(1, n_ctx_tokens, d_model) * 0.02)
 x_with_ctx = torch.cat([x_embedded, global_ctx.expand(B, -1, -1)], dim=1)

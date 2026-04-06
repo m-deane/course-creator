@@ -39,13 +39,10 @@ Just as a car has multiple safety systems (seatbelts, airbags, ABS, stability co
 ### Layer 1: Input Validation
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
 import re
@@ -453,15 +450,13 @@ class SafeAgent:
 **Problem:** Over-filtering blocks legitimate requests.
 
 
-<span class="filename">agent.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
 
 ```python
+
 # DON'T: Block everything remotely sensitive
 if any(word in input for word in ["medical", "legal", "financial"]):
     return "Blocked"
@@ -478,6 +473,7 @@ if is_asking_for_medical_diagnosis(input) and not user_is_doctor(user_id):
 **Problem:** If one guardrail fails, system is compromised.
 
 ```python
+
 # DON'T: Only input validation
 validate_input(input)
 return llm.generate(input)  # No output filtering!
@@ -493,6 +489,7 @@ verify_actions(actions)
 **Problem:** Can't diagnose issues or improve guardrails.
 
 ```python
+
 # DON'T: Silent failures
 if not is_safe(input):
     return "Error"
@@ -508,6 +505,7 @@ if not is_safe(input):
 **Problem:** Not monitoring for pattern of attacks.
 
 ```python
+
 # DON'T: Handle each request independently
 if is_prompt_injection(input):
     return "Blocked"

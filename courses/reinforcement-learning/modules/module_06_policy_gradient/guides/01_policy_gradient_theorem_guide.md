@@ -161,8 +161,6 @@ When a sampled action $a$ exceeds the current mean and led to high return, the m
 ## Optimization Landscape
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -211,8 +209,6 @@ Policy gradient methods perform gradient ascent on $J(\theta)$ using Monte Carlo
 ## Code Snippet
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

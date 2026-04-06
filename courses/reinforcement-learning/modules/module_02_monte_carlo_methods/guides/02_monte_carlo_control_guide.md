@@ -224,8 +224,6 @@ A standard schedule that satisfies GLIE: $\varepsilon_k = \frac{1}{k}$ (decays a
 ## Python Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

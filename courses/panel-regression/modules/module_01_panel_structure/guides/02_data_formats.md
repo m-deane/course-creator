@@ -112,12 +112,10 @@ $$\text{melt}(\text{df}_{\text{wide}}, \text{id\_vars}=i, \text{var\_name}=t, \t
 
 **Long Format (Analysis-Ready):**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 person_id | year | wage | education | experience
@@ -134,12 +132,10 @@ person_id | year | wage | education | experience
 
 **Wide Format (Time Series View):**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 person_id | wage_2019 | wage_2020 | wage_2021
@@ -169,12 +165,10 @@ person_id | wage_2019 | wage_2020 | wage_2021
 ### Format Conversion
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -241,6 +235,7 @@ print(f"\nData preserved: {data_long_restored.shape == (N*T, 3)}")
 ### Multi-Index DataFrames
 
 ```python
+
 # Create multi-index DataFrame (long format with hierarchical index)
 data_mi = data_long.set_index(['entity_id', 'year'])
 
@@ -288,6 +283,7 @@ print(time_means)
 ### Handling Unbalanced Panels
 
 ```python
+
 # Create unbalanced panel (some entities missing some years)
 np.random.seed(42)
 missing_mask = np.random.random(N * T) > 0.8  # 20% missing
@@ -337,6 +333,7 @@ print(f"Balanced subset: {len(data_balanced_subset)} observations")
 ### Advanced Reshaping
 
 ```python
+
 # Multiple variables to wide
 data_multi = data_long.copy()
 

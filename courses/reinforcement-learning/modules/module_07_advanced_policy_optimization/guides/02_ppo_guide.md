@@ -142,8 +142,6 @@ Where:
 PPO collects a batch of experience under $\pi_{\theta_{old}}$, then performs **multiple gradient epochs** over the same batch. This amortizes the environment interaction cost:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -312,8 +310,6 @@ def ppo_update(model, optimizer, rollout, n_epochs=4, batch_size=64,
 PPO uses Generalized Advantage Estimation (Schulman et al., 2016) to compute $\hat{A}_t$:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

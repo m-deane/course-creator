@@ -85,14 +85,13 @@ Think of deployment governance like air traffic control for Gen AI applications.
 The `DeploymentConfig` dataclass centralizes all environment-specific settings — token limits, monitoring flags, cost budgets — so the same codebase can run safely in dev, staging, and production without hardcoded values scattered across the application.
 
 
-<span class="filename">deployment_config.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">deployment_config.py</span>
 
 ```python
+
 # deployment_config.py
 from typing import Dict, Any
 from dataclasses import dataclass
@@ -205,14 +204,13 @@ def get_config(env: Environment) -> DeploymentConfig:
 ### Deployment Pipeline
 
 
-<span class="filename">deployment_pipeline.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">deployment_pipeline.py</span>
 
 ```python
+
 # deployment_pipeline.py
 import dataiku
 from dataiku.llm import LLM
@@ -422,14 +420,13 @@ else:
 ### Production Monitoring
 
 
-<span class="filename">monitoring.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">monitoring.py</span>
 
 ```python
+
 # monitoring.py
 from dataclasses import dataclass
 from datetime import datetime, timedelta

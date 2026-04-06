@@ -42,12 +42,10 @@ $$E[u_i | X_{it}] = 0 \quad \forall t$$
 This means the entity effect is uncorrelated with all regressors across all time periods.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -111,13 +109,15 @@ def demonstrate_re_assumption_violation():
     df['y_good'] = 3 + 1.5 * df['x_good'] + df['u_i'] + np.random.normal(0, 0.5, len(df))
     df_panel = df.set_index(['entity', 'time'])
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Random effects assumes the unobserved entity effect is uncorrelated with regressors. When this holds, RE is more efficient than FE because it uses both within- and between-entity variation.
 
 </div>
 
-
+```python
     print("\n--- Case 2: X uncorrelated with entity effect (VALID) ---")
     print(f"Correlation(X, u_i): {df.groupby('entity')[['x_good', 'u_i']].mean().corr().iloc[0,1]:.3f}")
 
@@ -148,12 +148,10 @@ $$Cov(v_{it}, v_{is}) = \sigma_u^2 \quad (t \neq s)$$
 $$Cov(v_{it}, v_{jt}) = 0 \quad (i \neq j)$$
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def visualize_error_structure():
@@ -230,12 +228,10 @@ visualize_error_structure()
 OLS ignores the error correlation structure, leading to inefficient (though still consistent, if RE assumption holds) estimates.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compare_ols_gls_efficiency():

@@ -29,13 +29,16 @@ Setting up the development environment for applying generative AI to commodity m
 
 **Primary: Anthropic Claude**
 ```bash
+
 # Sign up at: https://console.anthropic.com/
+
 # Set environment variable
 export ANTHROPIC_API_KEY="sk-ant-api..."
 ```
 
 **Alternative: OpenAI GPT**
 ```bash
+
 # Sign up at: https://platform.openai.com/
 export OPENAI_API_KEY="sk-..."
 ```
@@ -49,21 +52,30 @@ export OPENAI_API_KEY="sk-..."
 
 **Energy Information Administration (EIA)**
 ```bash
+
 # Free registration: https://www.eia.gov/opendata/register.php
 export EIA_API_KEY="your_eia_key"
 
 # Key datasets:
+
 # - Weekly Petroleum Status Report (WPSR)
+
 # - Natural Gas Weekly Update
+
 # - Short-Term Energy Outlook (STEO)
 ```
 
 **USDA Agricultural Data**
 ```bash
+
 # No API key required for most reports
+
 # Key sources:
+
 # - WASDE (World Agricultural Supply and Demand Estimates)
+
 # - Crop Progress Reports
+
 # - Export Sales Reports
 
 # Direct download URLs available
@@ -71,7 +83,9 @@ export EIA_API_KEY="your_eia_key"
 
 **NOAA Weather Data (Optional)**
 ```bash
+
 # For weather-dependent commodities (natural gas, agriculture)
+
 # Register at: https://www.ncdc.noaa.gov/cdo-web/token
 export NOAA_TOKEN="your_token"
 ```
@@ -84,6 +98,7 @@ export NOAA_TOKEN="your_token"
 - **Paid:** Quandl/Nasdaq Data Link
 
 ```bash
+
 # Free options don't require API keys
 pip install yfinance
 
@@ -101,6 +116,7 @@ export QUANDL_API_KEY="your_key"
 
 **Create Virtual Environment:**
 ```bash
+
 # Using venv
 python -m venv genai-commodities
 source genai-commodities/bin/activate  # On Windows: genai-commodities\Scripts\activate
@@ -114,6 +130,7 @@ conda activate genai-commodities
 
 **Create requirements.txt:**
 ```txt
+
 # LLM Frameworks
 anthropic>=0.25.0
 openai>=1.30.0
@@ -158,6 +175,7 @@ pip install -r requirements.txt
 
 **Create .env file:**
 ```bash
+
 # .env (never commit this file!)
 ANTHROPIC_API_KEY=sk-ant-api...
 OPENAI_API_KEY=sk-...
@@ -205,6 +223,7 @@ response = client.messages.create(
 )
 
 print(response.content[0].text)
+
 # Should return a coherent response about oil price drivers
 ```
 
@@ -239,12 +258,10 @@ else:
 
 **ChromaDB (local, no API key needed):**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import chromadb
@@ -261,6 +278,7 @@ results = collection.query(
     n_results=1
 )
 print(results)
+
 # Should return the document
 ```
 
@@ -311,12 +329,10 @@ genai-commodities/
 - **Issue:** Exceeding free tier limits or hitting rate limits
 - **Solution:** Implement caching, use exponential backoff, monitor usage
 
-<span class="filename">retry_with_backoff.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">retry_with_backoff.py</span>
 
 ```python
 import time
@@ -354,12 +370,10 @@ load_dotenv()  # Must be called before os.getenv()
 - **Issue:** Vector database data lost between sessions
 - **Solution:** Use persistent client
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import chromadb
@@ -375,12 +389,10 @@ client = chromadb.PersistentClient(path="./chroma_db")
 - **Issue:** LLM responses cut off mid-sentence
 - **Solution:** Increase max_tokens parameter
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 response = client.messages.create(
@@ -398,12 +410,10 @@ response = client.messages.create(
 - **Solution:** Use libraries like instructor or manual validation
 
 
-<span class="filename">safe_json_parse.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">safe_json_parse.py</span>
 
 ```python
 import json

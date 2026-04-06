@@ -47,12 +47,10 @@ The penalty $\lambda\|\beta\|_1$ shrinks coefficients toward zero. Variables wit
 In commodity markets, consider estimating the effect of carbon tax increases on power generation costs. Many controls (weather, fuel prices, demand, renewable capacity) have small but real confounding effects. Lasso may drop some of these, reintroducing bias.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -96,14 +94,13 @@ Lasso selects based on prediction of $Y$. Variables like $X_1$ and $X_7$ confoun
 After Lasso selection, running OLS on the selected variables ignores the uncertainty from the selection step:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Step 2: OLS on Lasso-selected variables
 X_selected = X[:, selected]
 DX_selected = np.column_stack([D, X_selected])
@@ -134,12 +131,10 @@ print(f"True effect in CI:      {in_ci}")
 Run a Monte Carlo simulation to check actual coverage:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def coverage_simulation(n_sims=500, n=1000, p=200, true_theta=1.5):
@@ -194,14 +189,13 @@ Belloni, Chernozhukov, and Hansen (2014) proposed "double selection" — run Las
 This ensures confounders of $D$ are not dropped, even if they are weak predictors of $Y$.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Double selection
 lasso_y = LassoCV(cv=5, random_state=42).fit(X, Y)
 lasso_d = LassoCV(cv=5, random_state=42).fit(X, D)
@@ -261,12 +255,10 @@ Explain why Lasso selecting variables for $Y$ is not the same as selecting confo
 Extend the coverage simulation to compare three methods: (a) post-Lasso OLS, (b) double selection OLS, (c) DML with random forests. Plot coverage rates for each. Which achieves nominal 95% coverage?
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def compare_coverage(n_sims=200, n=1000, p=200, true_theta=1.5):

@@ -118,12 +118,10 @@ The MIDAS-RV model captures that **not all lags of daily RV are equally informat
 ### 4.1 Beta Weight Function
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -177,12 +175,10 @@ def plot_beta_weights(ax, K=22):
 ### 4.2 MIDAS-RV Estimator
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from scipy.optimize import minimize
@@ -302,12 +298,10 @@ $$RV^{(d)}_{t+1} = c + \beta^{(d)} RV^{(d)}_t + \beta^{(w)} RV^{(w)}_t + \beta^{
 where $RV^{(w)}_t = \frac{1}{5}\sum_{j=0}^{4} RV^{(d)}_{t-j}$ (weekly average) and $RV^{(m)}_t = \frac{1}{22}\sum_{j=0}^{21} RV^{(d)}_{t-j}$ (monthly average).
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def fit_har_rv(rv_daily):

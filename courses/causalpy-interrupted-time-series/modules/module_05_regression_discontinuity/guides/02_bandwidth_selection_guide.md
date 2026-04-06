@@ -54,12 +54,10 @@ This scales as $n^{-1/5}$ — bandwidth shrinks as sample size grows.
 ### Practical Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -110,12 +108,10 @@ The goal of sensitivity analysis is to show that your treatment effect estimate 
 ### Generating the Sensitivity Plot
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -193,14 +189,13 @@ Use **local linear** (order 1) or at most **local quadratic** (order 2). Higher-
 3. The fit near the cutoff is dominated by distant points
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compare polynomial orders
 for order in [1, 2, 3, 4]:
     result = rdrobust(y=df['y'], x=df['x'], c=0, h=h_ik, p=order)
@@ -233,14 +228,13 @@ Kernel weights down-weight observations further from the cutoff. Common choices:
 The triangular kernel is optimal for the boundary regression problem in RDD — it down-weights observations far from the cutoff, which is exactly what you want.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Compare kernels
 for kernel in ['triangular', 'uniform', 'epanechnikov']:
     result = rdrobust(y=df['y'], x=df['x'], c=0, h=h_ik, kernel=kernel)
@@ -261,6 +255,7 @@ In practice, kernel choice rarely matters as much as bandwidth choice.
 The variance of the outcome near the cutoff may differ from the variance further away. Use HC2 or HC3 robust standard errors:
 
 ```python
+
 # rdrobust uses HC-type robust SEs by default
 result = rdrobust(y=df['y'], x=df['x'], c=0, h=h_ik, vce='hc1')
 ```
@@ -283,12 +278,10 @@ Ignoring clustering in clustered data leads to over-rejection of the null (false
 The "donut" removes observations very close to the cutoff, testing whether results are driven by local manipulation:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def donut_rdd(df, outcome, running_var, cutoff, bandwidth, donut_width):
@@ -322,12 +315,10 @@ If estimates are stable across donut widths, manipulation of the running variabl
 ## 8. CausalPy Bandwidth Sensitivity
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import causalpy as cp
@@ -419,7 +410,6 @@ plt.show()
 **Next:** [Module 05 Notebooks](../notebooks/)
 
 </div>
-
 
 
 ## Resources

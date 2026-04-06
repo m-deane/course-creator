@@ -180,8 +180,6 @@ Same transition $(S_t, A_t, R_{t+1}, S_{t+1})$ is used by both. The difference i
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

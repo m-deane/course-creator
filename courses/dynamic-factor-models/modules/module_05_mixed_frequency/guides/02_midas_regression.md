@@ -85,12 +85,10 @@ and $B(\theta_1, \theta_2) = \frac{\Gamma(\theta_1)\Gamma(\theta_2)}{\Gamma(\the
 ### Code Implementation: Beta Weights
 
 
-<span class="filename">midas_beta_weights.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midas_beta_weights.py</span>
 
 ```python
 import numpy as np
@@ -180,12 +178,10 @@ Typically use polynomial of degree 1 or 2.
 ### Code Implementation: Exponential Almon Weights
 
 
-<span class="filename">midas_almon_weights.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midas_almon_weights.py</span>
 
 ```python
 def midas_almon_weights(K, theta, normalize=True):
@@ -274,12 +270,10 @@ The MIDAS regression is **nonlinear** in $\theta$ (but linear in $\beta_0, \beta
 ### Code Implementation
 
 
-<span class="filename">midasregression.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midasregression.py</span>
 
 ```python
 from scipy.optimize import minimize

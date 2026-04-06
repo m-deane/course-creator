@@ -78,15 +78,13 @@ Exact Shapley value computation requires evaluating $v(S)$ for all $2^n$ subsets
 Estimate Shapley values by sampling random orderings:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Conceptual algorithm
 shapley_estimates = {i: 0 for i in range(n_features)}
 for _ in range(n_samples):
@@ -99,6 +97,7 @@ for _ in range(n_samples):
         shapley_estimates[feature_i] += (
             v(coalition_before | {feature_i}) - v(coalition_before)
         )
+
 # Average over samples
 shapley_estimates = {i: v / n_samples for i, v in shapley_estimates.items()}
 ```
@@ -114,10 +113,8 @@ Each sample requires $n$ model evaluations (one per position in the ordering). W
 ## 4. Captum ShapleyValueSampling API
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
 <div class="callout-key">
+
 <strong>Key Point:</strong> from captum.attr import ShapleyValueSampling
 </div>
 
@@ -139,6 +136,7 @@ attributions = svs.attribute(
     target=class_idx,       # Target class (for classifiers)
     n_samples=200           # Monte Carlo samples (default: 25)
 )
+
 # attributions: same shape as input
 ```
 
@@ -156,13 +154,10 @@ attributions = svs.attribute(
 Captum does not provide variance estimates directly, but you can estimate via bootstrap:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from scipy.stats import sem
@@ -215,15 +210,13 @@ SHAP (SHapley Additive exPlanations) is a family of Shapley-based methods:
 Captum's `ShapleyValueSampling` is equivalent to the Monte Carlo version of KernelSHAP. For neural networks in PyTorch, Captum's implementation is more convenient than the standalone `shap` library.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Captum (PyTorch native, works with arbitrary nn.Module)
 from captum.attr import ShapleyValueSampling
 svs = ShapleyValueSampling(model)
@@ -262,13 +255,10 @@ While Occlusion and Shapley values explain individual predictions (local), **Per
 **Key property:** No need to define a baseline value — permuting breaks the relationship between feature and prediction without removing the feature from the input space.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def permutation_importance(model, X_val, y_val, n_repeats=5):
@@ -321,13 +311,10 @@ def permutation_importance(model, X_val, y_val, n_repeats=5):
 Captum also provides `KernelShap` as a specific implementation following the original KernelSHAP methodology with a weighted regression approach:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import KernelShap
@@ -377,13 +364,10 @@ attr = ks.attribute(
 ShapleyValueSampling is a stochastic estimate — it has variance that decreases with n_samples. Monitor convergence:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def shapley_with_convergence_check(model, input_x, baseline, target,

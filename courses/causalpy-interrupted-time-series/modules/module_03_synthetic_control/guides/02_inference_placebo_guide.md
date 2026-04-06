@@ -44,12 +44,10 @@ of donors from their own synthetic counterparts.
 2. Compare the treated unit's gap to the distribution of donor gaps
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -161,12 +159,10 @@ Normalizing by RMSPE_pre focuses attention on post-period gaps that are large *r
 pre-period fit quality*.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def placebo_p_value(gaps, rmspe_pre, n_pre, treated_idx=0):
@@ -230,12 +226,10 @@ The canonical synthetic control inference plot shows all placebo gaps alongside 
 unit's gap. The treated unit should stand out — its gap should be clearly larger in the post-period.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -298,12 +292,10 @@ a large gap at a placebo date, either the pre-period fit is poor or the donor po
 chosen.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
@@ -376,12 +368,10 @@ from the treated unit's post-intervention outcomes and rerun the placebo test. T
 at level $1 - \alpha$ is the set of $\alpha_0$ values for which the null is not rejected.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def confidence_set_sc(Y_all, n_pre, treated_idx=0, alpha=0.1, alpha0_grid=None):

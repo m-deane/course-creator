@@ -136,8 +136,6 @@ This means: if the policy entropy is above the target, decrease $\alpha$ (less e
 ## Full SAC Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

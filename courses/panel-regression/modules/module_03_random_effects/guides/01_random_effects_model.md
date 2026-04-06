@@ -92,12 +92,10 @@ As $\sigma_\alpha^2 \to \infty$ or $T \to \infty$, $\theta \to 1$ (RE approaches
 ## Implementation in Python
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -147,12 +145,10 @@ print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 ### Method of Moments
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def estimate_variance_components(data, y_col, x_cols, entity_col, time_col):
@@ -221,19 +217,19 @@ for k, v in var_components.items():
 A key advantage of RE: estimating effects of time-invariant variables.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Add time-invariant variable
 data_flat = data.reset_index()
 data_flat['gender'] = np.repeat(np.random.choice([0, 1], N), T)
 
 # FE cannot estimate gender effect
+
 # RE can!
 data_panel = data_flat.set_index(['entity', 'time'])
 
@@ -259,6 +255,7 @@ $$y_{it} = \beta_0 + x_{it}'\beta + \bar{x}_i'\gamma + \alpha_i + \epsilon_{it}$
 This makes RE robust to correlation between $\alpha_i$ and $x_{it}$.
 
 ```python
+
 # Mundlak correction
 data_flat = data.reset_index()
 data_flat['x_mean'] = data_flat.groupby('entity')['x'].transform('mean')

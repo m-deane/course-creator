@@ -95,14 +95,13 @@ $$\text{Maximize: } Q(\text{Model}) - \lambda \times C(\text{Model})$$
 
 **Naive Implementation:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Every signal: full context, large model
 for news in news_feed:
     context = get_full_context(news)  # 5000 tokens
@@ -115,14 +114,13 @@ for news in news_feed:
 
 **Optimized Implementation:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Smart routing and caching
 for news in news_feed:
     # Check cache first
@@ -174,12 +172,10 @@ Total: 110ms (acceptable for trading)
 ### Intelligent Caching System
 
 
-<span class="filename">from.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
 
 ```python
 import hashlib

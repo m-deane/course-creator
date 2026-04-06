@@ -66,12 +66,10 @@ Think of custom model wrappers like middleware in web development. Just as middl
 ### Basic Wrapper Pattern
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.llm import LLM
@@ -151,12 +149,10 @@ class BaseLLMWrapper:
 ### JSON Extraction Wrapper
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class JSONExtractorLLM(BaseLLMWrapper):
@@ -244,6 +240,7 @@ Report: U.S. crude inventories fell 5.2 million barrels...
 """)
 
 print(result)
+
 # {'inventory_change': -5.2, 'sentiment': 'bullish', 'key_factors': [...]}
 ```
 
@@ -253,12 +250,10 @@ print(result)
 ### Retry and Fallback Wrapper
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import logging
@@ -352,12 +347,10 @@ result = resilient_llm.complete("Summarize this report...")
 ### Cost-Optimized Router Wrapper
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class CostOptimizedLLM(BaseLLMWrapper):
@@ -497,12 +490,10 @@ result3 = cost_optimized.complete("...", force_tier='high')
 ### Domain-Specific Wrapper
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class CommodityAnalysisLLM(BaseLLMWrapper):
@@ -647,12 +638,10 @@ print(f"Consensus: {comparison['consensus']}")
 ### Wrapper with Caching
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import hashlib

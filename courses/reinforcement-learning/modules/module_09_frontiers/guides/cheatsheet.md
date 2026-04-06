@@ -81,6 +81,8 @@ Step 1: Supervised Fine-Tuning (SFT)
   Loss:  L_SFT = -Σ log π_θ(y | x)
   Goal:  Initialize policy in good output region
 
+```
+
 <div class="callout-key">
 
 <strong>Key Point:</strong> ### DPO Alternative
@@ -89,7 +91,7 @@ $$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[\log\sigma\!\left(\beta\log\frac{\
 
 </div>
 
-
+```
 Step 2: Reward Model Training
   Data:  (prompt x, preferred y_w, rejected y_l) triples
   Model: Bradley-Terry  P(y_w ≻ y_l | x) = σ(r_φ(x, y_w) - r_φ(x, y_l))

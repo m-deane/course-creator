@@ -169,13 +169,10 @@ The fix is to treat the condition stack as a first-class data object — not as 
 ### Step 1: Define a condition payload schema
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 condition_payload = {
@@ -200,13 +197,10 @@ condition_payload = {
 Every agent's output schema includes the condition payload:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 agent_output = {
@@ -222,13 +216,10 @@ agent_output = {
 ### Step 3: Inject conditions into every downstream system prompt
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def build_agent_prompt(task: str, condition_stack: dict) -> str:
@@ -267,13 +258,10 @@ Include only conditions that:
 3. Constrain the solution space (not just describe it)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 CONDITION_SUMMARY_PROMPT = """
@@ -309,15 +297,13 @@ From Module 2: switch variables are the conditions that flip the solution branch
 Identify them before designing the pipeline:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # For a contract review pipeline:
 switch_variables = {
     "deal_breaker_threshold": "client will walk away if X",

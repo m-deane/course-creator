@@ -43,13 +43,10 @@ The gradient is the direction of steepest ascent in the output surface. Features
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -63,7 +60,9 @@ input_tensor = preprocess(image).unsqueeze(0).requires_grad_(True)
 
 # attr_method: use abs (absolute_value) for magnitude-only visualization
 attributions = saliency.attribute(input_tensor, target=class_idx)
+
 # attributions.shape == input_tensor.shape
+
 # Each value = |∂f/∂x_i|
 ```
 
@@ -76,15 +75,13 @@ attributions = saliency.attribute(input_tensor, target=class_idx)
 Understanding what Captum does internally:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Captum's Saliency is equivalent to:
 input_tensor.requires_grad_(True)
 output = model(input_tensor)
@@ -137,19 +134,17 @@ This approximation is exact for linear models and approximate for non-linear mod
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import InputXGradient
 
 ixg = InputXGradient(model)
 attributions = ixg.attribute(input_tensor, target=class_idx)
+
 # Each value = x_i * ∂f/∂x_i
 ```
 
@@ -190,13 +185,10 @@ This modification produces cleaner, sharper visualizations by removing gradient 
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import GuidedBackprop
@@ -255,13 +247,10 @@ Like Guided Backprop, deconvolution fails implementation invariance and is not a
 ### Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import Deconvolution
@@ -340,13 +329,10 @@ $$\phi_i^{\text{SmoothGrad}}(x) = \frac{1}{n} \sum_{k=1}^n \frac{\partial f(x + 
 In Captum, this is implemented via `NoiseTunnel`:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import Saliency, NoiseTunnel

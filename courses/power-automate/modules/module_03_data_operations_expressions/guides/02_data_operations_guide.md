@@ -52,8 +52,6 @@ By the end of this guide you will be able to:
 Power Automate evaluates expressions inline in every field, but a complex expression written six different times in six different fields is hard to maintain. Compose solves this by computing the value once and letting downstream steps reference the single output.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -138,8 +136,6 @@ Replaces the variable's current value with a new value.
 Example: after classifying an email, set `strStatus` to `"Approved"`:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -162,8 +158,6 @@ Adds a number to an integer or float variable. This is the standard loop counter
 > **On screen:** Search for `Increment variable`. Select the action. Choose the variable and enter the increment amount (for example, `1`).
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -196,12 +190,10 @@ Concatenates text onto the end of a string variable. Useful for building a multi
 Example: collect email subjects into a summary string:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```text
 Initialize variable

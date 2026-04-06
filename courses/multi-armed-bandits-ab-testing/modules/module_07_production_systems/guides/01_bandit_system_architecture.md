@@ -110,12 +110,10 @@ Just like you wouldn't let a portfolio manager bypass risk limits, your policy e
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataclasses import dataclass
@@ -179,14 +177,13 @@ class ProductionBanditSystem:
 
 **Commodity Application:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Weekly commodity allocation system
 def commodity_guardrails(arm: str, context: Dict) -> str:
     """Validate commodity selection before execution."""
@@ -283,9 +280,6 @@ When a commodity allocation performs poorly, you need to know: Was the arm enabl
    Design the interfaces for ArmRegistry and Guardrails that support these requirements.
 
 4. **Code Review:** What's wrong with this architecture?
-
-<span class="filename">example.py</span>
-</div>
 
    <div class="code-window">
 <div class="code-header">

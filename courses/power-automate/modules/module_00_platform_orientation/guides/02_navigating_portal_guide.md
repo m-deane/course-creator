@@ -285,9 +285,6 @@ Power Automate licensing directly determines which connectors you can use and ho
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

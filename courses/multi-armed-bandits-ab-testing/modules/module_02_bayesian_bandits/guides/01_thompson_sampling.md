@@ -44,13 +44,15 @@ Round 100: Beliefs concentrating
    Arm A        Arm B       Arm C
               (Clearly best)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** Thompson Sampling is often called probability matching because it selects each arm with probability equal to the posterior probability that it is optimal. This natural calibration is why it tends to outperform in practice.
 
 </div>
 
-
+```
 Round 500: Truth revealed
  Beta(245,256) Beta(298,203) Beta(231,270)
      |█|          |███|          |█|
@@ -120,12 +122,10 @@ You pick B. Tomorrow, they make new claims (new samples). Sometimes C gets lucky
 ## Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np

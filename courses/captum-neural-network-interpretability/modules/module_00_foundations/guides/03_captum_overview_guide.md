@@ -46,14 +46,10 @@ Every Captum method follows this pattern:
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import IntegratedGradients
@@ -97,13 +93,10 @@ The `attribute()` method signature varies slightly between methods, but the patt
 Captum requires inputs to have gradients enabled. The standard pattern:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -141,16 +134,13 @@ input_tensor = input_tensor.requires_grad_(True)
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Gradient-based
 from captum.attr import Saliency              # Vanilla gradient magnitude
 from captum.attr import InputXGradient        # Input × gradient
@@ -190,13 +180,10 @@ from captum.attr import TCAV                  # Testing with concept activation 
 `NoiseTunnel` adds variance reduction to any attribution method:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import IntegratedGradients, NoiseTunnel
@@ -241,14 +228,10 @@ Captum includes `captum.attr.visualization` for common attribution visualization
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import visualization as viz
@@ -300,15 +283,13 @@ fig, axes = viz.visualize_image_attr_multiple(
 ### SHAP (SHapley Additive exPlanations)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # SHAP usage (separate library)
 import shap
 
@@ -340,15 +321,13 @@ shap.image_plot(shap_values, input_data)
 ### LIME (Local Interpretable Model-agnostic Explanations)
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # LIME usage (separate library)
 from lime import lime_image
 
@@ -422,14 +401,10 @@ Captum works with any pretrained PyTorch model out of the box:
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import torch
@@ -453,13 +428,10 @@ ig = IntegratedGradients(resnet50.eval())
 ### HuggingFace Transformers
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -486,15 +458,13 @@ lig = LayerIntegratedGradients(model, model.distilbert.embeddings)
 For layer-based attribution, you need to specify which layer to attribute to:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # For ResNet50
 target_layer = resnet50.layer4[-1].conv2  # Last conv in layer 4
 
@@ -527,15 +497,13 @@ lgc = LayerGradCam(resnet50.eval(), target_layer)
 Attribution computation creates a full backward pass (for gradient methods). For large batches or high-resolution images, this can exceed GPU memory:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # For memory-constrained settings, process one image at a time
 results = []
 for i in range(batch_size):
@@ -559,13 +527,10 @@ attributions = torch.cat(results, dim=0)
 Always call `model.eval()` before computing attributions. Training mode enables dropout and batch norm in training behavior, which makes attributions non-deterministic and unreliable:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 model.eval()  # CRITICAL: disables dropout, uses running stats for BN
@@ -575,6 +540,7 @@ with torch.no_grad():  # Use no_grad for the forward model pass
 # Correct pattern:
 model.eval()
 attributions = ig.attribute(inputs, baselines=baseline, target=class_idx)
+
 # Captum handles gradient computation internally
 ```
 
@@ -587,13 +553,10 @@ attributions = ig.attribute(inputs, baselines=baseline, target=class_idx)
 For Integrated Gradients with many steps, Captum supports internal batching to control memory:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 attributions = ig.attribute(
@@ -616,15 +579,13 @@ attributions = ig.attribute(
 Before trusting attributions, run these sanity checks:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # 1. Completeness check (for Integrated Gradients)
 attributions, delta = ig.attribute(
     inputs, baselines=baseline, target=class_idx,
@@ -633,6 +594,7 @@ attributions, delta = ig.attribute(
 print(f"Convergence delta: {delta.item():.4f}")  # Should be near 0
 
 # 2. Attribution sum check
+
 # For IG: sum of attributions should equal f(input) - f(baseline)
 model.eval()
 with torch.no_grad():
@@ -645,6 +607,7 @@ print(f"Attribution sum:     {attr_sum:.4f}")
 print(f"f(input) - f(base):  {expected:.4f}")  # Should match
 
 # 3. Randomization check
+
 # Attributions for a randomly initialized model should look like noise
 import copy
 random_model = copy.deepcopy(resnet50)
@@ -654,6 +617,7 @@ for layer in random_model.modules():
 
 ig_random = IntegratedGradients(random_model.eval())
 attr_random = ig_random.attribute(inputs, baselines=baseline, target=class_idx)
+
 # This should look like noise, not structured attribution
 ```
 

@@ -57,14 +57,10 @@ Apply IG at each encoder layer independently:
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -138,13 +134,10 @@ $$C_l = \int_0^1 \frac{\partial F(x'+ \alpha(x-x'))}{\partial h_l(\alpha)} \cdot
 This is the chain-rule application of IG at each layer — it measures how much the layer's activation contributes to the final output difference.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from captum.attr import LayerConductance
@@ -185,13 +178,10 @@ def layer_conductance_all_layers(model, tokenizer, text, target_class):
 ## 5. Visualizing Layer Importance
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import matplotlib.pyplot as plt
@@ -271,13 +261,10 @@ L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
 A comprehensive visualization shows how token importance varies across layers:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def plot_token_layer_heatmap(
@@ -322,13 +309,10 @@ def plot_token_layer_heatmap(
 GPT-2 uses causal (left-to-right) attention, unlike BERT's bidirectional attention. This changes the layer attribution pattern:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
@@ -375,15 +359,13 @@ A layer can encode rich linguistic information (high probing accuracy) but not u
 Computing LayerIG for all 12 BERT layers plus the embedding layer requires 13 separate backward passes. For production analysis:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Process in batches and free gradients
 for layer_idx, encoder_layer in enumerate(model.bert.encoder.layer):
     with torch.no_grad():

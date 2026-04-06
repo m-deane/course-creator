@@ -57,15 +57,15 @@ At each round t:
 ## LinUCB Implementation Template
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
+
+```
 
 <div class="callout-insight">
 
@@ -73,7 +73,7 @@ import numpy as np
 
 </div>
 
-
+```python
 class LinUCB:
     def __init__(self, n_arms, context_dim, alpha=1.0, lambda_=1.0):
         self.n_arms = n_arms
@@ -137,12 +137,10 @@ month_cos = np.cos(2 * np.pi * month / 12)
 
 **Trend:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 ma_short = prices.rolling(20).mean()
@@ -155,14 +153,13 @@ trend = (ma_short - ma_long) / ma_long
 
 **Macro Regime:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Dollar + VIX composite
 dollar_z = (dollar - dollar.mean()) / dollar.std()
 vix_z = (vix - vix.mean()) / vix.std()
@@ -211,6 +208,7 @@ macro = 0.5 * dollar_z + 0.5 * vix_z
 
 ### Pattern 1: Regime-Dependent Allocation
 ```python
+
 # Context: market regime
 context = np.array([
     vol_zscore,
@@ -228,6 +226,7 @@ arm = bandit.choose_arm(context)
 
 ### Pattern 2: Personalized Recommendations
 ```python
+
 # Context: user features
 context = np.array([
     user_engagement_score,
@@ -242,6 +241,7 @@ content_id = bandit.choose_arm(context)
 
 ### Pattern 3: Dynamic Pricing
 ```python
+
 # Context: demand signals
 context = np.array([
     time_of_day_sin,
@@ -268,6 +268,7 @@ price_idx = bandit.choose_arm(context)
 ## Quick Diagnostics
 
 ```python
+
 # Check feature quality
 features.describe()  # Look for variance, range
 features.corr()      # Identify redundant features
@@ -295,6 +296,7 @@ cumulative_regret = sum(regret_t)
 
 **Suboptimality:**
 ```python
+
 # How often did we choose best arm?
 best_arm = oracle(context)
 accuracy = (chosen_arm == best_arm).mean()
@@ -302,6 +304,7 @@ accuracy = (chosen_arm == best_arm).mean()
 
 **Reward comparison:**
 ```python
+
 # Compare to baselines
 bandit_reward = sum(rewards_contextual)
 random_reward = sum(rewards_random)
@@ -371,7 +374,9 @@ def normalize_features(X):
 
 **Sherman-Morrison update (efficient):**
 ```python
+
 # Instead of recomputing A^{-1} each time
+
 # Update A^{-1} directly when adding x x^T to A
 def sherman_morrison_update(A_inv, x):
     numerator = A_inv @ np.outer(x, x) @ A_inv

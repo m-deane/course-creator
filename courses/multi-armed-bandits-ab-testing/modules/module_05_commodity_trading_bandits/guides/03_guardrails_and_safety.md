@@ -100,12 +100,10 @@ Guardrails force the bandit to:
 **Rule:** No single arm can exceed a maximum weight in the bandit sleeve.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def apply_position_limits(weights, max_weight=0.40):
@@ -131,20 +129,22 @@ def apply_position_limits(weights, max_weight=0.40):
 
 **Commodity example:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Bandit proposes: [0.70, 0.15, 0.10, 0.05, 0.00]
+
 # After position limit (40%): [0.44, 0.17, 0.11, 0.06, 0.22]
+
 #   → Forced diversification
 
 weights = np.array([0.70, 0.15, 0.10, 0.05, 0.00])
 safe_weights = apply_position_limits(weights, max_weight=0.40)
+
 # Result: WTI capped at 40%, excess reallocated
 ```
 
@@ -163,12 +163,10 @@ safe_weights = apply_position_limits(weights, max_weight=0.40)
 **Rule:** Every arm must maintain a minimum weight, even after poor performance.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def apply_minimum_allocation(weights, min_weight=0.05):
@@ -195,12 +193,16 @@ def apply_minimum_allocation(weights, min_weight=0.05):
 
 **Commodity example:**
 ```python
+
 # Bandit proposes: [0.50, 0.30, 0.15, 0.05, 0.00]
+
 # After min allocation (5%): [0.48, 0.29, 0.14, 0.05, 0.05]
+
 #   → Corn stays alive despite zero allocation
 
 weights = np.array([0.50, 0.30, 0.15, 0.05, 0.00])
 safe_weights = apply_minimum_allocation(weights, min_weight=0.05)
+
 # Result: Even worst-performing arm gets 5%
 ```
 
@@ -244,14 +246,19 @@ def apply_tilt_speed_limit(
 
 **Commodity example:**
 ```python
+
 # Current: [0.20, 0.20, 0.20, 0.20, 0.20]
+
 # Proposed: [0.50, 0.30, 0.10, 0.05, 0.05]
+
 # After speed limit (15%): [0.35, 0.28, 0.15, 0.12, 0.10]
+
 #   → Gradual tilt, not sudden swing
 
 old = np.array([0.20, 0.20, 0.20, 0.20, 0.20])
 new = np.array([0.50, 0.30, 0.10, 0.05, 0.05])
 safe = apply_tilt_speed_limit(new, old, max_change=0.15)
+
 # Result: WTI increases by max 15%, not full 30%
 ```
 
@@ -357,16 +364,25 @@ def apply_volatility_dampening(
 
 **Commodity example:**
 ```python
+
 # Normal regime (VIX=18):
+
 #   Bandit: [0.40, 0.30, 0.15, 0.10, 0.05]
+
 #   Core: [0.20, 0.20, 0.20, 0.20, 0.20]
+
 #   Final: bandit weights (no dampening)
 
 # Crisis regime (VIX=35):
+
 #   Bandit: [0.40, 0.30, 0.15, 0.10, 0.05]
+
 #   Core: [0.20, 0.20, 0.20, 0.20, 0.20]
+
 #   Final: 0.5 * bandit + 0.5 * core
+
 #        = [0.30, 0.25, 0.175, 0.15, 0.125]
+
 #   → Moved halfway back to equal-weight
 ```
 

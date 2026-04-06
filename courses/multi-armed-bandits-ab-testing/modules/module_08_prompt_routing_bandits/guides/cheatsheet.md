@@ -93,12 +93,10 @@ reward = primary_metric + Σ(guardrail_penalties)
 ### Example Composite Reward
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def commodity_llm_reward(query, response, docs, ground_truth=None):
@@ -133,12 +131,10 @@ def commodity_llm_reward(query, response, docs, ground_truth=None):
 ### Context Vector Example (15 dimensions)
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 context = [
@@ -178,12 +174,10 @@ context = [
 ### Thompson Sampling (No Context)
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class PromptRouter:
@@ -361,6 +355,7 @@ class ContextualPromptRouter:
 
 
 ```python
+
 # Initialize
 prompts = ["Extraction...", "Analysis...", "Signal..."]
 router = PromptRouter(len(prompts))

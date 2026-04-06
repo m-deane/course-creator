@@ -278,12 +278,10 @@ LASSO says: "Include all variables, but penalize complexity."
 ### Basic LASSO Implementation
 
 
-<span class="filename">highdimensionalregression.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">highdimensionalregression.py</span>
 
 ```python
 import numpy as np
@@ -543,14 +541,13 @@ class HighDimensionalRegression:
 ### Example Application
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Generate high-dimensional data
 np.random.seed(42)
 T = 100  # observations
@@ -624,14 +621,13 @@ print("=" * 60)
 ### Visualization
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Plot CV results
 fig, axes = plt.subplots(1, 2, figsize=(15, 5))
 
@@ -701,14 +697,13 @@ plt.show()
 **Solution:** Always standardize predictors before applying LASSO/elastic net.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WRONG
 model = Lasso(alpha=0.1)
 model.fit(X_raw, y)  # Variables have different units!
@@ -740,14 +735,13 @@ model.fit(X_scaled, y)
 **Solution:** Use nested cross-validation or separate validation set.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # WRONG
 model = LassoCV(cv=5)
 model.fit(X_train, y_train)

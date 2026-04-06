@@ -185,8 +185,6 @@ The **Details** field in the approval action supports a limited set of HTML. Thi
 ### Basic HTML Structure
 
 
-<span class="filename">example.html</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

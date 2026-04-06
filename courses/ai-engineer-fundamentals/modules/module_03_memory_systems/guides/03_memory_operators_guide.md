@@ -51,13 +51,10 @@ flowchart LR
 ### Implementation Pattern
 
 
-<span class="filename">memory_formation.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">memory_formation.py</span>
 
 ```python
 import hashlib
@@ -132,13 +129,10 @@ class MemoryFormation:
 ### Implementation Pattern
 
 
-<span class="filename">memory_retrieval.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">memory_retrieval.py</span>
 
 ```python
 import math
@@ -195,13 +189,10 @@ class MemoryRetrieval:
 | **Reinforce** | Boost importance of accessed memories | On each retrieval |
 
 
-<span class="filename">memory_evolution.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">memory_evolution.py</span>
 
 ```python
 class MemoryEvolution:
@@ -254,13 +245,10 @@ class MemoryEvolution:
 ## Putting It All Together
 
 
-<span class="filename">agent_memory.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent_memory.py</span>
 
 ```python
 class AgentMemory:

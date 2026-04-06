@@ -66,12 +66,10 @@ The factors are estimated as the first $q$ principal components of the data matr
 4. Estimated factors: $\hat{\mathbf{F}} = \mathbf{X} \hat{\mathbf{V}}_q / N$ where $\hat{\mathbf{V}}_q$ contains the top-$q$ eigenvectors
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -142,12 +140,10 @@ Common rule of thumb: select $q$ such that the first $q$ factors explain at leas
 For US quarterly macro data (N=15–30 indicators): typically $q = 2$ or $q = 3$ factors suffice.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def select_n_factors_bai_ng(X, max_factors=10):

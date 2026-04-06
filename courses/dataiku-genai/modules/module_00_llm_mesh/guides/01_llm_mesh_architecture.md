@@ -135,14 +135,13 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 ### Basic Architecture Components
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Conceptual implementation showing key architecture components
 
 class LLMMeshRouter:
@@ -376,14 +375,13 @@ class LLMMesh:
 ### Using LLM Mesh in Dataiku
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # In a Dataiku Python recipe or notebook
 
 import dataiku
@@ -402,11 +400,17 @@ print(f"Tokens used: {response.usage.total_tokens}")
 print(f"Cost: ${response.estimated_cost:.4f}")
 
 # The LLM Mesh automatically:
+
 # - Verified your permissions
+
 # - Checked rate limits
+
 # - Validated budget
+
 # - Routed to healthy connection
+
 # - Logged the interaction
+
 # - Tracked metrics
 ```
 
@@ -420,20 +424,20 @@ print(f"Cost: ${response.estimated_cost:.4f}")
 **Problem:**
 
 ```python
+
 # Bad - hardcoded connection
 llm = LLM("claude-production")
 ```
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Good - use project variables
 import dataiku
 project = dataiku.api_client().get_project(dataiku.default_project_key())
@@ -448,14 +452,13 @@ llm = LLM(connection_name)
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Will hit rate limits quickly
 for text in large_dataset:
     response = llm.complete(text)  # No delay
@@ -466,12 +469,10 @@ for text in large_dataset:
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import time
@@ -505,12 +506,10 @@ data = json.loads(response.text)  # What if not valid JSON?
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 try:
@@ -537,14 +536,13 @@ except Exception as e:
 
 **Problem:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # No cost awareness
 for row in df.iterrows():
     llm.complete(row['long_text'])  # Could be expensive!
@@ -555,12 +553,10 @@ for row in df.iterrows():
 
 **Solution:**
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from dataiku.monitoring import CostTracker
@@ -671,12 +667,10 @@ LLM Mesh (return path)
 <summary>Solution</summary>
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class ResilientLLMRouter:
@@ -763,12 +757,10 @@ class ResilientLLMRouter:
 <summary>Solution</summary>
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def optimize_batch_processing(reviews, budget=50.0):
@@ -872,9 +864,13 @@ def optimize_batch_processing(reviews, budget=50.0):
     return results
 
 # Expected outcome:
+
 # - ~8,000-9,000 reviews processed (within $50 budget)
+
 # - ~70-80% use Haiku (simple sentiment)
+
 # - ~20-30% use Sonnet (complex/nuanced cases)
+
 # - Average cost: ~$0.005-0.006 per review
 ```
 

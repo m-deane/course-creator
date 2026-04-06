@@ -70,8 +70,6 @@ By decoupling selection from evaluation, neither network controls both aspects o
 The only change from vanilla DQN is two lines in the target computation:
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -100,8 +98,6 @@ flowchart TD
 ### Code Implementation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">
@@ -203,12 +199,10 @@ $$p_i \leftarrow |\delta_i^{\text{new}}| + \epsilon$$
 Naive priority updates are $O(N)$ per step. A **sum tree** data structure reduces sampling and updating to $O(\log N)$:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class SumTree:

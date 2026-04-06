@@ -9,8 +9,6 @@ Modern forecasting has moved well beyond producing a single number. This guide m
 Start here: the code below installs neuralforecast and verifies the installation in under 30 seconds.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -115,9 +113,6 @@ The nixtla stack consists of three coordinated libraries:
 <strong>Insight:</strong> The nixtla stack consists of three coordinated libraries:
 
 
-example.py
-
-
 The following implementation builds on the approach above:
 
 
@@ -126,9 +121,6 @@ The following implementation builds on the approach above:
 </div>
 
 
-
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -169,12 +161,10 @@ Every model in the ecosystem expects data in a three-column format:
 This format handles thousands of series uniformly — a single `NeuralForecast` instance trains one model across all series simultaneously.
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import pandas as pd
@@ -183,9 +173,13 @@ from datasetsforecast.m4 import M4
 # Load M4 hourly subset — already in (unique_id, ds, y) format
 train, test, _ = M4.load(directory='/tmp/m4', group='Hourly')
 print(train.head())
+
 #    unique_id          ds      y
+
 # 0       H1  1750-01-01  605.0
+
 # 1       H1  1750-01-02  586.0
+
 # 2       H1  1750-01-03  586.0
 print(f"Series count: {train['unique_id'].nunique()}")
 print(f"Rows: {len(train):,}")

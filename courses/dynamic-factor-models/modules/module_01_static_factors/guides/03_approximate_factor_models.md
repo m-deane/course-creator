@@ -200,12 +200,10 @@ $$\hat{r} = \arg\min_k IC_p(k)$$
 ### Simulating Approximate Factor Model
 
 
-<span class="filename">simulate_approximate_factor_model.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">simulate_approximate_factor_model.py</span>
 
 ```python
 import numpy as np
@@ -284,12 +282,10 @@ print(idio_corr[:5, :5].round(3))
 ### Eigenvalue Spectrum Analysis
 
 
-<span class="filename">analyze_eigenvalue_spectrum.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_eigenvalue_spectrum.py</span>
 
 ```python
 def analyze_eigenvalue_spectrum(X, true_r=None):
@@ -359,12 +355,10 @@ analyze_eigenvalue_spectrum(X, true_r=r)
 ### Bai-Ng Information Criteria
 
 
-<span class="filename">bai_ng_ic.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bai_ng_ic.py</span>
 
 ```python
 def bai_ng_ic(X, k_max=10):
@@ -473,12 +467,10 @@ ic_results = bai_ng_ic(X, k_max=10)
 ### Weak Dependence Verification
 
 
-<span class="filename">check_weak_dependence.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_weak_dependence.py</span>
 
 ```python
 def check_weak_dependence(X, threshold=0.3):

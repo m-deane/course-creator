@@ -53,15 +53,13 @@ yields a posterior $p(\theta|y)$ in the same distributional family as $p(\theta)
 **Commodity application:** Probability that a crop report exceeds expectations; fill rate on limit orders.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Example: Estimating probability of inventory draw
 alpha_prior, beta_prior = 2, 2  # Weak prior centered at 0.5
 
@@ -103,13 +101,10 @@ where $\tau = 1/\sigma^2$ is precision.
 **Commodity application:** Estimating equilibrium price level; long-term mean reversion target.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -154,13 +149,10 @@ print(f"Posterior 95% CI: [{mu_post - 1.96*sigma_post:.2f}, {mu_post + 1.96*sigm
 **Commodity application:** Number of supply disruptions per quarter; frequency of limit moves.
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 from scipy import stats
@@ -240,13 +232,10 @@ This is the **Normal-Inverse-Gamma** prior, conjugate for the Normal likelihood 
 For online learning, conjugate priors allow instant updates:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 class BayesianMeanEstimator:
@@ -309,16 +298,15 @@ When you have little prior knowledge:
 **Example:** Seasonal inventory typically ranges from -5 to +10 million barrels
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
+
 # Prior mean: (10 + (-5)) / 2 = 2.5
+
 # Prior std: Range/4 ≈ 3.75 (covers ~95% of expected range)
 mu_0, sigma_0 = 2.5, 3.75
 ```
@@ -331,13 +319,10 @@ mu_0, sigma_0 = 2.5, 3.75
 Always simulate from your prior and check if the predictions are reasonable:
 
 
-<span class="filename">example.py</span>
-</div>
-<div class="code-body">
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np

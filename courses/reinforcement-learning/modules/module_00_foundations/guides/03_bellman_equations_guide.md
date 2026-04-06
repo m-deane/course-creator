@@ -156,8 +156,6 @@ $$\pi^*(s) = \arg\max_{a} \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^*(s'
 The Bellman equations have a natural graphical representation: the **backup diagram**.
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 ```mermaid
@@ -181,8 +179,6 @@ The diagram shows: from state $s$, the policy branches over actions; each action
 ## Python Code: Value Function Computation
 
 
-<span class="filename">example.py</span>
-</div>
 The following implementation builds on the approach above:
 
 <div class="code-window">

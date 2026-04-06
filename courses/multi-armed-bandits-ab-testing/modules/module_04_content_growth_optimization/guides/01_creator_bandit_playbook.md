@@ -30,13 +30,15 @@ This is the antidote to "I went viral once, so I'll chase that high forever" and
 ```
 CREATOR BANDIT LIFECYCLE (52-week cycle)
 
+```
+
 <div class="callout-insight">
 
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 
 </div>
 
-
+```
 Weeks 1-3: EXPLORATION PHASE
 ┌──────────────────────────────────────────┐
 │  6 Arms (3 topics × 2 formats)           │
@@ -143,12 +145,10 @@ After a year, you've learned:
 Complete simulation of the Creator Bandit Playbook over 52 weeks:
 
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 import numpy as np
@@ -303,12 +303,10 @@ A food blogger uses a bandit to optimize content. Arms are recipe types. Reward 
 ### Problem 3: Simulate Arm Retirement (Implementation)
 Implement the retirement logic from the playbook:
 
-<span class="filename">example.py</span>
-</div>
-
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 
 ```python
 def should_retire(arm_idx, avg_rewards, pulls, week):
@@ -320,6 +318,7 @@ def should_retire(arm_idx, avg_rewards, pulls, week):
     pass  # Your implementation
 
 # Test: After 12 weeks, arm 3 has 15 pulls and lowest avg
+
 # should_retire(3, avg_rewards, pulls, 12) → True
 ```
 

@@ -1,8 +1,15 @@
 # Practical Deep RL: Tuning, Debugging, and Reproducibility
 
+> **Reading time:** ~18 min | **Module:** 5 — Deep RL | **Prerequisites:** Module 4, PyTorch basics
+
 ## In Brief
 
 Deep RL training involves more failure modes than supervised learning. Policy optimization is non-stationary, reward signals are delayed, and hyperparameter sensitivity is high. This guide covers how to configure, debug, and reproduce deep RL experiments systematically.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Deep RL training involves more failure modes than supervised learning. Policy optimization is non-stationary, reward signals are delayed, and hyperparameter sensitivity is high.
+</div>
+
 
 ## Key Insight
 
@@ -10,6 +17,11 @@ Most deep RL training failures are diagnosable from four time series: episode re
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Most deep RL training failures are diagnosable from four time series: episode return, mean Q-value, gradient norm, and TD loss.
+</div>
 ## Hyperparameter Tuning for DQN
 
 ### Complete Hyperparameter Reference
@@ -36,7 +48,28 @@ Not all hyperparameters are equally important. Tune in this order:
 4. **Batch size** — larger batches reduce gradient variance. Diminishing returns above 256.
 5. **$\epsilon$ schedule** — tune last. If the policy is good but slightly suboptimal, more exploration may help.
 
+
+<div class="flow">
+<div class="flow-step mint">1. Learning rate</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Replay buffer size</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Target update frequency</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Batch size</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. $\epsilon$ schedule</div>
+</div>
+
 ### Learning Rate Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -62,6 +95,7 @@ scheduler = optim.lr_scheduler.StepLR(
     optimizer, step_size=500_000, gamma=0.5
 )
 ```
+</div>
 
 ### Discount Factor Selection
 
@@ -85,6 +119,14 @@ Setting $\gamma$ too high for short episodes causes value estimates to become no
 ### The Four Diagnostic Metrics
 
 Log these four metrics from training step one:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 class TrainingLogger:
@@ -160,10 +202,19 @@ class TrainingLogger:
             for i in range(1, len(values) + 1)
         ]
 ```
+</div>
 
 ### Failure Mode Diagnosis
 
 Use the four diagnostics to identify which failure mode is active:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart TD
@@ -195,6 +246,7 @@ flowchart TD
     style D4 fill:#4A90D9,color:#fff
     style D5 fill:#4CAF50,color:#fff
 ```
+</div>
 
 ### Common Failure Modes and Solutions
 
@@ -208,6 +260,12 @@ Causes:
 - Gradient norm not clipped
 
 Solutions:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Ensure target network is present and synced
 assert target_net is not None
@@ -219,6 +277,7 @@ optimizer = optim.Adam(q_net.parameters(), lr=1e-5)
 # Add gradient clipping (should always be present)
 nn.utils.clip_grad_norm_(q_net.parameters(), max_norm=10.0)
 ```
+</div>
 
 **Failure Mode 2 — No improvement after many episodes**
 
@@ -476,8 +535,17 @@ def aggregate_runs(returns_per_seed: List[List[float]]) -> dict:
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Tuning hyperparameters on a single seed.**
 Deep RL training variance is high enough that a hyperparameter may appear better on one seed purely by chance. Always evaluate hyperparameter choices across at least 3–5 seeds before drawing conclusions.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Tuning hyperparameters on a single seed.**
+Deep RL training variance is high enough that a hyperparameter may appear better on one seed purely by chance.
+</div>
 
 **Pitfall 2 — Evaluating policy while ε > 0.**
 During training, the agent takes random actions with probability $\epsilon$. Reporting training return (not evaluation return at $\epsilon = 0$) underestimates performance and makes comparison across different $\epsilon$ schedules meaningless. Maintain a separate evaluation loop.
@@ -512,11 +580,24 @@ def save_checkpoint(agent, step: int, checkpoint_dir: str):
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** DQN (Guide 01), DQN improvements (Guide 02), gradient descent fundamentals
 - **Leads to:** policy gradient methods (Module 06), actor-critic algorithms (Module 07), distributed RL
 - **Related to:** hyperparameter optimization in supervised learning, scientific computing reproducibility practices
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -524,3 +605,18 @@ def save_checkpoint(agent, step: int, checkpoint_dir: str):
 - Agarwal, R. et al. (2021). *Deep Reinforcement Learning at the Edge of the Statistical Precipice.* NeurIPS. — introduces IQM and other robust evaluation metrics for RL
 - Engstrom, L. et al. (2020). *Implementation Matters in Deep RL: A Case Study on PPO and TRPO.* ICLR. — shows how implementation details dominate algorithmic differences
 - OpenAI Spinning Up documentation (https://spinningup.openai.com) — practical guide covering implementation details, hyperparameters, and common bugs
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_practical_deep_rl_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_dqn_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

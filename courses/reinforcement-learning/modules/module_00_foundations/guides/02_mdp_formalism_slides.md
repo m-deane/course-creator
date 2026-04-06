@@ -30,6 +30,11 @@ $$(\mathcal{S},\ \mathcal{A},\ p,\ R,\ \gamma)$$
 | $R$ | Reward function | What the agent optimizes |
 | $\gamma \in [0,1)$ | Discount factor | How much future matters |
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Every quantity in RL -- value functions, policies, Bellman equations, algorithms -- is defined relative to this tuple. When students encounter a new algorithm, the first question should be: which components of the MDP does it require access to? Model-based methods need p. Model-free methods only need samples from p. The reward function R is implied by p and is often treated separately for clarity. -->
 
 ---
@@ -45,6 +50,11 @@ $$\sum_{s' \in \mathcal{S}} \sum_{r \in \mathcal{R}} p(s', r \mid s, a) = 1 \qua
 **Derived quantities:**
 
 $$p(s' \mid s, a) = \sum_{r} p(s', r \mid s, a) \qquad r(s,a) = \sum_{r} r \sum_{s'} p(s', r \mid s, a)$$
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The joint distribution p(s', r | s, a) is the complete model of the environment. Notice that the reward can depend on the next state s' as well as the current s and a. This matters in cliff-walking problems where the reward for stepping off a cliff depends on where you land. Many simplified presentations write r(s,a) directly, losing this generality. The two derived quantities -- marginal transition probabilities and expected reward -- are what the Bellman equations actually use. -->
 
@@ -62,6 +72,11 @@ $S_t$ is a **sufficient statistic** for all past interactions.
 
 > With the Markov property: a single state vector $s \in \mathcal{S}$ encodes everything needed.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: This is the most important assumption in the entire course. It is also the most frequently violated in practice. When a problem is not Markovian, standard RL algorithms still run but they converge to suboptimal policies. The fix is always the same: enrich the state representation until the Markov property is approximately satisfied. In Atari games, stacking four consecutive frames creates a state where velocity is observable, making the process approximately Markovian. -->
 
 ---
@@ -69,6 +84,7 @@ $S_t$ is a **sufficient statistic** for all past interactions.
 # State Transition Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     direction LR
     [*] --> s0 : start
@@ -82,11 +98,22 @@ stateDiagram-v2
 
 Each arrow: one $(s, a, r, s')$ transition — the atomic unit of RL experience.
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: This diagram shows a deterministic 3-state MDP. In the real world most transitions are stochastic: from state s0 taking action right might lead to s2 with probability 0.9 and stay in s0 with probability 0.1 due to wind or noise. The diagram would then show multiple arrows from the same state-action pair, each labeled with its probability and reward. Stochastic transitions are what motivates the expectation operators in value functions. -->
 
 ---
 
 # MDP as Python Dictionary
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # mdp[state][action] = [(probability, next_state, reward), ...]
@@ -109,6 +136,7 @@ mdp = {
 def expected_reward(mdp, s, a):
     return sum(p * r for p, _, r in mdp[s][a])
 ```
+</div>
 
 <!-- Speaker notes: This dictionary representation is a direct encoding of the p(s', r | s, a) function. The outer key is the current state s, the middle key is the action a, and each entry in the list is a (probability, next_state, reward) triple corresponding to one possible outcome. For stochastic transitions, the list would have multiple entries summing to probability 1. This is the exact data structure used in small tabular MDPs for dynamic programming. -->
 
@@ -280,6 +308,7 @@ Every RL algorithm is a method for solving or approximating these equations.
 # The MDP in One Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MDP["MDP $(\mathcal{S}, \mathcal{A}, p, R, \gamma)$"] --> Policy["Policy $\pi(a|s)$"]
     MDP --> Dynamics["Dynamics $p(s',r|s,a)$"]

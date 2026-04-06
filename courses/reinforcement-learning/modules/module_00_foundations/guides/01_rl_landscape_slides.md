@@ -28,6 +28,11 @@ An **agent** learns a behavior by:
 
 > No labeled data. No unsupervised structure. Just interaction and consequences.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The key phrase is "sequential decision-making." Unlike one-shot prediction tasks, the agent's choices have long-run consequences. A bad action now might not hurt immediately but closes off good options later. This temporal credit assignment problem -- figuring out which past actions caused a good or bad outcome -- is one of the central technical challenges the course addresses. -->
 
 ---
@@ -35,6 +40,7 @@ An **agent** learns a behavior by:
 # The Agent-Environment Loop
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A([Agent]) -- "Action $a_t$" --> E([Environment])
     E -- "State $s_{t+1}$" --> A
@@ -46,6 +52,11 @@ flowchart LR
 - Agent observes $S_t$, selects $A_t \sim \pi(\cdot \mid S_t)$
 - Environment transitions to $S_{t+1}$, emits $R_{t+1}$
 - Loop continues until terminal condition
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Draw students' attention to the direction of arrows. Actions flow agent-to-environment. State and reward flow environment-to-agent. Nothing else crosses the boundary. This boundary is a modeling choice: the same physical system could be partitioned differently. For example, a robot's internal proprioception could be treated as part of the agent or part of the environment depending on what we want to control. The course uses the Gymnasium interface which makes this loop concrete in code. -->
 
@@ -62,6 +73,11 @@ flowchart LR
 | Return | $G_t$ | Discounted sum of future rewards |
 | Episode | — | One complete agent-environment run |
 | Trajectory | $\tau$ | Sequence $(S_0, A_0, R_1, S_1, \ldots)$ |
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: These symbols are used consistently throughout the course and follow Sutton and Barto notation exactly. Point out that the reward at time t+1 is written R_{t+1}, not R_t. This is because the reward is a consequence of the action taken at time t -- it arrives one step later. Students who use R_t will get Bellman equations wrong. -->
 
@@ -85,6 +101,11 @@ flowchart LR
 - Feedback: delayed, noisy
 - Agent acts: Yes — changes future data
 
+</div>
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
 </div>
 
 <!-- Speaker notes: The "agent acts" row is the crucial distinction. In supervised learning the training distribution is fixed and independent of model outputs. In RL the agent's policy determines what data it sees next. This non-stationarity is why RL training can be unstable: improving the policy changes the data distribution, which changes the gradient signal, which changes the policy again. This feedback loop requires careful algorithmic design. -->
@@ -247,6 +268,12 @@ Treating partial observations as states violates the Markov property and breaks 
 
 # The Interaction Loop in Code
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import gymnasium as gym
 
@@ -267,6 +294,7 @@ while not (terminated or truncated):
 print(f"Episode return: {total_reward}")
 env.close()
 ```
+</div>
 
 <!-- Speaker notes: Walk through each line. env.reset() starts a new episode and returns the initial observation. env.step(action) executes the agent-environment loop body: the environment transitions, returns the new observation, reward, and termination flags. The Gymnasium API separates terminated -- the agent reached a natural end state -- from truncated -- the episode was cut short by a time limit. Both end the episode but have different implications for bootstrapping value estimates. -->
 

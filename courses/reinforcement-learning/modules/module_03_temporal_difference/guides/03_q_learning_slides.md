@@ -39,6 +39,11 @@ $$+ \alpha[R + \gamma \underbrace{\max_a Q(S', a)}_{\text{greedy max}} - Q(S,A)]
 
 Q-learning's target does not depend on the behavior policy. It always points toward the greedy optimum.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Have students look at both equations simultaneously. The only difference is in the bootstrap term. SARSA uses Q(S', A') where A' is actually sampled from the behavior policy. Q-learning uses max_a Q(S', a) — the best action according to Q, whether or not it was taken. This makes Q-learning off-policy: the target policy (greedy) differs from the behavior policy (epsilon-greedy). -->
 
 ---
@@ -58,6 +63,11 @@ Off-policy learning separates *how we explore* from *what we learn*.
 
 > This is the key feature that enables experience replay, human-guided exploration, and transfer learning.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: The separation of behavior and target policies is one of the most powerful ideas in RL. Because Q-learning is off-policy, you can: (1) use a separate random policy to collect data and still learn optimally, (2) learn from old data stored in a replay buffer (DQN), (3) learn from human demonstrations. SARSA cannot do any of these things without additional care, because it must follow the behavior policy it evaluates. -->
 
 ---
@@ -74,6 +84,11 @@ $$\pi^*(s) = \arg\max_a Q^*(s, a)$$
 
 > Once you have $Q^*$, you have the optimal policy. No additional policy extraction step needed.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: This is why Q-learning is so popular: it directly learns Q*, which encodes the optimal policy. Compare to prediction methods (TD(0), MC) which only evaluate a fixed policy — you still need a separate policy improvement step. Q-learning collapses evaluation and improvement into a single update. The Bellman optimality equation is the fixed point that Q-learning converges to. -->
 
 ---
@@ -89,6 +104,11 @@ $$\pi^*(s) = \arg\max_a Q^*(s, a)$$
 **Proof key insight:** Q-learning is a stochastic approximation of the operator $(\mathcal{T}^* Q)(s,a) = \mathbb{E}[R + \gamma \max_{a'} Q(S', a')]$.
 
 Since $\mathcal{T}^*$ is a $\gamma$-contraction in $\ell^\infty$, it has a unique fixed point $Q^*$, and the Robbins-Monro conditions ensure convergence of the stochastic iterates.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The convergence proof is a landmark result. Students do not need to reproduce it, but should understand the structure: Q-learning is an instance of stochastic approximation applied to the Bellman optimality operator. The contraction property of T* is what guarantees a unique fixed point. The Robbins-Monro conditions handle the stochastic noise. Together they guarantee that Q converges to Q* as the number of visits grows. -->
 
@@ -136,6 +156,12 @@ $$Q_1(S,A) \leftarrow Q_1(S,A) + \alpha \Bigl[R + \gamma Q_2\bigl(S', \underbrac
 
 ## Code: Q-Learning Core
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -162,6 +188,7 @@ def q_learning(env, num_episodes, alpha=0.1, gamma=0.99, epsilon=0.1):
             state = next_state
     return Q
 ```
+</div>
 
 > Unlike SARSA: no carry-forward of `next_action`. Q-learning uses `np.max` — the action is never actually needed.
 
@@ -170,6 +197,12 @@ def q_learning(env, num_episodes, alpha=0.1, gamma=0.99, epsilon=0.1):
 ---
 
 ## Code: Double Q-Learning
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def double_q_learning(env, num_episodes, alpha=0.1, gamma=0.99, epsilon=0.1):
@@ -198,6 +231,7 @@ def double_q_learning(env, num_episodes, alpha=0.1, gamma=0.99, epsilon=0.1):
             state = ns
     return Q1, Q2
 ```
+</div>
 
 <!-- Speaker notes: Walk through the double Q-learning code. The key pattern: randomly decide which table to update, then use that table for action selection and the OTHER table for evaluation. The 50/50 random split ensures both tables are updated equally. The final estimate uses (Q1 + Q2) / 2. In DQN, this becomes "online network" (Q1) and "target network" (Q2), with the target network updated periodically rather than randomly. -->
 
@@ -250,6 +284,12 @@ Q-learning: avg ≈ -13 (optimal path)
 
 ## Pitfall 1: On-Policy Confusion
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG: accidentally wrote SARSA while calling it Q-learning
 next_action = epsilon_greedy(Q, next_state, epsilon)
@@ -258,6 +298,7 @@ td_target = reward + gamma * Q[next_state, next_action]  # ← SARSA!
 # CORRECT Q-learning:
 td_target = reward + gamma * np.max(Q[next_state])       # ← off-policy max
 ```
+</div>
 
 **Test:** On cliff walking, does your agent learn the cliff-edge path (Q-learning) or the upper path (SARSA)? If you expect Q-learning but see the upper path, check your target.
 

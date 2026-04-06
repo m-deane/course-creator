@@ -26,6 +26,11 @@ The answer is the **state-value function** $V^\pi(s)$ — the expected cumulativ
 
 $$V^\pi(s) = \mathbb{E}_\pi\!\left[\sum_{t=0}^\infty \gamma^t R_t \;\Big|\; S_0 = s\right]$$
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Emphasize that policy evaluation is not about finding the best policy — it is about evaluating a given one. We must be able to measure quality before we can improve it. Ask students: "How would you estimate V^pi without a model?" to foreshadow model-free methods later in the course. -->
 
 ---
@@ -44,6 +49,11 @@ $$V^\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^\
 | $\gamma$ | Discount factor |
 | $V^\pi(s')$ | Value of successor state |
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through the equation term by term. The double sum says: for every action the policy might take, for every outcome the environment might produce, weight the value by both probabilities. Point out that this is a self-referential equation — V appears on both sides — which is why we need iteration. -->
 
 ---
@@ -57,6 +67,11 @@ $$\boxed{V_{k+1}(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r \mid s, a)\bigl[r + \
 - Start: $V_0(s) = 0$ for all $s$
 - Each pass through all states is a **sweep**
 - Repeat sweeps until $\max_s |V_{k+1}(s) - V_k(s)| < \theta$
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: This update rule is the heart of the algorithm. The key insight is that even though we don't know V^pi, we can use our current best guess V_k in place of it. The error shrinks with each sweep because of the contraction property — coming up on the next slide. -->
 
@@ -75,6 +90,11 @@ Because $\gamma < 1$:
 
 > Initialization does not matter — convergence is guaranteed.
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: This is the mathematical guarantee that the algorithm works. The contraction factor gamma means each sweep multiplies the remaining error by gamma. If gamma=0.9, after 100 sweeps the error is 0.9^100 ≈ 2.6e-5 times the initial error. Students who have seen fixed-point iteration in numerical methods will recognize this structure. -->
 
 ---
@@ -82,6 +102,7 @@ Because $\gamma < 1$:
 ## Algorithm: Policy Evaluation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Init["Initialize V(s) = 0\nfor all s ∈ S"] --> Sweep["Begin sweep\ndelta = 0"]
     Sweep --> ForS["For each state s"]
@@ -93,9 +114,6 @@ flowchart TD
     More -->|"No"| Conv{"delta < θ?"}
     Conv -->|"No"| Sweep
     Conv -->|"Yes"| Return["Return V ≈ V^π"]
-    style Init fill:#27ae60,color:#fff
-    style BU fill:#e67e22,color:#fff
-    style Return fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Trace through the flowchart step by step. delta tracks the largest change seen in the current sweep. The outer loop (sweep) continues until no state changes by more than theta. In-place updates — writing to V immediately — are the asynchronous variant shown here. -->
@@ -132,6 +150,12 @@ flowchart TD
 
 ## Code: Core Update Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -158,6 +182,7 @@ def policy_evaluation(pi, P, R, gamma=0.99, theta=1e-6):
 
     return V
 ```
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. The critical line is the numpy expression for V[s]: pi[s, :, None] broadcasts action probabilities across successor states, P[s] provides transition probs, and R[s] + gamma * V gives the one-step backup target. Ask students to verify the indexing matches the Bellman equation. -->
 
@@ -166,6 +191,12 @@ def policy_evaluation(pi, P, R, gamma=0.99, theta=1e-6):
 ## Worked Example: 4x4 Gridworld
 
 States 0-14 (non-terminal), state 15 (terminal). Policy: equal probability on all four actions. $\gamma = 1$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # 4x4 gridworld with uniform random policy
@@ -176,6 +207,7 @@ States 0-14 (non-terminal), state 15 (terminal). Policy: equal probability on al
 # Corner states: V ≈ -14  (far from terminal)
 # States adjacent to terminal: V ≈ -1
 ```
+</div>
 
 ```
  -14  -20  -22  -14
@@ -193,13 +225,12 @@ The values reflect expected steps to reach the terminal state.
 ## What the Values Tell Us
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S0["State s\nV^pi(s) = -14"] -->|"policy action"| S1["State s'\nV^pi(s') = -20"]
     S0 -->|"other action"| S2["State s''\nV^pi(s'') = -1"]
     S1 --> SN["..."]
     S2 --> Term["Terminal\nV = 0"]
-    style S2 fill:#27ae60,color:#fff
-    style Term fill:#4a90d9,color:#fff
 ```
 
 $V^\pi(s)$ encodes long-run quality, not just immediate reward.
@@ -271,19 +302,30 @@ $p[s, a, s']$ vs $p[s', a, s]$ — a silent bug that produces plausible-looking 
 
 <!-- Speaker notes: Summarize the five key ideas. Emphasize the last point: policy evaluation is a subroutine, not an end goal. The real DP algorithms — policy iteration and value iteration — use policy evaluation as a building block. Preview that in policy iteration we will alternate between evaluation and improvement until the policy stabilizes. -->
 
+<div class="flow">
+<div class="flow-step mint">Bellman expectation</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Contraction mapping</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Sweep = one pass</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">Synchronous vs asynchrono...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">Stop at $\delta < \theta$</div>
+</div>
+
 ---
 
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MDP["MDP\n(S, A, P, R, gamma)"] --> PE["Policy Evaluation\nV^pi = T^pi V^pi"]
     PE --> PI["Policy Improvement\npi' = greedy(V^pi)"]
     PI --> PIt["Policy Iteration\n(Guide 02)"]
     PE --> VI["Value Iteration\n(Guide 03)"]
     PE --> TD["TD(0)\n(model-free analog)"]
-    style PE fill:#e67e22,color:#fff
-    style PI fill:#4a90d9,color:#fff
 ```
 
 **References:** Sutton & Barto (2018), Section 4.1 — Bertsekas (2012), Chapter 1

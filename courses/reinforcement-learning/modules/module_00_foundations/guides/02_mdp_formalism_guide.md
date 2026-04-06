@@ -1,8 +1,15 @@
 # Markov Decision Processes
 
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** Probability, linear algebra
+
 ## In Brief
 
 A Markov Decision Process (MDP) is the mathematical formalization of the reinforcement learning problem. It provides a precise language for specifying environments, reasoning about policies, and deriving algorithms. Every RL algorithm is implicitly a method for solving an MDP.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> A Markov Decision Process (MDP) is the mathematical formalization of the reinforcement learning problem. It provides a precise language for specifying environments, reasoning about policies, and deriving algorithms.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ The MDP encodes two ideas simultaneously: the world transitions stochastically b
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The MDP encodes two ideas simultaneously: the world transitions stochastically based only on the current state and action (the Markov property), and the agent's goal is captured entirely by the reward...
+</div>
 ## Formal Definition
 
 A finite MDP is a tuple $(\mathcal{S}, \mathcal{A}, p, R, \gamma)$ where:
+
+<div class="callout-key">
+<strong>Key Point:</strong> A finite MDP is a tuple $(\mathcal{S}, \mathcal{A}, p, R, \gamma)$ where:
+
+| Component | Symbol | Description |
+|-----------|--------|-------------|
+| State space | $\mathcal{S}$ | Set of all possible...
+</div>
+
 
 | Component | Symbol | Description |
 |-----------|--------|-------------|
@@ -32,6 +53,13 @@ $$\sum_{s' \in \mathcal{S}} \sum_{r \in \mathcal{R}} p(s', r \mid s, a) = 1 \qua
 
 The MDP assumes that the transition dynamics depend only on the current state and action — not on the full history:
 
+<div class="callout-info">
+<strong>Info:</strong> The MDP assumes that the transition dynamics depend only on the current state and action — not on the full history:
+
+$$p(s_{t+1}, r_{t+1} \mid s_t, a_t) = p(s_{t+1}, r_{t+1} \mid s_1, a_1, s_2, a_2, \...
+</div>
+
+
 $$p(s_{t+1}, r_{t+1} \mid s_t, a_t) = p(s_{t+1}, r_{t+1} \mid s_1, a_1, s_2, a_2, \ldots, s_t, a_t)$$
 
 Equivalently, the state $S_t$ is a **sufficient statistic** for all past interactions. Knowing $S_t$ gives you everything you need to predict future states and rewards — the past adds no further information.
@@ -47,6 +75,11 @@ The Markov property makes the MDP tractable. Without it, the agent would need to
 ## Transition Dynamics
 
 The four-argument function $p(s', r \mid s, a)$ is the complete specification of environment dynamics. Useful derived quantities are:
+
+<div class="callout-warning">
+<strong>Warning:</strong> The four-argument function $p(s', r \mid s, a)$ is the complete specification of environment dynamics.
+</div>
+
 
 **State-transition probabilities** (marginalizing out reward):
 
@@ -131,6 +164,14 @@ This recursion is the foundation of the Bellman equations.
 
 ## MDP State Transition Diagram
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 stateDiagram-v2
     direction LR
@@ -142,12 +183,21 @@ stateDiagram-v2
     s2 --> s2 : a=right, r=+1
     s2 --> [*] : a=stop, r=+10
 ```
+</div>
 
 *A 3-state MDP: states $\{s_0, s_1, s_2\}$, actions $\{$left, right, stop$\}$. Transitions shown with associated action and immediate reward.*
 
 ---
 
 ## Python Code: MDP as a Dictionary
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from typing import Dict, Tuple, List
@@ -207,13 +257,23 @@ print("Probability of reaching s2 from s0 with 'right':",
 print("Expected reward from s1 taking 'left':",
       expected_reward(mdp, "s1", "left"))   # -1.0
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Conflating state and observation.**
 The MDP's state $S_t$ must satisfy the Markov property. If your representation does not capture all relevant history (e.g., an agent that sees only the current price but not trend), the process is not Markovian. You must either enrich the state or switch to a POMDP formulation.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Conflating state and observation.**
+The MDP's state $S_t$ must satisfy the Markov property.
+</div>
 
 **Pitfall 2 — Forgetting that $p$ is a joint distribution.**
 The function $p(s', r \mid s, a)$ is defined over $(s', r)$ pairs. Many treatments split this into separate transition and reward functions. The unified form is important: the reward can depend on both $s$ and $s'$, not just $s$ and $a$.
@@ -231,14 +291,42 @@ Rewards must be a property of the environment, not the agent. If the reward you 
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** agent-environment loop (Guide 01), probability theory, Markov chains
 - **Leads to:** Bellman equations (Guide 03), policy evaluation, dynamic programming, Q-learning
 - **Related to:** optimal control (continuous-time analog), game theory (multi-agent MDPs), POMDPs (partially observable extension)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning* (2nd ed.), Chapter 3 — the primary reference for MDP formalism used in this course
 - Puterman, M.L., *Markov Decision Processes* (1994) — the mathematical treatment for readers who want full measure-theoretic rigor
 - Bertsekas, D., *Dynamic Programming and Optimal Control* — connects MDPs to classical control theory
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_mdp_formalism_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_agent_environment_loop.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

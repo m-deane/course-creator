@@ -1,8 +1,23 @@
 # Module 07 Cheatsheet: Advanced Policy Optimization
 
+> **Reading time:** ~7 min | **Module:** 7 — Advanced Policy Optimization | **Prerequisites:** Module 6
+
 ## Algorithm Objectives
 
 ### TRPO (Schulman et al., 2015)
+
+<div class="callout-insight">
+<strong>Insight:</strong> ### TRPO (Schulman et al., 2015)
+
+**Objective (maximize):**
+
+$$L(\theta) = \mathbb{E}\!\left[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)} \hat{A}(s,a)\right]$$
+
+**Constraint:**
+
+$$\mathbb{E}\!\left...
+</div>
+
 
 **Objective (maximize):**
 
@@ -104,6 +119,17 @@ $$J(\alpha) = \mathbb{E}_{a \sim \pi_\psi}\!\left[-\alpha \log \pi_\psi(a|s) - \
 
 ### TRPO
 
+<div class="callout-key">
+<strong>Key Point:</strong> ### TRPO
+
+| Parameter | Typical Range | Default |
+|---|---|---|
+| KL constraint $\delta$ | $0.005 {-} 0.05$ | $0.01$ |
+| Discount $\gamma$ | $0.99 {-} 0.999$ | $0.99$ |
+| GAE $\lambda$ | $0.9 {-} 0.99...
+</div>
+
+
 | Parameter | Typical Range | Default |
 |---|---|---|
 | KL constraint $\delta$ | $0.005 {-} 0.05$ | $0.01$ |
@@ -182,6 +208,17 @@ START
 ## Common Diagnostic Signals
 
 ### PPO Diagnostics
+
+<div class="callout-info">
+<strong>Info:</strong> ### PPO Diagnostics
+
+| Metric | Healthy Range | Action if Unhealthy |
+|---|---|---|
+| Approx KL divergence | $ 0.05$ |
+| Clip fraction | $0.1 {-} 0.3$ | Reduce $\epsilon$ if $> 0.5$ |
+| Policy entropy...
+</div>
+
 
 | Metric | Healthy Range | Action if Unhealthy |
 |---|---|---|

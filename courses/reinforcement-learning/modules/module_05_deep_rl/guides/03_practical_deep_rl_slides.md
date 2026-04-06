@@ -23,6 +23,8 @@ Speaker notes: Key talking points for this slide
 - Every practitioner who has trained deep RL agents has hit all of these issues — this deck will save significant time
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Practical Deep RL. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Why Deep RL is Harder to Debug Than Supervised Learning
@@ -57,6 +59,13 @@ Speaker notes: Key talking points for this slide
 - Multiple random seeds is not optional in deep RL — it's the minimum scientific standard
 -->
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Why Deep RL is Harder to Debug Than Supervised Learning. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Four Diagnostic Metrics
@@ -70,6 +79,12 @@ Speaker notes: Key talking points for this slide
 | Gradient L2 norm | Update stability | Stays below ~10, no large spikes |
 | TD loss | Prediction error | Decreasing trend, no NaN |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Log after every gradient update
 logger.log_update(
@@ -78,6 +93,7 @@ logger.log_update(
     model_parameters=q_net.parameters(),
 )
 ```
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -87,6 +103,13 @@ Speaker notes: Key talking points for this slide
 - Log frequency: every update step for metrics 2-4; every episode for metric 1
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Four Diagnostic Metrics. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Hyperparameter Tuning: Priority Order
@@ -94,6 +117,7 @@ Speaker notes: Key talking points for this slide
 Not all hyperparameters deserve equal attention.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     P1["1. Learning rate α\nHighest impact — tune first\nStart: 1e-4 (Adam)"]
     P2["2. Replay buffer size N\nMust be large enough to decorrelate\nStart: 50,000–100,000"]
@@ -111,6 +135,13 @@ Speaker notes: Key talking points for this slide
 - Buffer size and batch size are linked: bigger buffer + bigger batch = better decorrelation but more memory
 - ε schedule tuning is often unnecessary if the other hyperparameters are correct
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Hyperparameter Tuning: Priority Order. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -167,6 +198,13 @@ Speaker notes: Key talking points for this slide
 - Adam is generally preferred over RMSProp for new implementations — Mnih 2015 used RMSProp because Adam wasn't widely used yet
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Learning Rate: The Most Important Hyperparameter. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Replay Buffer Size: Balancing Memory and Decorrelation
@@ -191,6 +229,8 @@ Speaker notes: Key talking points for this slide
 - Buffer warm-up is critical: training on a near-empty buffer (e.g., 65 transitions with batch_size=64) provides almost no decorrelation benefit
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Replay Buffer Size: Balancing Memory and Decorrelation. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -204,11 +244,14 @@ Speaker notes: Key talking points for this slide
 - The order of diagnosis matters: check for divergence first (easiest to identify), then overestimation, then gradient issues, then exploration issues
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Debugging Deep RL: Failure Mode Diagnosis. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Failure Mode Diagnosis Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Training not improving"]
     Q1{"Mean Q-value\nunbounded growth?"}
@@ -240,6 +283,8 @@ Speaker notes: Key talking points for this slide
 - "Gradient norm spikes > 100" is a heuristic — the exact threshold depends on architecture, but values > 10x the baseline norm are a red flag
 - "Not learning at all" from step 1 is usually a code bug, not a hyperparameter problem — check the loss computation first
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Failure Mode Diagnosis Flowchart. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -285,6 +330,8 @@ Speaker notes: Key talking points for this slide
 - Bug 4 (epsilon during eval): can cause 10-20% underestimate of true policy performance
 - Bug 5 (gradient clipping): a single large TD error can produce a gradient of magnitude 1000+ — clipping to norm 10 prevents catastrophic updates
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Five Most Common Deep RL Bugs. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -350,6 +397,8 @@ Speaker notes: Key talking points for this slide
 - "Flat near random" from the start: check ε — if it decays too fast, the agent commits to a random policy
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Reward Curve Interpretation. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -363,6 +412,8 @@ Speaker notes: Key talking points for this slide
 - The scientific standard: results must be reproducible by someone else using only your paper/code
 - This section provides the practical protocol to meet that standard
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Reproducibility in Deep RL. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -395,6 +446,8 @@ Speaker notes: Key talking points for this slide
 - Pin exact library versions: `torch==2.1.0`, `gymnasium==0.29.1` — minor version changes can shift results
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Sources of Non-Determinism. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # How Many Seeds? Reporting Standards
@@ -426,6 +479,8 @@ Speaker notes: Key talking points for this slide
 - Practical note: 5 seeds × a full Atari run × 50M steps can take weeks on a single GPU — use parallel runs
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about How Many Seeds? Reporting Standards. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Hardware and Environment Checklist
@@ -451,6 +506,8 @@ Speaker notes: Key talking points for this slide
 - "Separate train_env and eval_env" is subtle: if you use the same env object for both, the episode counter and internal state get mixed — this affects reproducibility and evaluation accuracy
 - "Library versions recorded" — many learners skip this. Three months later when re-running an experiment, they discover that gymnasium 0.26 and 0.29 have different API semantics
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Hardware and Environment Checklist. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -492,3 +549,5 @@ Speaker notes: Key talking points for this slide
 - Reproducibility: the community is moving toward higher standards (IQM, multiple seeds, open code). These practices are expected for published work.
 - Next steps: Module 06 (policy gradient methods) — applies all of this infrastructure to a different family of algorithms
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

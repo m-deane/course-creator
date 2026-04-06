@@ -1,8 +1,15 @@
 # Why Function Approximation?
 
+> **Reading time:** ~13 min | **Module:** 4 — Function Approximation | **Prerequisites:** Module 3
+
 ## In Brief
 
 Tabular methods store a value for every state (or state-action pair). When the state space is large or continuous, that table becomes impossibly big. Function approximation replaces the table with a parameterized function $\hat{v}(s, \mathbf{w}) \approx V^\pi(s)$ that generalizes across states, making RL tractable in the real world.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Tabular methods store a value for every state (or state-action pair). When the state space is large or continuous, that table becomes impossibly big.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,21 @@ A table is just a lookup function with one parameter per entry. Function approxi
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> A table is just a lookup function with one parameter per entry.
+</div>
 ## 1. The Curse of Dimensionality
 
 ### What It Is
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### What It Is
+
+The state space of a tabular RL agent grows exponentially with the number of state dimensions.
+</div>
+
 
 The state space of a tabular RL agent grows exponentially with the number of state dimensions. For $d$ binary features, the table needs $2^d$ entries.
 
@@ -38,6 +57,11 @@ Let $|\mathcal{S}|$ denote the number of states. Tabular storage is $\mathcal{O}
 ## 2. Generalization: Sharing Knowledge Across Similar States
 
 Tabular methods treat every state as unrelated to every other. An agent that visits state $s_1$ and learns its value gains no information about $s_2$, even if $s_1$ and $s_2$ are nearly identical.
+
+<div class="callout-info">
+<strong>Info:</strong> Tabular methods treat every state as unrelated to every other.
+</div>
+
 
 ```
 Tabular:                     Function Approximation:
@@ -173,6 +197,14 @@ For linear approximators, the feature vector $\mathbf{x}(s)$ determines what inf
 
 ### Feature Engineering Process
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 import numpy as np
 
@@ -208,6 +240,7 @@ def cartpole_features(state):
         x_dot_n * theta_dot_n   # velocity correlation
     ])
 ```
+</div>
 
 ---
 
@@ -225,6 +258,26 @@ def cartpole_features(state):
 | Best for | Small, discrete MDPs | Moderate-scale, structured | Large-scale, image/raw input |
 
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">6. Comparison: Tabular</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Function Approximation</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## 7. Visual: From Table to Function
 
@@ -265,8 +318,17 @@ Neural net:   ~~~~~~~~~~~~        (arbitrary smooth function)
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1: Forgetting to normalize features.**
 Features with very different scales (e.g., position in meters vs angle in radians) cause one feature to dominate gradient updates. Always normalize inputs before computing feature vectors.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1: Forgetting to normalize features.**
+Features with very different scales (e.g., position in meters vs angle in radians) cause one feature to dominate gradient updates.
+</div>
 
 **Pitfall 2: Using tabular Q-learning with a continuous state space by discretizing coarsely.**
 Coarse discretization loses information that the agent needs to distinguish similar states with different optimal actions. Tile coding or RBFs handle the same problem more gracefully.
@@ -283,6 +345,11 @@ Even with perfect weights, $\hat{v}(s, \mathbf{w})$ approximates $V^\pi(s)$ with
 ---
 
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 - **Builds on:** Module 03 (tabular TD methods), Module 00 (MDP notation and $V^\pi$, $Q^\pi$ definitions)
 - **Leads to:** Guide 02 (linear methods and semi-gradient TD), Guide 03 (deadly triad), Module 05 (DQN with neural network FA)
@@ -305,3 +372,18 @@ Even with perfect weights, $\hat{v}(s, \mathbf{w})$ approximates $V^\pi(s)$ with
 - Sutton & Barto (2018), *Reinforcement Learning: An Introduction*, 2nd ed., Chapter 9 — the authoritative source for this module's notation and results
 - Tsitsiklis & Van Roy (1997), "An analysis of temporal-difference learning with function approximation" — proves convergence of on-policy linear TD(0) to the TD fixed point
 - Mnih et al. (2015), "Human-level control through deep reinforcement learning" (DQN paper) — the landmark paper showing neural FA works with stabilization tricks
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_why_function_approximation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_tile_coding.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

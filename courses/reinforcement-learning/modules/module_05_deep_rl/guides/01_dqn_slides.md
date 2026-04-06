@@ -21,6 +21,8 @@ Speaker notes: Key talking points for this slide
 - By the end of this deck learners will be able to implement DQN from scratch and explain WHY both innovations are necessary
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Deep Q-Network (DQN). Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Problem: Why Tabular Q-Learning Fails at Scale
@@ -43,14 +45,12 @@ Works perfectly for small state spaces:
 <div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     A["Small state space<br/>(100 states)"] -->|Tabular Q-table| B["Works"]
     C["Large state space<br/>(Atari pixels)"] -->|Tabular Q-table| D["Impossible:<br/>table too large"]
     C -->|Neural network| E["DQN: Works"]
 
-    style B fill:#4CAF50,color:#fff
-    style D fill:#F44336,color:#fff
-    style E fill:#4A90D9,color:#fff
 ```
 
 </div>
@@ -63,6 +63,13 @@ Speaker notes: Key talking points for this slide
 - Neural networks are universal function approximators — they can represent any continuous function given enough capacity
 - The key question is: can we train them stably? That's the whole challenge.
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Problem: Why Tabular Q-Learning Fails at Scale. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -92,6 +99,13 @@ Speaker notes: Key talking points for this slide
 - The parameters θ are learned by gradient descent, just like any neural network
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The DQN Idea. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -105,6 +119,8 @@ Speaker notes: Key talking points for this slide
 - Each factor alone is manageable; together they create a feedback loop that diverges
 - Understanding this motivates each innovation in DQN
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Deadly Triad: Why Naive Training Fails. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -126,6 +142,13 @@ Speaker notes: Key talking points for this slide
 - The key insight: DQN's two innovations directly address factors 2 and 3
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Three Factors That Cause Divergence. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -139,6 +162,8 @@ Speaker notes: Key talking points for this slide
 - The buffer converts RL data collection into something closer to supervised learning
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Innovation 1: Experience Replay Buffer. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Experience Replay: The Idea
@@ -146,11 +171,18 @@ Speaker notes: Key talking points for this slide
 Collect transitions and store them in a buffer. Train on **random samples** from the buffer, not the latest transition.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     ENV["Environment"] -->|"(s, a, r, s', done)"| BUF["Replay Buffer D\n(capacity N)"]
     BUF -->|"random mini-batch"| TRAIN["Gradient Update\non Q-network θ"]
     TRAIN -->|"improved policy"| ENV
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Store every transition
@@ -159,6 +191,7 @@ buffer.push(state, action, reward, next_state, done)
 # Train on a random batch — NOT the latest transition
 batch = buffer.sample(batch_size=64)
 ```
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -167,6 +200,13 @@ Speaker notes: Key talking points for this slide
 - Original DQN: buffer size = 1,000,000 transitions
 - Walk through the flowchart: collect → store → sample → train → collect (loop)
 -->
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Experience Replay: The Idea. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -203,6 +243,8 @@ Speaker notes: Key talking points for this slide
 - Practical note: the buffer warm-up period (collecting random transitions before starting training) is important
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Why Experience Replay Works. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -215,6 +257,8 @@ Speaker notes: Key talking points for this slide
 - The idea is elegant: make the training target nearly stationary by using a frozen copy of the network
 - This is the innovation that most people forget or underestimate
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Innovation 2: Target Network. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -235,6 +279,8 @@ Speaker notes: Key talking points for this slide
 - The problem is that the bootstrap target r + γ·max Q(s';θ) is coupled to the prediction Q(s,a;θ)
 - Even a small gradient step can make the target "jump" in a direction that makes the prediction worse
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Moving Target Problem. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -262,11 +308,14 @@ Speaker notes: Key talking points for this slide
 - Soft update alternative: θ⁻ ← τ·θ + (1−τ)·θ⁻ with small τ (e.g., 0.005) — used in DDPG, SAC
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Target Network: The Fix. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # DQN Architecture: Both Innovations Together
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     ENV["Environment"]
     BUF["Replay Buffer D\n(capacity 1M)"]
@@ -292,6 +341,8 @@ Speaker notes: Key talking points for this slide
 - The replay buffer feeds random mini-batches to the loss computation
 - Only θ receives gradient updates — θ⁻ never does
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about DQN Architecture: Both Innovations Together. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -321,6 +372,8 @@ Speaker notes: Key talking points for this slide
 - The (1.0 − dones) term masks out terminal states: when done=1, there is no future reward to bootstrap
 - Huber loss (smooth L1) is often used instead of MSE because it is less sensitive to large TD errors
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The DQN Loss. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -362,6 +415,8 @@ Speaker notes: Key talking points for this slide
 - Evaluation vs training: always separate these. Report evaluation scores (ε=0), not training scores (ε > 0)
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about ε-Greedy Exploration. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # DQN Training Loop Summary
@@ -393,6 +448,8 @@ Speaker notes: Key talking points for this slide
 - "Different frequencies" note: in practice, you might do 4 gradient updates per environment step (DQN original) or 1:1 — this is a hyperparameter
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about DQN Training Loop Summary. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Common Pitfalls
@@ -414,11 +471,14 @@ Speaker notes: Key talking points for this slide
 - Have learners add diagnostic logging: Q-value mean, gradient norm, epsilon value, loss — these four metrics catch most bugs early
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Common Pitfalls. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary: What Makes DQN Work
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     PROBLEM["Neural Q-learning\n(unstable)"]
     FIX1["Experience Replay Buffer\n→ breaks temporal correlation\n→ improves data efficiency"]
@@ -445,6 +505,8 @@ Speaker notes: Key talking points for this slide
 - Next: Guide 02 covers three improvements — Double DQN, Dueling DQN, and Prioritized Experience Replay — each addressing a specific remaining weakness of vanilla DQN
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Summary: What Makes DQN Work. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Further Reading
@@ -461,3 +523,5 @@ Speaker notes: Key talking points for this slide
 - Sutton & Barto Chapter 11 is essential for understanding WHY DQN is designed the way it is
 - van Hasselt 2016 is a natural next read — it improves the TD target, which is the focus of Guide 02
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Further Reading. Pause for questions if the audience seems uncertain. -->

@@ -1,8 +1,15 @@
 # TD(λ) and Eligibility Traces
 
+> **Reading time:** ~11 min | **Module:** 3 — Temporal Difference | **Prerequisites:** Module 2
+
 ## In Brief
 
 TD(λ) is a family of algorithms parameterized by $\lambda \in [0, 1]$ that interpolates between one-step TD and Monte Carlo methods. The parameter $\lambda$ controls how many steps of actual rewards are used before bootstrapping. TD(0) ($\lambda=0$) and Monte Carlo ($\lambda=1$) are both special cases of a single unified framework.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> TD(λ) is a family of algorithms parameterized by $\lambda \in [0, 1]$ that interpolates between one-step TD and Monte Carlo methods. The parameter $\lambda$ controls how many steps of actual rewards are used before bootstrapping.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,25 @@ Every one-step TD estimate can be improved by looking further ahead. n-step retu
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Every one-step TD estimate can be improved by looking further ahead.
+</div>
 ## Formal Definition
 
 ### n-Step Returns
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### n-Step Returns
+
+The n-step return from time $t$ uses $n$ actual rewards before bootstrapping with $V(S_{t+n})$:
+
+$$G_t^{(n)} = \sum_{k=0}^{n-1} \gamma^k R_{t+k+1} + \gamma^n V(S_{t+n})$$
+
+| $n$ | ...
+</div>
+
 
 The n-step return from time $t$ uses $n$ actual rewards before bootstrapping with $V(S_{t+n})$:
 
@@ -35,6 +58,15 @@ requires waiting $n$ steps before updating — online but not as immediate as TD
 ## The $\lambda$-Return (Forward View)
 
 Instead of picking a single $n$, the $\lambda$-return takes an exponentially weighted average over all n-step returns:
+
+<div class="callout-info">
+<strong>Info:</strong> Instead of picking a single $n$, the $\lambda$-return takes an exponentially weighted average over all n-step returns:
+
+$$G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}$$
+
+The w...
+</div>
+
 
 $$G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}$$
 
@@ -120,6 +152,26 @@ The $\lambda$-return (forward view) and eligibility traces (backward view) are m
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Forward View</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Backward View: Equivalence</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Diagram: The Backup Spectrum
 
 ```
@@ -143,6 +195,14 @@ The $\lambda$-return (forward view) and eligibility traces (backward view) are m
 ---
 
 ## Code Implementation: TD(λ) with Eligibility Traces
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -281,6 +341,7 @@ print("TD(0.5) V:", V_td5.round(3))
 print("TD(1)  V:", V_tdmc.round(3))
 env.close()
 ```
+</div>
 
 ---
 
@@ -301,8 +362,17 @@ There is no universally optimal $\lambda$ — treat it as a hyperparameter to tu
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Not resetting traces at episode boundaries.**
 Eligibility traces must be zeroed at the start of each episode. If you carry traces across episodes, credit from the previous episode's states contaminates updates in the new episode. This introduces incorrect dependencies and prevents convergence.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Not resetting traces at episode boundaries.**
+Eligibility traces must be zeroed at the start of each episode.
+</div>
 
 **Pitfall 2 — Confusing accumulating and replacing traces.**
 Two variants exist:
@@ -324,14 +394,42 @@ The decay factor $\gamma\lambda$ determines how quickly traces fade. With $\gamm
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** TD(0) prediction (Guide 01), Monte Carlo prediction (Module 2), n-step returns
 - **Leads to:** SARSA(λ) and Q(λ) for control, TD(λ) with function approximation (Module 04), Generalized Advantage Estimation (GAE) in Actor-Critic methods (Module 06)
 - **Related to:** Temporal credit assignment problem, exponential moving averages, the Bellman equation spectrum
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 7 (n-step), Chapter 12 (eligibility traces) — comprehensive treatment of the forward and backward views
 - Sutton, R. S. (1988). *Learning to predict by the methods of temporal differences.* Machine Learning 3(1) — the original TD(λ) paper with random walk experiments
 - Schulman, J. et al. (2016). *High-dimensional continuous control using generalized advantage estimation.* ICLR — GAE is the policy gradient version of TD(λ), widely used in modern deep RL
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./04_td_lambda_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_td_zero_prediction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

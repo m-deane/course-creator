@@ -1,16 +1,48 @@
 # Value Iteration: Truncated Policy Iteration to the Limit
 
+> **Reading time:** ~10 min | **Module:** 1 — Dynamic Programming | **Prerequisites:** Module 0
+
 ## In Brief
 
 Value iteration computes the optimal value function $V^*$ by repeatedly applying the Bellman optimality operator, collapsing policy evaluation and improvement into a single update. It can be understood as policy iteration where evaluation is truncated to exactly one sweep before improvement. The algorithm converges asymptotically (not in finite steps like policy iteration), but each iteration is cheap and the error bound after $k$ sweeps is tight.
 
-> **Key Insight:** The Bellman optimality operator $\mathcal{T}^*$ is also a contraction. Iterating it from any starting point drives $V_k$ to $V^*$ geometrically fast. Once convergence is declared, extracting $\pi^*$ requires only a single greedy step.
+<div class="callout-insight">
+<strong>Insight:</strong> The Bellman optimality operator $\mathcal{T}^*$ is also a contraction. Iterating it from any starting point drives $V_k$ to $V^*$ geometrically fast. Once convergence is declared, extracting $\pi^*$ requires only a single greedy step.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Value iteration computes the optimal value function $V^*$ by repeatedly applying the Bellman optimality operator, collapsing policy evaluation and improvement into a single update. It can be understood as policy iteration where evaluation is truncated to exactly one sweep before improvement.
+</div>
+
 
 ---
+
+## Intuitive Explanation
+
+Value iteration works backward from the horizon. Imagine a finite-horizon problem: at the last step, the value of each state is just its immediate reward. One step from the end, the value is the reward plus the discounted terminal value. Two steps from the end, the value propagates back another step. Value iteration applies this backward induction repeatedly until the finite-horizon estimates stop changing — which happens because the discount factor makes distant futures irrelevant.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Value iteration works backward from the horizon.
+</div>
+
+
+The $\max$ in the update is the crucial difference from policy evaluation. Instead of averaging over a fixed policy's actions, we take the best action. This ensures the value function converges to $V^*$ rather than $V^\pi$ for some arbitrary $\pi$.
+
+---
+
 
 ## Formal Definition
 
 ### The Bellman Optimality Equation
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### The Bellman Optimality Equation
+
+The optimal value function $V^*$ is the unique solution to:
+
+$$V^*(s) = \max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^*(s')\bigr] \quad \forall s \in \m...
+</div>
+
 
 The optimal value function $V^*$ is the unique solution to:
 
@@ -36,19 +68,21 @@ $$\pi^*(s) = \arg\max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V(s')\bi
 
 ---
 
-## Intuitive Explanation
-
-Value iteration works backward from the horizon. Imagine a finite-horizon problem: at the last step, the value of each state is just its immediate reward. One step from the end, the value is the reward plus the discounted terminal value. Two steps from the end, the value propagates back another step. Value iteration applies this backward induction repeatedly until the finite-horizon estimates stop changing — which happens because the discount factor makes distant futures irrelevant.
-
-The $\max$ in the update is the crucial difference from policy evaluation. Instead of averaging over a fixed policy's actions, we take the best action. This ensures the value function converges to $V^*$ rather than $V^\pi$ for some arbitrary $\pi$.
-
----
 
 ## Value Iteration as Truncated Policy Iteration
 
 Policy iteration alternates:
 - **Full** policy evaluation (iterate until convergence): $V^{\pi_k}$
 - Greedy improvement: $\pi_{k+1} = \text{greedy}(V^{\pi_k})$
+
+<div class="callout-info">
+<strong>Info:</strong> Policy iteration alternates:
+- **Full** policy evaluation (iterate until convergence): $V^{\pi_k}$
+- Greedy improvement: $\pi_{k+1} = \text{greedy}(V^{\pi_k})$
+
+What if we truncate evaluation to a sin...
+</div>
+
 
 What if we truncate evaluation to a single sweep (modified policy iteration with $m=1$)?
 
@@ -143,6 +177,14 @@ Return V, pi*
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 import numpy as np
 
@@ -207,6 +249,7 @@ def value_iteration_vectorized(P, R, gamma=0.99, theta=1e-8):
     pi = np.argmax(Q, axis=1)
     return V, pi
 ```
+</div>
 
 ---
 
@@ -229,7 +272,35 @@ def value_iteration_vectorized(P, R, gamma=0.99, theta=1e-8):
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Policy Iteration</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Value Iteration: When to Use Which</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Mermaid: The Three DP Algorithms
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart TD
@@ -244,6 +315,7 @@ flowchart TD
     style VI fill:#4a90d9,color:#fff
     style PIt fill:#9b59b6,color:#fff
 ```
+</div>
 
 Value iteration and policy iteration are endpoints of a continuous spectrum parametrized by $m$.
 
@@ -251,7 +323,15 @@ Value iteration and policy iteration are endpoints of a continuous spectrum para
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 ### 1. Using $\|V_{k+1} - V_k\|_\infty < \theta$ without accounting for $\gamma$
+
+<div class="callout-warning">
+<strong>Warning:</strong> ### 1.
+</div>
 
 This condition does not guarantee $\|V_k - V^*\|_\infty < \theta$. The correct bound is $\|V_k - V^*\|_\infty \leq \frac{\gamma}{1-\gamma} \|V_{k+1} - V_k\|_\infty$. For $\gamma = 0.99$, this multiplies the observed delta by a factor of 99. Use a much smaller $\theta$ than your target accuracy.
 
@@ -279,11 +359,24 @@ For episodic MDPs, add a terminal absorbing state with $V = 0$ and zero-reward s
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Policy evaluation (Guide 01), policy improvement theorem (Guide 02), contraction mapping theorem
 - **Leads to:** Q-learning (model-free analog using samples), approximate dynamic programming, fitted value iteration for continuous spaces
 - **Related to:** Backward induction (finite-horizon case), linear programming for MDPs
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -291,3 +384,18 @@ For episodic MDPs, add a terminal absorbing state with $V = 0$ and zero-reward s
 - Bellman (1957), *Dynamic Programming* — the original formulation
 - Puterman (1994), *Markov Decision Processes*, Chapter 6 — rigorous complexity analysis
 - Bertsekas (2012), *Dynamic Programming and Optimal Control*, Vol. 1, Chapter 1
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_value_iteration_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_policy_evaluation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

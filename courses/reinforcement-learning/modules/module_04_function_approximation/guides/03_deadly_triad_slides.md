@@ -18,6 +18,12 @@ math: mathjax
 
 # What Goes Wrong?
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Tabular Q-learning: ALWAYS converges ✓
 q_table = np.zeros((n_states, n_actions))
@@ -28,10 +34,16 @@ w = np.zeros(n_features)
 td_error = r + gamma * w @ x(s_) - w @ x(s)
 w += alpha * td_error * x(s)   # same form, different behavior!
 ```
+</div>
 
 Same update formula. Completely different convergence behavior.
 
 **The difference is not the algorithm. It is the combination of three properties.**
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Start with the code side-by-side. The update rule is identical in structure. The tabular version always converges; the FA version can diverge. This is the mystery that the deadly triad resolves. The three properties are the explanation for why these two identical-looking algorithms have different convergence behavior. -->
 
@@ -40,6 +52,7 @@ Same update formula. Completely different convergence behavior.
 # The Three Conditions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FA["Function Approximation\nŵ(s,w) — shared parameters\nacross states"]
     BS["Bootstrapping\nTD target: R + γŵ(S',w)\ntarget depends on w"]
@@ -52,6 +65,11 @@ flowchart TD
 ```
 
 Remove **any one** → stable. Keep all three → danger.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The flowchart shows the three conditions feeding into the divergence risk. The key message is in the bottom note: remove any one and you get safety. This is not just theoretical: it guides every design decision in practical deep RL. When something is unstable, ask which triad component to weaken. -->
 
@@ -73,6 +91,11 @@ Update at s1 affects:
 
 **Dangerous if:** Updates at $s$ push predictions for $s'$ in the wrong direction (off-policy mismatch).
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The key concept is weight sharing. In a table, updating row s1 only changes row s1. With FA, updating w changes the predictions for every state whose feature vector overlaps with x(s1). Under on-policy training, states are visited proportionally to how often the policy visits them, so the side effects are statistically consistent. Under off-policy, the side effects are mismatched to the actual visit frequencies. -->
 
 ---
@@ -90,6 +113,11 @@ $$\text{MC Target} = G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \quad \text{(n
 **The danger:** If $\hat{v}(S', \mathbf{w})$ overestimates, the target is inflated, which increases $\hat{v}(S, \mathbf{w})$, which inflates targets for predecessors of $S$...
 
 $$\text{overestimate} \to \text{higher target} \to \text{bigger overestimate} \to \ldots$$
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Bootstrapping creates a feedback loop. The target depends on the current weights, so if the weights drift high, the target drifts high too, pulling the weights even higher. Under tabular methods, this is bounded because each state's value is estimated independently. Under FA, the drift in one state's estimate propagates to all similar states, making the feedback loop much more dangerous. -->
 
@@ -156,6 +184,12 @@ Despite all rewards being zero. Despite the true solution being $\mathbf{w} = \m
 
 # Why Baird's MDP Diverges
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # At w = 0, the expected update direction under off-policy sampling is:
 # delta = gamma * v(s7) - v(si)
@@ -178,6 +212,7 @@ def expected_update_at_w_zero(gamma=0.99):
     # This scales up the effective update, creating instability.
     return "Weights pushed outward by IS mismatch even at true solution"
 ```
+</div>
 
 The importance sampling ratio amplifies updates in the direction away from $\mathbf{w} = \mathbf{0}$.
 

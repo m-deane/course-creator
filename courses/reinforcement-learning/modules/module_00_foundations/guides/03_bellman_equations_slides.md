@@ -30,6 +30,11 @@ $$Q^\pi(s, a) = \mathbb{E}_\pi[G_t \mid S_t = s, A_t = a]$$
 
 $$V^\pi(s) = \sum_{a} \pi(a \mid s)\, Q^\pi(s, a)$$
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The state-value function V answers "what is the expected return from this state?" The action-value function Q answers "what is the expected return from this state if I first take this specific action?" Q is strictly more informative than V -- it tells you both the value of the state and which action is responsible. This is why Q-learning is so powerful: knowing Q* immediately tells you the optimal action without needing a model of the environment. -->
 
 ---
@@ -48,6 +53,11 @@ Write out expectations explicitly (using MDP dynamics and policy):
 
 $$\boxed{V^\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^\pi(s')\right]}$$
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through each step slowly. The key substitution is replacing E_pi[G_{t+1} | S_{t+1} = s'] with V^pi(s'). This is valid because G_{t+1} under policy pi, conditioned on being in state s' at time t+1, has the same distribution as G_t conditioned on S_t = s'. This is the Markov property doing the heavy lifting. The final equation is linear in V^pi -- the unknowns V^pi(s) appear on both sides. For |S| states this gives |S| linear equations in |S| unknowns. -->
 
 ---
@@ -61,7 +71,20 @@ Three layers of averaging:
 2. **Dynamics** $p(s', r \mid s, a)$: where does the environment send us?
 3. **Recursion** $r + \gamma V^\pi(s')$: immediate reward plus future value
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: This decomposition maps directly to the backup diagram. The first average is the agent's choice -- stochastic if using a stochastic policy. The second average is environmental stochasticity -- even deterministic actions may have uncertain outcomes. The third term is the Bellman recursion that connects the value of s to the values of successor states. In deterministic environments with deterministic policies, both sums collapse to single terms and the equation simplifies to V^pi(s) = r(s, pi(s)) + gamma V^pi(s'). -->
+
+<div class="flow">
+<div class="flow-step mint">Policy</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Dynamics</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Recursion</div>
+</div>
 
 ---
 
@@ -75,6 +98,11 @@ So equivalently:
 
 $$Q^\pi(s, a) = \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^\pi(s')\right]$$
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The Q^pi Bellman equation differs from V^pi in that the first sum over actions is gone -- the action a is given (we condition on it). The remaining sum averages over stochastic next states and rewards. The inner sum over a-prime brings in the policy again for the next-step action selection. This equation is what SARSA uses as its target: it evaluates Q under the current policy by bootstrapping from the current Q estimates. -->
 
 ---
@@ -82,6 +110,7 @@ $$Q^\pi(s, a) = \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^\pi(s')\right]
 # Backup Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S["State $s$"] -->|"$\pi(a_1|s)$"| A1["$a_1$"]
     S -->|"$\pi(a_2|s)$"| A2["$a_2$"]
@@ -166,6 +195,7 @@ Used by: value iteration, Q-learning, DQN
 # Policy Iteration: Using Both Equations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Init["Initialize $\pi_0$"] --> PE["Policy Evaluation\nSolve $V^{\pi_k}$ from Bellman expectation"]
     PE --> PI["Policy Improvement\n$\pi_{k+1}(s) = \arg\max_a \sum p[r + \gamma V^{\pi_k}(s')]$"]
@@ -181,6 +211,12 @@ Policy iteration converges in **finite steps** for finite MDPs.
 ---
 
 # Value Iteration in Code
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def value_iteration(mdp, gamma=0.9, theta=1e-8):
@@ -206,6 +242,7 @@ def value_iteration(mdp, gamma=0.9, theta=1e-8):
             break
     return V
 ```
+</div>
 
 <!-- Speaker notes: Value iteration applies the Bellman optimality operator T* repeatedly: V_{k+1} = T* V_k. Each application brings V_k one step closer to V* because T* is a contraction mapping with contraction factor gamma. After k iterations, the error satisfies ||V_k - V*|| <= gamma^k ||V_0 - V*||. With gamma = 0.99 and starting from zero, you need about 460 iterations to get within 0.01 of V*. With gamma = 0.9, only 44 iterations are needed. This is another reason to prefer smaller gamma in practice. -->
 
@@ -274,6 +311,7 @@ Using only $p(s'|s,a)$ with $r(s,a)$ is an approximation — valid only for dete
 # From Bellman to RL Algorithms
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BE["Bellman Equations"] --> DP["Dynamic Programming\n(full model required)"]
     BE --> MC["Monte Carlo\n(sample full episodes)"]

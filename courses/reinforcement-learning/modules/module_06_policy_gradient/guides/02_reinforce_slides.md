@@ -21,6 +21,8 @@ Speaker notes: Key talking points for this slide
 - Understanding REINFORCE deeply makes all successor algorithms easy to understand
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about REINFORCE: Monte Carlo Policy Gradient. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Core Idea
@@ -45,6 +47,13 @@ Speaker notes: Key talking points for this slide
 - The price: each G_t is a single sample, so the estimate is unbiased but has high variance
 - No approximation is needed -- just run episodes and collect returns
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Core Idea. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -72,6 +81,13 @@ Speaker notes: Key talking points for this slide
 - The causality principle: G_t only includes rewards from time t onward -- action A_t could not have caused R_1,...,R_t
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Return $G_t$. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # REINFORCE Update Rule
@@ -91,6 +107,13 @@ Speaker notes: Key talking points for this slide
 - This is more data-efficient than only updating on the final outcome
 - Important: all updates use the SAME θ from before the episode; you don't update mid-episode
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about REINFORCE Update Rule. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -123,6 +146,13 @@ Speaker notes: Key talking points for this slide
 - The episode boundary is critical: NEVER update mid-episode in vanilla REINFORCE
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about REINFORCE Algorithm. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Variance Problem
@@ -134,6 +164,7 @@ $$G_t = \underbrace{R_{t+1}}_{\text{random}} + \gamma \underbrace{R_{t+2}}_{\tex
 **Variance compounds:** Each future reward is random. Returns from long episodes have high variance. The gradient estimate inherits this variance.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Episode 1: G_0 = 87"]
     B["Episode 2: G_0 = 23"]
@@ -146,7 +177,6 @@ graph LR
     C --> E
     D --> E
 
-    style E fill:#F44336,color:#fff
 ```
 
 <!--
@@ -157,6 +187,8 @@ Speaker notes: Key talking points for this slide
 - Consequence: gradient steps can go in the wrong direction for individual episodes
 - This is why REINFORCE needs many episodes and small learning rates -- individual gradient estimates are unreliable
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Variance Problem. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -180,6 +212,8 @@ Speaker notes: Key talking points for this slide
 - So b(S_t) · 0 = 0 -- the baseline contributes nothing in expectation
 - But it dramatically reduces variance by centering the returns around what was "expected"
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Baseline Subtraction: The Fix. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -206,6 +240,8 @@ Speaker notes: Key talking points for this slide
 - When A ≈ 0: action performed as expected -- no update needed
 - This is the bridge between REINFORCE and actor-critic: the actor-critic learns V(s) as a neural network
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about What Makes a Good Baseline?. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -246,9 +282,17 @@ Speaker notes: Key talking points for this slide
 - Practical approximations: G_t - V(S_t) (Monte Carlo advantage), R + γV(S') - V(S) (TD advantage), GAE (weighted combination)
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about The Advantage Function. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Code: REINFORCE in PyTorch
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def reinforce_update(log_probs, rewards, optimizer, gamma=0.99):
@@ -271,6 +315,7 @@ def reinforce_update(log_probs, rewards, optimizer, gamma=0.99):
     loss.backward()
     optimizer.step()
 ```
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -281,6 +326,8 @@ Speaker notes: Key talking points for this slide
 - optimizer.zero_grad() is critical: without it, gradients accumulate across episodes
 - This is the complete update -- just 10 lines of actual logic
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Code: REINFORCE in PyTorch. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -321,6 +368,8 @@ Speaker notes: Key talking points for this slide
 - The tradeoff: Monte Carlo (REINFORCE) has high variance but zero bias; TD (actor-critic) has lower variance but some bias from the value approximation
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Limitations of Vanilla REINFORCE. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # When to Use REINFORCE
@@ -345,6 +394,8 @@ Speaker notes: Key talking points for this slide
 - In research: REINFORCE is rarely used directly; it serves as the baseline that actor-critic methods improve upon
 - In education: REINFORCE is the right starting point because it directly implements the policy gradient theorem without additional complexity
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about When to Use REINFORCE. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -386,3 +437,5 @@ Speaker notes: Key talking points for this slide
 - The advantage function A(s,a) is the conceptual bridge to actor-critic -- the actor-critic learns V(s) (the critic) to compute advantages for the actor
 - References: Williams (1992) for original algorithm; Sutton & Barto Ch. 13.3 for baseline theory
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

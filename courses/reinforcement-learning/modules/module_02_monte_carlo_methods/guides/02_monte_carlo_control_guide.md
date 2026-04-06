@@ -1,8 +1,15 @@
 # Monte Carlo Control
 
+> **Reading time:** ~12 min | **Module:** 2 — Monte Carlo Methods | **Prerequisites:** Module 1
+
 ## In Brief
 
 Monte Carlo control finds the optimal policy $\pi^*$ without a model by alternating between MC policy evaluation and greedy policy improvement. Because improvement requires comparing actions, we estimate $Q(s,a)$ (action-value) rather than $V(s)$ (state-value).
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Monte Carlo control finds the optimal policy $\pi^*$ without a model by alternating between MC policy evaluation and greedy policy improvement. Because improvement requires comparing actions, we estimate $Q(s,a)$ (action-value) rather than $V(s)$ (state-value).
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ DP control used $V(s)$ but needed the model to do $\arg\max_a \sum_{s'} p(s'|s,a
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> DP control used $V(s)$ but needed the model to do $\arg\max_a \sum_{s'} p(s'|s,a)[r + \gamma V(s')]$.
+</div>
 ## Why $Q(s,a)$, Not $V(s)$, for Model-Free Control
 
 In Module 1, policy improvement used:
+
+<div class="callout-insight">
+<strong>Insight:</strong> In Module 1, policy improvement used:
+
+$$\pi'(s) = \arg\max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^\pi(s')\bigr]$$
+
+This requires the transition model $p(s', r \mid s, a)$.
+</div>
+
 
 $$\pi'(s) = \arg\max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^\pi(s')\bigr]$$
 
@@ -36,6 +57,15 @@ The expected return when taking action $a$ in state $s$, then following $\pi$ th
 
 MC control is an instance of Generalized Policy Iteration (GPI):
 
+<div class="callout-info">
+<strong>Info:</strong> MC control is an instance of Generalized Policy Iteration (GPI):
+
+
+
+Each evaluation step uses MC episodes to update $Q$.
+</div>
+
+
 ```
         Evaluate
 Q ←────────────────── π
@@ -54,6 +84,11 @@ Each evaluation step uses MC episodes to update $Q$. Each improvement step updat
 ## Exploring Starts
 
 For MC to estimate $Q(s,a)$ for every state-action pair, every pair must be visited. If the policy is deterministic, many $(s, a)$ pairs are never visited and $Q(s, a)$ remains unknown for unchosen actions.
+
+<div class="callout-warning">
+<strong>Warning:</strong> For MC to estimate $Q(s,a)$ for every state-action pair, every pair must be visited.
+</div>
+
 
 **Exploring Starts assumption (ES):** Each episode begins with a randomly chosen starting state-action pair $(S_0, A_0)$, with all pairs having non-zero probability of being selected as the start.
 
@@ -179,6 +214,14 @@ A standard schedule that satisfies GLIE: $\varepsilon_k = \frac{1}{k}$ (decays a
 
 ## Python Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 import numpy as np
 from collections import defaultdict
@@ -256,6 +299,7 @@ def mc_control_epsilon_greedy(env, n_episodes=50_000, gamma=1.0,
 
     return Q, greedy_policy
 ```
+</div>
 
 ---
 
@@ -305,8 +349,17 @@ $$Q^{\pi'}(s, a) \geq Q^\pi(s, a) \quad \forall s, a$$
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Estimating $V$ instead of $Q$**
 MC control requires $Q(s,a)$, not $V(s)$. A classic mistake is attempting to improve the policy from $V(s)$ estimates without a model. Without $p(s'|s,a)$, the greedy improvement step $\arg\max_a \sum_{s'} p(s'|s,a)[r + \gamma V(s')]$ is undefined. Always collect action-value returns.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Estimating $V$ instead of $Q$**
+MC control requires $Q(s,a)$, not $V(s)$.
+</div>
 
 **Never exploring away from the greedy action**
 With a fixed deterministic policy, non-greedy actions accumulate no returns. $Q(s,a)$ for non-greedy $a$ stays at its initial value forever, and the argmax over $Q$ never changes. Solution: $\epsilon$-greedy or exploring starts.
@@ -324,12 +377,40 @@ After a policy improvement step, the Q-values for the old policy are no longer c
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** MC prediction (Guide 01), GPI framework (Module 1 — DP control)
 - **Leads to:** Importance sampling (Guide 03) for off-policy Q-estimation; TD control (SARSA, Q-learning) in Module 3
 - **Related to:** Multi-armed bandits ($\varepsilon$-greedy exploration), function approximation (Module 4 extends tabular Q to neural Q-networks)
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 5.3–5.4 — primary reference
 - Singh, Jaakkola & Jordan (2000), "Convergence results for single-step on-policy RL algorithms" — formal GLIE convergence proof
 - Mnih et al. (2015), "Human-level control through deep reinforcement learning" — DQN applies MC-style Q-estimation with neural function approximation
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_monte_carlo_control_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_mc_prediction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

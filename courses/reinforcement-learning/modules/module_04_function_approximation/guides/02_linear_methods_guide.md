@@ -1,8 +1,15 @@
 # Linear Methods and Semi-Gradient TD
 
+> **Reading time:** ~19 min | **Module:** 4 — Function Approximation | **Prerequisites:** Module 3
+
 ## In Brief
 
 Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s)$ — a dot product between a weight vector and a hand-crafted feature vector. Combined with semi-gradient TD(0), this produces an efficient, convergent on-policy learning algorithm with well-understood theoretical properties.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s)$ — a dot product between a weight vector and a hand-crafted feature vector. Combined with semi-gradient TD(0), this produces an efficient, convergent on-policy learning algorithm with well-understood theoretical properties.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,25 @@ Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T 
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> "Semi-gradient" means we treat the TD target as a fixed label and differentiate only through the prediction, not the target.
+</div>
 ## 1. Linear Function Approximation
 
 ### Formal Definition
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### Formal Definition
+
+$$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
+
+where:
+- $\mathbf{w} \in \mathbb{R}^d$ — the weight vector (the parameters we learn)
+- $\...
+</div>
+
 
 $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
 
@@ -55,6 +78,14 @@ $$\mathbf{x}(\mathbf{s}) = [1, s_1, s_2, s_1^2, s_1 s_2, s_2^2]^T$$
 
 Total features: $\binom{k+n}{n}$. For $k=4$ (CartPole) and $n=3$: $\binom{7}{3} = 35$ features.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 import numpy as np
 from itertools import product as iproduct
@@ -86,6 +117,7 @@ s = np.array([0.5, -0.3])
 x = polynomial_features(s, degree=2)
 print(f"Features: {x}")  # [1, 0.5, -0.3, 0.25, -0.15, 0.09]
 ```
+</div>
 
 ### 2.2 Fourier Basis
 
@@ -100,6 +132,14 @@ The coefficient vectors $\mathbf{c}_i$ capture different frequency components. T
 $$\alpha_i = \alpha \Big/ \sqrt{1 + \|\mathbf{c}_i\|^2}$$
 
 Higher-frequency features get smaller learning rates, which improves stability.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 def fourier_features(state, order=3, state_low=None, state_high=None):
@@ -131,6 +171,7 @@ def fourier_alphas(coeffs, base_alpha):
     norms = np.linalg.norm(coeffs, axis=1)
     return np.where(norms == 0, base_alpha, base_alpha / norms)
 ```
+</div>
 
 ### 2.3 Tile Coding (Deep Dive)
 
@@ -144,6 +185,14 @@ For a $k$-dimensional state with $m$ tiles per dimension and $n$ tilings:
 2. Total features: $n \times m^k$
 3. Non-zero features per state: exactly $n$ (one per tiling)
 4. Offset for tiling $i$: shift by $(i/n) \times (\text{tile width})$ in each dimension
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 class TileCoder:
@@ -228,6 +277,7 @@ x = coder.encode(state)
 print(f"Feature vector: {x.shape} features, {int(x.sum())} active")
 # Output: (512,) features, 8 active
 ```
+</div>
 
 #### Why Multiple Tilings?
 
@@ -240,6 +290,12 @@ n tilings: Resolution = tile_width / n
 ```
 
 ### 2.4 Radial Basis Functions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def rbf_features(state, centers, sigma=1.0):
@@ -261,6 +317,7 @@ def rbf_features(state, centers, sigma=1.0):
     dists_sq = np.sum((centers - state) ** 2, axis=1)
     return np.exp(-dists_sq / (2 * sigma**2))
 ```
+</div>
 
 ---
 
@@ -505,8 +562,17 @@ The "stop gradient" annotation marks the semi-gradient point. The target $v_t' =
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1: Setting $\alpha$ too large for tile coding.**
 The standard rule is $\alpha = \alpha_0 / n_{\text{tilings}}$ where $\alpha_0 \in [0.1, 0.5]$. Tile coding activates $n_{\text{tilings}}$ features simultaneously, so the effective step size scales with $n_{\text{tilings}}$. Dividing by $n_{\text{tilings}}$ keeps the effective step constant regardless of the number of tilings.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1: Setting $\alpha$ too large for tile coding.**
+The standard rule is $\alpha = \alpha_0 / n_{\text{tilings}}$ where $\alpha_0 \in [0.1, 0.5]$.
+</div>
 
 **Pitfall 2: Forgetting the terminal-state treatment.**
 At terminal states, $V(S_{T}) = 0$ by definition (no future rewards). The TD target for the last transition is simply $R_T$, not $R_T + \gamma \hat{v}(S_T, \mathbf{w})$. Use `done` flag to zero out the bootstrap value.
@@ -523,6 +589,11 @@ Semi-gradient TD does not follow the gradient of any objective function. This me
 ---
 
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 - **Builds on:** Guide 01 (function approximation motivation and feature vectors), Module 03 (tabular TD(0) — linear methods are the same algorithm with generalization added)
 - **Leads to:** Guide 03 (the deadly triad — off-policy + FA breaks convergence), Module 05 (DQN uses neural networks in place of linear FA with the same semi-gradient idea)
@@ -548,3 +619,18 @@ Semi-gradient TD does not follow the gradient of any objective function. This me
 - Sutton & Barto (2018), Chapter 9.4 — the TD fixed point and the $1/(1-\gamma)$ bound (Equation 9.14)
 - Tsitsiklis & Van Roy (1997), "An analysis of temporal-difference learning with function approximation" — formal convergence proof for on-policy linear TD(0)
 - Sutton's tilecoding.py — reference implementation of hash-based tile coding: `http://incompleteideas.net/tiles/tiles3.html`
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_linear_methods_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_tile_coding.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

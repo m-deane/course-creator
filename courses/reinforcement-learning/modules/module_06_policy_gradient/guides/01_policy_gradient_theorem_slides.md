@@ -21,11 +21,14 @@ Speaker notes: Key talking points for this slide
 - Key motivating question: "Why would we want to do that, given that value-based methods work so well?"
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about The Policy Gradient Theorem. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Where We Are in the RL Landscape
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     RL["Reinforcement Learning"]
     VB["Value-Based\n(Q-learning, DQN)"]
@@ -37,8 +40,6 @@ graph TD
     VB --> AC
     PB --> AC
 
-    style PB fill:#4A90D9,color:#fff
-    style AC fill:#4A90D9,color:#fff
 ```
 
 **Policy gradient methods** occupy the right branch — and actor-critic methods combine both.
@@ -51,6 +52,13 @@ Speaker notes: Key talking points for this slide
 - Policy gradient is not replacing value-based methods; it is a complementary approach with different tradeoffs
 - The two branches merge in actor-critic, which is the dominant paradigm in modern deep RL
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Where We Are in the RL Landscape. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -85,6 +93,13 @@ Speaker notes: Key talking points for this slide
 - Stochastic policies: rock-paper-scissors requires a 1/3 mixed strategy; a greedy policy always loses to an adaptive opponent
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Why Parameterize the Policy Directly?. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Optimization Objective
@@ -104,6 +119,13 @@ Speaker notes: Key talking points for this slide
 - Naive finite-difference gradient estimation would require many trajectory rollouts per gradient step and doesn't scale
 - The policy gradient theorem resolves this by giving us an analytic expression we can estimate from a single set of trajectories
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Optimization Objective. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -128,6 +150,13 @@ Speaker notes: Key talking points for this slide
 - The dynamics terms p(s_{t+1}|s_t,a_t) don't depend on θ -- their gradients are zero!
 - Only the policy terms log π_θ(a_t|s_t) survive differentiation -- this is why we don't need to know the dynamics
 -->
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Core Challenge. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -154,6 +183,8 @@ Speaker notes: Key talking points for this slide
 - The final expression only requires knowing π_θ, not the environment dynamics p(s'|s,a)
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Log-Derivative Trick: Step by Step. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Policy Gradient Theorem
@@ -174,11 +205,14 @@ Speaker notes: Key talking points for this slide
 - Actor-critic uses a learned value network -- leading to lower variance but some bias
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about The Policy Gradient Theorem. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Intuition: Reinforcing Good Actions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Sample action A\nfrom π_θ(·|S)"]
     B["Observe return G_t"]
@@ -191,8 +225,6 @@ graph LR
     C -- Yes --> D
     C -- No --> E
 
-    style D fill:#4CAF50,color:#fff
-    style E fill:#F44336,color:#fff
 ```
 
 The gradient **pushes probability mass** toward actions with positive returns and **pulls it away** from actions with negative returns.
@@ -204,6 +236,8 @@ Speaker notes: Key talking points for this slide
 - The magnitude of the update is proportional to the return -- bigger rewards cause bigger probability shifts
 - Important subtlety: this only works correctly when actions lead to both positive and negative returns; if all returns are positive, all action probabilities increase (though relatively)
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Intuition: Reinforcing Good Actions. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -227,6 +261,8 @@ Speaker notes: Key talking points for this slide
 - In neural network policies, we don't compute this manually: autograd handles it via log_softmax
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Policy Parameterization: Softmax (Discrete). Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Policy Parameterization: Gaussian (Continuous)
@@ -249,6 +285,8 @@ Speaker notes: Key talking points for this slide
 - Multi-dimensional actions: use a diagonal Gaussian (independent dimensions) or full covariance Gaussian
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Policy Parameterization: Gaussian (Continuous). Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Monte Carlo Gradient Estimator
@@ -270,11 +308,14 @@ Speaker notes: Key talking points for this slide
 - This is the key weakness of the pure REINFORCE estimator -- addressed in Guide 02 with baselines
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Monte Carlo Gradient Estimator. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Variance Problem
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Single trajectory G_t"]
     B["Sum of T future rewards"]
@@ -290,8 +331,6 @@ graph TD
     D --> E
     E --> F
 
-    style E fill:#F44336,color:#fff
-    style F fill:#4A90D9,color:#fff
 ```
 
 **Variance reduction techniques:** baselines (Guide 02), actor-critic (Guide 03), GAE (Guide 03)
@@ -304,6 +343,8 @@ Speaker notes: Key talking points for this slide
 - Actor-critic replaces G_t with a one-step TD estimate -- much lower variance, but introduces some bias
 - The bias-variance tradeoff is the central design decision in policy gradient algorithms
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Variance Problem. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -325,6 +366,8 @@ Speaker notes: Key talking points for this slide
 - Off-policy: if you sample trajectories from an old policy and use them to update the current policy, the gradient estimate is biased
 - Importance sampling corrects this but has its own variance problems for large policy differences
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Common Pitfalls. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -366,3 +409,5 @@ Speaker notes: Key talking points for this slide
 - The key equation to remember: ∇J = E[∇log π · Q] -- this is the starting point for all policy gradient algorithms
 - References: Sutton & Barto Ch. 13 for proof; Williams (1992) for REINFORCE; Schulman (2016) for GAE
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary: Policy Gradient Theorem. Pause for questions if the audience seems uncertain. -->

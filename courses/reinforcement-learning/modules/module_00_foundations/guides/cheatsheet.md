@@ -1,5 +1,7 @@
 # Reinforcement Learning Foundations — Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 0 — Foundations | **Prerequisites:** Probability, linear algebra
+
 ## Symbol Table
 
 | Symbol | Name | Definition |
@@ -25,6 +27,15 @@
 
 $$\mathcal{M} = (\mathcal{S},\ \mathcal{A},\ p,\ R,\ \gamma)$$
 
+<div class="callout-insight">
+<strong>Insight:</strong> $$\mathcal{M} = (\mathcal{S},\ \mathcal{A},\ p,\ R,\ \gamma)$$
+
+| Component | Description | Constraint |
+|-----------|-------------|------------|
+| $\mathcal{S}$ | State space | Finite or continuous |...
+</div>
+
+
 | Component | Description | Constraint |
 |-----------|-------------|------------|
 | $\mathcal{S}$ | State space | Finite or continuous |
@@ -43,6 +54,17 @@ $$p(s_{t+1}, r_{t+1} \mid s_t, a_t) = p(s_{t+1}, r_{t+1} \mid s_1, a_1, \ldots, 
 **General discounted return:**
 $$G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
 
+<div class="callout-key">
+<strong>Key Point:</strong> **General discounted return:**
+$$G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
+
+**Episodic (finite horizon $T$):**
+$$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1}$$
+
+**Recursive decomposition (foundati...
+</div>
+
+
 **Episodic (finite horizon $T$):**
 $$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1}$$
 
@@ -54,6 +76,17 @@ $$G_t = R_{t+1} + \gamma G_{t+1}$$
 ## All Four Bellman Equations
 
 ### Bellman Expectation — State-Value
+
+<div class="callout-info">
+<strong>Info:</strong> ### Bellman Expectation — State-Value
+
+$$V^\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^\pi(s')\right]$$
+
+### Bellman Expectation — Action-Value
+
+$$Q^\pi(s, a) = \...
+</div>
+
 
 $$V^\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^\pi(s')\right]$$
 
@@ -84,6 +117,15 @@ $$\pi^*(s) = \arg\max_a Q^*(s, a)$$
 ## Key Distinctions
 
 ### Episodic vs Continuing Tasks
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### Episodic vs Continuing Tasks
+
+| | Episodic | Continuing |
+|--|---------|-----------|
+| Terminal state?
+</div>
+
 
 | | Episodic | Continuing |
 |--|---------|-----------|

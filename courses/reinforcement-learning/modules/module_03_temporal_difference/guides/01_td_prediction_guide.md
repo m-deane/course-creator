@@ -1,12 +1,24 @@
 # TD(0) Prediction: Learning Value Functions Online
 
+> **Reading time:** ~9 min | **Module:** 3 — Temporal Difference | **Prerequisites:** Module 2
+
 ## In Brief
 
 Temporal Difference (TD) prediction estimates the state-value function $V^\pi$ by combining the sampling idea of Monte Carlo with the bootstrapping idea of Dynamic Programming. The agent updates value estimates after every single step — no need to wait for an episode to end.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Temporal Difference (TD) prediction estimates the state-value function $V^\pi$ by combining the sampling idea of Monte Carlo with the bootstrapping idea of Dynamic Programming. The agent updates value estimates after every single step — no need to wait for an episode to end.
+</div>
+
+
 ## Key Insight
 
 TD learning updates toward a *target that is itself an estimate*. Instead of waiting to observe the full return $G_t$, TD substitutes the immediate reward plus a discounted estimate of the next state's value:
+
+<div class="callout-key">
+<strong>Key Point:</strong> TD learning updates toward a *target that is itself an estimate*.
+</div>
+
 
 $$\text{TD target} = R_{t+1} + \gamma V(S_{t+1})$$
 
@@ -14,9 +26,36 @@ The difference between this target and the current estimate is the **TD error** 
 
 ---
 
+## Intuitive Explanation
+
+Imagine you are driving from city A to city C, passing through city B. You want to estimate how long the full journey takes.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Imagine you are driving from city A to city C, passing through city B.
+</div>
+
+
+- **Monte Carlo approach:** Drive the entire route, record the total time, then update your estimate. You get an unbiased measurement but must wait until arrival.
+- **DP approach:** Use a perfect road map to compute the exact expected travel time. Requires full knowledge of road conditions.
+- **TD approach:** When you reach city B, you already know how long A→B took. You also have a (possibly imperfect) estimate of how long B→C takes. Combine them immediately, without waiting to reach C.
+
+The TD approach lets you *learn while you travel*, updating estimates at every waypoint using the best information available at that moment.
+
+---
+
+
 ## Formal Definition
 
 ### TD(0) Update Rule
+
+<div class="callout-info">
+<strong>Info:</strong> ### TD(0) Update Rule
+
+For a policy $\pi$ being evaluated, after each transition $(S_t, A_t, R_{t+1}, S_{t+1})$:
+
+$$V(S_t) \leftarrow V(S_t) + \alpha \bigl[R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\bigr]$$...
+</div>
+
 
 For a policy $\pi$ being evaluated, after each transition $(S_t, A_t, R_{t+1}, S_{t+1})$:
 
@@ -46,17 +85,6 @@ $$V(S_t) \leftarrow V(S_t) + \alpha \, \delta_t$$
 
 ---
 
-## Intuitive Explanation
-
-Imagine you are driving from city A to city C, passing through city B. You want to estimate how long the full journey takes.
-
-- **Monte Carlo approach:** Drive the entire route, record the total time, then update your estimate. You get an unbiased measurement but must wait until arrival.
-- **DP approach:** Use a perfect road map to compute the exact expected travel time. Requires full knowledge of road conditions.
-- **TD approach:** When you reach city B, you already know how long A→B took. You also have a (possibly imperfect) estimate of how long B→C takes. Combine them immediately, without waiting to reach C.
-
-The TD approach lets you *learn while you travel*, updating estimates at every waypoint using the best information available at that moment.
-
----
 
 ## Bootstrapping: Using Estimates to Update Estimates
 
@@ -89,6 +117,26 @@ Bootstrapping introduces bias (the estimate $V(S_{t+1})$ may be wrong) but reduc
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">TD</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Monte Carlo vs Dynamic Programming</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Convergence Properties
 
 Under tabular representation with a fixed policy $\pi$:
@@ -118,6 +166,14 @@ TD(0) uses a **one-step backup**: only one transition is observed before updatin
 ---
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -188,13 +244,23 @@ print("Estimated V for first 8 states:")
 print(V_hat[:8].round(4))
 env.close()
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Bootstrapping into a terminal state.**
 When $S_{t+1}$ is terminal, its value is 0 by definition. If you look up `V[terminal_state]` naively, you may get a non-zero stale value. Always check `terminated` and use `reward - V[state]` (i.e., set next-state value to zero) on terminal transitions.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Bootstrapping into a terminal state.**
+When $S_{t+1}$ is terminal, its value is 0 by definition.
+</div>
 
 **Pitfall 2 — Using a constant large step size.**
 A large $\alpha$ (e.g., 0.9) makes learning noisy and can prevent convergence to a fixed point. Start with $\alpha \in [0.01, 0.1]$. For proven convergence, use a schedule such as $\alpha_t = 1/N(S_t)$ where $N(S_t)$ is the visit count.
@@ -212,14 +278,42 @@ TD error $\delta_t$ is computed from a one-step transition. Monte Carlo return $
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Bellman expectation equation (Module 0), Monte Carlo prediction (Module 2), MDP framework
 - **Leads to:** SARSA on-policy control (Guide 02), Q-learning off-policy control (Guide 03), TD(λ) and eligibility traces (Guide 04), function approximation with TD (Module 04)
 - **Related to:** Kalman filtering (Bayesian view of TD), temporal difference models in neuroscience (dopamine as TD error signal)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 6.1–6.3 — canonical derivation and analysis of TD(0)
 - Sutton, R. S. (1988). *Learning to predict by the methods of temporal differences.* Machine Learning 3(1) — the original TD paper
 - Dayan, P. & Niv, Y. (2008). *Reinforcement learning: The good, the bad and the ugly.* Current Opinion in Neurobiology — covers the dopamine-as-TD-error connection
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_td_prediction_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_td_zero_prediction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

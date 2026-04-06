@@ -29,6 +29,11 @@ $$\pi^* = \arg\max_\pi V^\pi(s) \quad \forall s$$
 
 Repeat until the policy stops changing.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Policy evaluation answered "how good is this policy?" Policy iteration answers "what is the best policy?" The algorithm is conceptually simple: measure, improve, repeat. The mathematical content of this guide is the policy improvement theorem, which proves this procedure can only get better. -->
 
 ---
@@ -44,6 +49,11 @@ The greedy improved policy is:
 $$\boxed{\pi'(s) = \arg\max_a Q^\pi(s, a)}$$
 
 $Q^\pi(s, a)$ answers: "What is the value of taking action $a$ in state $s$, then following $\pi$ thereafter?"
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The Q-function is the bridge between V^pi and the improvement step. It asks: what happens if I deviate from pi for exactly one step, then return to following pi? If any such deviation looks better than V^pi(s), we should make that deviation permanent — which is exactly what the greedy step does. -->
 
@@ -63,6 +73,11 @@ $$Q^\pi(s, \pi'(s)) = \max_a Q^\pi(s, a) \geq Q^\pi(s, \pi(s)) = V^\pi(s)$$
 
 The first inequality holds because we take the max. The final equality holds because $V^\pi(s) = Q^\pi(s, \pi(s))$ for deterministic $\pi$.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The theorem says: if a new policy does at least as well as the old policy at every state for one step, then it does at least as well everywhere over the infinite horizon. The proof extends the one-step advantage recursively using the Bellman equations. The key consequence: the greedy policy always satisfies the theorem's hypothesis, so improvement never makes things worse. -->
 
 ---
@@ -77,6 +92,11 @@ $$\vdots$$
 $$\leq \mathbb{E}_{\pi'}\!\left[\sum_{k=0}^\infty \gamma^k R_{t+k+1} \;\Big|\; S_t = s\right] = V^{\pi'}(s)$$
 
 Each row applies the hypothesis one step further into the future.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: This is the telescoping argument. At each step we apply the hypothesis Q^pi(s, pi'(s)) >= V^pi(s) one step further. Because gamma < 1, the series converges and we get V^{pi'}(s) on the right. Walk through this slowly — students who have not seen this before often find it surprising that a one-step condition implies an infinite-horizon result. -->
 
@@ -101,16 +121,13 @@ This is the **Bellman optimality equation**. Its solution is $V^* = V^\pi$ and $
 ## The Full Cycle
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Init["Initialize\npi_0 arbitrarily"] --> Eval["Policy Evaluation\nCompute V^{pi_k}"]
     Eval --> Impr["Policy Improvement\npi_{k+1}(s) = argmax_a Q^{pi_k}(s,a)"]
     Impr --> Stable{"pi_{k+1} == pi_k\nfor all s?"}
     Stable -->|"No: k = k+1"| Eval
     Stable -->|"Yes"| Opt["Return pi* and V*"]
-    style Init fill:#27ae60,color:#fff
-    style Eval fill:#e67e22,color:#fff
-    style Impr fill:#9b59b6,color:#fff
-    style Opt fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Trace through the cycle. The key property is the arrow from "No" back to evaluation — we go back and evaluate the NEW policy, not the old one. This is critical: after improvement, the current policy has changed, so the old V^pi is no longer valid and must be recomputed. -->
@@ -135,6 +152,12 @@ Why must the sequence $\pi_0, \pi_1, \pi_2, \ldots$ terminate?
 
 ## Code: Policy Evaluation (Deterministic Policy)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -157,12 +180,19 @@ def policy_evaluation(pi, P, R, gamma, theta=1e-8):
         if delta < theta:
             return V
 ```
+</div>
 
 <!-- Speaker notes: For a deterministic policy, the Bellman expectation simplifies: the sum over actions collapses to a single term (the action the policy selects). Point out that pi[s] indexes directly into the action dimension of P and R, making the inner computation a simple dot product. -->
 
 ---
 
 ## Code: Policy Improvement
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def policy_improvement(V, P, R, gamma):
@@ -187,6 +217,7 @@ def policy_iteration(P, R, gamma=0.99):
 
     raise RuntimeError("Did not converge")
 ```
+</div>
 
 <!-- Speaker notes: The policy_improvement function computes the full Q-table in one vectorized numpy operation. The broadcasting: V[None, None, :] expands V to shape (1, 1, n_states) so it can be added to R of shape (n_states, n_actions, n_states). The sum over axis=2 marginalizes over s'. Ask students to verify the shapes. -->
 
@@ -217,12 +248,10 @@ Iteration 3: policy unchanged $\to$ optimal policy found.
 Full evaluation (to convergence) is expensive. What if we stop after $m$ sweeps?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     E1["1 sweep\n= Value Iteration"] --> E2["m sweeps\n= Modified PI"]
     E2 --> Einf["∞ sweeps\n= Standard PI"]
-    style E1 fill:#e67e22,color:#fff
-    style E2 fill:#9b59b6,color:#fff
-    style Einf fill:#4a90d9,color:#fff
 ```
 
 | $m$ sweeps | Algorithm | Convergence |
@@ -281,18 +310,30 @@ We study value iteration in Guide 03.
 
 <!-- Speaker notes: Summarize the five key ideas. Stress point 3: policy stability is not just a convenient stopping rule, it is a proof of optimality. This is one of the elegant results in reinforcement learning theory. Preview that value iteration, covered next, is the limiting case of modified policy iteration with m=1. -->
 
+<div class="flow">
+<div class="flow-step mint">Alternation:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Policy improvement theore...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Optimality at convergence...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">Finite convergence:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">Modified PI:</div>
+</div>
+
 ---
 
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PE["Policy Evaluation\n(Guide 01)"] --> PIt["Policy Iteration\n(this guide)"]
     PIt --> VI["Value Iteration\nm=1 special case\n(Guide 03)"]
     PIt --> MPI["Modified Policy Iteration\ngeneral m-step version"]
     PIt --> LPsol["Linear Programming\nalternative formulation"]
     VI --> QLearn["Q-Learning\nmodel-free analog"]
-    style PIt fill:#e67e22,color:#fff
 ```
 
 **References:** Sutton & Barto (2018), Section 4.3 — Howard (1960), *Dynamic Programming and Markov Processes*

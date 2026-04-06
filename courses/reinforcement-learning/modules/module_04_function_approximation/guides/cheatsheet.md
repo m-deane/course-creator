@@ -1,5 +1,7 @@
 # Module 04 Cheatsheet — Function Approximation
 
+> **Reading time:** ~8 min | **Module:** 4 — Function Approximation | **Prerequisites:** Module 3
+
 ## Core Notation
 
 | Symbol | Meaning |
@@ -20,6 +22,15 @@
 
 $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
 
+<div class="callout-insight">
+<strong>Insight:</strong> $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
+
+**Gradient** (constant — does not depend on $\mathbf{w}$):
+
+$$\nabla_{\mathbf{w}} \hat{v}(s, \mathbf{w}) = \math...
+</div>
+
+
 **Gradient** (constant — does not depend on $\mathbf{w}$):
 
 $$\nabla_{\mathbf{w}} \hat{v}(s, \mathbf{w}) = \mathbf{x}(s)$$
@@ -33,6 +44,17 @@ $$\overline{VE}(\mathbf{w}) = \sum_{s \in \mathcal{S}} \mu(s) \left[ V^\pi(s) - 
 ## Semi-Gradient TD(0) Update
 
 For transition $(S_t, R_{t+1}, S_{t+1})$:
+
+<div class="callout-key">
+<strong>Key Point:</strong> For transition $(S_t, R_{t+1}, S_{t+1})$:
+
+**Step 1 — TD error:**
+
+$$\delta_t = R_{t+1} + \gamma \hat{v}(S_{t+1}, \mathbf{w}) - \hat{v}(S_t, \mathbf{w})$$
+
+(Use $\hat{v}(S_{t+1}, \mathbf{w}) = 0$ if $...
+</div>
+
 
 **Step 1 — TD error:**
 
@@ -61,6 +83,16 @@ $$\boxed{\mathbf{w} \leftarrow \mathbf{w} + \alpha \, \delta_t \, \mathbf{x}(S_t
    - $m$ = tiles per dimension (typically 4, 8, 16)
    - State bounds: $[s_{\text{low}}, s_{\text{high}}]$ per dimension
 
+<div class="callout-info">
+<strong>Info:</strong> **Choose parameters:**
+   - $n$ = number of tilings (typically 4, 8, or 16)
+   - $m$ = tiles per dimension (typically 4, 8, 16)
+   - State bounds: $[s_{\text{low}}, s_{\text{high}}]$ per dimension
+
+2.
+</div>
+
+
 2. **Compute scale factor** (converts state range to tile indices):
    $$\text{scale} = m \,/\, (s_{\text{high}} - s_{\text{low}})$$
 
@@ -74,6 +106,12 @@ $$\boxed{\mathbf{w} \leftarrow \mathbf{w} + \alpha \, \delta_t \, \mathbf{x}(S_t
 4. **Feature vector size:** $n \times m^k$ (total), exactly $n$ non-zero entries.
 
 5. **Learning rate:** $\alpha = \alpha_0 / n$, with $\alpha_0 \in [0.1, 0.5]$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class TileCoder:
@@ -95,6 +133,7 @@ class TileCoder:
             features[i * self.n_tiles_per_tiling + flat] = 1.0
         return features
 ```
+</div>
 
 ---
 
@@ -105,6 +144,11 @@ class TileCoder:
 | **Function Approximation** | $|\mathbf{w}| \ll |\mathcal{S}|$; weights shared across states | Tile coding, neural network |
 | **Bootstrapping** | Target depends on current $\mathbf{w}$: $R + \gamma \hat{v}(S', \mathbf{w})$ | TD(0), Q-learning, DQN |
 | **Off-Policy Training** | Behavior policy $b \neq$ target policy $\pi$ | Q-learning, experience replay |
+
+<div class="callout-warning">
+<strong>Warning:</strong> All three → potential divergence.
+</div>
+
 
 **The rule:** Any two → safe. All three → potential divergence.
 
@@ -141,6 +185,16 @@ class TileCoder:
 ## When to Use Tabular vs Linear FA vs Neural Network FA
 
 ### Use Tabular RL When
+
+<div class="callout-insight">
+<strong>Insight:</strong> ### Use Tabular RL When
+
+- State space is small and discrete (less than ~$10^6$ states)
+- You need convergence guarantees
+- Debugging a conceptual algorithm (tabular = transparent)
+- Environment: Grid...
+</div>
+
 
 - State space is small and discrete (less than ~$10^6$ states)
 - You need convergence guarantees

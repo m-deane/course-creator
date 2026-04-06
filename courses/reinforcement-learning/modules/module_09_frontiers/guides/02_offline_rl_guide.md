@@ -1,8 +1,15 @@
 # Offline Reinforcement Learning
 
+> **Reading time:** ~12 min | **Module:** 9 — Frontiers | **Prerequisites:** Modules 5-8
+
 ## In Brief
 
 Offline RL (also called batch RL) learns a policy entirely from a fixed, pre-collected dataset of transitions — without any interaction with the environment during training. The agent cannot take new actions to collect new data; it must extract a good policy purely from whatever trajectories exist in the dataset.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Offline RL (also called batch RL) learns a policy entirely from a fixed, pre-collected dataset of transitions — without any interaction with the environment during training. The agent cannot take new actions to collect new data; it must extract a good policy purely from whatever trajectories exist in the dataset.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,21 @@ The defining challenge of offline RL is **distribution shift**: a learned policy
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The defining challenge of offline RL is **distribution shift**: a learned policy will visit states and take actions that are poorly represented in the training data, and the Q-function learned from th...
+</div>
 ## Formal Definition
 
 Given a fixed dataset $\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}$ collected by some **behavior policy** $\pi_\beta$, the offline RL problem is:
+
+<div class="callout-key">
+<strong>Key Point:</strong> Given a fixed dataset $\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}$ collected by some **behavior policy** $\pi_\beta$, the offline RL problem is:
+
+$$\max_\pi \; J(\pi) = \mathbb{E}_{s_0}\left[\sum_{t=0...
+</div>
+
 
 $$\max_\pi \; J(\pi) = \mathbb{E}_{s_0}\left[\sum_{t=0}^\infty \gamma^t R(S_t, A_t) \;\middle|\; A_t \sim \pi(\cdot \mid S_t)\right]$$
 
@@ -25,6 +44,13 @@ The dataset coverage is characterized by $d^{\pi_\beta}(s, a)$ — the state-act
 ## Why Offline RL Matters
 
 ### Safety-Critical Domains
+
+<div class="callout-insight">
+<strong>Insight:</strong> ### Safety-Critical Domains
+
+In healthcare, autonomous vehicles, or industrial control, deploying a partially-trained agent to collect exploration data may cause irreversible harm.
+</div>
+
 
 In healthcare, autonomous vehicles, or industrial control, deploying a partially-trained agent to collect exploration data may cause irreversible harm. Offline RL enables learning from historical records without risk.
 
@@ -50,6 +76,14 @@ $$Q(s, a) \leftarrow r + \gamma \max_{a'} Q(s', a')$$
 
 The $\max_{a'}$ operator queries Q-values at $(s', a')$ pairs that the behavior policy never visited. These Q-values are extrapolated by the function approximator in an unconstrained way.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     D["Dataset $\mathcal{D}$\n(behavior policy coverage)"] --> Train["Train Q-function\non $(s, a, r, s')$ tuples"]
@@ -62,6 +96,7 @@ flowchart TD
     style Error fill:#d63031,color:#fff
     style OOD fill:#d63031,color:#fff
 ```
+</div>
 
 **The death spiral:** Q-values for OOD actions are overestimated → the greedy policy selects those actions → those actions have no supporting data → Q-values get even more inaccurate through bootstrapping → the policy becomes increasingly OOD.
 
@@ -84,6 +119,14 @@ where $\mu$ is a distribution that concentrates on high-Q actions (e.g., the cur
 - Q-values are provably lower bounds on the true value function under the behavior policy.
 - The learned policy will be conservative: it prefers actions seen in the data.
 - The penalty strength $\alpha$ controls how conservative the policy is.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -134,6 +177,7 @@ def cql_loss(q_net, target_q_net, batch: dict, alpha: float = 1.0, gamma: float 
 
     return bellman_error + alpha * conservative_penalty
 ```
+</div>
 
 ---
 
@@ -153,6 +197,14 @@ Train a GPT-style autoregressive Transformer to predict $a_t$ given the context 
 
 At inference, condition on a desired target return $\hat{R}_1 = R_{\text{target}}$, and the model generates actions that achieve it.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart LR
     RTG1["$\hat{R}_1$"] --> Tok1["Token 1"]
@@ -166,6 +218,7 @@ flowchart LR
     style TR fill:#4A90D9,color:#fff
     style Apred fill:#6ab04c,color:#fff
 ```
+</div>
 
 **Advantages over CQL:**
 
@@ -193,6 +246,12 @@ $$\mathcal{L}_V = \mathbb{E}_{(s,a) \sim \mathcal{D}}\left[\mathcal{L}_2^\tau\le
 where $\mathcal{L}_2^\tau(u) = |\tau - \mathbf{1}(u < 0)| \cdot u^2$ is the asymmetric expectile loss with $\tau \in (0.5, 1.0)$.
 
 For $\tau \to 1$, $V(s)$ approaches $\max_{a \in \mathcal{D}(s)} Q(s, a)$ — the maximum over **dataset actions only**, not over all possible actions.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:
@@ -224,6 +283,7 @@ def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:
     weight = torch.where(u > 0, tau * torch.ones_like(u), (1 - tau) * torch.ones_like(u))
     return (weight * u ** 2).mean()
 ```
+</div>
 
 ---
 
@@ -258,8 +318,17 @@ Offline logs contain user interactions, but the logged policy (the old recommend
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Extrapolation error from bootstrapping.**
 Every Bellman backup that evaluates $\max_{a'} Q(s', a')$ on actions not in the dataset is potentially extrapolating the Q-function. In offline settings, extrapolation errors compound through multiple bootstrapping steps and lead to catastrophically overestimated Q-values. Use CQL, IQL, or avoid Bellman backups entirely (Decision Transformer).
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Extrapolation error from bootstrapping.**
+Every Bellman backup that evaluates $\max_{a'} Q(s', a')$ on actions not in the dataset is potentially extrapolating the Q-function.
+</div>
 
 **Pitfall 2 — Overestimation of out-of-distribution actions.**
 A neural Q-network trained on a fixed dataset will generalize beyond the support of the data. It generalizes optimistically (high Q-values for unseen actions) because standard supervised losses have no pressure to be accurate on inputs they never see. Always add an explicit pessimism mechanism.
@@ -277,11 +346,24 @@ You cannot evaluate a policy by running it in the environment (offline setting).
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Q-learning and temporal difference (Module 3), function approximation (Module 4), policy gradient (Module 6)
 - **Leads to:** Safe RL and RLHF (Guide 03) — RLHF uses offline learning from human preference data
 - **Related to:** imitation learning, inverse RL, offline policy evaluation, causal inference
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -290,3 +372,18 @@ You cannot evaluate a policy by running it in the environment (offline setting).
 - Chen et al. (2021). *Decision Transformer: Reinforcement Learning via Sequence Modeling* — RL as conditional sequence prediction
 - Kostrikov et al. (2021). *Offline Reinforcement Learning with Implicit Q-Learning* — IQL, often the practical baseline of choice
 - Fu et al. (2020). *D4RL: Datasets for Deep Data-Driven Reinforcement Learning* — standard offline RL benchmark suite
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_offline_rl_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_offline_rl_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

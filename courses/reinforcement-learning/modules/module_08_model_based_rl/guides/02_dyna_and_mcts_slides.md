@@ -35,6 +35,11 @@ Module 8 · Guide 02
 
 </div>
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The key distinction is *when* planning happens. Dyna-Q plans during training to improve the Q-table globally — the result is a better Q-function that makes good decisions everywhere. MCTS plans at decision time to improve the specific action chosen right now — the result is a good action at the current state, but no permanent improvement to a stored value function. Ask students: which is better? Neither is strictly better — it depends on whether you need a reusable policy (Dyna) or high-quality decisions in a specific situation (MCTS). -->
 
 ---
@@ -60,6 +65,11 @@ Three interleaved processes per real step:
 ```
 
 All three updates share the same Q-table and are identical in form.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The beauty of Dyna-Q is that steps 1 and 4 (planning) are the same Q-learning update — the only difference is the source of the transition tuple. This means you can implement Dyna-Q by taking any Q-learning implementation and adding two lines: model.update(s, a, r, s') and a loop of n simulated updates. Show students the pseudocode on the next slide. -->
 
@@ -89,6 +99,11 @@ For each step:
 
 Steps 3 and 5 are the same formula — real and imagined transitions are treated identically.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: Read through the algorithm carefully. Emphasize step 5: S̃ is sampled from *previously observed states*, not the current state. This means planning happens across the entire state space that has been visited, not just the current location. After the agent discovers a reward at one part of the maze, planning propagates that information backward to distant states — much faster than waiting for real trajectories to reach those states. -->
 
 ---
@@ -115,6 +130,11 @@ Steps 3 and 5 are the same formula — real and imagined transitions are treated
 </div>
 
 Planning steps $n$ directly multiply sample efficiency — with accurate model.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: This is one of the cleanest experiments in all of RL because it isolates the planning benefit. With n=0 (pure Q-learning), the agent must literally walk the rewarding path many times before the value propagates back to the start. With n=50, planning propagates value information backward after every single real step — converging 50x faster. The curve is approximately 1/n, which confirms the theoretical multiplier. -->
 
@@ -161,16 +181,13 @@ Actions not recently tried receive inflated reward → agent re-explores.
 ## The Four MCTS Phases
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S1["1. Selection\nUCT traversal\nto leaf"] --> S2["2. Expansion\nAdd new child\nto tree"]
     S2 --> S3["3. Simulation\nRollout to terminal\nwith π_roll"]
     S3 --> S4["4. Backprop\nUpdate N, Q̄\non path to root"]
     S4 -->|"Repeat K times"| S1
 
-    style S1 fill:#e8f4ff,stroke:#4A90D9
-    style S2 fill:#fff8e8,stroke:#D4A017
-    style S3 fill:#f0ffe8,stroke:#4A9D4A
-    style S4 fill:#ffe8f4,stroke:#D44A7A
 ```
 
 Each iteration: one leaf expanded, one rollout, statistics updated.

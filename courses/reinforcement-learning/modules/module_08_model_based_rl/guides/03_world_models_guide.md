@@ -1,8 +1,15 @@
 # World Models and MuZero
 
+> **Reading time:** ~14 min | **Module:** 8 — Model-Based RL | **Prerequisites:** Module 5
+
 ## In Brief
 
 World Models (Ha & Schmidhuber, 2018) decompose the agent into three specialized components — a visual encoder, a temporal memory, and a compact controller — enabling the controller to be trained entirely inside a learned dream environment. MuZero (Schrittwieser et al., 2020) eliminates the need for an explicit environment simulator by learning dynamics in a latent space, then applying AlphaZero-style MCTS planning within that space. Both represent the frontier of sample-efficient deep RL.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> World Models (Ha & Schmidhuber, 2018) decompose the agent into three specialized components — a visual encoder, a temporal memory, and a compact controller — enabling the controller to be trained entirely inside a learned dream environment. MuZero (Schrittwieser et al., 2020) eliminates the need for an explicit environment simulator by learning dynamics in a latent space, then applying AlphaZero-style MCTS planning within that space.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,39 @@ The challenge in applying Dyna-Q to rich, high-dimensional environments (pixel-b
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The challenge in applying Dyna-Q to rich, high-dimensional environments (pixel-based games, robotics from cameras) is that modeling raw pixels is expensive and brittle.
+</div>
+## Intuitive Explanation: World Models
+
+A film director preparing for a scene does not need to actually film every possible camera angle. They have a mental model of how lighting, actor positioning, and camera motion combine to produce an image. They can simulate in their mind which angles will look good and issue precise instructions on set — with minimal real takes.
+
+<div class="callout-key">
+<strong>Key Point:</strong> A film director preparing for a scene does not need to actually film every possible camera angle.
+</div>
+
+
+The V model is the director's perceptual system: it compresses the complex visual world into essential features. The M model is the director's predictive imagination: given a current shot and a camera move, predict what the next frame looks like. The C model is the director's decision process: given the compressed state and predicted future, choose the action.
+
+The key insight is that training C inside the dream (using V and M) is much faster than training C from real environment interactions — dream simulations run at thousands of frames per second instead of real-time.
+
+---
+
+
 ## Formal Definition: World Models
 
 The World Models architecture (Ha & Schmidhuber, 2018) decomposes the agent into three modules that are trained separately:
+
+<div class="callout-info">
+<strong>Info:</strong> The World Models architecture (Ha & Schmidhuber, 2018) decomposes the agent into three modules that are trained separately:
+
+### Module 1: Vision Model (V) — Variational Autoencoder
+
+The V model compr...
+</div>
+
 
 ### Module 1: Vision Model (V) — Variational Autoencoder
 
@@ -67,15 +104,6 @@ $$\text{for } t = 0, 1, 2, \ldots: \quad a_t = C(z_t, h_t), \quad z_{t+1} \sim M
 
 ---
 
-## Intuitive Explanation: World Models
-
-A film director preparing for a scene does not need to actually film every possible camera angle. They have a mental model of how lighting, actor positioning, and camera motion combine to produce an image. They can simulate in their mind which angles will look good and issue precise instructions on set — with minimal real takes.
-
-The V model is the director's perceptual system: it compresses the complex visual world into essential features. The M model is the director's predictive imagination: given a current shot and a camera move, predict what the next frame looks like. The C model is the director's decision process: given the compressed state and predicted future, choose the action.
-
-The key insight is that training C inside the dream (using V and M) is much faster than training C from real environment interactions — dream simulations run at thousands of frames per second instead of real-time.
-
----
 
 ## MuZero: Learning Dynamics Without Reconstruction
 
@@ -141,6 +169,14 @@ where $u_{t+k}$ is the actual reward, $z_{t+k}$ is the bootstrapped target value
 
 ## MuZero Architecture Diagram
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart LR
     OBS["Observations\no_1,...,o_t"] --> HREP["Representation\nh_0 = h(o_1,...,o_t)"]
@@ -166,6 +202,7 @@ flowchart LR
 
     style UNROLL fill:#fff8e8,stroke:#D4A017
 ```
+</div>
 
 ---
 
@@ -181,6 +218,26 @@ flowchart LR
 | **Interpretability** | Can decode latent to image | Latent space is abstract |
 
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">World Models</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">MuZero: Key Differences</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## Sample Efficiency Comparison
 
@@ -200,6 +257,14 @@ Model-based methods achieve $10\times$–$50\times$ sample efficiency improvemen
 ---
 
 ## Python Implementation: World Model Components
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -316,13 +381,23 @@ class MemoryModel(nn.Module):
 
         return pi, mu, log_sigma, hidden
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Training the three World Model components in the wrong order.**
 The V model must be trained before the M model, because M operates on encoded latents $z_t$. If you train M on raw observations or on latents from an untrained V, M learns noise. Train V first; freeze it; encode the dataset; then train M on the encoded sequences.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Training the three World Model components in the wrong order.**
+The V model must be trained before the M model, because M operates on encoded latents $z_t$.
+</div>
 
 **Pitfall 2 — Forgetting the temperature parameter in MDN-RNN sampling.**
 At test time (inside the dream), a temperature $\tau > 1$ is often added when sampling from the MDN to inject exploration. Without temperature, the dream is too deterministic and the controller may overfit to a narrow set of trajectories. Use $\tau \in [0.5, 1.5]$; the original World Models paper uses $\tau = 1.15$ for the CarRacing environment.
@@ -343,11 +418,24 @@ The controller trained in the dream can only be as good as the dream. A V model 
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Dyna-Q and MCTS (Guide 02), variational autoencoders (deep learning), LSTM/recurrent networks
 - **Leads to:** DreamerV2/V3 (Hafner et al. 2020–2023), IRIS (Micheli et al. 2022), TD-MPC2 (Hansen et al. 2024)
 - **Related to:** Predictive coding in neuroscience — the brain may maintain a generative world model and continuously predict sensory input; imagination in humans parallels agent dreaming
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -356,3 +444,18 @@ The controller trained in the dream can only be as good as the dream. A V model 
 - Hafner et al. (2020), "Dream to Control: Learning Behaviors by Latent Imagination" (Dreamer) — direct successor to World Models
 - Hafner et al. (2023), "Mastering Diverse Domains through World Models" (DreamerV3) — single algorithm, same hyperparameters, solving all environments
 - Grimm et al. (2020), "The Value Equivalence Principle for Model-Based Reinforcement Learning" — theoretical foundation for why MuZero's latent model is sufficient for planning
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_world_models_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_dyna_q.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

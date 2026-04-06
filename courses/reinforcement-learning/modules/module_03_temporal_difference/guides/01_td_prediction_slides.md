@@ -19,18 +19,21 @@ math: mathjax
 ## Where We Are
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DP["Dynamic Programming\n(Model required)"] --> TD["Temporal Difference\n(No model, online)"]
     MC["Monte Carlo\n(No model, episodic)"] --> TD
 
-    style TD fill:#36f,color:#fff
-    style DP fill:#888,color:#fff
-    style MC fill:#888,color:#fff
 ```
 
 TD inherits the best of both:
 - **From MC:** learns from raw experience, no model
 - **From DP:** bootstraps — updates from estimates without waiting for full returns
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Orient students in the RL algorithm landscape. Emphasize that TD is not a compromise — it often outperforms both MC and DP in practice. Ask: what does it mean to learn without waiting for the end of an episode? That is the core capability TD unlocks. -->
 
@@ -45,6 +48,11 @@ $$V(S_t) \leftarrow V(S_t) + \alpha \bigl[\underbrace{G_t}_{\text{actual return}
 $$V(S_t) \leftarrow V(S_t) + \alpha \bigl[\underbrace{R_{t+1} + \gamma V(S_{t+1})}_{\text{TD target}} - V(S_t)\bigr]$$
 
 > The TD target substitutes an *estimate* for the true return. This is bootstrapping.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Write both equations side by side and ask students what differs. The only change is replacing G_t (actual full return) with R_{t+1} + gamma*V(S_{t+1}) (one-step bootstrap). That single substitution unlocks online learning. Pause here — this is the conceptual core of the entire module. -->
 
@@ -77,6 +85,11 @@ Decrease $V(S_t)$.
 
 > $\delta_t = 0$ means the value estimate is already perfectly consistent with the observed transition.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The TD error is the most important quantity in RL. It appears in SARSA, Q-learning, Actor-Critic methods, and even neuroscience models of dopamine signaling. Make sure students understand it intuitively before moving on: it is the gap between what was predicted and what actually happened (over one step). -->
 
 ---
@@ -94,6 +107,11 @@ You are driving from city **A** to city **C**, passing through **B**.
 TD updates your estimate at *every waypoint*, using the best available information without waiting to arrive.
 
 > In RL: every state transition is a waypoint. TD never wastes a step.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The driving analogy is highly effective. Make it concrete: "You know it took 45 minutes to get from A to B. You estimate B to C takes 30 minutes. So you update your A-to-C estimate to 75 minutes — right now, without finishing the trip." This is exactly what TD(0) does. -->
 
@@ -177,6 +195,12 @@ $$\sum_{t=0}^{\infty} \alpha_t = \infty \quad \text{and} \quad \sum_{t=0}^{\inft
 
 ## Code: TD(0) in 20 Lines
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -199,6 +223,7 @@ def td_zero(env, policy, num_episodes, alpha=0.1, gamma=0.99):
             state = next_state
     return V
 ```
+</div>
 
 > Note `next_value = 0.0 if terminated` — terminal states have value zero by definition.
 
@@ -207,6 +232,12 @@ def td_zero(env, policy, num_episodes, alpha=0.1, gamma=0.99):
 ---
 
 ## Running the Code
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import gymnasium as gym
@@ -220,6 +251,7 @@ V = td_zero(env, random_policy, num_episodes=10_000)
 print(V.reshape(4, 4).round(3))
 env.close()
 ```
+</div>
 
 ```
 [[0.    0.    0.001 0.   ]

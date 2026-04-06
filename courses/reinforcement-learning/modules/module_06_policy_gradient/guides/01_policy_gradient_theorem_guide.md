@@ -1,8 +1,15 @@
 # The Policy Gradient Theorem
 
+> **Reading time:** ~9 min | **Module:** 6 — Policy Gradient | **Prerequisites:** Module 5
+
 ## In Brief
 
 Policy gradient methods optimize the agent's policy directly by following the gradient of expected return with respect to the policy parameters $\theta$. The policy gradient theorem provides an analytically tractable expression for this gradient that can be estimated from sampled trajectories, enabling gradient ascent even when the environment dynamics are unknown.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Policy gradient methods optimize the agent's policy directly by following the gradient of expected return with respect to the policy parameters $\theta$. The policy gradient theorem provides an analytically tractable expression for this gradient that can be estimated from sampled trajectories, enabling gradient ascent even when the environment dynamics are unknown.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,19 @@ Instead of learning a value function and deriving a policy from it, parameterize
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Instead of learning a value function and deriving a policy from it, parameterize the policy $\pi(a|s;\theta)$ directly and nudge its parameters in the direction that increases expected return.
+</div>
 ## Why Parameterize the Policy Directly?
 
 Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and derive a policy greedily: $\pi(s) = \arg\max_a Q(s,a)$. This works well in discrete action spaces but breaks down in several important scenarios.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and derive a policy greedily: $\pi(s) = \arg\max_a Q(s,a)$.
+</div>
+
 
 ### Advantages Over Value-Based Methods
 
@@ -36,6 +53,13 @@ The policy parameterization can encode domain knowledge directly — for example
 ## Objective Function
 
 The goal is to find parameters $\theta$ that maximize expected return:
+
+<div class="callout-info">
+<strong>Info:</strong> The goal is to find parameters $\theta$ that maximize expected return:
+
+$$J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\sum_{t=0}^{T} \gamma^t R_t\right] = \mathbb{E}_{\tau \sim \pi_\theta}\!\left[G_0\r...
+</div>
+
 
 $$J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\sum_{t=0}^{T} \gamma^t R_t\right] = \mathbb{E}_{\tau \sim \pi_\theta}\!\left[G_0\right]$$
 
@@ -128,6 +152,14 @@ When a sampled action $a$ exceeds the current mean and led to high return, the m
 
 ## Optimization Landscape
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 graph TB
     subgraph "Policy Space"
@@ -162,12 +194,21 @@ graph TB
     style J2 fill:#4A90D9,color:#fff
     style G fill:#E8844A,color:#fff
 ```
+</div>
 
 Policy gradient methods perform gradient ascent on $J(\theta)$ using Monte Carlo estimates of the gradient. Because $J(\theta)$ is generally non-convex, convergence to global optima is not guaranteed — only local optima.
 
 ---
 
 ## Code Snippet
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -232,13 +273,23 @@ def compute_policy_gradient_loss(
     # Loss = -mean(log_probs * returns) gives ∇loss = -∇J
     return -(log_probs * returns).mean()
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — High variance gradient estimates.**
 Monte Carlo estimates of $Q^{\pi_\theta}(s,a)$ using episode returns have high variance because a single trajectory sample includes contributions from many stochastic decisions. Without variance reduction (baselines, control variates), learning is slow and unstable. See Guide 02 on REINFORCE with baseline and Guide 03 on actor-critic methods.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — High variance gradient estimates.**
+Monte Carlo estimates of $Q^{\pi_\theta}(s,a)$ using episode returns have high variance because a single trajectory sample includes contributions from many stochastic decisions.
+</div>
 
 **Pitfall 2 — Using absolute returns instead of advantages.**
 If all returns in an episode are positive (even though some actions were relatively bad), the policy gradient increases the probability of all actions proportionally to their absolute return. This is correct in expectation but biased in small samples. Subtracting a baseline $b(s)$ centers returns around zero without changing the expected gradient.
@@ -256,11 +307,24 @@ The policy gradient theorem assumes on-policy data: trajectories sampled under $
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Module 00 (MDP formalism, $Q^{\pi}$, $V^{\pi}$), Module 04 (function approximation), Module 05 (neural network policies)
 - **Leads to:** REINFORCE (Guide 02), actor-critic (Guide 03), PPO and TRPO (Module 07)
 - **Related to:** Score function estimators (REINFORCE estimator), variational inference (ELBO gradient), evolution strategies
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -268,3 +332,18 @@ The policy gradient theorem assumes on-policy data: trajectories sampled under $
 - Sutton, R. S., McAllester, D., Singh, S., & Mansour, Y. (2000). Policy gradient methods for reinforcement learning with function approximation. *NeurIPS* — the original policy gradient theorem paper
 - Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. *Machine Learning* — introduces the REINFORCE estimator and score function approach
 - Schulman, J., Moritz, P., Levine, S., Jordan, M., & Abbeel, P. (2016). High-dimensional continuous control using generalized advantage estimation. *ICLR* — GAE for variance reduction
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_policy_gradient_theorem_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_reinforce_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

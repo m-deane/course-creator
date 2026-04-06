@@ -1,5 +1,7 @@
 # Module 9 Cheatsheet: Frontiers & Applications
 
+> **Reading time:** ~8 min | **Module:** 9 — Frontiers | **Prerequisites:** Modules 5-8
+
 ---
 
 ## 1. MARL Taxonomy
@@ -30,6 +32,13 @@ Execution: Decentralized actor πⁱ(aⁱ | oⁱ) uses only own observation
 ## 2. Offline RL Key Algorithms
 
 ### The Core Problem
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### The Core Problem
+
+Behavior policy $\pi_\beta$ induces dataset $\mathcal{D}$.
+</div>
+
 
 Behavior policy $\pi_\beta$ induces dataset $\mathcal{D}$. Learned policy $\pi$ may visit $(s, a) \notin \text{supp}(d^{\pi_\beta})$.
 
@@ -70,6 +79,13 @@ Step 1: Supervised Fine-Tuning (SFT)
   Loss:  L_SFT = -Σ log π_θ(y | x)
   Goal:  Initialize policy in good output region
 
+<div class="callout-key">
+<strong>Key Point:</strong> ### DPO Alternative
+
+$$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[\log\sigma\!\left(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l...
+</div>
+
+
 Step 2: Reward Model Training
   Data:  (prompt x, preferred y_w, rejected y_l) triples
   Model: Bradley-Terry  P(y_w ≻ y_l | x) = σ(r_φ(x, y_w) - r_φ(x, y_l))
@@ -93,6 +109,15 @@ No reward model. No PPO. Single supervised pass on preference pairs. Often compe
 ## 4. Safe RL Constraint Formulation
 
 ### Constrained MDP (CMDP)
+
+<div class="callout-info">
+<strong>Info:</strong> ### Constrained MDP (CMDP)
+
+$$\max_\pi \; J_R(\pi) \quad \text{subject to} \quad J_{C_k}(\pi) \leq d_k, \quad k = 1, \ldots, K$$
+
+$$J_{C_k}(\pi) = \mathbb{E}_\pi\left[\sum_{t=0}^\infty \gamma^t C_k(S_...
+</div>
+
 
 $$\max_\pi \; J_R(\pi) \quad \text{subject to} \quad J_{C_k}(\pi) \leq d_k, \quad k = 1, \ldots, K$$
 

@@ -39,6 +39,11 @@ Dyna-Q works in a tabular setting. What breaks when we scale to images?
 
 </div>
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This is the core motivation for latent-space models. Modeling in raw pixel space is wasteful — most of the 12,288 dimensions are background, lighting artifacts, and texture details that are irrelevant to decision making. A good encoder strips these out, leaving only the task-relevant structure. Empirically, latent-space dynamics models make predictions 10-100× more accurate than pixel-space models of the same parameter count. -->
 
 ---
@@ -67,6 +72,11 @@ Observation o_t (image)
 └──────────────────┘
 ```
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through each component. V is a standard VAE — reconstruct the observation as a training objective, but the useful output is the latent z. M is an LSTM with a Mixture Density Network head — it predicts the distribution over next latent states. Using a mixture is important for multi-modal transitions (e.g., a car can turn left or right after a fork). C is deliberately simple — a linear layer. This keeps training fast (evolutionary strategies instead of backprop) and prevents overfitting to the dream. -->
 
 ---
@@ -81,6 +91,11 @@ $$\mathcal{L}_\text{VAE} = \underbrace{-\mathbb{E}_{q_\phi}[\log p_\psi(o_t \mid
 - $z_t$ captures the essential structure of $o_t$
 - KL term forces $z_t$ to stay near the unit Gaussian — smooth latent space
 - Smooth latent space makes the M model's prediction task easier
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: The VAE is trained separately on a dataset of observations collected by a random policy. The KL term is critical: without it, the encoder could assign very different z values to similar observations, making the dynamics hard to model. The beta parameter controls the trade-off — larger beta gives a more disentangled latent space but worse reconstruction. Ha & Schmidhuber use beta=1. DreamerV2 uses larger beta=1 with additional reconstruction terms. The key output is not the reconstructed image — it is the latent vector z used by M and C. -->
 
@@ -98,6 +113,11 @@ $$h_{t+1} = \text{LSTM}_\theta(h_t,\; [z_t; a_t])$$
 - Stochastic environments have multi-modal transitions
 - A single Gaussian would predict the average of the modes — which may have probability zero under the true distribution
 - The mixture captures genuine stochasticity
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The MDN-RNN is the most technically complex component. The key insight is that we need a *distribution* over next latent states, not a point prediction. In a racing game, hitting a corner could result in many different outcomes depending on friction, speed, and steering — a single Gaussian average would predict the car in the middle of the track, which never actually happens. The LSTM's hidden state h accumulates information about the trajectory — what has happened so far — giving the controller a sense of temporal context beyond the current frame. -->
 
@@ -129,6 +149,7 @@ optimize C to maximize dream reward (CMA-ES evolutionary strategy)
 ## World Models: The Dream Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph REAL["Phase 1: Real Interaction"]
         E([Environment]) --> COLLECT["Collect observations\nwith random policy"]
@@ -148,9 +169,6 @@ flowchart TD
 
     TRAIN_C --> DEPLOY["Deploy C + V + M\nin real environment"]
 
-    style REAL fill:#e8f4ff,stroke:#4A90D9
-    style TRAIN_VM fill:#fff8e8,stroke:#D4A017
-    style DREAM fill:#f0ffe8,stroke:#4A9D4A
 ```
 
 <!-- Speaker notes: The three-phase pipeline is the key engineering insight. Phase 1 is brief — just enough real data to train V and M. Phase 2 is supervised learning — straightforward VAE and MDN-RNN training. Phase 3 is where the RL happens, but entirely inside a learned simulator. The real environment is consulted only during deployment testing. In the CarRacing-v0 experiments, this approach required ~10,000 real frames versus ~1 million for model-free methods. -->

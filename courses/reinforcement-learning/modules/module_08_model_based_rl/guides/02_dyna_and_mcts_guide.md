@@ -1,8 +1,15 @@
 # Dyna-Q and Monte Carlo Tree Search
 
+> **Reading time:** ~17 min | **Module:** 8 — Model-Based RL | **Prerequisites:** Module 5
+
 ## In Brief
 
 Dyna-Q (Sutton, 1991) is the foundational algorithm that unifies learning from real experience and planning with a learned model. Monte Carlo Tree Search (MCTS) is the dominant algorithm for lookahead planning in large discrete spaces and the engine behind AlphaGo and AlphaZero. Both methods exploit a model — one implicitly through replay, one explicitly through simulation.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Dyna-Q (Sutton, 1991) is the foundational algorithm that unifies learning from real experience and planning with a learned model. Monte Carlo Tree Search (MCTS) is the dominant algorithm for lookahead planning in large discrete spaces and the engine behind AlphaGo and AlphaZero.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,39 @@ Dyna-Q asks: "After each real step, why not run several imagined steps too?" The
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Dyna-Q asks: "After each real step, why not run several imagined steps too?" The imagined steps use a tabular model fitted from real transitions and produce additional Q-learning updates at zero envir...
+</div>
+## Intuitive Explanation: Dyna-Q
+
+A student preparing for an exam:
+- **Real experience** (Step 2): work through new practice problems as they encounter them.
+- **Model** (Step 3): maintain a mental model of which problem types map to which solution patterns.
+- **Planning** (Step 4): drill from memory — re-solve problems already seen, reinforce the solution pattern without doing new problems.
+
+<div class="callout-key">
+<strong>Key Point:</strong> A student preparing for an exam:
+- **Real experience** (Step 2): work through new practice problems as they encounter them.
+</div>
+
+
+The $n$ parameter controls the ratio of drilling to new problems. $n = 0$ is pure reactive learning; large $n$ is mostly drilling on past experience. The optimal $n$ depends on model accuracy and the cost of new problems.
+
+---
+
+
 ## Formal Definition: Dyna-Q
 
 ### Setting
+
+<div class="callout-info">
+<strong>Info:</strong> ### Setting
+
+Tabular MDP $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$ with a deterministic learned model $\hat{p}$.
+</div>
+
 
 Tabular MDP $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$ with a deterministic learned model $\hat{p}$. The agent maintains:
 
@@ -56,20 +93,15 @@ Source: Sutton & Barto Figure 8.2 — the Maze example.
 
 ---
 
-## Intuitive Explanation: Dyna-Q
-
-A student preparing for an exam:
-- **Real experience** (Step 2): work through new practice problems as they encounter them.
-- **Model** (Step 3): maintain a mental model of which problem types map to which solution patterns.
-- **Planning** (Step 4): drill from memory — re-solve problems already seen, reinforce the solution pattern without doing new problems.
-
-The $n$ parameter controls the ratio of drilling to new problems. $n = 0$ is pure reactive learning; large $n$ is mostly drilling on past experience. The optimal $n$ depends on model accuracy and the cost of new problems.
-
----
 
 ## Dyna-Q+ for Changing Environments
 
 Standard Dyna-Q assumes the environment is stationary. If the environment changes (e.g., a wall is removed or added), the model becomes stale and planning reinforces outdated beliefs.
+
+<div class="callout-warning">
+<strong>Warning:</strong> Standard Dyna-Q assumes the environment is stationary.
+</div>
+
 
 **Dyna-Q+** (Sutton & Barto, Ch. 8.3) adds an exploration bonus that grows with the time since a state-action pair was last tried in the real environment:
 
@@ -84,6 +116,27 @@ where $\tau(S, A)$ is the number of real time steps since $(S, A)$ was last exec
 ---
 
 ## Python Implementation: Dyna-Q
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+---
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -158,6 +211,7 @@ class DynaQ:
             td_error_sim = td_target_sim - self.Q[s_sim][a_sim]
             self.Q[s_sim][a_sim] += self.alpha * td_error_sim
 ```
+</div>
 
 ---
 
@@ -246,6 +300,14 @@ After K iterations:
 
 ## Mermaid Diagram: MCTS Four Phases
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     START([Current State s₀]) --> SEL
@@ -283,6 +345,7 @@ flowchart TD
     style SIM fill:#f0ffe8,stroke:#4A9D4A
     style BACK fill:#ffe8f4,stroke:#D44A7A
 ```
+</div>
 
 ---
 
@@ -319,7 +382,35 @@ The two approaches are complementary. AlphaZero uses both: Dyna-style self-play 
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Planning</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Learning Trade-Offs</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Code Snippet: MCTS Core Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import math
@@ -422,13 +513,23 @@ def mcts_search(root_state, env_simulator, n_simulations: int, c: float = math.s
     best_action = max(root.children, key=lambda a: root.children[a].visit_count)
     return best_action
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Using stale model transitions in Dyna-Q after environment change.**
 If the environment changes (a wall is added, a reward location moves), Dyna-Q continues to plan with old model transitions that are now wrong. These incorrect planning updates can undo learning from real experience. Use Dyna-Q+ with an exploration bonus, or discard model entries older than a threshold.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Using stale model transitions in Dyna-Q after environment change.**
+If the environment changes (a wall is added, a reward location moves), Dyna-Q continues to plan with old model transitions that are now wrong.
+</div>
 
 **Pitfall 2 — Insufficient planning steps for the model quality.**
 Too many planning steps with an inaccurate model causes model exploitation. Too few planning steps with an accurate model wastes the sample efficiency benefit. A practical heuristic: start with $n = 5$, monitor whether simulated transitions match real transitions, and scale $n$ with model accuracy.
@@ -449,11 +550,24 @@ Dyna-Q improves the *global* Q-table by replaying past experience. MCTS improves
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Model-Based Overview (Guide 01), Q-learning and TD updates (Module 3), UCB1 bandit algorithm (Multi-Armed Bandits course)
 - **Leads to:** World Models and MuZero (Guide 03) which replace the hand-crafted simulator in MCTS with a learned latent model
 - **Related to:** Monte Carlo methods (Module 2) — MCTS uses MC rollouts; prioritized experience replay — a variation of Dyna-Q's planning step sampling
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -462,3 +576,18 @@ Dyna-Q improves the *global* Q-table by replaying past experience. MCTS improves
 - Silver et al. (2016), "Mastering the game of Go with deep neural networks and tree search" (AlphaGo)
 - Silver et al. (2017), "Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm" (AlphaZero)
 - Browne et al. (2012), "A Survey of Monte Carlo Tree Search Methods" — comprehensive MCTS reference
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_dyna_and_mcts_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_dyna_q.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

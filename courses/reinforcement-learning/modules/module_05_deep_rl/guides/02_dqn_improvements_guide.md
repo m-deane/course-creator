@@ -1,8 +1,15 @@
 # DQN Improvements: Double DQN, Dueling DQN, PER, and Rainbow
 
+> **Reading time:** ~12 min | **Module:** 5 — Deep RL | **Prerequisites:** Module 4, PyTorch basics
+
 ## In Brief
 
 Vanilla DQN (Mnih et al., 2015) has three specific, measurable weaknesses: systematic overestimation of Q-values, no architectural separation between state value and action advantage, and uniform sampling from the replay buffer that ignores which transitions are most informative. Double DQN, Dueling DQN, and Prioritized Experience Replay each address exactly one of these weaknesses. Rainbow (Hessel et al., 2018) combines all known improvements into a single agent.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Vanilla DQN (Mnih et al., 2015) has three specific, measurable weaknesses: systematic overestimation of Q-values, no architectural separation between state value and action advantage, and uniform sampling from the replay buffer that ignores which transitions are most informative. Double DQN, Dueling DQN, and Prioritized Experience Replay each address exactly one of these weaknesses.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ Each improvement is modular: Double DQN changes only the target computation, Due
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Each improvement is modular: Double DQN changes only the target computation, Dueling DQN changes only the network architecture, and PER changes only the replay sampling strategy.
+</div>
 ## Improvement 1: Double DQN
 
 ### The Problem: Overestimation Bias
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### The Problem: Overestimation Bias
+
+The vanilla DQN TD target uses the same network to **select** the best next action and **evaluate** its value:
+
+$$Y^{\text{DQN}} = r + \gamma \max_{a'} Q(s', a';\...
+</div>
+
 
 The vanilla DQN TD target uses the same network to **select** the best next action and **evaluate** its value:
 
@@ -42,6 +63,14 @@ By decoupling selection from evaluation, neither network controls both aspects o
 
 The only change from vanilla DQN is two lines in the target computation:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 # Vanilla DQN target
 max_next_q = target_net(next_states).max(dim=1).values
@@ -55,6 +84,7 @@ with torch.no_grad():
 
 targets = rewards + gamma * max_next_q * (1.0 - dones)
 ```
+</div>
 
 ---
 
@@ -81,6 +111,14 @@ This constraint ensures that for the greedy action $a^* = \arg\max_a A(s, a; \th
 
 ### Architecture Diagram
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     S["State $s$"]
@@ -100,8 +138,17 @@ flowchart TD
     style S fill:#4A90D9,color:#fff
     style OUT fill:#E8844A,color:#fff
 ```
+</div>
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -147,6 +194,7 @@ class DuelingQNetwork(nn.Module):
         q = value + (advantage - advantage.mean(dim=1, keepdim=True))
         return q
 ```
+</div>
 
 ### Why It Helps
 
@@ -193,6 +241,12 @@ $$p_i \leftarrow |\delta_i^{\text{new}}| + \epsilon$$
 ### Efficient Implementation: Sum Tree
 
 Naive priority updates are $O(N)$ per step. A **sum tree** data structure reduces sampling and updating to $O(\log N)$:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class SumTree:
@@ -246,6 +300,7 @@ class SumTree:
     def total_priority(self) -> float:
         return self.tree[0]
 ```
+</div>
 
 ---
 
@@ -259,6 +314,19 @@ Hessel et al. (2018) combine six DQN improvements into a single agent:
 4. **Multi-step Returns** — uses $n$-step returns instead of 1-step TD: $Y_t^{(n)} = \sum_{k=0}^{n-1} \gamma^k r_{t+k} + \gamma^n \max_{a'} Q(s_{t+n}, a';\theta^-)$
 5. **Distributional RL (C51)** — predicts the full return distribution, not just the expected value
 6. **Noisy Networks** — replaces $\epsilon$-greedy with learnable noise for exploration
+
+
+<div class="flow">
+<div class="flow-step mint">1. Double DQN</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Prioritized Experience Replay</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Dueling Networks</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Multi-step Returns</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Distributional RL (C51)</div>
+</div>
 
 The ablation study in the Rainbow paper demonstrates that removing any single component degrades performance, but the combined agent significantly outperforms any individual improvement.
 
@@ -278,8 +346,17 @@ The ablation study in the Rainbow paper demonstrates that removing any single co
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Double DQN: confusing which network does what.**
 Action selection uses the **online** network $\theta$; action evaluation uses the **target** network $\theta^-$. Swapping them (or using the same network for both) negates the overestimation correction and produces results identical to vanilla DQN.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Double DQN: confusing which network does what.**
+Action selection uses the **online** network $\theta$; action evaluation uses the **target** network $\theta^-$.
+</div>
 
 **Pitfall 2 — Dueling DQN: forgetting the mean-subtraction normalization.**
 Without subtracting the mean advantage $\frac{1}{|\mathcal{A}|}\sum_{a'} A(s, a'; \theta_A)$, the decomposition $Q = V + A$ is not identifiable. The network cannot distinguish whether high Q-values come from a good state or a high-advantage action. Training converges to incorrect value estimates.
@@ -297,11 +374,24 @@ Debugging a combined agent is much harder than debugging each component independ
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** DQN (Guide 01), Bellman equations (Module 00), replay buffers, target networks
 - **Leads to:** distributional RL (C51, QR-DQN), policy gradient methods (Module 06), actor-critic algorithms (Module 07)
 - **Related to:** overestimation bias in Q-learning (Thrun & Schwartz, 1993), importance sampling in statistics, advantage functions in policy gradient theory
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -309,3 +399,18 @@ Debugging a combined agent is much harder than debugging each component independ
 - Wang, Z. et al. (2016). *Dueling Network Architectures for Deep Reinforcement Learning.* ICML. — original Dueling DQN paper with identifiability analysis
 - Schaul, T. et al. (2016). *Prioritized Experience Replay.* ICLR. — original PER paper with sum-tree implementation details
 - Hessel, M. et al. (2018). *Rainbow: Combining Improvements in Deep Reinforcement Learning.* AAAI. — ablation study showing each component's individual contribution
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_dqn_improvements_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_dqn_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

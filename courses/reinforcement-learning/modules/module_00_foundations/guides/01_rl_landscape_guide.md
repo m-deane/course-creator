@@ -1,8 +1,15 @@
 # The Reinforcement Learning Landscape
 
+> **Reading time:** ~8 min | **Module:** 0 — Foundations | **Prerequisites:** Probability, linear algebra
+
 ## In Brief
 
 Reinforcement learning (RL) is a computational framework for sequential decision-making: an agent learns a behavior policy by interacting with an environment and receiving scalar reward signals. Unlike supervised learning, no labeled data is provided; unlike unsupervised learning, a performance objective is explicit.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Reinforcement learning (RL) is a computational framework for sequential decision-making: an agent learns a behavior policy by interacting with an environment and receiving scalar reward signals. Unlike supervised learning, no labeled data is provided; unlike unsupervised learning, a performance objective is explicit.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,37 @@ The agent-environment interaction loop is the organizing idea of all RL. At ever
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The agent-environment interaction loop is the organizing idea of all RL.
+</div>
+## Intuitive Explanation
+
+Think of a chess player learning to improve. The board position is the **state**, the chosen move is the **action**, winning or losing a piece is part of the **reward** (or the game outcome is the terminal reward), and the player's decision strategy is the **policy**.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Think of a chess player learning to improve.
+</div>
+
+
+The player does not have a teacher telling them the correct move for every position (that would be supervised learning). They learn by playing many games and observing which sequences of moves lead to wins.
+
+---
+
+
 ## Formal Definition
 
 A reinforcement learning problem is defined by:
+
+<div class="callout-info">
+<strong>Info:</strong> A reinforcement learning problem is defined by:
+
+- An **agent** that selects actions
+- An **environment** that responds to those actions with new states and rewards
+- A **policy** $\pi$ mapping states...
+</div>
+
 
 - An **agent** that selects actions
 - An **environment** that responds to those actions with new states and rewards
@@ -57,7 +92,35 @@ $$S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3, \ldots$$
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Comparison: RL</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Supervised vs Unsupervised Learning</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## The Agent-Environment Interaction Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart LR
@@ -68,6 +131,7 @@ flowchart LR
     style A fill:#4A90D9,color:#fff,stroke:#2C5F8A
     style E fill:#E8844A,color:#fff,stroke:#B05A28
 ```
+</div>
 
 At each discrete time step $t$:
 
@@ -78,13 +142,6 @@ At each discrete time step $t$:
 
 ---
 
-## Intuitive Explanation
-
-Think of a chess player learning to improve. The board position is the **state**, the chosen move is the **action**, winning or losing a piece is part of the **reward** (or the game outcome is the terminal reward), and the player's decision strategy is the **policy**.
-
-The player does not have a teacher telling them the correct move for every position (that would be supervised learning). They learn by playing many games and observing which sequences of moves lead to wins.
-
----
 
 ## Real-World Examples
 
@@ -115,6 +172,14 @@ The player does not have a teacher telling them the correct move for every posit
 ---
 
 ## Code Snippet: The Interaction Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import gymnasium as gym
@@ -158,13 +223,23 @@ episode_rewards = [run_episode(env, random_policy) for _ in range(100)]
 print(f"Random policy mean return: {sum(episode_rewards) / len(episode_rewards):.1f}")
 env.close()
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Reward shaping without domain understanding.**
 Manually engineering reward functions often introduces unintended behavior. An agent given +1 reward for staying alive in a game may learn never to take risks required to win. Always test whether the shaped reward actually aligns with the intended goal.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Reward shaping without domain understanding.**
+Manually engineering reward functions often introduces unintended behavior.
+</div>
 
 **Pitfall 2 — Confusing observation with state.**
 The agent receives an *observation* $O_t$ which may be a partial or noisy view of the true state $S_t$. Treating a partial observation as the full state violates the Markov property and makes value estimates incorrect. Partially observable problems require POMDPs or memory-augmented agents.
@@ -182,14 +257,42 @@ Many bugs arise from failing to reset environments correctly between episodes or
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** probability theory, Markov chains, dynamic programming basics
 - **Leads to:** Markov Decision Processes (Guide 02), Bellman equations (Guide 03), tabular methods, function approximation, deep RL
 - **Related to:** optimal control theory, multi-armed bandits (a special single-state RL problem), game theory
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 1 — the canonical introduction to the agent-environment framework
 - Silver, D. (2015). *Lecture 1: Introduction to Reinforcement Learning* — concise framing of the RL problem and its relationship to other learning paradigms
 - Gymnasium documentation (https://gymnasium.farama.org) — standard environment interface used throughout this course
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_rl_landscape_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_agent_environment_loop.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

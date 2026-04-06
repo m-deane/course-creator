@@ -26,6 +26,11 @@ Policy iteration cost per iteration:
 
 **Value iteration:** Apply the Bellman **optimality** operator once per state, per sweep. No explicit policy. Just values.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Recall that policy iteration spends most of its time in the evaluation phase. Value iteration asks: why wait for full convergence before improving? Can we do one Bellman step and immediately improve? Yes — and this produces value iteration, which is equivalent to modified policy iteration with m=1. -->
 
 ---
@@ -46,6 +51,11 @@ $$V^\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^\
 | Fixed point | $V^\pi$ | $V^*$ |
 | Used in | Policy evaluation | Value iteration |
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: The key difference is max vs sum weighted by pi. In policy evaluation we average over the policy's action distribution. In value iteration we take the max — implicitly acting as if we will choose the best action every time. The max makes this the optimality equation rather than the expectation equation. -->
 
 ---
@@ -61,6 +71,11 @@ $$\boxed{V_{k+1}(s) = \max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V_k
 
 > The policy is never stored during iteration — only the value function.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The update is almost identical to policy evaluation, with sum replaced by max. This means value iteration can be implemented by changing a single line of code from the policy evaluation implementation. Emphasize that the policy is implicit in the argmax and is only extracted after convergence — during iteration, we only track V. -->
 
 ---
@@ -68,27 +83,29 @@ $$\boxed{V_{k+1}(s) = \max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V_k
 ## Value Iteration as Truncated Policy Iteration
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PE["Policy\nEvaluation\n(∞ sweeps)"] --> PI["Policy\nImprovement"]
     PI --> PE
-    style PE fill:#e67e22,color:#fff
-    style PI fill:#9b59b6,color:#fff
 ```
 
 **Policy iteration:** evaluate fully, then improve
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S1["1 Bellman\nOptimality\nSweep"] --> S1b["1 Bellman\nOptimality\nSweep"]
     S1b --> S1c["...until\nconvergence"]
-    style S1 fill:#4a90d9,color:#fff
-    style S1b fill:#4a90d9,color:#fff
-    style S1c fill:#4a90d9,color:#fff
 ```
 
 **Value iteration:** apply $\mathcal{T}^*$ repeatedly (evaluation + improvement fused)
 
 Equivalently: modified policy iteration with $m = 1$ evaluation sweep.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: This is the key theoretical connection. Value iteration is not a fundamentally different algorithm — it is policy iteration in the limit of minimal evaluation. The Bellman optimality update implicitly does one step of evaluation (using the current V) and one step of improvement (taking the max) simultaneously. -->
 
@@ -138,6 +155,7 @@ To guarantee $\epsilon$ accuracy, use $\theta = \epsilon(1-\gamma)/\gamma$.
 ## Algorithm Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Init["Initialize V(s) = 0\nfor all s ∈ S"] --> Sweep["Begin sweep\ndelta = 0"]
     Sweep --> ForS["For each state s"]
@@ -150,9 +168,6 @@ flowchart TD
     Conv -->|"No"| Sweep
     Conv -->|"Yes"| Extract["Extract pi*(s) = argmax_a Q(s,a)"]
     Extract --> Done["Return V*, pi*"]
-    style Init fill:#27ae60,color:#fff
-    style Max fill:#4a90d9,color:#fff
-    style Done fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Trace through the flowchart. Note that the policy extraction step happens after convergence, not inside the loop. During the loop, we only update V. The argmax is recomputed once at the end to get the final policy. This is different from policy iteration where the policy is always explicit. -->
@@ -250,12 +265,11 @@ The number of sweeps needed grows as $\gamma \to 1$:
 $$k_\epsilon \approx \frac{\log(\epsilon(1-\gamma))}{\log \gamma} \approx \frac{\log(\epsilon(1-\gamma))}{-(1-\gamma)} \to \infty \text{ as } \gamma \to 1$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     G1["gamma = 0.5\n~20 sweeps"] --> G2["gamma = 0.9\n~200 sweeps"]
     G2 --> G3["gamma = 0.99\n~2000 sweeps"]
     G3 --> G4["gamma = 0.999\n~20000 sweeps"]
-    style G1 fill:#27ae60,color:#fff
-    style G4 fill:#e74c3c,color:#fff
 ```
 
 For $\gamma$ close to 1, **policy iteration strongly preferred** (converges in few outer steps).
@@ -285,6 +299,7 @@ The contraction mapping theorem requires $\gamma < 1$. For $\gamma = 1$, converg
 ## The Three DP Algorithms: Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BE["Bellman Equations"] --> PE["Policy Evaluation\nT^pi iterated to convergence\nFixed pi, find V^pi"]
     BE --> BO["Bellman Optimality\nT* iterated to convergence\nFind V* directly"]
@@ -292,10 +307,6 @@ flowchart TD
     BO --> VI["Value Iteration\nT* per sweep\nAsymptotic convergence to V*"]
     PIt --> MPI["Modified PI\nm-step evaluation\nUnifies both"]
     VI --> MPI
-    style BE fill:#27ae60,color:#fff
-    style PIt fill:#9b59b6,color:#fff
-    style VI fill:#4a90d9,color:#fff
-    style MPI fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: This diagram shows the full picture of DP algorithms. All three — policy evaluation, policy iteration, and value iteration — stem from the two Bellman equations. Modified policy iteration is the general family that contains both policy iteration and value iteration as special cases. Understanding this unification is more important than memorizing each algorithm separately. -->
@@ -318,12 +329,12 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     VI["Value Iteration\n(this guide)"] --> QL["Q-Learning\nmodel-free: samples replace sums"]
     VI --> FVI["Fitted Value Iteration\ncontinuous state spaces"]
     VI --> AVI["Approximate DP\nfunction approximation"]
     VI --> BW["Backward Induction\nfinite-horizon analog"]
-    style VI fill:#4a90d9,color:#fff
 ```
 
 **References:** Sutton & Barto (2018), Section 4.4 — Bellman (1957), *Dynamic Programming*

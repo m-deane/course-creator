@@ -1,8 +1,15 @@
 # Reinforcement Learning for Trading
 
+> **Reading time:** ~15 min | **Module:** 9 — Frontiers | **Prerequisites:** Modules 5-8
+
 ## In Brief
 
 Applying RL to financial markets formalizes portfolio management and execution as a sequential decision problem: at each time step, an agent observes market state, selects a position or trade, and receives a reward based on risk-adjusted returns. Unlike supervised learning approaches that predict prices, RL directly optimizes the objective that matters — portfolio performance — accounting for transaction costs, risk, and sequential dependencies.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Applying RL to financial markets formalizes portfolio management and execution as a sequential decision problem: at each time step, an agent observes market state, selects a position or trade, and receives a reward based on risk-adjusted returns. Unlike supervised learning approaches that predict prices, RL directly optimizes the objective that matters — portfolio performance — accounting for transaction costs, risk, and sequential dependencies.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ The central design challenge is the reward function: a naive reward of raw P&L e
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The central design challenge is the reward function: a naive reward of raw P&L encourages excessive risk, while a well-designed reward incorporating the Sharpe ratio or transaction costs shapes the ag...
+</div>
 ## Formal Definition: The Trading MDP
 
 The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R, \gamma)$:
+
+<div class="callout-key">
+<strong>Key Point:</strong> The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R, \gamma)$:
+
+| Component | Trading Interpretation |
+|-----------|----------------------|
+| State $s \in \mathcal{S}$ | Pr...
+</div>
+
 
 | Component | Trading Interpretation |
 |-----------|----------------------|
@@ -27,6 +48,11 @@ The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R,
 ## State Space Design
 
 The state must capture everything relevant to the trading decision — without including information unavailable at decision time (look-ahead bias).
+
+<div class="callout-info">
+<strong>Info:</strong> The state must capture everything relevant to the trading decision — without including information unavailable at decision time (look-ahead bias).
+</div>
+
 
 ### Common State Components
 
@@ -45,6 +71,14 @@ $$s_{\text{indicators}} = \left[\text{RSI}_{14}, \text{MACD}, \text{BB}_{20}, \t
 **Macro / Cross-Asset:**
 
 $$s_{\text{macro}} = \left[\text{VIX}, \text{yield spread}, \text{FX rates}, \text{commodity indices}\right]$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -98,12 +132,18 @@ def build_state(prices: pd.DataFrame, holdings: np.ndarray, portfolio_value: flo
 
     return np.concatenate([price_features, portfolio_features])
 ```
+</div>
 
 ---
 
 ## Action Space Design
 
 The choice of action space fundamentally shapes what the agent can express and which algorithms apply.
+
+<div class="callout-warning">
+<strong>Warning:</strong> The choice of action space fundamentally shapes what the agent can express and which algorithms apply.
+</div>
+
 
 ### Discrete Action Space (DQN-compatible)
 
@@ -156,6 +196,14 @@ $$R_t = \sum_i w^i_t (p^i_{t+1} - p^i_t) - \kappa \sum_i |w^i_t - w^i_{t-1}|$$
 
 where $\kappa$ is the cost per unit of turnover (bid-ask spread + market impact).
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 def trading_reward(
     current_weights: np.ndarray,
@@ -203,6 +251,7 @@ def trading_reward(
 
     return portfolio_return - transaction_cost - variance_penalty
 ```
+</div>
 
 ---
 
@@ -239,6 +288,14 @@ The entropy bonus $\alpha \mathcal{H}(\pi)$ encourages the policy to maintain un
 Backtesting is the primary evaluation tool for trading strategies. Poor backtesting methodology produces inflated performance estimates.
 
 ### Correct Backtesting Protocol
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 def walk_forward_backtest(
@@ -293,6 +350,7 @@ def walk_forward_backtest(
 
     return pd.DataFrame(results)
 ```
+</div>
 
 ---
 
@@ -332,6 +390,12 @@ Backtesting on only companies that exist today, excluding those that were delist
 
 **Normalize all features** before feeding to the neural network:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Rolling Z-score normalization (uses only past data — no look-ahead)
 def rolling_zscore(series: pd.Series, window: int = 252) -> pd.Series:
@@ -339,6 +403,7 @@ def rolling_zscore(series: pd.Series, window: int = 252) -> pd.Series:
     rolling_std  = series.rolling(window).std()
     return (series - rolling_mean) / (rolling_std + 1e-8)
 ```
+</div>
 
 **Use returns, not price levels.** Returns are stationary (approximately); prices are not. Neural networks trained on price levels overfit to the specific price range seen during training.
 
@@ -350,6 +415,17 @@ A well-shaped reward trains faster and produces more realistic behavior:
 2. **Include transaction costs** in the reward to discourage excessive turnover
 3. **Penalize drawdowns** explicitly if drawdown control is a requirement
 4. **Do not reward prediction accuracy** — reward portfolio performance directly
+
+
+<div class="flow">
+<div class="flow-step mint">1. Normalize rewards</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Include transaction costs</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Penalize drawdowns</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Do not reward prediction accur...</div>
+</div>
 
 ### Sim-to-Real Gap
 
@@ -391,8 +467,17 @@ Financial returns are highly noisy (Sharpe ratio of 1.0 is excellent, meaning si
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Optimizing raw P&L without risk adjustment.**
 An agent rewarded only on P&L will learn to maximize leverage and take excessive risk. Always include a risk term (variance penalty, Sharpe reward, drawdown constraint). The Sharpe ratio is the standard risk-adjusted performance metric.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Optimizing raw P&L without risk adjustment.**
+An agent rewarded only on P&L will learn to maximize leverage and take excessive risk.
+</div>
 
 **Pitfall 2 — Look-ahead bias in feature construction.**
 Any feature computed using prices or data from after the decision point contaminates your backtest. Common culprits: indicators computed on the full bar that ends after your decision time, labels from future returns used as features. Always verify features are computable from strictly past data.
@@ -413,12 +498,25 @@ A policy trained in a bull market may fail catastrophically in a bear market. Re
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Offline RL (Guide 02) — financial data is effectively a fixed dataset; RLHF and Safe RL (Guide 03) — reward shaping and risk constraints apply directly
 - **Builds on:** Model-based RL (Module 8) — learned market models for planning
 - **Related to:** portfolio optimization (Markowitz), execution algorithms (TWAP, VWAP), high-frequency trading research
 - **Related to:** multi-agent RL (Guide 01) — markets as multi-agent systems; MARL for competing execution algorithms
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -428,3 +526,18 @@ A policy trained in a bull market may fail catastrophically in a bear market. Re
 - Markowitz (1952). *Portfolio Selection* — the mean-variance optimization framework that RL generalizes
 - Sutton & Barto (2018). Chapter 10 — on-policy control for continuous action spaces; foundational for PPO/SAC-based trading agents
 - OpenAI. *Spinning Up in Deep RL* — practical SAC and PPO implementations directly applicable to trading environments
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./04_rl_for_trading_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_offline_rl_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

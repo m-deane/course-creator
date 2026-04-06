@@ -1,5 +1,7 @@
 # Module 8: Model-Based RL — Cheatsheet
 
+> **Reading time:** ~8 min | **Module:** 8 — Model-Based RL | **Prerequisites:** Module 5
+
 ## Model-Free vs Model-Based Comparison
 
 | Dimension | Model-Free | Model-Based |
@@ -18,6 +20,17 @@
 ## Dyna-Q Algorithm Steps
 
 **Input:** $\alpha$ (step size), $\gamma$ (discount), $\epsilon$ (exploration), $n$ (planning steps)
+
+<div class="callout-insight">
+<strong>Insight:</strong> **Input:** $\alpha$ (step size), $\gamma$ (discount), $\epsilon$ (exploration), $n$ (planning steps)
+
+
+
+**Source:** Sutton & Barto (2018), Algorithm 8.1
+
+**Dyna-Q+ modification (non-stationary environ...
+</div>
+
 
 ```
 Initialize Q(s, a) = 0 for all s ∈ S, a ∈ A
@@ -57,6 +70,12 @@ Replace $R$ with $\tilde{r}(S, A) = R + \kappa\sqrt{\tau(S, A)}$, where $\tau(S,
 ### Phase 1: Selection
 Starting from root $s_0$, traverse existing tree by selecting the child with the highest UCT score until reaching a **leaf node** (a node with at least one untried action, or a terminal state).
 
+<div class="callout-key">
+<strong>Key Point:</strong> ### Phase 1: Selection
+Starting from root $s_0$, traverse existing tree by selecting the child with the highest UCT score until reaching a **leaf node** (a node with at least one untried action, or a ...
+</div>
+
+
 ### Phase 2: Expansion
 At the leaf node, add one new child node corresponding to an untried action. The new node is initialized with $N = 0$, $\bar{Q} = 0$.
 
@@ -77,6 +96,17 @@ $$a^* = \arg\max_a N(s_0, a) \qquad \text{(visit count, not Q-value)}$$
 
 **UCB1** (multi-armed bandits):
 $$\text{UCB1}(a) = \bar{r}(a) + c\sqrt{\frac{\ln N}{N(a)}}$$
+
+<div class="callout-info">
+<strong>Info:</strong> **UCB1** (multi-armed bandits):
+$$\text{UCB1}(a) = \bar{r}(a) + c\sqrt{\frac{\ln N}{N(a)}}$$
+
+**UCT** (MCTS tree policy):
+$$\text{UCT}(s, a) = \bar{Q}(s, a) + c\sqrt{\frac{\ln N(s)}{N(s, a)}}$$
+
+| Sym...
+</div>
+
 
 **UCT** (MCTS tree policy):
 $$\text{UCT}(s, a) = \bar{Q}(s, a) + c\sqrt{\frac{\ln N(s)}{N(s, a)}}$$
@@ -107,6 +137,12 @@ where $p(a \mid s)$ is the policy network prior over actions.
 | **Representation** $h$ | $h_0 = h(o_1, \ldots, o_t)$ | Encode observation history to initial hidden state |
 | **Dynamics** $g$ | $r_k, h_k = g(h_{k-1}, a_k)$ | Predict next hidden state and immediate reward |
 | **Prediction** $f$ | $p_k, v_k = f(h_k)$ | Predict policy prior and value from any hidden state |
+
+<div class="callout-warning">
+<strong>Warning:</strong> $h_0 = h(o_1, \ldots, o_t)$ — encode current history
+2.
+</div>
+
 
 **MuZero planning loop** (decision time):
 1. $h_0 = h(o_1, \ldots, o_t)$ — encode current history

@@ -32,6 +32,11 @@ R_{t+1}+γV(S_{t+1})            ...            G_t
 
 **TD(λ):** interpolate between them with a single parameter $\lambda \in [0,1]$.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Use the spectrum visualization to make the relationship concrete. Ask: "What is the ideal number of steps to look ahead?" The answer depends on the environment. In deterministic environments, many steps work well (low variance). In stochastic environments, more steps accumulate more noise (high variance). Lambda lets you tune this tradeoff. The goal is to find the sweet spot — often lambda around 0.7-0.9 works well in practice. -->
 
 ---
@@ -65,6 +70,11 @@ $$V(S_t) \leftarrow V(S_t) + \alpha[G_t^{(n)} - V(S_t)]$$
 
 > Limitation: must wait $n$ steps before updating. Not fully online.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: n-step returns are practical and simple. The key limitation: you must wait n steps after visiting a state before you can update its value. This delays learning. For n=1 (TD(0)), the delay is one step. For n=10, you wait 10 steps. For MC, you wait until the end of the episode. TD(lambda) uses eligibility traces to achieve the equivalent of a weighted average over all n without the delay. -->
 
 ---
@@ -85,6 +95,11 @@ $$G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}$$
 | $n$ | $(1-\lambda)\lambda^{n-1}$ |
 
 Weights sum to 1: $\displaystyle\sum_{n=1}^\infty (1-\lambda)\lambda^{n-1} = 1$
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: The weights are geometric — each additional step gets (1-lambda)*lambda^{n-1} weight. The factor (1-lambda) normalizes so they sum to 1. When lambda=0, all weight falls on n=1 (TD(0)). When lambda=1, the weights become equal geometric series that reproduce the full return (MC). For intermediate lambda, the weighting favors shorter returns but incorporates information from longer ones. -->
 
@@ -115,6 +130,11 @@ Equal-weighted sum of all n-step returns collapses to the full return.
 </div>
 
 > Both TD(0) and Monte Carlo are special cases of a single family, unified by λ.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Show the mathematical derivation for lambda=1. When lambda=1, the lambda-return becomes sum_{n=1}^inf (1-1)*1^{n-1} * G^(n). This is 0*anything — but in the limit, the geometric series sums correctly to G_t. The key insight: the (1-lambda) normalization factor ensures the weights always sum to 1, and as lambda -> 1 the weight spreads uniformly across all n, reproducing the full return. -->
 
@@ -162,6 +182,12 @@ The trace remembers that $S$ was visited at $t=3$, $t=7$, and $t=11$, and the re
 
 ## Code: TD(λ) with Traces
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -187,6 +213,7 @@ def td_lambda(env, policy, lam, num_episodes, alpha=0.1, gamma=0.99):
             state = next_state
     return V
 ```
+</div>
 
 > Three-line inner loop after computing `delta`:
 > 1. Spike trace at current state
@@ -256,6 +283,12 @@ def td_lambda(env, policy, lam, num_episodes, alpha=0.1, gamma=0.99):
 
 ## Pitfall 1: Not Resetting Traces Between Episodes
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG: traces carry over between episodes
 V = np.zeros(n_states)
@@ -270,6 +303,7 @@ for episode in range(num_episodes):
     state, _ = env.reset()
     e = np.zeros(n_states)   # Reset inside the loop
 ```
+</div>
 
 Stale traces from the previous episode assign credit from the new episode's rewards to states visited in the last episode. The algorithm still converges but to incorrect values.
 
@@ -278,6 +312,12 @@ Stale traces from the previous episode assign credit from the new episode's rewa
 ---
 
 ## Pitfall 2: Wrong Update Order
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # WRONG: update values before updating trace
@@ -291,6 +331,7 @@ e[state] += 1.0            # ← current state gets full credit
 V += alpha * delta * e     # ← uses updated trace
 e *= gamma * lam           # ← decay after update
 ```
+</div>
 
 With the wrong order, the current state receives a delayed credit update (it appears in the trace only next step), effectively losing one step of credit.
 

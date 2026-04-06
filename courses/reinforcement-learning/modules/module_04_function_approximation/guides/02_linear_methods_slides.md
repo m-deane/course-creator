@@ -31,6 +31,11 @@ $$\nabla_{\mathbf{w}} \hat{v}(s, \mathbf{w}) = \mathbf{x}(s)$$
 
 Gradient = feature vector. Constant. No chain rule needed.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Start with the formula. Emphasize the three symbols and their roles: w is what we learn, x(s) is what we design, and the dot product is the prediction. The key property — that the gradient is just x(s) — is what makes linear FA computationally simple and theoretically tractable. All the complexity is pushed into the design of x(s). -->
 
 ---
@@ -49,6 +54,11 @@ The update:
 - Adds $\alpha \delta$ to weights corresponding to **active features only**
 - Leaves all other weights unchanged
 - Cost = $\mathcal{O}(d)$ dense, $\mathcal{O}(k)$ for $k$ non-zero features (tile coding)
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: This slide connects the math to the computation. The update rule says: scale the feature vector by the TD error and add it to the weights. If features are sparse (tile coding), only the non-zero features need updating. This is the key computational efficiency of tile coding — with 8 tilings, only 8 weights change per step, not all 512. -->
 
@@ -88,6 +98,11 @@ $\exp(-\|s-c_i\|^2/2\sigma^2)$
 
 </div>
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The four-panel layout shows the design space. Two key dimensions: dense vs sparse, and smooth vs piecewise. Polynomial and Fourier are dense and smooth. Tile coding is sparse and piecewise — the workhorse for practical linear RL. RBF is dense and smooth but localized. The right choice depends on the problem: if you know the value function is smooth, use Fourier; if you need robustness, use tile coding. -->
 
 ---
@@ -112,11 +127,22 @@ s and s' differ in tiling 2 → distinguish
 
 8 tilings × 8×8 tiles = **512 features**, exactly **8 active** per state.
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: Work through the diagram step by step. The two states s and s' share a tile in tiling 1 but not tiling 2. This is the key: multiple tilings allow fine-grained distinction while coarse single tiles allow generalization. 8 tilings give 8x better resolution than a single tiling with the same tile size, without 8x more memory. This is elegant combinatorial engineering. -->
 
 ---
 
 # Tile Coding: Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class TileCoder:
@@ -138,6 +164,7 @@ class TileCoder:
             features[tiling * self.n_tiles_per_tiling + flat] = 1.0
         return features
 ```
+</div>
 
 <!-- Speaker notes: Walk through the encode method line by line. The scaled variable puts the state in [0, tiles_per_dim) range. The offset shifts each tiling by tiling/n_tilings of a tile width. Floor gives the integer tile index. ravel_multi_index converts the k-dimensional tile index to a flat index within the tiling. Setting features[...] = 1.0 marks the active tile. -->
 
@@ -147,6 +174,12 @@ class TileCoder:
 
 $$x_i(\mathbf{s}) = \cos\left(\pi \, \mathbf{c}_i^T \mathbf{s}\right), \quad \mathbf{s} \in [0,1]^k$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def fourier_features(state, order=3):
     # state normalized to [0,1]^k
@@ -154,6 +187,7 @@ def fourier_features(state, order=3):
     coeffs = np.array(list(product(range(order+1), repeat=k)))
     return np.cos(np.pi * coeffs @ state)
 ```
+</div>
 
 **Per-feature learning rate** (recommended):
 $$\alpha_i = \frac{\alpha_0}{\sqrt{1 + \|\mathbf{c}_i\|^2}}$$
@@ -208,6 +242,12 @@ This is not true SGD, but it converges (on-policy, linear).
 
 # Semi-Gradient TD(0): Code
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class SemiGradientTD0:
     def __init__(self, feature_fn, n_features, alpha=0.01, gamma=0.99):
@@ -228,6 +268,7 @@ class SemiGradientTD0:
         # Semi-gradient update: w += alpha * delta * x(s)
         self.w += self.alpha * delta * x_s
 ```
+</div>
 
 The `done` flag ensures $V(S_T) = 0$ at terminal states.
 

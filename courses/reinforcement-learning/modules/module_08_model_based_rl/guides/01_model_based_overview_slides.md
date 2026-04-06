@@ -31,6 +31,11 @@ Module 7: Advanced Policy Optim     ← PPO, SAC, trust regions
 Module 9: Frontiers
 ```
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Situate students in the curriculum. Dynamic Programming in Module 1 required the *true* model — transition probabilities p(s'|s,a) and reward function r(s,a). Modules 2–7 deliberately avoided using a model. Module 8 asks: what if we *learn* a model from data? This gives us the planning power of DP combined with the model-free ability to work from experience. -->
 
 ---
@@ -55,6 +60,11 @@ Module 9: Frontiers
 
 </div>
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Ground the motivation in real numbers. 200 million Atari frames at 60 fps is about 38 days of real play. A physical robot arm doing 1 million grasping attempts at 1 attempt/second takes 11 days — and motors wear out. The model-based promise is dramatic: MBPO achieves HalfCheetah performance matching 1 million SAC steps with only ~30k real steps. -->
 
 ---
@@ -73,6 +83,11 @@ Fitted by supervised learning on collected transitions $\mathcal{D} = \{(s_i, a_
 |-----------|----------|-----------------|
 | Transition model $\hat{p}_\theta$ | Next state $s'$ | MLP, ensemble, GP |
 | Reward model $\hat{r}_\phi$ | Reward $r$ | MLP, linear |
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: Emphasize that the model is just supervised learning — regression from (s,a) to (s', r). There is nothing RL-specific about the model training step itself. The magic is in how you then *use* the model. Also note the two components: some algorithms learn only the transition model (when reward is known) and some need both. -->
 
@@ -93,6 +108,11 @@ Each imagined transition is a **free** Q-learning update.
 
 $K = 50$ planning steps per real step → effectively $50\times$ more data
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: This pseudocode is essentially Dyna-Q, which we will study in detail in Guide 02. The key point is that after collecting one real transition, we can spin the model K times to get K synthetic transitions for Q-updates. The cost is only compute — no additional environment interaction. Walk through the loop: we sample a past (s,a) pair, query the model for the predicted next state and reward, and run a standard Q-learning update on that imaginary transition. -->
 
 ---
@@ -100,6 +120,7 @@ $K = 50$ planning steps per real step → effectively $50\times$ more data
 ## Model-Free vs Model-Based Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph MF["Model-Free"]
         E1([Environment]) -->|"real (s,a,r,s')"| B1[(Buffer)]
@@ -116,8 +137,6 @@ flowchart LR
         U2 --> E2
     end
 
-    style MF fill:#f0f4ff,stroke:#4A90D9
-    style MB fill:#fff4f0,stroke:#E8844A
 ```
 
 <!-- Speaker notes: Draw attention to the extra feedback loop in the model-based pipeline: real data fits the model, the model generates synthetic data, synthetic data augments the buffer, and the policy trains on the augmented buffer. The real environment is still there — the model supplements but does not replace it. This is the Dyna architecture. An alternative is to use the model purely offline for planning at decision time (MCTS style), which we cover in Guide 02. -->
@@ -266,6 +285,18 @@ Differentiable model allows $\nabla_\theta J(\theta)$ through simulated trajecto
 5. **Taxonomy** = plan-then-execute | augment model-free | backprop through model
 
 <!-- Speaker notes: Summarize the five points explicitly. Ask students which of the three taxonomy categories they find most natural or surprising. The backpropagation-through-model category often surprises people — the idea that you can compute gradients through a learned simulator of the world is powerful and is at the core of modern algorithms like Dreamer. -->
+
+<div class="flow">
+<div class="flow-step mint">Model</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Planning</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Sample efficiency</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">Core challenge</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">Taxonomy</div>
+</div>
 
 ---
 

@@ -33,6 +33,11 @@ Standard RL requires a reward function $R(s, a) \in \mathbb{R}$.
 1. **RLHF:** Learn the reward from human feedback
 2. **Safe RL:** Add hard constraints alongside the reward
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This motivating slide sets up both RLHF and Safe RL as responses to the same underlying limitation of standard RL. The reward function is the specification of what we want the agent to do. For simple tasks (reach the goal, score points), reward is easy to specify. For complex tasks involving human preferences, safety requirements, or long-term outcomes, scalar reward is inadequate. RLHF solves the specification problem; Safe RL solves the constraint problem. -->
 
 ---
@@ -40,13 +45,11 @@ Standard RL requires a reward function $R(s, a) \in \mathbb{R}$.
 ## RLHF: The Three-Step Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     SFT["Step 1\nSupervised Fine-Tuning\nImitate demonstrations"] --> RM["Step 2\nReward Model\nLearn from preferences"]
     RM --> PPO["Step 3\nPPO Fine-Tuning\nOptimize against RM\n(with KL penalty)"]
 
-    style SFT fill:#4A90D9,color:#fff
-    style RM fill:#E8844A,color:#fff
-    style PPO fill:#6ab04c,color:#fff
 ```
 
 This is the pipeline behind **InstructGPT, ChatGPT, Claude, and Gemini**.
@@ -56,6 +59,11 @@ This is the pipeline behind **InstructGPT, ChatGPT, Claude, and Gemini**.
 | SFT | Demonstration pairs $(x, y_{\text{demo}})$ | Bootstrap in-distribution responses |
 | RM | Preference pairs $(x, y_w, y_l)$ | Learn a proxy reward function |
 | PPO | Prompts $x$; reward from RM | Maximize reward, stay close to SFT |
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The three-step pipeline is the core of this deck. Walk through each step before diving into the details. Emphasize that these are sequential: you cannot start PPO without a trained reward model, and you cannot train a good reward model without an SFT policy to generate candidate outputs. The entire pipeline is a carefully orchestrated sequence of supervised and reinforcement learning. -->
 
@@ -73,6 +81,11 @@ $$\mathcal{L}_{\text{SFT}} = -\sum_{(x, y) \in \mathcal{D}_{\text{demo}}} \log \
 
 **Result:** A policy $\pi_{\text{SFT}}$ that is reasonable but not yet optimally aligned. This becomes the reference policy for the KL constraint in Step 3.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: SFT is just standard supervised learning on a high-quality dataset. The key insight is that it serves as initialization: the RL in Step 3 starts from a policy that already generates plausible, in-format responses. Without SFT, PPO would spend most of its budget learning basic language format rather than alignment. The SFT checkpoint also serves as the reference policy for the KL penalty — this is why SFT quality matters beyond just initialization. -->
 
 ---
@@ -89,13 +102,25 @@ $$\mathcal{L}_{\text{RM}} = -\mathbb{E}\left[\log \sigma\left(r_\phi(x, y_w) - r
 
 where $y_w$ = preferred ("won"), $y_l$ = dispreferred ("lost").
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def reward_model_loss(r_won, r_lost):
     # r_won should be > r_lost — maximize margin
     return -F.logsigmoid(r_won - r_lost).mean()
 ```
+</div>
 
 **Architecture:** SFT model backbone + scalar linear head (one number per response).
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The Bradley-Terry model is the key mathematical idea in Step 2. Rather than asking raters to score outputs on an absolute scale (which is noisy and hard), we ask only for relative comparisons: which of these two responses is better? This is cognitively easier and produces more consistent labels. The loss function translates these comparisons into a scalar reward function by requiring the preferred response to receive a higher reward than the dispreferred one. -->
 
@@ -126,11 +151,10 @@ $$\max_{\pi_\theta} \mathbb{E}_{x \sim \mathcal{D},\, y \sim \pi_\theta}\left[r_
 **The KL penalty is essential — without it:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PPO["PPO without KL"] --> Hack["Reward hacking:\ngenerate nonsense that\nfools the reward model"]
     Hack --> High["High RM score\nLow human score"]
-    style Hack fill:#d63031,color:#fff
-    style High fill:#d63031,color:#fff
 ```
 
 **With KL penalty:** Policy must stay close to $\pi_{\text{SFT}}$, which preserves language quality and limits exploitation.
@@ -206,6 +230,7 @@ $$\mathcal{L}(\pi, \lambda) = J_R(\pi) - \lambda \underbrace{(J_C(\pi) - d)}_{\t
 **Primal-dual algorithm:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Init["Initialize $\pi, \lambda \geq 0$"] --> Primal["Primal step:\nUpdate $\pi$ to maximize $\mathcal{L}(\pi, \lambda)$\n(standard RL with modified reward)"]
     Primal --> Dual["Dual step:\n$\lambda \leftarrow \max(0, \lambda + \alpha_\lambda (J_C(\pi) - d))$"]
@@ -247,6 +272,7 @@ $$\text{CVaR}_\alpha(G) = \mathbb{E}[G \mid G \leq \text{VaR}_\alpha(G)]$$
 ## Application: LLM Alignment Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Pre["Pretrained LLM\n(next-token prediction on internet)"] --> SFT["SFT on curated demonstrations\n(helpful, safe, honest responses)"]
     SFT --> Pref["Human preference collection\n(compare response pairs)"]
@@ -254,8 +280,6 @@ flowchart TD
     RM --> PPO["PPO optimization\n(maximize RM score, KL penalty)"]
     PPO --> Aligned["Aligned LLM\n(ChatGPT, Claude, Gemini)"]
 
-    style Pre fill:#636e72,color:#fff
-    style Aligned fill:#6ab04c,color:#fff
 ```
 
 **Scale (InstructGPT):** 1.3B RLHF model preferred over 175B GPT-3 base model by human evaluators.
@@ -346,6 +370,7 @@ $\lambda$ may oscillate without converging. Use small dual learning rates or tru
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Problem["Reward specification\nis insufficient"] --> RLHF["RLHF\nLearn reward from humans"]
     Problem --> SafeRL["Safe RL\nAdd hard constraints"]
@@ -363,8 +388,6 @@ flowchart TD
     Lag --> Apps2
     CVaR --> Apps2
 
-    style Problem fill:#d63031,color:#fff
-    style Apps2 fill:#6ab04c,color:#fff
 ```
 
 **Next:** RL for Trading — applying RL to portfolio optimization

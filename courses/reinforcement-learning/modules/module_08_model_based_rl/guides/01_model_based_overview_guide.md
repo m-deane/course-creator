@@ -1,8 +1,15 @@
 # Model-Based Reinforcement Learning: Overview
 
+> **Reading time:** ~10 min | **Module:** 8 — Model-Based RL | **Prerequisites:** Module 5
+
 ## In Brief
 
 Model-based reinforcement learning (MBRL) augments the standard agent-environment loop with a **learned model** of the environment. The agent uses this model to simulate experience, plan ahead, or optimize a policy without generating every required data point from real interaction. The primary payoff is **sample efficiency**: fewer real environment steps are needed to reach a given performance level.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Model-based reinforcement learning (MBRL) augments the standard agent-environment loop with a **learned model** of the environment. The agent uses this model to simulate experience, plan ahead, or optimize a policy without generating every required data point from real interaction.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,42 @@ Model-free methods are powerful but wasteful — they discard the structural inf
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Model-free methods are powerful but wasteful — they discard the structural information in each transition $(S_t, A_t, R_{t+1}, S_{t+1})$ after using it once.
+</div>
+## Intuitive Explanation
+
+Think of a chess grandmaster and a novice both studying to improve. The novice can only improve by playing real games (model-free). The grandmaster additionally runs games in their head — "If I move here, my opponent will likely respond there, then I could…" That internal simulation is planning. A strong mental model of how chess works makes each real game far more educational.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Think of a chess grandmaster and a novice both studying to improve.
+</div>
+
+
+In RL terms:
+- Each real game = one environment episode (expensive: slow clock, physical wear, financial cost)
+- Mental simulation = rollout under the learned model (cheap: pure computation)
+- The grandmaster's internal chess model = $\hat{p}_\theta$ and $\hat{r}_\phi$
+
+The model is not perfect, but it is good enough to improve the policy when used carefully.
+
+---
+
+
 ## Formal Definition
 
 ### The Environment Model
+
+<div class="callout-info">
+<strong>Info:</strong> ### The Environment Model
+
+In a Markov Decision Process $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$, the true dynamics are:
+
+$$p(s' \mid s, a) \quad \text{and} \quad r(s, a) = \mathbb{E}[R_{t+1} \mid S...
+</div>
+
 
 In a Markov Decision Process $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$, the true dynamics are:
 
@@ -38,18 +78,6 @@ where $s' \sim \hat{p}(\cdot \mid s, a)$ is drawn from the model.
 
 ---
 
-## Intuitive Explanation
-
-Think of a chess grandmaster and a novice both studying to improve. The novice can only improve by playing real games (model-free). The grandmaster additionally runs games in their head — "If I move here, my opponent will likely respond there, then I could…" That internal simulation is planning. A strong mental model of how chess works makes each real game far more educational.
-
-In RL terms:
-- Each real game = one environment episode (expensive: slow clock, physical wear, financial cost)
-- Mental simulation = rollout under the learned model (cheap: pure computation)
-- The grandmaster's internal chess model = $\hat{p}_\theta$ and $\hat{r}_\phi$
-
-The model is not perfect, but it is good enough to improve the policy when used carefully.
-
----
 
 ## What Is a "Model"?
 
@@ -142,6 +170,14 @@ Three distinct ways to use a learned model:
 
 ## Pipeline Diagram
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     subgraph MF["Model-Free Pipeline"]
@@ -165,10 +201,19 @@ flowchart TD
     style MF fill:#f0f4ff,stroke:#4A90D9
     style MB fill:#fff4f0,stroke:#E8844A
 ```
+</div>
 
 ---
 
 ## Code Snippet: Minimal Model Training Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -227,13 +272,23 @@ def train_model(model, optimizer, buffer, batch_size: int = 256, epochs: int = 5
         loss.backward()
         optimizer.step()
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Planning too far into an inaccurate model.**
 Long rollouts amplify model errors. A model that is 95% accurate per step has $0.95^{20} \approx 36\%$ accuracy after 20 steps. Restrict rollout horizon to where model accuracy is acceptable, typically $H \in [1, 10]$ for neural network models on complex tasks.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Planning too far into an inaccurate model.**
+Long rollouts amplify model errors.
+</div>
 
 **Pitfall 2 — Model exploitation (distributional shift).**
 The policy optimized inside the model will seek out states where the model is incorrect but appears favorable. This is a form of adversarial attack on your own model. Mitigation: use model uncertainty (ensembles, dropout) to penalize out-of-distribution states during planning.
@@ -251,11 +306,24 @@ Practitioners often focus on transition accuracy and underweight the reward mode
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Bellman equations (Module 0), Q-learning and TD methods (Module 3), function approximation (Module 4)
 - **Leads to:** Dyna-Q and MCTS (Guide 02), World Models and MuZero (Guide 03)
 - **Related to:** Optimal control and trajectory optimization (classical control theory), model predictive control (MPC)
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -263,3 +331,18 @@ Practitioners often focus on transition accuracy and underweight the reward mode
 - Moerland et al. (2023), "Model-based Reinforcement Learning: A Survey" — comprehensive taxonomy of MBRL approaches
 - Janner et al. (2019), "When to Trust Your Model: Model-Based Policy Optimization" (MBPO) — demonstrates 30× sample efficiency improvement with short model rollouts
 - Chua et al. (2018), "Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models" (PETS) — probabilistic ensemble approach to model uncertainty
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_model_based_overview_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_dyna_q.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

@@ -1,8 +1,15 @@
 # Bellman Equations
 
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** Probability, linear algebra
+
 ## In Brief
 
 Bellman equations are recursive functional equations that define value functions — the expected cumulative reward an agent can obtain from any state or state-action pair. They are the analytical core of reinforcement learning: every RL algorithm is either an exact or approximate method for solving them.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Bellman equations are recursive functional equations that define value functions — the expected cumulative reward an agent can obtain from any state or state-action pair. They are the analytical core of reinforcement learning: every RL algorithm is either an exact or approximate method for solving them.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ The value of a state equals the immediate reward plus the discounted value of th
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The value of a state equals the immediate reward plus the discounted value of the states you land in next.
+</div>
 ## State-Value Function
 
 The **state-value function** $V^\pi(s)$ under policy $\pi$ is the expected return when starting in state $s$ and following $\pi$ thereafter:
+
+<div class="callout-key">
+<strong>Key Point:</strong> The **state-value function** $V^\pi(s)$ under policy $\pi$ is the expected return when starting in state $s$ and following $\pi$ thereafter:
+
+$$V^\pi(s) = \mathbb{E}_\pi[G_t \mid S_t = s]$$
+
+Expanding...
+</div>
+
 
 $$V^\pi(s) = \mathbb{E}_\pi[G_t \mid S_t = s]$$
 
@@ -27,6 +48,13 @@ $$V^\pi(s) = \mathbb{E}_\pi[R_{t+1} + \gamma G_{t+1} \mid S_t = s]$$
 ## Action-Value Function
 
 The **action-value function** $Q^\pi(s, a)$ under policy $\pi$ is the expected return when starting in state $s$, taking action $a$, and following $\pi$ thereafter:
+
+<div class="callout-info">
+<strong>Info:</strong> The **action-value function** $Q^\pi(s, a)$ under policy $\pi$ is the expected return when starting in state $s$, taking action $a$, and following $\pi$ thereafter:
+
+$$Q^\pi(s, a) = \mathbb{E}_\pi[G_t...
+</div>
+
 
 $$Q^\pi(s, a) = \mathbb{E}_\pi[G_t \mid S_t = s, A_t = a]$$
 
@@ -43,6 +71,17 @@ The state-value is a policy-weighted average of action-values.
 ## Bellman Expectation Equation for $V^\pi$
 
 Starting from the recursive return definition:
+
+<div class="callout-warning">
+<strong>Warning:</strong> Starting from the recursive return definition:
+
+$$V^\pi(s) = \mathbb{E}_\pi\left[R_{t+1} + \gamma V^\pi(S_{t+1}) \mid S_t = s\right]$$
+
+Writing out the expectations explicitly:
+
+$$\boxed{V^\pi(s) = \s...
+</div>
+
 
 $$V^\pi(s) = \mathbb{E}_\pi\left[R_{t+1} + \gamma V^\pi(S_{t+1}) \mid S_t = s\right]$$
 
@@ -106,6 +145,14 @@ $$\pi^*(s) = \arg\max_{a} \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^*(s'
 
 The Bellman equations have a natural graphical representation: the **backup diagram**.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     S["State $s$"] -->|"$\pi(a|s)$"| A1["Action $a_1$"]
@@ -118,12 +165,21 @@ flowchart TD
     S2 -->|"$\gamma V^\pi(s'_2)$"| V2["backed up"]
     S3 -->|"$\gamma V^\pi(s'_3)$"| V3["backed up"]
 ```
+</div>
 
 The diagram shows: from state $s$, the policy branches over actions; each action branches over stochastic next states. The value of $s$ is the result of averaging over all branches and adding immediate rewards.
 
 ---
 
 ## Python Code: Value Function Computation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -285,6 +341,7 @@ print("\nOptimal policy:")
 for s, a in pi_star.items():
     print(f"  pi*({s}) = {a}")
 ```
+</div>
 
 Expected output pattern:
 - $V^*(s_2) > V^*(s_0) > V^*(s_1)$: state $s_2$ is closest to the +10 goal
@@ -305,8 +362,17 @@ The **optimality equation** says the same thing but replaces "where you move acc
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Bootstrapping from terminal states.**
 Terminal states have $V(s_{\text{terminal}}) = 0$ by definition. Using the Bellman update to bootstrap from a terminal state value that was not explicitly zeroed causes incorrect value estimates to propagate backward through all preceding states.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Bootstrapping from terminal states.**
+Terminal states have $V(s_{\text{terminal}}) = 0$ by definition.
+</div>
 
 **Pitfall 2 — Confusing on-policy and off-policy.**
 The Bellman expectation equation for $Q^\pi$ uses $\pi$ to compute the next state's value: $\sum_{a'} \pi(a' \mid s') Q^\pi(s', a')$. This is on-policy. Q-learning uses $\max_{a'} Q^*(s', a')$ — an off-policy update targeting the optimal value regardless of what the behavior policy does. Mixing these produces incorrect results.
@@ -324,14 +390,42 @@ $V^*(s) = \max_a Q^*(s, a)$ holds, but $V^*$ requires knowing $p$ to extract a p
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** MDP formalism (Guide 02), return definition, policy definition
 - **Leads to:** Dynamic programming (policy iteration, value iteration), Monte Carlo methods, temporal-difference learning, Q-learning, policy gradients
 - **Related to:** Hamilton-Jacobi-Bellman equation (continuous-time analog), linear programming formulation of MDPs
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning* (2nd ed.), Chapter 3.5–3.8 — the definitive treatment of value functions and Bellman equations
 - Bellman, R. (1957). *Dynamic Programming* — the original work; the recursive decomposition of optimal control problems
 - Silver, D. (2015). *Lecture 2: Markov Decision Processes* — compact, clean derivation of both expectation and optimality equations
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_bellman_equations_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_agent_environment_loop.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

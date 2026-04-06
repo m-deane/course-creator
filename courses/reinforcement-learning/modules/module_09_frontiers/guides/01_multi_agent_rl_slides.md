@@ -30,6 +30,11 @@ Most real environments involve **multiple decision-makers**:
 
 > Single-agent RL assumes the environment is stationary. Multi-agent RL drops that assumption.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Ground the motivation before defining anything formal. The key point is that single-agent RL has a silent assumption: the environment does not change as a result of other learning agents. In MARL, that assumption fails by design. This is not just an edge case — it is the normal condition for deployed AI systems. -->
 
 ---
@@ -43,6 +48,7 @@ $$\mathcal{P}(s' \mid s, \mathbf{a}), \quad \mathbf{a} = (a^1, \ldots, a^n) \in 
 Each agent $i$ has policy $\pi^i(a^i \mid o^i)$ conditioned on **own observation** $o^i$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     E["Environment\n$\mathcal{P}(s' | s, \mathbf{a})$"] --> O1["$o^1_{t+1}, r^1_{t+1}$"]
     E --> O2["$o^2_{t+1}, r^2_{t+1}$"]
@@ -54,6 +60,11 @@ flowchart LR
     O2 --> A2
     On --> An
 ```
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Walk through the MMDP definition carefully. Point out that the transition kernel now conditions on the full joint action vector — no single agent controls the outcome alone. The joint action space is the Cartesian product, so it grows exponentially with the number of agents. This is why scalability is a central challenge. -->
 
@@ -90,6 +101,11 @@ Examples: market making, autonomous vehicles, social dilemmas
 </div>
 </div>
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: This taxonomy is the most important conceptual framework in MARL. The appropriate algorithm, convergence guarantee, and solution concept depend entirely on which regime you are in. Spend time here. Cooperative settings allow joint optimization. Competitive settings require adversarial thinking. Mixed settings require game-theoretic reasoning about equilibria. -->
 
 ---
@@ -97,6 +113,12 @@ Examples: market making, autonomous vehicles, social dilemmas
 ## Approach 1: Independent Learners
 
 Each agent runs **standard single-agent RL**, treating others as part of the environment.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class IndependentLearner:
@@ -110,12 +132,18 @@ class IndependentLearner:
         loss.backward()
         self.optimizer.step()
 ```
+</div>
 
 **Pros:** Simple, scalable, no coordination needed
 
 **Cons:** Environment is non-stationary — convergence guarantees break
 
 > The world is not stationary because the other agents are also learning.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Independent learners is the baseline to understand before anything more sophisticated. It often works surprisingly well in practice despite lacking theoretical guarantees. The key failure mode is that Q-values estimated early in training become stale as other agents' policies change. Ask: if you played poker against opponents who kept changing their strategy, would your model of their play stay accurate? -->
 
@@ -130,13 +158,11 @@ $$\mathcal{P}^i_{\text{eff}}(o^i_{t+1} \mid o^i_t, a^i_t) = \sum_{\mathbf{a}^{-i
 As $\pi^j$ updates, $\mathcal{P}^i_{\text{eff}}$ changes — even if the true $\mathcal{P}$ is fixed.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P1["$\pi^j$ at iteration 100"] --> E1["Environment seen by $i$: version A"]
     P2["$\pi^j$ at iteration 500"] --> E2["Environment seen by $i$: version B"]
     P3["$\pi^j$ at iteration 1000"] --> E3["Environment seen by $i$: version C"]
-    style E1 fill:#4A90D9,color:#fff
-    style E2 fill:#E8844A,color:#fff
-    style E3 fill:#6ab04c,color:#fff
 ```
 
 <!-- Speaker notes: This slide makes the non-stationarity problem mathematically precise. The effective transition kernel experienced by agent i is a mixture over all other agents' policies. When those policies change, the mixture changes. This is why replay buffers are dangerous in MARL — old transitions were collected under a different joint policy. -->
@@ -148,6 +174,7 @@ flowchart LR
 The dominant paradigm for **cooperative** MARL:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Training["Training Phase"]
         GS["Global state $s$\nAll obs $o^1,\ldots,o^n$\nAll actions $a^1,\ldots,a^n$"] --> CC["Centralized Critic\n$V(s)$ or $Q(s,\mathbf{a})$"]
@@ -224,13 +251,11 @@ $$V^i(\pi^{i*}, \boldsymbol{\pi}^{-i*}) \geq V^i(\pi^i, \boldsymbol{\pi}^{-i*}) 
 When agents can send messages, effective observation becomes $(o^i_t, m^{-i}_t)$:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A1["Agent 1\nEncodes obs → msg $m^1$"] --> A2["Agent 2\nReceives $m^1$, sends $m^2$"]
     A2 --> A3["Agent 3\nReceives $m^1, m^2$"]
     A3 --> A1
-    style A1 fill:#4A90D9,color:#fff
-    style A2 fill:#E8844A,color:#fff
-    style A3 fill:#6ab04c,color:#fff
 ```
 
 **Key approaches:**
@@ -320,6 +345,7 @@ This creates an evaluation—training mismatch. Always match observation regime 
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MARL["Multi-Agent RL"] --> Coop["Cooperative\nShared reward"]
     MARL --> Comp["Competitive\nZero-sum"]
@@ -335,9 +361,6 @@ flowchart TD
 
     Exec --> Apps["Traffic · Games\nRobotics · Trading"]
 
-    style MARL fill:#4A90D9,color:#fff
-    style CTDE fill:#6ab04c,color:#fff
-    style Exec fill:#E8844A,color:#fff
 ```
 
 **Next:** Offline RL — learning from fixed datasets without environment interaction

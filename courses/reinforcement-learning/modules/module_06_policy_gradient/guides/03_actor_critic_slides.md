@@ -22,6 +22,8 @@ Speaker notes: Key talking points for this slide
 - Key design principle we'll emphasize: actor and critic are SEPARATE networks with SEPARATE roles
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Actor-Critic Methods. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # From REINFORCE to Actor-Critic
@@ -47,6 +49,13 @@ Speaker notes: Key talking points for this slide
 - In practice, lower variance wins: you can learn more reliably from 1000 episodes with moderate bias than from 1000 episodes with high variance
 - This is the same logic behind why TD(0) is preferred over Monte Carlo for value learning (Module 03)
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about From REINFORCE to Actor-Critic. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -93,11 +102,19 @@ Speaker notes: Key talking points for this slide
 - Common mistake: using the same optimizer for both, or accidentally backpropagating through one into the other
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Two Networks: Separate Roles. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Actor-Critic Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     S["State s_t"]
 
@@ -126,9 +143,6 @@ graph TB
     TD -- "Actor loss:\n-δ · ∇log π" --> AH
     TD -- "Critic loss:\nδ² → ∇V" --> CH
 
-    style AP fill:#4A90D9,color:#fff
-    style CV fill:#E8844A,color:#fff
-    style TD fill:#9B59B6,color:#fff
 ```
 
 <!--
@@ -140,6 +154,13 @@ Speaker notes: Key talking points for this slide
 - Actor: uses δ as a signed weight on the policy gradient (wants actions that produce δ > 0)
 - The gradient flow MUST be separated: td_error.detach() when computing actor loss
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Actor-Critic Architecture. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -167,6 +188,13 @@ Speaker notes: Key talking points for this slide
 - Terminal states: V(S_terminal) = 0, so δ = R - V(S_t) at episode end
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The TD Error as Advantage. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # One-Step Actor-Critic Update Rules
@@ -190,6 +218,8 @@ Speaker notes: Key talking points for this slide
   Without detach, the actor's backward pass would propagate gradients through the critic's parameters via δ
 - This would effectively couple the two networks' gradients -- causing instability
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about One-Step Actor-Critic Update Rules. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -229,6 +259,8 @@ Speaker notes: Key talking points for this slide
 - Disadvantage: updates are noisy because each step's experience is correlated with the previous step
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about One-Step Actor-Critic Algorithm. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # A2C: Advantage Actor-Critic
@@ -267,11 +299,22 @@ Speaker notes: Key talking points for this slide
 - Multi-step: n-step returns give a better bias/variance tradeoff than one-step TD
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about A2C: Advantage Actor-Critic. Pause for questions if the audience seems uncertain. -->
+
+<div class="flow">
+<div class="flow-step mint">Parallel workers</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Multi-step returns</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Entropy bonus</div>
+</div>
+
 ---
 
 # A3C: Asynchronous Advantage Actor-Critic
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     GN["Global Network\n(θ_global, w_global)"]
 
@@ -290,7 +333,6 @@ graph TB
     W3 -- "Push gradients (async)" --> GN
     WN -- "Push gradients (async)" --> GN
 
-    style GN fill:#4A90D9,color:#fff
 ```
 
 **A3C vs A2C:** A3C has asynchronous gradient updates. A2C synchronizes all workers before updating. In practice, A2C is preferred for reproducibility.
@@ -304,6 +346,8 @@ Speaker notes: Key talking points for this slide
 - With vectorized environments (e.g., gymnasium's VectorEnv), A2C is trivially parallelizable without threading
 - Mnih et al. showed A3C outperformed DQN with replay buffer on Atari -- the async diversity acts like a replay buffer
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about A3C: Asynchronous Advantage Actor-Critic. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -331,6 +375,8 @@ Speaker notes: Key talking points for this slide
 - Why GAE works: it smoothly weights the bias-variance tradeoff, letting you tune to your problem
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Generalized Advantage Estimation (GAE). Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # GAE: Efficient Computation
@@ -339,6 +385,12 @@ Speaker notes: Key talking points for this slide
 
 $$\hat{A}_{T-1} = \delta_{T-1}$$
 $$\hat{A}_t = \delta_t + \gamma\lambda\,(1 - d_{t+1})\,\hat{A}_{t+1}$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_gae(rewards, values, next_value, dones, gamma=0.99, lam=0.95):
@@ -350,6 +402,7 @@ def compute_gae(rewards, values, next_value, dones, gamma=0.99, lam=0.95):
         advantages.insert(0, gae)
     return advantages
 ```
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -361,6 +414,8 @@ Speaker notes: Key talking points for this slide
 - This single function is the core of most modern policy gradient implementations (PPO, A2C, etc.)
 - The backward loop is O(T) -- fast and memory-efficient
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about GAE: Efficient Computation. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -384,6 +439,8 @@ Speaker notes: Key talking points for this slide
   "truncated" means time limit hit -- V = V(S_T;w) is a valid bootstrap target
 - Entropy: β = 0.01 is a good starting point; tune if policy collapses early or fails to explore
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Common Pitfalls. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -423,3 +480,5 @@ Speaker notes: Key talking points for this slide
 - Key takeaway: actor and critic are separate networks; TD error connects them; GAE controls the bias-variance tradeoff
 - References: Sutton & Barto Ch. 13.5 (one-step AC), Mnih et al. 2016 (A3C/A2C), Schulman et al. 2016 (GAE)
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary: Actor-Critic Methods. Pause for questions if the audience seems uncertain. -->

@@ -1,5 +1,7 @@
 # Module 06 — Policy Gradient Methods: Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 6 — Policy Gradient | **Prerequisites:** Module 5
+
 ## Notation Reference
 
 | Symbol | Meaning |
@@ -22,6 +24,14 @@
 
 $$\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\nabla_\theta \log \pi_\theta(A|S) \cdot Q^{\pi_\theta}(S,A)\right]$$
 
+<div class="callout-insight">
+<strong>Insight:</strong> $$\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\nabla_\theta \log \pi_\theta(A|S) \cdot Q^{\pi_\theta}(S,A)\right]$$
+
+**Key facts:**
+- Environment dynamics $p(s'|s,a)$ do not appear — mode...
+</div>
+
+
 **Key facts:**
 - Environment dynamics $p(s'|s,a)$ do not appear — model-free
 - Estimate by sampling trajectories under $\pi_\theta$ (on-policy)
@@ -34,6 +44,16 @@ $$\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\nabla_\theta \log \p
 ## 2. REINFORCE Update Rules
 
 ### Vanilla REINFORCE
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### Vanilla REINFORCE
+
+$$\theta \leftarrow \theta + \alpha \sum_{t=0}^{T-1} \gamma^t G_t \nabla_\theta \log \pi_\theta(A_t|S_t)$$
+
+where the return from time $t$ is:
+$$G_t = \sum_{k=0}^{T-t-1} \gamma^...
+</div>
+
 
 $$\theta \leftarrow \theta + \alpha \sum_{t=0}^{T-1} \gamma^t G_t \nabla_\theta \log \pi_\theta(A_t|S_t)$$
 
@@ -66,6 +86,13 @@ $$\mathbb{E}_{A_t}\!\left[b(S_t)\nabla_\theta \log \pi_\theta(A_t|S_t)\right] = 
 
 $$A^{\pi_\theta}(s,a) = Q^{\pi_\theta}(s,a) - V^{\pi_\theta}(s)$$
 
+<div class="callout-info">
+<strong>Info:</strong> $$A^{\pi_\theta}(s,a) = Q^{\pi_\theta}(s,a) - V^{\pi_\theta}(s)$$
+
+**Interpretation:** How much better (or worse) is action $a$ compared to the average action in state $s$ under policy $\pi_\theta$?
+</div>
+
+
 **Interpretation:** How much better (or worse) is action $a$ compared to the average action in state $s$ under policy $\pi_\theta$?
 
 **Properties:**
@@ -79,6 +106,14 @@ $$A^{\pi_\theta}(s,a) = Q^{\pi_\theta}(s,a) - V^{\pi_\theta}(s)$$
 
 **TD error (one-step advantage estimate):**
 $$\delta_t = R_{t+1} + \gamma V(S_{t+1};\mathbf{w}) - V(S_t;\mathbf{w})$$
+
+<div class="callout-warning">
+<strong>Warning:</strong> **TD error (one-step advantage estimate):**
+$$\delta_t = R_{t+1} + \gamma V(S_{t+1};\mathbf{w}) - V(S_t;\mathbf{w})$$
+
+At episode termination: $\delta_t = R_{t+1} - V(S_t;\mathbf{w})$ (zero bootstrap)...
+</div>
+
 
 At episode termination: $\delta_t = R_{t+1} - V(S_t;\mathbf{w})$ (zero bootstrap)
 

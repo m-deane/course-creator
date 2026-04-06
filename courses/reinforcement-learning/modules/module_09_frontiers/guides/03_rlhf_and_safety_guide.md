@@ -1,8 +1,15 @@
 # RLHF and Safe Reinforcement Learning
 
+> **Reading time:** ~12 min | **Module:** 9 — Frontiers | **Prerequisites:** Modules 5-8
+
 ## In Brief
 
 Reinforcement Learning from Human Feedback (RLHF) is the dominant technique for aligning large language models with human values and preferences. Safe RL extends the standard MDP framework with explicit cost constraints, enabling agents to maximize reward while satisfying safety requirements. Both fields address the same fundamental problem: standard RL optimizes a scalar reward, but real-world objectives are more complex, multi-dimensional, and often difficult to specify precisely.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Reinforcement Learning from Human Feedback (RLHF) is the dominant technique for aligning large language models with human values and preferences. Safe RL extends the standard MDP framework with explicit cost constraints, enabling agents to maximize reward while satisfying safety requirements.
+</div>
+
 
 ## Key Insight
 
@@ -10,11 +17,29 @@ In RLHF, the reward function is not specified by the designer — it is **learne
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> In RLHF, the reward function is not specified by the designer — it is **learned** from human comparative judgments.
+</div>
 ## RLHF: Reinforcement Learning from Human Feedback
 
 RLHF became the standard approach for aligning large language models after InstructGPT (Ouyang et al., 2022) demonstrated that it dramatically improves model behavior on human-preferred outputs. The same three-step pipeline underpins ChatGPT, Claude, and most modern aligned LLMs.
 
+<div class="callout-key">
+<strong>Key Point:</strong> RLHF became the standard approach for aligning large language models after InstructGPT (Ouyang et al., 2022) demonstrated that it dramatically improves model behavior on human-preferred outputs.
+</div>
+
+
 ### The Three-Step Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart TD
@@ -25,6 +50,7 @@ flowchart TD
     style RM fill:#E8844A,color:#fff
     style PPO fill:#6ab04c,color:#fff
 ```
+</div>
 
 ---
 
@@ -57,6 +83,14 @@ $$\mathcal{L}_{\text{RM}} = -\mathbb{E}_{(x, y_w, y_l) \sim \mathcal{D}_{\text{p
 where $y_w$ is the preferred ("won") response and $y_l$ is the less preferred ("lost") response.
 
 **Architecture:** Typically the SFT model with a linear head replacing the final token prediction head. The linear head outputs a scalar reward for the full response.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -107,6 +141,7 @@ def reward_model_loss(reward_model, batch: dict) -> torch.Tensor:
     loss = -torch.nn.functional.logsigmoid(r_chosen - r_rejected).mean()
     return loss
 ```
+</div>
 
 ---
 
@@ -184,6 +219,14 @@ $$\pi_{k+1} = \arg\max_\pi \mathcal{L}(\pi, \lambda_k)$$
 **Dual step** (maximize over $\lambda \geq 0$, treating $\pi$ as fixed):
 $$\lambda_{k+1} = \max\left(0, \lambda_k + \alpha_\lambda \left(J_C(\pi_k) - d\right)\right)$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 class LagrangianSafeRL:
     """
@@ -209,6 +252,7 @@ class LagrangianSafeRL:
         constraint_violation = current_cost - self.threshold
         self.lambda_multiplier = max(0.0, self.lambda_multiplier + self.lr_lambda * constraint_violation)
 ```
+</div>
 
 **Convergence:** Under standard regularity conditions, the primal-dual iterates converge to the optimal constrained policy.
 
@@ -268,8 +312,17 @@ In robotic manipulation:
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Reward hacking the reward model.**
 The reward model is an imperfect proxy for human preferences. PPO will find exploits: generating very long outputs if length correlates with reward, using excessive formatting, or generating confident-sounding nonsense. The KL penalty mitigates this but does not eliminate it. Monitor reward model scores alongside human evaluation throughout training.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Reward hacking the reward model.**
+The reward model is an imperfect proxy for human preferences.
+</div>
 
 **Pitfall 2 — Preference data quality and annotator disagreement.**
 Human raters disagree, especially on nuanced preferences (creativity vs accuracy, brevity vs completeness). Aggregating noisy labels by majority vote or average can wash out signal. Use inter-annotator agreement metrics and consider modeling rater heterogeneity explicitly.
@@ -287,11 +340,24 @@ The dual variable $\lambda$ can oscillate around the constraint boundary rather 
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** PPO (Module 7), policy gradient (Module 6), offline RL (Guide 02)
 - **Leads to:** RL for trading (Guide 04) — reward shaping and risk management
 - **Related to:** mechanism design, value alignment, AI safety research, constrained optimization
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -301,3 +367,18 @@ The dual variable $\lambda$ can oscillate around the constraint boundary rather 
 - Achiam et al. (2017). *Constrained Policy Optimization (CPO)* — trust-region method for safe RL with theoretical guarantees
 - Rockafellar & Uryasev (2000). *Optimization of Conditional Value-at-Risk* — CVaR definition and properties for risk-sensitive optimization
 - Bai et al. (2022). *Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback* (Anthropic) — detailed description of Constitutional AI and RLHF at scale
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_rlhf_and_safety_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_offline_rl_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

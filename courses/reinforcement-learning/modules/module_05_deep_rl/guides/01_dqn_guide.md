@@ -1,8 +1,15 @@
 # Deep Q-Network (DQN)
 
+> **Reading time:** ~11 min | **Module:** 5 — Deep RL | **Prerequisites:** Module 4, PyTorch basics
+
 ## In Brief
 
 DQN (Mnih et al., 2015) replaces the tabular Q-table with a neural network that approximates the action-value function $Q(s, a; \theta) \approx Q^*(s, a)$. Two stabilizing mechanisms — an **experience replay buffer** and a **target network** — make the training process tractable and converge reliably.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> DQN (Mnih et al., 2015) replaces the tabular Q-table with a neural network that approximates the action-value function $Q(s, a; \theta) \approx Q^*(s, a)$. Two stabilizing mechanisms — an **experience replay buffer** and a **target network** — make the training process tractable and converge reliably.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ Q-learning with a neural network approximator is unstable without intervention. 
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Q-learning with a neural network approximator is unstable without intervention.
+</div>
 ## Formal Definition
 
 The optimal action-value function satisfies the Bellman optimality equation:
+
+<div class="callout-key">
+<strong>Key Point:</strong> The optimal action-value function satisfies the Bellman optimality equation:
+
+$$Q^*(s, a) = \mathbb{E}\!\left[r + \gamma \max_{a'} Q^*(s', a') \;\Big|\; S_t = s,\, A_t = a\right]$$
+
+DQN approximates $...
+</div>
+
 
 $$Q^*(s, a) = \mathbb{E}\!\left[r + \gamma \max_{a'} Q^*(s', a') \;\Big|\; S_t = s,\, A_t = a\right]$$
 
@@ -43,6 +64,15 @@ The replay buffer $\mathcal{D}$ stores transitions $(s, a, r, s', \text{done})$ 
 1. **Breaks temporal correlation.** Consecutive transitions $(s_t, a_t, r_{t+1}, s_{t+1})$ are highly correlated because they share the same trajectory. Gradient descent on correlated data oscillates; random mini-batches from the buffer approximate i.i.d. samples.
 2. **Improves data efficiency.** Each transition can be replayed many times, amortizing the cost of environment interaction.
 3. **Stabilizes the data distribution.** Without a buffer, the distribution of training samples shifts as the policy changes, violating the i.i.d. assumption underlying SGD convergence guarantees.
+
+
+<div class="flow">
+<div class="flow-step mint">1. Breaks temporal correlation.</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Improves data efficiency.</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Stabilizes the data distributi...</div>
+</div>
 
 Buffer capacity is a hyperparameter. A buffer that is too small forgets old experience quickly; too large and early (poor-policy) transitions dilute recent ones.
 
@@ -76,6 +106,14 @@ Removing either the replay buffer or the target network reintroduces one pathway
 
 ## Neural Network Architecture
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     S["State $s$ (e.g., 84×84×4 pixel stack)"]
@@ -91,6 +129,7 @@ flowchart TD
     style S fill:#4A90D9,color:#fff
     style Q fill:#E8844A,color:#fff
 ```
+</div>
 
 The network takes a state as input and outputs one Q-value per action simultaneously. At inference, the greedy action is $a^* = \arg\max_a Q(s, a; \theta)$.
 
@@ -139,6 +178,14 @@ For episode = 1, 2, ..., M:
 ---
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -291,13 +338,23 @@ class DQNAgent:
 
         return loss.item()
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Omitting the target network.**
 Computing TD targets with the same network being updated creates a moving-target problem. Q-values and targets chase each other, typically causing divergence within a few thousand steps. Always use a separate, periodically updated target network.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Omitting the target network.**
+Computing TD targets with the same network being updated creates a moving-target problem.
+</div>
 
 **Pitfall 2 — Replay buffer too small.**
 A buffer that holds fewer than ~10,000 transitions fills quickly with on-policy data. The agent effectively trains only on recent experience, losing the decorrelation benefit. The original DQN used a buffer of 1,000,000 transitions.
@@ -318,11 +375,24 @@ During training, the epsilon-greedy policy is necessary for exploration. During 
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Q-learning (Module 03), Bellman equations (Module 00 Guide 03), function approximation concepts
 - **Leads to:** Double DQN, Dueling DQN, Prioritized Experience Replay (Guide 02), policy gradient methods (Module 06)
 - **Related to:** temporal-difference learning, neural fitted Q-iteration, fitted value iteration
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -330,3 +400,18 @@ During training, the epsilon-greedy policy is necessary for exploration. During 
 - Mnih, V. et al. (2013). *Playing Atari with Deep Reinforcement Learning.* arXiv:1312.5602. — the earlier workshop version with the core ideas
 - Sutton & Barto (2018). *Reinforcement Learning: An Introduction*, 2nd ed., Chapter 11 — formal treatment of the deadly triad and off-policy divergence
 - van Hasselt, H., Guez, A., & Silver, D. (2016). *Deep Reinforcement Learning with Double Q-Learning.* AAAI. — the natural successor addressing overestimation bias
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_dqn_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_dqn_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

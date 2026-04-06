@@ -32,6 +32,11 @@ $$\pi'(s) = \arg\max_a \underbrace{\sum_{s', r} p(s', r \mid s, a)\bigl[r + \gam
 
 $$\pi'(s) = \arg\max_a Q^\pi(s, a) \quad \leftarrow \text{no model needed}$$
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This slide is the conceptual linchpin of the entire guide. Draw out both formulas. The DP improvement formula has p(s',r|s,a) in it — that's the transition model. Without it, we cannot evaluate which action is best from V(s) alone. Q(s,a) bakes the action into the estimate directly, so the argmax over Q is purely a table lookup. This is why model-free RL almost always works with Q rather than V. -->
 
 ---
@@ -51,6 +56,11 @@ Expected return when:
 $$V^\pi(s) = \sum_a \pi(a \mid s)\, Q^\pi(s, a)$$
 
 **MC estimate:** Collect episodes where $(s, a)$ is visited; average returns.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Q(s,a) is the expected return from the state-action pair. The key phrase in the definition: "then following pi." The first action is forced (a), subsequent actions come from the policy. This makes Q^pi policy-specific — it tells you how good a is under the current policy pi, not the optimal policy. The relationship V = sum_a pi(a|s) Q(s,a) shows V is a pi-weighted average of Q values. -->
 
@@ -76,6 +86,11 @@ This is **GPI** from Module 1 — now with MC evaluation instead of DP.
 
 GPI still converges — policy improvement is guaranteed even from approximate $Q$.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: GPI is a unifying framework across all of RL. Point back to Module 1 where we saw GPI with DP. The arrows are the same — only the evaluation step changes. Monte Carlo fills in the evaluation arrow. The fact that we improve after every episode (not after full convergence) is called "optimistic" or "online" GPI. The policy improvement theorem still applies, guaranteeing each step is non-worse. -->
 
 ---
@@ -96,6 +111,11 @@ Q(s, RIGHT) = 0.0   ← never visited → never updated
 ```
 
 We need a mechanism to **try all actions**.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: This is the exploration-exploitation dilemma in concrete form. If the initial Q values happen to favor a suboptimal action, and we never try other actions, we never discover the better ones. This is why Q-table initialization matters and why exploration is non-optional. Two solutions: exploring starts (force initial diversity) and epsilon-soft policies (always keep some exploration probability). -->
 
@@ -224,6 +244,12 @@ k=10000:ε ≈ 0.007
 
 ## Python: $\varepsilon$-Greedy Action Selection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def epsilon_greedy_action(Q_state, epsilon, n_actions):
     """
@@ -254,6 +280,7 @@ def exponential_epsilon(episode_num, epsilon_start=1.0,
     return epsilon_end + (epsilon_start - epsilon_end) * \
            (decay_rate ** episode_num)
 ```
+</div>
 
 <!-- Speaker notes: These utility functions are copy-paste ready for the companion notebook. Point out: glie_epsilon has a floor at epsilon_min — pure 1/k goes to zero too slowly in early episodes (epsilon=1.0 in episode 1 means always random). The floor lets the algorithm start exploiting sooner while still exploring. The exponential schedule is what most practitioners use; the decay_rate hyperparameter controls how quickly exploration is reduced. -->
 

@@ -1,8 +1,15 @@
 # Actor-Critic Methods
 
+> **Reading time:** ~14 min | **Module:** 6 — Policy Gradient | **Prerequisites:** Module 5
+
 ## In Brief
 
 Actor-critic methods decompose the policy gradient agent into two separate components: an **actor** (the policy network $\pi(a|s;\theta)$) that selects actions, and a **critic** (the value network $V(s;\mathbf{w})$) that evaluates how good states are. The critic's value estimates replace the high-variance Monte Carlo returns of REINFORCE, enabling online updates, lower variance, and applicability to continuing tasks.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Actor-critic methods decompose the policy gradient agent into two separate components: an **actor** (the policy network $\pi(a|s;\theta)$) that selects actions, and a **critic** (the value network $V(s;\mathbf{w})$) that evaluates how good states are. The critic's value estimates replace the high-variance Monte Carlo returns of REINFORCE, enabling online updates, lower variance, and applicability to continuing tasks.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,19 @@ REINFORCE must wait until an episode ends to compute $G_t$. The actor-critic rep
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> REINFORCE must wait until an episode ends to compute $G_t$.
+</div>
 ## The Two Networks: Actor and Critic
 
 The most important design principle of actor-critic is that the actor and critic are **separate networks with different roles, different parameters, and different loss functions**. They are not interchangeable, and their updates are independent.
+
+<div class="callout-key">
+<strong>Key Point:</strong> The most important design principle of actor-critic is that the actor and critic are **separate networks with different roles, different parameters, and different loss functions**.
+</div>
+
 
 ### Actor: The Policy Network
 
@@ -43,6 +60,11 @@ The critic does **not** select actions. The actor does **not** evaluate states. 
 ## One-Step Actor-Critic
 
 The simplest actor-critic variant performs one update per time step using a one-step TD error.
+
+<div class="callout-info">
+<strong>Info:</strong> The simplest actor-critic variant performs one update per time step using a one-step TD error.
+</div>
+
 
 ### TD Error (Advantage Estimate)
 
@@ -114,6 +136,14 @@ For each episode:
 
 ## Architecture: Actor-Critic Network
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 graph TB
     subgraph "State Input"
@@ -161,6 +191,7 @@ graph TB
     style CV fill:#E8844A,color:#fff
     style TD fill:#9B59B6,color:#fff
 ```
+</div>
 
 The actor (blue) and critic (orange) can share a backbone encoder for efficiency, but their output heads and update rules remain fully independent.
 
@@ -192,6 +223,14 @@ A3C (Mnih et al., 2016) runs multiple parallel workers, each with its own copy o
 
 ### A3C Architecture
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 graph TB
     GN["Global Network\n(θ_global, w_global)"]
@@ -217,6 +256,7 @@ graph TB
     style W3 fill:#E8844A,color:#fff
     style WN fill:#E8844A,color:#fff
 ```
+</div>
 
 **Key insight:** Asynchronous workers implicitly decorrelate their experience, acting like a distributed replay buffer without the off-policy complications.
 
@@ -258,6 +298,14 @@ This is the same backward recurrence as return computation, with $\gamma\lambda$
 ---
 
 ## Code Snippet
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -399,13 +447,23 @@ def compute_gae(
 
     return torch.FloatTensor(advantages)
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Mixing actor and critic parameters.**
 The actor and critic must have separate parameters and separate optimizers. A common mistake in implementations is to accidentally share parameters or update them with the same optimizer, causing unstable learning. The actor's loss should use `td_error.detach()` so the critic's gradient doesn't flow through the actor computation graph.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Mixing actor and critic parameters.**
+The actor and critic must have separate parameters and separate optimizers.
+</div>
 
 **Pitfall 2 — Bootstrapping into terminal states.**
 When $S_{t+1}$ is a terminal state, $V(S_{t+1}) = 0$ by definition (no future reward is possible). The TD error should be $\delta = R_{t+1} - V(S_t)$, not $\delta = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$. Failing to zero out terminal state values causes incorrect value targets and corrupted learning.
@@ -426,11 +484,24 @@ When actor and critic share a feature extractor, their conflicting gradient sign
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Policy gradient theorem (Guide 01), REINFORCE and advantage function (Guide 02), TD learning (Module 03), function approximation (Module 04)
 - **Leads to:** Proximal Policy Optimization and TRPO (Module 07), Soft Actor-Critic (Module 07)
 - **Related to:** A2C and A3C (Mnih et al., 2016), GAE (Schulman et al., 2016)
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -438,3 +509,18 @@ When actor and critic share a feature extractor, their conflicting gradient sign
 - Mnih, V., et al. (2016). Asynchronous methods for deep reinforcement learning. *ICML* — introduces A3C and A2C; foundational for modern deep RL
 - Schulman, J., Moritz, P., Levine, S., Jordan, M., & Abbeel, P. (2016). High-dimensional continuous control using generalized advantage estimation. *ICLR* — GAE derivation and empirical validation
 - Konda, V. R. & Tsitsiklis, J. N. (2000). Actor-critic algorithms. *NeurIPS* — two-timescale convergence analysis for actor-critic
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_actor_critic_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_reinforce_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

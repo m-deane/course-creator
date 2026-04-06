@@ -1,16 +1,48 @@
 # Policy Evaluation: Computing Value Under a Fixed Policy
 
+> **Reading time:** ~9 min | **Module:** 1 — Dynamic Programming | **Prerequisites:** Module 0
+
 ## In Brief
 
 Policy evaluation answers the question: "How good is this policy?" Given a fixed policy $\pi$, iterative policy evaluation computes the state-value function $V^\pi$ by repeatedly applying the Bellman expectation equation until convergence. It is the foundation on which policy improvement and policy iteration are built.
 
-> **Key Insight:** We cannot solve the Bellman equation in closed form for large state spaces, but we can solve it iteratively. Each sweep of all states brings $V_k$ closer to the true $V^\pi$ — and the contraction mapping theorem guarantees we arrive.
+<div class="callout-insight">
+<strong>Insight:</strong> We cannot solve the Bellman equation in closed form for large state spaces, but we can solve it iteratively. Each sweep of all states brings $V_k$ closer to the true $V^\pi$ — and the contraction mapping theorem guarantees we arrive.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Policy evaluation answers the question: "How good is this policy?" Given a fixed policy $\pi$, iterative policy evaluation computes the state-value function $V^\pi$ by repeatedly applying the Bellman expectation equation until convergence. It is the foundation on which policy improvement and policy iteration are built.
+</div>
+
 
 ---
+
+## Intuitive Explanation
+
+Think of the value function as a consensus estimate of long-run reward starting from each state. At initialization, every state's value is zero — we have no information. After the first sweep, states adjacent to high-reward transitions get a small positive signal. After the second sweep, states two steps away pick up that signal, discounted by $\gamma$. This propagation continues outward like ripples in a pond until the estimates stop changing — that fixed point is $V^\pi$.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Think of the value function as a consensus estimate of long-run reward starting from each state.
+</div>
+
+
+The analogy: estimating average commute times in a city. On day 1 you have no data. You start measuring. Each day your estimates improve. Eventually, with enough data, the estimates stabilize. The Bellman update is the formal version of this incremental refinement.
+
+---
+
 
 ## Formal Definition
 
 ### The Bellman Expectation Equation
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### The Bellman Expectation Equation
+
+For a policy $\pi$ and discount factor $\gamma \in [0, 1)$, the true value function $V^\pi$ satisfies:
+
+$$V^\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r | s, a)\...
+</div>
+
 
 For a policy $\pi$ and discount factor $\gamma \in [0, 1)$, the true value function $V^\pi$ satisfies:
 
@@ -36,13 +68,6 @@ Each application of this rule is called a **sweep** through the state space.
 
 ---
 
-## Intuitive Explanation
-
-Think of the value function as a consensus estimate of long-run reward starting from each state. At initialization, every state's value is zero — we have no information. After the first sweep, states adjacent to high-reward transitions get a small positive signal. After the second sweep, states two steps away pick up that signal, discounted by $\gamma$. This propagation continues outward like ripples in a pond until the estimates stop changing — that fixed point is $V^\pi$.
-
-The analogy: estimating average commute times in a city. On day 1 you have no data. You start measuring. Each day your estimates improve. Eventually, with enough data, the estimates stabilize. The Bellman update is the formal version of this incremental refinement.
-
----
 
 ## Convergence: The Contraction Mapping Theorem
 
@@ -86,6 +111,26 @@ In-place asynchronous updates typically converge faster in practice because new 
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Synchronous</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Asynchronous Updates</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Algorithm
 
 ### Pseudocode
@@ -111,6 +156,14 @@ Return V (approximately V^pi)
 
 ### Mermaid Flowchart
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     Init["Initialize V(s) = 0\nfor all s"] --> Sweep["Begin sweep:\ndelta = 0"]
@@ -127,10 +180,19 @@ flowchart TD
     style Done fill:#4a90d9,color:#fff
     style Update fill:#e67e22,color:#fff
 ```
+</div>
 
 ---
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -214,12 +276,21 @@ V_pi = policy_evaluation(pi, P, R, gamma=0.9)
 print("V^pi:", V_pi.round(3))
 # Expected: values decrease toward terminal state
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 ### 1. Forgetting to discount future values
+
+<div class="callout-warning">
+<strong>Warning:</strong> ### 1.
+</div>
 
 The update must include $\gamma V_k(s')$, not just $V_k(s')$. Omitting $\gamma$ causes divergence when the environment has long cycles.
 
@@ -243,14 +314,42 @@ The dynamics $p(s', r | s, a)$ are indexed by $(s, a, s')$. A transposed array s
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Markov Decision Processes (MDP formulation), Bellman equations, discount factors
 - **Leads to:** Policy improvement (Guide 02), policy iteration (Guide 02), value iteration (Guide 03)
 - **Related to:** Temporal-difference learning (TD(0) is the model-free online version of policy evaluation)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto (2018), *Reinforcement Learning: An Introduction*, 2nd ed., Section 4.1
 - Puterman (1994), *Markov Decision Processes*, Chapter 6 — rigorous contraction proofs
 - Bertsekas (2012), *Dynamic Programming and Optimal Control*, Vol. 1 — general treatment
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_policy_evaluation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_policy_evaluation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

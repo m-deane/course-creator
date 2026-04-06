@@ -1,8 +1,15 @@
 # REINFORCE: Monte Carlo Policy Gradient
 
+> **Reading time:** ~10 min | **Module:** 6 — Policy Gradient | **Prerequisites:** Module 5
+
 ## In Brief
 
 REINFORCE (Williams, 1992) is the simplest practical instantiation of the policy gradient theorem. It estimates the action-value $Q^{\pi_\theta}(s,a)$ using the complete Monte Carlo return $G_t$ from each time step in an episode, then uses the score-weighted return to update policy parameters via gradient ascent.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> REINFORCE (Williams, 1992) is the simplest practical instantiation of the policy gradient theorem. It estimates the action-value $Q^{\pi_\theta}(s,a)$ using the complete Monte Carlo return $G_t$ from each time step in an episode, then uses the score-weighted return to update policy parameters via gradient ascent.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,43 @@ Replace the unknown $Q^{\pi_\theta}(s,a)$ in the policy gradient theorem with it
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Replace the unknown $Q^{\pi_\theta}(s,a)$ in the policy gradient theorem with its unbiased Monte Carlo estimate: the actual discounted return $G_t$ observed by running the policy to completion.
+</div>
+## Intuitive Explanation
+
+Think of REINFORCE as a trial-and-error learner that watches entire episodes play out before updating:
+
+<div class="callout-key">
+<strong>Key Point:</strong> Think of REINFORCE as a trial-and-error learner that watches entire episodes play out before updating:
+
+1.
+</div>
+
+
+1. Run a complete episode following the current policy.
+2. For each step, compute how much total reward followed from that point forward ($G_t$).
+3. If $G_t$ was large, increase the log-probability of the action taken — that action sequence worked.
+4. If $G_t$ was small (or negative), decrease the log-probability — that action sequence did not work.
+5. Repeat many episodes, averaging out the stochasticity.
+
+The intuition parallels human trial-and-error learning: you complete a task, recall which decisions led to good outcomes, and make those decisions more likely next time.
+
+---
+
+
 ## Formal Definition
 
 Given a trajectory $\tau = (S_0, A_0, R_1, S_1, A_1, R_2, \ldots, S_{T-1}, A_{T-1}, R_T)$ sampled under $\pi_\theta$, define the **return from time $t$**:
+
+<div class="callout-info">
+<strong>Info:</strong> Given a trajectory $\tau = (S_0, A_0, R_1, S_1, A_1, R_2, \ldots, S_{T-1}, A_{T-1}, R_T)$ sampled under $\pi_\theta$, define the **return from time $t$**:
+
+$$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1...
+</div>
+
 
 $$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1}$$
 
@@ -24,19 +65,6 @@ where the $\gamma^t$ factor discounts the gradient contribution of later time st
 
 ---
 
-## Intuitive Explanation
-
-Think of REINFORCE as a trial-and-error learner that watches entire episodes play out before updating:
-
-1. Run a complete episode following the current policy.
-2. For each step, compute how much total reward followed from that point forward ($G_t$).
-3. If $G_t$ was large, increase the log-probability of the action taken — that action sequence worked.
-4. If $G_t$ was small (or negative), decrease the log-probability — that action sequence did not work.
-5. Repeat many episodes, averaging out the stochasticity.
-
-The intuition parallels human trial-and-error learning: you complete a task, recall which decisions led to good outcomes, and make those decisions more likely next time.
-
----
 
 ## Derivation from the Policy Gradient Theorem
 
@@ -136,6 +164,14 @@ where $V(S_t)$ is estimated by a learned baseline network (trained on the same t
 ---
 
 ## Code Snippet
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -265,13 +301,23 @@ def train_reinforce(
     env.close()
     return episode_returns
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — High variance without baseline.**
 Vanilla REINFORCE (no baseline) requires hundreds to thousands of episodes to converge even on simple environments like CartPole. Always include at least a constant baseline (running mean of returns) and ideally a learned $V(s)$ baseline.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — High variance without baseline.**
+Vanilla REINFORCE (no baseline) requires hundreds to thousands of episodes to converge even on simple environments like CartPole.
+</div>
 
 **Pitfall 2 — Using future rewards only (causality).**
 A subtle but important optimization: action $A_t$ cannot have caused rewards before time $t$. The theoretically correct update uses only the causal return $G_t = \sum_{k \geq t}$, not the full episode return $G_0$. Some implementations mistakenly use $G_0$ for all steps, which is also unbiased (the extra terms cancel in expectation) but has higher variance.
@@ -292,11 +338,24 @@ If some episodes are long (many steps) and others short, the gradient estimator 
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Policy gradient theorem (Guide 01), Monte Carlo methods (Module 02)
 - **Leads to:** Actor-critic methods (Guide 03), which replace $G_t$ with a bootstrapped value estimate
 - **Related to:** REINFORCE as a score function estimator appears in variational inference (ELBO gradient) and as the REINFORCE trick in latent variable models
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -304,3 +363,18 @@ If some episodes are long (many steps) and others short, the gradient estimator 
 - Sutton, R. S. & Barto, A. G. (2018). *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 13.3 — REINFORCE with baseline, variance analysis, convergence properties
 - Greensmith, E., Bartlett, P. L., & Baxter, J. (2004). Variance reduction techniques for gradient estimates in reinforcement learning. *JMLR* — rigorous treatment of baselines and variance bounds
 - Peters, J. & Schaal, S. (2008). Reinforcement learning of motor skills with policy gradients. *Neural Networks* — practical guide to policy gradient for robotics with Gaussian policies
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_reinforce_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_reinforce_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

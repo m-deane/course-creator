@@ -1,8 +1,15 @@
 # Multi-Agent Reinforcement Learning
 
+> **Reading time:** ~11 min | **Module:** 9 — Frontiers | **Prerequisites:** Modules 5-8
+
 ## In Brief
 
 Multi-agent reinforcement learning (MARL) extends the single-agent RL framework to settings where multiple agents simultaneously interact with a shared environment. Each agent observes (possibly partial) state, selects actions, and receives rewards — but now every agent's behavior shapes the environment experienced by all others.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Multi-agent reinforcement learning (MARL) extends the single-agent RL framework to settings where multiple agents simultaneously interact with a shared environment. Each agent observes (possibly partial) state, selects actions, and receives rewards — but now every agent's behavior shapes the environment experienced by all others.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ The fundamental difficulty of MARL is that the environment appears **non-station
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> The fundamental difficulty of MARL is that the environment appears **non-stationary** to every individual agent: as agents update their policies, the transition and reward distributions experienced by...
+</div>
 ## Formal Definition
 
 A Multi-Agent MDP (MMDP) for $n$ agents is a tuple $(\mathcal{S}, \{\mathcal{A}^i\}_{i=1}^n, \mathcal{P}, \{R^i\}_{i=1}^n, \gamma)$ where:
+
+<div class="callout-key">
+<strong>Key Point:</strong> A Multi-Agent MDP (MMDP) for $n$ agents is a tuple $(\mathcal{S}, \{\mathcal{A}^i\}_{i=1}^n, \mathcal{P}, \{R^i\}_{i=1}^n, \gamma)$ where:
+
+| Symbol | Meaning |
+|--------|---------|
+| $\mathcal{S}$ | ...
+</div>
+
 
 | Symbol | Meaning |
 |--------|---------|
@@ -32,6 +53,13 @@ The joint policy is $\boldsymbol{\pi} = (\pi^1, \ldots, \pi^n)$.
 ## Taxonomy: Cooperative, Competitive, and Mixed Settings
 
 ### Cooperative (Team Reward)
+
+<div class="callout-info">
+<strong>Info:</strong> ### Cooperative (Team Reward)
+
+All agents share a single reward signal: $R^1 = R^2 = \cdots = R^n = R$.
+</div>
+
 
 All agents share a single reward signal: $R^1 = R^2 = \cdots = R^n = R$.
 
@@ -72,6 +100,14 @@ The simplest MARL approach: each agent runs a standard single-agent RL algorithm
 
 **Cons:** The environment is non-stationary from each agent's perspective (other agents are learning simultaneously), breaking convergence guarantees. Q-values estimated during early training become stale as other agents' policies change.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 class IndependentLearner:
     """
@@ -96,12 +132,21 @@ class IndependentLearner:
         self.optimizer.step()
         return loss.item()
 ```
+</div>
 
 ---
 
 ## Centralized Training, Decentralized Execution (CTDE)
 
 CTDE is the dominant paradigm for cooperative MARL. During training, agents have access to global information (all observations, all actions, even ground-truth state). At execution time, each agent acts using only its local observation.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart TD
@@ -123,6 +168,7 @@ flowchart TD
     style Training fill:#4A90D9,color:#fff
     style Execution fill:#E8844A,color:#fff
 ```
+</div>
 
 **Key algorithms using CTDE:**
 
@@ -159,6 +205,14 @@ When agents can send messages, the effective observation of agent $i$ becomes $(
 | Bandwidth | Continuous vs. quantized vs. binary messages |
 | Timing | Synchronous vs. asynchronous |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 class CommunicatingAgent:
     """
@@ -180,6 +234,7 @@ class CommunicatingAgent:
         # Condition policy on own obs + aggregated peer information
         return self.actor(torch.cat([obs, aggregated], dim=-1))
 ```
+</div>
 
 ---
 
@@ -256,8 +311,17 @@ Joint action space grows exponentially: $|\mathcal{A}| = \prod_{i=1}^n |\mathcal
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Applying single-agent convergence guarantees to multi-agent settings.**
 Q-learning provably converges in single-agent MDPs. In multi-agent settings with simultaneously-learning agents, Q-values chase moving targets. Do not assume convergence without additional assumptions (e.g., two-player zero-sum, or all agents converging in a specific order).
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Applying single-agent convergence guarantees to multi-agent settings.**
+Q-learning provably converges in single-agent MDPs.
+</div>
 
 **Pitfall 2 — Ignoring non-stationarity in replay buffers.**
 Experience replay stores transitions from earlier stages of training. In MARL, these old transitions were generated by earlier (different) policies of all agents. Old data is off-policy with respect to the current joint policy, which can cause instability. Use short replay buffers or prioritize recent data.
@@ -275,11 +339,24 @@ Learned communication algorithms often pass dense continuous message vectors at 
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** MDP formalism (Module 0), policy gradient methods (Module 6), value function approximation (Module 4)
 - **Leads to:** Offline RL (Guide 02), Safe RL and RLHF (Guide 03), RL for trading (Guide 04)
 - **Related to:** game theory (Nash equilibria, mechanism design), decentralized control, swarm intelligence
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -288,3 +365,18 @@ Learned communication algorithms often pass dense continuous message vectors at 
 - Vinyals et al. (2019). *Grandmaster level in StarCraft II using multi-agent reinforcement learning* — large-scale MARL in complex games
 - Yang et al. (2018). *Mean Field Multi-Agent Reinforcement Learning* — scalable approximation for large populations
 - Hernandez-Leal et al. (2019). *A Survey and Critique of Multiagent Deep Reinforcement Learning* — comprehensive overview with failure modes
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_multi_agent_rl_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_offline_rl_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

@@ -1,8 +1,15 @@
 # SARSA: On-Policy TD Control
 
+> **Reading time:** ~10 min | **Module:** 3 — Temporal Difference | **Prerequisites:** Module 2
+
 ## In Brief
 
 SARSA is the simplest on-policy TD control algorithm. It extends TD(0) prediction from state values $V(s)$ to action values $Q(s,a)$, and adds a greedy policy improvement step. The name captures the entire update tuple: **S**tate, **A**ction, **R**eward, next **S**tate, next **A**ction.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> SARSA is the simplest on-policy TD control algorithm. It extends TD(0) prediction from state values $V(s)$ to action values $Q(s,a)$, and adds a greedy policy improvement step.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,23 @@ SARSA is *on-policy*: the action $A_{t+1}$ used in the bootstrap target is chose
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> SARSA is *on-policy*: the action $A_{t+1}$ used in the bootstrap target is chosen by the same policy currently being followed.
+</div>
 ## Formal Definition
 
 ### SARSA Update Rule
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### SARSA Update Rule
+
+After observing the transition $(S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})$:
+
+$$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \bigl[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)\b...
+</div>
+
 
 After observing the transition $(S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})$:
 
@@ -37,6 +58,15 @@ The update: $Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \, \delta_t$
 ## Name Origin: The (S, A, R, S', A') Quintuple
 
 The algorithm is named after the five quantities it uses at each step:
+
+<div class="callout-info">
+<strong>Info:</strong> The algorithm is named after the five quantities it uses at each step:
+
+
+
+The critical element is $A_{t+1}$: this action is sampled from the *current behavior policy* $\pi$ (typically $\varepsilon$-gr...
+</div>
+
 
 ```
   S_t      A_t      R_{t+1}    S_{t+1}    A_{t+1}
@@ -115,6 +145,14 @@ Cliff Walking is a canonical gridworld that illustrates the on-policy vs off-pol
 
 ## Diagram: SARSA Control Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart TD
     Init["Initialize Q(s,a) = 0 for all s, a"] --> Loop["For each episode"]
@@ -128,12 +166,21 @@ flowchart TD
     Terminal -->|No| Step
     Terminal -->|Yes| Loop
 ```
+</div>
 
 The crucial implementation detail: $A_{t+1}$ is chosen *before* the SARSA update, using the same $\varepsilon$-greedy policy. The next loop iteration uses this preselected action.
 
 ---
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -217,13 +264,23 @@ print("Greedy action for each state (0=Up, 1=Right, 2=Down, 3=Left):")
 print(greedy_policy.reshape(4, 12))
 env.close()
 ```
+</div>
 
 ---
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Choosing $A_{t+1}$ after the update (wrong order).**
 The correct sequence is: observe $S_{t+1}$, choose $A_{t+1}$, *then* compute the SARSA update using $Q(S_{t+1}, A_{t+1})$, *then* execute $A_{t+1}$. If you choose $A_{t+1}$ after the update, you break the on-policy guarantee because the Q table has already changed.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Choosing $A_{t+1}$ after the update (wrong order).**
+The correct sequence is: observe $S_{t+1}$, choose $A_{t+1}$, *then* compute the SARSA update using $Q(S_{t+1}, A_{t+1})$, *then* execute $A_{t+1}$.
+</div>
 
 **Pitfall 2 — Using $\max_a Q(S_{t+1}, a)$ instead of $Q(S_{t+1}, A_{t+1})$.**
 This turns SARSA into Q-learning. The difference: SARSA's target uses the *actual next action* from the behavior policy; Q-learning's target uses the *greedy best action*. Mixing them produces an off-policy algorithm that lacks Q-learning's convergence guarantees and SARSA's safety properties.
@@ -241,14 +298,42 @@ Optimistic initialization (e.g., $Q(s,a) = 10$) encourages exploration by making
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** TD(0) prediction (Guide 01), $\varepsilon$-greedy policy, action-value functions $Q(s,a)$
 - **Leads to:** Q-learning (Guide 03) — the off-policy counterpart, Expected SARSA, SARSA(λ) with eligibility traces (Guide 04), Actor-Critic methods (Module 06)
 - **Related to:** Policy gradient methods (SARSA updates $Q$, which implicitly defines a policy; policy gradient methods update $\pi$ directly)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 6.4 — SARSA derivation, cliff walking example, GLIE convergence conditions
 - Rummery & Niranjan (1994). *On-line Q-learning using connectionist systems* — the original SARSA paper (called "modified connectionist Q-learning" at the time)
 - Van Seijen et al. (2009). *A Theoretical and Empirical Analysis of Expected Sarsa* — shows Expected SARSA dominates SARSA in variance with minimal additional cost
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_sarsa_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_td_zero_prediction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

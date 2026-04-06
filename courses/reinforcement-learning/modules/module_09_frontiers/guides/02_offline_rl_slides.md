@@ -23,6 +23,7 @@ math: mathjax
 **Offline RL:** Given a fixed dataset $\mathcal{D}$ of transitions — learn a policy. No new interaction allowed.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Online["Online RL"]
         Ag1["Agent"] <-->|"interact"| Env1["Environment"]
@@ -32,11 +33,14 @@ flowchart LR
         D["Fixed Dataset\n$\mathcal{D} = \{(s,a,r,s')\}$"] --> Ag2["Agent\n(learns only from $\mathcal{D}$)"]
         X["Environment"] -.->|"no access"| Ag2
     end
-    style X fill:#d63031,color:#fff
-    style D fill:#4A90D9,color:#fff
 ```
 
 The dataset was collected by some **behavior policy** $\pi_\beta$ — it could be a human expert, a heuristic, a previous RL agent, or random exploration.
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Draw the contrast starkly. In online RL, data collection and learning are interleaved. In offline RL, they are completely separated. The dataset exists, it is fixed, and the agent must learn everything it needs from that fixed set of transitions. This is analogous to the difference between learning to drive by practicing (online) vs learning from a textbook and dashcam footage (offline). -->
 
@@ -56,6 +60,11 @@ The dataset was collected by some **behavior policy** $\pi_\beta$ — it could b
 
 Offline RL is the only RL approach that works here.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: The table makes the motivation concrete. In every row, the reason online RL fails is not technical — it is ethical or economic. You cannot ethically give patients random treatments to collect RL training data. You cannot financially absorb exploration losses in live trading. Offline RL is not just a technical variant — it addresses a fundamental constraint present in most real-world deployments. -->
 
 ---
@@ -67,6 +76,7 @@ The behavior policy $\pi_\beta$ induces a state-action distribution $d^{\pi_\bet
 A learned policy $\pi$ may visit $(s, a) \notin \text{supp}(d^{\pi_\beta})$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     D["Dataset coverage\n$d^{\pi_\beta}(s,a)$"] --> Q["Train Q-function\non dataset transitions"]
     Q --> BU["Bellman backup\n$\max_{a'} Q(s', a')$"]
@@ -74,18 +84,26 @@ flowchart TD
     OOD --> Over["Optimistic extrapolation\nhigh Q-values for OOD actions"]
     Over --> Policy["Policy selects OOD actions\n(looks good on paper)"]
     Policy --> Bad["Deployed policy fails\n(Q-values were wrong)"]
-    style OOD fill:#d63031,color:#fff
-    style Over fill:#d63031,color:#fff
-    style Bad fill:#d63031,color:#fff
 ```
 
 **The death spiral:** overestimated Q-values → OOD actions selected → more OOD bootstrapping → worse overestimation.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: This is the single most important slide in the deck. Distribution shift is not a minor technical issue — it is a fundamental obstacle that makes naive offline RL catastrophically bad. Walk through each node of the flowchart. The death spiral is real: in practice, naively applying DQN or SAC to a fixed dataset produces policies that are worse than simple behavior cloning in most settings. This motivated the entire field of offline RL algorithm design. -->
 
 ---
 
 ## Naive Off-Policy RL on Fixed Data: Why It Fails
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Standard Q-learning Bellman backup — DANGEROUS in offline setting
@@ -98,10 +116,16 @@ def bellman_backup(q_net, s_next, r, gamma):
 
     return r + gamma * max_q_next       # target: overestimated for OOD actions
 ```
+</div>
 
 The `max` operator selects the highest Q-value, which for OOD actions is an unconstrained extrapolation. Neural networks extrapolate optimistically — they will be overconfident in regions with no training data.
 
 > Applying standard off-policy RL to a fixed dataset almost always produces policies worse than behavior cloning.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Show the code to make the failure mode concrete. The max operator is not inherently bad — it is essential for Q-learning. But when the Q-function has never seen the (s, a) pairs being maximized over, the max is computed over garbage values. This is a case where the algorithm is technically correct but the preconditions for its correctness are violated by the offline setting. -->
 
@@ -140,13 +164,12 @@ Encode trajectory as: $(\hat{R}_1, s_1, a_1, \hat{R}_2, s_2, a_2, \ldots)$
 where $\hat{R}_t = \sum_{t'=t}^T r_{t'}$ is the **return-to-go**.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RTG["Target return $\hat{R}$"] --> TR["GPT Transformer\n(trained on $\mathcal{D}$)"]
     S["Current state $s_t$"] --> TR
     H["History of $(s, a, r)$"] --> TR
     TR --> A["Predicted action $a_t$"]
-    style TR fill:#4A90D9,color:#fff
-    style A fill:#6ab04c,color:#fff
 ```
 
 At inference: condition on desired target return $R_{\text{target}}$, and the model generates actions to achieve it.
@@ -252,6 +275,7 @@ Offline policy evaluation has its own variance and bias. A policy that looks bad
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Problem["Offline RL Problem\nFixed dataset, no new interaction"] --> DS["Core Challenge:\nDistribution Shift"]
     DS --> CQL["CQL\nPessimistic Q-values\n(push OOD Q down)"]
@@ -264,12 +288,6 @@ flowchart TD
 
     Eval --> Apps["Healthcare\nAutonomous Driving\nTrading\nRecommendation"]
 
-    style Problem fill:#d63031,color:#fff
-    style DS fill:#d63031,color:#fff
-    style CQL fill:#4A90D9,color:#fff
-    style DT fill:#4A90D9,color:#fff
-    style IQL fill:#4A90D9,color:#fff
-    style Apps fill:#6ab04c,color:#fff
 ```
 
 **Next:** RLHF and Safe RL — when the reward function itself must be learned from humans

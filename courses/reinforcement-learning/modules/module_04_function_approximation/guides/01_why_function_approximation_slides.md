@@ -31,6 +31,11 @@ TabularRL works when:       Real environments look like:
 
 Tabular methods are exactly right for toy problems and exactly wrong for real ones.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This slide lands the punchline immediately: tabular RL is provably correct but practically useless at scale. The Atari example makes the absurdity concrete — the table would be astronomically larger than the observable universe. Then pivot to: we need a different representation. -->
 
 ---
@@ -49,6 +54,11 @@ $$|\mathcal{S}| = m^d$$
 | 12 | 100 | $10^{24}$ | $8 \times 10^{15}$ TB |
 
 > Each additional dimension multiplies the table size by $m$.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Walk through the table row by row. 4 dimensions (CartPole has 4 state variables) already produces 10^8 states — 800 MB just for the table, before training. At 8 dimensions the table exceeds all data centers on Earth. This is the curse: exponential growth with linear increase in problem complexity. -->
 
@@ -76,6 +86,11 @@ s2 (position=1.02) → V = ?     ← never visited, no info
 s3 (position=1.03) → V = ?     ← never visited, no info
 ```
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The core limitation is not just memory — it is the complete absence of information sharing. Two nearly identical states have independent value estimates. In a continuous state space, every step visits a state that has never been seen before. The tabular estimate is literally undefined. -->
 
 ---
@@ -93,6 +108,11 @@ $$\hat{v}(s, \mathbf{w}) \approx V^\pi(s)$$
 **Same idea for action values:**
 
 $$\hat{q}(s, a, \mathbf{w}) \approx Q^\pi(s, a)$$
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The key equation is the hat notation: v-hat(s, w). The hat means "approximate." The weight vector w has d components; we can choose d to be much smaller than the number of states, and the function generalizes across all states by sharing parameters. This is the single most important concept in the module. -->
 
@@ -135,6 +155,12 @@ $$\mathbf{w} \leftarrow \mathbf{w} + \alpha \left[ V^\pi(S_t) - \hat{v}(S_t, \ma
 
 Linear FA requires a feature map $\mathbf{x} : \mathcal{S} \to \mathbb{R}^d$:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def cartpole_features(state):
     x, x_dot, theta, theta_dot = state
@@ -150,6 +176,7 @@ def cartpole_features(state):
         x_n * theta_n,          # cross term (physically meaningful)
     ])
 ```
+</div>
 
 The feature vector encodes what the agent can represent about the state.
 
@@ -206,6 +233,7 @@ Each center ci creates a "bump" of influence:
 # Neural Networks: Power vs. Stability
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S["State s"] --> H1["Hidden Layer 1\n(learned features)"]
     H1 --> H2["Hidden Layer 2"]
@@ -245,6 +273,7 @@ flowchart LR
 # When to Use Each Approach
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{State space<br>finite and small?} -->|Yes| TAB["Use tabular RL\n(Q-learning, TD)"]
     Q1 -->|No| Q2{Can you design<br>good features?}

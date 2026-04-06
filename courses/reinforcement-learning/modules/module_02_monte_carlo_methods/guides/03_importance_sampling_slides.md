@@ -39,6 +39,11 @@ Two separate policies:
 
 </div>
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Draw the contrast clearly. On-policy is simpler but constraining — the data-generating policy and the learning target are the same thing, so exploring (which is good for learning) contaminates the policy (which you want to be greedy). Off-policy separates these concerns. The behavior policy can be a reckless explorer while the target policy remains pure and greedy. This separation is fundamental to Q-learning and DQN. -->
 
 ---
@@ -63,6 +68,11 @@ $b$ = human expert behavior; $\pi$ = RL-optimized policy.
 One run of $b$ trains many $\pi_1, \pi_2, \ldots$ simultaneously.
 *Hyperparameter search, meta-learning.*
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Ground each use case in a concrete domain. The medical data example is powerful: you cannot run a random policy on patients. You use historical treatment data (b = past physicians) to evaluate a new treatment policy pi. Safe exploration is increasingly important in robotics. Multiple targets is the basis of "experience replay" in DQN — one replay buffer trains the same target policy repeatedly with different samples. -->
 
 ---
@@ -83,6 +93,11 @@ $$\pi(a \mid s) > 0 \implies b(a \mid s) > 0 \quad \forall s, a$$
 - $b = \pi$ (they can differ arbitrarily in probabilities)
 - $b$ being optimal or near-optimal
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: Coverage is a necessary mathematical condition, not just a technical assumption. If b never visits (s, a) pairs that pi would use, we literally have no information about those parts of pi's behavior. A uniform random policy trivially satisfies coverage (assigns positive probability to all actions in all states) and is therefore a common choice for b. Note: coverage can fail in large/continuous spaces where some states are extremely unlikely. -->
 
 ---
@@ -102,6 +117,11 @@ $$\Pr_b = \prod_{k=t}^{T-1} b(A_k \mid S_k)\, p(S_{k+1} \mid S_k, A_k)$$
 $$\boxed{\rho_{t:T-1} = \frac{\Pr_\pi}{\Pr_b} = \prod_{k=t}^{T-1} \frac{\pi(A_k \mid S_k)}{b(A_k \mid S_k)}}$$
 
 Only policy probabilities appear — no model required.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The cancellation of p(S'|S,A) is crucial and beautiful. We do need the model to generate the environment transitions, but we do NOT need to know the model probabilities to compute the IS ratio. The ratio depends only on how likely each action was under pi vs b. This means we only need to know pi(a|s) and b(a|s) — which we set ourselves — not the environment dynamics. -->
 
@@ -196,6 +216,12 @@ in virtually all practical scenarios (Sutton & Barto, Ch. 5.6).
 
 Maintain running weighted sum efficiently:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # For each episode, backward pass:
 G = 0.0
@@ -214,6 +240,7 @@ for (state, action, reward, b_prob) in reversed(episode):
 
     W = W * (1.0 / b_prob)   # pi(a|s)=1 for deterministic pi
 ```
+</div>
 
 `C[state]` is the cumulative weight denominator. The formula `V += (W/C) * (G - V)` is the weighted incremental mean.
 
@@ -260,6 +287,16 @@ $$\rho = c^T \implies \text{Var}[\rho \cdot G] \propto c^{2T}$$
 4. **Short effective horizon** — use $\gamma < 1$ or truncate
 
 <!-- Speaker notes: The exponential variance growth is why off-policy MC is rarely used for long-horizon problems in practice. TD methods (Q-learning, Retrace) address this by not requiring trajectory-level IS ratios. Per-decision IS (Precup et al., 2000) is a middle ground: use a separate ratio for each reward term, which grows slower than the full trajectory ratio. This is the basis of V-trace and Retrace, used in distributed RL. -->
+
+<div class="flow">
+<div class="flow-step mint">Weighted IS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Per-decision IS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Keep $\pi$ and $b$ close</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">Short effective horizon</div>
+</div>
 
 ---
 

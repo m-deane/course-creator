@@ -1,14 +1,40 @@
 # Trust Region Policy Optimization (TRPO)
 
+> **Reading time:** ~10 min | **Module:** 7 — Advanced Policy Optimization | **Prerequisites:** Module 6
+
 ## In Brief
 
 Trust region methods constrain how much a policy can change in a single gradient update. Without such a constraint, large updates can collapse performance catastrophically and recovery is slow or impossible. TRPO (Schulman et al., 2015) formalizes this intuition as a constrained optimization problem, providing a principled guarantee that each update improves the policy.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Trust region methods constrain how much a policy can change in a single gradient update. Without such a constraint, large updates can collapse performance catastrophically and recovery is slow or impossible.
+</div>
+
 
 ## Key Insight
 
 Gradient descent assumes the loss landscape is locally linear near the current parameters. For policies, this assumption breaks down: a parameter update that looks small in Euclidean space can produce a large behavioral change, because the mapping from parameters to action distributions is nonlinear. Trust region methods measure change in the space of **distributions** rather than parameters, keeping each update within a safe neighborhood where the linear approximation is reliable.
 
 ---
+
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Gradient descent assumes the loss landscape is locally linear near the current parameters.
+</div>
+## Intuitive Explanation
+
+Think of policy optimization as navigating a hill in the dark. You can feel which direction is uphill from where you stand, but you cannot see how the hill curves in the distance. Taking a very large step based on local gradient information risks stepping off a cliff.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Think of policy optimization as navigating a hill in the dark.
+</div>
+
+
+TRPO says: only take steps small enough that the terrain you measured accurately describes where you are stepping. The KL divergence is your step-length ruler — not in parameter space, but in the space of what the policy actually does. You can reshape the policy distribution's parameters dramatically, but if the resulting distributions are close, you have stayed within the safe neighborhood.
+
+---
+
 
 ## Formal Definition
 
@@ -44,13 +70,6 @@ Here $\hat{A}(s,a)$ is the advantage estimate (how much better action $a$ is com
 
 ---
 
-## Intuitive Explanation
-
-Think of policy optimization as navigating a hill in the dark. You can feel which direction is uphill from where you stand, but you cannot see how the hill curves in the distance. Taking a very large step based on local gradient information risks stepping off a cliff.
-
-TRPO says: only take steps small enough that the terrain you measured accurately describes where you are stepping. The KL divergence is your step-length ruler — not in parameter space, but in the space of what the policy actually does. You can reshape the policy distribution's parameters dramatically, but if the resulting distributions are close, you have stayed within the safe neighborhood.
-
----
 
 ## Natural Policy Gradient
 
@@ -71,6 +90,14 @@ This update moves the same distance in distribution space regardless of how the 
 Computing $F^{-1}$ directly costs $O(d^2)$ in memory and $O(d^3)$ in time for a network with $d$ parameters, making it infeasible for deep networks. TRPO avoids explicit inversion using the **conjugate gradient (CG)** algorithm to solve $Fx = g$ iteratively, requiring only matrix-vector products $Fv$ rather than the full matrix.
 
 After computing the update direction $x = F^{-1}g$, a **backtracking line search** finds the largest step size that satisfies the KL constraint and achieves a positive surrogate objective improvement.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 def trpo_step(policy, states, actions, advantages, old_log_probs,
@@ -163,6 +190,7 @@ def conjugate_gradient(Av, b, n_iters=10, tol=1e-10):
 
     return x
 ```
+</div>
 
 ---
 
@@ -188,6 +216,26 @@ destroy policy behavior            regardless of parameter norm
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Diagram: Trust Region</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Unconstrained Gradient</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Why TRPO Works but Is Complex to Implement
 
 TRPO provides a **monotonic improvement guarantee** under certain assumptions: each constrained update cannot decrease the true objective $J(\theta)$. This makes it theoretically sound, unlike plain policy gradient which can oscillate or diverge.
@@ -208,8 +256,17 @@ For large networks this translates to 10-50x the compute of a plain gradient ste
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — KL constraint too loose.**
 Setting $\delta$ too large (e.g., $\delta = 0.5$) defeats the purpose: the trust region becomes so wide that catastrophic updates are not prevented. Typical values are $\delta \in [0.01, 0.05]$. If your policy collapses early in training, decrease $\delta$.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — KL constraint too loose.**
+Setting $\delta$ too large (e.g., $\delta = 0.5$) defeats the purpose: the trust region becomes so wide that catastrophic updates are not prevented.
+</div>
 
 **Pitfall 2 — Advantage estimates not normalized.**
 TRPO's surrogate is sensitive to the scale of $\hat{A}$. If advantages are not normalized to zero mean and unit variance per batch, the effective step size varies wildly across batches. Always normalize advantages before computing the ratio objective.
@@ -227,11 +284,24 @@ The constraint is $D_{KL}(\pi_{\theta_{old}} \| \pi_\theta)$, i.e., the old poli
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Policy gradient theorem (Module 5), advantage estimation (Module 6), importance sampling
 - **Leads to:** PPO (Guide 02) which approximates TRPO's constraint with clipping; natural gradients in variational inference
 - **Related to:** Proximal optimization methods, mirror descent, information geometry
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -239,3 +309,18 @@ The constraint is $D_{KL}(\pi_{\theta_{old}} \| \pi_\theta)$, i.e., the old poli
 - Kakade, S. M. (2002). *A Natural Policy Gradient.* NeurIPS 2001. — Original derivation of the natural policy gradient.
 - Martens, J. (2014). *New Insights and Perspectives on the Natural Gradient Method.* JMLR. — Comprehensive treatment of Fisher information and natural gradients.
 - Schulman, J. (2016). *Optimizing Expectations: From Deep Reinforcement Learning to Stochastic Computation Graphs.* PhD Thesis, UC Berkeley. — Extended derivations and connections to PPO.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_trust_regions_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_ppo_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

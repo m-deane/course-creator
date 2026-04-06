@@ -1,8 +1,17 @@
 # Module 3: Temporal Difference Learning — Cheatsheet
 
+> **Reading time:** ~6 min | **Module:** 3 — Temporal Difference | **Prerequisites:** Module 2
+
 ## Core Update Rules
 
 ### TD(0) Prediction
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### TD(0) Prediction
+
+Evaluate a fixed policy $\pi$ by updating state values after every step.
+</div>
+
 
 Evaluate a fixed policy $\pi$ by updating state values after every step.
 
@@ -179,3 +188,9 @@ Correct update order per step:
 - Rummery & Niranjan (1994). *On-line Q-learning using connectionist systems* — original SARSA paper
 - van Hasselt (2010). *Double Q-learning.* NeurIPS — maximization bias and its fix
 - Schulman et al. (2016). *High-dimensional continuous control using generalized advantage estimation.* ICLR — TD(λ) in modern deep RL
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> 12 (eligibility traces)
+- Watkins & Dayan (1992).
+</div>

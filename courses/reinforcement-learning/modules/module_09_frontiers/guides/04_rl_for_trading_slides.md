@@ -33,6 +33,11 @@ $$\max_\pi \; \mathbb{E}\left[\sum_{t=0}^T \gamma^t R(s_t, a_t, s_{t+1})\right]$
 
 > You do not predict to trade well. You trade to maximize risk-adjusted return.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The key distinction between supervised ML and RL for trading is the objective. A supervised model that predicts price direction correctly 55% of the time may still lose money after transaction costs, or may concentrate risk in ways that are unacceptable. RL sidesteps the prediction step and directly optimizes the performance metric that matters. The RL reward function is the bridge between prediction and action — and designing it correctly is the central engineering challenge. -->
 
 ---
@@ -48,14 +53,18 @@ $$\max_\pi \; \mathbb{E}\left[\sum_{t=0}^T \gamma^t R(s_t, a_t, s_{t+1})\right]$
 | Discount | $\gamma$ | Time preference for returns |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Agent["Trading Agent\n$\pi_\theta$"] --"$a_t$: trade"--> Market["Market\nEnvironment"]
     Market --"$s_{t+1}$: new prices\n+ portfolio state"--> Agent
     Market --"$r_t$: P&L\n- costs - risk"--> Agent
 
-    style Agent fill:#4A90D9,color:#fff
-    style Market fill:#E8844A,color:#fff
 ```
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The MDP formulation makes the trading problem concrete. Walk through each component. Note that the transition kernel — market dynamics — is non-stationary and partially observable. This is what makes the trading problem hard: the environment itself changes as market regimes shift, other market participants adapt, and macro conditions evolve. The agent must learn a policy that is robust to this non-stationarity. -->
 
@@ -89,6 +98,12 @@ flowchart LR
 - Commodity indices
 
 ### Feature Normalization
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Rolling Z-score — no look-ahead
 def zscore(series, window=252):
@@ -96,11 +111,17 @@ def zscore(series, window=252):
     sd = series.rolling(window).std()
     return (series - mu) / (sd + 1e-8)
 ```
+</div>
 
 </div>
 </div>
 
 > Use **returns**, not price levels. Returns are approximately stationary; prices are not.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: State design is often the most impactful choice in building a trading RL agent. Two principles dominate: first, only use information available at decision time (look-ahead bias is a common and catastrophic mistake); second, normalize all features. Neural networks are sensitive to input scale — unnormalized price levels will cause the network to overfit to the specific price regime in the training data. Returns and rolling Z-scores are both stationary transformations that generalize better across market regimes. -->
 
@@ -141,6 +162,11 @@ $$a \in \Delta^n = \left\{w \geq 0 : \sum_i w_i = 1\right\}$$
 - Few assets, execution focus: discrete (DQN/Dueling DQN)
 - Multi-asset portfolio allocation: continuous (SAC or PPO)
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The choice of action space determines which algorithms you can use and how expressive the policy can be. Discrete action spaces map naturally to individual security trading decisions. Continuous action spaces are more natural for portfolio allocation where you want to express exact weight targets. SAC is particularly well-suited for continuous trading because the entropy bonus encourages action diversity, which in the portfolio context translates to position diversification — a desirable property. -->
 
 ---
@@ -172,6 +198,12 @@ An agent rewarded only on P&L will:
 
 Transaction costs are not optional — they determine deployability.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def trading_reward(
     current_weights: np.ndarray,   # weights after rebalancing
@@ -184,6 +216,7 @@ def trading_reward(
     transaction_cost = cost_rate * turnover
     return portfolio_return - transaction_cost
 ```
+</div>
 
 **Typical transaction cost rates:**
 
@@ -203,6 +236,7 @@ def trading_reward(
 ## Algorithm Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     ASpace{"Action Space?"} --> Disc["Discrete\n(buy/sell/hold)"]
     ASpace --> Cont["Continuous\n(portfolio weights)"]
@@ -225,6 +259,7 @@ flowchart TD
 **Walk-forward backtesting:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph WF["Walk-Forward Evaluation"]
         T1["Train\n(Year 1)"] --> E1["Eval\n(Q1 Y2)"]
@@ -232,12 +267,6 @@ flowchart LR
         T3["Train\n(Y1+Q1+Q2)"] --> E3["Eval\n(Q3 Y2)"]
         T4["Train\n(...)"] --> E4["Eval\n(...)"]
     end
-    style T1 fill:#4A90D9,color:#fff
-    style T2 fill:#4A90D9,color:#fff
-    style T3 fill:#4A90D9,color:#fff
-    style E1 fill:#6ab04c,color:#fff
-    style E2 fill:#6ab04c,color:#fff
-    style E3 fill:#6ab04c,color:#fff
 ```
 
 The agent is **never evaluated on data it trained on**. Each evaluation window uses a freshly-trained or fine-tuned agent.
@@ -281,6 +310,7 @@ Assuming zero slippage, mid-price execution, or ignoring market impact.
 ## The Sim-to-Real Gap in Trading
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     BT["Backtesting\nPerformance"] --> Gap["Sim-to-Real Gap"]
     Gap --> Live["Live Trading\nPerformance"]
@@ -293,7 +323,6 @@ flowchart LR
     end
 
     Sources --> Gap
-    style Gap fill:#d63031,color:#fff
 ```
 
 **Mitigations:**
@@ -373,6 +402,7 @@ Deploy with drawdown-based position reduction: if portfolio drawdown exceeds X%,
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Trading["RL for Trading"] --> Env["Environment Design"]
     Trading --> Algo["Algorithm Selection"]
@@ -389,10 +419,6 @@ flowchart TD
     Eval --> WF["Walk-forward\nbacktest"]
     WF --> Pitfalls["Avoid:\nLook-ahead bias\nSurvivorship bias\nZero-cost assumption"]
 
-    style Trading fill:#4A90D9,color:#fff
-    style Reward fill:#E8844A,color:#fff
-    style WF fill:#6ab04c,color:#fff
-    style Pitfalls fill:#d63031,color:#fff
 ```
 
 **Next:** Cheatsheet — quick reference for all Module 9 topics

@@ -30,6 +30,11 @@ Run the policy. Observe the returns. Average them.
 
 > **No model required. No Bellman equations to solve.**
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The Bellman equation is the foundation of DP but requires knowing transition probabilities. MC bypasses this entirely by sampling from the real (or simulated) environment. This is why MC is called "model-free." Emphasize: we are estimating the same quantity V^pi(s) — just using a different computational strategy. -->
 
 ---
@@ -47,6 +52,11 @@ $$G_{T-2} = R_{T-1} + \gamma G_{T-1}$$
 $$G_t = R_{t+1} + \gamma G_{t+1}$$
 
 This **backward recursion** is the key to efficient implementation.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The backward recursion G_t = R_{t+1} + gamma * G_{t+1} is computationally important. Instead of summing from t to T for every t (quadratic cost), we compute G once from the end of the episode in linear time. This is how both first-visit and every-visit MC are implemented efficiently. Walk through the recursion with a short example: 3-step episode. -->
 
@@ -66,6 +76,11 @@ For each state s:
 ```
 
 After enough episodes, $V(s) \to V^\pi(s)$ by the **Law of Large Numbers**.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: This diagram is the whole algorithm. The sophistication is in the details — which visits count, how returns are computed, how averages are maintained. But the conceptual picture is simple: collect episodes, compute returns, average. Ask students: what would make this converge slowly? Answer: high variance in returns, or states visited rarely. -->
 
@@ -101,6 +116,11 @@ Only the *first* time $s$ appears counts.
 
 </div>
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The key distinction: first-visit produces independent samples because each is the first from a fresh "start" at that state within the episode. Every-visit samples within one episode are correlated (later visits are continuations of earlier visits). In practice every-visit often works just as well and gives more data. Rule of thumb: use first-visit for theoretical work, every-visit for implementation. -->
 
 ---
@@ -129,6 +149,12 @@ The first-visit check: "has $S_t$ appeared earlier in this episode?"
 
 ## Python: Efficient Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def mc_prediction_first_visit(env, policy, gamma=0.99, n_episodes=10_000):
     returns_sum   = defaultdict(float)
@@ -151,6 +177,7 @@ def mc_prediction_first_visit(env, policy, gamma=0.99, n_episodes=10_000):
     return {s: returns_sum[s] / returns_count[s]
             for s in returns_count}
 ```
+</div>
 
 <!-- Speaker notes: The `reversed(episode)` is the key implementation detail. By iterating backwards, we accumulate G cheaply with one multiply and one add per step. The `visited` set implements the first-visit check in O(1) per lookup. Note: `returns_sum` and `returns_count` are maintained across all episodes, not per-episode. This accumulates statistics over the full training run. -->
 

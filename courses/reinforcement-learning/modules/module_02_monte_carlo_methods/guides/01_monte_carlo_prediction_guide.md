@@ -1,8 +1,15 @@
 # Monte Carlo Prediction
 
+> **Reading time:** ~11 min | **Module:** 2 — Monte Carlo Methods | **Prerequisites:** Module 1
+
 ## In Brief
 
 Monte Carlo (MC) prediction estimates the value function $V^\pi(s)$ for a given policy $\pi$ by averaging actual returns observed from sample episodes. No model of the environment is required — only experience.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Monte Carlo (MC) prediction estimates the value function $V^\pi(s)$ for a given policy $\pi$ by averaging actual returns observed from sample episodes. No model of the environment is required — only experience.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,35 @@ Where Dynamic Programming computes value functions by solving Bellman equations 
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Where Dynamic Programming computes value functions by solving Bellman equations exactly (requiring a model), Monte Carlo simply asks: "Run the policy many times and average what you actually get." The...
+</div>
+## Intuitive Explanation
+
+Imagine you want to know the average score a basketball player earns per game when playing a specific strategy. You could try to model every possible game scenario mathematically — or you could just watch 1,000 games and compute the average. Monte Carlo takes the second approach.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Imagine you want to know the average score a basketball player earns per game when playing a specific strategy.
+</div>
+
+
+Each episode is one "game." The return $G_t$ from a state is the total discounted reward from that point to the end of the episode. Average enough of these, and you have a reliable estimate of $V^\pi(s)$.
+
+---
+
+
 ## Formal Definition
 
 Given a policy $\pi$ and an episodic MDP with states $\mathcal{S}$, actions $\mathcal{A}$, and discount factor $\gamma \in [0, 1)$, the true state-value function is:
+
+<div class="callout-info">
+<strong>Info:</strong> Given a policy $\pi$ and an episodic MDP with states $\mathcal{S}$, actions $\mathcal{A}$, and discount factor $\gamma \in [0, 1)$, the true state-value function is:
+
+$$V^\pi(s) = \mathbb{E}_\pi\left[...
+</div>
+
 
 $$V^\pi(s) = \mathbb{E}_\pi\left[G_t \mid S_t = s\right]$$
 
@@ -32,17 +65,15 @@ where $N(s)$ is the number of times state $s$ has been visited.
 
 ---
 
-## Intuitive Explanation
-
-Imagine you want to know the average score a basketball player earns per game when playing a specific strategy. You could try to model every possible game scenario mathematically — or you could just watch 1,000 games and compute the average. Monte Carlo takes the second approach.
-
-Each episode is one "game." The return $G_t$ from a state is the total discounted reward from that point to the end of the episode. Average enough of these, and you have a reliable estimate of $V^\pi(s)$.
-
----
 
 ## First-Visit vs. Every-Visit MC
 
 A single episode may visit the same state $s$ multiple times. The two variants differ in which visits count toward the average.
+
+<div class="callout-warning">
+<strong>Warning:</strong> A single episode may visit the same state $s$ multiple times.
+</div>
+
 
 ### First-Visit MC
 
@@ -89,6 +120,26 @@ For state S2:
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">First-Visit</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Every-Visit MC</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Algorithm: MC Prediction (First-Visit)
 
 **Input:** Policy $\pi$, discount $\gamma$, number of episodes $N$
@@ -118,6 +169,14 @@ The backward pass for computing $G_t$ is a key implementation detail — it avoi
 ---
 
 ## Python Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -209,6 +268,7 @@ def mc_prediction_every_visit(env, policy, gamma=0.99, n_episodes=10_000):
     V = {s: returns_sum[s] / returns_count[s] for s in returns_count}
     return V
 ```
+</div>
 
 ---
 
@@ -277,8 +337,17 @@ The key condition is that every state be visited infinitely often — satisfied 
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **High variance in return estimates**
 Returns $G_t$ are sums of many random rewards. Variance compounds with episode length and discount: $\text{Var}[G_t] \approx \sum_{k} \gamma^{2k} \text{Var}[R_{t+k}]$. Mitigations: use $\gamma < 1$ to down-weight distant rewards; collect more episodes; use importance-sampling variance reduction (see Guide 03).
+
+<div class="callout-warning">
+<strong>Warning:</strong> **High variance in return estimates**
+Returns $G_t$ are sums of many random rewards.
+</div>
 
 **Requires complete episodes**
 MC cannot update until the episode ends. This is a fundamental limitation: (1) inapplicable to continuing (non-episodic) tasks, (2) slow learning in environments with very long episodes, (3) no online updating mid-episode. TD methods (Module 3) solve this by bootstrapping.
@@ -296,12 +365,40 @@ If $V(s)$ is initialized to non-zero values and updated incrementally, early est
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Markov Decision Processes (Module 0), policy evaluation concept from Dynamic Programming (Module 1)
 - **Leads to:** Monte Carlo Control (Guide 02), Temporal-Difference learning (Module 3) which combines MC's model-free sampling with DP's bootstrapping
 - **Related to:** Importance sampling (Guide 03) for off-policy estimation; rollout methods in planning
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 5.1–5.2 — primary reference for this guide
 - Singh & Sutton (1996), "Reinforcement learning with replacing eligibility traces" — analysis of first-visit vs every-visit convergence rates
 - Precup, Sutton & Singh (2000), "Eligibility Traces for Off-Policy Policy Evaluation" — extensions to off-policy settings
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_monte_carlo_prediction_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_mc_prediction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

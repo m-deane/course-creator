@@ -25,6 +25,8 @@ Speaker notes: Key talking points for this slide
 - Rainbow: all of the above, combined
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about DQN Improvements. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # DQN's Three Remaining Weaknesses
@@ -45,6 +47,13 @@ Speaker notes: Key talking points for this slide
 - Uniform sampling: a transition with TD error of 0.001 gets the same training attention as one with TD error of 5.0 — that's clearly suboptimal
 -->
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about DQN's Three Remaining Weaknesses. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -57,6 +66,8 @@ Speaker notes: Key talking points for this slide
 - The fix is a two-line change to the target computation — zero architectural changes
 - van Hasselt et al. (2016) showed measurable performance improvements on Atari with this single change
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Double DQN: Fixing Overestimation Bias. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -82,6 +93,13 @@ Speaker notes: Key talking points for this slide
 - van Hasselt (2010) showed this causes problems even with tabular Q-learning and function approximation
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Why DQN Overestimates. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Double DQN: Decouple Selection from Evaluation
@@ -104,6 +122,12 @@ $$Y^{\text{DDQN}} = r + \gamma Q(s', a^*;\, \theta^-)$$
 </div>
 <div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Select action using online network
 next_a = q_net(next_states).argmax(
@@ -117,6 +141,7 @@ next_q = target_net(next_states).gather(
 
 targets = rewards + gamma * next_q * (1 - dones)
 ```
+</div>
 
 </div>
 </div>
@@ -128,6 +153,13 @@ Speaker notes: Key talking points for this slide
 - Two independent overestimates of the same action are less likely than one, so bias is reduced
 - Code: the only change from vanilla DQN is replacing target_net(next_states).max() with the two-step selection/evaluation
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Double DQN: Decouple Selection from Evaluation. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -141,6 +173,8 @@ Speaker notes: Key talking points for this slide
 - The motivation comes from observing that in many states, action choice is irrelevant
 - Wang et al. (2016) showed consistent improvements across Atari games, especially those with many similar-value actions
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Dueling DQN: Separating Value from Advantage. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -164,11 +198,19 @@ Speaker notes: Key talking points for this slide
 - In practice: the value stream learns faster for states where action doesn't matter, improving overall Q-value accuracy
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Value-Advantage Decomposition. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Dueling Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S["State $s$"]
     ENC["Shared Encoder"]
@@ -184,8 +226,6 @@ flowchart TD
     A --> AGG
     AGG --> OUT
 
-    style V fill:#4A90D9,color:#fff
-    style A fill:#E8844A,color:#fff
 ```
 
 **Identifiability constraint** — subtract mean advantage:
@@ -200,9 +240,17 @@ Speaker notes: Key talking points for this slide
 - The training loss and procedure are identical to vanilla DQN — only the network architecture changes
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Dueling Architecture. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Dueling Network Code
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class DuelingQNetwork(nn.Module):
@@ -229,6 +277,7 @@ class DuelingQNetwork(nn.Module):
         # Mean-subtraction: identifiability constraint
         return v + (a - a.mean(dim=1, keepdim=True))
 ```
+</div>
 
 > Drop-in replacement for standard `QNetwork` — no other code changes required.
 
@@ -238,6 +287,8 @@ Speaker notes: Key talking points for this slide
 - The mean(dim=1, keepdim=True) is the identifiability constraint in one line of code
 - Practical tip: initialize the advantage stream's final layer weights to zero — this ensures the network starts near V(s) with zero advantages, which is a reasonable initialization
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Dueling Network Code. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -251,6 +302,8 @@ Speaker notes: Key talking points for this slide
 - The insight is borrowed from curriculum learning: focus on examples that are currently most informative
 - High TD error = the network was surprised = there's something to learn here
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Prioritized Experience Replay. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -272,6 +325,8 @@ Speaker notes: Key talking points for this slide
 - The solution is inspired by curriculum learning: sample according to how much the network can learn from each transition
 - The TD error is a natural measure of "surprise" — high TD error means the network's prediction was far off, so there's more to learn
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Why Uniform Sampling Wastes Compute. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -300,6 +355,8 @@ Speaker notes: Key talking points for this slide
 - Note: priorities must be updated after each gradient step with the new TD errors — stale priorities defeat the purpose
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about PER: Priority and Sampling Probability. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Importance Sampling Correction
@@ -324,6 +381,8 @@ Speaker notes: Key talking points for this slide
 - normalization by max weight ensures weights are always ≤ 1, so only scale down, never up
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Importance Sampling Correction. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # PER: Data Structure for Efficient Sampling
@@ -333,6 +392,7 @@ Naive priority sampling is $O(N)$ — too slow for a buffer of 1M transitions.
 A **sum tree** reduces sampling and updating to $O(\log N)$:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     ROOT["Root: total = 42"]
     N1["25"]
@@ -361,6 +421,8 @@ Speaker notes: Key talking points for this slide
 - In practice, use the SumTree class from the guide rather than implementing from scratch
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about PER: Data Structure for Efficient Sampling. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Rainbow: Combining All Improvements
@@ -387,6 +449,8 @@ Speaker notes: Key talking points for this slide
 - Noisy Networks add learnable Gaussian noise to weights, enabling more structured exploration than ε-greedy
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Rainbow: Combining All Improvements. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Rainbow Ablation Results (Atari 57)
@@ -394,6 +458,7 @@ Speaker notes: Key talking points for this slide
 The Rainbow paper ablation removed one component at a time:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     FULL["Rainbow\n(full)"]
     NO_PER["No PER\n(−12% median score)"]
@@ -410,8 +475,6 @@ graph LR
     FULL --> NO_DUEL
     FULL --> NO_NOISY
 
-    style FULL fill:#4A90D9,color:#fff
-    style NO_DIST fill:#F44336,color:#fff
 ```
 
 > Every component contributes. No single component dominates.
@@ -423,6 +486,8 @@ Speaker notes: Key talking points for this slide
 - The conclusion: all components interact positively — Rainbow is more than the sum of its parts
 - Practical recommendation: for most applications, Double DQN + Dueling + PER (the three covered in depth here) provide most of the gain with less implementation complexity than full Rainbow
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Rainbow Ablation Results (Atari 57). Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -443,6 +508,8 @@ Speaker notes: Key talking points for this slide
 - Add PER when you have the sum-tree infrastructure and need better sample efficiency
 - Full Rainbow is appropriate for benchmark comparisons or when pushing performance limits
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Comparison Summary. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -481,11 +548,14 @@ Speaker notes: Key talking points for this slide
 - The "validate incrementally" advice is practical wisdom: each fix is simple, but combined they're hard to debug simultaneously
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Common Pitfalls. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     DQN["DQN (baseline)"]
     DDQN["+ Double DQN\nFix: overestimation bias\nChange: 2 lines of target code"]
@@ -505,3 +575,5 @@ Speaker notes: Key talking points for this slide
 - PER adds meaningful complexity (sum tree data structure) but provides significant sample efficiency gains
 - Next: Guide 03 covers practical deep RL — hyperparameter tuning, debugging, and reproducibility
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

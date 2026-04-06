@@ -1,8 +1,15 @@
 # Soft Actor-Critic (SAC)
 
+> **Reading time:** ~13 min | **Module:** 7 — Advanced Policy Optimization | **Prerequisites:** Module 6
+
 ## In Brief
 
 Soft Actor-Critic (Haarnoja et al., 2018) is an off-policy actor-critic algorithm built on the **maximum entropy reinforcement learning** framework. Rather than simply maximizing expected return, SAC maximizes a combination of return and policy entropy. This makes the learned policy stochastically exploratory by design, producing policies that are more robust, better at avoiding local optima, and more sample-efficient than on-policy methods like PPO.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Soft Actor-Critic (Haarnoja et al., 2018) is an off-policy actor-critic algorithm built on the **maximum entropy reinforcement learning** framework. Rather than simply maximizing expected return, SAC maximizes a combination of return and policy entropy.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,39 @@ Standard RL trains a policy to be as deterministic as possible — commit to the
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Standard RL trains a policy to be as deterministic as possible — commit to the best action and ignore all others.
+</div>
+## Intuitive Explanation
+
+Imagine training a robot arm to grasp objects. A standard RL policy commits to one specific joint trajectory. If the object is slightly displaced, the policy fails because it has no experience with variations. A maximum entropy policy explores many different grasping approaches simultaneously — it finds multiple ways to succeed. When the object moves, it has backup strategies available.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Imagine training a robot arm to grasp objects.
+</div>
+
+
+The temperature $\alpha$ adjusts how much the robot "cares" about trying different approaches versus optimizing the reward. High $\alpha$ → diverse strategies, slower convergence to optimal. Low $\alpha$ → focused behavior, closer to standard RL.
+
+---
+
+
 ## Formal Definition
 
 ### Maximum Entropy Reinforcement Learning
+
+<div class="callout-info">
+<strong>Info:</strong> ### Maximum Entropy Reinforcement Learning
+
+The standard RL objective is:
+
+$$J_{standard}(\pi) = \sum_{t} \mathbb{E}_{(s_t, a_t) \sim \rho_\pi}\!\left[r(s_t, a_t)\right]$$
+
+The maximum entropy RL obje...
+</div>
+
 
 The standard RL objective is:
 
@@ -40,13 +77,6 @@ The soft value function subtracts the log-probability (negative entropy contribu
 
 ---
 
-## Intuitive Explanation
-
-Imagine training a robot arm to grasp objects. A standard RL policy commits to one specific joint trajectory. If the object is slightly displaced, the policy fails because it has no experience with variations. A maximum entropy policy explores many different grasping approaches simultaneously — it finds multiple ways to succeed. When the object moves, it has backup strategies available.
-
-The temperature $\alpha$ adjusts how much the robot "cares" about trying different approaches versus optimizing the reward. High $\alpha$ → diverse strategies, slower convergence to optimal. Low $\alpha$ → focused behavior, closer to standard RL.
-
----
 
 ## SAC Architecture
 
@@ -96,6 +126,14 @@ This means: if the policy entropy is above the target, decrease $\alpha$ (less e
 ---
 
 ## Full SAC Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -329,6 +367,7 @@ class SACAgent:
             "entropy":     -log_probs.mean().item(),
         }
 ```
+</div>
 
 ---
 
@@ -388,10 +427,39 @@ class SACAgent:
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">SAC</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">PPO: When to Use Which</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Common Pitfalls
+
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
 
 **Pitfall 1 — Replay buffer too small.**
 SAC requires a large replay buffer (at least 100K transitions, ideally 1M) for the off-policy updates to be effective. A buffer that is too small causes overfitting to recent experience and instability. This is the most common SAC failure mode.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Replay buffer too small.**
+SAC requires a large replay buffer (at least 100K transitions, ideally 1M) for the off-policy updates to be effective.
+</div>
 
 **Pitfall 2 — Target entropy set incorrectly.**
 The default $\bar{\mathcal{H}} = -\dim(\mathcal{A})$ works well for normalized action spaces. If the action space is not in $[-1, 1]^d$, scale accordingly. Too-high target entropy prevents the policy from committing to good actions; too-low collapses exploration.
@@ -412,11 +480,24 @@ Polyak coefficient $\tau = 0.005$ (i.e., 99.5% old, 0.5% new per step) is the st
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Actor-critic architectures (Module 6), double Q-learning (Module 5), exploration-exploitation trade-offs (Modules 2-3)
 - **Leads to:** TD3 (Fujimoto 2018) adds deterministic policy gradient to the SAC framework; REDQ (Chen 2021) pushes sample efficiency further with ensembles
 - **Related to:** MaxEnt IRL (Ziebart 2008) uses the same entropy-regularized objective for inverse RL; variational inference objectives have the same form as the soft Bellman equations
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -425,3 +506,18 @@ Polyak coefficient $\tau = 0.005$ (i.e., 99.5% old, 0.5% new per step) is the st
 - Fujimoto, S., Hoof, H., & Meger, D. (2018). *Addressing Function Approximation Error in Actor-Critic Methods.* ICML 2018. — TD3, the deterministic counterpart to SAC; introduces double Q-networks in the actor-critic setting.
 - van Hasselt, H., Guez, A., & Silver, D. (2016). *Deep Reinforcement Learning with Double Q-learning.* AAAI 2016. — Original double Q-learning paper; motivation for SAC's dual-critic design.
 - Stable-Baselines3 SAC implementation: https://stable-baselines3.readthedocs.io/en/master/modules/sac.html — production-quality reference implementation with extensive documentation.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_sac_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_ppo_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

@@ -29,6 +29,11 @@ Q(s,a) → useful for policy improvement (we can act greedily: argmax_a Q(s,a))
 
 > The step from $V$ to $Q$ is small mathematically — replace the state value with an action-value. But it unlocks full policy optimization without a model.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Clarify why we need Q instead of V for control. With V, we can compute the greedy policy only if we have the transition model: pi*(s) = argmax_a sum_{s'} p(s'|s,a)[r + gamma*V(s')]. Without the model, we cannot compute this argmax. With Q(s,a), the greedy policy is simply argmax_a Q(s,a) — no model needed. This is why Q functions are central to model-free control. -->
 
 ---
@@ -58,6 +63,11 @@ $$\underbrace{S_t}_{S}, \underbrace{A_t}_{A}, \underbrace{R_{t+1}}_{R}, \underbr
 
 > $A_{t+1}$ is chosen from the current behavior policy, not computed as the greedy max. This single choice defines on-policy learning.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: The name SARSA is a mnemonic for exactly what goes into the update. Have students say it: S-A-R-S-A. The critical element is the final A: it is a real action drawn from the current policy, with its exploration noise intact. Q-learning replaces this with max_a Q(s',a) — that is the entire algorithmic difference between on-policy and off-policy TD control. -->
 
 ---
@@ -74,6 +84,11 @@ Compare to TD(0) for $V$:
 $$\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$$
 
 The only change: $V(S_{t+1}) \to Q(S_{t+1}, A_{t+1})$ — action value of the *actual* next action.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: Put both equations side by side and highlight the single difference. V(S_{t+1}) is replaced by Q(S_{t+1}, A_{t+1}). This small change has major implications: we now need to observe not just the next state, but also the next action. That observation is what makes the algorithm on-policy — we see what the agent actually does next. -->
 
@@ -92,6 +107,11 @@ Target policy   (what Q represents): ε-greedy over Q
 SARSA evaluates the $\varepsilon$-greedy policy — including its random exploratory actions.
 
 > SARSA asks: "How good am I, counting all the times I explore randomly?"
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Contrast this with what Q-learning does: Q-learning evaluates the greedy policy while behaving epsilon-greedily. So Q-learning asks: "How good would I be if I always picked the best action?" — even while it is actually exploring. On-policy vs off-policy is one of the most important distinctions in RL. It affects safety, convergence, and the value estimates the algorithm produces. -->
 
@@ -189,6 +209,12 @@ Key: $A_{t+1}$ is chosen **before** the Q update and **carried forward** to the 
 
 ## Code: SARSA Core
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -216,6 +242,7 @@ def sarsa(env, num_episodes, alpha=0.1, gamma=0.99, epsilon=0.1):
             state, action = next_state, next_action   # Carry forward
     return Q
 ```
+</div>
 
 <!-- Speaker notes: Two lines are critical. Line "next_action = epsilon_greedy(...)": this is where on-policy is enforced — we sample from the behavior policy, not take the max. Line "state, action = next_state, next_action": this carries the sampled action forward so it is executed (not re-sampled) at the top of the next iteration. Ask students to identify where this would need to change to become Q-learning. -->
 
@@ -231,6 +258,12 @@ def sarsa(env, num_episodes, alpha=0.1, gamma=0.99, epsilon=0.1):
 
 ## Pitfall 1: Using Max Instead of On-Policy Action
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # SARSA (correct): uses the actual next action from the policy
 next_action = epsilon_greedy(Q, next_state, epsilon)
@@ -239,6 +272,7 @@ target = reward + gamma * Q[next_state, next_action]
 # Q-learning (wrong if you think you're writing SARSA):
 target = reward + gamma * np.max(Q[next_state])   # ← off-policy!
 ```
+</div>
 
 Using `np.max` converts SARSA into Q-learning. Both are valid algorithms, but they have different convergence properties and different behavior on tasks like cliff walking.
 
@@ -247,6 +281,12 @@ Using `np.max` converts SARSA into Q-learning. Both are valid algorithms, but th
 ---
 
 ## Pitfall 2: Re-Sampling the Action Each Iteration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # WRONG: re-samples action at each step (breaks carry-forward)
@@ -258,6 +298,7 @@ while not done:
     state = next_state
     # next_action is computed but never carried forward!
 ```
+</div>
 
 $A_{t+1}$ must be selected once, used in the update, then *executed* in the next step.
 

@@ -1,8 +1,15 @@
 # Proximal Policy Optimization (PPO)
 
+> **Reading time:** ~14 min | **Module:** 7 — Advanced Policy Optimization | **Prerequisites:** Module 6
+
 ## In Brief
 
 Proximal Policy Optimization (Schulman et al., 2017) achieves the stability of TRPO without the computational overhead of conjugate gradient and line search. Instead of enforcing a hard KL constraint, PPO clips the importance ratio to prevent large policy updates. The result is a first-order algorithm that is easy to implement, fast to run, and competitive with TRPO on nearly every benchmark.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Proximal Policy Optimization (Schulman et al., 2017) achieves the stability of TRPO without the computational overhead of conjugate gradient and line search. Instead of enforcing a hard KL constraint, PPO clips the importance ratio to prevent large policy updates.
+</div>
+
 
 ## Key Insight
 
@@ -10,9 +17,33 @@ TRPO's KL constraint stops updates that move the policy too far. PPO approximate
 
 ---
 
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> TRPO's KL constraint stops updates that move the policy too far.
+</div>
+## Intuitive Explanation
+
+Imagine a hiring manager reviewing candidate scores. If a candidate scores 20% above the threshold, you hire them. If they score 100% above the threshold, you still just hire them — the extra margin gives you no additional benefit. PPO applies the same logic to policy updates: once you have improved an action's probability by $\epsilon$, further increase yields no reward gradient. The policy has no incentive to make radical changes in a single update.
+
+---
+
+
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Imagine a hiring manager reviewing candidate scores.
+</div>
 ## Formal Definition
 
 ### The Probability Ratio
+
+<div class="callout-info">
+<strong>Info:</strong> ### The Probability Ratio
+
+PPO builds on the same importance-weighted surrogate as TRPO.
+</div>
+
 
 PPO builds on the same importance-weighted surrogate as TRPO. Define the probability ratio:
 
@@ -51,11 +82,6 @@ Both terms are equal; the clipped and unclipped objectives agree. Normal gradien
 
 ---
 
-## Intuitive Explanation
-
-Imagine a hiring manager reviewing candidate scores. If a candidate scores 20% above the threshold, you hire them. If they score 100% above the threshold, you still just hire them — the extra margin gives you no additional benefit. PPO applies the same logic to policy updates: once you have improved an action's probability by $\epsilon$, further increase yields no reward gradient. The policy has no incentive to make radical changes in a single update.
-
----
 
 ## Clip Behavior Diagram
 
@@ -107,6 +133,14 @@ Where:
 ### Data Collection and Multiple Epochs
 
 PPO collects a batch of experience under $\pi_{\theta_{old}}$, then performs **multiple gradient epochs** over the same batch. This amortizes the environment interaction cost:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -261,10 +295,19 @@ def ppo_update(model, optimizer, rollout, n_epochs=4, batch_size=64,
 
     return {k: np.mean(v) for k, v in diagnostics.items()}
 ```
+</div>
 
 ### Advantage Estimation (GAE)
 
 PPO uses Generalized Advantage Estimation (Schulman et al., 2016) to compute $\hat{A}_t$:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 def compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):
@@ -299,6 +342,7 @@ def compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):
     returns = advantages + values[:T]    # TD targets for value function
     return advantages, returns
 ```
+</div>
 
 ---
 
@@ -319,6 +363,26 @@ def compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):
 **When to choose TRPO over PPO:** When you need a provable safety guarantee (e.g., safety-critical robotics research) or when you are ablating the effect of the exact vs. approximate constraint. For all practical purposes, PPO is preferred.
 
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">PPO</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">TRPO Comparison</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## Hyperparameter Guide
 
@@ -370,8 +434,17 @@ Monitor these quantities during training to detect problems early:
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 **Pitfall 1 — Advantages not normalized per mini-batch.**
 Normalizing advantages once over the full rollout is incorrect when using mini-batches. The statistics should be computed over the rollout (not per mini-batch), but mini-batches should use the rollout-level mean and std. Normalizing per mini-batch reintroduces scale noise.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1 — Advantages not normalized per mini-batch.**
+Normalizing advantages once over the full rollout is incorrect when using mini-batches.
+</div>
 
 **Pitfall 2 — Recomputing old log-probabilities.**
 The $\pi_{\theta_{old}}(a_t|s_t)$ values must be stored at collection time and remain fixed throughout all epochs. If you call the current model to get "old" log probs, you are always computing ratio = 1, and PPO degenerates to vanilla policy gradient.
@@ -392,11 +465,24 @@ When a trajectory is truncated (time limit hit, not episode end), the last value
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** TRPO (Guide 01) — PPO is TRPO with the hard constraint replaced by a soft penalty; policy gradient theorem (Module 5); GAE advantage estimation (Module 6)
 - **Leads to:** SAC (Guide 03) for continuous control; PPO is the base algorithm for RLHF fine-tuning of large language models
 - **Related to:** Proximal point methods in convex optimization; trust region methods in numerical optimization; clipped surrogate objectives in off-policy learning
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -404,3 +490,18 @@ When a trajectory is truncated (time limit hit, not episode end), the last value
 - Schulman, J., Moritz, P., Levine, S., Jordan, M. I., & Abbeel, P. (2016). *High-Dimensional Continuous Control Using Generalized Advantage Estimation.* ICLR 2016. — GAE derivation; essential companion for understanding $\hat{A}_t$.
 - Engstrom, L., Ilyas, A., Santurkar, S., Tsipras, D., Janoos, F., Rudolph, L., & Madry, A. (2020). *Implementation Matters in Deep Policy Gradients: A Case Study on PPO and TRPO.* ICLR 2020. — Shows that implementation details (normalization, clipping, etc.) matter more than the objective itself.
 - OpenAI Spinning Up — PPO implementation: https://spinningup.openai.com/en/latest/algorithms/ppo.html — Clean reference implementation with extensive documentation.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_ppo_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_ppo_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

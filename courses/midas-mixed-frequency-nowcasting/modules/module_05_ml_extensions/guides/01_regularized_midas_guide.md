@@ -511,7 +511,6 @@ Next: [Machine Learning Nowcasting](02_ml_nowcasting_guide.md) — random forest
 **Practice Question 2:** What assumptions must hold for this method to produce reliable results?
 
 
-
 ---
 
 ## Cross-References

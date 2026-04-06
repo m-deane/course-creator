@@ -330,7 +330,6 @@ import arviz as az
 **Practice Question 2:** Under what conditions would this approach fail or underperform?
 
 
-
 ---
 
 ## Cross-References

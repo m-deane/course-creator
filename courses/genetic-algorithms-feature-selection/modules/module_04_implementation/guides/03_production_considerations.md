@@ -13,7 +13,9 @@ Production genetic algorithms require careful attention to computational efficie
 </div>
 
 <div class="callout-insight">
+
 The fitness function is the bottleneck -- evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that is 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100x speedup while maintaining determinism through careful random state management.
+
 </div>
 
 
@@ -135,6 +137,7 @@ ga.run()  # Best fitness: 0.87
 np.random.seed(42)
 ga.run()  # Best fitness: 0.89  ← Different!
 ```
+
 </div>
 
 
@@ -641,7 +644,9 @@ print(f"  Test accuracy: {test_score:.4f}")
 ```
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Non-deterministic GAs produce different results on every run, making debugging impossible and A/B testing unreliable. Always set random seeds for NumPy, Python random, and your ML framework. Store seeds alongside results for full reproducibility.
+
 </div>
 
 ## Common Pitfalls
@@ -680,7 +685,9 @@ print(f"  Test accuracy: {test_score:.4f}")
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 **Builds on:**
@@ -699,7 +706,9 @@ print(f"  Test accuracy: {test_score:.4f}")
 - Workflow orchestration (Airflow, Prefect for GA pipelines)
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> Fitness caching alone can provide 30-50% speedup for typical GA runs. Combined with parallelization (4-8 cores), you can achieve 5-10x wall-clock reduction, making GA feature selection feasible for production ML pipelines.
+
 </div>
 
 ## Practice Problems

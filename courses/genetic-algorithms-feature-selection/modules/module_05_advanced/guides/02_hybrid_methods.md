@@ -13,7 +13,9 @@ Hybrid methods combine genetic algorithms' global exploration with local search'
 </div>
 
 <div class="callout-insight">
+
 GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5x fewer evaluations to reach same quality, or better final solutions with same budget.
+
 </div>
 
 ## When to Use Hybrid Methods
@@ -520,6 +522,7 @@ print(f"Standard GA:            {result_ga['best_fitness']:.4f}")
 print(f"Memetic (Lamarckian):   {result_ma_lamarck['best_fitness']:.4f}")
 print(f"Memetic (Baldwinian):   {result_ma_baldwin['best_fitness']:.4f}")
 ```
+
 </div>
 
 
@@ -577,7 +580,9 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 ```
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Applying local search to every individual in every generation makes the GA prohibitively expensive (n_features evaluations per local search step). Limit local search to the top 10-20% of the population, or apply it every 5-10 generations.
+
 </div>
 
 ## Common Pitfalls
@@ -616,7 +621,9 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 **Builds on:**
@@ -635,7 +642,9 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 - Variable neighborhood search (multiple neighborhood structures)
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> Memetic algorithms (GA + local search) are the practical gold standard for feature selection. The GA finds promising regions, local search polishes each candidate to its local optimum. This combination typically finds solutions in 2-5x fewer evaluations than either method alone.
+
 </div>
 
 ## Practice Problems

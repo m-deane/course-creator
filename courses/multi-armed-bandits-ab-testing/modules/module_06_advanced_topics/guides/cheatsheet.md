@@ -389,7 +389,6 @@ See `resources/additional_readings.md` for full references.
 **Practice Question 2:** Under what conditions would this approach fail or underperform?
 
 
-
 ---
 
 ## Cross-References

@@ -7,11 +7,15 @@
 Binary and integer encoding schemes transform the feature selection problem into a representation suitable for genetic algorithm manipulation. Binary encoding maps each feature to a bit (0=excluded, 1=included), while integer encoding stores indices of selected features.
 
 <div class="callout-insight">
+
 The choice of encoding determines what genetic operators can do. Binary encoding enables standard crossover/mutation operators and naturally handles variable-length feature sets, while integer encoding can be more compact but requires specialized operators to maintain validity.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Encoding is the bridge between the problem domain (which features to select) and the GA's machinery (chromosomes, crossover, mutation). Binary encoding is the natural default for feature selection because it directly maps to inclusion/exclusion -- no transformation needed, and standard operators work out of the box.
+
 </div>
 
 ![GA Lifecycle](./ga_lifecycle.svg)
@@ -262,6 +266,7 @@ def demo_binary_encoding():
     print(f"Child 1:  {child1.chromosome}")
     print(f"Child 2:  {child2.chromosome}")
 ```
+
 </div>
 
 
@@ -517,7 +522,9 @@ def good_mutation(individual, min_features=1):
 ```
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Choosing the wrong encoding for your problem size can make the GA 100x slower. If selecting 5 features from 100,000, binary encoding wastes 99.995% of the chromosome on zeros. Use integer encoding instead.
+
 </div>
 
 ### 2. Integer Encoding Duplicates
@@ -548,7 +555,9 @@ def good_integer_mutation(individual):
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Always validate uniqueness after integer crossover or mutation. Two parents with overlapping feature indices can produce children with duplicate entries, violating the encoding constraint.
+
 </div>
 
 ### 3. Inefficient Binary Operations
@@ -582,7 +591,9 @@ def fast_crossover(parent1, parent2):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Prerequisites

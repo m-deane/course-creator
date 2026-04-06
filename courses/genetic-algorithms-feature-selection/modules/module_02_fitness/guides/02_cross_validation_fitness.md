@@ -5,7 +5,9 @@
 ## Introduction
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> The fitness function is the single most impactful component of your GA. A well-designed fitness function with proper cross-validation will find good features even with suboptimal operators. A poorly designed one will find bad features regardless of how sophisticated your GA is.
+
 </div>
 
 <div class="callout-key">
@@ -166,6 +168,7 @@ for chrom in test_chromosomes:
     n_features = sum(chrom)
     print(f"Features: {n_features:2d}, Fitness: {fitness:.4f}")
 ```
+
 </div>
 
 
@@ -416,7 +419,9 @@ for ind, obj in zip(pareto_front[:5], pareto_objectives[:5]):
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Multi-objective fitness returns a tuple, not a scalar. Ensure your GA is configured for multi-objective optimization (e.g., NSGA-II) before using Pareto fitness. Passing a tuple to a single-objective GA will crash or silently produce wrong results.
+
 </div>
 
 ## Regularized Fitness
@@ -604,6 +609,7 @@ for k, v in stats.items():
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **Cross-validation** provides robust out-of-sample fitness estimates
@@ -617,6 +623,7 @@ for k, v in stats.items():
 5. **Caching** dramatically speeds up GA with repeated evaluations
 
 6. **Regularization** can be incorporated into fitness for smoother landscapes
+
 </div>
 
 ## Practice Problems

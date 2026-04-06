@@ -7,13 +7,16 @@
 Crossover combines genetic material from two parents to create offspring, enabling the exchange of beneficial feature combinations. Mutation introduces random changes to maintain diversity and explore new regions of the search space. Together, these operators balance exploitation (crossover) with exploration (mutation).
 
 <div class="callout-insight">
+
 The effectiveness of genetic operators depends on the problem structure. For feature selection, uniform crossover often outperforms single-point crossover because feature interactions are typically non-positional. Mutation rate should be inversely proportional to chromosome length to maintain approximately one change per individual.
+
 </div>
 
 <div class="callout-key">
-<strong>Key Concept:</strong> Crossover and mutation serve fundamentally different purposes. Crossover *exploits* existing knowledge by combining proven feature groups from different parents. Mutation *explores* new territory by introducing features no one has tried. A GA without crossover is a random search with selection; a GA without mutation converges prematurely and stalls. The balance between them -- controlled by crossover probability and mutation rate -- is the most important parameter decision you will make.
-</div>
 
+<strong>Key Concept:</strong> Crossover and mutation serve fundamentally different purposes. Crossover *exploits* existing knowledge by combining proven feature groups from different parents. Mutation *explores* new territory by introducing features no one has tried. A GA without crossover is a random search with selection; a GA without mutation converges prematurely and stalls. The balance between them -- controlled by crossover probability and mutation rate -- is the most important parameter decision you will make.
+
+</div>
 
 
 ![Crossover Types](./crossover_types.svg)
@@ -83,7 +86,9 @@ Offspring: [1, 1, 1, 1, 1, 0, 0, 1, 1, 0]   Fitness: 0.28 (BETTER)
 The offspring inherits all three building blocks and outperforms both parents. This is the power of crossover: it did not discover any new features -- it assembled existing discoveries into a superior combination. No single-step mutation could have achieved this.
 
 <div class="callout-insight">
+
 <strong>Why this matters for feature selection:</strong> Building blocks in feature selection are groups of features that interact beneficially. Momentum indicators work together. Volatility measures reinforce each other. Cross-commodity spreads capture related signals. Crossover's ability to combine these groups is what makes GAs outperform single-solution methods like hill climbing.
+
 </div>
 
 **When building blocks break:** Single-point crossover can disrupt building blocks by cutting through them. If the crossover point falls between positions 0 and 1 (splitting Block 1), the offspring inherits only half of the momentum signal. Uniform crossover is more robust because each position is independently inherited, so building blocks are not disrupted by a single cut point -- though they can still be partially inherited by chance.
@@ -334,6 +339,7 @@ def scattered_crossover(
         BinaryIndividual(chromosome=child2_chrom)
     )
 ```
+
 </div>
 
 
@@ -766,7 +772,9 @@ if __name__ == "__main__":
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> A mutation rate of 0.5 means half of all bits flip each generation -- this is random search, not evolution. The GA loses all memory of good solutions. Always verify that the Hamming distance between parent and child is small (1-2 bits).
+
 </div>
 
 ### 1. Mutation Rate Too High
@@ -798,7 +806,9 @@ child1, child2 = uniform_crossover(p1, p2, crossover_prob=0.8)
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Single-point crossover introduces positional bias -- features near each other in the chromosome tend to stay together. For feature selection, features have no natural ordering, so this bias is harmful. Use uniform crossover as the default.
+
 </div>
 
 ### 3. Wrong Crossover for Problem Structure
@@ -834,7 +844,9 @@ def good_mutation(individual, min_features=1):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Prerequisites

@@ -113,6 +113,7 @@ def cv_fitness(
     # Return negative MSE (we minimize, so positive = bad)
     return -scores.mean()
 ```
+
 </div>
 
 
@@ -185,7 +186,9 @@ def pareto_fitness(
 </div>
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Never evaluate fitness on the training set alone. Without cross-validation, the GA will select all features (maximum overfitting) because in-sample error always decreases with more features. This produces models that look perfect in development and fail in production.
+
 </div>
 
 ## Time Series Specific Fitness
@@ -514,6 +517,7 @@ class CachedFitnessEvaluator:
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **Cross-validation is essential** - never evaluate on training data alone
@@ -525,6 +529,7 @@ class CachedFitnessEvaluator:
 4. **Nested CV prevents bias** - separate evaluation from selection
 
 5. **Cache evaluations** - same chromosome should return same fitness
+
 </div>
 
 ## Practice Problems

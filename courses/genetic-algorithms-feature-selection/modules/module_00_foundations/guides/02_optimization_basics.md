@@ -3,7 +3,9 @@
 > **Reading time:** ~5 min | **Module:** 0 — Foundations | **Prerequisites:** Calculus, basic Python
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Feature selection is an NP-hard combinatorial optimization problem. Exhaustive search is provably infeasible beyond ~20 features. Greedy methods are fast but miss feature interactions (the XOR problem). Genetic algorithms occupy the sweet spot: they explore multiple solutions simultaneously, escape local optima via crossover and mutation, and naturally encode feature inclusion as binary chromosomes.
+
 </div>
 
 ## The Feature Selection Problem
@@ -82,6 +84,7 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
     scores = cross_val_score(model, X, y, cv=cv_folds, scoring='neg_mean_squared_error')
     return -scores.mean()
 ```
+
 </div>
 
 
@@ -270,7 +273,9 @@ def visualize_fitness_landscape():
 | **Deception** | Misleading gradients | May require larger population |
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Never trust a GA configuration without validating it on your specific problem. A setup that works brilliantly for one dataset may completely fail on another -- this is a mathematical guarantee, not just practical advice.
+
 </div>
 
 ## No Free Lunch Theorem
@@ -330,7 +335,9 @@ How many candidate features?
 Where $G$ = generations, $N$ = population size, $T_{eval}$ = fitness evaluation time.
 
 <div class="callout-insight">
+
 <strong>Practical rule:</strong> If you have 20-100 features and suspect feature interactions matter (they usually do in time series), start with a GA. If you have > 100, filter first to ~50-100, then apply a GA. If you have < 20, exhaustive search gives you the guaranteed-best answer.
+
 </div>
 
 ## Mathematical Framework
@@ -373,6 +380,7 @@ Prediction Error
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **Feature selection is NP-hard** - exhaustive search is infeasible for real problems
@@ -384,6 +392,7 @@ Prediction Error
 4. **GAs are well-suited** for binary feature selection problems
 
 5. **No free lunch** - algorithm choice depends on problem structure
+
 </div>
 
 ## Practice Problems

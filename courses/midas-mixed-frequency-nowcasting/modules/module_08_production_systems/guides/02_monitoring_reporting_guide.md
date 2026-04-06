@@ -815,7 +815,6 @@ The key outputs — nowcast evolution chart, news decomposition waterfall, rolli
 **Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
 
 
-
 ---
 
 ## Cross-References

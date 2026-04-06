@@ -13,9 +13,10 @@ Lag features capture temporal dependencies by including past values of variables
 </div>
 
 <div class="callout-insight">
-Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
-</div>
 
+Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
+
+</div>
 
 
 ![Walk-Forward Timeline](./walk_forward_timeline.svg)
@@ -312,6 +313,7 @@ def identify_significant_lags(
 
     return results
 ```
+
 </div>
 
 
@@ -772,7 +774,9 @@ if __name__ == "__main__":
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Lag features with consecutive indices (lag-1, lag-2, lag-3, ...) are almost always highly correlated (VIF > 100). Including them all causes numerical instability in linear models and wastes capacity in tree models. Always check VIF before using lag features.
+
 </div>
 
 ### 1. Including Too Many Lags
@@ -812,7 +816,9 @@ fitness = mse + alpha_vif * vif_penalty
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Confusing lag-k features with k-step-ahead forecasting is a common mistake. A lag-k feature uses y(t-k) to predict y(t) -- this is still a 1-step-ahead forecast. For true k-step-ahead, you need lags starting at k, not 1.
+
 </div>
 
 ### 4. Not Accounting for Seasonality
@@ -830,7 +836,9 @@ lags = list(range(1, 8)) + [30, 60, 90, 365]  # Daily data
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Prerequisites

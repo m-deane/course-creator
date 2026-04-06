@@ -395,7 +395,6 @@ def contextual_epsilon_greedy(context, epsilon=0.1):
 **Practice Question 2:** What happens to LinUCB performance when the context features are noisy or irrelevant?
 
 
-
 ---
 
 ## Cross-References

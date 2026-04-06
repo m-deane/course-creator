@@ -85,6 +85,7 @@ creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 # Define individual
 creator.create("Individual", list, fitness=creator.FitnessMin)
 ```
+
 </div>
 
 
@@ -342,7 +343,9 @@ def custom_ga(
 ## Time Series Feature Selection
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> DEAP's creator.create() modifies global state. Calling it twice with the same name (e.g., "FitnessMin") raises an error. In notebooks, restart the kernel or add a guard: if not hasattr(creator, "FitnessMin").
+
 </div>
 
 <div class="callout-warning">
@@ -481,6 +484,7 @@ plot_evolution(result['history'])
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **DEAP provides flexibility** - customize every component
@@ -494,6 +498,7 @@ plot_evolution(result['history'])
 5. **Parallel evaluation** speeds up fitness computation linearly with cores
 
 6. **Parameter choices matter** -- pop_size, mutation_rate, crossover_prob, and tournament_size interact as a system, not independently
+
 </div>
 
 ## Practice Problems

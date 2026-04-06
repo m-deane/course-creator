@@ -257,7 +257,6 @@ class ProductionBanditSystem:
 **Practice Question 2:** How would you implement a safe rollback mechanism for a production bandit system?
 
 
-
 ---
 
 ## Cross-References

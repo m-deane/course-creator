@@ -508,7 +508,6 @@ Next: [S&P 500 MIDAS-RV Notebook](../notebooks/01_midas_rv_sp500.ipynb)
 **Practice Question 2:** In what situations would last-period sampling outperform simple averaging as an aggregation strategy?
 
 
-
 ---
 
 ## Cross-References

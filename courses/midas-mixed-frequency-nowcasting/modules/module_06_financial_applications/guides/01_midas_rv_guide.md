@@ -515,7 +515,6 @@ Next: [Mixed-Frequency Risk Models](02_mixed_freq_risk_guide.md) — daily VaR, 
 **Practice Question 2:** What assumptions must hold for this method to produce reliable results?
 
 
-
 ---
 
 ## Cross-References

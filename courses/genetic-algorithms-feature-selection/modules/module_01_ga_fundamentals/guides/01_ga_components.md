@@ -3,7 +3,9 @@
 > **Reading time:** ~6 min | **Module:** 1 — GA Fundamentals | **Prerequisites:** Module 0 foundations
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A genetic algorithm is a loop: evaluate, select, recombine, mutate, repeat. Every GA -- regardless of the problem -- follows this same six-step cycle. What makes a GA specific to feature selection is just two things: the chromosome encoding (binary vector = feature mask) and the fitness function (model performance on selected features). Everything else is reusable infrastructure.
+
 </div>
 
 ## The GA Framework
@@ -165,6 +167,7 @@ class Population:
         fitnesses = [ind.fitness for ind in self.individuals if ind.fitness is not None]
         return np.mean(fitnesses) if fitnesses else float('inf')
 ```
+
 </div>
 
 
@@ -339,7 +342,9 @@ def two_point_crossover(
 ## Mutation Operators
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> An all-zeros chromosome (no features selected) will crash most fitness functions with division-by-zero or empty-array errors. Every operator must include a validity check to ensure at least one feature remains selected.
+
 </div>
 
 <div class="callout-warning">
@@ -488,6 +493,7 @@ def steady_state_replacement(
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **Binary encoding** is natural for feature selection - each bit represents a feature
@@ -499,6 +505,7 @@ def steady_state_replacement(
 4. **Mutation rate** should be low (0.01-0.1) to maintain good solutions
 
 5. **Elitism** preserves best solutions across generations
+
 </div>
 
 ## Practice Problems

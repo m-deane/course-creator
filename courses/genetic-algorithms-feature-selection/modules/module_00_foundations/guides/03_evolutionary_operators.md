@@ -5,11 +5,15 @@
 ## Introduction
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> The three operators -- selection, crossover, mutation -- form a balanced system. Selection drives convergence, crossover combines good building blocks, and mutation prevents stagnation. Removing or misconfiguring any one breaks the system.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Think of the three operators as a team: selection provides *direction* (which solutions are worth pursuing), crossover provides *exploitation* (combining the best parts of known good solutions), and mutation provides *exploration* (discovering entirely new possibilities). The GA's power comes from these three forces working in tension -- not from any single operator.
+
 </div>
 
 Genetic algorithms evolve solutions through three fundamental operators:
@@ -80,6 +84,7 @@ selected = tournament_selection(population, fitness_scores, tournament_size=3)
 print(f"Selected individual: {selected}")
 print(f"Fitness: {sum(selected)}")
 ```
+
 </div>
 
 
@@ -521,7 +526,9 @@ The introduction stated that removing any operator "breaks the system." Here is 
 | **No selection, no crossover** (mutation only) | Pure random search. Each generation, random bits are flipped with no bias toward better solutions. | Extremely slow. Equivalent to sampling random feature subsets -- ignores all fitness information. |
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Premature convergence (the "no mutation" failure) is the most common and least obvious GA problem. The GA appears to be working -- fitness improves, the best solution looks good -- but it stopped exploring too early. Always monitor population diversity alongside fitness.
+
 </div>
 
 The three-operator system works because selection provides direction, crossover provides speed (via building block combination), and mutation provides insurance (against diversity loss). The balance between them -- controlled by tournament size, crossover probability, and mutation rate -- determines whether the GA converges quickly to a good solution or gets stuck.
@@ -529,6 +536,7 @@ The three-operator system works because selection provides direction, crossover 
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **Selection pressure** controls exploitation vs exploration balance
@@ -544,6 +552,7 @@ The three-operator system works because selection provides direction, crossover 
 6. **Adaptive operators** can improve performance by responding to population state
 
 7. **All three operators are necessary** -- removing any one causes a specific, predictable failure mode
+
 </div>
 
 ## Practice Problems

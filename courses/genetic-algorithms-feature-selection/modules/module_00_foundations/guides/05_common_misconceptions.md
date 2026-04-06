@@ -7,7 +7,9 @@
 GAs are powerful but widely misunderstood. This guide addresses the five most common misconceptions practitioners hold about genetic algorithms for feature selection. Each misconception is paired with the reality, why it matters, and a concrete example.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Genetic algorithms are stochastic satisficing optimizers -- they find good solutions quickly, not perfect solutions guaranteed. Understanding what GAs actually promise (and what they do not) prevents wasted effort, miscalibrated expectations, and flawed experimental designs.
+
 </div>
 
 ## Misconception 1: GAs Always Find the Global Optimum
@@ -34,7 +36,9 @@ If you believe GAs find the global optimum, you will:
 A GA selecting from 50 commodity forecasting features finds a 7-feature subset with 67% accuracy. Running the GA 10 more times with different random seeds produces subsets with accuracies ranging from 64% to 68%. The "best" run is not guaranteed to be globally optimal -- it is the best of 11 stochastic samples. The correct approach: run multiple times, report the range, and use the consensus features (those appearing in most runs).
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A single GA run is a single sample from a stochastic process. Always run the GA multiple times (at least 5-10 runs) with different random seeds and report the distribution of results, not just the best run.
+
 </div>
 
 ---
@@ -78,7 +82,9 @@ Running excessive generations wastes computational budget that could be better s
 On the commodity dataset, a GA with population 100 achieves 65% accuracy at generation 50, 67% at generation 100, 67.3% at generation 200, and 67.4% at generation 500. The last 400 generations bought 0.1% accuracy at 4x the cost. Running 5 independent 100-generation runs would have been more informative and cheaper.
 
 <div class="callout-insight">
+
 <strong>Rule of thumb:</strong> If the best fitness has not improved for 20-30 consecutive generations, the GA has effectively converged. Stop early and invest the saved compute elsewhere.
+
 </div>
 
 ---
@@ -146,7 +152,9 @@ Same 50-feature commodity problem, population 100, 100 generations:
 | 0.5 | 98% | 52% | Pure random search |
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> A mutation rate of 0.5 means half of all feature selections flip every generation. This is not a genetic algorithm -- it is a random search wearing a GA costume. The algorithm retains no memory of good solutions.
+
 </div>
 
 ---
@@ -191,7 +199,9 @@ Ten runs on the commodity dataset produce these selection frequencies:
 The robust feature set is {5-day return, RSI, VIX, MACD}. Day-of-week appeared in one run purely by chance. A practitioner who ran only that one run might have included it.
 
 <div class="callout-insight">
+
 <strong>Best practice:</strong> Report feature selection frequency across multiple GA runs, not the result of a single run. Features selected in > 70% of runs are robust; features selected in < 30% are likely noise.
+
 </div>
 
 ---

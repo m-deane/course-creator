@@ -652,7 +652,6 @@ After understanding these case studies:
 **Practice Question 2:** What risk management constraints should be layered on top of a bandit-based allocation system?
 
 
-
 ---
 
 ## Cross-References

@@ -13,9 +13,10 @@ Stationarity means that a time series' statistical properties (mean, variance, a
 </div>
 
 <div class="callout-insight">
-Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
-</div>
 
+Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
+
+</div>
 
 
 ![Walk-Forward Timeline](./walk_forward_timeline.svg)
@@ -341,6 +342,7 @@ def test_stationarity_multiple_series(
 
     return pd.DataFrame(results)
 ```
+
 </div>
 
 
@@ -861,7 +863,9 @@ if __name__ == "__main__":
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Regression on non-stationary data produces spurious correlations. Two unrelated random walks will show a correlation of 0.5-0.9 purely by chance. If your GA selects non-stationary features, you are likely finding artifacts, not real predictive relationships.
+
 </div>
 
 ### 1. Ignoring Non-Stationarity
@@ -889,7 +893,9 @@ X_stat, info = auto_make_stationary(X)
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Over-differencing a stationary series introduces artificial negative autocorrelation at lag 1. Always test stationarity before differencing -- if the ADF test already rejects the unit root null, do not difference.
+
 </div>
 
 ### 3. Mixing Stationary and Non-Stationary Features
@@ -921,7 +927,9 @@ def rolling_stationarity_test(series, window=100):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Prerequisites

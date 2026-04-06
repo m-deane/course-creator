@@ -390,7 +390,6 @@ for query in requests:
 **Practice Question 2:** Under what conditions would this approach fail or underperform?
 
 
-
 ---
 
 ## Cross-References

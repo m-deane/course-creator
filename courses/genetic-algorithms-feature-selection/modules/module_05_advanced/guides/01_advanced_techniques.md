@@ -11,11 +11,15 @@
 </div>
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Running NSGA-II with insufficient population size (e.g., 20 individuals for a 100-feature problem) produces a sparse, unreliable Pareto front. Use at least 2-3x the number of features as population size for meaningful multi-objective results.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> DEAP's creator.create() uses global state. If you define FitnessMulti for NSGA-II after previously defining FitnessMin for single-objective, both remain active. Clear previous definitions or use separate modules.
+
 </div>
 
 ## Multi-Objective Optimization
@@ -176,6 +180,7 @@ def run_nsga2(X, y, pop_size=100, n_generations=50):
         ]
     }
 ```
+
 </div>
 
 
@@ -537,6 +542,7 @@ class SurrogateFitness:
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **NSGA-II** handles multi-objective optimization by finding the full Pareto front of accuracy-vs-parsimony tradeoffs, without requiring you to specify weights
@@ -548,6 +554,7 @@ class SurrogateFitness:
 4. **Constraints** can be handled through repair operators that fix invalid solutions after crossover/mutation
 
 5. **Surrogate models** reduce computational cost by predicting fitness cheaply and only computing exact fitness when uncertain
+
 </div>
 
 ## Practice Problems

@@ -409,7 +409,6 @@ Next: [Inflation and Labour Market Nowcasting](02_inflation_labour_guide.md)
 **Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
 
 
-
 ---
 
 ## Cross-References

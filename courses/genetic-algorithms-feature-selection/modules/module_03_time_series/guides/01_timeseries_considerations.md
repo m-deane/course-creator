@@ -100,6 +100,7 @@ splits = walk_forward_split(1000, n_splits=5, gap=5)
 for i, (train, test) in enumerate(splits):
     print(f"Split {i}: Train {train[0]}-{train[-1]}, Test {test[0]}-{test[-1]}")
 ```
+
 </div>
 
 
@@ -193,7 +194,9 @@ def create_timeseries_fitness(X, y, n_splits=5, gap=5):
 ```
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Using standard k-fold cross-validation on time series data is the most common source of inflated performance metrics. A model that appears 95% accurate with k-fold may be only 60% accurate with walk-forward validation. Always validate with temporal splits.
+
 </div>
 
 ## Handling Non-Stationarity
@@ -433,6 +436,7 @@ def ga_with_lag_features(X, y, feature_names, max_lag=5):
 ## Key Takeaways
 
 <div class="callout-key">
+
 🔑 **Key Points**
 
 1. **Always use temporal validation** - never shuffle time series data
@@ -444,6 +448,7 @@ def ga_with_lag_features(X, y, feature_names, max_lag=5):
 4. **Non-stationarity requires rolling analysis** - features may change importance
 
 5. **Multi-horizon testing** ensures robust feature selection
+
 </div>
 
 ## Practice Problems

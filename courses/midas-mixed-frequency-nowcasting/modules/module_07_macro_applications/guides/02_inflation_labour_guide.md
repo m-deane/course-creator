@@ -412,7 +412,6 @@ Next: `01_simplified_nyfed_nowcast.ipynb`
 **Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
 
 
-
 ---
 
 ## Cross-References

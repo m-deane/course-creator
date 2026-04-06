@@ -7,11 +7,15 @@
 Feature selection methods fall into three main categories: **filter methods** (statistical tests independent of models), **wrapper methods** (model-based evaluation), and **embedded methods** (selection built into model training). Each approach offers different tradeoffs between computational cost, model dependency, and optimization quality.
 
 <div class="callout-insight">
+
 The choice of feature selection approach determines both what you optimize (statistical relevance vs. prediction accuracy) and how you search (independent evaluation vs. model-guided search). Filters are fast but ignore model interactions; wrappers are accurate but computationally expensive; embedded methods balance both but are model-specific.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> The three feature selection families -- filter, wrapper, embedded -- represent a fundamental tradeoff between computational cost and selection quality. Filters are cheap but blind to feature interactions. Wrappers see interactions but are expensive. Embedded methods are a compromise tied to a specific model. Understanding this tradeoff is essential for choosing the right approach (or combining them).
+
 </div>
 
 ![Feature Selection Pipeline](./feature_selection_pipeline.svg)
@@ -210,6 +214,7 @@ plt.tight_layout()
 print(f"Selected features: {selected}")
 print(f"True relevant features: [0, 1, 2, 3, 4]")
 ```
+
 </div>
 
 
@@ -525,7 +530,9 @@ print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")
 **How to avoid:** Use wrapper methods for problems with known interactions, or add interaction terms to filter evaluation.
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Evaluating thousands of feature subsets on the same validation set is a form of data leakage. The "best" subset is partially optimized to the validation set, not the true data distribution. Always use nested cross-validation for wrapper methods.
+
 </div>
 
 ### Pitfall 2: Overfitting with Wrapper Methods
@@ -567,7 +574,9 @@ for train_idx, test_idx in KFold(5).split(X):
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Wrapper methods can require thousands of model evaluations. For expensive models (deep learning, large ensembles), use filters for initial screening, then wrappers for final refinement.
+
 </div>
 
 ### Pitfall 3: Embedded Methods with Non-Linear Models
@@ -602,7 +611,9 @@ print(f"Combined: {len(combined)}")
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Builds On

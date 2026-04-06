@@ -13,9 +13,10 @@ Multi-objective feature selection explicitly optimizes multiple conflicting goal
 </div>
 
 <div class="callout-insight">
-There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
-</div>
 
+There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
+
+</div>
 
 
 ![Fitness Landscape](./fitness_landscape.svg)
@@ -212,6 +213,7 @@ individual = np.random.randint(0, 2, p)
 objectives = multi_objective_fitness(individual, X, y)
 print(f"MSE: {objectives[0]:.4f}, Complexity: {objectives[1]:.4f}")
 ```
+
 </div>
 
 
@@ -505,7 +507,9 @@ for strategy in ['accuracy', 'sparse', 'balanced', 'knee']:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Converting multi-objective to single-objective with a weighted sum (e.g., 0.7 * error + 0.3 * features) permanently collapses the Pareto front into a single point. You lose all other trade-off options. This decision is irreversible once the GA has run.
+
 </div>
 
 ### Pitfall 1: Converting to Single Objective Too Early
@@ -568,7 +572,9 @@ def diverse_mutation(individual, indpb=0.05):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Builds On
@@ -588,7 +594,9 @@ def diverse_mutation(individual, indpb=0.05):
 - **Engineering design**: Tradeoffs in physical system design
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> The "knee point" of the Pareto front -- where further feature reduction causes disproportionate accuracy loss -- is usually the best practical choice. It represents the point of diminishing returns for model simplification.
+
 </div>
 
 ## Practice Problems

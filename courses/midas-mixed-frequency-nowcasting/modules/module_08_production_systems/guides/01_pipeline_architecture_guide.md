@@ -1008,7 +1008,6 @@ In Module 08 Notebook 01 you will build a simplified version of this pipeline en
 **Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
 
 
-
 ---
 
 ## Cross-References

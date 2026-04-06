@@ -7,11 +7,15 @@
 Feature selection is the process of identifying the most relevant subset of features from a larger feature space to improve model performance, reduce overfitting, and enhance interpretability. In time series forecasting with many potential features and limited observations, this becomes critical for generalization.
 
 <div class="callout-insight">
+
 The feature selection problem grows exponentially with the number of features: with $p$ features, there are $2^p$ possible subsets to evaluate. For even moderate feature sets (p=30), exhaustive search requires evaluating over 1 billion combinations, making intelligent search strategies essential.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Feature selection is a combinatorial search problem where the search space grows exponentially with the number of features. The core challenge is not computational speed -- it is that exhaustive evaluation becomes physically impossible beyond ~20 features, forcing you to use intelligent search strategies that find good (not perfect) subsets.
+
 </div>
 
 ![Feature Selection Pipeline](./feature_selection_pipeline.svg)
@@ -76,7 +80,9 @@ For time series with $n$ observations and $p$ features:
 $$\text{Risk} \propto \frac{p}{n}$$
 
 <div class="callout-warning">
+
 When $p \approx n$ or $p > n$, most models will overfit — training error decreases while test error explodes. A ratio of $p/n > 0.2$ is a serious red flag requiring aggressive feature selection.
+
 </div>
 
 
@@ -105,7 +111,9 @@ f_3(s) = \text{Computational Cost}(X_s)
 This creates a Pareto frontier: improving one objective may worsen others.
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> With $p > 20$ features, exhaustive search is physically impossible. This is not a performance problem -- it is a mathematical certainty. Any viable approach must use intelligent search heuristics.
+
 </div>
 
 ## Code Implementation
@@ -190,6 +198,7 @@ best_features, best_score = exhaustive_feature_selection(X, y, max_features=5)
 print(f"Best features: {best_features}")
 print(f"Best score: {best_score:.4f}")
 ```
+
 </div>
 
 
@@ -250,7 +259,9 @@ print(f"Need intelligent search strategy!")
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Data leakage from feature selection outside cross-validation is the most common and most damaging mistake in ML pipelines. It produces models that appear to perform well in development but fail catastrophically in production.
+
 </div>
 
 ### Pitfall 1: Selection on Full Dataset
@@ -347,7 +358,9 @@ def fitness_with_cost(features, X, y, feature_names):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Builds On

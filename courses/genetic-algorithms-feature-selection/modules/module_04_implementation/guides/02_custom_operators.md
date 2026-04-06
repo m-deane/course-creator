@@ -13,7 +13,9 @@ Custom genetic operators adapt the GA to problem-specific structure, improving c
 </div>
 
 <div class="callout-insight">
+
 Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5x faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
+
 </div>
 
 ## When Do You Need Custom Operators?
@@ -165,6 +167,7 @@ importances = [0.15, 0.12, 0.10, 0.05, 0.03, ..., 0.001]
 # Mutation rates proportional to importance
 mutation_rates = 0.01 + 0.04 * (importances / max(importances))
 ```
+
 </div>
 
 
@@ -675,7 +678,9 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 ```
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Custom operators that violate problem constraints (e.g., selecting zero features, exceeding budget limits) corrupt the population silently. Always wrap custom operators with a constraint-repair step that fires after every crossover and mutation.
+
 </div>
 
 ## Common Pitfalls
@@ -714,7 +719,9 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 **Builds on:**
@@ -733,7 +740,9 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 - Problem-specific heuristics (domain knowledge integration)
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> Custom operators that respect feature group structure (e.g., keeping all one-hot encoded columns together) converge 2-5x faster than standard operators. The investment in operator design pays off quickly for domain-specific problems.
+
 </div>
 
 ## Practice Problems

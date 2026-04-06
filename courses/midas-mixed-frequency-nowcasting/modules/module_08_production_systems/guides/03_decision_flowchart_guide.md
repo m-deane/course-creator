@@ -511,7 +511,6 @@ Before deploying a production nowcasting model, verify each item:
 **Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
 
 
-
 ---
 
 ## Cross-References

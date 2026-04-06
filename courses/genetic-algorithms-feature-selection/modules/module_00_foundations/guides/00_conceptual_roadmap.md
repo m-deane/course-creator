@@ -7,7 +7,9 @@
 This roadmap provides the big-picture narrative connecting all six modules. It introduces a running example -- selecting features for commodity price forecasting -- that reappears throughout the course, and maps the key decisions a practitioner faces to the module that addresses each.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Genetic algorithms solve feature selection by treating it as an evolutionary search problem. A population of candidate feature subsets competes, combines, and mutates over generations until a high-performing, parsimonious subset emerges. Every module in this course adds one essential piece to making that process work reliably on real data.
+
 </div>
 
 ## The Running Example: Commodity Price Forecasting

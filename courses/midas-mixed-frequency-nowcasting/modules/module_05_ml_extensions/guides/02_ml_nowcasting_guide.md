@@ -715,7 +715,6 @@ Next: [Lasso MIDAS Notebook](../notebooks/01_lasso_midas.ipynb) — hands-on imp
 **Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
 
 
-
 ---
 
 ## Cross-References

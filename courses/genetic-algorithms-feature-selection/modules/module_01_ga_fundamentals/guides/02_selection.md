@@ -7,13 +7,16 @@
 Selection operators determine which individuals from the current population reproduce to create the next generation. Tournament, roulette wheel, and rank selection represent different strategies for balancing exploitation of good solutions with exploration of the search space.
 
 <div class="callout-insight">
+
 Selection pressure controls the trade-off between convergence speed and population diversity. High pressure (large tournaments, steep rank weighting) accelerates convergence but risks premature convergence to local optima. Low pressure maintains diversity but may converge too slowly.
+
 </div>
 
 <div class="callout-key">
-<strong>Key Concept:</strong> Selection is the GA's steering wheel. It determines how aggressively the algorithm favors fit individuals. Too much pressure (large tournaments) and the population converges fast but often to a local optimum. Too little pressure (small tournaments or random selection) and the search wanders aimlessly. Tournament selection with size 3-5 is the robust default because it provides moderate pressure without requiring fitness scaling.
-</div>
 
+<strong>Key Concept:</strong> Selection is the GA's steering wheel. It determines how aggressively the algorithm favors fit individuals. Too much pressure (large tournaments) and the population converges fast but often to a local optimum. Too little pressure (small tournaments or random selection) and the search wanders aimlessly. Tournament selection with size 3-5 is the robust default because it provides moderate pressure without requiring fitness scaling.
+
+</div>
 
 
 ![Selection Methods](./selection_methods.svg)
@@ -161,6 +164,7 @@ def adaptive_tournament_selection(
     size = int(min_size + progress * (max_size - min_size))
     return tournament_selection(population, tournament_size=size, minimize=minimize)
 ```
+
 </div>
 
 
@@ -517,7 +521,9 @@ To build intuition for how selection pressure affects GA behavior, consider this
 | 10 | Very high | Low | Very fast | Very high | Only with adaptive mutation to compensate |
 
 <div class="callout-insight">
+
 <strong>Practical guidance:</strong> Start with tournament size 3. If the GA converges too slowly (best fitness still improving at the end), increase to 5. If the GA converges too fast (best fitness plateaus early, diversity collapses), decrease to 2 or add adaptive mutation. Tournament size 7+ is rarely beneficial without compensating mechanisms.
+
 </div>
 
 **What "diversity at gen 50" means:** The fraction of unique chromosomes remaining in the population. At 100% diversity, all individuals are different. At 0%, all are identical (fully converged). Healthy GAs maintain 20-50% diversity through most of the run.
@@ -543,7 +549,9 @@ After seeing all three operators and understanding selection pressure, here is a
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Using raw fitness values with roulette wheel selection in a minimization problem inverts the selection logic -- the worst individual gets the highest selection probability. This silently produces terrible results with no error message.
+
 </div>
 
 ### 1. Wrong Fitness Transformation for Minimization
@@ -615,7 +623,9 @@ def good_roulette_negative(population):
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Prerequisites
@@ -636,7 +646,9 @@ def good_roulette_negative(population):
 - Island models and migration
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> Tournament selection is the safest default. It works for both minimization and maximization, is insensitive to fitness scaling, and provides easily tunable selection pressure via tournament size.
+
 </div>
 
 ## Practice Problems

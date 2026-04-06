@@ -13,9 +13,10 @@ Walk-forward validation evaluates time series models by training on past data an
 </div>
 
 <div class="callout-insight">
-Standard k-fold cross-validation is invalid for time series because it trains on future data to predict the past, creating unrealistic optimistic performance estimates. Walk-forward validation prevents this temporal leakage and provides realistic estimates of how the model will perform on unseen future data.
-</div>
 
+Standard k-fold cross-validation is invalid for time series because it trains on future data to predict the past, creating unrealistic optimistic performance estimates. Walk-forward validation prevents this temporal leakage and provides realistic estimates of how the model will perform on unseen future data.
+
+</div>
 
 
 ![Walk-Forward Timeline](./walk_forward_timeline.svg)
@@ -386,6 +387,7 @@ def walk_forward_feature_selection(
 
     return np.mean(fold_scores)
 ```
+
 </div>
 
 
@@ -735,7 +737,9 @@ if __name__ == "__main__":
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Training on future data to predict the past is the time series equivalent of looking at the exam answers before taking the test. The resulting performance estimates are meaningless -- they tell you how well the model memorizes temporal patterns, not how well it forecasts.
+
 </div>
 
 ### 1. Using Standard K-Fold Cross-Validation
@@ -765,7 +769,9 @@ validator = WalkForwardValidator(gap=10)  # Skip 10 samples
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A gap of 0 between train and test sets allows autocorrelation to leak information. For financial data with daily frequency, use a gap of at least 5-10 trading days.
+
 </div>
 
 ### 3. Not Enough Test Samples
@@ -795,7 +801,9 @@ validator = WalkForwardValidator(expanding=False)
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 ### Prerequisites

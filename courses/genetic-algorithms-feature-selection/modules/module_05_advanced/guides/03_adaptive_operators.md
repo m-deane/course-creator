@@ -13,7 +13,9 @@ Adaptive operators automatically adjust GA parameters (mutation rate, crossover 
 </div>
 
 <div class="callout-insight">
+
 Optimal GA parameters change during search: early exploration needs high mutation/diversity, late exploitation needs low mutation/focused search. Fixed parameters are either too exploratory (slow convergence) or too exploitative (premature convergence). Adaptive operators measure population state (diversity, fitness improvement, convergence rate) and dynamically adjust parameters. Self-adaptive operators encode parameters in chromosomes, allowing evolution to discover optimal settings for the current search phase.
+
 </div>
 
 ## Comparing Adaptation Strategies
@@ -445,6 +447,7 @@ for strategy, result in results.items():
     print(f"  Features selected: {result['best_individual'].sum()}")
     print(f"  Final mutation rate: {result['mutation_rate_history'][-1]:.4f}")
 ```
+
 </div>
 
 
@@ -622,7 +625,9 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 ```
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Self-adaptive parameters encoded in the chromosome are subject to genetic drift. If the population converges to a single mutation rate (e.g., very low), the GA loses the ability to adapt. Always maintain a minimum mutation floor (e.g., 0.001) regardless of the self-adapted value.
+
 </div>
 
 ## Common Pitfalls
@@ -661,7 +666,9 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 ## Connections
 
 <div class="callout-info">
+
 ℹ️ **How this connects to the rest of the course:**
+
 </div>
 
 **Builds on:**
@@ -680,7 +687,9 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
 - Bayesian optimization (adaptive acquisition functions)
 
 <div class="callout-key">
+
 <strong>Key Takeaway:</strong> Diversity-based adaptation is the most robust strategy: measure population diversity, increase mutation when diversity drops, decrease when diversity is high. This simple feedback loop eliminates 80% of the parameter tuning burden.
+
 </div>
 
 ## Practice Problems

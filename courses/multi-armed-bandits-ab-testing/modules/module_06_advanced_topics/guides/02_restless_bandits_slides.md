@@ -24,11 +24,19 @@ Restless bandits are arms that evolve over time **even when you don't select the
 **The challenge:** You can only observe one arm per period, but ALL arms are evolving.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Standard vs Restless
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Standard["Standard Bandit"]
         SA["Arm A: evolves when selected"]
@@ -38,14 +46,18 @@ flowchart LR
         RA["Arm A: evolves continuously"]
         RB["Arm B: evolves even unobserved!"]
     end
-
-    style Standard fill:#fa0,color:#000
-    style Restless fill:#36f,color:#fff
 ```
 
 **Commodity example:** You hold WTI for 6 months. Meanwhile, NatGas volatility dropped from 25% to 16%. You missed it because you weren't watching.
 
 <!-- Speaker notes: The diagram on Standard vs Restless illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -63,6 +75,13 @@ $$s_i(t+1) \sim P_i(\cdot \mid s_i(t), a_t)$$
 > Restless bandits are **PSPACE-hard** in general, but practical approximations exist.
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Whittle Index Policy
@@ -80,9 +99,22 @@ $$\text{Score}_i(t) = \mathbb{E}[\text{reward} \mid \text{belief}_i] - \lambda \
 > Balances exploitation (high expected reward) with information gathering (check neglected arms).
 
 <!-- Speaker notes: The mathematical treatment of Whittle Index Policy formalizes what we discussed intuitively. Walk through each variable and equation, relating them back to the commodity trading context. Ensure the audience follows the notation before moving on. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Code: Greedy Restless Bandit
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class GreedyRestlessBandit:
@@ -95,11 +127,19 @@ class GreedyRestlessBandit:
         self.t = 0
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Greedy Restless Bandit (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def select_arm(self):
@@ -116,12 +156,15 @@ class GreedyRestlessBandit:
         return np.argmax(scores)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Recency Penalty Calibration
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q{"How fast do arms drift?"}
     Q -->|"Slow (metals)"| Low["λ = 0.001-0.01"]
@@ -131,10 +174,6 @@ flowchart TD
     Low --> Rarely["Re-check every ~100 periods"]
     Med --> Sometimes["Re-check every ~30-50 periods"]
     High --> Often["Re-check every ~10-20 periods"]
-
-    style Low fill:#6f6,color:#000
-    style Med fill:#fa0,color:#000
-    style High fill:#f66,color:#fff
 ```
 
 **Formula:** $\lambda = \frac{\text{reward\_difference}}{\text{acceptable\_lag}}$
@@ -240,6 +279,7 @@ class DiscountedRestlessBandit:
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RB["Restless Bandits"] --> Problem["All arms evolve, observe one"]
     RB --> Whittle["Whittle Index / Recency Penalty"]
@@ -251,9 +291,6 @@ flowchart TD
 
     Balance --> Result_r["Catches improving unobserved arms"]
     Fresh --> Result_r
-
-    style RB fill:#36f,color:#fff
-    style Result_r fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

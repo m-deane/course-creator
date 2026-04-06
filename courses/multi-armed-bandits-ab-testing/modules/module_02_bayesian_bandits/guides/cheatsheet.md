@@ -1,8 +1,24 @@
 # Bayesian Bandits Cheatsheet
 
+> **Reading time:** ~20 min | **Module:** 02 — Bayesian Bandits | **Prerequisites:** Module 1
+
+
 ## Thompson Sampling Algorithm
 
+
+<div class="callout-key">
+
+**Key Concept Summary:** Interpretation: Posterior mean is precision-weighted
+
+</div>
+
 ### Beta-Bernoulli (Binary Rewards)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Initialize
 alpha = np.ones(K)  # Successes + 1
@@ -19,7 +35,15 @@ else:
     beta[arm] += 1
 ```
 
+</div>
+
 ### Gaussian (Continuous Rewards, Known Variance)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Initialize
 mu = np.zeros(K)        # Posterior means
@@ -36,7 +60,15 @@ mu[arm] = (mu[arm]/sigma[arm]**2 + reward/sigma_data**2) / tau_post
 sigma[arm] = np.sqrt(1 / tau_post)
 ```
 
+</div>
+
 ### Poisson (Count Data)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Initialize
 alpha = np.ones(K)      # Shape parameter
@@ -51,7 +83,16 @@ alpha[arm] += reward
 beta[arm] += 1
 ```
 
+</div>
+
 ## Conjugate Prior Table
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 | Likelihood | Parameter | Conjugate Prior | Posterior Update |
 |------------|-----------|-----------------|------------------|
@@ -64,6 +105,13 @@ beta[arm] += 1
 *Normal-Normal: τ₁ = τ₀ + n/σ², μ₁ = (τ₀μ₀ + nμ̂/σ²)/τ₁, σ₁² = 1/τ₁
 
 ## Posterior Update Formulas
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Beta-Bernoulli
 ```
@@ -253,6 +301,13 @@ import arviz as az
 
 ## Debugging Tips
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 1. **Plot posteriors every N rounds** — See if they're concentrating
 2. **Track exploration rate** — Should decay over time
 3. **Check for degenerate posteriors** — Very small variance means over-confidence
@@ -264,3 +319,49 @@ import arviz as az
 - Russo & Van Roy (2018): "Learning to Optimize via Information-Directed Sampling"
 - Chapelle & Li (2011): "An Empirical Evaluation of Thompson Sampling"
 - Connection to **Bayesian Commodity Forecasting** course for deeper Bayesian methods
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary tradeoff this approach makes compared to simpler alternatives?
+
+**Practice Question 2:** Under what conditions would this approach fail or underperform?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_thompson_sampling.md">
+  <div class="link-card-title">01 Thompson Sampling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_thompson_sampling.md">
+  <div class="link-card-title">01 Thompson Sampling — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_posterior_updating.md">
+  <div class="link-card-title">02 Posterior Updating</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_posterior_updating.md">
+  <div class="link-card-title">02 Posterior Updating — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_thompson_vs_ucb.md">
+  <div class="link-card-title">03 Thompson Vs Ucb</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_thompson_vs_ucb.md">
+  <div class="link-card-title">03 Thompson Vs Ucb — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

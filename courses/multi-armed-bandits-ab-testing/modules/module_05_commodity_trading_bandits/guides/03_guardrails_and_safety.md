@@ -1,6 +1,16 @@
 # Guardrails and Safety
 
+> **Reading time:** ~20 min | **Module:** 05 — Commodity Trading Bandits | **Prerequisites:** Module 4
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Bandit algorithms without constraints become dangerous optimization machines. Guardrails are hard limits that prevent concentration risk, overtrading, and regime-blind allocation. They're not weakn...
+
+</div>
 
 Bandit algorithms without constraints become dangerous optimization machines. Guardrails are hard limits that prevent concentration risk, overtrading, and regime-blind allocation. They're not weakness—they're the difference between a learning system and self-sabotage.
 
@@ -19,6 +29,13 @@ Guardrails force the bandit to:
 - Adapt allocation speed to market conditions
 
 ## Visual Explanation
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌────────────────────────────────────────────────────────────┐
@@ -69,11 +86,24 @@ Guardrails force the bandit to:
 
 ## The Five Essential Guardrails
 
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
+
 ### Guardrail 1: Position Limits
 
 **Purpose:** Prevent concentration risk.
 
 **Rule:** No single arm can exceed a maximum weight in the bandit sleeve.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def apply_position_limits(weights, max_weight=0.40):
@@ -89,12 +119,20 @@ def apply_position_limits(weights, max_weight=0.40):
     return weights / weights.sum()
 ```
 
+</div>
+
 **Typical values:**
 - Conservative: 30% max per arm
 - Moderate: 40% max per arm
 - Aggressive: 50% max per arm
 
 **Commodity example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Bandit proposes: [0.70, 0.15, 0.10, 0.05, 0.00]
 # After position limit (40%): [0.44, 0.17, 0.11, 0.06, 0.22]
@@ -104,6 +142,8 @@ weights = np.array([0.70, 0.15, 0.10, 0.05, 0.00])
 safe_weights = apply_position_limits(weights, max_weight=0.40)
 # Result: WTI capped at 40%, excess reallocated
 ```
+
+</div>
 
 **Why it matters:**
 - One commodity can dominate without this (e.g., 95% WTI after strong streak)
@@ -115,6 +155,12 @@ safe_weights = apply_position_limits(weights, max_weight=0.40)
 **Purpose:** Prevent premature abandonment of arms.
 
 **Rule:** Every arm must maintain a minimum weight, even after poor performance.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def apply_minimum_allocation(weights, min_weight=0.05):
@@ -130,6 +176,8 @@ def apply_minimum_allocation(weights, min_weight=0.05):
     # Re-normalize
     return weights / weights.sum()
 ```
+
+</div>
 
 **Typical values:**
 - Conservative: 10% min per arm (forces near-equal weight)
@@ -590,6 +638,13 @@ Guardrails should be tight by default, but can be loosened in specific scenarios
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Builds On
 - **Module 1**: Thompson Sampling (what guardrails constrain)
 - **Reward design**: Guardrails complement rewards
@@ -642,3 +697,39 @@ Should you relax any guardrails? Tighten any? Why?
 **Next Steps:**
 - Read [Regime-Aware Allocation](04_regime_aware_allocation.md) for contextual extensions
 - Try [Two-Wallet Framework Notebook](../notebooks/01_two_wallet_framework.ipynb) to implement guardrails
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./04_regime_aware_allocation.md">
+  <div class="link-card-title">04 Regime Aware Allocation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./04_regime_aware_allocation.md">
+  <div class="link-card-title">04 Regime Aware Allocation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

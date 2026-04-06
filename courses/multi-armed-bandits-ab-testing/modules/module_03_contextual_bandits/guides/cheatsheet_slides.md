@@ -26,6 +26,13 @@ math: mathjax
 | **Regret** | $O(\sqrt{T})$ | $O(d\sqrt{T})$ |
 
 <!-- Speaker notes: This comparison table on Standard vs Contextual Bandits is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## LinUCB Algorithm
@@ -45,9 +52,22 @@ At each round t:
 ```
 
 <!-- Speaker notes: This code example for LinUCB Algorithm is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## LinUCB Code Template
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class LinUCB:
@@ -57,11 +77,25 @@ class LinUCB:
         self.alpha = alpha
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
 
 ---
 
 ## LinUCB Code Template (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def choose_arm(self, context):
@@ -78,7 +112,16 @@ class LinUCB:
         self.b[arm] += reward * context
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Feature Checklist
@@ -95,6 +138,7 @@ class LinUCB:
 ## Commodity Context Features
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph T1["Tier 1: Always"]
         V["vol_zscore = (vol - mean) / std"]
@@ -157,6 +201,7 @@ flowchart LR
 ## When to Use What
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["Optimal arm changes with conditions?"]
     Q -->|"Yes + good features"| CB["Contextual Bandit"]
@@ -166,9 +211,6 @@ flowchart TD
     CB --> Short{"Short horizon?"}
     Short -->|"Yes (< 100)"| EG_c["Contextual epsilon-greedy"]
     Short -->|"No"| LinUCB_c["LinUCB or Contextual TS"]
-
-    style CB fill:#6f6,color:#000
-    style LinUCB_c fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on When to Use What illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -177,6 +219,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M3["Module 3: Contextual Bandits"] --> Framework["Context-dependent decisions"]
     M3 --> Algo["LinUCB algorithm"]
@@ -189,9 +232,6 @@ flowchart TD
     Regime --> Commodity_c["Commodity Trading"]
     Regret_c --> Commodity_c
     Quality --> Commodity_c
-
-    style M3 fill:#36f,color:#fff
-    style Regret_c fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

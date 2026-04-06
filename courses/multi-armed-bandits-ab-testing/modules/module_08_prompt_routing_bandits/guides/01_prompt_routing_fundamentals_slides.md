@@ -24,11 +24,19 @@ Prompt routing bandits treat each **prompt template** as an "arm." The system le
 **Eliminates the "Bad Prompt Tax"** -- the cost of using suboptimal prompts while you manually iterate.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## The Bad Prompt Tax
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Tax["The Hidden Tax of Bad Prompts"]
         T1["Time Tax<br/>Weeks of manual iteration"]
@@ -42,17 +50,22 @@ flowchart TD
     end
 
     Tax --> Fix
-
-    style Tax fill:#f66,color:#fff
-    style Fix fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on The Bad Prompt Tax illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Prompt Routing Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as User Request
     participant FE as Feature Extraction
@@ -70,6 +83,13 @@ sequenceDiagram
 ```
 
 <!-- Speaker notes: The diagram on Prompt Routing Architecture illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Six Prompt Arms for Commodity Trading
@@ -84,6 +104,13 @@ sequenceDiagram
 | **Scenario Analysis** | Bull/base/bear | Risk assessment |
 
 <!-- Speaker notes: This comparison table on Six Prompt Arms for Commodity Trading is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -105,6 +132,12 @@ $$\max \sum_{t=1}^T \mathbb{E}[r_t \mid x_t, a_t = \pi(x_t)]$$
 
 ## Code: Minimal Prompt Router
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class PromptRouter:
     def __init__(self, prompts):
@@ -125,10 +158,18 @@ class PromptRouter:
             self.failures[prompt_idx] += 1
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Usage Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 prompts = [
@@ -143,6 +184,8 @@ for request in requests:
     idx = router.select_prompt()
     prompt = prompts[idx]
 ```
+
+</div>
 
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
@@ -167,6 +210,7 @@ for request in requests:
 ## Analyst Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["New Query Arrives"] --> Route{Which analyst?}
 
@@ -178,9 +222,6 @@ flowchart TD
 
     A & B & C & D & E --> Learn["Track Performance"]
     Learn --> |"Update beliefs"| Route
-
-    style Q fill:#36f,color:#fff
-    style Learn fill:#6f6,color:#000
 ```
 
 > Like learning which analyst to trust for each market -- but with prompts.
@@ -236,6 +277,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PRF["Prompt Routing Fundamentals"] --> Arms["6 Prompt Types"]
     PRF --> TS["Thompson Sampling Engine"]
@@ -246,9 +288,6 @@ flowchart TD
     Tax --> |"No manual testing,<br/>continuous learning"| Efficient["Token + Time Savings"]
 
     Specialized & Adaptive & Efficient --> Router["Production Prompt Router"]
-
-    style PRF fill:#36f,color:#fff
-    style Router fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

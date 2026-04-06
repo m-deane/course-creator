@@ -27,11 +27,19 @@ Instead of one universal allocation:
 - Allocation for risk-on vs risk-off
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Regime-Aware Bandit Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Obs["1. Observe Market Features<br/>VIX: 32, Contango: +2%, Trend: +15%"] --> Class["2. Classify Regime<br/>HIGH_VOL_CONTANGO_TRENDING"]
     Class --> Retrieve["3. Retrieve Regime-Specific Beliefs<br/>WTI: strong, Gold: weak"]
@@ -39,13 +47,16 @@ flowchart TD
     Alloc --> Observe["5. Observe Returns"]
     Observe --> Update["6. Update THIS Regime Only"]
     Update --> Obs
-
-    style Obs fill:#36f,color:#fff
-    style Class fill:#fa0,color:#000
-    style Alloc fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Regime-Aware Bandit Flow illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Context Vector: 6 Regime Features
@@ -60,9 +71,22 @@ flowchart TD
 | Inventory | Percentile of historical | Low/Normal/High |
 
 <!-- Speaker notes: This comparison table on Context Vector: 6 Regime Features is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Feature Engineering Recipes
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # 1. Realized Volatility
@@ -82,7 +106,16 @@ sentiment = sp500.rolling(5).mean() - (vix - 20) / 100
 seasonal = seasonal_patterns[commodity][date.month]
 ```
 
+</div>
+
 <!-- Speaker notes: This code example for Feature Engineering Recipes is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -107,20 +140,23 @@ $$a_t = \arg\max_k \tilde{\theta}_k$$
 ## Regime Classification Strategies
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S1["Rule-Based"] --> |"Hand-crafted from domain knowledge"| P1["Interpretable, needs tuning"]
     S2["K-Means Clustering"] --> |"Data-driven discovery"| P2["Automatic, less interpretable"]
     S3["Hidden Markov Model"] --> |"Sequential + probabilistic"| P3["Accounts for persistence"]
-
-    style S1 fill:#6f6,color:#000
-    style S2 fill:#fa0,color:#000
-    style S3 fill:#36f,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Regime Classification Strategies illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
 ---
 
 ## Simple Rule-Based Classifier
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def classify_regime(features):
@@ -134,6 +170,8 @@ def classify_regime(features):
     else:
         vol_state = 'MED_VOL'
 ```
+
+</div>
 
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
@@ -266,6 +304,7 @@ class RegimeAwareBandit:
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RA["Regime-Aware Allocation"] --> Features_ra["6 Market Features"]
     RA --> Classification["Regime Classification"]
@@ -280,9 +319,6 @@ flowchart TD
     Classification --> HMM_ra["HMM"]
 
     Separate --> |"Update only observed regime"| Adapt_ra["Adapt as regimes shift"]
-
-    style RA fill:#36f,color:#fff
-    style Adapt_ra fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

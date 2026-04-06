@@ -1,6 +1,16 @@
 # Decision Theory Basics
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Decision theory provides the mathematical foundation for choosing actions under uncertainty. For bandits and commodity trading, the key concepts are: expected value (what you'll earn on average), u...
+
+</div>
 
 Decision theory provides the mathematical foundation for choosing actions under uncertainty. For bandits and commodity trading, the key concepts are: expected value (what you'll earn on average), utility (how you value different outcomes), sequential decision making (your choices now affect future information), and regret minimization (comparing your strategy to the best possible strategy in hindsight).
 
@@ -45,6 +55,13 @@ Risk-seeking:  U(x) = x²                   (convex)
 EU = Σ U(x_i) · P(x_i)
 ```
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 **Example:** Would you rather have:
 - **Option A:** $100 for sure
 - **Option B:** 50% chance of $200, 50% chance of $0
@@ -78,6 +95,13 @@ Risk-neutral bandit: Prefers A (higher mean).
 Risk-adjusted bandit: Prefers B (higher Sharpe).
 
 ## Sequential Decision Making Under Uncertainty
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### The Value of Information
 
@@ -258,6 +282,13 @@ A crude oil trader asks: "Should I increase my WTI position or rotate to Brent?"
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Builds on:**
 - Basic probability (expected value, variance, distributions)
 - Statistical inference (confidence intervals, hypothesis testing)
@@ -301,6 +332,12 @@ You can test it for N weeks, then decide whether to adopt it permanently or stic
 
 **3. Utility-Based Arm Selection:**
 Implement a bandit algorithm that chooses arms based on **expected utility** instead of expected reward:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -349,8 +386,46 @@ arm_stds = [5, 2]
 # Compare risk-neutral vs risk-averse preferences
 ```
 
+</div>
+
 **Expected behavior:**
 - Risk-neutral: Prefers arm 0 (mean = 10)
 - Risk-averse: Might prefer arm 1 (mean = 8, but lower variance gives higher utility)
 
 **Extension:** How does the risk aversion parameter affect exploration? More risk-averse agents might explore less (uncertainty is costly).
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ab_testing_limits.md">
+  <div class="link-card-title">01 Ab Testing Limits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ab_testing_limits.md">
+  <div class="link-card-title">01 Ab Testing Limits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_explore_exploit_tradeoff.md">
+  <div class="link-card-title">02 Explore Exploit Tradeoff</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_explore_exploit_tradeoff.md">
+  <div class="link-card-title">02 Explore Exploit Tradeoff — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

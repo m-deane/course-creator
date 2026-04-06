@@ -28,11 +28,19 @@ A pure bandit will:
 - Ignore regime changes
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Guardrail Checkpoint Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Raw["Raw Bandit Proposal<br/>WTI: 60%, Gold: 30%, NatGas: 0%"] --> G1["1. Position Limits<br/>Max 40% per arm"]
     G1 --> G2["2. Minimum Allocation<br/>Min 5% per arm"]
@@ -40,23 +48,35 @@ flowchart TD
     G3 --> G4["4. Core Protection<br/>Core monthly, bandit weekly"]
     G4 --> G5["5. Volatility Dampening<br/>VIX > 30 → reduce tilt"]
     G5 --> Safe["Final Safe Allocation<br/>WTI: 35%, Gold: 28%, NatGas: 10%"]
-
-    style Raw fill:#f66,color:#fff
-    style Safe fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Guardrail Checkpoint Flow illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Guardrail 1: Position Limits
 
 **Purpose:** Prevent concentration risk.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def apply_position_limits(weights, max_weight=0.40):
     weights = np.clip(weights, 0, max_weight)
     return weights / weights.sum()
 ```
+
+</div>
 
 | Setting | Max Weight | Use Case |
 |---------|-----------|----------|
@@ -65,11 +85,24 @@ def apply_position_limits(weights, max_weight=0.40):
 | Aggressive | 50% | High-conviction strategies |
 
 <!-- Speaker notes: This code example for Guardrail 1: Position Limits is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Guardrail 2: Minimum Allocation
 
 **Purpose:** Prevent premature abandonment of arms.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def apply_minimum_allocation(weights, min_weight=0.05):
@@ -77,9 +110,18 @@ def apply_minimum_allocation(weights, min_weight=0.05):
     return weights / weights.sum()
 ```
 
+</div>
+
 > Sample size of one week is insufficient to judge an arm. Volatility != bad arm.
 
 <!-- Speaker notes: This code example for Guardrail 2: Minimum Allocation is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Guardrail 3: Tilt Speed Limits
@@ -104,6 +146,7 @@ def apply_tilt_speed_limit(new_weights, old_weights, max_change=0.15):
 **Purpose:** Separate strategic from tactical allocation.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Core["Core (80%)"]
         CM["Monthly rebalance"]
@@ -115,9 +158,6 @@ flowchart LR
     end
     Core --> Total["Combined Allocation"]
     Bandit --> Total
-
-    style Core fill:#36f,color:#fff
-    style Bandit fill:#6f6,color:#000
 ```
 
 > Different timescales prevent bandit from dominating.
@@ -244,16 +284,12 @@ class GuardrailSystem:
 ## Guardrail Pitfalls
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     P1["No Min Allocation"] --> |"Zero out arm after 1 bad week"| F1["Miss 26% rebound"]
     P2["No Tilt Speed Limit"] --> |"Massive weekly turnover"| F2["5% annual cost"]
     P3["Ignoring Correlations"] --> |"40% WTI + 40% Brent"| F3["80% oil exposure"]
     P4["Same Timescale"] --> |"Core + bandit both weekly"| F4["Bandit dominates"]
-
-    style F1 fill:#f66,color:#fff
-    style F2 fill:#f66,color:#fff
-    style F3 fill:#f66,color:#fff
-    style F4 fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: Walk through Guardrail Pitfalls carefully. Emphasize why this mistake is common and how to recognize it in practice. The commodity trading example makes it concrete -- ask if anyone has encountered this in their own work. -->
@@ -299,6 +335,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GS["Guardrails & Safety"] --> Five["5 Essential Guardrails"]
     GS --> Commodity_g["Commodity-Specific"]
@@ -313,9 +350,6 @@ flowchart TD
     Commodity_g --> Corr["Correlation limits"]
     Commodity_g --> Sector["Sector caps"]
     Commodity_g --> Inv["Inventory-based sizing"]
-
-    style GS fill:#36f,color:#fff
-    style Five fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -20,6 +20,7 @@ math: mathjax
 **Prompt routing = multi-armed bandit where arms are prompt templates**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Request["User Request"] --> FE["Feature Extraction"]
     FE --> Bandit["Bandit Selection<br/>(TS or LinUCB)"]
@@ -27,12 +28,16 @@ flowchart LR
     Prompt --> LLM["LLM Call"]
     LLM --> Reward["Reward Calculation"]
     Reward --> |"Update"| Bandit
-
-    style Bandit fill:#36f,color:#fff
-    style Reward fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Core Concept illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Prompt Arm Design
@@ -49,6 +54,13 @@ flowchart LR
 > **5-8 prompts maximum.** Each solves ONE job.
 
 <!-- Speaker notes: This comparison table on Prompt Arm Design is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Reward Function Template
@@ -81,6 +93,13 @@ flowchart LR
 $$\text{reward} = \text{primary} + \sum(\text{guardrail\_penalties})$$
 
 <!-- Speaker notes: This comparison table on Reward Function Template is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Context Features
@@ -96,26 +115,36 @@ $$\text{reward} = \text{primary} + \sum(\text{guardrail\_penalties})$$
 **Context vector:** 15 dimensions (one-hot + continuous + intercept)
 
 <!-- Speaker notes: This comparison table on Context Features is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Algorithm Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q{Context features matter?}
     Q -->|"No: one prompt<br/>for all requests"| TS["Thompson Sampling<br/>10 lines of code"]
     Q -->|"Yes: different prompts<br/>for different contexts"| LinUCB["LinUCB<br/>30 lines of code"]
     Q -->|"Just need a baseline"| EG["Epsilon-Greedy<br/>5 lines of code"]
-
-    style TS fill:#6f6,color:#000
-    style LinUCB fill:#36f,color:#fff
-    style EG fill:#fa0,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Algorithm Selection illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
 ---
 
 ## Thompson Sampling (No Context)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class PromptRouter:
@@ -135,10 +164,18 @@ class PromptRouter:
             self.beta[idx] += 1
 ```
 
+</div>
+
 <!-- Speaker notes: This code example for Thompson Sampling (No Context) is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
 ---
 
 ## LinUCB (With Context)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class ContextualPromptRouter:
@@ -147,6 +184,8 @@ class ContextualPromptRouter:
         self.b = [np.zeros(context_dim) for _ in range(num_prompts)]
         self.alpha = alpha
 ```
+
+</div>
 
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
@@ -243,6 +282,7 @@ class ContextualPromptRouter:
 ## Module Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M2["Module 2<br/>Thompson Sampling"] --> M8["Module 8<br/>Prompt Routing"]
     M3["Module 3<br/>LinUCB"] --> M8
@@ -252,10 +292,6 @@ flowchart TD
     M8 --> |"TS = non-contextual routing"| TS_c["Simple Router"]
     M8 --> |"LinUCB = contextual routing"| LU_c["Context-Aware Router"]
     M8 --> |"Same domain, prompts not allocations"| Domain["Commodity LLM Systems"]
-
-    style M8 fill:#36f,color:#fff
-    style TS_c fill:#6f6,color:#000
-    style LU_c fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The connections section shows how this topic links to the rest of the course. Highlight the 'Builds On' prerequisites to remind students of what they should already know, and use 'Leads To' to create anticipation for upcoming modules. -->
@@ -264,6 +300,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M8_v["Module 8: Prompt Routing Bandits"] --> Arms_v["Prompt Arms (5-8)"]
     M8_v --> Reward_v["Composite Rewards"]
@@ -276,9 +313,6 @@ flowchart TD
     Cases --> |"Hallucination 35%->2%<br/>Accuracy 56%->63%"| Proven_v["Proven in Production"]
 
     Specialized_v & Correct & Smart_v & Proven_v --> System["Production Prompt Routing System"]
-
-    style M8_v fill:#36f,color:#fff
-    style System fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

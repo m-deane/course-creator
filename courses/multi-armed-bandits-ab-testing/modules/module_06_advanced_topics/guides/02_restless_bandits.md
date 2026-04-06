@@ -1,10 +1,27 @@
 # Restless Bandits
 
+> **Reading time:** ~20 min | **Module:** 06 — Advanced Topics | **Prerequisites:** Module 5
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Restless bandits are arms that evolve over time *even when you don't select them*. Unlike standard bandits where unselected arms stay frozen, restless arms change on their own — like commodities whose
+
+</div>
 
 Restless bandits are arms that evolve over time *even when you don't select them*. Unlike standard bandits where unselected arms stay frozen, restless arms change on their own — like commodities whose volatility and correlation shift whether you're invested or not.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 **Standard bandits assume passive arms:** If you don't pull an arm, its reward distribution stays the same. But in reality:
 - A commodity's volatility changes even if you're not trading it
@@ -16,6 +33,13 @@ Restless bandits are arms that evolve over time *even when you don't select them
 **Restless bandits are PSPACE-hard** (computationally intractable in general), but practical approximations exist for real-world use.
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 Standard Bandit (arms freeze when not selected):
@@ -111,6 +135,12 @@ Whittle index balances these: "Friend B's life is changing rapidly (high volatil
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from collections import defaultdict
@@ -177,9 +207,17 @@ for t in range(1000):
     bandit.update(arm, reward)
 ```
 
+</div>
+
 **Advanced: Discounted Restless Bandit**
 
 Combine recency penalty with exponential discounting:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class DiscountedRestlessBandit:
@@ -218,6 +256,8 @@ class DiscountedRestlessBandit:
         self.beta[arm] += (1 - reward)
         self.last_observed[arm] = self.t
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -272,6 +312,13 @@ class DiscountedRestlessBandit:
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Problem 1: When to Use Restless Bandits
 For each scenario, decide if restless bandits are appropriate:
 
@@ -312,6 +359,12 @@ Which arm should have a higher Whittle index (higher priority)? Why?
 
 **Restless Bandit Solution:**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Initialize with recency penalty
 bandit = GreedyRestlessBandit(n_arms=5, recency_penalty=0.02)
@@ -338,6 +391,44 @@ for day in trading_days:
     # force us to check back.
 ```
 
+</div>
+
 **Key insight:** The recency penalty `λ=0.02` means that after ~50 days without observing a commodity, the staleness penalty (0.02 × 50 = 1.0) becomes very large, forcing re-observation even if it was historically bad. This prevents the "ignore and forget" problem where an improving commodity is never reconsidered.
 
 **Backtesting:** Compare restless bandit vs standard Thompson Sampling on historical data with known regime changes (e.g., 2020 COVID crash, 2022 energy crisis). Restless bandit should recover faster after unobserved commodities become attractive.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_non_stationary_bandits.md">
+  <div class="link-card-title">01 Non Stationary Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_non_stationary_bandits.md">
+  <div class="link-card-title">01 Non Stationary Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_adversarial_bandits.md">
+  <div class="link-card-title">03 Adversarial Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_adversarial_bandits.md">
+  <div class="link-card-title">03 Adversarial Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

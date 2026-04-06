@@ -29,11 +29,18 @@ math: mathjax
 
 <!-- Speaker notes: This comparison table is the core message of Module 0. A/B testing is appropriate for one-time decisions in static environments. Bandits are appropriate for repeated decisions in dynamic environments -- which describes most commodity trading scenarios. The regret growth rate difference (linear vs logarithmic) is the mathematical foundation for the entire course. -->
 
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## When to Use Which
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["Do you need to choose between options?"] --> OT["One-time decision?"]
     Q --> RD["Repeated decision?"]
@@ -48,13 +55,15 @@ flowchart TD
     INT --> EG["Epsilon-greedy"]
     TH --> UCB_a["UCB"]
     EMP --> TS["Thompson Sampling"]
-
-    style AB fill:#fa0,color:#000
-    style DEC fill:#6f6,color:#000
-    style ADAPT fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: Use this decision flowchart when choosing between A/B testing and bandit approaches. One-time decisions with no time pressure suit A/B testing. Repeated decisions in stable environments suit standard bandits (UCB, epsilon-decay). Non-stationary environments need adaptive bandits (sliding window, discounted). If interpretability is paramount, epsilon-greedy is simplest to explain. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
 
 ---
 
@@ -70,6 +79,12 @@ $$n = \frac{2(1.96 + 0.84)^2 \cdot 0.065 \cdot 0.935}{(0.03)^2} \approx 1{,}954 
 
 <!-- Speaker notes: This formula tells you how many observations per variant you need for an A/B test. The key driver is the effect size in the denominator -- smaller differences require much larger samples. For commodity trading, if the Sharpe difference between strategies is small (e.g., 0.1), you may need thousands of trades to detect it with an A/B test, during which half your capital is on the inferior strategy. -->
 
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Test Statistic
@@ -83,6 +98,12 @@ where $\hat{p} = \frac{x_A + x_B}{n_A + n_B}$ is the pooled proportion.
 Reject $H_0$ if $|z| > z_{\alpha/2}$ (e.g., 1.96 for $\alpha = 0.05$).
 
 <!-- Speaker notes: The z-test compares two proportions under the null hypothesis that they are equal. The pooled proportion provides the standard error estimate. Reject the null when the observed difference is large relative to the standard error. In bandit terms, this test is run once at the end of a fixed-horizon experiment. Bandits skip this entirely by continuously adapting allocation. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
 
 ---
 
@@ -204,6 +225,7 @@ $$\text{Sharpe} = \frac{\mu - r_f}{\sigma}$$
 ## Common Pitfalls Checklist
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph AB["A/B Testing Pitfalls"]
         P1["Peeking: checking early inflates Type I error"]
@@ -230,6 +252,12 @@ flowchart TD
 
 ## Quick Code: A/B Test Sample Size
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.stats import norm
 import numpy as np
@@ -246,11 +274,19 @@ n = ab_sample_size(0.05, 0.08)
 print(f"Need {n} per variant, {2*n} total")
 ```
 
+</div>
+
 <!-- Speaker notes: Copy-paste this function to calculate A/B test sample sizes. Try different effect sizes to see how sample requirements explode for small differences. For example, detecting a 0.05 vs 0.06 difference requires roughly 15,000 per variant. This demonstrates why A/B testing is impractical for subtle strategy differences in commodity trading. -->
 
 ---
 
 ## Quick Code: Cumulative Regret
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def cumulative_regret(arm_means, choices):
@@ -265,6 +301,8 @@ choices = [0, 1, 0, 1, 1, 2, 1, 1]
 regret = cumulative_regret(arm_means, choices)
 print(f"Total regret: {regret[-1]:.3f}")
 ```
+
+</div>
 
 <!-- Speaker notes: This utility function calculates cumulative regret for any sequence of arm choices. Use it to evaluate and compare different algorithms. The example shows a simple sequence of 8 choices across 3 commodity sectors. Plot the result to see the regret curve. You will use this function throughout the course for evaluation. -->
 
@@ -320,6 +358,7 @@ print(f"Chose arm {arm}")
 ## Visual Summary: Module 0 Foundations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     AB["A/B Testing Limits"] --> EE["Explore-Exploit Tradeoff"]
     EE --> DT["Decision Theory"]
@@ -333,11 +372,6 @@ flowchart LR
     Framework --> Bandits
 
     Bandits --> M1["Module 1: Algorithms"]
-
-    style Problem fill:#f66,color:#fff
-    style Solution fill:#6f6,color:#000
-    style Framework fill:#36f,color:#fff
-    style Bandits fill:#f9f,color:#000
 ```
 
 <!-- Speaker notes: This diagram maps the three Module 0 guides to their roles in the course narrative. Guide 1 establishes the problem (A/B testing waste). Guide 2 introduces the solution concept (explore-exploit balance). Guide 3 provides the mathematical framework (decision theory). Together they motivate and prepare you for Module 1 where we implement actual bandit algorithms. -->

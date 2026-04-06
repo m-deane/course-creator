@@ -1,6 +1,16 @@
 # Feature Engineering for Contextual Bandits
 
+> **Reading time:** ~20 min | **Module:** 03 — Contextual Bandits | **Prerequisites:** Module 2
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Good context features are the difference between a contextual bandit that learns useful patterns and one that just adds complexity. For commodity markets, effective features capture market regime (...
+
+</div>
 
 Good context features are the difference between a contextual bandit that learns useful patterns and one that just adds complexity. For commodity markets, effective features capture market regime (volatility, term structure), seasonality, and macro conditions in a format that enables learning while avoiding overfitting.
 
@@ -10,9 +20,23 @@ Good context features are the difference between a contextual bandit that learns
 - Too few features → can't capture regime-dependent patterns
 - Too many features → overfitting, slow learning, exploration becomes expensive
 
+<div class="callout-insight">
+
+**Insight:** Contextual bandits bridge the gap between simple A/B tests and full reinforcement learning. They personalize decisions based on observable features without needing to model state transitions.
+
+</div>
+
+
 **The sweet spot:** 3-7 features that capture the core drivers of regime-dependent performance. Unlike supervised learning where you can throw in 50 features and let regularization handle it, bandits pay an exploration cost for each dimension.
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 FEATURE SELECTION FRAMEWORK:
@@ -92,6 +116,12 @@ You should be able to explain why the feature might matter.
 ## Commodity-Specific Feature Recipes
 
 ### Recipe 1: Volatility Regime
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compute_volatility_regime(prices, window=20):
     """Classify current volatility as low/medium/high."""
@@ -102,11 +132,19 @@ def compute_volatility_regime(prices, window=20):
     return vol_zscore
 ```
 
+</div>
+
 **Why:** Defensive commodities (gold, treasuries) perform better in high-vol regimes; growth commodities (industrial metals) prefer low-vol.
 
 **Typical range:** -2 to +2 (z-score), standardized
 
 ### Recipe 2: Term Structure Indicator
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compute_term_structure(front_price, back_price):
     """Compute contango/backwardation strength."""
@@ -115,11 +153,19 @@ def compute_term_structure(front_price, back_price):
     return term_spread
 ```
 
+</div>
+
 **Why:** Contango indicates oversupply or low demand (bad for commodities); backwardation indicates shortage or high demand (good).
 
 **Typical range:** -0.2 to +0.2 (20% annualized)
 
 ### Recipe 3: Seasonality Features
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compute_seasonality(date):
     """Extract seasonal features."""
@@ -130,6 +176,8 @@ def compute_seasonality(date):
     is_winter = 1 if month in [12, 1, 2] else 0
     return np.array([is_harvest, is_winter])
 ```
+
+</div>
 
 **Why:** Seasonal patterns are strong in agriculture (harvest pressure) and energy (heating demand).
 
@@ -286,6 +334,13 @@ features = features.fillna(0)
 
 ## Diagnostic Tools
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Check Feature Quality
 ```python
 def diagnose_features(features, rewards, arm):
@@ -349,3 +404,39 @@ def add_momentum_regime(features, prices):
 - Features are all highly correlated (check feature correlation matrix)
 - Features are too noisy (try smoothing)
 - Scale issues (check feature ranges, apply normalization)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_contextual_bandit_framework.md">
+  <div class="link-card-title">01 Contextual Bandit Framework</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_contextual_bandit_framework.md">
+  <div class="link-card-title">01 Contextual Bandit Framework — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_linucb_algorithm.md">
+  <div class="link-card-title">02 Linucb Algorithm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_linucb_algorithm.md">
+  <div class="link-card-title">02 Linucb Algorithm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

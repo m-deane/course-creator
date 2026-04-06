@@ -18,6 +18,7 @@ math: mathjax
 ## Pre-Deployment Checklist
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     C1["1. Architecture separates concerns"] --> C2["2. Comprehensive logging"]
     C2 --> C3["3. Monitoring dashboard"]
@@ -29,12 +30,16 @@ flowchart TD
     C8 --> C9["9. Propensities logged"]
     C9 --> C10["10. Tested on staging"]
     C10 --> Deploy["DEPLOY"]
-
-    style Deploy fill:#6f6,color:#000
-    style C1 fill:#36f,color:#fff
 ```
 
 <!-- Speaker notes: This checklist is a practical tool for real-world application. Suggest students save or print this for reference when implementing their own systems. Walk through each item briefly, explaining why it matters. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## System Architecture Quick Reference
@@ -49,6 +54,13 @@ flowchart TD
 | **Monitor** | `check_alerts()` | Detect failures |
 
 <!-- Speaker notes: This comparison table on System Architecture Quick Reference is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## What to Log (Per Decision)
@@ -89,6 +101,13 @@ flowchart TD
 </div>
 
 <!-- Speaker notes: This slide connects theory to implementation for What to Log (Per Decision). Start with the mathematical formulation, then show how each term maps to a line of code. This bridge between theory and practice is one of the most valuable aspects of the course. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Monitoring Metrics
@@ -102,6 +121,13 @@ flowchart TD
 | Arm Pull Balance | max/min counts | > 10x | Extreme imbalance |
 
 <!-- Speaker notes: This comparison table on Monitoring Metrics is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Offline Evaluation Formulas
@@ -139,18 +165,13 @@ $$\hat{V}_{DR} = \frac{1}{n} \sum_i \left[ \sum_a \pi_1 \hat{r} + \frac{\pi_1}{\
 ## Common Failure Modes
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     F1["Policy Collapse<br/>Entropy < 0.5"] --> Fix1["Increase exploration<br/>Optimistic initialization"]
     F2["Reward Degradation<br/>Declining MA"] --> Fix2["Retrain, add recency<br/>Check feature pipeline"]
     F3["Feature Drift<br/>KL spike"] --> Fix3["Regime detection<br/>Retrain with recent data"]
     F4["Cold Start Failure<br/>New arms never selected"] --> Fix4["Optimistic initialization<br/>Forced exploration"]
     F5["High Override Rate<br/>Guardrails > 50%"] --> Fix5["Retrain with constraints<br/>Adjust thresholds"]
-
-    style F1 fill:#f66,color:#fff
-    style F2 fill:#f66,color:#fff
-    style F3 fill:#fa0,color:#000
-    style F4 fill:#fa0,color:#000
-    style F5 fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Common Failure Modes illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -170,6 +191,12 @@ flowchart TD
 
 ## Production Code Template
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class ProductionBanditSystem:
     def __init__(self, policy, guardrails, logger, monitor):
@@ -180,11 +207,19 @@ class ProductionBanditSystem:
         self.monitor = monitor
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Production Code Template (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def make_decision(self, context):
@@ -203,23 +238,20 @@ class ProductionBanditSystem:
         self.monitor.update(arm, reward)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Deployment Environments
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Local["Local<br/>Unit tests<br/>Synthetic data"] --> Staging["Staging<br/>Integration tests<br/>Historical replay"]
     Staging --> Paper["Paper Trading<br/>Live data<br/>No real execution"]
     Paper --> Canary["Canary<br/>1-5% real traffic<br/>Intensive monitoring"]
     Canary --> Prod["Production<br/>100% real traffic<br/>Standard monitoring"]
-
-    style Local fill:#36f,color:#fff
-    style Staging fill:#36f,color:#fff
-    style Paper fill:#fa0,color:#000
-    style Canary fill:#fa0,color:#000
-    style Prod fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Deployment Environments illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -265,6 +297,7 @@ flowchart LR
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M7["Module 7: Production Systems"] --> Arch["Architecture"]
     M7 --> Log["Logging"]
@@ -277,9 +310,6 @@ flowchart TD
     Eval --> |"IPS, DR, Replay"| Safe["Safe Updates"]
 
     Modular & Audit & Observe & Safe --> Deploy["Production-Ready Bandit System"]
-
-    style M7 fill:#36f,color:#fff
-    style Deploy fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -27,6 +27,13 @@ Both achieve **logarithmic regret**, but explore differently:
 | **Exploration** | Wide confidence bounds | Wide posteriors give diverse samples |
 
 <!-- Speaker notes: This comparison table on Two Leading Algorithms is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Visual: How They Differ
@@ -46,11 +53,19 @@ Round 3: sample A=0.52, B=0.56, C=0.47 --> Pick B
 > UCB commits until bounds shift. Thompson continuously randomizes.
 
 <!-- Speaker notes: This code example for Visual: How They Differ is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Exploration Mechanisms
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph UCB_alg["UCB: Deterministic Optimism"]
         U1["Compute upper bound for each arm"]
@@ -67,6 +82,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: The diagram on Exploration Mechanisms illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Formal Comparison
@@ -82,6 +104,13 @@ $$\hat{\theta}_i \sim \text{Beta}(\alpha_i, \beta_i), \quad a_t = \arg\max_i \ha
 Thompson's bound was proven later (2010s vs 2000s), but they're **asymptotically equivalent**.
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Full Comparison Table
@@ -148,6 +177,7 @@ UCB does NOT satisfy this -- it's deterministic. This property makes Thompson Sa
 ## Practical Trade-offs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph UCB_wins["UCB Wins"]
         UW1["Simpler implementation"]
@@ -160,7 +190,6 @@ flowchart TD
         TW3["Prior knowledge integration"]
         TW4["Better empirical results"]
     end
-    style TS_wins fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Practical Trade-offs illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -197,11 +226,19 @@ beta *= 0.99
 **UCB:** No natural way to incorporate beliefs. Ad-hoc count initialization.
 
 **Thompson:** Priors are fundamental:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Believe arm has ~60% success from fundamentals
 alpha[arm] = 6   # Beta(6, 4)
 beta[arm] = 4
 ```
+
+</div>
 
 > **Winner: Thompson Sampling** (Bayesian framework)
 
@@ -287,6 +324,7 @@ Run both algorithms for 1000 rounds. Compare:
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Battle["UCB vs Thompson Sampling"] --> Same["Same regret bound: O(log T)"]
 
@@ -303,10 +341,6 @@ flowchart TD
     TS_s --> Prior_s["Encodes priors"]
 
     TS_s --> Winner["Often wins in practice"]
-
-    style Same fill:#ff9,color:#000
-    style Winner fill:#6f6,color:#000
-    style TS_s fill:#36f,color:#fff
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

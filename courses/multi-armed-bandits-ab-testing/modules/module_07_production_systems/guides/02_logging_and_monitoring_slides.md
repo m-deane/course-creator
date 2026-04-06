@@ -22,6 +22,13 @@ Production bandit systems require **comprehensive logging** of every decision an
 > The difference between a research notebook and a production system is **observability**. Without structured logging and monitoring, you're flying blind.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## What to Log (Per Decision)
@@ -46,11 +53,19 @@ Production bandit systems require **comprehensive logging** of every decision an
 ```
 
 <!-- Speaker notes: This code example for What to Log (Per Decision) is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Logging Data Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     D[Decision Made] --> |"Log immediately"| DL[Decision Log]
     DL --> |"context, scores,<br/>arm, metadata"| JSONL[(JSONL File)]
@@ -60,13 +75,16 @@ flowchart LR
 
     JSONL --> |"Join on decision_id"| Analysis[Offline Analysis]
     JSONL --> |"Stream"| Monitor[Real-Time Monitor]
-
-    style DL fill:#36f,color:#fff
-    style RL fill:#fa0,color:#000
-    style JSONL fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Logging Data Flow illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Monitoring Metrics
@@ -79,11 +97,19 @@ flowchart LR
 | **Feature Drift** | $D_{KL}(P_{\text{recent}} \|\| P_{\text{hist}})$ | > threshold | Regime change |
 
 <!-- Speaker notes: This comparison table on Monitoring Metrics is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Monitoring Dashboard Layout
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Dashboard["Monitoring Dashboard"]
         subgraph Top["Top Row"]
@@ -100,10 +126,6 @@ flowchart TD
             G_alert["GREEN: All normal"]
         end
     end
-
-    style R_alert fill:#f66,color:#fff
-    style Y_alert fill:#fa0,color:#000
-    style G_alert fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Monitoring Dashboard Layout illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -124,17 +146,31 @@ flowchart TD
 
 ## Code: BanditLogger
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class BanditLogger:
     def __init__(self, log_file="bandit_decisions.jsonl"):
         self.log_file = log_file
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: BanditLogger (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def log_decision(self, decision_id, policy_version,
@@ -151,6 +187,8 @@ class BanditLogger:
         with open(self.log_file, "a") as f:
             f.write(json.dumps(log_entry) + "\n")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -225,6 +263,7 @@ for week in range(52):
 ## Black Box Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph BlackBox["Logging = Black Box Recorder"]
         DC["Decision Context<br/>What did the world look like?"]
@@ -239,9 +278,6 @@ flowchart TD
         Change["World changing?<br/>(feature drift)"]
         Earn["Are we earning?<br/>(reward trends)"]
     end
-
-    style BlackBox fill:#36f,color:#fff
-    style Cockpit fill:#fa0,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Black Box Analogy illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -294,6 +330,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     LM["Logging & Monitoring"] --> Log["Structured Logging"]
     LM --> Mon["Real-Time Monitoring"]
@@ -306,9 +343,6 @@ flowchart TD
     Audit --> Observable["Observable Production System"]
     Health --> Observable
     Action --> Observable
-
-    style LM fill:#36f,color:#fff
-    style Observable fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

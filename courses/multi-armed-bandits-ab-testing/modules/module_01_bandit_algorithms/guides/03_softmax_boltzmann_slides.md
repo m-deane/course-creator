@@ -24,6 +24,13 @@ $$\pi(a) = \frac{\exp(\hat{Q}(a) / \tau)}{\sum_{a'} \exp(\hat{Q}(a') / \tau)}$$
 > Instead of the hard explore-exploit switch of epsilon-greedy, softmax **smoothly** allocates more pulls to better arms.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Key Insight
@@ -35,11 +42,19 @@ Softmax is smarter -- it explores **in proportion to how promising** each arm lo
 Temperature $\tau$ plays the same role as $\varepsilon$, but with a smoother effect.
 
 <!-- Speaker notes: This is the single most important idea in the deck. Make sure the audience understands and remembers this insight. Consider asking the audience to restate it in their own words before proceeding. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Temperature Controls the Distribution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Cold["tau -> 0 (Cold)"]
         C1["P = [0, 0, 1, 0, 0]"]
@@ -60,6 +75,13 @@ flowchart LR
 With $\hat{Q} = [0.2, 0.5, 0.7, 0.3, 0.1]$
 
 <!-- Speaker notes: The diagram on Temperature Controls the Distribution illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Softmax vs Epsilon-Greedy
@@ -74,6 +96,13 @@ $\hat{Q} = [0.1, 0.3, 0.8, 0.4, 0.2]$, 5 arms
 > Softmax gives more probability to arm 4 ($\hat{Q}=0.4$) than arm 1 ($\hat{Q}=0.1$), while epsilon-greedy treats them equally during exploration.
 
 <!-- Speaker notes: This comparison table on Softmax vs Epsilon-Greedy is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -125,22 +154,24 @@ $$\tau(t) = \frac{\tau_0}{\log(t + 2)}$$
 ## Temperature as Risk Tolerance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     High["High tau (tau=2)"] --> Div["Spread capital broadly = Diversification"]
     Mid["Medium tau (tau=0.5)"] --> Bal["Focus on top, maintain exposure = Balanced"]
     Low["Low tau (tau=0.1)"] --> Con["Concentrate on best = High conviction"]
     Zero["tau -> 0"] --> All["Go all-in = Maximum conviction"]
-
-    style High fill:#36f,color:#fff
-    style Mid fill:#6f6,color:#000
-    style Low fill:#fa0,color:#000
-    style Zero fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Temperature as Risk Tolerance illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
 ---
 
 ## Code: Core Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -153,11 +184,19 @@ class SoftmaxBandit:
         self.action_counts = np.zeros(k_arms)
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Core Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def select_action(self):
@@ -171,6 +210,8 @@ class SoftmaxBandit:
         n = self.action_counts[action]
         self.q_estimates[action] += (reward - self.q_estimates[action]) / n
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -335,6 +376,7 @@ With $\tau = 0.1$: $\pi \approx [0.0003, 0.018, 0.982]$ -- nearly deterministic!
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SM["Softmax / Boltzmann"] --> Prob["Probabilistic selection"]
     SM --> Tau["Temperature parameter tau"]
@@ -354,10 +396,6 @@ flowchart TD
     SM --> Avoid["Watch out for"]
     Avoid --> Overflow["Numerical overflow (use log-sum-exp)"]
     Avoid --> Scale["Temperature scale mismatch"]
-
-    style SM fill:#36f,color:#fff
-    style Smooth fill:#6f6,color:#000
-    style Prop fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -1,6 +1,16 @@
 # Core Bandit Algorithms Cheatsheet
 
+> **Reading time:** ~20 min | **Module:** 01 — Bandit Algorithms | **Prerequisites:** Module 0 Foundations
+
+
 ## Algorithm Comparison Table
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of core bandit algorithms cheatsheet, with worked examples and practical implementation guidance.
+
+</div>
 
 | Algorithm | Selection Rule | Hyperparameters | Regret Bound | Best For |
 |-----------|---------------|-----------------|--------------|----------|
@@ -11,6 +21,12 @@
 ## Key Formulas
 
 ### Epsilon-Greedy
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Action selection
 if random() < epsilon:
@@ -26,11 +42,26 @@ Q[a] += (reward - Q[a]) / N[a]
 epsilon_t = min(1.0, C / sqrt(t + 1))  # C ∈ [1, 10]
 ```
 
+</div>
+
 **Optimal ε:** ε* ≈ (K/T)^(1/3) for T steps, K arms
 
 **Expected regret:** E[R_T] = ε·T + (K·Δ²)/ε
 
 ### UCB1
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 ```python
 # Action selection (after pulling each arm once)
 ucb_values = Q + c * sqrt(log(t) / (N + 1e-10))
@@ -40,6 +71,8 @@ action = argmax(ucb_values)
 N[a] += 1
 Q[a] += (reward - Q[a]) / N[a]
 ```
+
+</div>
 
 **Standard constant:** c = √2
 
@@ -71,6 +104,13 @@ tau_t = tau_0 / log(t + 2)
 **Selection probability:** π(a) = exp(Q̂(a)/τ) / Σ_a' exp(Q̂(a')/τ)
 
 ## Decision Guide: Which Algorithm Should I Use?
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Choose **Epsilon-Greedy** if:
 - You want simplicity (easiest to implement and debug)
@@ -121,6 +161,12 @@ tau_t = tau_0 / log(t + 2)
 **Rule of thumb:** ε·T ≥ 10K (explore each arm ~10 times in expectation)
 
 **Decay schedule:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Aggressive (fast decay)
 epsilon = 1 / sqrt(t + 1)
@@ -131,6 +177,8 @@ epsilon = 10 / sqrt(t + 1)
 # Conservative (slow decay)
 epsilon = min(0.2, 100 / sqrt(t + 1))
 ```
+
+</div>
 
 ### Exploration Constant (UCB1)
 **Too low (c < 0.5):**
@@ -391,6 +439,13 @@ for month in range(12):
 
 ## Quick Diagnostic Checklist
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 Regret not decreasing:
 - [ ] Check ε/τ/c values (too high = too much exploration)
 - [ ] Verify update rule (using sample mean, not EMA for stationary)
@@ -439,3 +494,49 @@ Numerical errors (NaN, inf):
 │  Regret = T·μ* - Σ r_t                                     │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary tradeoff this approach makes compared to simpler alternatives?
+
+**Practice Question 2:** Under what conditions would this approach fail or underperform?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_epsilon_greedy.md">
+  <div class="link-card-title">01 Epsilon Greedy</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_epsilon_greedy.md">
+  <div class="link-card-title">01 Epsilon Greedy — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_upper_confidence_bound.md">
+  <div class="link-card-title">02 Upper Confidence Bound</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_upper_confidence_bound.md">
+  <div class="link-card-title">02 Upper Confidence Bound — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_softmax_boltzmann.md">
+  <div class="link-card-title">03 Softmax Boltzmann</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_softmax_boltzmann.md">
+  <div class="link-card-title">03 Softmax Boltzmann — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

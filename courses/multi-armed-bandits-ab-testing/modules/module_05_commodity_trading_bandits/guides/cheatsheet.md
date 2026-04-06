@@ -1,6 +1,16 @@
 # Commodity Trading Bandits Cheatsheet
 
+> **Reading time:** ~20 min | **Module:** 05 — Commodity Trading Bandits | **Prerequisites:** Module 4
+
+
 Quick reference for bandit-based commodity allocation systems.
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Quick reference for bandit-based commodity allocation systems.
+
+</div>
 
 ## The 6-Step Accumulator Bandit Playbook
 
@@ -33,6 +43,13 @@ Quick reference for bandit-based commodity allocation systems.
 
 ## Two-Wallet Framework
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 ```
 ┌─────────────────────────────────────┐
 │ Total Portfolio                     │
@@ -52,6 +69,13 @@ Total allocation = 0.8 * core + 0.2 * bandit
 ```
 
 ## Reward Function Comparison
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 | Reward Type | Formula | What It Trains | Use When |
 |-------------|---------|----------------|----------|
@@ -81,6 +105,12 @@ Total allocation = 0.8 * core + 0.2 * bandit
 ## Common Commodity Arms
 
 ### Broad Sectors (5 arms)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 arms = ['Energy', 'Metals', 'Grains', 'Softs', 'Livestock']
 
@@ -93,7 +123,15 @@ sector_mapping = {
 }
 ```
 
+</div>
+
 ### Granular Commodities (8-10 arms)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 arms = [
     'WTI',      # Energy
@@ -106,6 +144,8 @@ arms = [
     'Cattle'    # Livestock
 ]
 ```
+
+</div>
 
 ### Strategy Factors (4-6 arms)
 ```python
@@ -122,6 +162,12 @@ arms = [
 ## Regime Features for Contextual Bandits
 
 ### Feature Engineering Recipes
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # 1. Realized Volatility (20-day)
@@ -144,6 +190,8 @@ seasonal = seasonal_patterns[commodity][date.month]
 # 6. Inventory Percentile
 inv_pct = percentileofscore(historical_inv, current_inv)
 ```
+
+</div>
 
 ### Simple Regime Classifier
 
@@ -423,6 +471,13 @@ def backtest_bandit(data, bandit, reward_func, rebalance_freq='W'):
 
 ## Further Reading
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 - [Accumulator Bandit Playbook](01_accumulator_bandit_playbook.md) - Full system overview
 - [Reward Design](02_reward_design_commodities.md) - Critical reward function details
 - [Guardrails](03_guardrails_and_safety.md) - Safety constraints
@@ -439,3 +494,49 @@ def backtest_bandit(data, bandit, reward_func, rebalance_freq='W'):
 5. Deploy with monitoring
 
 **Total time:** 2-3 hours for production-ready system.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does non-stationarity in commodity markets affect bandit algorithm assumptions?
+
+**Practice Question 2:** What risk management constraints should be layered on top of a bandit-based allocation system?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

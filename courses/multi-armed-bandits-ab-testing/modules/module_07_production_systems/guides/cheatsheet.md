@@ -1,6 +1,16 @@
 # Production Systems Cheatsheet
 
+> **Reading time:** ~13 min | **Module:** 07 — Production Systems | **Prerequisites:** Module 6
+
+
 ## Pre-Deployment Checklist
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of production systems cheatsheet, with worked examples and practical implementation guidance.
+
+</div>
 
 Before shipping a bandit to production, verify:
 
@@ -16,6 +26,13 @@ Before shipping a bandit to production, verify:
 10. **Tested on staging** — Run on paper trading or simulation for minimum 20 decisions before live capital
 
 ## System Architecture Components
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌─────────────┐   ┌──────────────┐   ┌─────────────┐
@@ -40,6 +57,13 @@ Before shipping a bandit to production, verify:
 - `Monitor.check_alerts()` → List[Alert]
 
 ## What to Log (Per Decision)
+
+<div class="callout-warning">
+
+**Warning:** Logging bias is the most common source of silent failure in production bandit systems. If you do not log the policy that generated each observation, offline evaluation will be unreliable.
+
+</div>
+
 
 ```json
 {
@@ -132,6 +156,12 @@ $$\hat{V}_{Replay}(\pi_1) = \text{mean}(r_i : \pi_1(c_i) = a_i)$$
 
 ## Production Code Template
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class ProductionBanditSystem:
     def __init__(self, policy, guardrails, logger, monitor):
@@ -176,6 +206,8 @@ class ProductionBanditSystem:
             self.send_alerts(self.monitor.get_alerts())
 ```
 
+</div>
+
 ## Deployment Environments
 
 | Environment | Purpose | Traffic | Monitoring |
@@ -187,6 +219,13 @@ class ProductionBanditSystem:
 | **Production** | Full deployment | 100% real | Standard (daily) |
 
 ## Quick Reference: When to Use What
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Use epsilon-greedy when:** Simple problem, bounded rewards, need explainability
 **Use Thompson Sampling when:** Need probabilistic matching, multi-modal rewards
@@ -207,3 +246,49 @@ class ProductionBanditSystem:
 - **Papers:** Dudík et al. (2011) "Doubly Robust Policy Evaluation", Li et al. (2010) "Contextual Bandits"
 - **Industry:** Netflix, Spotify, Microsoft blog posts on production bandit systems
 - **Books:** "Bandit Algorithms" (Lattimore & Szepesvári), "Trustworthy Online Controlled Experiments" (Kohavi et al.)
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What are the key differences between offline evaluation and online A/B testing for bandit systems?
+
+**Practice Question 2:** How would you implement a safe rollback mechanism for a production bandit system?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_bandit_system_architecture.md">
+  <div class="link-card-title">01 Bandit System Architecture</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_bandit_system_architecture.md">
+  <div class="link-card-title">01 Bandit System Architecture — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_logging_and_monitoring.md">
+  <div class="link-card-title">02 Logging And Monitoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_logging_and_monitoring.md">
+  <div class="link-card-title">02 Logging And Monitoring — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_offline_evaluation.md">
+  <div class="link-card-title">03 Offline Evaluation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_offline_evaluation.md">
+  <div class="link-card-title">03 Offline Evaluation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

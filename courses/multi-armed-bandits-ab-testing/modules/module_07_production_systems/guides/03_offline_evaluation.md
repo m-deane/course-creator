@@ -1,6 +1,16 @@
 # Offline Evaluation
 
+> **Reading time:** ~15 min | **Module:** 07 — Production Systems | **Prerequisites:** Module 6
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Offline evaluation lets you test new bandit policies on historical data without deploying them to production, using techniques like inverse propensity scoring and doubly-robust estimation to correc...
+
+</div>
 
 Offline evaluation lets you test new bandit policies on historical data without deploying them to production, using techniques like inverse propensity scoring and doubly-robust estimation to correct for the bias in logged decisions.
 
@@ -34,6 +44,13 @@ Offline evaluation lets you test new bandit policies on historical data without 
 │                                                                  │
 └────────────────────────────────────────────────────────────────┘
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 ┌────────────────────────────────────────────────────────────────┐
 │              OFFLINE EVALUATION METHODS                         │
 ├────────────────────────────────────────────────────────────────┤
@@ -65,6 +82,13 @@ Offline evaluation lets you test new bandit policies on historical data without 
 ```
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 **Inverse Propensity Scoring (IPS):**
 
@@ -101,6 +125,12 @@ Imagine you're a new portfolio manager (policy $\pi_1$) and you want to prove yo
 **Replay method:** "I'll be conservative and only count trades where we agree. Smaller sample size, but no statistical tricks needed."
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -185,7 +215,15 @@ class OfflineEvaluator:
         return total / len(self.data)
 ```
 
+</div>
+
 **Commodity Application:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Evaluate new commodity allocation policy on historical data
 
@@ -224,6 +262,8 @@ dr_value = evaluator.doubly_robust_estimate(new_policy, reward_model)
 print(f"DR estimate: {dr_value:.4f}")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Missing propensity scores**
@@ -247,6 +287,13 @@ If new policy is very different from old policy, replay method discards most dat
 **Solution:** Check sample size. If $|\mathcal{D}_{\text{match}}| < 30$, don't trust replay estimate.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - Module 0: Expected value and regret calculations
@@ -282,7 +329,13 @@ If new policy is very different from old policy, replay method discards most dat
 4. **Design Challenge:** You're building an offline evaluation pipeline for commodity allocation. What data do you need to log during production to enable IPS, doubly robust, and replay methods? Design the schema.
 
 5. **Code Review:** What's wrong with this IPS implementation?
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    def ips_estimate(data, new_policy):
        total = 0
        for d in data:
@@ -290,4 +343,42 @@ If new policy is very different from old policy, replay method discards most dat
                total += d['reward']
        return total / len(data)
    ```
+
+</div>
    Fix it to correctly implement IPS.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_bandit_system_architecture.md">
+  <div class="link-card-title">01 Bandit System Architecture</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_bandit_system_architecture.md">
+  <div class="link-card-title">01 Bandit System Architecture — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_logging_and_monitoring.md">
+  <div class="link-card-title">02 Logging And Monitoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_logging_and_monitoring.md">
+  <div class="link-card-title">02 Logging And Monitoring — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

@@ -1,12 +1,48 @@
 # Epsilon-Greedy Algorithm
 
+> **Reading time:** ~20 min | **Module:** 01 — Bandit Algorithms | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 Epsilon-greedy is the simplest bandit algorithm: with probability ε, explore by choosing a random arm; otherwise, exploit by choosing the arm with the highest estimated reward. It balances exploration and exploitation with a single tunable parameter.
+
+<div class="flow">
+<div class="flow-step mint">1. Generate Random</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Explore or Exploit?</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Pull Arm</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Observe Reward</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Update Estimates</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of epsilon-greedy algorithm, with worked examples and practical implementation guidance.
+
+</div>
 
 ## Key Insight
 The algorithm forces you to make the exploration-exploitation tradeoff explicit through ε. Too high (ε=0.5) and you waste time on bad arms; too low (ε=0.01) and you might never discover the best arm. The sweet spot depends on your problem.
 
+<div class="callout-insight">
+
+**Insight:** Epsilon-greedy is the simplest bandit algorithm, but its constant exploration rate makes it suboptimal in the long run. Decaying epsilon recovers some of this loss, but UCB and Thompson Sampling handle the exploration-exploitation tradeoff more elegantly.
+
+</div>
+
+
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
                     ┌─────────────────────────┐
@@ -121,6 +157,12 @@ Think of epsilon-greedy as a commodity trader with a simple rule:
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -150,7 +192,15 @@ for t in range(1000):
     bandit.update(action, reward)
 ```
 
+</div>
+
 **Decaying ε variant:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class DecayingEpsilonGreedy(EpsilonGreedyBandit):
     def __init__(self, k_arms, epsilon_fn=lambda t: 1/np.sqrt(t+1)):
@@ -163,6 +213,8 @@ class DecayingEpsilonGreedy(EpsilonGreedyBandit):
         self.t += 1
         return super().select_action()
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -200,6 +252,12 @@ epsilon = lambda t: min(1.0, 10 / np.sqrt(t + 1))  # Decays as 1/√t
 **Problem:** If two arms have identical Q̂ values, `argmax` picks the first one (biases towards lower-indexed arms).
 
 **Fix:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def select_action(self):
     if np.random.random() < self.epsilon:
@@ -210,6 +268,8 @@ def select_action(self):
         max_actions = np.where(self.q_estimates == max_q)[0]
         return np.random.choice(max_actions)
 ```
+
+</div>
 
 ### 5. Wrong Update Rule
 **Problem:** Using exponential moving average instead of sample mean.
@@ -227,6 +287,13 @@ q_new = q_old + 0.1 * (reward - q_old)  # Forgets old data
 **When EMA is better:** Non-stationary rewards (arm distributions change over time).
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 ### Builds On
 - **Basic probability:** Understanding of expectation, variance
@@ -303,3 +370,39 @@ def select_action(self):
 ```
 
 How does this compare to standard ε-greedy and UCB1?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_upper_confidence_bound.md">
+  <div class="link-card-title">02 Upper Confidence Bound</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_upper_confidence_bound.md">
+  <div class="link-card-title">02 Upper Confidence Bound — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_softmax_boltzmann.md">
+  <div class="link-card-title">03 Softmax Boltzmann</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_softmax_boltzmann.md">
+  <div class="link-card-title">03 Softmax Boltzmann — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

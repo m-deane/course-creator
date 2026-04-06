@@ -1,6 +1,16 @@
 # Non-Stationary Bandits
 
+> **Reading time:** ~20 min | **Module:** 06 — Advanced Topics | **Prerequisites:** Module 5
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Non-stationary bandits handle environments where reward distributions change over time — the best option today might not be best tomorrow. In commodity trading, regime shifts (seasonal patterns, su...
+
+</div>
 
 Non-stationary bandits handle environments where reward distributions change over time — the best option today might not be best tomorrow. In commodity trading, regime shifts (seasonal patterns, supply shocks, macro changes) make non-stationarity the norm, not the exception.
 
@@ -19,6 +29,13 @@ Arm B:    ░░░░░░░░░░░░  (worse)          █████
                                     Regime shift happens,
                                     but algorithm is stuck on Arm A
                                     (too much historical evidence)
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 Discounted Thompson Sampling (ADAPTS):
 Time:     0 ─────────── 500 ─────────── 1000 ─────────── 1500 ────→
@@ -40,6 +57,13 @@ Only use last W=200 observations:
 ```
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Discounted Thompson Sampling
 
@@ -93,6 +117,12 @@ Imagine driving with GPS directions. If the GPS uses traffic data from last week
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from scipy.stats import beta
@@ -134,7 +164,15 @@ for t in range(1000):
     bandit.update(arm, reward)
 ```
 
+</div>
+
 **Sliding-Window UCB:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from collections import deque
@@ -171,6 +209,8 @@ class SlidingWindowUCB:
     def update(self, arm, reward):
         self.history.append((arm, reward))
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -228,6 +268,13 @@ class SlidingWindowUCB:
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Problem 1: Commodity Seasonality
 Agricultural commodities (corn, wheat) have seasonal patterns. Would you use discounting or sliding windows? What window size or γ would you choose for monthly data?
 
@@ -265,6 +312,12 @@ During COVID-19 crash (March 2020), oil went negative. Standard TS with data fro
 With γ=0.95 (half-life ~14 days), post-crash data quickly dominated. Algorithm shifted to natural gas and heating oil within 2-3 weeks.
 
 **Implementation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Pseudo-code
 returns_dict = load_commodity_returns(['WTI', 'NATGAS', 'HEAT'])
@@ -284,4 +337,42 @@ for date in trading_dates:
     allocate(commodity, capital)
 ```
 
+</div>
+
 **Key insight:** Discount factor becomes a tunable parameter for regime sensitivity. Backtest with historical regime changes to calibrate.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_restless_bandits.md">
+  <div class="link-card-title">02 Restless Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_restless_bandits.md">
+  <div class="link-card-title">02 Restless Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_adversarial_bandits.md">
+  <div class="link-card-title">03 Adversarial Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_adversarial_bandits.md">
+  <div class="link-card-title">03 Adversarial Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

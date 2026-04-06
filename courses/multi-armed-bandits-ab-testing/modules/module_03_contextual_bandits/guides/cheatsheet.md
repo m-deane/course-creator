@@ -1,6 +1,16 @@
 # Contextual Bandits Cheatsheet
 
+> **Reading time:** ~20 min | **Module:** 03 — Contextual Bandits | **Prerequisites:** Module 2
+
+
 ## Quick Reference
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of contextual bandits cheatsheet, with worked examples and practical implementation guidance.
+
+</div>
 
 ### Core Concepts
 
@@ -46,8 +56,21 @@ At each round t:
 
 ## LinUCB Implementation Template
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
+
+<div class="callout-insight">
+
+**Insight:** Contextual bandits bridge the gap between simple A/B tests and full reinforcement learning. They personalize decisions based on observable features without needing to model state transitions.
+
+</div>
+
 
 class LinUCB:
     def __init__(self, n_arms, context_dim, alpha=1.0, lambda_=1.0):
@@ -71,7 +94,16 @@ class LinUCB:
         self.b[arm] += reward * context
 ```
 
+</div>
+
 ## Feature Engineering Checklist
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Must-Have Properties
 - [ ] **Observable** — Known before decision time (no future leakage)
@@ -101,19 +133,35 @@ month_cos = np.cos(2 * np.pi * month / 12)
 ```
 
 **Trend:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 ma_short = prices.rolling(20).mean()
 ma_long = prices.rolling(50).mean()
 trend = (ma_short - ma_long) / ma_long
 ```
 
+</div>
+
 **Macro Regime:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Dollar + VIX composite
 dollar_z = (dollar - dollar.mean()) / dollar.std()
 vix_z = (vix - vix.mean()) / vix.std()
 macro = 0.5 * dollar_z + 0.5 * vix_z
 ```
+
+</div>
 
 ## Parameter Selection Guide
 
@@ -275,6 +323,13 @@ relative = (bandit_reward - random_reward) / (best_reward - random_reward)
 
 ## Key Formulas
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Ridge regression solution:**
 ```
 θ̂_a = (X_a^T X_a + λI)^{-1} X_a^T r_a = A_a^{-1} b_a
@@ -329,3 +384,49 @@ def contextual_epsilon_greedy(context, epsilon=0.1):
 ---
 
 **Remember:** Contextual bandits are worth the complexity when context genuinely predicts which arm is best. If not, stick with simpler approaches.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does incorporating context features change the explore-exploit tradeoff compared to context-free bandits?
+
+**Practice Question 2:** What happens to LinUCB performance when the context features are noisy or irrelevant?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_contextual_bandit_framework.md">
+  <div class="link-card-title">01 Contextual Bandit Framework</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_contextual_bandit_framework.md">
+  <div class="link-card-title">01 Contextual Bandit Framework — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_linucb_algorithm.md">
+  <div class="link-card-title">02 Linucb Algorithm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_linucb_algorithm.md">
+  <div class="link-card-title">02 Linucb Algorithm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_feature_engineering_bandits.md">
+  <div class="link-card-title">03 Feature Engineering Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_feature_engineering_bandits.md">
+  <div class="link-card-title">03 Feature Engineering Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

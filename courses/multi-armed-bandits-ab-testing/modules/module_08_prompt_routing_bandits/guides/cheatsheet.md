@@ -1,12 +1,29 @@
 # Prompt Routing Bandits — Quick Reference
 
+> **Reading time:** ~20 min | **Module:** 08 — Prompt Routing Bandits | **Prerequisites:** Module 7
+
+
 ## Core Concept
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Instead of manually testing prompts, let the system learn which prompt works best for each request type.
+
+</div>
 
 **Prompt routing = multi-armed bandit where arms are prompt templates**
 
 Instead of manually testing prompts, let the system learn which prompt works best for each request type.
 
 ## The Bad Prompt Tax
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 Every production LLM system pays:
 - **Time tax:** Weeks of manual prompt iteration
@@ -19,6 +36,13 @@ Every production LLM system pays:
 ---
 
 ## 1. Prompt Arm Design Checklist
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Essential Prompt Arms for Commodity Trading LLM
 
@@ -68,6 +92,12 @@ reward = primary_metric + Σ(guardrail_penalties)
 
 ### Example Composite Reward
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def commodity_llm_reward(query, response, docs, ground_truth=None):
     # Primary
@@ -80,6 +110,8 @@ def commodity_llm_reward(query, response, docs, ground_truth=None):
 
     return max(0, primary + hallucination_pen + format_pen + citation_pen)
 ```
+
+</div>
 
 ---
 
@@ -96,6 +128,12 @@ def commodity_llm_reward(query, response, docs, ground_truth=None):
 | **Urgency** | high, medium, low | Time of day, keywords |
 
 ### Context Vector Example (15 dimensions)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 context = [
@@ -119,6 +157,8 @@ context = [
 ]
 ```
 
+</div>
+
 ---
 
 ## 4. Algorithm Selection
@@ -130,6 +170,12 @@ context = [
 | **Epsilon-Greedy** | Quick baseline, interpretable | 5 lines |
 
 ### Thompson Sampling (No Context)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class PromptRouter:
@@ -147,6 +193,8 @@ class PromptRouter:
         else:
             self.beta[idx] += 1
 ```
+
+</div>
 
 ### LinUCB (With Context)
 
@@ -296,6 +344,13 @@ class ContextualPromptRouter:
 
 ## Quick Start Code
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ```python
 # Initialize
 prompts = ["Extraction...", "Analysis...", "Signal..."]
@@ -324,3 +379,49 @@ for query in requests:
 - Original article: "Bandits for Prompts" by Shenggang Li
 - Module guides: 01_fundamentals, 02_reward_design, 03_contextual_routing, 04_case_studies
 - Notebooks: Hands-on implementations with commodity trading examples
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary tradeoff this approach makes compared to simpler alternatives?
+
+**Practice Question 2:** Under what conditions would this approach fail or underperform?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

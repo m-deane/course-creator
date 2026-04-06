@@ -1,12 +1,48 @@
 # Upper Confidence Bound (UCB1)
 
+> **Reading time:** ~20 min | **Module:** 01 — Bandit Algorithms | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 UCB1 selects the arm with the highest upper confidence bound: the estimated mean reward plus a bonus that decreases as you pull that arm more. It eliminates the need for tuning ε by using "optimism in the face of uncertainty"—always bet on arms that could plausibly be the best.
+
+<div class="flow">
+<div class="flow-step mint">1. Compute UCB Score</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Select Max UCB</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Pull Arm</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Observe Reward</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Update Statistics</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of upper confidence bound (ucb1), with worked examples and practical implementation guidance.
+
+</div>
 
 ## Key Insight
 UCB1 solves the exploration-exploitation tradeoff automatically by adding a shrinking confidence bonus to each arm's value estimate. Arms you've pulled rarely get a large bonus (optimistic assumption), encouraging exploration. Arms you've pulled often have tight confidence bounds, so only truly good arms stay competitive.
 
+<div class="callout-insight">
+
+**Insight:** UCB algorithms are deterministic given the same history, which makes them easier to debug and reproduce than Thompson Sampling. This is a practical advantage in production systems where reproducibility matters.
+
+</div>
+
+
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 Reward Estimate with Confidence Bounds at t=100
@@ -168,6 +204,12 @@ Where uncertainty bonus = "how wrong could I be, given how little I've traded th
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -198,7 +240,15 @@ class UCB1:
         self.q_estimates[action] += (reward - self.q_estimates[action]) / n
 ```
 
+</div>
+
 **Usage:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 ucb = UCB1(k_arms=5)
 for t in range(1000):
@@ -209,6 +259,8 @@ for t in range(1000):
 print(f"Final estimates: {ucb.q_estimates}")
 print(f"Pull counts: {ucb.action_counts}")
 ```
+
+</div>
 
 **Variant: Different exploration constant:**
 ```python
@@ -244,6 +296,12 @@ ucb_values = q + c * np.sqrt(np.log(t) / (counts + 1e-10))
 
 ### 3. Wrong Time Index
 **Problem:** Using N(a) instead of t in the logarithm:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG
 ucb = q + c * np.sqrt(np.log(counts) / counts)
@@ -251,6 +309,8 @@ ucb = q + c * np.sqrt(np.log(counts) / counts)
 # CORRECT
 ucb = q + c * np.sqrt(np.log(t) / counts)
 ```
+
+</div>
 
 **Why it matters:** The ln(t) term ensures the bonus grows (slowly) with total time, encouraging continuous exploration. Using ln(N(a)) would make the bonus shrink too fast.
 
@@ -307,6 +367,13 @@ But note: This breaks UCB1's theoretical guarantees.
 **Empirical observation:** UCB1 often beats ε-greedy by 2-5× in total regret on stationary problems.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 ### Builds On
 - **Hoeffding's Inequality:** Concentration bound for sample means
@@ -406,3 +473,39 @@ where V_a(t) = (1/N_a)·Σ(r² - Q̂²) + √(2ln(t)/N_a)
 This exploits the fact that arms with low variance need smaller confidence bounds.
 
 **Hint:** Track sum of squared rewards for each arm to compute variance efficiently.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_epsilon_greedy.md">
+  <div class="link-card-title">01 Epsilon Greedy</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_epsilon_greedy.md">
+  <div class="link-card-title">01 Epsilon Greedy — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_softmax_boltzmann.md">
+  <div class="link-card-title">03 Softmax Boltzmann</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_softmax_boltzmann.md">
+  <div class="link-card-title">03 Softmax Boltzmann — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

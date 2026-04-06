@@ -1,6 +1,16 @@
 # Reward Design for Commodities
 
+> **Reading time:** ~20 min | **Module:** 05 — Commodity Trading Bandits | **Prerequisites:** Module 4
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Your reward function is the most important decision in bandit-based trading. It defines what "success" means and shapes every allocation decision. Choose poorly and you train a system that sabotage...
+
+</div>
 
 Your reward function is the most important decision in bandit-based trading. It defines what "success" means and shapes every allocation decision. Choose poorly and you train a system that sabotages your real goals.
 
@@ -11,6 +21,13 @@ A bandit maximizes whatever you tell it to maximize. If you say "maximize weekly
 The reward function isn't just a metric. It's the objective your system optimizes.
 
 ## Visual Explanation
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -54,13 +71,28 @@ The reward function isn't just a metric. It's the objective your system optimize
 
 ## The Problem: Bad Rewards and What They Train
 
+<div class="callout-warning">
+
+**Warning:** A bandit system that optimizes the wrong reward function will converge efficiently to the wrong answer. Spend more time designing the reward function than choosing the algorithm.
+
+</div>
+
+
 ### Bad Reward 1: Raw Returns
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def naive_reward(returns):
     """Worst possible reward: maximize last period's return."""
     return returns  # This is a disaster
 ```
+
+</div>
 
 **What it trains:**
 - Buy whatever went up last week
@@ -77,11 +109,19 @@ def naive_reward(returns):
 
 ### Bad Reward 2: Sharpe Ratio Only
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def sharpe_only_reward(returns, volatility):
     """Sounds smart, but creates risk-averse allocator."""
     return returns / (volatility + 1e-6)
 ```
+
+</div>
 
 **What it trains:**
 - Avoid anything with high volatility
@@ -97,11 +137,19 @@ def sharpe_only_reward(returns, volatility):
 
 ### Bad Reward 3: Win Rate Only
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def win_rate_reward(returns):
     """Counts how often you make money."""
     return 1.0 if returns > 0 else 0.0
 ```
+
+</div>
 
 **What it trains:**
 - Take tiny gains quickly
@@ -436,6 +484,13 @@ When designing a reward for your commodity bandit:
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Builds On
 - **Module 2**: Regret analysis (regret-relative rewards)
 - **Bayesian statistics**: Prior beliefs in reward design
@@ -484,3 +539,39 @@ Design a seasonal-adjusted reward function. How would you handle years when patt
 **Next Steps:**
 - Read [Guardrails and Safety](03_guardrails_and_safety.md) to learn constraints that complement rewards
 - Try [Reward Function Lab Notebook](../notebooks/02_reward_function_lab.ipynb) to see rewards in action
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./04_regime_aware_allocation.md">
+  <div class="link-card-title">04 Regime Aware Allocation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./04_regime_aware_allocation.md">
+  <div class="link-card-title">04 Regime Aware Allocation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

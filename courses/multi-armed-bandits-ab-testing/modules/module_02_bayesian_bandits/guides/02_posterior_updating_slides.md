@@ -24,6 +24,13 @@ Posterior updating: combine **prior belief** with **new evidence** using Bayes' 
 For Thompson Sampling, conjugate priors make posterior updates **instant and exact**.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 > 💡 **Key Insight:** $$\text{Posterior} \propto \text{Likelihood} \times \text{Prior}$$
@@ -36,11 +43,19 @@ For Thompson Sampling, conjugate priors make posterior updates **instant and exa
 > No integrals, no sampling, no numerical optimization. Just arithmetic.
 
 <!-- Speaker notes: This is the single most important idea in the deck. Make sure the audience understands and remembers this insight. Consider asking the audience to restate it in their own words before proceeding. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Visual: Posterior Evolution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P1["Prior: Beta(2,2)\nWide, uncertain"] --> D1["Observe: 3 wins, 1 loss"]
     D1 --> P2["Posterior: Beta(5,3)\nMore peaked, shifted right"]
@@ -51,6 +66,13 @@ flowchart LR
 **Sequential updating:** Each observation updates the posterior, which becomes the prior for the next observation.
 
 <!-- Speaker notes: The diagram on Visual: Posterior Evolution illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Common Conjugate Pairs
@@ -63,6 +85,13 @@ flowchart LR
 | Exponential($\lambda$) | Gamma($\alpha, \beta$) | Gamma($\alpha + n, \beta + \sum x_i$) |
 
 <!-- Speaker notes: This comparison table on Common Conjugate Pairs is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Beta-Bernoulli: The Workhorse
@@ -99,6 +128,7 @@ $$\mu_1 = \frac{\tau_0 \cdot \mu_0 + n \cdot \tau \cdot \bar{x}}{\tau_1}$$
 ## Intuitive Explanation: Prior Strength
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Weak["Weak Prior: Beta(1,1)"]
         W1["No idea, could be anything"]
@@ -112,8 +142,6 @@ flowchart TD
         S3["Posterior: Beta(13,12), mean = 52%"]
         S4["Prior resists change"]
     end
-    style W4 fill:#6f6,color:#000
-    style S4 fill:#fa0,color:#000
 ```
 
 > Prior strength = effective sample size. Beta($\alpha, \beta$) acts like $\alpha + \beta - 2$ observations.
@@ -122,6 +150,12 @@ flowchart TD
 ---
 
 ## Code: Beta-Bernoulli Update
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -144,10 +178,18 @@ class BetaBernoulli:
         return self.alpha / (self.alpha + self.beta)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Code: Normal-Normal Update
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class NormalNormal:
@@ -169,6 +211,8 @@ class NormalNormal:
     def sample(self, n=1):
         return np.random.normal(self.mu, self.sigma, size=n)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -266,6 +310,7 @@ Start with Beta(2, 3). Observe: success, success, failure, success.
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Bayes["Bayes' Rule"] --> Conj["Conjugate Priors"]
     Conj --> BB["Beta-Bernoulli\n(binary rewards)"]
@@ -283,10 +328,6 @@ flowchart TD
     Bayes --> Strength["Prior strength =\neffective sample size"]
     Strength --> Weak["Weak: data dominates"]
     Strength --> Strong["Strong: prior resists"]
-
-    style Bayes fill:#36f,color:#fff
-    style TS fill:#6f6,color:#000
-    style Fast fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

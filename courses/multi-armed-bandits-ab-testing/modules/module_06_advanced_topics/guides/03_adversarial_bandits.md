@@ -1,6 +1,16 @@
 # Adversarial Bandits
 
+> **Reading time:** ~20 min | **Module:** 06 — Advanced Topics | **Prerequisites:** Module 5
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Adversarial bandits assume rewards are chosen by an adversary who knows your algorithm and tries to minimize your payoff. Unlike stochastic bandits (rewards drawn from fixed distributions), adversa...
+
+</div>
 
 Adversarial bandits assume rewards are chosen by an adversary who knows your algorithm and tries to minimize your payoff. Unlike stochastic bandits (rewards drawn from fixed distributions), adversarial settings require game-theoretic approaches that randomize arm selection to avoid exploitation.
 
@@ -29,6 +39,13 @@ Adversarial Bandit (rewards chosen to hurt you):
 Arm A:   ●─●──●───●─○───○──○──○  (adversary makes A bad when you pick it)
 Arm B:   ○──○─○────●──●─●──●  (adversary makes B good when you avoid it)
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
          If you always select A → adversary makes A terrible
          If you switch to B → adversary makes B terrible
          Solution: RANDOMIZE to be unpredictable
@@ -49,6 +66,13 @@ EXP3 solution: Randomize buy times, sometimes skip days, mix in other commoditie
 ```
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Adversarial Bandit Setup
 
@@ -127,6 +151,12 @@ Dividing by `p` corrects this bias (importance sampling).
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -202,9 +232,17 @@ for t in range(1000):
     bandit.update(arm, reward)
 ```
 
+</div>
+
 **EXP3 with Bounded Rewards:**
 
 The above assumes rewards in `[0, 1]`. For arbitrary ranges `[r_min, r_max]`:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def normalize_reward(reward, r_min, r_max):
@@ -215,6 +253,8 @@ def normalize_reward(reward, r_min, r_max):
 normalized_reward = normalize_reward(reward, r_min, r_max)
 bandit.update(arm, normalized_reward)
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -288,6 +328,13 @@ bandit.update(arm, normalized_reward)
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Problem 1: Stochastic vs Adversarial
 For each scenario, decide if EXP3 is appropriate or if stochastic bandits are better:
 
@@ -333,6 +380,12 @@ What signals would trigger the switch? How would you prevent oscillation between
 
 **EXP3 Solution:**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Initialize EXP3 for 3 exchanges
 bandit = EXP3(n_arms=3)
@@ -358,6 +411,8 @@ for t in range(1000):
     # can't specifically widen spreads against you
 ```
 
+</div>
+
 **Result:** Randomization prevents market makers from learning your pattern. They must quote competitive spreads on all exchanges, not just the ones you're likely to avoid.
 
 **Trade-off:** EXP3 occasionally selects expensive exchanges (exploration), so you pay higher spreads sometimes. But you gain by preventing systematic exploitation of predictable patterns.
@@ -373,3 +428,39 @@ for t in range(1000):
 - Markets with many passive participants (no strategic adaptation)
 
 **Empirical test:** Backtest both UCB and EXP3 on your execution data. If UCB's regret is similar, the environment is likely stochastic and you don't need EXP3. If EXP3 significantly outperforms, adversarial dynamics are present.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_non_stationary_bandits.md">
+  <div class="link-card-title">01 Non Stationary Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_non_stationary_bandits.md">
+  <div class="link-card-title">01 Non Stationary Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_restless_bandits.md">
+  <div class="link-card-title">02 Restless Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_restless_bandits.md">
+  <div class="link-card-title">02 Restless Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

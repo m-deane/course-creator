@@ -1,6 +1,28 @@
 # LinUCB Algorithm
 
+> **Reading time:** ~20 min | **Module:** 03 — Contextual Bandits | **Prerequisites:** Module 2
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Compute UCB Score</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Select Max UCB</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Pull Arm</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Observe Reward</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Update Statistics</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** LinUCB (Linear Upper Confidence Bound) is a contextual bandit algorithm that assumes rewards are linear in features and uses ridge regression with confidence bounds for exploration. It's the UCB1 a...
+
+</div>
 
 LinUCB (Linear Upper Confidence Bound) is a contextual bandit algorithm that assumes rewards are linear in features and uses ridge regression with confidence bounds for exploration. It's the UCB1 algorithm extended to contextual settings with principled uncertainty quantification.
 
@@ -10,9 +32,23 @@ LinUCB combines two powerful ideas:
 1. **Linear model:** Assume E[r | x, a] = x^T θ_a (reward is linear in context features)
 2. **Confidence bounds:** Use ridge regression uncertainty to compute UCB scores
 
+<div class="callout-insight">
+
+**Insight:** UCB algorithms are deterministic given the same history, which makes them easier to debug and reproduce than Thompson Sampling. This is a practical advantage in production systems where reproducibility matters.
+
+</div>
+
+
 Instead of tracking simple reward averages like UCB1, LinUCB maintains a regression model per arm. The "confidence bound" comes from the regression's prediction uncertainty — contexts far from previous observations get wider confidence intervals, encouraging exploration.
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 LINUCB DECISION PROCESS:
@@ -139,6 +175,12 @@ LinUCB learns the linear relationship: "Energy performs well when VIX is low and
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -170,6 +212,8 @@ class LinUCB:
         self.A[arm] += np.outer(context, context)
         self.b[arm] += reward * context
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -204,6 +248,13 @@ class LinUCB:
 - **Fix:** Use kernel LinUCB, neural bandits, or tree-based contextual bandits
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 ### Builds On
 - **Module 1 (UCB1):** LinUCB extends UCB1 to contextual setting with linear models
@@ -251,12 +302,20 @@ Use neural network for feature representation, LinUCB on final layer embeddings.
 ### 3. Implementation Exercise
 **Task:** Add a method to compute prediction uncertainty for a given context and arm.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def get_uncertainty(self, arm, context):
     """Return prediction uncertainty for given arm and context."""
     A_inv = np.linalg.inv(self.A[arm])
     return np.sqrt(context @ A_inv @ context)
 ```
+
+</div>
 
 ### 4. Diagnostic Question
 **Scenario:** Your LinUCB always chooses arm 0, even after 1000 rounds with varying contexts. What might be wrong?
@@ -268,3 +327,39 @@ def get_uncertainty(self, arm, context):
 - Bug in context generation → all contexts are identical
 
 **Debug:** Print UCB scores for all arms, check feature variance, verify reward distributions.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_contextual_bandit_framework.md">
+  <div class="link-card-title">01 Contextual Bandit Framework</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_contextual_bandit_framework.md">
+  <div class="link-card-title">01 Contextual Bandit Framework — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_feature_engineering_bandits.md">
+  <div class="link-card-title">03 Feature Engineering Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_feature_engineering_bandits.md">
+  <div class="link-card-title">03 Feature Engineering Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

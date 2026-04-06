@@ -1,6 +1,16 @@
 # Contextual Prompt Routing
 
+> **Reading time:** ~20 min | **Module:** 08 — Prompt Routing Bandits | **Prerequisites:** Module 7
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** One prompt cannot serve all requests. A prompt optimized for extracting inventory numbers from EIA reports will fail at generating fundamental analysis for corn markets. Contextual bandits solve th...
+
+</div>
 
 One prompt cannot serve all requests. A prompt optimized for extracting inventory numbers from EIA reports will fail at generating fundamental analysis for corn markets. Contextual bandits solve this by routing based on request features — task type, commodity sector, data availability, urgency — to select the best prompt for each specific context. This is the same contextual bandit framework from Module 3, applied to prompt selection.
 
@@ -18,6 +28,13 @@ A non-contextual bandit learns "Prompt B is best on average." A contextual bandi
 
 Consider a commodity research assistant that handles these queries:
 
+<div class="callout-insight">
+
+**Insight:** Contextual bandits bridge the gap between simple A/B tests and full reinforcement learning. They personalize decisions based on observable features without needing to model state transitions.
+
+</div>
+
+
 1. "What were last week's crude oil inventories?" (extraction task, energy sector, data-heavy)
 2. "Analyze the corn supply-demand balance for 2024/25." (analysis task, agriculture sector, requires synthesis)
 3. "Should I buy natural gas futures?" (signal generation task, energy sector, needs conviction)
@@ -32,6 +49,13 @@ If you use the same prompt for all four:
 
 ## Context Features for Commodity LLM Routing
 
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
+
 ### Feature 1: Task Type
 
 **Extraction categories:**
@@ -42,6 +66,12 @@ If you use the same prompt for all four:
 - **Comparative analysis:** Compare commodities or time periods
 
 **How to extract:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def classify_task_type(query):
     """Classify query into task type."""
@@ -64,6 +94,8 @@ def classify_task_type(query):
     return 'general'  # Default
 ```
 
+</div>
+
 ### Feature 2: Commodity Sector
 
 **Why it matters:**
@@ -77,6 +109,12 @@ Different sectors have different:
 - **Key drivers:** Energy = inventory; agriculture = yield forecasts; metals = industrial production
 
 **How to extract:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def classify_commodity_sector(query):
     """Identify commodity sector from query."""
@@ -96,6 +134,8 @@ def classify_commodity_sector(query):
     return 'unknown'
 ```
 
+</div>
+
 ### Feature 3: Data Availability
 
 **Why it matters:**
@@ -103,6 +143,12 @@ When your RAG system retrieves rich context (5 relevant documents), use evidence
 When retrieval is sparse (0-1 documents), evidence-only prompts will just say "not found" — use analytical prompts instead.
 
 **How to measure:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def assess_data_availability(retrieved_docs, query):
     """Score data availability for this query."""
@@ -120,6 +166,8 @@ def assess_data_availability(retrieved_docs, query):
     else:
         return 'low'
 ```
+
+</div>
 
 ### Feature 4: User Preference
 
@@ -502,6 +550,13 @@ The math is identical. The application is different.
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Builds on:**
 - **Module 3 (Contextual Bandits):** LinUCB algorithm is the routing engine
 - **Guide 01:** Prompt arms are the actions
@@ -532,3 +587,39 @@ Show that the router learns to route correctly based on task type.
 
 ### Problem 4: Cold Start Problem
 A new user arrives with no history. Your contextual router includes "user preference" as a feature. How do you handle this cold start? Provide two approaches.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./04_commodity_research_assistant.md">
+  <div class="link-card-title">04 Commodity Research Assistant</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./04_commodity_research_assistant.md">
+  <div class="link-card-title">04 Commodity Research Assistant — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

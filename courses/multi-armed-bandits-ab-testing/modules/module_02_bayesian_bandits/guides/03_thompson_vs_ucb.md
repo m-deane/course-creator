@@ -1,6 +1,28 @@
 # Thompson Sampling vs UCB: Theory and Practice
 
+> **Reading time:** ~20 min | **Module:** 02 — Bayesian Bandits | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Set Prior</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Sample from Posterior</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Pull Best Sample</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Observe Reward</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Update Posterior</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Thompson Sampling (TS) and Upper Confidence Bound (UCB) are the two leading bandit algorithms. Both achieve logarithmic regret, but they explore differently: UCB uses deterministic optimism ("pick the
+
+</div>
 
 Thompson Sampling (TS) and Upper Confidence Bound (UCB) are the two leading bandit algorithms. Both achieve logarithmic regret, but they explore differently: UCB uses deterministic optimism ("pick the arm with highest plausible value"), while Thompson Sampling uses randomized probability matching ("pick arms proportionally to their probability of being best"). In practice, Thompson Sampling often outperforms UCB in non-stationary, delayed-feedback, and batched-update settings.
 
@@ -12,6 +34,21 @@ Thompson Sampling (TS) and Upper Confidence Bound (UCB) are the two leading band
 
 ## Visual Explanation
 
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">UCB (Frequentist)</div>
+    <div class="body">
+      Deterministic selection based on confidence bounds. Easy to analyze theoretically. Reproducible given same history.
+    </div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Thompson Sampling (Bayesian)</div>
+    <div class="body">
+      Stochastic selection via posterior sampling. Often better empirical performance. Natural probability matching.
+    </div>
+  </div>
+</div>
+
 ```
 Scenario: 3 arms, 100 pulls each
 
@@ -22,6 +59,13 @@ Arm C: [0.40 ███████████ 0.60] ← UCB = 0.60 (wide but no
 
 UCB picks arm C (highest upper bound)
 Deterministic: Always C until bound shrinks
+
+<div class="callout-insight">
+
+**Insight:** Thompson Sampling is often called probability matching because it selects each arm with probability equal to the posterior probability that it is optimal. This natural calibration is why it tends to outperform in practice.
+
+</div>
+
 
 Thompson Sampling Posteriors:
 Arm A: Beta(50, 55)    |█|
@@ -41,6 +85,13 @@ Naturally mixes exploration and exploitation
 **Key difference:** UCB commits to one arm until confidence bounds shift. Thompson Sampling continuously randomizes across plausible arms.
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### UCB1 Algorithm
 ```
@@ -216,6 +267,13 @@ Winner: UCB (easier to reason about)
 
 ## Empirical Results from Literature
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Chapelle & Li (2011):** "An Empirical Evaluation of Thompson Sampling"
 - Tested on 6 real-world datasets
 - Thompson Sampling matched or beat UCB on all datasets
@@ -271,3 +329,39 @@ You're presenting to a portfolio manager who asks: "Why use this Thompson Sampli
 - Explains the explore-exploit tradeoff
 - Shows why Thompson Sampling is better than "always pick highest observed Sharpe"
 - Connects to commodity market non-stationarity
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_thompson_sampling.md">
+  <div class="link-card-title">01 Thompson Sampling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_thompson_sampling.md">
+  <div class="link-card-title">01 Thompson Sampling — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_posterior_updating.md">
+  <div class="link-card-title">02 Posterior Updating</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_posterior_updating.md">
+  <div class="link-card-title">02 Posterior Updating — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

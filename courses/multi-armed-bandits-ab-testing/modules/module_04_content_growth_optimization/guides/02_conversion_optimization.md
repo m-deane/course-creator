@@ -1,12 +1,29 @@
 # Conversion Optimization with Bandits
 
+> **Reading time:** ~20 min | **Module:** 04 — Content Growth Optimization | **Prerequisites:** Module 3
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Website conversion testing with bandits solves a simple problem: **why waste traffic on inferior landing pages when you could be tilting toward winners while you learn?** Traditional A/B testing locks
+
+</div>
 
 Website conversion testing with bandits solves a simple problem: **why waste traffic on inferior landing pages when you could be tilting toward winners while you learn?** Traditional A/B testing locks you into 50/50 splits for weeks, costing real revenue. Thompson Sampling for Beta-Bernoulli models gives you the optimal balance: explore early when uncertain, exploit heavily once you're confident.
 
 **Why it matters for commodity traders:** When you're testing research report formats, email subject lines, or alert delivery channels, every "conversion" is a trader taking action. Wasting half your audience on the worse variant for 4 weeks means missed trades and lost trust.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 Conversion optimization is the **perfect use case for Bayesian bandits**:
 - **Binary outcomes:** Visitor converts (1) or doesn't (0) → Bernoulli
@@ -17,6 +34,13 @@ Conversion optimization is the **perfect use case for Bayesian bandits**:
 The math is beautiful: after observing successes S and failures F, your posterior belief is Beta(1+S, 1+F). Sample from it, pick the best sample, observe result, update. You'll converge to the best variant faster than any A/B test while losing less money along the way.
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 TRADITIONAL A/B TEST vs BANDIT
@@ -118,6 +142,12 @@ Imagine you're a commodity research firm testing two landing pages for your week
 
 Complete Thompson Sampling conversion optimizer:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -161,6 +191,8 @@ for i, rate in enumerate(true_rates):
     print(f"Variant {i}: {pulls:.0f} visitors, "
           f"{conv_rate:.1%} conv (true: {rate:.1%})")
 ```
+
+</div>
 
 **Output example:**
 ```
@@ -243,6 +275,13 @@ Notice: 89% of traffic went to the best variant (B) by the end.
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Builds on:**
 - **Module 2 (Bayesian Bandits):** Thompson Sampling with Beta-Bernoulli is the workhorse here
 - **Module 1 (UCB):** UCB1 also works for conversions, but Thompson Sampling is simpler and better for binary rewards
@@ -296,3 +335,39 @@ A SaaS company runs a conversion bandit optimizing for "started free trial." Aft
 **Question:** What went wrong? What should they optimize for instead?
 
 **Answer:** They optimized for a vanity metric (trial starts) that doesn't correlate with revenue. Should optimize for "trial → paid conversion" or use a composite reward: (trial start) × (predicted LTV based on engagement).
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_creator_bandit_playbook.md">
+  <div class="link-card-title">01 Creator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_creator_bandit_playbook.md">
+  <div class="link-card-title">01 Creator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_arm_management.md">
+  <div class="link-card-title">03 Arm Management</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_arm_management.md">
+  <div class="link-card-title">03 Arm Management — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

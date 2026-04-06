@@ -1,6 +1,16 @@
 # Arm Management: Retirement, Introduction, and Evolution
 
+> **Reading time:** ~20 min | **Module:** 04 — Content Growth Optimization | **Prerequisites:** Module 3
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Real-world bandit systems aren't static. New options emerge (formats, products, strategies), old options stop working (market regime shifts, audience fatigue), and you can't test infinite arms simu...
+
+</div>
 
 Real-world bandit systems aren't static. New options emerge (formats, products, strategies), old options stop working (market regime shifts, audience fatigue), and you can't test infinite arms simultaneously. **Arm management** is the discipline of deciding when to retire underperforming arms, how to introduce new ones without disrupting learning, and how to keep your bandit system evolving as the world changes.
 
@@ -11,6 +21,13 @@ Real-world bandit systems aren't static. New options emerge (formats, products, 
 The best bandit systems are **gardens, not monuments**:
 - **Monument mindset:** "I'll design the perfect 10 arms, test them, and use the winners forever."
 - **Garden mindset:** "I'll start with 6 arms, prune the worst quarterly, plant new ones, and let the system evolve."
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 This maps directly to how successful companies operate:
 - **Amazon:** Constantly tests new product features, retires what doesn't work, scales what does
@@ -24,6 +41,13 @@ The key techniques:
 4. **Minimum pull constraints:** Don't retire until you've given it a fair shot
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 EVOLUTIONARY BANDIT SYSTEM (12-month lifecycle)
@@ -164,6 +188,12 @@ Imagine you run a commodity trading newsletter with 6 content types (arms). Afte
 
 Complete arm management system with retirement and introduction:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -230,6 +260,8 @@ for week in range(52):
             bandit.add_arm(new, onboarding_pulls=10)
             print(f"Week {week}: Added '{new}'")
 ```
+
+</div>
 
 ## Commodity Trading Applications
 
@@ -319,6 +351,13 @@ for week in range(52):
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Builds on:**
 - **Module 1 (UCB):** UCB confidence intervals are perfect for retirement decisions (overlap check)
 - **Module 2 (Thompson Sampling):** Bayesian credible intervals for statistical significance
@@ -335,6 +374,12 @@ for week in range(52):
 ## Practice Problems
 
 ### Problem 1: Implement Retirement Logic (Code)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def should_retire(arm_stats, arm_id, min_pulls=50):
     """
@@ -365,6 +410,8 @@ assert should_retire(stats, 'B', min_pulls=50) == True  # B is worst and signifi
 assert should_retire(stats, 'C', min_pulls=50) == False  # C is competitive
 ```
 
+</div>
+
 ### Problem 2: Design an Introduction Protocol (Conceptual)
 You're adding a new trading strategy (arm) to a portfolio bandit with 6 existing strategies.
 
@@ -391,3 +438,39 @@ Reward: 0.45 0.48 0.47 0.46 0.44 0.42 0.38 0.35 0.32 0.30 0.28 0.25
 1. Cumulative: (0.45+...+0.25)/12 = 0.37 (looks okay)
 2. Windowed: (0.30+0.28+0.25)/3 = 0.28 (trending down!)
 3. **Yes, retire:** Clear downward trend suggests the arm stopped working. Cumulative average is misleading.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_creator_bandit_playbook.md">
+  <div class="link-card-title">01 Creator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_creator_bandit_playbook.md">
+  <div class="link-card-title">01 Creator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_conversion_optimization.md">
+  <div class="link-card-title">02 Conversion Optimization</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_conversion_optimization.md">
+  <div class="link-card-title">02 Conversion Optimization — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

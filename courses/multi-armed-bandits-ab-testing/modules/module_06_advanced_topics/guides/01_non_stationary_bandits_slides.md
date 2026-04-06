@@ -24,11 +24,19 @@ Non-stationary bandits handle environments where reward distributions **change o
 **The fix:** Weight recent observations more heavily via discounting or sliding windows.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Standard vs Non-Stationary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Standard["Standard TS (FAILS)"]
         S1["Arm A best for steps 1-500"]
@@ -40,12 +48,16 @@ flowchart LR
         D2["Regime shift at step 500"]
         D3["Detects decline, switches to Arm B"]
     end
-
-    style Standard fill:#f66,color:#fff
-    style Discounted fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Standard vs Non-Stationary illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Two Approaches
@@ -78,6 +90,13 @@ Only last $W$ pulls count.
 </div>
 
 <!-- Speaker notes: The mathematical treatment of Two Approaches formalizes what we discussed intuitively. Walk through each variable and equation, relating them back to the commodity trading context. Ensure the audience follows the notation before moving on. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Discount Factor Tuning
@@ -92,9 +111,22 @@ Only last $W$ pulls count.
 **Rule of thumb:** $\gamma$ such that $\frac{1}{1-\gamma} \approx$ expected regime duration.
 
 <!-- Speaker notes: This comparison table on Discount Factor Tuning is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Code: Discounted Thompson Sampling
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import beta
@@ -107,11 +139,19 @@ class DiscountedThompsonSampling:
         self.beta_params = np.ones(n_arms)
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Discounted Thompson Sampling (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def select_arm(self):
@@ -125,6 +165,8 @@ class DiscountedThompsonSampling:
         self.alpha[arm] += reward       # Update selected arm
         self.beta_params[arm] += (1 - reward)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -172,6 +214,7 @@ class SlidingWindowUCB:
 ## Commodity Application: COVID Crash
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Pre as Pre-COVID (Jan 2020)
     participant Crash as COVID Crash (Mar 2020)
@@ -233,6 +276,7 @@ sequenceDiagram
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     NS_v["Non-Stationary Bandits"] --> Disc_v["Discounted TS"]
     NS_v --> SW_v["Sliding-Window UCB"]
@@ -245,9 +289,6 @@ flowchart TD
     Exponential --> Adapt["Adapt to regime shifts"]
     HardCut --> Adapt
     Reset --> Adapt
-
-    style NS_v fill:#36f,color:#fff
-    style Adapt fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -1,6 +1,28 @@
 # Thompson Sampling
 
+> **Reading time:** ~14 min | **Module:** 02 — Bayesian Bandits | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Set Prior</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Sample from Posterior</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Pull Best Sample</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Observe Reward</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Update Posterior</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Thompson Sampling is a Bayesian bandit algorithm that maintains a probability distribution (belief) over each arm's true reward, samples a plausible reward from each distribution, and selects the a...
+
+</div>
 
 Thompson Sampling is a Bayesian bandit algorithm that maintains a probability distribution (belief) over each arm's true reward, samples a plausible reward from each distribution, and selects the arm with the highest sample. It naturally balances exploration (wide sampling when uncertain) and exploitation (concentrated sampling when confident) through posterior-guided randomness.
 
@@ -22,6 +44,13 @@ Round 100: Beliefs concentrating
    Arm A        Arm B       Arm C
               (Clearly best)
 
+<div class="callout-insight">
+
+**Insight:** Thompson Sampling is often called probability matching because it selects each arm with probability equal to the posterior probability that it is optimal. This natural calibration is why it tends to outperform in practice.
+
+</div>
+
+
 Round 500: Truth revealed
  Beta(245,256) Beta(298,203) Beta(231,270)
      |█|          |███|          |█|
@@ -35,6 +64,13 @@ Posteriors narrow → Samples concentrate → Exploration fades
 **Key observation:** Arm B's posterior is both higher (better mean) and tighter (more certain). Thompson Sampling picks it most often, but still samples A and C occasionally when their random draws exceed B's.
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 **Beta-Bernoulli Thompson Sampling:**
 
@@ -83,6 +119,12 @@ You pick B. Tomorrow, they make new claims (new samples). Sometimes C gets lucky
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from scipy.stats import beta
@@ -112,6 +154,8 @@ for t in range(1000):
     reward = np.random.binomial(1, true_probs[arm])
     bandit.update(arm, reward)
 ```
+
+</div>
 
 **That's it.** 15 lines for a state-of-the-art bandit algorithm.
 
@@ -145,6 +189,13 @@ for t in range(1000):
 **Trade-off:** Strong priors prevent early over-commitment to lucky arms, but delay convergence. Use Beta(1,1) unless you have genuine prior information.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - Module 0: Decision theory and regret minimization
@@ -186,3 +237,39 @@ Instrument Thompson Sampling to track the "exploration rate" = fraction of times
 **Expected behavior:** Exploration rate should decay roughly as 1/t. Verify this empirically.
 
 **Commodity context:** In live trading, you want exploration to fade but never fully stop (in case regimes change). What exploration rate is acceptable after 500 trades?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_posterior_updating.md">
+  <div class="link-card-title">02 Posterior Updating</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_posterior_updating.md">
+  <div class="link-card-title">02 Posterior Updating — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_thompson_vs_ucb.md">
+  <div class="link-card-title">03 Thompson Vs Ucb</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_thompson_vs_ucb.md">
+  <div class="link-card-title">03 Thompson Vs Ucb — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

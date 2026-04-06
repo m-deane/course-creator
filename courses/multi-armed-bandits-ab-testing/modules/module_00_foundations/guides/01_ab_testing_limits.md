@@ -1,14 +1,50 @@
 # The Limits of A/B Testing
 
+> **Reading time:** ~18 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Design Experiment</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Fixed 50/50 Split</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Statistical Test</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Decide</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A/B testing allocates traffic evenly between options until statistical significance is reached, but this means you keep sending 50% of traffic to the inferior option even after it's clearly losing. In
+
+</div>
 
 A/B testing allocates traffic evenly between options until statistical significance is reached, but this means you keep sending 50% of traffic to the inferior option even after it's clearly losing. In commodity trading, this translates to continuing to allocate capital to underperforming strategies while evidence accumulates.
 
 ## Key Insight
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 > 💡 **A/B testing is a snapshot; bandits are a steering wheel.** Traditional A/B tests prioritize certainty over efficiency — they minimize false positives but maximize opportunity cost. In dynamic environments like commodity markets, you need to learn AND earn simultaneously, not wait for perfect statistical confidence before acting.
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 A/B TESTING (Fixed Allocation)
@@ -74,6 +110,12 @@ In commodity trading: You have two crude oil trading strategies. A/B testing kee
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -113,6 +155,8 @@ def ab_test_simulation(p_A=0.05, p_B=0.08, n_trials=10000):
 regret = ab_test_simulation(p_A=0.05, p_B=0.08, n_trials=10000)
 ```
 
+</div>
+
 ## Common Pitfalls
 
 ### 1. The Peeking Problem
@@ -144,6 +188,13 @@ regret = ab_test_simulation(p_A=0.05, p_B=0.08, n_trials=10000)
 **Commodity example:** You test two wheat inventory strategies during a calm market period. Results say Strategy A wins. Then a supply shock hits (Ukraine conflict, drought), and the optimal strategy flips. Your A/B test result is now obsolete.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - Basic probability and statistics (expected value, variance)
@@ -184,6 +235,12 @@ You run a 4-week A/B test on two crude oil inventory signals. Week 1-2: Signal A
 **3. Regret Calculator:**
 Implement a function that calculates cumulative regret for any allocation strategy given true arm means:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def calculate_regret(arm_means, choices, rewards=None):
     """
@@ -214,6 +271,8 @@ print(f"Total regret: {regret[-1]:.2f}")
 # Should show regret accumulating linearly
 ```
 
+</div>
+
 **Expected behavior:** For round-robin allocation across K arms, regret should grow as T · (μ* - μ_avg) where μ* is the best arm mean and μ_avg is the average arm mean.
 
 **Extension:** Compare the regret curve for:
@@ -221,3 +280,39 @@ print(f"Total regret: {regret[-1]:.2f}")
 - Random allocation
 - Always picking arm 1 (pure exploitation, wrong arm)
 - Always picking best arm (oracle, zero regret baseline)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_explore_exploit_tradeoff.md">
+  <div class="link-card-title">02 Explore Exploit Tradeoff</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_explore_exploit_tradeoff.md">
+  <div class="link-card-title">02 Explore Exploit Tradeoff — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_decision_theory_basics.md">
+  <div class="link-card-title">03 Decision Theory Basics</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_decision_theory_basics.md">
+  <div class="link-card-title">03 Decision Theory Basics — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

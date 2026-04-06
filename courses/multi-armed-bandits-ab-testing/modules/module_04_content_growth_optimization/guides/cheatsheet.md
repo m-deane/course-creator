@@ -1,6 +1,16 @@
 # Module 4 Cheatsheet: Bandits for Content & Growth
 
+> **Reading time:** ~20 min | **Module:** 04 — Content Growth Optimization | **Prerequisites:** Module 3
+
+
 ## Creator Bandit Playbook (6-Step Framework)
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of module 4 cheatsheet: bandits for content & growth, with worked examples and practical implementation guidance.
+
+</div>
 
 ```
 STEP 1: Define Arms (repeatable content types)
@@ -44,6 +54,13 @@ SETUP:
   Binary reward: conversion (1) or not (0)
   Prior: Beta(1, 1) for each variant
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 ALGORITHM:
   For each visitor t:
     1. Sample: θ̃_k ~ Beta(α_k, β_k) for all variants
@@ -66,6 +83,13 @@ COMMODITY APPLICATION:
 ```
 
 ## Arm Management Decision Tree
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
                     New arm to introduce?
@@ -217,6 +241,13 @@ ADVANCED: Content strategy optimization
 
 ## Key Equations
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ```
 Thompson Sampling Update (Beta-Bernoulli):
   α_k ← α_k + r_t     (if arm k selected, conversion occurred)
@@ -254,3 +285,49 @@ Tools:
   - Ax Platform (Meta's adaptive experimentation)
   - Google Optimize (deprecated, but good case studies)
 ```
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary tradeoff this approach makes compared to simpler alternatives?
+
+**Practice Question 2:** Under what conditions would this approach fail or underperform?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_creator_bandit_playbook.md">
+  <div class="link-card-title">01 Creator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_creator_bandit_playbook.md">
+  <div class="link-card-title">01 Creator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_conversion_optimization.md">
+  <div class="link-card-title">02 Conversion Optimization</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_conversion_optimization.md">
+  <div class="link-card-title">02 Conversion Optimization — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_arm_management.md">
+  <div class="link-card-title">03 Arm Management</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_arm_management.md">
+  <div class="link-card-title">03 Arm Management — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

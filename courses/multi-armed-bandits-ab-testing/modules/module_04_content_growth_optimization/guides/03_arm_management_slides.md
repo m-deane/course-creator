@@ -28,24 +28,35 @@ Real-world bandit systems aren't static. New options emerge, old options stop wo
 | **Garden** | **Start, prune worst, plant new, evolve** | **Adaptive** |
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Evolutionary Bandit System
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M0["Month 0: Initial Arms<br/>[A, B, C, D, E, F]"] --> M3["Month 3: First Pruning"]
     M3 --> |"Retire F (worst)<br/>Add G (new)"| M6["Month 6: Second Pruning"]
     M6 --> |"Retire E (drifted)<br/>Add H (new)"| M9["Month 9: Third Pruning"]
     M9 --> |"Retire D (fading)<br/>Add I (new)"| M12["Month 12: Evolved Portfolio"]
     M12 --> |"50% original, 50% new"| Result["System adapted to audience"]
-
-    style M0 fill:#36f,color:#fff
-    style M12 fill:#6f6,color:#000
-    style Result fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Evolutionary Bandit System illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Four Key Techniques
@@ -56,11 +67,19 @@ flowchart TD
 4. **Minimum pull constraints:** Don't retire until fair evaluation
 
 <!-- Speaker notes: Cover Four Key Techniques at a steady pace. Highlight the key points and connect them to the broader course themes. Check for audience questions before moving to the next slide. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Retirement Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Has arm been pulled >= N_min?"}
     Q1 -->|No| Keep1["Keep exploring"]
@@ -71,13 +90,16 @@ flowchart TD
     Q3 -->|Yes| Q4{"mu_hat < absolute threshold?"}
     Q4 -->|Yes| Retire["RETIRE"]
     Q4 -->|No| Keep4["Keep it (not terrible)"]
-
-    style Retire fill:#f66,color:#fff
-    style Keep1 fill:#6f6,color:#000
-    style Keep2 fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Retirement Decision Tree illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Formal Retirement Criteria
@@ -102,16 +124,13 @@ $$\text{UCB}_k = \hat{\mu}_k + \sqrt{\frac{2 \log t}{n_k}}, \quad \text{LCB}_{\t
 When introducing new arm $k_{\text{new}}$:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     O["Weeks 1-2:<br/>Onboarding"] --> |"Pull with prob >= 1/K"| M["Weeks 3-4:<br/>Monitoring"]
     M --> |"Let bandit choose naturally"| E["Week 4:<br/>Evaluation"]
     E --> |"n >= N_min?"| D{"Performance?"}
     D -->|"mu > threshold"| Keep["Keep in rotation"]
     D -->|"mu < threshold"| Retire["Retire early"]
-
-    style O fill:#36f,color:#fff
-    style Keep fill:#6f6,color:#000
-    style Retire fill:#f66,color:#fff
 ```
 
 **Alternative:** Optimistic initialization -- set $\hat{\mu}_{k_{\text{new}}} = \hat{\mu}_{\text{best}}$
@@ -147,6 +166,12 @@ $\alpha \in [0.9, 0.99]$ (higher = more memory)
 
 ## Code: Evolutionary Bandit
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -165,10 +190,18 @@ class EvolutionaryBandit:
         return np.mean(data)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Code: Retirement and Introduction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def retire_worst(self, threshold=None):
@@ -184,6 +217,8 @@ class EvolutionaryBandit:
             return worst
         return None
 ```
+
+</div>
 
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
@@ -251,6 +286,7 @@ class EvolutionaryBandit:
 ## Pitfall 3: Ignoring Non-Stationarity
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Cumulative["Cumulative Average"]
         C1["6 months great + 1 month terrible"]
@@ -262,9 +298,6 @@ flowchart LR
         W1 --> W2["Recent decline visible"]
         W2 --> W3["Retire the arm"]
     end
-
-    style Cumulative fill:#f66,color:#fff
-    style Windowed fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: Walk through Pitfall 3: Ignoring Non-Stationarity carefully. Emphasize why this mistake is common and how to recognize it in practice. The commodity trading example makes it concrete -- ask if anyone has encountered this in their own work. -->
@@ -310,6 +343,7 @@ flowchart LR
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     AM["Arm Management"] --> Retire["Retirement"]
     AM --> Intro["Introduction"]
@@ -324,9 +358,6 @@ flowchart TD
     Adapt --> Evolve
 
     Evolve --> Result["50% original + 50% new after 12 months"]
-
-    style AM fill:#36f,color:#fff
-    style Evolve fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

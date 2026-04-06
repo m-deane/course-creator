@@ -26,6 +26,12 @@ In commodity trading, this means continuing to allocate capital to **underperfor
 
 <!-- Speaker notes: The key takeaway here is that A/B testing prioritizes statistical certainty over efficiency. In a commodity context, the 50/50 split means you are literally losing money on the inferior strategy for the entire test duration. This is the "regret" concept we will formalize later. -->
 
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Key Insight
@@ -37,6 +43,12 @@ In commodity trading, this means continuing to allocate capital to **underperfor
 - In dynamic environments like commodity markets, you need to **learn AND earn simultaneously**
 
 <!-- Speaker notes: This analogy is worth emphasizing. A/B tests take a snapshot and wait -- bandits continuously steer. Ask the audience: would you rather wait 4 weeks to know which trading strategy is better, or start shifting capital within days? That is the core value proposition of bandit algorithms. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
 
 ---
 
@@ -58,6 +70,12 @@ Option B:  50%    65%    80%    90%    95%   <-- Exploits winner sooner
 
 <!-- Speaker notes: Walk through the ASCII diagram line by line. Emphasize that the bandit approach does not sacrifice learning -- it still explores, just less over time. The key visual contrast is the flat lines (A/B) versus the converging lines (bandit). In dollar terms, if each percentage point is $10K of capital, the bandit approach saves tens of thousands in opportunity cost. -->
 
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Cumulative Regret Comparison
@@ -68,6 +86,7 @@ Bandit:    ██████░░░░░░░░░░░░░░ (wastes 
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph AB["A/B Testing"]
         direction TB
@@ -86,6 +105,12 @@ flowchart LR
 ```
 
 <!-- Speaker notes: The regret bars are a simplified visual. The crucial distinction is growth rate: A/B test regret grows linearly with time (the longer you test, the more you waste), while bandit regret grows logarithmically (it slows down). This O(T) vs O(log T) gap is the mathematical foundation for why bandits outperform in sequential settings. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
 
 ---
 
@@ -122,11 +147,11 @@ $$R(T) = \frac{T}{2} \cdot |\mu_A - \mu_B|$$
 > This regret is **linear in T** -- the longer you test, the more you waste.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T["Test Duration T"] --> R["Regret = T/2 * gap"]
     R --> L["Linear growth"]
     L --> W["Waste scales with time"]
-    style W fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: This is the punchline of the deck. Linear regret means the cost of testing scales directly with time. If the gap between strategies is $50K/month and you test for 3 months, you waste approximately $75K on the inferior strategy. Bandits reduce this to logarithmic growth, which is dramatically cheaper. -->
@@ -169,6 +194,7 @@ You have two crude oil trading strategies:
 | **Bandit** | Shifts capital to winner within days | Small exploratory bets maintained |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant T as Trader
     participant AB as A/B Test
@@ -193,6 +219,12 @@ sequenceDiagram
 
 ## Code: A/B Test Regret Setup
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -207,11 +239,19 @@ def ab_test_simulation(p_A=0.05, p_B=0.08, n_trials=10000):
     return arms, best_arm, choices
 ```
 
+</div>
+
 <!-- Speaker notes: This first code slide sets up the simulation. We define two arms with known probabilities (5% vs 8% conversion). The A/B test randomly assigns each trial to arm 0 or 1 with equal probability. Note the simplicity -- this is the entire A/B test logic. The next slide calculates regret from these choices. -->
 
 ---
 
 ## Code: Regret Calculation and Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def calculate_ab_regret(arms, best_arm, choices):
@@ -229,6 +269,8 @@ def calculate_ab_regret(arms, best_arm, choices):
     plt.grid(alpha=0.3)
     return cumulative_regret
 ```
+
+</div>
 
 <!-- Speaker notes: We split the simulation into two slides for readability. This function computes the per-trial regret (best arm reward minus chosen arm reward) and accumulates it. The resulting plot shows a straight line going up -- that is linear regret. Every trial on the inferior arm adds to the total. With bandits, this line curves and flattens. -->
 
@@ -285,13 +327,12 @@ Aggregating across different market conditions can **hide regime-dependent perfo
 > Assuming true parameters remain constant throughout the test.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Start A/B Test"] --> B["Calm Market: Strategy A wins"]
     B --> C["Supply Shock Hits!"]
     C --> D["Strategy B now optimal"]
     D --> E["A/B test result is OBSOLETE"]
-    style C fill:#f66,color:#fff
-    style E fill:#f66,color:#fff
 ```
 
 **Commodity example:** You test wheat inventory strategies during calm markets. Then a drought hits -- the optimal strategy flips entirely.
@@ -364,6 +405,7 @@ regret = calculate_regret(arm_means, ab_test_choices)
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     AB["A/B Testing"] --> |"Fixed 50/50"| LR["Linear Regret O(T)"]
     AB --> |"Waits for significance"| HC["High Certainty"]
@@ -375,9 +417,6 @@ flowchart TD
 
     LR --> |"Use when"| Static["Static, one-time decisions"]
     LogR --> |"Use when"| Dynamic["Dynamic, repeated decisions"]
-
-    style LR fill:#f66,color:#fff
-    style LogR fill:#6f6,color:#fff
 ```
 
 <!-- Speaker notes: This visual summary captures the entire deck in one diagram. Left side: A/B testing with its limitations. Right side: bandits with their advantages. The bottom row gives the decision rule -- use A/B for one-shot decisions, bandits for repeated sequential decisions. Most commodity trading falls squarely in the bandit territory. -->

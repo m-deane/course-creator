@@ -24,11 +24,19 @@ math: mathjax
 | **Softmax** | Sample from $\exp(\hat{Q}/\tau)$ | $\tau > 0$ | $O(T^{2/3})$ | Portfolio, smooth |
 
 <!-- Speaker notes: This comparison table on Algorithm Comparison is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Start["Which algorithm?"] --> NS{"Non-stationary?"}
     NS -->|Yes| EG["Epsilon-Greedy (fixed epsilon)"]
@@ -41,18 +49,25 @@ flowchart TD
     Portfolio -->|No| Simple{"Want simplicity?"}
     Simple -->|Yes| EG2["Epsilon-Greedy (decaying)"]
     Simple -->|No| UCB2["UCB1"]
-
-    style UCB fill:#6f6,color:#000
-    style UCB2 fill:#6f6,color:#000
-    style EG fill:#fa0,color:#000
-    style SM fill:#36f,color:#fff
-    style SM2 fill:#36f,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Decision Guide illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Epsilon-Greedy Formulas
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Action selection
@@ -69,14 +84,29 @@ Q[a] += (reward - Q[a]) / N[a]
 epsilon_t = min(1.0, C / sqrt(t + 1))  # C in [1, 10]
 ```
 
+</div>
+
 **Optimal:** $\varepsilon^* \approx (K/T)^{1/3}$
 
 **Regret:** $E[R_T] = \varepsilon T + K\Delta^2/\varepsilon$
 
 <!-- Speaker notes: This slide connects theory to implementation for Epsilon-Greedy Formulas. Start with the mathematical formulation, then show how each term maps to a line of code. This bridge between theory and practice is one of the most valuable aspects of the course. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## UCB1 Formulas
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Action selection (after pulling each arm once)
@@ -88,11 +118,20 @@ N[a] += 1
 Q[a] += (reward - Q[a]) / N[a]
 ```
 
+</div>
+
 **Standard:** $c = \sqrt{2}$
 
 **Regret:** $E[R_T] \leq \sum_a \frac{8 \ln T}{\Delta_a} + O(1)$
 
 <!-- Speaker notes: This slide connects theory to implementation for UCB1 Formulas. Start with the mathematical formulation, then show how each term maps to a line of code. This bridge between theory and practice is one of the most valuable aspects of the course. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Softmax Formulas
@@ -132,6 +171,7 @@ tau_t = tau_0 / log(t + 2)
 ## Hyperparameter Tuning
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph EG["Epsilon-Greedy"]
         EL["epsilon too low"] --> ELS["One arm dominates, high regret plateau"]
@@ -281,6 +321,7 @@ probs = bandit.get_probabilities()  # Use as portfolio weights
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MAB["Multi-Armed Bandit Problem"] --> EG["Epsilon-Greedy"]
     MAB --> UCB["UCB1"]
@@ -295,9 +336,6 @@ flowchart TD
     SMR --> Port["Portfolio allocation"]
 
     MAB --> Next["Next: Thompson Sampling (Module 2)"]
-
-    style UCBR fill:#6f6,color:#000
-    style Next fill:#f9f,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

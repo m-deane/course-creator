@@ -1,6 +1,16 @@
 # Reward Function Design for LLM Systems
 
+> **Reading time:** ~20 min | **Module:** 08 — Prompt Routing Bandits | **Prerequisites:** Module 7
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** The reward function is the MOST IMPORTANT design decision in prompt routing bandits. A poorly designed reward trains your system to produce confident hallucinations, verbose garbage, or technically...
+
+</div>
 
 The reward function is the MOST IMPORTANT design decision in prompt routing bandits. A poorly designed reward trains your system to produce confident hallucinations, verbose garbage, or technically-correct-but-useless responses. The key is to use composite rewards: one primary metric (does it solve the task?) plus multiple guardrails (is it factual? is it efficient? does it follow format?).
 
@@ -48,6 +58,13 @@ User: "Analyze the latest EIA inventory report."
 Bad prompt response: "Bearish."
 (Short! High reward! But useless for actual trading decisions.)
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 ### Bad Reward 3: No Follow-Up Questions
 **Design:**
 ```python
@@ -82,6 +99,13 @@ Bad prompt response: "The latest oil inventories, which are released weekly by t
 
 ## The Operator Trick: Primary Metric + Guardrails
 
+<div class="callout-warning">
+
+**Warning:** A bandit system that optimizes the wrong reward function will converge efficiently to the wrong answer. Spend more time designing the reward function than choosing the algorithm.
+
+</div>
+
+
 The solution is **composite reward design:**
 
 ```python
@@ -104,6 +128,12 @@ This ensures you optimize for the right thing while preventing catastrophic fail
 - Human labels: Sample 5% of responses for human evaluation
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def task_completion_score(query, response):
     """Check if response addresses the query."""
@@ -123,6 +153,8 @@ def task_completion_score(query, response):
     return 1.0 if "yes" in judgment.lower() else 0.0
 ```
 
+</div>
+
 ### Metric 2: Extraction Accuracy
 **Question:** Did it correctly parse the data from the source document?
 
@@ -132,6 +164,12 @@ def task_completion_score(query, response):
 - Spot-check samples manually
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def extraction_accuracy(response, ground_truth):
     """Compare extracted data to known values."""
@@ -150,6 +188,8 @@ def extraction_accuracy(response, ground_truth):
         return 0.0  # Not even valid JSON
 ```
 
+</div>
+
 ### Metric 3: Signal Quality
 **Question:** Was the trading signal actionable and directionally correct?
 
@@ -159,6 +199,12 @@ def extraction_accuracy(response, ground_truth):
 - Conviction calibration: Are "high conviction" signals actually more accurate?
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def signal_quality(response, actual_price_change):
     """Evaluate trading signal quality after observing outcome."""
@@ -185,6 +231,8 @@ def signal_quality(response, actual_price_change):
 
     return max(reward, 0.0)
 ```
+
+</div>
 
 ### Metric 4: Research Completeness
 **Question:** Did it cover all relevant dimensions of the analysis?
@@ -481,6 +529,13 @@ A reward designed for data extraction will fail for trading signal generation.
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Builds on:**
 - **Module 2 (Thompson Sampling):** Reward = success/failure for Beta updates
 - **Module 5 (Commodity Trading):** Same reward design principles (primary metric + risk guardrails)
@@ -517,3 +572,39 @@ You have these reward weights:
 reward = 0.8 * task_completion + 0.2 * format_compliance - 0.1 * hallucination_penalty
 ```
 The system is producing well-formatted hallucinations. Which weight should you adjust and why?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./04_commodity_research_assistant.md">
+  <div class="link-card-title">04 Commodity Research Assistant</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./04_commodity_research_assistant.md">
+  <div class="link-card-title">04 Commodity Research Assistant — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

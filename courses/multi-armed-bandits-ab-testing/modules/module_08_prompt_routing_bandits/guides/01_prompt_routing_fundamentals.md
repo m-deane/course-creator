@@ -1,10 +1,27 @@
 # Prompt Routing Fundamentals
 
+> **Reading time:** ~20 min | **Module:** 08 — Prompt Routing Bandits | **Prerequisites:** Module 7
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Prompt routing bandits treat each prompt template as an "arm" in a multi-armed bandit problem. Instead of manually testing prompts, the system learns which prompt works best for each request type b...
+
+</div>
 
 Prompt routing bandits treat each prompt template as an "arm" in a multi-armed bandit problem. Instead of manually testing prompts, the system learns which prompt works best for each request type by balancing exploration (trying different prompts) and exploitation (using the best-known prompt). This eliminates the "bad prompt tax" — the cost of using suboptimal prompts while you manually iterate.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 **Prompts are a perfect bandit problem** because:
 1. You choose one prompt at a time (sequential decision-making)
@@ -15,6 +32,13 @@ Prompt routing bandits treat each prompt template as an "arm" in a multi-armed b
 The traditional approach — manually A/B test prompts for weeks — is exactly the inefficiency that bandits were designed to eliminate.
 
 ## The "Bad Prompt Tax"
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 Every production LLM system pays a hidden tax:
 
@@ -222,6 +246,12 @@ Probabilities must sum to 100%. Justify each scenario with data.
 
 Here's a minimal prompt routing bandit in ~15 lines:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -246,7 +276,15 @@ class PromptRouter:
             self.failures[prompt_idx] += 1
 ```
 
+</div>
+
 **Usage:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Define your prompt arms
 prompts = [
@@ -272,6 +310,8 @@ for request in requests:
     # Update bandit
     router.update(idx, reward)
 ```
+
+</div>
 
 ## Intuitive Explanation
 
@@ -319,6 +359,13 @@ A prompt router does the same thing — but with prompt templates instead of hum
 **The bandit solution:** Reward task completion and accuracy, not word count.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - **Module 0:** Explore-exploit tradeoff applies to prompt selection just like commodity allocation
@@ -369,3 +416,39 @@ Implement a prompt router that:
 - Returns selection probabilities for each arm after every update
 
 Test it with simulated rewards where Prompt 3 is best.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./04_commodity_research_assistant.md">
+  <div class="link-card-title">04 Commodity Research Assistant</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./04_commodity_research_assistant.md">
+  <div class="link-card-title">04 Commodity Research Assistant — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

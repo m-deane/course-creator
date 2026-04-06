@@ -31,6 +31,12 @@ Key concepts for bandits and commodity trading:
 
 <!-- Speaker notes: This table maps four abstract concepts to their practical meaning. Each one becomes a building block for bandit algorithms. Expected value drives arm selection. Utility captures risk preferences. Sequential decisions introduce the explore-exploit tradeoff. Regret minimization provides the objective function we optimize. -->
 
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Key Insight
@@ -44,6 +50,12 @@ Decision theory makes these tradeoffs **explicit and mathematically tractable**.
 
 <!-- Speaker notes: Every trader makes decisions that implicitly encode decision theory concepts. When a trader says they prefer steady 8% returns over volatile 12% returns, they are expressing a concave utility function. When they take a small exploratory position, they are assigning value to information. Decision theory just makes these intuitions precise enough to implement in algorithms. -->
 
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Expected Value (Risk-Neutral)
@@ -55,6 +67,12 @@ $$E[X] = \int x \cdot f(x)\, dx \quad \text{(continuous)}$$
 **In bandits:** Expected reward of arm $k$ is $\mu_k = E[r \mid \text{arm } k]$.
 
 <!-- Speaker notes: Expected value is the weighted average of outcomes. In the bandit context, each arm has a true expected reward mu_k that we are trying to learn. A risk-neutral agent simply picks the arm with the highest expected value. The challenge is that we do not know mu_k -- we must estimate it from observations. The quality of our estimates determines the quality of our decisions. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
 
 ---
 
@@ -72,6 +90,12 @@ Crude oil P&L calculation:
 $$E[\text{P\&L}] = \sum (\text{return}_i \times \text{probability}_i) = \$1.10$$
 
 <!-- Speaker notes: Walk through the calculation row by row. The expected P&L is positive ($1.10/barrel), so a risk-neutral trader would take this trade. But notice the downside: there is a 30% chance of losing $3/barrel. A risk-averse trader might skip this trade despite the positive expected value. This motivates utility functions on the next slide. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
 
 ---
 
@@ -100,11 +124,11 @@ Most traders are **risk-averse**: they prefer certain outcomes over risky bets w
 Both have $E[X] = \$100$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RN["Risk-Neutral: U(x) = x"] --> |"U(A) = 100, U(B) = 100"| I["Indifferent"]
     RA["Risk-Averse: U(x) = sqrt(x)"] --> |"U(A) = 10, U(B) = 7.07"| PA["Prefers A"]
     RS["Risk-Seeking: U(x) = x^2"] --> |"U(A) = 10000, U(B) = 20000"| PB["Prefers B"]
-    style PA fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This classic example makes risk aversion concrete. Under square-root utility, the certain $100 has utility 10, while the gamble has expected utility 0.5*sqrt(200) + 0.5*sqrt(0) = 7.07. The risk-averse agent strongly prefers the certain outcome. Most institutional commodity traders are risk-averse -- they prefer consistent returns over volatile ones with the same average. This is why Sharpe ratio is the standard metric. -->
@@ -172,13 +196,12 @@ $$\text{VPI}_k = E[\text{future regret reduction} \mid \text{learn true } \mu_k]
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Explore["Explore Arm 2"] --> Good["True mean = 0.6"]
     Explore --> Bad["True mean = 0.4"]
     Good --> Switch["Switch permanently: huge future gain"]
     Bad --> Stay["Stay with Arm 1: small cost, big savings"]
-    style Switch fill:#6f6,color:#000
-    style Stay fill:#ff9,color:#000
 ```
 
 <!-- Speaker notes: Walk through the decision tree. If arm 2's true mean is 0.6, exploring saves massive future regret by discovering a better arm. If arm 2's true mean is 0.4, exploring costs one round of regret but saves you from making a permanent mistake. The asymmetry is key: the upside of discovering a better arm is large (compounded over all future rounds), while the downside is small (one round of suboptimal play). This is why algorithms like UCB explore uncertain arms even when their point estimate is lower. -->
@@ -281,6 +304,7 @@ Three arms with means [10, 9, 8]. After 100 pulls:
 ## Commodity Context
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Speculator["Reward Maximization"]
         S1["Outsized bets on high-variance commodities"]
@@ -401,6 +425,7 @@ A crude oil trader asks: "Should I increase my WTI position or rotate to Brent?"
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DT["Decision Theory"] --> EV["Expected Value"]
     DT --> U["Utility Functions"]
@@ -416,10 +441,6 @@ flowchart TD
 
     Reg --> |"frequentist"| UCB["UCB Algorithm"]
     Reg --> |"bayesian"| TS["Thompson Sampling"]
-
-    style DT fill:#36f,color:#fff
-    style UCB fill:#6f6,color:#000
-    style TS fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This flowchart maps decision theory concepts to the algorithms we will study. Expected value plus risk preferences leads to utility functions. Sequential decisions create the explore-exploit tradeoff. The regret framework branches into frequentist (UCB) and Bayesian (Thompson Sampling) approaches. Both achieve logarithmic regret -- the choice between them depends on whether you want to encode prior beliefs (Bayesian) or prefer distribution-free guarantees (frequentist). -->

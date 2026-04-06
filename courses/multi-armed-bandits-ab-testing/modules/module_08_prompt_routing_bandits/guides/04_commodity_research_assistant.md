@@ -1,6 +1,16 @@
 # Commodity Research Assistant: Case Studies in Prompt Routing
 
+> **Reading time:** ~20 min | **Module:** 08 — Prompt Routing Bandits | **Prerequisites:** Module 7
+
+
 ## Overview
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide presents three real-world case studies of prompt routing bandits applied to commodity trading systems. Each case study shows the problem, the bandit setup, the reward function, and the r...
+
+</div>
 
 This guide presents three real-world case studies of prompt routing bandits applied to commodity trading systems. Each case study shows the problem, the bandit setup, the reward function, and the results — demonstrating how adaptive prompt selection improves quality, reduces costs, and eliminates manual prompt engineering.
 
@@ -75,10 +85,23 @@ This prompt worked well for open-ended research questions ("Analyze the crude oi
 - Data availability (high, medium, low) — from RAG retrieval score
 
 **Reward function:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def research_bot_reward(query, response, retrieved_docs, ground_truth=None):
     # Primary: task completion
     completion = task_completion_score(query, response)
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
     # Guardrail 1: Hallucination detection (critical!)
     hallucination_penalty = 0.0
@@ -94,6 +117,8 @@ def research_bot_reward(query, response, retrieved_docs, ground_truth=None):
     reward = completion + hallucination_penalty + citation_bonus
     return max(reward, 0.0)
 ```
+
+</div>
 
 **Key insight:** Hallucination penalty is -0.5 per unsupported claim. This makes hallucinating very expensive for the bandit.
 
@@ -120,6 +145,12 @@ After 2 weeks of production use (500 queries):
 - 40% reduction in "throwaway" responses (answers that were ignored)
 
 ### Implementation Code
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Initialize router
@@ -155,6 +186,8 @@ for query in incoming_queries:
     })
 ```
 
+</div>
+
 ### Key Lessons
 
 1. **Hallucination penalty must be severe** — otherwise the bandit learns to hallucinate confidently (users like confidence)
@@ -165,6 +198,13 @@ for query in incoming_queries:
 ---
 
 ## Case Study 2: EIA Report Processor That Improved While Running
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### The Problem
 
@@ -228,6 +268,12 @@ A single prompt was optimized for tables but terrible at narratives.
 - User role (trader, analyst, portfolio manager)
 
 **Reward function:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def eia_extraction_reward(section_type, response, ground_truth):
     # For tables: exact match on numbers
@@ -252,6 +298,8 @@ def eia_extraction_reward(section_type, response, ground_truth):
 
     return 0.5  # Default
 ```
+
+</div>
 
 ### The Result
 
@@ -572,6 +620,13 @@ class MultiCommoditySignalRouter:
 
 ## Connections to Other Modules
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 - **Module 2 (Bayesian Bandits):** Same Thompson Sampling algorithm
 - **Module 3 (Contextual Bandits):** Same LinUCB framework
 - **Module 5 (Commodity Trading):** Same domain (commodities), different application (prompts vs allocation)
@@ -586,3 +641,49 @@ After understanding these case studies:
 3. **Define your rewards** — what matters for your application?
 4. **Start simple** — 3-5 prompts, basic context features, Thompson Sampling
 5. **Monitor and iterate** — track hallucination rates, costs, user satisfaction
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does non-stationarity in commodity markets affect bandit algorithm assumptions?
+
+**Practice Question 2:** What risk management constraints should be layered on top of a bandit-based allocation system?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_prompt_routing_fundamentals.md">
+  <div class="link-card-title">01 Prompt Routing Fundamentals — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_llm.md">
+  <div class="link-card-title">02 Reward Design Llm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_contextual_prompt_routing.md">
+  <div class="link-card-title">03 Contextual Prompt Routing — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

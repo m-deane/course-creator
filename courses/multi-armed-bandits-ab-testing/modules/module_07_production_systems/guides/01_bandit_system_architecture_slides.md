@@ -24,11 +24,19 @@ A production bandit system separates **policy logic**, **data management**, and 
 **Goal:** Clean architecture with clear interfaces enables safe iteration and reliable monitoring.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## System Architecture Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     AR[Arm Registry] --> PE[Policy Engine]
     CP[Context Provider] --> PE
@@ -41,13 +49,16 @@ flowchart TD
 
     RT --> |"Update policy"| PE
     MD --> |"Alerts"| Ops[Operations Team]
-
-    style PE fill:#36f,color:#fff
-    style GE fill:#f66,color:#fff
-    style Decision fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on System Architecture Overview illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Six Components
@@ -62,11 +73,19 @@ flowchart TD
 | **Monitor** | Detect anomalies | Surveillance system |
 
 <!-- Speaker notes: This comparison table on Six Components is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Data Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant CP as Context Provider
     participant PE as Policy Engine
@@ -89,6 +108,13 @@ sequenceDiagram
 ```
 
 <!-- Speaker notes: The diagram on Data Flow illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -109,6 +135,12 @@ $$\text{action} = G(P(C(t), H), t)$$
 
 ## Code: Core System
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class ProductionBanditSystem:
     def __init__(self, policy, guardrails=None):
@@ -123,11 +155,19 @@ class ProductionBanditSystem:
         validated_arm = self.guardrails(selected_arm, context)
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Core System (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
         decision = {
@@ -140,6 +180,8 @@ class ProductionBanditSystem:
         self.logger.append(json.dumps(decision))
         return validated_arm
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -173,6 +215,7 @@ for commodity in ["GOLD", "OIL", "NATGAS", "COPPER"]:
 ## Separation of Concerns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Bad["Monolithic (BAD)"]
         Mono["One giant class:<br/>TS + position limits +<br/>DB calls + stop-loss +<br/>logging + alerting"]
@@ -183,9 +226,6 @@ flowchart LR
         L["Logger<br/>(only recording)"]
         M["Monitor<br/>(only alerting)"]
     end
-
-    style Bad fill:#f66,color:#fff
-    style Good fill:#6f6,color:#000
 ```
 
 > Each component can be developed, tested, and monitored independently.
@@ -240,6 +280,7 @@ flowchart LR
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BSA["Bandit System Architecture"] --> Components["6 Components"]
     BSA --> Separation["Separation of Concerns"]
@@ -252,9 +293,6 @@ flowchart TD
     Modular --> Production["Production-Ready Bandit"]
     Safe --> Production
     Composable --> Production
-
-    style BSA fill:#36f,color:#fff
-    style Production fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

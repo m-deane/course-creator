@@ -22,11 +22,19 @@ Your reward function is the most important decision in bandit-based trading. It 
 > **Your reward function IS your trading strategy.** Choose poorly and you train a system that sabotages your real goals.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Bad Rewards and What They Train
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Bad["Bad Rewards"]
         R1["Raw Returns"] --> B1["Trend chasing, buys high"]
@@ -34,13 +42,18 @@ flowchart TD
         R3["Win Rate Only"] --> B3["Tiny gains, large losses"]
         R4["No Transaction Costs"] --> B4["Constant churning"]
     end
-
-    style Bad fill:#f66,color:#fff
 ```
 
 > **Rule:** Avoid raw returns in risk-managed settings. Exception: risk-neutral contexts with very short horizons where simplicity outweighs accuracy.
 
 <!-- Speaker notes: The diagram on Bad Rewards and What They Train illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Bad Reward 1: Raw Returns
@@ -58,11 +71,19 @@ def naive_reward(returns):
 > Classic "buy high, sell low" behavior.
 
 <!-- Speaker notes: This code example for Bad Reward 1: Raw Returns is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Good Reward Designs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Good["Good Rewards"]
         G1["Risk-Adjusted + DD Penalty"] --> O1["Balance return and stability"]
@@ -71,14 +92,25 @@ flowchart TD
         G4["Thesis-Aligned"] --> O4["Tactical overlay"]
         G5["Multi-Objective"] --> O5["Explicit tradeoffs"]
     end
-
-    style Good fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Good Reward Designs illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Good Reward 1: Risk-Adjusted with Drawdown Penalty
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def risk_adjusted_reward(returns, volatility, drawdown, lambda_dd=2.0):
@@ -86,6 +118,8 @@ def risk_adjusted_reward(returns, volatility, drawdown, lambda_dd=2.0):
     dd_penalty = lambda_dd * abs(drawdown)
     return sharpe - dd_penalty
 ```
+
+</div>
 
 **Example:**
 - WTI: +2% avg, 5% vol, -3% DD -> Reward = 0.34
@@ -98,12 +132,20 @@ def risk_adjusted_reward(returns, volatility, drawdown, lambda_dd=2.0):
 
 ## Good Reward 2: Regret-Relative
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def regret_relative_reward(arm_returns, all_arm_returns):
     best_possible = all_arm_returns.max()
     regret = best_possible - arm_returns
     return -regret  # Minimize regret
 ```
+
+</div>
 
 **What it trains:** Learn which arms are consistently good. Balance exploration with exploitation.
 
@@ -152,12 +194,10 @@ def commodity_adjusted_reward(spot_returns, roll_yield, volatility):
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Contango["Contango<br/>(upward curve)"] --> |"Negative roll yield"| Penalty["Penalizes long positions"]
     Back["Backwardation<br/>(downward curve)"] --> |"Positive roll yield"| Bonus["Rewards long positions"]
-
-    style Contango fill:#f66,color:#fff
-    style Back fill:#6f6,color:#000
 ```
 
 > Ignoring roll yield overweights contango commodities (bad).
@@ -261,6 +301,7 @@ def multi_objective_reward(returns, volatility, drawdown, turnover,
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RD["Reward Design"] --> Bad_v["Bad Rewards"]
     RD --> Good_v["Good Rewards"]
@@ -272,10 +313,6 @@ flowchart TD
 
     Success --> Rule["Rule: Reward IS strategy"]
     Context --> Rule
-
-    style RD fill:#36f,color:#fff
-    style Success fill:#6f6,color:#000
-    style Disaster fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

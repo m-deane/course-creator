@@ -30,11 +30,19 @@ Content publishing as a multi-armed bandit: arms are **topic x format** combinat
 | **Bandit** | **Tilt + 20% explore + quarterly prune** | **Adaptive** |
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Creator Bandit Lifecycle
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     E["Weeks 1-3: EXPLORATION"] --> |"6 arms, ~2 posts each"| Ex["Weeks 4-12: EXPLOITATION"]
     Ex --> |"Top 2 get 60%, rest get 40%"| R["Week 12: ARM RETIREMENT"]
@@ -42,13 +50,16 @@ flowchart TD
     E2 --> Ex2["Weeks 16-24: EXPLOIT AGAIN"]
     Ex2 --> R2["Week 24: RETIRE AGAIN"]
     R2 --> |"Repeat quarterly"| Cycle["...52-week cycle"]
-
-    style E fill:#36f,color:#fff
-    style Ex fill:#6f6,color:#000
-    style R fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Creator Bandit Lifecycle illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Key Insight: Non-Stationarity
@@ -63,11 +74,19 @@ Content creation is **inherently sequential and non-stationary:**
 > The antidote to "I went viral once, so I'll chase that high forever."
 
 <!-- Speaker notes: This is the single most important idea in the deck. Make sure the audience understands and remembers this insight. Consider asking the audience to restate it in their own words before proceeding. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Arms: Topic x Format Matrix
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Topics["3 Topics"]
         T1["Market Analysis"]
@@ -81,14 +100,18 @@ flowchart LR
     T1 --> F1 & F2
     T2 --> F1 & F2
     T3 --> F1 & F2
-
-    style Topics fill:#36f,color:#fff
-    style Formats fill:#6f6,color:#000
 ```
 
 **Result:** 3 topics x 2 formats = **6 arms** (repeatable weekly)
 
 <!-- Speaker notes: The diagram on Arms: Topic x Format Matrix illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -110,6 +133,7 @@ $$k_{\text{worst}} = \arg\min_k \hat{\mu}_k \quad \to \text{retire and replace}$
 ## Reward Design: Quality Not Vanity
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Good["Good Rewards"]
         G1["Read ratio (completions / opens)"]
@@ -121,9 +145,6 @@ flowchart TD
         B2["Likes (trains controversy)"]
         B3["Opens alone (trains misleading headlines)"]
     end
-
-    style Good fill:#6f6,color:#000
-    style Bad fill:#f66,color:#fff
 ```
 
 > A thread with 50K views but 2% read ratio loses to an essay with 5K views and 40% read ratio.
@@ -132,6 +153,12 @@ flowchart TD
 ---
 
 ## Code: Creator Bandit Simulation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -153,10 +180,18 @@ for week in range(3):
         rewards[arm] += reward
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Code: Exploitation + Retirement
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Phase 2: Tilted exploitation (weeks 4-52)
@@ -171,6 +206,8 @@ for week in range(3, 52):
     )
     np.random.shuffle(week_arms)
 ```
+
+</div>
 
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
@@ -279,6 +316,7 @@ for week in range(3, 52):
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CBP["Creator Bandit Playbook"] --> Arms["6 Arms: Topic × Format"]
     CBP --> Reward["Reward: Read Ratio (not views)"]
@@ -292,10 +330,6 @@ flowchart TD
     Explore --> Exploit["Weeks 4-12: Tilt to winners"]
     Exploit --> Retire
     Introduce --> Explore2["2 weeks onboarding"]
-
-    style CBP fill:#36f,color:#fff
-    style Quality fill:#6f6,color:#000
-    style Retire fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

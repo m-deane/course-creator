@@ -1,12 +1,29 @@
 # Bandit System Architecture
 
+> **Reading time:** ~14 min | **Module:** 07 — Production Systems | **Prerequisites:** Module 6
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A production bandit system separates policy logic (how to select arms), data management (tracking rewards and contexts), and business logic (guardrails and overrides) into distinct components that can
+
+</div>
 
 A production bandit system separates policy logic (how to select arms), data management (tracking rewards and contexts), and business logic (guardrails and overrides) into distinct components that can be developed, tested, and monitored independently.
 
 > 💡 **Key Insight:** The biggest mistake in production bandit systems is coupling the machine learning policy too tightly with business logic. When your Thompson Sampling algorithm is tangled with position limits, stop-loss checks, and data validation, you can't update one without breaking the other. Clean architecture with clear interfaces enables safe iteration and reliable monitoring.
 
 ## Visual Explanation
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -55,6 +72,13 @@ A production bandit system separates policy logic (how to select arms), data man
 
 ## Formal Definition
 
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
+
 A production bandit system is a tuple $(R, C, P, G, L, M)$ where:
 
 - **R** = Arm Registry: maps arm IDs to configurations and enables/disables arms dynamically
@@ -84,6 +108,12 @@ Think of a production bandit system like an automated trading desk with speciali
 Just like you wouldn't let a portfolio manager bypass risk limits, your policy engine shouldn't be able to violate guardrails. And just like compliance needs complete audit trails, your logger must capture everything.
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -142,7 +172,15 @@ class ProductionBanditSystem:
         self.policy.update(arm, reward, context)
 ```
 
+</div>
+
 **Commodity Application:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Weekly commodity allocation system
 def commodity_guardrails(arm: str, context: Dict) -> str:
@@ -172,6 +210,8 @@ context = get_market_features()  # VIX, term structure, momentum
 allocation = system.make_decision(context)
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Monolithic design**
@@ -195,6 +235,13 @@ When a commodity allocation performs poorly, you need to know: Was the arm enabl
 **Solution:** The Arm Registry should store rich metadata. The logger should capture it on every decision.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - Module 1: Core bandit algorithms (epsilon-greedy, Thompson Sampling)
@@ -230,7 +277,13 @@ When a commodity allocation performs poorly, you need to know: Was the arm enabl
    Design the interfaces for ArmRegistry and Guardrails that support these requirements.
 
 4. **Code Review:** What's wrong with this architecture?
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    class BanditSystem:
        def decide(self, context):
            arm = self.policy.select(context)
@@ -239,4 +292,42 @@ When a commodity allocation performs poorly, you need to know: Was the arm enabl
            return arm
    ```
 
+</div>
+
    List at least 3 architectural problems and how to fix them.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_logging_and_monitoring.md">
+  <div class="link-card-title">02 Logging And Monitoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_logging_and_monitoring.md">
+  <div class="link-card-title">02 Logging And Monitoring — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_offline_evaluation.md">
+  <div class="link-card-title">03 Offline Evaluation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_offline_evaluation.md">
+  <div class="link-card-title">03 Offline Evaluation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

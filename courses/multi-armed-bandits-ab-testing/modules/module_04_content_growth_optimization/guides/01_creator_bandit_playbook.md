@@ -1,6 +1,16 @@
 # Creator Bandit Playbook
 
+> **Reading time:** ~20 min | **Module:** 04 — Content Growth Optimization | **Prerequisites:** Module 3
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** The **Creator Bandit Playbook** treats content publishing as a multi-armed bandit problem where arms are topic×format combinations you can repeat weekly, and rewards are meaningful engagement metri...
+
+</div>
 
 The **Creator Bandit Playbook** treats content publishing as a multi-armed bandit problem where arms are topic×format combinations you can repeat weekly, and rewards are meaningful engagement metrics (read ratio, not just views). Instead of guessing what your audience wants or running endless A/B tests, you publish evenly for a few weeks, tilt toward top performers, keep exploring, and ruthlessly prune what doesn't work.
 
@@ -19,6 +29,13 @@ This is the antidote to "I went viral once, so I'll chase that high forever" and
 
 ```
 CREATOR BANDIT LIFECYCLE (52-week cycle)
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 Weeks 1-3: EXPLORATION PHASE
 ┌──────────────────────────────────────────┐
@@ -52,6 +69,13 @@ Bandit Creator:        📈 (tilt toward what works + 20% experiments + quarterl
 ```
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 Let:
 - **K = 6 arms** (3 topics × 2 formats, e.g., "Trading Psychology × Thread" or "Market Analysis × Video")
@@ -117,6 +141,12 @@ After a year, you've learned:
 ## Code Implementation
 
 Complete simulation of the Creator Bandit Playbook over 52 weeks:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -190,6 +220,8 @@ for i, arm in enumerate(arms):
               f"({int(pulls[i])} posts)")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 ### Pitfall 1: Over-Learning from One Viral Spike
@@ -227,6 +259,13 @@ for i, arm in enumerate(arms):
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 **Builds on:**
 - **Module 2 (Bayesian Bandits):** Thompson Sampling is perfect for content — each arm has a Beta posterior for read ratio
 - **Module 1 (Core Algorithms):** Epsilon-greedy with ε=0.2 (20% exploration) is the simplest version of this playbook
@@ -260,6 +299,12 @@ A food blogger uses a bandit to optimize content. Arms are recipe types. Reward 
 
 ### Problem 3: Simulate Arm Retirement (Implementation)
 Implement the retirement logic from the playbook:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def should_retire(arm_idx, avg_rewards, pulls, week):
     """Return True if arm should be retired this week"""
@@ -273,4 +318,42 @@ def should_retire(arm_idx, avg_rewards, pulls, week):
 # should_retire(3, avg_rewards, pulls, 12) → True
 ```
 
+</div>
+
 **Self-check:** Did you verify minimum pulls before retiring? (Don't retire arms you haven't given a fair shot.)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_conversion_optimization.md">
+  <div class="link-card-title">02 Conversion Optimization</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_conversion_optimization.md">
+  <div class="link-card-title">02 Conversion Optimization — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_arm_management.md">
+  <div class="link-card-title">03 Arm Management</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_arm_management.md">
+  <div class="link-card-title">03 Arm Management — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

@@ -1,6 +1,16 @@
 # Regime-Aware Allocation
 
+> **Reading time:** ~20 min | **Module:** 05 — Commodity Trading Bandits | **Prerequisites:** Module 4
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Market regimes change. A bandit optimized for trending markets fails in mean-reverting regimes. Contextual bandits solve this by conditioning allocation on observable regime features, learning sepa...
+
+</div>
 
 Market regimes change. A bandit optimized for trending markets fails in mean-reverting regimes. Contextual bandits solve this by conditioning allocation on observable regime features, learning separate strategies for different market states.
 
@@ -16,6 +26,13 @@ Instead of one universal allocation policy, learn:
 The bandit adapts in real-time as regimes shift.
 
 ## Visual Explanation
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -79,6 +96,13 @@ Key difference from non-contextual:
 
 ## Formal Definition
 
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
+
 **Contextual Bandit for Commodities:**
 
 At each time `t`:
@@ -139,6 +163,12 @@ The contextual bandit is the same idea, but:
 
 **Why it matters:** High-vol and low-vol regimes require different strategies.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compute_realized_volatility(returns, window=20):
     """
@@ -150,6 +180,8 @@ def compute_realized_volatility(returns, window=20):
     """
     return returns.rolling(window).std() * np.sqrt(252)
 ```
+
+</div>
 
 **Regime classification:**
 - Low vol: < 15% annualized
@@ -164,6 +196,12 @@ def compute_realized_volatility(returns, window=20):
 
 **Why it matters:** Contango vs backwardation affects carry returns.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compute_term_structure_slope(front_month, back_month):
     """
@@ -175,6 +213,8 @@ def compute_term_structure_slope(front_month, back_month):
     """
     return (back_month - front_month) / front_month
 ```
+
+</div>
 
 **Regime classification:**
 - Steep contango: slope > +5%
@@ -188,6 +228,12 @@ def compute_term_structure_slope(front_month, back_month):
 ### Feature 3: Trend Strength
 
 **Why it matters:** Trending vs mean-reverting markets need different allocations.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_trend_strength(prices, short_window=20, long_window=50):
@@ -203,6 +249,8 @@ def compute_trend_strength(prices, short_window=20, long_window=50):
     slow_ma = prices.rolling(long_window).mean()
     return (fast_ma - slow_ma) / slow_ma
 ```
+
+</div>
 
 **Regime classification:**
 - Strong uptrend: > +10%
@@ -587,6 +635,13 @@ See **Hidden Markov Models course** in this repo for full HMM implementation.
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Builds On
 - **Module 3**: Contextual bandits (general framework)
 - **Module 1**: Thompson Sampling (per-regime allocation)
@@ -629,3 +684,39 @@ You've just defined a new regime ("EXTREME_BACKWARDATION") that's only occurred 
 - Read [Cheatsheet](cheatsheet.md) for quick reference
 - Try [Regime-Aware Commodity Bandit Notebook](../notebooks/03_regime_commodity_bandit.ipynb)
 - Explore **Hidden Markov Models course** for advanced regime detection
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_accumulator_bandit_playbook.md">
+  <div class="link-card-title">01 Accumulator Bandit Playbook — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

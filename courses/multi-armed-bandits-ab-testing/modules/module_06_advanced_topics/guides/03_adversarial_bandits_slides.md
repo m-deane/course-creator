@@ -26,11 +26,19 @@ Adversarial bandits assume rewards are chosen by an adversary who knows your alg
 **Solution:** Randomize using **EXP3** to be unpredictable.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Stochastic vs Adversarial
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Stochastic["Stochastic (standard)"]
         S1["Rewards from fixed distributions"]
@@ -42,12 +50,16 @@ flowchart TD
         A2["If predictable, you get exploited"]
         A3["Need EXP3: O(sqrt(T)) regret"]
     end
-
-    style Stochastic fill:#6f6,color:#000
-    style Adversarial fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Stochastic vs Adversarial illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Market Impact Example
@@ -66,6 +78,13 @@ Your predictable strategy became exploitable.
 > EXP3 solution: Randomize buy times, mix in other commodities, be unpredictable.
 
 <!-- Speaker notes: This slide connects theory to implementation for Market Impact Example. Start with the mathematical formulation, then show how each term maps to a line of code. This bridge between theory and practice is one of the most valuable aspects of the course. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## EXP3 Algorithm
@@ -85,19 +104,23 @@ Your predictable strategy became exploitable.
 **Optimal $\gamma$:** $\sqrt{\frac{K \ln K}{T}}$ gives regret $\leq 2\sqrt{TK\ln K}$
 
 <!-- Speaker notes: The mathematical treatment of EXP3 Algorithm formalizes what we discussed intuitively. Walk through each variable and equation, relating them back to the commodity trading context. Ensure the audience follows the notation before moving on. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Why Randomize? Rock-Paper-Scissors
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Det["Deterministic: Always Rock"] --> Exploit["Opponent plays Paper → you lose"]
     Pattern["Pattern: Rock-Scissors-Rock..."] --> Predict["Opponent predicts → you lose"]
     Random["Random: 1/3 each"] --> Safe["Opponent can't exploit → optimal"]
-
-    style Det fill:#f66,color:#fff
-    style Pattern fill:#f66,color:#fff
-    style Random fill:#6f6,color:#000
 ```
 
 > EXP3 does this for bandits: weight arms by performance, but always randomize.
@@ -106,6 +129,12 @@ flowchart TD
 ---
 
 ## Code: EXP3
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class EXP3:
@@ -121,11 +150,19 @@ class EXP3:
             self.gamma = min(1.0, np.sqrt(K * np.log(K) / T))
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: EXP3 (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def get_probabilities(self):
@@ -145,6 +182,8 @@ class EXP3:
         gamma = self.gamma or 0.1
         self.weights[arm] *= np.exp(gamma * estimated_reward / self.n_arms)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -173,14 +212,12 @@ You only observe the selected arm. To correct selection bias:
 | EXP3 | Stochastic (overkill) | $O(\sqrt{T})$ (worse than UCB) |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q{"Are rewards adversarial?"}
     Q -->|"Yes: market impact, HFT, strategic competitors"| EXP3_v["Use EXP3"]
     Q -->|"No: i.i.d. rewards, passive data"| UCB_v["Use UCB/TS (better regret)"]
     Q -->|"Unsure"| Test["Backtest both, compare"]
-
-    style EXP3_v fill:#f66,color:#fff
-    style UCB_v fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Regret Comparison illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -254,6 +291,7 @@ for t in range(1000):
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     AB["Adversarial Bandits"] --> Problem_a["Rewards chosen to hurt you"]
     AB --> Solution_a["EXP3: Randomize to be unpredictable"]
@@ -265,9 +303,6 @@ flowchart TD
 
     When_a --> Regret_a["O(sqrt(TK ln K)) regret"]
     How --> Regret_a
-
-    style AB fill:#36f,color:#fff
-    style Regret_a fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

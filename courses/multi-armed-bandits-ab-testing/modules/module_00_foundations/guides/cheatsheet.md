@@ -1,6 +1,16 @@
 # Module 0 Quick Reference: Foundations
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## A/B Testing vs Bandits
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Reject null hypothesis if |z| > z_α/2 (e.g., 1.96 for α=0.05).
+
+</div>
 
 | Aspect | A/B Testing | Multi-Armed Bandits |
 |--------|-------------|---------------------|
@@ -34,6 +44,13 @@ where:
 - z_β: critical value for power 1-β (0.84 for 80% power)
 - p̄ = (p_A + p_B) / 2
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 **Example:** Detect 0.05 → 0.08 conversion rate (60% relative lift):
 ```
 n = 2(1.96 + 0.84)² · 0.065(0.935) / (0.03)²
@@ -51,6 +68,13 @@ Reject null hypothesis if |z| > z_α/2 (e.g., 1.96 for α=0.05).
 ---
 
 ## Explore-Exploit Tradeoff
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ### Key Definitions
 
@@ -210,6 +234,12 @@ START: Do you need to choose between options?
 ## Quick Code Snippets
 
 ### Calculate A/B Test Sample Size
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.stats import norm
 import numpy as np
@@ -227,7 +257,15 @@ n = ab_sample_size(0.05, 0.08)
 print(f"Need {n} per variant, {2*n} total")
 ```
 
+</div>
+
 ### Calculate Cumulative Regret
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def cumulative_regret(arm_means, choices):
     """Regret for a sequence of arm choices."""
@@ -243,7 +281,15 @@ regret = cumulative_regret(arm_means, choices)
 print(f"Total regret: {regret[-1]:.3f}")
 ```
 
+</div>
+
 ### Simple Epsilon-Greedy
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def epsilon_greedy(Q, epsilon=0.1):
     """Choose arm using epsilon-greedy policy."""
@@ -258,9 +304,18 @@ arm = epsilon_greedy(Q, epsilon=0.1)
 print(f"Chose arm {arm}")
 ```
 
+</div>
+
 ---
 
 ## Resources for Going Deeper
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Textbooks:**
 - *Bandit Algorithms* by Lattimore & Szepesvári (definitive reference)
@@ -285,3 +340,49 @@ print(f"Chose arm {arm}")
 4. **Bookmark this cheatsheet** — you'll reference it throughout the course
 
 **Ready to build?** → Start with `notebooks/01_ab_test_simulation.ipynb`
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary tradeoff this approach makes compared to simpler alternatives?
+
+**Practice Question 2:** Under what conditions would this approach fail or underperform?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ab_testing_limits.md">
+  <div class="link-card-title">01 Ab Testing Limits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ab_testing_limits.md">
+  <div class="link-card-title">01 Ab Testing Limits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_explore_exploit_tradeoff.md">
+  <div class="link-card-title">02 Explore Exploit Tradeoff</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_explore_exploit_tradeoff.md">
+  <div class="link-card-title">02 Explore Exploit Tradeoff — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_decision_theory_basics.md">
+  <div class="link-card-title">03 Decision Theory Basics</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_decision_theory_basics.md">
+  <div class="link-card-title">03 Decision Theory Basics — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

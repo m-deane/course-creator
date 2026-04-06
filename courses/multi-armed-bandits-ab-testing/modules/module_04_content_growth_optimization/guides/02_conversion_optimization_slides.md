@@ -27,11 +27,19 @@ Why waste traffic on inferior landing pages when you could tilt toward winners *
 > Conversion optimization is the **perfect** use case for Bayesian bandits: binary outcomes, unknown rates, high opportunity cost.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## A/B Test vs Thompson Sampling
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph AB["A/B Test (4 weeks)"]
         A1["Week 1: 50/50"] --> A2["Week 2: 50/50"]
@@ -45,14 +53,18 @@ flowchart LR
         T3 --> T4["Week 4: 5/95"]
         T4 --> TC["Converged early"]
     end
-
-    style AB fill:#f66,color:#fff
-    style TS fill:#6f6,color:#000
 ```
 
 **Result:** Thompson Sampling saves ~75 conversions over 10,000 visitors.
 
 <!-- Speaker notes: The diagram on A/B Test vs Thompson Sampling illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Why Bandits Win: Posterior Evolution
@@ -68,6 +80,13 @@ Variant B:    Beta(1,1)      Beta(7, 93)     Beta(31, 469)    Beta(121, 1879)
 > Wide posteriors = more exploration. Tight posteriors = automatic exploitation.
 
 <!-- Speaker notes: This code example for Why Bandits Win: Posterior Evolution is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -87,11 +106,19 @@ For each visitor $t$:
 **Regret:** $E[\text{Regret}_T] = O(K \log T)$ vs A/B test: $\Theta(T)$
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Thompson Sampling Mechanics
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     V["Visitor arrives"] --> S["Sample from each Beta posterior"]
     S --> Pick["Pick variant with highest sample"]
@@ -102,16 +129,18 @@ flowchart TD
     Alpha --> Next["Next visitor"]
     Beta --> Next
     Next --> V
-
-    style Conv fill:#fa0,color:#000
-    style Alpha fill:#6f6,color:#000
-    style Beta fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Thompson Sampling Mechanics illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
 ---
 
 ## Code: Conversion Bandit
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -128,11 +157,19 @@ class ConversionBandit:
         return np.argmax(samples)
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Conversion Bandit (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def update(self, variant, converted):
@@ -146,6 +183,8 @@ class ConversionBandit:
         """Current conversion rate estimates"""
         return self.alpha / (self.alpha + self.beta)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -178,6 +217,7 @@ Variant 3:  274 visitors, 4.7% conv (true: 5.0%)
 ## Commodity Trading Applications
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph App1["Research Report Formats"]
         R1["PDF with charts"]
@@ -200,10 +240,6 @@ flowchart TD
     App1 --> Reward1["Reward: trade within 24h"]
     App2 --> Reward2["Reward: 'actionable' rating"]
     App3 --> Reward3["Reward: open rate × read ratio"]
-
-    style Reward1 fill:#6f6,color:#000
-    style Reward2 fill:#6f6,color:#000
-    style Reward3 fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Commodity Trading Applications illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -303,6 +339,7 @@ Confirmed → First purchase (2 onboarding flows, bandit #3)
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CO["Conversion Optimization"] --> TS_co["Thompson Sampling"]
     CO --> Beta_co["Beta-Bernoulli Model"]
@@ -317,9 +354,6 @@ flowchart TD
     Adapt --> Regret["O(K log T) regret"]
     Learn --> Regret
     Regret --> Win["Beats A/B test by ~20%"]
-
-    style CO fill:#36f,color:#fff
-    style Win fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

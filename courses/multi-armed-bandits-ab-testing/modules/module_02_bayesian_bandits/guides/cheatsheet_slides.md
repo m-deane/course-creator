@@ -17,6 +17,12 @@ math: mathjax
 
 ## Thompson Sampling: Beta-Bernoulli
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Initialize
 alpha = np.ones(K)  # Successes + 1
@@ -33,10 +39,25 @@ else:
     beta[arm] += 1
 ```
 
+</div>
+
 <!-- Speaker notes: This code example for Thompson Sampling: Beta-Bernoulli is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Thompson Sampling: Gaussian
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Initialize
@@ -54,7 +75,16 @@ mu[arm] = (mu[arm]/sigma[arm]**2 + reward/sigma_data**2) / tau_post
 sigma[arm] = np.sqrt(1 / tau_post)
 ```
 
+</div>
+
 <!-- Speaker notes: This code example for Thompson Sampling: Gaussian is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Conjugate Prior Table
@@ -66,6 +96,13 @@ sigma[arm] = np.sqrt(1 / tau_post)
 | Poisson($\lambda$) | $\lambda > 0$ | Gamma($\alpha, \beta$) | Gamma($\alpha + \sum x, \beta + n$) |
 
 <!-- Speaker notes: This comparison table on Conjugate Prior Table is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Posterior Update Formulas
@@ -79,11 +116,19 @@ Mean: $\alpha/(\alpha + \beta)$, Variance: $\alpha\beta / [(\alpha+\beta)^2(\alp
 $$\tau_1 = \tau_0 + n\tau, \quad \mu_1 = \frac{\tau_0\mu_0 + n\tau\bar{x}}{\tau_1}, \quad \sigma_1^2 = 1/\tau_1$$
 
 <!-- Speaker notes: The mathematical treatment of Posterior Update Formulas formalizes what we discussed intuitively. Walk through each variable and equation, relating them back to the commodity trading context. Ensure the audience follows the notation before moving on. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Thompson vs UCB Quick Reference
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph TS["Thompson Sampling"]
         T1["Stochastic selection"]
@@ -140,6 +185,7 @@ alpha, beta = 6, 4  # Beta(6,4)
 ## Non-Stationary Adaptations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     NS["Non-Stationary Environment"] --> Disc["Exponential Discount"]
     NS --> Slide["Sliding Window"]
@@ -224,6 +270,7 @@ follow = np.argmax(signals)
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M2["Module 2: Bayesian Bandits"] --> TS_m["Thompson Sampling"]
     M2 --> PU["Posterior Updating"]
@@ -240,9 +287,6 @@ flowchart TD
     Commodity --> Port_m["Portfolio allocation"]
     Commodity --> Signal["Signal selection"]
     Commodity --> Regime["Regime adaptation"]
-
-    style M2 fill:#36f,color:#fff
-    style Practice fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

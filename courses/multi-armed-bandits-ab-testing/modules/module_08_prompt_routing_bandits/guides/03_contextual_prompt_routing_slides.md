@@ -23,11 +23,19 @@ One prompt cannot serve all requests. Contextual bandits route based on **reques
 > Contextual: "Prompt B is best for **energy extraction when data is available**; Prompt D is best for **agriculture analysis when data is sparse**."
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Why One Prompt Fails
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1["'Latest crude inventories?'<br/>extraction + energy + data-heavy"] --> Generic["Generic Prompt"]
     Q2["'Corn supply-demand balance?'<br/>analysis + agriculture + synthesis"] --> Generic
@@ -35,14 +43,18 @@ flowchart TD
     Q4["'Three copper scenarios?'<br/>scenario + metals + probabilistic"] --> Generic
 
     Generic --> Result["Mediocre at everything<br/>Excellent at nothing"]
-
-    style Generic fill:#f66,color:#fff
-    style Result fill:#f66,color:#fff
 ```
 
 > The same task type (extraction) may need different prompts for different sectors.
 
 <!-- Speaker notes: The diagram on Why One Prompt Fails illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Five Context Features
@@ -56,11 +68,19 @@ flowchart TD
 | **Urgency** | high, medium, low | Trading hours need fast prompts |
 
 <!-- Speaker notes: This comparison table on Five Context Features is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Feature Extraction Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Query["User Query"] --> TT["Task Type<br/>Keyword classifier"]
     Query --> CS["Commodity Sector<br/>Keyword matching"]
@@ -70,12 +90,16 @@ flowchart LR
 
     TT & CS & DA & UP & UR --> Vec["Context Vector<br/>[1,0,0,0,0, 1,0,0,0, 1.0, 0,1,0, 0.5, 1]"]
     Vec --> LinUCB["LinUCB Selection"]
-
-    style Vec fill:#36f,color:#fff
-    style LinUCB fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Feature Extraction Pipeline illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## LinUCB for Prompt Routing
@@ -97,6 +121,12 @@ $$A_p \leftarrow A_p + x x^T, \quad b_p \leftarrow b_p + r \cdot x$$
 
 ## Code: ContextualPromptRouter
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 class ContextualPromptRouter:
     def __init__(self, num_prompts, context_dim, alpha=1.0):
@@ -105,11 +135,19 @@ class ContextualPromptRouter:
         self.alpha = alpha
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: ContextualPromptRouter (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def select_prompt(self, context):
@@ -126,6 +164,8 @@ class ContextualPromptRouter:
         self.A[prompt_idx] += np.outer(context, context)
         self.b[prompt_idx] += reward * context
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -207,6 +247,7 @@ After 1000 requests:
 ## Connection to Module 3
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph M3["Module 3: Commodity Trading"]
         Arms3["Arms = commodities<br/>(WTI, corn, gold)"]
@@ -220,9 +261,6 @@ flowchart LR
     end
 
     M3 --- |"Same LinUCB math<br/>Different application"| M8
-
-    style M3 fill:#36f,color:#fff
-    style M8 fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Connection to Module 3 illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -231,6 +269,7 @@ flowchart LR
 ## Newsroom Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Story["New Story Arrives"] --> Editor{Editor considers...}
 
@@ -240,9 +279,6 @@ flowchart TD
     Editor -->|"Audience?"| Audience["General public?<br/>Expert readers?"]
 
     Type & Topic & Sources & Audience --> Assign["Assign Best Reporter"]
-
-    style Editor fill:#36f,color:#fff
-    style Assign fill:#6f6,color:#000
 ```
 
 > A contextual prompt router is an automated editor assigning the right reporter.
@@ -296,6 +332,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CPR["Contextual Prompt Routing"] --> Features["5 Context Features"]
     CPR --> LinUCB_v["LinUCB Algorithm"]
@@ -306,9 +343,6 @@ flowchart TD
     Learning --> |"Energy+extraction -> Evidence-Only<br/>Ag+analysis -> Quantitative"| Optimal["Context-Optimal Routing"]
 
     Vector & Select & Optimal --> Router["Production Contextual Router"]
-
-    style CPR fill:#36f,color:#fff
-    style Router fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -1,12 +1,29 @@
 # Logging and Monitoring
 
+> **Reading time:** ~15 min | **Module:** 07 — Production Systems | **Prerequisites:** Module 6
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Production bandit systems require comprehensive logging of every decision (arm, context, reward, metadata) and real-time monitoring of key metrics (regret estimates, arm selection distribution, reward
+
+</div>
 
 Production bandit systems require comprehensive logging of every decision (arm, context, reward, metadata) and real-time monitoring of key metrics (regret estimates, arm selection distribution, reward trends) to detect failures before they cause significant losses.
 
 > 💡 **Key Insight:** The difference between a research notebook and a production system is observability. When your bandit starts losing money, you need to answer: Which arm is underperforming? Did the context features change? Is the policy stuck on one arm? Did we violate position limits? Without structured logging and monitoring, you're flying blind.
 
 ## Visual Explanation
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌───────────────────────────────────────────────────────────────────┐
@@ -82,6 +99,13 @@ Production bandit systems require comprehensive logging of every decision (arm, 
 
 ## Formal Definition
 
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
+
 **Logging Requirements:**
 
 For each decision at time $t$, log the tuple:
@@ -131,6 +155,12 @@ $$L_t \leftarrow L_t \cup (r_t, t_{observe})$$
 The key is **actionable alerts**. Don't just track 50 metrics — identify the 5 failure modes that matter and set clear thresholds.
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import json
@@ -222,7 +252,15 @@ class BanditMonitor:
         return -np.sum(probs * np.log(probs + 1e-10))
 ```
 
+</div>
+
 **Commodity Application:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Weekly commodity allocation with logging
 logger = BanditLogger("commodity_decisions.jsonl")
@@ -267,6 +305,8 @@ for week in range(52):
 print(monitor.get_summary())
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **Pitfall 1: Logging only successes**
@@ -290,6 +330,13 @@ Setting thresholds too sensitive creates noise. Too loose and you miss real prob
 **Solution:** Always log baseline performance alongside bandit performance. Monitor the difference.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - Module 0: Regret definitions and cumulative regret calculation
@@ -319,11 +366,55 @@ Setting thresholds too sensitive creates noise. Too loose and you miss real prob
    What's happening? Is this necessarily bad? What would you investigate next?
 
 4. **Code Review:** What's missing from this logging approach?
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    def make_decision(context):
        arm = policy.select(context)
        print(f"Selected: {arm}")
        return arm
    ```
 
+</div>
+
    Rewrite it with proper structured logging that would support debugging 6 months later.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_bandit_system_architecture.md">
+  <div class="link-card-title">01 Bandit System Architecture</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_bandit_system_architecture.md">
+  <div class="link-card-title">01 Bandit System Architecture — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_offline_evaluation.md">
+  <div class="link-card-title">03 Offline Evaluation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_offline_evaluation.md">
+  <div class="link-card-title">03 Offline Evaluation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

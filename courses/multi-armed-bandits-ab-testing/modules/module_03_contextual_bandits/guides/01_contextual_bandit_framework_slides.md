@@ -26,11 +26,19 @@ A contextual bandit observes **features about the current situation** (context) 
 > Context makes decisions **situational**.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Standard vs Contextual
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Standard["Standard Bandit"]
         S1["Choose Arm"] --> S2["Observe Reward"] --> S3["Update"]
@@ -47,11 +55,19 @@ flowchart LR
 Context vector: $x_t = [\text{volatility}, \text{term\_structure}, \text{seasonality}]$
 
 <!-- Speaker notes: The diagram on Standard vs Contextual illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Context-to-Action Mapping
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Context["Context Features"]
         F1["Vol=Low, Contango"]
@@ -71,6 +87,13 @@ flowchart LR
 The bandit learns **which allocation works in which state**.
 
 <!-- Speaker notes: The diagram on Context-to-Action Mapping illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -89,6 +112,13 @@ $$\text{Regret}(T) = \sum_{t=1}^{T} [r_t^* - r_t]$$
 where $r_t^* = \max_a E[r \mid x_t, a]$ is the best possible reward given context $x_t$.
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Intuitive Explanation
@@ -103,6 +133,12 @@ where $r_t^* = \max_a E[r \mid x_t, a]$ is the best possible reward given contex
 ---
 
 ## Code: Simple Contextual Bandit
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -119,11 +155,19 @@ class ContextualBandit:
         return np.mean(self.rewards[arm])  # Simplified
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Simple Contextual Bandit (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def choose_arm(self, context):
@@ -135,6 +179,8 @@ class ContextualBandit:
         self.contexts[arm].append(context)
         self.rewards[arm].append(reward)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -162,11 +208,10 @@ class ContextualBandit:
 ## Context Leakage
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Good["Good: Yesterday's VIX, current term spread"] --> OK["Observable before decision"]
     Bad["Bad: Tomorrow's inventory report"] --> Leak["Future information = LEAKAGE"]
-    style Leak fill:#f66,color:#fff
-    style OK fill:#6f6,color:#000
 ```
 
 > **Rule:** Only use lagged or contemporaneous data, never future data.
@@ -204,6 +249,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CB["Contextual Bandits"] --> Obs["Observe context features"]
     CB --> Learn["Learn context-to-arm mapping"]
@@ -218,9 +264,6 @@ flowchart TD
 
     Adapt --> Better["Better than fixed allocation"]
     Adapt --> Regime["Regime-aware trading"]
-
-    style CB fill:#36f,color:#fff
-    style Better fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

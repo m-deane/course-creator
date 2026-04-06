@@ -24,11 +24,19 @@ Good context features are the difference between a bandit that learns useful pat
 **Sweet spot:** 3-7 features capturing core drivers of regime-dependent performance.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Feature Selection Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Good["Good Features"]
         G1["Predictive: different arms optimal in different regions"]
@@ -42,11 +50,16 @@ flowchart TD
         B3["Noisy/erratic: more noise than signal"]
         B4["Redundant: duplicates existing features"]
     end
-    style Good fill:#6f6,color:#000
-    style Bad fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Feature Selection Framework illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Commodity Context Hierarchy
@@ -58,6 +71,13 @@ flowchart TD
 | **Tier 3** (Specific) | Weather (ag), production (energy), PMI (metals) | Domain-specific |
 
 <!-- Speaker notes: This comparison table on Commodity Context Hierarchy is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Five Properties of Good Features
@@ -69,9 +89,22 @@ flowchart TD
 5. **Interpretable:** You can explain why it matters
 
 <!-- Speaker notes: Cover Five Properties of Good Features at a steady pace. Highlight the key points and connect them to the broader course themes. Check for audience questions before moving to the next slide. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Recipe 1: Volatility Regime
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_volatility_regime(prices, window=20):
@@ -81,6 +114,8 @@ def compute_volatility_regime(prices, window=20):
     return vol_zscore
 ```
 
+</div>
+
 > **Why:** Defensive commodities (gold) perform better in high-vol; growth commodities (industrial metals) prefer low-vol.
 
 <!-- Speaker notes: This code example for Recipe 1: Volatility Regime is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
@@ -88,11 +123,19 @@ def compute_volatility_regime(prices, window=20):
 
 ## Recipe 2: Term Structure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def compute_term_structure(front_price, back_price):
     term_spread = (back_price - front_price) / front_price
     return term_spread
 ```
+
+</div>
 
 > **Why:** Contango = oversupply (bad). Backwardation = shortage (good).
 
@@ -175,13 +218,11 @@ class CommodityContextFeatures:
 Each additional feature:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Add["Add Feature"] --> Cost1["Increases exploration cost"]
     Add --> Cost2["Raises overfitting risk"]
     Add --> Cost3["Slows computation O(d^3)"]
-    style Cost1 fill:#f66,color:#fff
-    style Cost2 fill:#f66,color:#fff
-    style Cost3 fill:#f66,color:#fff
 ```
 
 **Process:** Start minimal, add one at a time, measure impact.
@@ -247,6 +288,7 @@ def diagnose_features(features, rewards, arm):
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FE["Feature Engineering"] --> Tier1["Tier 1: Vol + Term Structure"]
     FE --> Tier2["Tier 2: Season + Inventory + Macro"]
@@ -262,9 +304,6 @@ flowchart TD
     Diag --> D1["Check feature-reward correlation"]
     Diag --> D2["Ablation tests"]
     Diag --> D3["Examine model weights"]
-
-    style FE fill:#36f,color:#fff
-    style Tier1 fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

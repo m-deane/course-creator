@@ -18,6 +18,7 @@ math: mathjax
 ## 6-Step Accumulator Bandit Playbook
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S1["1. Core (80%)<br/>Equal-weight"] --> S2["2. Sleeve (20%)<br/>Thompson Sampling"]
     S2 --> S3["3. Arms (5-10)<br/>Commodities/sectors"]
@@ -25,17 +26,27 @@ flowchart LR
     S4 --> S5["5. Score<br/>Risk-adjusted reward"]
     S5 --> S6["6. Guardrails<br/>Position + speed limits"]
     S6 --> S4
-
-    style S1 fill:#36f,color:#fff
-    style S6 fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on 6-Step Accumulator Bandit Playbook illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Two-Wallet Framework
 
 $$w_{\text{total}}(t) = 0.8 \cdot w_{\text{core}} + 0.2 \cdot w_{\text{bandit}}(t)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class TwoWalletBandit:
@@ -48,7 +59,16 @@ class TwoWalletBandit:
                 self.bandit_pct * self.bandit.get_allocation())
 ```
 
+</div>
+
 <!-- Speaker notes: This slide connects theory to implementation for Two-Wallet Framework. Start with the mathematical formulation, then show how each term maps to a line of code. This bridge between theory and practice is one of the most valuable aspects of the course. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Reward Function Comparison
@@ -65,11 +85,19 @@ class TwoWalletBandit:
 > **Your reward IS your strategy.**
 
 <!-- Speaker notes: This comparison table on Reward Function Comparison is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Guardrail Parameters
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Conservative["Conservative"]
         C1["Max: 30%, Min: 10%"]
@@ -86,13 +114,16 @@ flowchart TD
         A2["Speed: 25%, Core: 70%"]
         A3["VIX threshold: 35"]
     end
-
-    style Conservative fill:#6f6,color:#000
-    style Moderate fill:#fa0,color:#000
-    style Aggressive fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Guardrail Parameters illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Common Arms
@@ -101,11 +132,19 @@ flowchart TD
 <div>
 
 ### Broad Sectors (5 arms)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 arms = ['Energy', 'Metals',
         'Grains', 'Softs',
         'Livestock']
 ```
+
+</div>
 
 ### Strategy Factors
 ```python
@@ -153,6 +192,7 @@ sentiment = sp500.rolling(5).mean() - (vix - 20) / 100
 ## Decision Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Goal?"} -->|Steady accumulation| R1["Stability-weighted reward"]
     Q1 -->|Max returns| R2["Risk-adjusted reward"]
@@ -166,9 +206,6 @@ flowchart TD
     Q3 -->|Conservative| G1["85/15, tight guardrails"]
     Q3 -->|Moderate| G2["80/20, moderate"]
     Q3 -->|Aggressive| G3["70/30, loose"]
-
-    style Q1 fill:#36f,color:#fff
-    style G1 fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Decision Flowchart illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -205,6 +242,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M5["Module 5: Commodity Trading"] --> TW_v["Two-Wallet Framework"]
     M5 --> RD_v["Reward Design"]
@@ -217,9 +255,6 @@ flowchart TD
     RA_v --> |"Context-dependent"| Adaptive["Regime adaptation"]
 
     Stable & Smart & Safe_v & Adaptive --> Production["Production-Ready Allocator"]
-
-    style M5 fill:#36f,color:#fff
-    style Production fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

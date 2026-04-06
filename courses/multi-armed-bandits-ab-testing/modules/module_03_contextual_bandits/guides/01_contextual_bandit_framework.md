@@ -1,6 +1,16 @@
 # Contextual Bandit Framework
 
+> **Reading time:** ~15 min | **Module:** 03 — Contextual Bandits | **Prerequisites:** Module 2
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A contextual bandit observes features about the current situation (context) before choosing an action, enabling adaptive decisions that depend on circumstances. Unlike standard bandits that learn "arm
+
+</div>
 
 A contextual bandit observes features about the current situation (context) before choosing an action, enabling adaptive decisions that depend on circumstances. Unlike standard bandits that learn "arm 2 is best on average," contextual bandits learn "arm 2 is best when context features indicate high volatility and contango."
 
@@ -9,9 +19,23 @@ A contextual bandit observes features about the current situation (context) befo
 **Standard bandit:** Fixed arm preferences learned from experience
 **Contextual bandit:** Context-dependent preferences learned as mappings from features to rewards
 
+<div class="callout-insight">
+
+**Insight:** Contextual bandits bridge the gap between simple A/B tests and full reinforcement learning. They personalize decisions based on observable features without needing to model state transitions.
+
+</div>
+
+
 The transformation is profound. A commodity allocator using contextual bandits doesn't just learn "energy beats metals on average." It learns "energy wins in low-volatility contango, metals win in high-volatility backwardation." The context vector makes decisions situational.
 
 ## Visual Explanation
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 ```
 STANDARD BANDIT:
@@ -84,6 +108,12 @@ The context vector encodes the current market state. The bandit learns which all
 
 ## Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -125,6 +155,8 @@ context = np.array([0.15, 0.02])  # [VIX, term_spread]
 arm = bandit.choose_arm(context)
 ```
 
+</div>
+
 ## Common Pitfalls
 
 ### 1. **Using irrelevant features**
@@ -153,6 +185,13 @@ arm = bandit.choose_arm(context)
 - **Fix:** Use UCB or Thompson Sampling with contextual models (LinUCB, Thompson with regression)
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 ### Builds On
 - **Module 1 (Bandit Algorithms):** UCB and Thompson Sampling extend to contextual setting
@@ -189,6 +228,12 @@ arm = bandit.choose_arm(context)
 **Task:** Modify the code above to use ridge regression for prediction instead of simple averaging.
 
 **Hint:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.linear_model import Ridge
 
@@ -202,7 +247,45 @@ def predict(self, context, arm):
     return model.predict([context])[0]
 ```
 
+</div>
+
 ### 4. Regret Analysis
 **Question:** In a contextual bandit with 3 arms and 2-dimensional context, you always choose the greedy arm (no exploration). Why might this be worse than a standard bandit with proper exploration?
 
 **Answer:** Without exploration, you never learn about alternative arms in new context regions. You might permanently commit to suboptimal arms in certain contexts because you never tried the alternatives. Standard bandits with UCB/Thompson at least explore all arms eventually.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_linucb_algorithm.md">
+  <div class="link-card-title">02 Linucb Algorithm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_linucb_algorithm.md">
+  <div class="link-card-title">02 Linucb Algorithm — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_feature_engineering_bandits.md">
+  <div class="link-card-title">03 Feature Engineering Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_feature_engineering_bandits.md">
+  <div class="link-card-title">03 Feature Engineering Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

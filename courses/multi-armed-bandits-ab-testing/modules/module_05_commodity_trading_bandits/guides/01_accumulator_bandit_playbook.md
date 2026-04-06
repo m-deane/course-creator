@@ -1,6 +1,16 @@
 # Accumulator Bandit Playbook
 
+> **Reading time:** ~16 min | **Module:** 05 — Commodity Trading Bandits | **Prerequisites:** Module 4
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A practical 6-step system for applying multi-armed bandits to commodity portfolio allocation. Separates stable core holdings from an adaptive "bandit sleeve" that tilts toward better-performing assets
+
+</div>
 
 A practical 6-step system for applying multi-armed bandits to commodity portfolio allocation. Separates stable core holdings from an adaptive "bandit sleeve" that tilts toward better-performing assets while maintaining safety guardrails.
 
@@ -13,6 +23,13 @@ The two-wallet framework:
 This prevents the bandit from becoming a dangerous dopamine machine while still capturing the benefits of adaptive allocation.
 
 ## Visual Explanation
+
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -54,6 +71,13 @@ Weekly process:
 ```
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 **Two-Wallet Bandit Portfolio:**
 
@@ -99,6 +123,12 @@ The core provides stability and ensures you're always participating in the marke
 The core keeps customers happy. The specials let you adapt and innovate.
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -199,6 +229,8 @@ if __name__ == "__main__":
     for commodity, weight in zip(commodities, weights):
         print(f"  {commodity}: {weight:.2%}")
 ```
+
+</div>
 
 ## The 6-Step Accumulator Bandit Playbook
 
@@ -321,6 +353,13 @@ See [Guardrails Guide](03_guardrails_and_safety.md) for implementations.
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
+
 ### Builds On
 - **Module 1**: Thompson Sampling (the core algorithm)
 - **Module 2**: Regret analysis (why adaptive allocation helps)
@@ -375,3 +414,39 @@ Design a reward function that matches this goal. Write it in Python.
 **Next Steps:**
 - Read [Reward Design for Commodities](02_reward_design_commodities.md) to master the most critical decision
 - Or jump to [Two-Wallet Framework Notebook](../notebooks/01_two_wallet_framework.ipynb) to build it yourself
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_reward_design_commodities.md">
+  <div class="link-card-title">02 Reward Design Commodities — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_guardrails_and_safety.md">
+  <div class="link-card-title">03 Guardrails And Safety — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./04_regime_aware_allocation.md">
+  <div class="link-card-title">04 Regime Aware Allocation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./04_regime_aware_allocation.md">
+  <div class="link-card-title">04 Regime Aware Allocation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

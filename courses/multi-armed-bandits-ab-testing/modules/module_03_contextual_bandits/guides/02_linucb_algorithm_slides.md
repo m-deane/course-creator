@@ -26,11 +26,19 @@ LinUCB extends UCB1 to contextual settings:
 $$\text{UCB}_a(x_t) = x_t^T\hat{\theta}_a + \alpha \cdot \sigma_a(x_t)$$
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## How LinUCB Works
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Obs["1. Observe context x_t"] --> Comp["2. For each arm a, compute UCB"]
     Comp --> Pred["Predicted reward: x^T * theta_a"]
@@ -44,6 +52,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: The diagram on How LinUCB Works illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Confidence Ellipsoid
@@ -65,6 +80,13 @@ Wider uncertainty --> larger exploration bonus --> more exploration
 > Contexts far from previous observations get wider confidence intervals.
 
 <!-- Speaker notes: This code example for Confidence Ellipsoid is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -84,6 +106,13 @@ Choose $a_t = \arg\max_a \text{UCB}_a$, then update:
 $$A_{a_t} \leftarrow A_{a_t} + x_t x_t^T, \quad b_{a_t} \leftarrow b_{a_t} + r_t x_t$$
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Why This Works
@@ -104,6 +133,7 @@ Larger $\sigma$ = less data in that region = higher exploration bonus.
 ## Intuitive Explanation: GPS Learning Traffic
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant GPS as LinUCB
     participant R1 as Route A
@@ -126,6 +156,12 @@ sequenceDiagram
 
 ## Code: Core Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -138,11 +174,19 @@ class LinUCB:
         self.b = [np.zeros(context_dim) for _ in range(n_arms)]
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Core Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def choose_arm(self, context):
@@ -159,6 +203,8 @@ class LinUCB:
         self.A[arm] += np.outer(context, context)
         self.b[arm] += reward * context
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -212,11 +258,10 @@ theta = np.linalg.solve(A, b)
 > If $E[r \mid x, a]$ is highly nonlinear, LinUCB underperforms.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Linear["Linear relationship?"] -->|Yes| LinUCB_use["Use LinUCB"]
     Linear -->|No| Alternatives["Kernel LinUCB, Neural bandits, Tree-based"]
-    style LinUCB_use fill:#6f6,color:#000
-    style Alternatives fill:#fa0,color:#000
 ```
 
 <!-- Speaker notes: Walk through Pitfall 4: Non-Linear Rewards carefully. Emphasize why this mistake is common and how to recognize it in practice. The commodity trading example makes it concrete -- ask if anyone has encountered this in their own work. -->
@@ -261,6 +306,7 @@ flowchart LR
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     LinUCB_v["LinUCB"] --> Ridge["Ridge regression per arm"]
     LinUCB_v --> Conf["Confidence bounds for exploration"]
@@ -272,9 +318,6 @@ flowchart TD
 
     LinUCB_v --> Regret_v["Regret: O(d * sqrt(T log T))"]
     LinUCB_v --> Params["Parameters: alpha (exploration), lambda (reg)"]
-
-    style LinUCB_v fill:#36f,color:#fff
-    style Regret_v fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

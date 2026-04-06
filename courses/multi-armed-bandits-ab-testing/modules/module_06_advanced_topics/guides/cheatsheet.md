@@ -1,6 +1,16 @@
 # Module 6 Cheatsheet: Advanced Topics in Bandits
 
+> **Reading time:** ~20 min | **Module:** 06 — Advanced Topics | **Prerequisites:** Module 5
+
+
 ## Algorithm Selection Decision Tree
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers the core concepts of module 6 cheatsheet: advanced topics in bandits, with worked examples and practical implementation guidance.
+
+</div>
 
 ```
 START: Is your environment non-standard?
@@ -42,6 +52,13 @@ START: Is your environment non-standard?
 
 ## Non-Stationary Algorithm Comparison
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 | Algorithm | Best For | Hyperparameter | Adaptation Speed | Regret vs Static Best |
 |-----------|----------|----------------|------------------|----------------------|
 | **Discounted Thompson Sampling** | Gradual drift, smooth transitions | γ ∈ (0.9, 0.99) | Fast (exponential) | O(√T) |
@@ -55,6 +72,13 @@ START: Is your environment non-standard?
 - Use **change-point detection** when you can afford computational cost for active monitoring
 
 ## Change-Point Detection Methods
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 | Method | Detection Lag | False Alarm Rate | Computational Cost |
 |--------|---------------|------------------|-------------------|
@@ -197,6 +221,12 @@ Practical:
 ### Is My Environment Non-Stationary?
 
 **Test 1: Split-Sample Comparison**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Split data in half
 first_half_mean = rewards[:T//2].mean(axis=0)
@@ -210,7 +240,15 @@ if p_value < 0.05:
     print("Non-stationary detected")
 ```
 
+</div>
+
 **Test 2: Rolling Mean Variance**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 rolling_means = pd.Series(rewards).rolling(50).mean()
 variance_of_rolling_means = rolling_means.var()
@@ -220,6 +258,8 @@ threshold = overall_variance / 10
 if variance_of_rolling_means > threshold:
     print("Non-stationary detected")
 ```
+
+</div>
 
 ### Is My Environment Adversarial?
 
@@ -237,6 +277,12 @@ else:
 ### Do I Have Restless Arms?
 
 **Test: Correlation Between Selection and Reward**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 for arm_i in arms:
     selected = (history['arm'] == arm_i).astype(int)
@@ -248,6 +294,8 @@ for arm_i in arms:
     if autocorr < -0.1:  # Negative autocorr suggests depletion
         print(f"Arm {arm_i} appears restless (decays when selected)")
 ```
+
+</div>
 
 ## Commodity-Specific Guidelines
 
@@ -280,6 +328,13 @@ for arm_i in arms:
 | Academic/research setting | Standard algorithms first | Establish baseline before complexity |
 
 ## Quick Reference: Algorithm Code Snippets
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 ### Discounted Thompson Sampling (3 lines)
 ```python
@@ -323,3 +378,49 @@ scores = means - lambda_penalty * staleness
 - **Change-Point:** Adams & MacKay (2007), "Bayesian Online Changepoint Detection"
 
 See `resources/additional_readings.md` for full references.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary tradeoff this approach makes compared to simpler alternatives?
+
+**Practice Question 2:** Under what conditions would this approach fail or underperform?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_non_stationary_bandits.md">
+  <div class="link-card-title">01 Non Stationary Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_non_stationary_bandits.md">
+  <div class="link-card-title">01 Non Stationary Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_restless_bandits.md">
+  <div class="link-card-title">02 Restless Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_restless_bandits.md">
+  <div class="link-card-title">02 Restless Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_adversarial_bandits.md">
+  <div class="link-card-title">03 Adversarial Bandits</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_adversarial_bandits.md">
+  <div class="link-card-title">03 Adversarial Bandits — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

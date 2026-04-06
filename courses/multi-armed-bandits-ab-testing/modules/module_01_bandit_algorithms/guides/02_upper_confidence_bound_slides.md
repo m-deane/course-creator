@@ -24,6 +24,13 @@ $$a_t = \arg\max_a \left[\hat{Q}(a) + c\sqrt{\frac{\ln t}{N(a)}}\right]$$
 > **Optimism in the face of uncertainty:** Always bet on arms that *could plausibly* be the best.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Visual: Confidence Bounds at t=100
@@ -39,11 +46,19 @@ Arm 4: mu=0.3, N=50     |==*==|                  UCB = 0.37
 - Arm 1 has many pulls -- tight confidence, no bonus needed
 
 <!-- Speaker notes: This code example for Visual: Confidence Bounds at t=100 is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## How UCB Evolves Over Time
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant UCB as UCB Algorithm
     participant A as Arm A (best)
@@ -65,6 +80,13 @@ sequenceDiagram
 ```
 
 <!-- Speaker notes: The diagram on How UCB Evolves Over Time illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Formal Definition
@@ -81,6 +103,13 @@ $$N(a_t) \leftarrow N(a_t) + 1$$
 $$\hat{Q}(a_t) \leftarrow \hat{Q}(a_t) + \frac{r_t - \hat{Q}(a_t)}{N(a_t)}$$
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## The UCB Bonus Term
@@ -135,11 +164,11 @@ For each commodity sector, estimate its potential:
 $$\text{Potential} = \text{historical avg return} + \text{uncertainty bonus}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     E["Energy: 100 trades, avg 0.5%, uncertainty +/-0.1%"] --> EP["Potential = 0.6%"]
     A["Agriculture: 10 trades, avg 0.4%, uncertainty +/-0.5%"] --> AP["Potential = 0.9%"]
     AP --> Pick["Pick Agriculture! Could plausibly be best"]
-    style Pick fill:#6f6,color:#000
 ```
 
 After many pulls of Agriculture, its uncertainty shrinks and true performance dominates.
@@ -162,6 +191,12 @@ After many pulls of Agriculture, its uncertainty shrinks and true performance do
 
 ## Code: Core Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -179,11 +214,19 @@ class UCB1:
             return self.t - 1  # Pull each arm once first
 ```
 
+</div>
+
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
 ---
 
 ## Code: Core Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
         ucb_values = self.q_estimates + self.c * np.sqrt(
@@ -196,6 +239,8 @@ class UCB1:
         n = self.action_counts[action]
         self.q_estimates[action] += (reward - self.q_estimates[action]) / n
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -276,11 +321,11 @@ ucb = q + c * np.sqrt(np.log(t) / counts)
 > If reward distributions change over time, UCB keeps trusting old estimates.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Old["Arm A was best (t=1-500)"] --> Change["Regime change!"]
     Change --> New["Arm B now best (t=500+)"]
     New --> Problem["UCB still pulls Arm A"]
-    style Problem fill:#f66,color:#fff
 ```
 
 **Fix:** Sliding window or discounted UCB:
@@ -360,6 +405,7 @@ q_new = (1 - alpha) * q_old + alpha * reward  # Exponential recency
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     UCB["UCB1 Algorithm"] --> Sel["Select: argmax Q + c*sqrt(ln(t)/N)"]
     Sel --> Mean["Estimated Mean Q"]
@@ -376,9 +422,6 @@ flowchart TD
     UCB --> Limits["Limitations"]
     Limits --> Bound["Requires bounded rewards"]
     Limits --> Stat["Assumes stationarity"]
-
-    style LR fill:#6f6,color:#000
-    style PF fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -19,6 +19,7 @@ math: mathjax
 ## Three Case Studies
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CS1["Case Study 1<br/>Research Bot That<br/>Stopped Hallucinating"]
     CS2["Case Study 2<br/>EIA Report Processor<br/>That Self-Improved"]
@@ -27,13 +28,16 @@ flowchart LR
     CS1 --> |"Hallucination rate<br/>35% -> 2%"| R1["Trust Restored"]
     CS2 --> |"Zero hours<br/>manual tuning"| R2["Self-Adapting"]
     CS3 --> |"Accuracy<br/>56% -> 63%"| R3["Commodity-Specific"]
-
-    style R1 fill:#6f6,color:#000
-    style R2 fill:#6f6,color:#000
-    style R3 fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Three Case Studies illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -59,11 +63,19 @@ professional analysis. Be confident and thorough.
 > **ALL hallucinated.** System didn't have the report. "Confident and thorough" trained guessing.
 
 <!-- Speaker notes: This code example for The Problem is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## The Bandit Setup
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Arms["5 Prompt Arms"]
         A1["Generic Analysis<br/>(the original)"]
@@ -81,12 +93,16 @@ flowchart TD
 
     Arms --> Reward
     Reward --> |"max(0, completion + penalties)"| Score["Composite Score"]
-
-    style HP fill:#f66,color:#fff
-    style Score fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on The Bandit Setup illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Results After 500 Queries
@@ -118,6 +134,13 @@ flowchart TD
 </div>
 
 <!-- Speaker notes: This two-column comparison for Results After 500 Queries highlights important trade-offs. Walk through both sides, noting when each approach is preferred. The contrast format helps students make informed decisions in their own work. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Key Lesson
@@ -139,6 +162,7 @@ flowchart TD
 Hedge fund extracting data from weekly EIA petroleum reports. One prompt for all sections:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Sections["EIA Report Sections"]
         Tables["Tables<br/>(inventory numbers)"]
@@ -150,8 +174,6 @@ flowchart TD
     OnePrompt["Single Extraction Prompt"] --> |"Good for tables"| Tables
     OnePrompt --> |"TERRIBLE for narratives"| Narrative
     OnePrompt --> |"Misses comparisons"| Historical
-
-    style OnePrompt fill:#f66,color:#fff
 ```
 
 **Manual cost:** 4 hours/week tweaking prompts after each release.
@@ -201,6 +223,7 @@ Same signal prompt for 12 commodities:
 ## The Bandit Learned Commodity Preferences
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Energy["Energy"]
         WTI["WTI -> Fundamental Signal<br/>65% selection, 68% accuracy"]
@@ -213,10 +236,6 @@ flowchart TD
         Gold["Gold -> Macro-Driven Signal<br/>58% selection, 65% accuracy"]
         Copper["Copper -> Macro-Driven Signal<br/>60% selection, 63% accuracy"]
     end
-
-    style Energy fill:#f66,color:#fff
-    style Ag fill:#6f6,color:#000
-    style Metals fill:#36f,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on The Bandit Learned Commodity Preferences illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -255,6 +274,7 @@ flowchart TD
 ## Delayed Rewards Work
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant S as Signal Generated
     participant P as Price Observed
@@ -331,6 +351,7 @@ sequenceDiagram
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CRA["Case Studies"] --> CS1_v["Research Bot"]
     CRA --> CS2_v["EIA Processor"]
@@ -341,9 +362,6 @@ flowchart TD
     CS3_v --> |"Accuracy<br/>56% -> 63%"| Smart["Commodity-Aware"]
 
     Anti & Auto & Smart --> Proven["Proven Production Patterns"]
-
-    style CRA fill:#36f,color:#fff
-    style Proven fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

@@ -24,11 +24,19 @@ Offline evaluation lets you test new bandit policies on **historical data** with
 **Solution:** Use inverse propensity scoring and doubly-robust estimation to correct for bias.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## The Offline Evaluation Problem
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Log["Historical Data<br/>(from policy pi_0)"] --> Naive["Naive: Average matching rewards"]
     Log --> IPS["IPS: Weight by pi_1/pi_0"]
@@ -39,14 +47,16 @@ flowchart TD
     IPS --> |"Unbiased, high variance"| OK["Correct but noisy"]
     DR --> |"Unbiased, lower variance"| Good["Best estimate"]
     Replay --> |"Unbiased, wastes data"| Conservative["Safe but limited"]
-
-    style Bad fill:#f66,color:#fff
-    style OK fill:#fa0,color:#000
-    style Good fill:#6f6,color:#000
-    style Conservative fill:#36f,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on The Offline Evaluation Problem illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Why Naive Evaluation Fails
@@ -63,6 +73,13 @@ New policy $\pi_1$ prefers OIL. But we only have **1 OIL sample**!
 > Averaging only matching decisions biases toward $\pi_0$'s preferences.
 
 <!-- Speaker notes: This comparison table on Why Naive Evaluation Fails is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Three Evaluation Methods
@@ -92,11 +109,19 @@ Use reward model as baseline, correct with IPS.
 </div>
 
 <!-- Speaker notes: The mathematical treatment of Three Evaluation Methods formalizes what we discussed intuitively. Walk through each variable and equation, relating them back to the commodity trading context. Ensure the audience follows the notation before moving on. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Method Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q{Which method?}
     Q -->|"Need unbiased estimate<br/>Have propensity scores"| IPS_m["IPS<br/>Unbiased, high variance"]
@@ -110,10 +135,6 @@ flowchart TD
     Replay_m --> Check2{"Enough matches?"}
     Check2 -->|"< 30 matches"| IPS_m
     Check2 -->|"> 30 matches"| Use_Replay["Use Replay"]
-
-    style Use_IPS fill:#6f6,color:#000
-    style DR_m fill:#6f6,color:#000
-    style Use_Replay fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Method Comparison illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -132,6 +153,12 @@ flowchart TD
 ---
 
 ## Code: IPS Estimator
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class OfflineEvaluator:
@@ -153,10 +180,18 @@ class OfflineEvaluator:
         return total / len(self.data)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Code: Replay and Doubly Robust
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     def replay_estimate(self, new_policy):
@@ -164,6 +199,8 @@ class OfflineEvaluator:
                     if new_policy.select_arm(r['context']) == r['action']]
         return np.mean(matching) if len(matching) >= 30 else np.nan
 ```
+
+</div>
 
 <!-- Speaker notes: Code continues on the next slide. This first part sets up the structure. -->
 
@@ -261,6 +298,7 @@ print(f"IPS: {ips_value:.4f}, DR: {dr_value:.4f}")
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OE["Offline Evaluation"] --> IPS_v["IPS: pi_1/pi_0 weighting"]
     OE --> DR_v["DR: Model + IPS correction"]
@@ -272,10 +310,6 @@ flowchart TD
 
     Correct --> |"Test before deploying"| Safe["Safe Policy Updates"]
     Safe --> |"Log propensities!"| Loop["Continuous Improvement Loop"]
-
-    style OE fill:#36f,color:#fff
-    style Safe fill:#6f6,color:#000
-    style Loop fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

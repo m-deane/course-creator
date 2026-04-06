@@ -18,6 +18,7 @@ math: mathjax
 ## Algorithm Selection Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Start{"Is environment non-standard?"}
     Start -->|No| Standard["Standard TS/UCB (Module 2)"]
@@ -30,15 +31,16 @@ flowchart TD
 
     What -->|"Unselected arms evolve"| Rest["Restless Bandit (λ penalty)"]
     What -->|"Adversarial rewards"| Adv["EXP3 (randomize)"]
-
-    style Standard fill:#6f6,color:#000
-    style DTS fill:#36f,color:#fff
-    style SWUCB fill:#36f,color:#fff
-    style Rest fill:#fa0,color:#000
-    style Adv fill:#f66,color:#fff
 ```
 
 <!-- Speaker notes: The diagram on Algorithm Selection Decision Tree illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 ## Algorithm Comparison
@@ -52,6 +54,13 @@ flowchart TD
 | EXP3 | Adversarial | $\gamma = \sqrt{K \ln K / T}$ | $O(\sqrt{TK\ln K})$ |
 
 <!-- Speaker notes: This comparison table on Algorithm Comparison is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Key Formulas
@@ -69,6 +78,13 @@ $$p_i = (1-\gamma)\frac{w_i}{\sum w_j} + \frac{\gamma}{K}, \quad w_i \leftarrow 
 $$\text{Score}_i = \hat{\mu}_i - \lambda \cdot (t - \text{last\_observed}_i)$$
 
 <!-- Speaker notes: The mathematical treatment of Key Formulas formalizes what we discussed intuitively. Walk through each variable and equation, relating them back to the commodity trading context. Ensure the audience follows the notation before moving on. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Hyperparameter Tuning
@@ -99,9 +115,22 @@ $$\lambda = \frac{\text{reward\_diff}}{\text{acceptable\_lag}}$$
 </div>
 
 <!-- Speaker notes: This comparison table on Hyperparameter Tuning is a key reference. Walk through each row, highlighting the most important distinctions. Students should understand when to use each option based on the criteria shown. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## 3-Line Code Snippets
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Discounted TS
@@ -109,6 +138,8 @@ self.alpha *= gamma; self.beta *= gamma
 self.alpha[arm] += reward; self.beta[arm] += (1-reward)
 arm = np.argmax([beta.rvs(a, b) for a, b in zip(self.alpha, self.beta)])
 ```
+
+</div>
 
 ```python
 # EXP3
@@ -142,6 +173,7 @@ arm = np.argmax(scores)
 ## Diagnostic Tests
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Is it non-stationary?"} --> |"Split-sample test<br/>Rolling mean variance"| A1["Compare first/second half means"]
     Q2{"Is it adversarial?"} --> |"Backtest UCB vs EXP3"| A2["If EXP3 wins → adversarial"]
@@ -150,10 +182,6 @@ flowchart TD
     A1 --> |"p < 0.05"| NS_yes["Non-stationary → use discounting"]
     A2 --> |"EXP3 < 90% UCB regret"| Adv_yes["Adversarial → use EXP3"]
     A3 --> |"Negative autocorr"| Rest_yes["Restless → add recency penalty"]
-
-    style NS_yes fill:#6f6,color:#000
-    style Adv_yes fill:#6f6,color:#000
-    style Rest_yes fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: The diagram on Diagnostic Tests illustrates the key relationships visually. Walk through the flow step by step, pointing out decision points and outcomes. Visual representations like this help students build mental models of the concepts. -->
@@ -188,6 +216,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M6["Module 6: Advanced Topics"] --> NS_m["Non-Stationary"]
     M6 --> Rest_m["Restless"]
@@ -200,9 +229,6 @@ flowchart TD
     Adapt_m --> Production_m["Production-Ready Systems"]
     Monitor_m --> Production_m
     Protect_m --> Production_m
-
-    style M6 fill:#36f,color:#fff
-    style Production_m fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

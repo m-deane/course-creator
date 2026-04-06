@@ -1,6 +1,16 @@
 # Posterior Updating with Conjugate Priors
 
+> **Reading time:** ~16 min | **Module:** 02 — Bayesian Bandits | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Posterior updating is how Bayesian methods learn from data: combine your prior belief with new evidence using Bayes' rule to produce a posterior belief. With conjugate priors, this update has a clo...
+
+</div>
 
 Posterior updating is how Bayesian methods learn from data: combine your prior belief with new evidence using Bayes' rule to produce a posterior belief. With conjugate priors, this update has a closed-form solution — no MCMC needed. For Thompson Sampling, conjugate priors make posterior updates instant and exact.
 
@@ -39,6 +49,13 @@ Posterior: Beta(2+3, 2+1) = Beta(5, 3)
 More peaked, shifted right
 (More confident, higher mean)
 
+<div class="callout-insight">
+
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+
+</div>
+
+
 After 100 observations: 58 successes, 42 failures
 Posterior: Beta(60, 44)
          |█|
@@ -52,6 +69,13 @@ Very peaked, tight around true value
 **Sequential updating:** Each observation updates the posterior, which becomes the prior for the next observation. Beta(2,2) → observe success → Beta(3,2) → observe failure → Beta(3,3) → ...
 
 ## Formal Definition
+
+<div class="callout-warning">
+
+**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
+
+</div>
+
 
 **Conjugate Prior:** A prior p(θ) is conjugate to likelihood p(D|θ) if the posterior p(θ|D) has the same functional form as the prior.
 
@@ -126,6 +150,12 @@ The strong prior acts like you've already seen 18 trades (10-1 + 10-1). Five new
 
 ### Beta-Bernoulli Update
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from scipy.stats import beta
@@ -156,7 +186,15 @@ class BetaBernoulli:
         return ax
 ```
 
+</div>
+
 ### Normal-Normal Update
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class NormalNormal:
@@ -178,6 +216,8 @@ class NormalNormal:
     def sample(self, n=1):
         return np.random.normal(self.mu, self.sigma, size=n)
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -212,6 +252,13 @@ class NormalNormal:
 **Commodity example:** A trading signal that worked in 2020 may fail in 2023. Discount old evidence or detect regime shifts.
 
 ## Connections
+
+<div class="callout-danger">
+
+**Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
+
+</div>
+
 
 **Builds on:**
 - Bayesian Commodity Forecasting: Same posterior updating framework
@@ -272,3 +319,39 @@ In the Bayesian Commodity Forecasting course, you learned to forecast prices usi
 - Difference: Bandits act to learn (exploration), forecasts passively predict
 
 **Extension:** Could you use commodity price forecasts as prior beliefs for a Thompson Sampling portfolio allocator? How would you convert price forecast uncertainty into reward distribution uncertainty?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_thompson_sampling.md">
+  <div class="link-card-title">01 Thompson Sampling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_thompson_sampling.md">
+  <div class="link-card-title">01 Thompson Sampling — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_thompson_vs_ucb.md">
+  <div class="link-card-title">03 Thompson Vs Ucb</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_thompson_vs_ucb.md">
+  <div class="link-card-title">03 Thompson Vs Ucb — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

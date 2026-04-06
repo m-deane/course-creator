@@ -22,6 +22,13 @@ Thompson Sampling maintains a **probability distribution** (belief) over each ar
 > Exploration and exploitation happen **automatically** through posterior-guided randomness -- no parameters to tune.
 
 <!-- Speaker notes: This opening summary sets the context for the entire deck. Read the key quote aloud and pause to let it sink in. The goal is to establish the core problem or concept before diving into details. -->
+
+<div class="callout-key">
+
+Bandits learn AND earn simultaneously -- the core advantage over traditional A/B testing.
+
+</div>
+
 ---
 
 > 💡 **Key Insight:** Instead of deterministically choosing (like UCB), Thompson Sampling asks:
@@ -29,6 +36,7 @@ Thompson Sampling maintains a **probability distribution** (belief) over each ar
 > "Given what I know, what **could** each arm's true reward be?"
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Beliefs["Maintain beliefs\n(posteriors)"] --> Sample["Sample one value\nfrom each posterior"]
     Sample --> Act["Pick arm with\nhighest sample"]
@@ -41,6 +49,13 @@ Wide beliefs = diverse samples = more exploration
 Tight beliefs = consistent samples = more exploitation
 
 <!-- Speaker notes: This is the single most important idea in the deck. Make sure the audience understands and remembers this insight. Consider asking the audience to restate it in their own words before proceeding. -->
+
+<div class="callout-insight">
+
+**Insight:** The exploration-exploitation tradeoff is not a fixed ratio -- it should adapt as uncertainty decreases over time.
+
+</div>
+
 ---
 
 ## Posterior Evolution Over Time
@@ -62,6 +77,13 @@ Beta(245,256) Beta(298,203) Beta(231,270)
 > Posteriors narrow. Samples concentrate. Exploration fades naturally.
 
 <!-- Speaker notes: This code example for Posterior Evolution Over Time is production-ready. Walk through the implementation, noting any important design patterns or potential modifications for different use cases. -->
+
+<div class="callout-warning">
+
+**Warning:** Non-stationary reward distributions violate bandit assumptions. Always implement change detection in production systems.
+
+</div>
+
 ---
 
 ## Formal Definition: Beta-Bernoulli
@@ -69,6 +91,7 @@ Beta(245,256) Beta(298,203) Beta(231,270)
 For each arm $i$, maintain: $\theta_i \sim \text{Beta}(\alpha_i, \beta_i)$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Init["Initialize: alpha_i = 1, beta_i = 1 for all arms"] --> Loop["For each round t"]
     Loop --> S["1. Sample theta_i ~ Beta(alpha_i, beta_i) for each arm"]
@@ -84,6 +107,13 @@ flowchart TD
 **Regret:** $O(\log T)$ for Bernoulli rewards -- asymptotically optimal for this case (Agrawal & Goyal, 2012). For general reward distributions, optimality guarantees require additional assumptions.
 
 <!-- Speaker notes: This is the formal mathematical treatment. Walk through each symbol and equation carefully, connecting back to the intuitive explanation from the previous slides. Do not rush this slide -- pause after each equation to ensure comprehension. -->
+
+<div class="callout-info">
+
+**Info:** The regret of the best bandit algorithms grows logarithmically with time, compared to linearly for A/B testing.
+
+</div>
+
 ---
 
 ## Intuitive Explanation
@@ -104,6 +134,12 @@ Each signal makes its **best case** based on current evidence:
 ---
 
 ## Code: 15 Lines for State-of-the-Art
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -126,12 +162,20 @@ class ThompsonSampling:
             self.beta[arm] += 1
 ```
 
+</div>
+
 > That's it. 15 lines for a state-of-the-art bandit algorithm.
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
 
 ## Code: Usage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 bandit = ThompsonSampling(n_arms=3)
@@ -146,6 +190,8 @@ print(f"Alpha: {bandit.alpha}")
 print(f"Beta:  {bandit.beta}")
 print(f"Means: {bandit.alpha / (bandit.alpha + bandit.beta)}")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code line by line. Highlight the key design decisions and explain why each parameter or function call matters. This code is copy-paste ready -- students can use it directly in their own projects. -->
 ---
@@ -177,10 +223,10 @@ Match the prior to the likelihood:
 > Posteriors keep accumulating evidence from the past, even when regimes change.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Old["Strong posterior from old regime"] --> Change["Market regime shifts"]
     Change --> Problem["Old posterior dominates new data"]
-    style Problem fill:#f66,color:#fff
 ```
 
 **Fixes:**
@@ -246,6 +292,7 @@ Expected: exploration rate decays roughly as 1/t
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TS["Thompson Sampling"] --> Bayes["Bayesian approach"]
     TS --> Auto["Automatic exploration"]
@@ -264,10 +311,6 @@ flowchart TD
     Best --> Delayed["Handles delayed feedback"]
     Best --> NS["Adapts to non-stationarity"]
     Best --> Context["Extends to contextual"]
-
-    style TS fill:#36f,color:#fff
-    style Log fill:#6f6,color:#000
-    style Best fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This visual summary captures the key relationships from the entire deck. Walk through each branch of the diagram, connecting back to the main concepts covered. This slide works well as a reference -- encourage students to screenshot it for later review. -->

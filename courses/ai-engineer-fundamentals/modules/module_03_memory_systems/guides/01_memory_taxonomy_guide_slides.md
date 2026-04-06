@@ -31,6 +31,7 @@ It is not just storage -- it has a lifecycle (formation -> retrieval -> evolutio
 ## Memory Forms Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Memory Forms"
         CTX["Context Window<br/>Fast access, limited size"]
@@ -115,7 +116,9 @@ class ContextManager:
 | **Traceability** | Can cite sources |
 | **Cost** | Embedding + search adds latency |
 
-> **Key insight:** Don't memorize everything in weights. Retrieve what is relevant when needed.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Don't memorize everything in weights. Retrieve what is relevant when needed.
+</div>
 
 <!-- Speaker notes: For our support agent, RAG stores: product documentation (500 pages), shipping policies, return policies, FAQ articles, and known issues. When a customer asks "What's your return policy for electronics?", the agent retrieves the relevant policy document and generates an accurate, sourced answer. Without RAG, the agent would hallucinate policy details. -->
 
@@ -167,7 +170,9 @@ def retrieve(query: str, k: int = 5) -> list:
 
 **What goes here:** User preferences, learned facts, past task outcomes, summarized experiences
 
-> **Key insight:** Long-term memory requires a lifecycle policy -- not just storage, but formation, retrieval, and evolution.
+<div class="callout-insight">
+<strong>Key Insight:</strong> Long-term memory requires a lifecycle policy -- not just storage, but formation, retrieval, and evolution.
+</div>
 
 <!-- Speaker notes: For our support agent, long-term memory stores: "This customer prefers email over phone," "Last interaction was about order #12344 which was resolved by refund," "Customer is a Premium member since 2022." This personalizes the experience across sessions. Without long-term memory, every conversation starts from scratch and the customer has to repeat context. -->
 
@@ -248,6 +253,7 @@ class LongTermMemory:
 ## Dynamics: How It Changes
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     F["Formation<br/>Extract, Summarize,<br/>Deduplicate, Store"]
     R["Retrieval<br/>Search, Rank,<br/>Inject"]
@@ -334,6 +340,7 @@ graph LR
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Memory Taxonomy"
         direction LR

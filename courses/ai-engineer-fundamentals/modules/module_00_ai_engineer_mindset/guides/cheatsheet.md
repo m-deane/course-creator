@@ -1,12 +1,32 @@
 # AI Engineer Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 0 — AI Engineer Mindset | **Prerequisites:** None
+
+<span class="badge mint">All Levels</span> <span class="badge amber">~5 min</span> <span class="badge blue">Module 0</span>
+
 ## The Core Mental Model
 
-```
-Goal → Context → Plan/Generate → Act → Observe → Update Memory → Evaluate → Iterate
-```
+<div class="flow">
+  <div class="flow-step mint">Goal</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Context</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Plan/Generate</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Act</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step rose">Observe</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step mint">Update Memory</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Evaluate</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Iterate</div>
+</div>
 
-**Whoever runs this loop faster and cleaner wins.**
+<div class="callout-key">
+<strong>Key Point:</strong> Whoever runs this loop faster and cleaner wins.
+</div>
 
 ---
 
@@ -16,7 +36,7 @@ Goal → Context → Plan/Generate → Act → Observe → Update Memory → Eva
 |-------|---------|------------------|
 | **Evaluation** | Measure progress, prevent regression | Benchmarks, custom metrics, red-teaming |
 | **Observability** | Monitor production behavior | Logging, tracing, dashboards |
-| **Agent Loop** | Goal → action → observation cycle | ReAct, function calling |
+| **Agent Loop** | Goal to action to observation cycle | ReAct, function calling |
 | **Tools** | Actions beyond text | APIs, databases, code execution |
 | **Memory** | Updated, relevant context | RAG, vector DBs, long-term stores |
 | **Protocols** | Standardized tool integration | MCP |
@@ -38,19 +58,16 @@ Goal → Context → Plan/Generate → Act → Observe → Update Memory → Eva
 ## Key Formulas
 
 ### Attention
-```
-Attention(Q, K, V) = softmax(QK^T / √d_k) V
-```
+
+$$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right) V$$
 
 ### Chinchilla Optimal Training
-```
-Tokens ≈ 20 × Parameters
-```
+
+$$\text{Tokens} \approx 20 \times \text{Parameters}$$
 
 ### DPO Loss
-```
-L = -E[log σ(β(log π(y_w|x)/π_ref(y_w|x) - log π(y_l|x)/π_ref(y_l|x)))]
-```
+
+$$\mathcal{L} = -\mathbb{E}\left[\log \sigma\left(\beta\left(\log \frac{\pi(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \log \frac{\pi(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right)\right]$$
 
 ---
 
@@ -60,31 +77,31 @@ L = -E[log σ(β(log π(y_w|x)/π_ref(y_w|x) - log π(y_l|x)/π_ref(y_l|x)))]
 
 ```
 Need to add knowledge?
-├── Knowledge changes frequently → RAG
-├── Knowledge is domain-specific but stable → Fine-tune
-├── Need source attribution → RAG
-└── Need to change behavior/style → Fine-tune (SFT/DPO)
++-- Knowledge changes frequently --> RAG
++-- Knowledge is domain-specific but stable --> Fine-tune
++-- Need source attribution --> RAG
++-- Need to change behavior/style --> Fine-tune (SFT/DPO)
 ```
 
 ### Choosing Alignment Method
 
 ```
 What do you have?
-├── Demonstration data (good examples) → SFT
-├── Preference pairs (A > B) → DPO
-├── Reward signal + compute budget → RLHF
-└── Explicit principles → Constitutional AI
++-- Demonstration data (good examples) --> SFT
++-- Preference pairs (A > B) --> DPO
++-- Reward signal + compute budget --> RLHF
++-- Explicit principles --> Constitutional AI
 ```
 
 ### Memory Architecture
 
 ```
 What kind of information?
-├── Current conversation → Context window
-├── Documents/knowledge base → RAG (vector DB)
-├── User preferences → Long-term memory store
-├── Task state → Working memory
-└── Needs updating in weights → Model editing (rare)
++-- Current conversation --> Context window
++-- Documents/knowledge base --> RAG (vector DB)
++-- User preferences --> Long-term memory store
++-- Task state --> Working memory
++-- Needs updating in weights --> Model editing (rare)
 ```
 
 ---
@@ -92,6 +109,14 @@ What kind of information?
 ## Common Patterns
 
 ### ReAct Agent Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">react_pattern.txt</span>
+</div>
+<div class="code-body">
+
 ```
 Thought: [reasoning about the task]
 Action: [tool_name(parameters)]
@@ -101,15 +126,38 @@ Thought: [I can now answer]
 Action: finish(answer)
 ```
 
+</div>
+</div>
+
 ### RAG Pipeline
-```
-Query → Embed → Retrieve → Rerank → Generate with context
-```
+
+<div class="flow">
+  <div class="flow-step mint">Query</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Embed</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Retrieve</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Rerank</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step rose">Generate with context</div>
+</div>
 
 ### Production Deployment
-```
-Request → Cache check → Route to model → Generate → Guardrails → Log → Respond
-```
+
+<div class="flow">
+  <div class="flow-step mint">Request</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Cache check</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Route to model</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Generate</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step rose">Guardrails</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step mint">Log & Respond</div>
+</div>
 
 ---
 
@@ -157,30 +205,36 @@ Request → Cache check → Route to model → Generate → Guardrails → Log �
 
 ## Anti-Patterns
 
-| Don't | Do Instead |
-|-------|------------|
-| "Just scale the model" | Design the full system |
-| "Fine-tune for everything" | Use RAG for knowledge, fine-tune for behavior |
-| "RLHF is always better" | DPO is simpler and often sufficient |
-| "Long context solves memory" | Hierarchical memory with intelligent retrieval |
-| "Benchmark scores = production quality" | Task-specific evaluation + monitoring |
-| "One agent does everything" | Specialized agents with clear responsibilities |
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">Don't</div>
+    <div class="body">
+      "Just scale the model." Fine-tune for everything. RLHF is always better. Long context solves memory. Benchmark scores = production quality. One agent does everything.
+    </div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Do Instead</div>
+    <div class="body">
+      Design the full system. Use RAG for knowledge, fine-tune for behavior. DPO is simpler and often sufficient. Hierarchical memory with intelligent retrieval. Task-specific evaluation + monitoring. Specialized agents with clear responsibilities.
+    </div>
+  </div>
+</div>
 
 ---
 
 ## Quick Commands
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">quick_commands.sh</span>
+</div>
+<div class="code-body">
+
 ```bash
 # Fine-tune with LoRA
 python -m trl.scripts.sft --model_name meta-llama/Llama-2-7b-hf \
   --dataset_name your_dataset --peft_lora_r 8
-
-# Quantize model
-from transformers import AutoModelForCausalLM, BitsAndBytesConfig
-model = AutoModelForCausalLM.from_pretrained(
-    "model_name",
-    quantization_config=BitsAndBytesConfig(load_in_4bit=True)
-)
 
 # Start MCP server
 mcp run server.py
@@ -188,6 +242,9 @@ mcp run server.py
 # Run evaluation
 lm_eval --model hf --model_args pretrained=your_model --tasks mmlu
 ```
+
+</div>
+</div>
 
 ---
 

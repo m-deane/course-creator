@@ -29,6 +29,7 @@ An agent is an LLM that can **take actions** in the world, **observe results**, 
 ## The Agent Loop Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     GOAL[User Goal] --> INT[Interpret Goal]
     INT --> DEC[Decide Action]
@@ -105,6 +106,7 @@ def decide_action(messages: list, tools: list) -> dict:
 ## Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     M[Model Evaluates Goal + Context] --> D{What to do?}
     D -->|Has answer| R[Respond to User]
@@ -348,6 +350,7 @@ class LoopController:
 ## Loop Control Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     START[Start Loop] --> CHECK{Check Limits}
     CHECK -->|Max iterations| FAIL[Graceful Failure]
@@ -399,6 +402,7 @@ graph TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     U[User Goal] --> I[Interpret]
     I --> D{Decide}

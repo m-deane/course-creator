@@ -33,6 +33,7 @@ Memory is not just storage -- it is a living system with three core operators:
 ## Memory Lifecycle
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     F["Formation<br/>Extract, Summarize,<br/>Deduplicate, Store"] --> R["Retrieval<br/>Search, Rank,<br/>Inject, Trigger"]
     R --> E["Evolution<br/>Consolidate, Decay,<br/>Merge, Update"]
@@ -78,6 +79,7 @@ graph LR
 ## Formation Pipeline -- Worked Example
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Artifact] --> B{Is Memorable?}
     B -->|No| SKIP[Skip]
@@ -173,6 +175,7 @@ def _is_duplicate(self, content: str) -> bool:
 ## Multi-Factor Retrieval Ranking
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     Q[Query] --> VS[Vector Search<br/>Over-retrieve k*3]
     VS --> SEM[Semantic Score<br/>1 - distance]
@@ -394,6 +397,7 @@ class AgentMemory:
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Formation"
         EX[Extract] --> SU[Summarize] --> DD[Dedup] --> SC[Score] --> ST[Store]

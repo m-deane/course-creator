@@ -1,52 +1,56 @@
 # Three Tracks of AI Engineering
 
-## In Brief
+> **Reading time:** ~15 min | **Module:** 0 — AI Engineer Mindset | **Prerequisites:** 02 The Closed Loop
+
+<span class="badge mint">Beginner</span> <span class="badge amber">~15 min</span> <span class="badge blue">Module 0</span>
+
+## Introduction
 
 AI Engineering divides into three complementary tracks: Model & Training Core (understanding and modifying the engine), Alignment & Safety (shaping behavior), and Agent Systems (connecting to reality). Mastering all three makes you a complete AI Engineer.
 
-> 💡 **Key Insight:** You don't need to be a researcher to be an AI Engineer, but you need to understand enough of each track to make good architectural decisions.
+<div class="callout-insight">
+<strong>Key Insight:</strong> You don't need to be a researcher to be an AI Engineer, but you need to understand enough of each track to make good architectural decisions.
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** The three tracks — Model Core, Alignment & Safety, and Agent Systems — cover the full scope of AI engineering. Each track has distinct skills, career paths, and modules in this course. The tracks overlap at critical junctures (fine-tuning for alignment, embeddings for RAG, evaluation of agent behavior), and production systems require knowledge from all three.
+
+</div>
 
 ## Visual Explanation
 
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
+flowchart TB
+    subgraph A["Track A: Model & Training Core"]
+        A1["Transformers & Attention"]
+        A2["Training & Scaling Laws"]
+        A3["Efficiency: LoRA, Quantization"]
+    end
+    subgraph B["Track B: Alignment & Safety"]
+        B1["SFT / RLHF / DPO"]
+        B2["Safety Policies & Red-teaming"]
+        B3["Evaluation & Regression Testing"]
+    end
+    subgraph C["Track C: Agent Systems"]
+        C1["RAG & Memory"]
+        C2["Tool Use & Protocols (MCP)"]
+        C3["Orchestration & Observability"]
+    end
+    A --> AB["Fine-tuning for alignment (A∩B)"]
+    A --> AC["Embeddings for RAG (A∩C)"]
+    B --> BC["Evaluation of agent behavior (B∩C)"]
+    AB --> FULL["Complete AI Engineer"]
+    AC --> FULL
+    BC --> FULL
 ```
-┌──────────────────────────────────────────────────────────────────────────┐
-│                     THE THREE TRACKS OF AI ENGINEERING                   │
-└──────────────────────────────────────────────────────────────────────────┘
 
-┌────────────────────┐  ┌────────────────────┐  ┌────────────────────┐
-│   TRACK A          │  │   TRACK B          │  │   TRACK C          │
-│   MODEL & TRAINING │  │   ALIGNMENT &      │  │   AGENT SYSTEMS    │
-│   CORE             │  │   SAFETY           │  │                    │
-├────────────────────┤  ├────────────────────┤  ├────────────────────┤
-│                    │  │                    │  │                    │
-│  "Understand and   │  │  "Make it behave   │  │  "Connect it to    │
-│   modify the       │  │   the way you      │  │   the real world"  │
-│   engine"          │  │   want"            │  │                    │
-│                    │  │                    │  │                    │
-├────────────────────┤  ├────────────────────┤  ├────────────────────┤
-│ • Transformers     │  │ • SFT              │  │ • RAG              │
-│ • Attention        │  │ • RLHF             │  │ • Memory           │
-│ • Training         │  │ • DPO              │  │ • Tool use         │
-│ • Scaling laws     │  │ • Constitutional   │  │ • Protocols (MCP)  │
-│ • Data quality     │  │ • Red-teaming      │  │ • Orchestration    │
-│ • Efficiency       │  │ • Evaluation       │  │ • Observability    │
-│                    │  │                    │  │                    │
-├────────────────────┤  ├────────────────────┤  ├────────────────────┤
-│ Modules: 01, 06    │  │ Modules: 02, 07    │  │ Modules: 03-05, 08 │
-└────────────────────┘  └────────────────────┘  └────────────────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                                 ▼
-                    ┌────────────────────────┐
-                    │   COMPLETE AI ENGINEER │
-                    │                        │
-                    │   Can build end-to-end │
-                    │   production systems   │
-                    └────────────────────────┘
-```
+<div class="caption">Figure 1: The three tracks of AI engineering and their overlaps.</div>
 
 ## Track A: Model & Training Core
+
+*"Understand and modify the engine"*
 
 ### What It Covers
 
@@ -61,6 +65,13 @@ AI Engineering divides into three complementary tracks: Model & Training Core (u
 
 ### Key Skills
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">track_a_skills.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Track A engineers can:
 
@@ -69,41 +80,33 @@ from transformers import AutoModel
 model = AutoModel.from_pretrained("meta-llama/Llama-2-7b")
 print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
 
-# 2. Understand attention patterns
-attention_weights = model.get_attention_weights(input_ids)
-visualize_attention(attention_weights)
-
-# 3. Fine-tune efficiently
+# 2. Fine-tune efficiently
 from peft import LoraConfig, get_peft_model
 lora_config = LoraConfig(r=8, lora_alpha=32, target_modules=["q_proj", "v_proj"])
 model = get_peft_model(model, lora_config)
 
-# 4. Quantize for deployment
+# 3. Quantize for deployment
 from transformers import BitsAndBytesConfig
 quantization_config = BitsAndBytesConfig(load_in_4bit=True)
 
-# 5. Reason about compute budgets
+# 4. Reason about compute budgets
 tokens_needed = 20 * num_parameters  # Chinchilla optimal
 ```
 
-### When You Need Track A
+</div>
+</div>
 
-- Fine-tuning models for specific domains
-- Optimizing inference cost and latency
-- Debugging unexpected model behavior
-- Choosing between model sizes
-- Understanding capability limits
+<div class="callout-info">
+<strong>When You Need Track A:</strong> Fine-tuning for specific domains, optimizing inference cost and latency, debugging unexpected model behavior, choosing between model sizes, understanding capability limits.
+</div>
 
-### Career Focus
-
-- ML Engineers at AI labs
-- Model optimization specialists
-- Training infrastructure engineers
-- Research engineers
+**Career Focus:** ML Engineers at AI labs, model optimization specialists, training infrastructure engineers, research engineers.
 
 ---
 
 ## Track B: Alignment & Safety
+
+*"Make it behave the way you want"*
 
 ### What It Covers
 
@@ -119,18 +122,17 @@ tokens_needed = 20 * num_parameters  # Chinchilla optimal
 
 ### Key Skills
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">track_b_skills.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Track B engineers can:
 
-# 1. Create instruction-tuning datasets
-training_data = [
-    {"instruction": "Summarize this article",
-     "input": article_text,
-     "output": good_summary},
-    # ...
-]
-
-# 2. Implement preference optimization
+# 1. Implement preference optimization
 from trl import DPOTrainer
 trainer = DPOTrainer(
     model=model,
@@ -139,7 +141,7 @@ trainer = DPOTrainer(
     beta=0.1,  # KL penalty weight
 )
 
-# 3. Design safety evaluations
+# 2. Design safety evaluations
 def test_harmful_request_handling(model):
     harmful_prompts = load_red_team_prompts()
     results = []
@@ -153,7 +155,7 @@ def test_harmful_request_handling(model):
         })
     return calculate_safety_metrics(results)
 
-# 4. Build regression test suites
+# 3. Build regression test suites
 def regression_test(model_v1, model_v2, test_cases):
     for case in test_cases:
         v1_result = model_v1.generate(case.input)
@@ -162,24 +164,20 @@ def regression_test(model_v1, model_v2, test_cases):
             f"Regression detected on: {case.name}"
 ```
 
-### When You Need Track B
+</div>
+</div>
 
-- Building customer-facing AI products
-- Ensuring brand-safe responses
-- Meeting compliance requirements
-- Reducing support escalations
-- Preventing harmful outputs
+<div class="callout-info">
+<strong>When You Need Track B:</strong> Building customer-facing AI products, ensuring brand-safe responses, meeting compliance requirements, reducing support escalations, preventing harmful outputs.
+</div>
 
-### Career Focus
-
-- AI Safety engineers
-- Product AI engineers
-- Trust & Safety teams
-- AI policy and governance
+**Career Focus:** AI Safety engineers, Product AI engineers, Trust & Safety teams, AI policy and governance.
 
 ---
 
 ## Track C: Agent Systems
+
+*"Connect it to the real world"*
 
 ### What It Covers
 
@@ -195,6 +193,13 @@ def regression_test(model_v1, model_v2, test_cases):
 
 ### Key Skills
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">track_c_skills.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Track C engineers can:
 
@@ -206,51 +211,12 @@ class RAGSystem:
         self.reranker = CrossEncoderReranker()
 
     def query(self, question: str, k: int = 5) -> list[Document]:
-        # Embed query
         query_embedding = self.embedder.embed(question)
-
-        # Retrieve candidates (retrieve more, rerank to k)
         candidates = self.vector_db.search(query_embedding, k=k*3)
-
-        # Rerank for relevance
         reranked = self.reranker.rerank(question, candidates, k=k)
-
         return reranked
 
-# 2. Implement agent loops
-class ReActAgent:
-    def run(self, goal: str) -> str:
-        history = []
-
-        for step in range(self.max_steps):
-            # Generate thought + action
-            thought, action = self.think_and_act(goal, history)
-
-            # Execute action
-            if action.type == "finish":
-                return action.value
-
-            observation = self.execute(action)
-
-            # Update history
-            history.append((thought, action, observation))
-
-        return "Max steps reached"
-
-# 3. Design tool interfaces
-@tool(description="Search the web for current information")
-def web_search(query: str, num_results: int = 5) -> list[SearchResult]:
-    """
-    Args:
-        query: The search query
-        num_results: Number of results to return (default 5)
-
-    Returns:
-        List of search results with title, url, and snippet
-    """
-    return search_api.search(query, num_results)
-
-# 4. Build with protocols (MCP)
+# 2. Build with protocols (MCP)
 from mcp import Server, Tool
 
 server = Server("my-tools")
@@ -260,39 +226,30 @@ def get_weather(city: str) -> dict:
     """Get current weather for a city."""
     return weather_api.get(city)
 
-# 5. Add observability
+# 3. Add observability
 @traced("agent.run")
 def run_agent(goal: str):
     with span("context_building"):
         context = build_context(goal)
-
     with span("generation"):
         response = generate(goal, context)
-
     log_metrics({
         "goal": goal,
         "context_tokens": count_tokens(context),
         "response_tokens": count_tokens(response),
         "latency_ms": elapsed_ms()
     })
-
     return response
 ```
 
-### When You Need Track C
+</div>
+</div>
 
-- Building AI-powered applications
-- Integrating LLMs with existing systems
-- Creating autonomous agents
-- Connecting to enterprise data
-- Scaling to production
+<div class="callout-info">
+<strong>When You Need Track C:</strong> Building AI-powered applications, integrating LLMs with existing systems, creating autonomous agents, connecting to enterprise data, scaling to production.
+</div>
 
-### Career Focus
-
-- AI Application engineers
-- Full-stack AI developers
-- Platform engineers
-- Startup founders
+**Career Focus:** AI Application engineers, Full-stack AI developers, Platform engineers, Startup founders.
 
 ---
 
@@ -300,92 +257,62 @@ def run_agent(goal: str):
 
 ### Example: Building a Customer Support Bot
 
-```
-Track A Knowledge Used:
-- Choose model size based on latency/quality tradeoff
-- Quantize for inference efficiency
-- Understand why certain queries confuse the model
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">Track A Knowledge</div>
+    <div class="body">Choose model size based on latency/quality tradeoff. Quantize for inference efficiency. Understand why certain queries confuse the model.</div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Track B Knowledge</div>
+    <div class="body">Fine-tune on support conversations (SFT). Ensure brand-appropriate tone. Build refusal behavior for out-of-scope requests. Create regression tests.</div>
+  </div>
+</div>
 
-Track B Knowledge Used:
-- Fine-tune on support conversations (SFT)
-- Ensure brand-appropriate tone
-- Build refusal behavior for out-of-scope requests
-- Create regression tests for common issues
-
-Track C Knowledge Used:
-- RAG for product documentation
-- Tool integration for order lookup, refunds
-- Memory for conversation continuity
-- Logging for debugging and improvement
-```
-
-### Overlap Diagram
-
-```
-                    ┌─────────────────────┐
-                    │      Track A        │
-                    │   Model & Training  │
-                    └──────────┬──────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              │                │                │
-              ▼                ▼                ▼
-    ┌─────────────────┐ ┌─────────────┐ ┌─────────────────┐
-    │ Fine-tuning for │ │  Efficient  │ │   Embedding     │
-    │   alignment     │ │  inference  │ │   models for    │
-    │   (A ∩ B)       │ │  (A ∩ C)    │ │   RAG (A ∩ C)   │
-    └─────────────────┘ └─────────────┘ └─────────────────┘
-              │                │                │
-              ▼                │                ▼
-    ┌─────────────────┐        │        ┌─────────────────┐
-    │     Track B     │        │        │     Track C     │
-    │   Alignment &   │◄───────┴───────►│  Agent Systems  │
-    │     Safety      │                 │                 │
-    └─────────────────┘                 └─────────────────┘
-              │                                 │
-              └─────────────┬───────────────────┘
-                            ▼
-                  ┌─────────────────────┐
-                  │  Evaluation of      │
-                  │  agent behavior     │
-                  │  (B ∩ C)            │
-                  └─────────────────────┘
-```
+<div class="callout-key">
+<strong>Track C Knowledge:</strong> RAG for product documentation. Tool integration for order lookup and refunds. Memory for conversation continuity. Logging for debugging and improvement.
+</div>
 
 ## Recommended Learning Paths
 
-### Path 1: Application Developer (Track C → B → A)
+### Path 1: Application Developer (Track C -> B -> A)
 
-```
-Week 1-2: Module 03 (Memory) + Module 04 (Tools)
-Week 3:   Module 05 (MCP) + Module 08 (Production)
-Week 4:   Module 02 (Alignment) + Module 07 (Evaluation)
-Week 5-6: Module 01 (Transformer) + Module 06 (Efficiency)
-```
+<div class="flow">
+  <div class="flow-step blue">Week 1-2: Memory + Tools</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Week 3: MCP + Production</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Week 4: Alignment + Eval</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step mint">Week 5-6: Transformer + Efficiency</div>
+</div>
 
 **Rationale:** Get building quickly, then understand why things work.
 
-### Path 2: ML Engineer (Track A → B → C)
+### Path 2: ML Engineer (Track A -> B -> C)
 
-```
-Week 1-2: Module 01 (Transformer) + Module 06 (Efficiency)
-Week 3:   Module 02 (Alignment) + Module 07 (Evaluation)
-Week 4-5: Module 03 (Memory) + Module 04 (Tools)
-Week 6:   Module 05 (MCP) + Module 08 (Production)
-```
+<div class="flow">
+  <div class="flow-step mint">Week 1-2: Transformer + Efficiency</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Week 3: Alignment + Eval</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Week 4-5: Memory + Tools</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Week 6: MCP + Production</div>
+</div>
 
 **Rationale:** Understand the engine deeply, then apply to systems.
 
 ### Path 3: Product/Startup (All tracks parallel)
 
-```
-Week 1: Module 00 (Mindset) + Quick-starts from each track
-Week 2: Module 03 (Memory) - enough to build RAG
-Week 3: Module 04 (Tools) - enough to build agents
-Week 4: Module 02 (Alignment) - enough to tune behavior
-Week 5: Module 08 (Production) - deployment focus
-Week 6: Deep dive into whatever bottleneck you hit
-```
+<div class="flow">
+  <div class="flow-step mint">Week 1: Mindset</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Week 2-3: RAG + Tools</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Week 4: Alignment</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Week 5-6: Production</div>
+</div>
 
 **Rationale:** Get to production fast, fill gaps as needed.
 
@@ -412,15 +339,27 @@ Week 6: Deep dive into whatever bottleneck you hit
 - [ ] Can add observability to agent systems
 - [ ] Can deploy and monitor in production
 
-## Connections
-
-- **Builds on:** The closed-loop mental model
-- **Leads to:** Detailed exploration of each track in subsequent modules
-
-## Practice Problems
+## Practice Questions
 
 1. **Self-assessment:** Rate yourself 1-5 on each skill in the three checklists above. Where are your biggest gaps?
 
 2. **System design:** Design a system for "AI-powered code review." Which track's knowledge is most critical? Which can you start with minimal depth?
 
 3. **Career planning:** Based on your current role and goals, which learning path makes most sense for you?
+
+## Cross-References
+
+<a class="link-card" href="./03_three_tracks_slides.md">
+  <div class="link-card-title">Companion Slides — Three Tracks</div>
+  <div class="link-card-description">Slide deck covering the three tracks with overlap diagrams and career path recommendations.</div>
+</a>
+
+<a class="link-card" href="./02_the_closed_loop.md">
+  <div class="link-card-title">Previous Guide — The Closed Loop</div>
+  <div class="link-card-description">The core mental model for modern AI engineering.</div>
+</a>
+
+<a class="link-card" href="./cheatsheet.md">
+  <div class="link-card-title">Cheatsheet — AI Engineer Quick Reference</div>
+  <div class="link-card-description">Decision trees, formulas, patterns, and anti-patterns in one page.</div>
+</a>

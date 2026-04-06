@@ -31,6 +31,7 @@ It describes how an AI system receives goals, builds context, generates plans, t
 ## The Seven Stages
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     GOAL[Goal Input] --> CTX[Context Builder]
     CTX --> MEM[Memory State]
@@ -130,6 +131,7 @@ def build_context(goal, memory, retriever):
 ## The Model Decides What to Do
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     DEC[Decision Point] -->|Enough info| A[Generate Response]
     DEC -->|Need clarification| B[Ask User]
@@ -301,6 +303,7 @@ def update_memory(memory, interaction):
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     G[Goal] --> C[Context]
     C --> P[Plan]

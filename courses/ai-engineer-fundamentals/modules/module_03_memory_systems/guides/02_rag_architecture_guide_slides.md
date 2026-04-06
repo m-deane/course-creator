@@ -29,6 +29,7 @@ RAG (Retrieval-Augmented Generation) combines the reasoning power of LLMs with t
 ## RAG Pipeline Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Q[Query] --> EMB[Embed]
     EMB --> RET[Retrieve]
@@ -54,6 +55,7 @@ graph LR
 ## Indexing Pipeline (Offline)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     D[Documents] --> CH[Chunk]
     CH --> E[Embed]
@@ -336,6 +338,7 @@ class RAGPipeline:
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Offline: Indexing"
         D[Documents] --> CH[Chunk] --> EM[Embed] --> ST[Store]

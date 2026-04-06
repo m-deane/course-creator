@@ -1,27 +1,25 @@
 # Memory Systems Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 3 — Memory Systems | **Prerequisites:** None
+
+<span class="badge mint">All Levels</span> <span class="badge amber">~5 min</span> <span class="badge blue">Module 3</span>
+
 ## The Memory Decision Tree
 
 ```
 What kind of information?
-│
-├── Changes frequently (news, prices, events)
-│   └── RAG with frequent re-indexing
-│
-├── User-specific (preferences, history)
-│   └── Long-term memory store (per-user)
-│
-├── Domain knowledge (docs, manuals)
-│   └── RAG (vector DB)
-│
-├── Current task state (steps, variables)
-│   └── Working memory (context window)
-│
-├── Conversation context (recent messages)
-│   └── Context window + summarization
-│
-└── Needs behavior change (not just knowledge)
-    └── Fine-tuning (SFT/DPO), not memory
++-- Changes frequently (news, prices, events)
+|   --> RAG with frequent re-indexing
++-- User-specific (preferences, history)
+|   --> Long-term memory store (per-user)
++-- Domain knowledge (docs, manuals)
+|   --> RAG (vector DB)
++-- Current task state (steps, variables)
+|   --> Working memory (context window)
++-- Conversation context (recent messages)
+|   --> Context window + summarization
++-- Needs behavior change (not just knowledge)
+    --> Fine-tuning (SFT/DPO), not memory
 ```
 
 ---
@@ -40,15 +38,21 @@ What kind of information?
 
 ## RAG Pipeline Quick Reference
 
-```
-┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐
-│  Query  │────►│  Embed  │────►│Retrieve │────►│ Rerank  │────►│Generate │
-└─────────┘     └─────────┘     └─────────┘     └─────────┘     └─────────┘
-                    │               │               │
-                    ▼               ▼               ▼
-               Same model      Over-retrieve    Cross-encoder
-               as indexing       (k×3)          to top-k
-```
+<div class="flow">
+  <div class="flow-step mint">Query</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step amber">Embed</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step blue">Retrieve (k*3)</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step lavender">Rerank (top-k)</div>
+  <div class="flow-arrow">&#8594;</div>
+  <div class="flow-step rose">Generate</div>
+</div>
+
+<div class="callout-info">
+<strong>Info:</strong> Use the same embedding model for indexing and querying. Over-retrieve, then rerank to the final count.
+</div>
 
 ---
 
@@ -62,7 +66,9 @@ What kind of information?
 | **Semantic** | Variable | Context-aware | Quality-critical |
 | **Recursive** | Target size | 10-20% | Mixed content |
 
-**Rule of thumb:** Start with 500 tokens, 10% overlap. Adjust based on retrieval quality.
+<div class="callout-key">
+<strong>Key Point:</strong> Start with 500 tokens, 10% overlap. Adjust based on retrieval quality.
+</div>
 
 ---
 
@@ -70,11 +76,11 @@ What kind of information?
 
 | Model | Dims | Speed | Quality | Cost |
 |-------|------|-------|---------|------|
-| `all-MiniLM-L6-v2` | 384 | ⚡⚡⚡ | ★★★ | Free |
-| `bge-small-en-v1.5` | 384 | ⚡⚡⚡ | ★★★★ | Free |
-| `bge-base-en-v1.5` | 768 | ⚡⚡ | ★★★★★ | Free |
-| `text-embedding-3-small` | 1536 | ⚡⚡ | ★★★★★ | $0.02/1M |
-| `voyage-2` | 1024 | ⚡⚡ | ★★★★★ | $0.10/1M |
+| `all-MiniLM-L6-v2` | 384 | Very fast | Good | Free |
+| `bge-small-en-v1.5` | 384 | Fast | Very good | Free |
+| `bge-base-en-v1.5` | 768 | Medium | Excellent | Free |
+| `text-embedding-3-small` | 1536 | API | Excellent | $0.02/1M |
+| `voyage-2` | 1024 | API | State-of-art | $0.10/1M |
 
 ---
 
@@ -93,8 +99,15 @@ What kind of information?
 ## Memory Operators
 
 ### Formation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">formation_ops.py</span>
+</div>
+<div class="code-body">
+
 ```python
-# Key operations
 extract()      # Identify memory candidates
 summarize()    # Compress content
 deduplicate()  # Remove redundant
@@ -102,23 +115,46 @@ score()        # Assign importance
 store()        # Write to appropriate store
 ```
 
+</div>
+</div>
+
 ### Retrieval
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">retrieval_ops.py</span>
+</div>
+<div class="code-body">
+
 ```python
-# Key operations
 search()       # Vector similarity search
 filter()       # Apply metadata filters
 rerank()       # Cross-encoder reordering
 inject()       # Format for prompt
 ```
 
+</div>
+</div>
+
 ### Evolution
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evolution_ops.py</span>
+</div>
+<div class="code-body">
+
 ```python
-# Key operations
 decay()        # Reduce unused memory importance
 consolidate()  # Merge similar memories
 prune()        # Remove low-value memories
 reinforce()    # Boost accessed memories
 ```
+
+</div>
+</div>
 
 ---
 
@@ -133,111 +169,29 @@ reinforce()    # Boost accessed memories
 
 ---
 
-## Code Snippets
-
-### Quick RAG Setup
-```python
-import chromadb
-from sentence_transformers import SentenceTransformer
-
-# Setup
-embedder = SentenceTransformer("BAAI/bge-small-en-v1.5")
-db = chromadb.PersistentClient("./db")
-collection = db.get_or_create_collection("docs")
-
-# Index
-collection.add(
-    documents=["doc1", "doc2"],
-    embeddings=embedder.encode(["doc1", "doc2"]).tolist(),
-    ids=["1", "2"]
-)
-
-# Query
-results = collection.query(
-    query_embeddings=embedder.encode(["query"]).tolist(),
-    n_results=5
-)
-```
-
-### Memory Formation
-```python
-def should_remember(content: str, source: str) -> bool:
-    """Quick importance check."""
-    if source == "user" and len(content) > 20:
-        return True
-    if any(w in content.lower() for w in ["prefer", "always", "never"]):
-        return True
-    return False
-```
-
-### Memory Decay
-```python
-def decay_importance(importance: float, days_unused: int) -> float:
-    """Exponential decay with 30-day half-life."""
-    return importance * (0.95 ** days_unused)
-```
-
----
-
-## Common Patterns
-
-### Hybrid Search
-```
-query → [vector_search, keyword_search] → reciprocal_rank_fusion → top_k
-```
-
-### Hierarchical Memory
-```
-Hot (context) ←→ Warm (vector DB) ←→ Cold (archive)
-         ↑ promote                demote ↓
-```
-
-### Memory-Augmented Generation
-```
-user_query + retrieved_memories + system_prompt → LLM → response
-                                                    ↓
-                                            form_new_memory
-```
-
----
-
 ## Anti-Patterns
 
-| Don't | Do Instead |
-|-------|------------|
-| Store everything | Filter by importance |
-| Never update memories | Implement evolution |
-| Single retrieval strategy | Adaptive retrieval |
-| Ignore metadata | Use metadata for filtering |
-| Same embedding for all content | Domain-specific when beneficial |
-| Retrieve once, use forever | Re-retrieve on context change |
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">Don't</div>
+    <div class="body">Store everything. Never update memories. Single retrieval strategy. Ignore metadata. Same embedding for all content. Retrieve once, use forever.</div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Do Instead</div>
+    <div class="body">Filter by importance. Implement evolution. Adaptive retrieval. Use metadata for filtering. Domain-specific when beneficial. Re-retrieve on context change.</div>
+  </div>
+</div>
 
 ---
 
 ## When to Use What
 
-```
-RAG:
-✓ External knowledge needed
-✓ Information changes over time
-✓ Need source attribution
-✓ Large knowledge base
-
-Long-term memory:
-✓ User-specific information
-✓ Cross-session persistence
-✓ Learning from interactions
-
-Fine-tuning:
-✓ Need behavior change
-✓ Domain-specific language
-✓ Consistent style/format
-
-Weight editing (ROME/MEMIT):
-✓ Specific fact corrections
-✓ Can't use retrieval
-✓ Small number of edits
-```
+| Use Case | Solution |
+|----------|----------|
+| External knowledge needed, changes over time, need source attribution | **RAG** |
+| User-specific, cross-session, learning from interactions | **Long-term memory** |
+| Need behavior change, domain-specific language, consistent style | **Fine-tuning** |
+| Specific fact corrections, can't use retrieval | **Weight editing (ROME/MEMIT)** |
 
 ---
 

@@ -19,6 +19,7 @@ math: mathjax
 ## The Memory Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Q[What kind of information?]
     Q -->|Changes frequently| A[RAG with frequent re-indexing]
@@ -50,6 +51,7 @@ graph TD
 ## RAG Pipeline Quick Reference
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Q[Query] --> E[Embed<br/>Same model as indexing]
     E --> R[Retrieve<br/>Over-retrieve k*3]
@@ -228,6 +230,7 @@ def decay_importance(importance,
 ## Common Patterns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Hybrid Search"
         Q1[Query] --> VS1[Vector Search]
@@ -250,6 +253,7 @@ graph TB
 ## Memory-Augmented Generation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     UQ[User Query] --> COMB[Combine]
     RM[Retrieved Memories] --> COMB
@@ -332,6 +336,7 @@ graph LR
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Memory System"
         FORM[Formation: What to remember]

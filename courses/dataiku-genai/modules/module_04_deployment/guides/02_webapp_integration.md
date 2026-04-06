@@ -152,6 +152,15 @@ def health_check():
 
 </div>
 
+The frontend HTML connects to the backend endpoints and renders the analysis results:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">frontend.html</span>
+
+</div>
+
 ```html
 <!-- frontend.html - Dataiku Webapp Frontend -->
 <!DOCTYPE html>
@@ -376,6 +385,8 @@ def health_check():
 </html>
 ```
 
+</div>
+
 ### Chatbot Interface
 
 <div class="code-window">
@@ -468,6 +479,15 @@ def chat_history():
 
     return jsonify({'history': history})
 ```
+
+</div>
+
+The chatbot frontend manages conversation state and renders the message history:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">frontend.html</span>
 
 </div>
 
@@ -625,6 +645,8 @@ def chat_history():
 </html>
 ```
 
+</div>
+
 ### Streaming Responses
 
 <div class="code-window">
@@ -673,6 +695,15 @@ def stream_analysis():
 
 </div>
 
+The frontend JavaScript reads from the event stream and updates the UI incrementally:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">frontend.js</span>
+
+</div>
+
 ```javascript
 // Frontend - Handle streaming
 async function streamAnalysis() {
@@ -710,6 +741,8 @@ async function streamAnalysis() {
     }
 }
 ```
+
+</div>
 
 ## Common Pitfalls
 

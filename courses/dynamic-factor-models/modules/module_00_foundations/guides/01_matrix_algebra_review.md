@@ -28,6 +28,7 @@ Factor models rely heavily on matrix decompositions—particularly eigendecompos
 **Insight:** Think of eigendecomposition as finding the "natural axes" of a transformation. For a covariance matrix, eigenvectors point in directions of maximum/minimum variance, eigenvalues measure the variance in each direction, and the largest eigenvalues capture the most important variation.
 
 </div>
+
 ### Formal Definition
 
 For a square matrix $A \in \mathbb{R}^{n \times n}$, an eigenvalue-eigenvector pair $(\lambda, v)$ satisfies:

@@ -83,6 +83,7 @@ where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_
 **Insight:** Score-driven models are adaptive: parameters update based on how surprising recent data is.
 
 </div>
+
 ### Choosing the Right Approach
 
 | Approach | Parameters Evolve... | Best When | Computational Cost |

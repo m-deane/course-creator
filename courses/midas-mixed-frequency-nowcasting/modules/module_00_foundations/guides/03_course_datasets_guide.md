@@ -42,11 +42,13 @@ FRED is the primary source for macroeconomic data. The St. Louis Fed maintains o
 
 **API Access:**
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Install: pip install fredapi
@@ -64,11 +66,13 @@ fred = Fred(api_key=os.environ.get('FRED_API_KEY'))
 
 **Fallback (no API key required):**
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import pandas as pd
@@ -95,11 +99,13 @@ ip = pd.read_csv('resources/industrial_production_monthly.csv', index_col=0, par
 
 **How to download:**
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import pandas as pd

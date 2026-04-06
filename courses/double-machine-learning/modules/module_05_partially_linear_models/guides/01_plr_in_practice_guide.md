@@ -36,12 +36,13 @@ Data(Y, D, X) → DoubleMLData → DoubleMLPLR(ml_l, ml_m) → .fit() → .summa
 
 The commodity example: estimating the causal effect of carbon price policy changes on power generation fuel mix. Treatment $D$ is the carbon price change, outcome $Y$ is the coal share of generation, and controls $X$ include gas prices, renewable capacity, demand, weather, and 45 other market variables.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -88,12 +89,13 @@ The `DoubleMLData` object organises your data into the Y, D, X structure that DM
 
 The two nuisance models predict $E[Y|X]$ and $E[D|X]$. These are pure prediction tasks — use whatever ML model predicts best.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Option 1: Random Forest (good default)
@@ -123,12 +125,13 @@ ml_m_lasso = LassoCV(cv=5, random_state=42)
 
 ## How to Fit and Interpret Results
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Fit PLR with gradient boosting nuisance models
@@ -153,12 +156,13 @@ The `summary` output includes the coefficient, standard error, t-statistic, and 
 
 ## How to Compare Nuisance Model Choices
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 results = {}
@@ -184,12 +188,13 @@ If all nuisance models give similar treatment effects, the result is robust. If 
 
 ## How to Visualise Confidence Intervals
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt

@@ -150,11 +150,13 @@ The strong prior acts like you've already seen 18 trades (10-1 + 10-1). Five new
 
 ### Beta-Bernoulli Update
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -190,11 +192,13 @@ class BetaBernoulli:
 
 ### Normal-Normal Update
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 class NormalNormal:

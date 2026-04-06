@@ -127,12 +127,14 @@ $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 
 ### Simple Local Level Model
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -228,12 +230,14 @@ print(f"Mean squared error: {np.mean((np.array(kf.filtered_states) - alpha_true)
 
 ### Commodity Application: Filtering Oil Prices
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pandas as pd
@@ -310,12 +314,14 @@ Uncertainty Evolution:
 **Problem:** If Q and H are misspecified, filter can be too sluggish or too jumpy.
 
 **Example:**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Too small Q, too large H → Filter stuck, doesn't adapt
@@ -369,12 +375,14 @@ kf = KalmanFilter(H=0.01, Q=100, ...)
 **Diagnostic:** If $v_t$ (forecast errors) are not white noise, model is wrong!
 
 **Check:**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 innovations = y - predictions

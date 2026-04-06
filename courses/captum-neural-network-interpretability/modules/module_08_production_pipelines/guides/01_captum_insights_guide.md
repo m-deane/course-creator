@@ -44,13 +44,14 @@ Captum Insights is a web-based visualization interface built on top of Captum's 
 
 Captum Insights requires Flask and additional dependencies:
 
+
+<span class="filename">example.sh</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.sh</span>
-
-</div>
-<div class="code-body">
 
 ```bash
 pip install captum[insights]
@@ -68,13 +69,14 @@ pip install captum flask flask-compress
 
 The main class is `AttributionVisualizer`, which wraps your model and attribution methods:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.insights import AttributionVisualizer, Batch
@@ -98,13 +100,14 @@ visualizer = AttributionVisualizer(
 
 ## 4. Image Classification Setup
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -160,13 +163,14 @@ Captum Insights expects an iterable of `Batch` objects:
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.insights import Batch
@@ -193,13 +197,14 @@ def load_imagenet_samples(image_dir: str, transform, class_names: list, n=20):
 
 For a quick demo with synthetic images:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -228,13 +233,14 @@ def synthetic_image_dataset(n_batches=10, n_classes=10):
 
 ## 6. Starting the Insights Server
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 visualizer = AttributionVisualizer(
@@ -258,13 +264,14 @@ Navigate to `http://localhost:5001` in your browser to access the Insights dashb
 
 **Jupyter Notebook usage:**
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.insights.widget import CaptumInsightsWidget
@@ -300,13 +307,14 @@ Run two attribution methods simultaneously and view side by side.
 
 ## 8. Text Classification Setup
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.insights.attr_vis.features import TextFeature

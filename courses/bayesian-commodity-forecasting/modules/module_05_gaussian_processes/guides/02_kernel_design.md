@@ -159,12 +159,14 @@ This allows winter peaks to change magnitude year-to-year.
 
 ### 1. Crude Oil: Smooth Trend with Occasional Shocks
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pymc as pm
@@ -208,12 +210,14 @@ with pm.Model() as crude_model:
 
 ### 2. Natural Gas: Strong Seasonality with Time-Varying Amplitude
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 with pm.Model() as gas_model:
@@ -249,12 +253,14 @@ with pm.Model() as gas_model:
 
 ### 3. Agricultural (Corn): Harvest Seasonality + Trend + Weather Shocks
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 with pm.Model() as corn_model:
@@ -297,12 +303,14 @@ with pm.Model() as corn_model:
 
 Model price as function of time *and* fundamentals (inventory, production).
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 with pm.Model() as covariate_model:
@@ -334,12 +342,14 @@ with pm.Model() as covariate_model:
 
 ## Forecasting with Custom Kernels
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # After fitting GP model
@@ -417,12 +427,14 @@ plt.show()
 </div>
 
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Extract length scales from trace
@@ -444,12 +456,14 @@ print(f"Interpretation: Trend changes over ~{ell_trend_post.mean():.0f} week hor
 
 ### 2. Posterior Predictive Checks
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 with model:
@@ -477,12 +491,14 @@ plt.show()
 
 ### 3. Covariance Matrix Visualization
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Compute posterior mean covariance
@@ -530,12 +546,14 @@ Using SE kernel for volatile commodities smooths over real shocks.
 Natural gas heating season has shifted with climate change.
 
 **Fix:** Learn period as parameter:
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 period = pm.Gamma('period', alpha=20, beta=20)  # Prior around 1 year
@@ -552,12 +570,14 @@ cov_seasonal = sigma**2 * pm.gp.cov.Periodic(1, period=period, ls=ell)
 Adding too many components overfits.
 
 **Check:** Use LOO-CV to compare kernel designs:
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 loo_simple = az.loo(trace_simple)

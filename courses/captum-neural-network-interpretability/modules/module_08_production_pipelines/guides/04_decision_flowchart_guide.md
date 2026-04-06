@@ -124,13 +124,14 @@ These disagree on negation, adversarial inputs, and compositional sentences. Use
 
 ### Baseline Selection for Text
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # BERT-family: PAD baseline
@@ -164,13 +165,14 @@ baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 
 ### Baseline for Tabular Data
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Option 1: Zero vector (if features are normalized)
@@ -248,13 +250,14 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 
 **Only IG satisfies all three requirements.**
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Compliance-grade configuration
@@ -311,13 +314,14 @@ The baseline is as important as the method. It defines the reference point: "Wha
 
 For GradientSHAP and DeepLIFTSHAP, provide 50-200 background samples:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import GradientShap

@@ -88,12 +88,14 @@ VI trades accuracy for speed. How much accuracy? Depends on:
 
 ### Basic Variational Inference in PyMC
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pymc as pm
@@ -181,12 +183,14 @@ print(az.summary(trace_mcmc))
 
 ### Custom Variational Family (Full-Rank Gaussian)
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from scipy.optimize import minimize
@@ -288,12 +292,14 @@ print(f"\nTrue values: alpha={true_alpha}, beta={true_beta}, log_sigma={np.log(t
 
 ### Stochastic Variational Inference (Mini-Batch)
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import torch

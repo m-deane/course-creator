@@ -67,11 +67,13 @@ A commodity retrieval strategy is a function **R: (Q, KB, F) → C** where:
 
 ### Multi-Dimensional Retrieval System
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -586,11 +588,13 @@ Examples:
 
 ### Hybrid Retrieval with Re-ranking
 
+
+<span class="filename">hybridretrieval.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">hybridretrieval.py</span>
-</div>
 
 ```python
 class HybridRetrieval:

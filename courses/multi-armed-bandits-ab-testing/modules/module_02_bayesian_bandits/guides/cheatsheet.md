@@ -13,11 +13,13 @@
 </div>
 
 ### Beta-Bernoulli (Binary Rewards)
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Initialize
@@ -38,11 +40,13 @@ else:
 </div>
 
 ### Gaussian (Continuous Rewards, Known Variance)
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Initialize
@@ -63,11 +67,13 @@ sigma[arm] = np.sqrt(1 / tau_post)
 </div>
 
 ### Poisson (Count Data)
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Initialize

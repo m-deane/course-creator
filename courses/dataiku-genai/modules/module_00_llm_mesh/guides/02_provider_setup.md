@@ -74,12 +74,13 @@ Similarly, LLM Mesh provider setup centralizes all LLM infrastructure management
 
 ### Anthropic Claude Setup
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Administrative setup (done via UI or API)
@@ -144,12 +145,13 @@ connection_config = {
 
 ### OpenAI Setup
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 connection_config = {
@@ -195,12 +197,13 @@ connection_config = {
 
 ### Azure OpenAI Setup
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 connection_config = {
@@ -249,12 +252,13 @@ connection_config = {
 
 ### Using Configured Connections
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # In a Dataiku Python recipe or notebook
@@ -305,12 +309,13 @@ result = generate_with_fallback("Summarize this report: ...")
 ### 1. Hardcoding API Keys
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # NEVER DO THIS
@@ -321,12 +326,13 @@ client = anthropic.Anthropic(api_key="sk-ant-api03-...")  # Exposed!
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Use Dataiku connection - API key managed securely
@@ -339,12 +345,13 @@ llm = LLM("claude-production")  # API key in secure storage
 ### 2. Incorrect Azure Deployment Names
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Azure requires deployment name, not model name
@@ -358,12 +365,13 @@ response = llm.complete(
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Use deployment name configured in Azure
@@ -379,12 +387,13 @@ response = llm.complete(
 ### 3. Ignoring Provider-Specific Limits
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Different providers have different rate limits
@@ -395,12 +404,13 @@ for i in range(1000):
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import time
@@ -424,12 +434,13 @@ for i in range(1000):
 ### 4. Not Testing Connections
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Deploying without testing
@@ -440,12 +451,13 @@ llm = LLM("new-connection")
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def test_connection(connection_name):
@@ -484,12 +496,13 @@ for conn in ["claude-production", "openai-gpt4", "azure-openai-prod"]:
 ### 5. Mixed Provider Assumptions
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Anthropic-specific parameter used with OpenAI
@@ -503,12 +516,13 @@ response = llm.complete(
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Check provider before using provider-specific features
@@ -557,12 +571,13 @@ elif provider == "openai":
 <details>
 <summary>Solution</summary>
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Connection 1: Claude for Data Scientists
@@ -668,12 +683,13 @@ llm = LLM(connection_name)
 <details>
 <summary>Solution</summary>
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Three regional connections

@@ -8,13 +8,14 @@ NeuralForecast's `.simulate()` uses the Gaussian Copula method to generate sampl
 
 Start with the complete working example, then study each step in detail.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -65,26 +66,19 @@ print(paths_df.columns[:5].tolist())  # ['unique_id', 'ds', 'sample_1', 'sample_
 
 ## The Six-Step Pipeline
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+The following implementation builds on the approach above:
+---
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
----
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -114,13 +108,14 @@ NHITS trained with `MQLoss(level=[80, 90])` produces, for each horizon step $t$,
 
 These are **marginal** quantile forecasts: the distribution of step $t$ conditioned only on history, without reference to other steps.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # Inspect the marginal quantile forecasts
@@ -158,12 +153,13 @@ $$\Delta y_t = y_t - y_{t-1}$$
 
 $$\Delta y_t = \phi \cdot \Delta y_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma^2)$$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from scipy.stats import pearsonr

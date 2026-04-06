@@ -95,11 +95,13 @@ Action = {
 
 ### Signal Generator from Sentiment
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -433,11 +435,13 @@ class SignalConstructor:
 
 ### Signal Validation and Backtesting
 
+
+<span class="filename">signalvalidator.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">signalvalidator.py</span>
-</div>
 
 ```python
 class SignalValidator:
@@ -563,11 +567,13 @@ class SignalValidator:
 
 ### Signal Portfolio Management
 
+
+<span class="filename">signalportfolio.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">signalportfolio.py</span>
-</div>
 
 ```python
 class SignalPortfolio:

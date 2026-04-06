@@ -108,11 +108,13 @@ Every economic release has a deterministic publication schedule known in advance
 
 A production system maintains a **publication calendar** — a table of `(series_id, release_date, pub_lag_days)` triples that drives all scheduling.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import datetime
@@ -192,11 +194,13 @@ The table below gives typical lags from the end of the reference period to the f
 
 ### Scheduler Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import time
@@ -258,11 +262,13 @@ When the BLS publishes payrolls in early October, it simultaneously revises Sept
 
 The minimal viable schema stores one row per `(series_id, observation_date, vintage_date, value)` tuple.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import sqlite3

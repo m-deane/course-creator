@@ -128,11 +128,13 @@ This ensures you optimize for the right thing while preventing catastrophic fail
 - Human labels: Sample 5% of responses for human evaluation
 
 **Example:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def task_completion_score(query, response):
@@ -164,11 +166,13 @@ def task_completion_score(query, response):
 - Spot-check samples manually
 
 **Example:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def extraction_accuracy(response, ground_truth):
@@ -199,11 +203,13 @@ def extraction_accuracy(response, ground_truth):
 - Conviction calibration: Are "high conviction" signals actually more accurate?
 
 **Example:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def signal_quality(response, actual_price_change):

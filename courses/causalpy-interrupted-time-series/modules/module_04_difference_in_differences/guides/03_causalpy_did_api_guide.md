@@ -41,12 +41,13 @@ CausalPy's `DifferenceInDifferences` expects a `pandas.DataFrame` with:
 
 ### Preparing Your Data
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import pandas as pd
@@ -85,12 +86,13 @@ print(f"\nGroup counts:\n{nj_data.groupby(['state', 'period']).size()}")
 
 ### Basic Syntax
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp
@@ -118,12 +120,13 @@ The formula must include:
 
 You can add covariates to control for observed differences:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # With covariates
@@ -140,12 +143,13 @@ result = cp.DifferenceInDifferences(
 
 ### Using the Frequentist Backend
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from sklearn.linear_model import LinearRegression as SKLinReg
@@ -185,12 +189,13 @@ For the Bayesian backend, you get:
 
 ### Accessing the Posterior
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Get the posterior samples for the treatment effect
@@ -223,12 +228,13 @@ CausalPy's DiD plot shows:
 
 ### Customising the Plot
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -259,12 +265,13 @@ plt.show()
 
 ### Trace Plots for Diagnostics
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import arviz as az
@@ -295,12 +302,13 @@ By default, CausalPy uses weakly informative priors:
 
 ### Specifying Custom Priors
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Suppose we believe the treatment effect is small and positive
@@ -326,12 +334,13 @@ result_informative = cp.DifferenceInDifferences(
 
 ### Prior Sensitivity Analysis
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Compare three prior specifications
@@ -377,12 +386,13 @@ plt.show()
 
 ### Posterior Predictive Check
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Does the model generate data that looks like the observed data?
@@ -413,12 +423,13 @@ If $\hat{R} > 1.01$:
 
 ## 8. Complete Worked Example
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp

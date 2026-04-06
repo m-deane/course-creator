@@ -55,12 +55,13 @@ where $D_{ij} = 1$ if $i = j$, else 0.
 
 ### Implementation
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pandas as pd
@@ -107,12 +108,13 @@ print(f"  Number of parameters: {len(lsdv_model.params)}")
 
 ### Extracting Entity Effects
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Extract entity fixed effects from LSDV
@@ -151,12 +153,13 @@ Then estimate: $\tilde{y}_{it} = \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$
 
 ### Implementation
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Manual within transformation

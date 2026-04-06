@@ -126,11 +126,13 @@ Imagine predicting stock prices. In reality, you can only use data up to today t
 
 ### Basic Walk-Forward Validation
 
+
+<span class="filename">__init__.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">__init__.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -393,11 +395,13 @@ def walk_forward_feature_selection(
 
 ### Advanced Walk-Forward Strategies
 
+
+<span class="filename">advanced_walk_forward.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">advanced_walk_forward.py</span>
-</div>
 
 ```python
 class AdaptiveWalkForward:

@@ -71,12 +71,13 @@ Stage 6: Output and Logging
 
 ## 3. Production Pipeline Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 """
@@ -288,12 +289,13 @@ Once a causal model is deployed and producing regular estimates, monitor:
 3. **Estimate stability:** Is the treatment effect changing over time? (Effect modification vs. true change)
 4. **Sample composition:** Are there changes in the types of units entering the sample?
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class CausalMonitor:
@@ -345,12 +347,13 @@ Unlike predictive models, causal models don't "degrade" in accuracy — they can
 
 ### Automated Re-estimation Workflow
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def run_monthly_causal_update(data_path: Path, results_dir: Path):
@@ -394,12 +397,13 @@ def run_monthly_causal_update(data_path: Path, results_dir: Path):
 
 Every causal analysis run should be reproducible. Best practices:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import hashlib

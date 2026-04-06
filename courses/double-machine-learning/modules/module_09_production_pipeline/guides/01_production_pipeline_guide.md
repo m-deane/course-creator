@@ -37,12 +37,13 @@ Data → Validate → Select Models → Estimate → Sensitivity → Report
 
 The pipeline below is designed for commodity market causal analysis — estimating effects like carbon price changes on generation mix, sanctions on freight rates, or inventory surprises on futures spreads. It handles the full workflow from raw data to stakeholder-ready reports.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np

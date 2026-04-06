@@ -53,12 +53,13 @@ This scales as $n^{-1/5}$ — bandwidth shrinks as sample size grows.
 
 ### Practical Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -107,12 +108,13 @@ The goal of sensitivity analysis is to show that your treatment effect estimate 
 
 ### Generating the Sensitivity Plot
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -188,12 +190,13 @@ Use **local linear** (order 1) or at most **local quadratic** (order 2). Higher-
 2. They produce erratic behaviour near the boundaries (Runge's phenomenon)
 3. The fit near the cutoff is dominated by distant points
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Compare polynomial orders
@@ -226,12 +229,13 @@ Kernel weights down-weight observations further from the cutoff. Common choices:
 
 The triangular kernel is optimal for the boundary regression problem in RDD — it down-weights observations far from the cutoff, which is exactly what you want.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Compare kernels
@@ -274,12 +278,13 @@ Ignoring clustering in clustered data leads to over-rejection of the null (false
 
 The "donut" removes observations very close to the cutoff, testing whether results are driven by local manipulation:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def donut_rdd(df, outcome, running_var, cutoff, bandwidth, donut_width):
@@ -311,12 +316,13 @@ If estimates are stable across donut widths, manipulation of the running variabl
 
 ## 8. CausalPy Bandwidth Sensitivity
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp

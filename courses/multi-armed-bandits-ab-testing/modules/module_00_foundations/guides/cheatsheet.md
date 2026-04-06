@@ -234,11 +234,13 @@ START: Do you need to choose between options?
 ## Quick Code Snippets
 
 ### Calculate A/B Test Sample Size
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from scipy.stats import norm
@@ -260,11 +262,13 @@ print(f"Need {n} per variant, {2*n} total")
 </div>
 
 ### Calculate Cumulative Regret
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def cumulative_regret(arm_means, choices):
@@ -284,11 +288,13 @@ print(f"Total regret: {regret[-1]:.3f}")
 </div>
 
 ### Simple Epsilon-Greedy
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def epsilon_greedy(Q, epsilon=0.1):

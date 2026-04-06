@@ -18,12 +18,14 @@ Well-designed tools are the difference between agents that work reliably and age
 
 Each tool should do one thing well:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Bad: Tool does too many things
@@ -215,12 +217,14 @@ Non-required parameters should have sensible defaults:
 
 Use enums and ranges to limit possible values:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 {
@@ -374,12 +378,14 @@ Use `anyOf` or `oneOf` for mutually exclusive options:
 
 ### Group Related Tools
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Database tools
@@ -440,12 +446,14 @@ More tools = more tokens + more confusion:
 
 ### Template for Tool Descriptions
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def create_tool_description(
@@ -503,12 +511,14 @@ search_tool = {
 
 Build validation into your tool execution:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def execute_book_flight(origin: str, destination: str, departure_date: str, **kwargs):
@@ -591,12 +601,14 @@ def execute_tool(name: str, arguments: dict) -> dict:
 
 ### Tool Schema Validation
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import jsonschema

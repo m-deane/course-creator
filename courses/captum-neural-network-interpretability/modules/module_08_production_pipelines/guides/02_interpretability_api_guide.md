@@ -87,13 +87,14 @@ Content-Type: application/json
 
 ## 3. FastAPI Application Structure
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from fastapi import FastAPI, HTTPException
@@ -117,13 +118,14 @@ logger = logging.getLogger(__name__)
 
 ### Pydantic Request Model
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from typing import List, Optional, Literal
@@ -154,13 +156,14 @@ class AttributionRequest(BaseModel):
 
 ## 4. Model Registry
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import threading
@@ -210,13 +213,14 @@ registry = ModelRegistry()
 
 ## 5. Baseline Construction
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def build_baseline(
@@ -252,13 +256,14 @@ def build_baseline(
 
 ## 6. Attribution Computation
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def compute_attribution(
@@ -328,13 +333,14 @@ def compute_attribution(
 
 ## 7. Attribution Caching
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import hashlib
@@ -392,13 +398,14 @@ attribution_cache = AttributionCache(max_size=512)
 
 ## 8. The Attribution Endpoint
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 @app.post("/attribute")
@@ -495,13 +502,14 @@ async def attribute(request: AttributionRequest):
 
 ## 9. Health and Utility Endpoints
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 @app.get("/health")
@@ -531,13 +539,14 @@ async def clear_cache():
 
 ## 10. Application Startup
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from contextlib import asynccontextmanager
@@ -577,13 +586,14 @@ app = FastAPI(title="Captum Interpretability Service",
 
 ## 11. Running the Service
 
+
+<span class="filename">example.sh</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.sh</span>
-
-</div>
-<div class="code-body">
 
 ```bash
 # Development
@@ -607,13 +617,14 @@ docker run -p 8080:8080 \
 
 ### Test with curl
 
+
+<span class="filename">example.sh</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.sh</span>
-
-</div>
-<div class="code-body">
 
 ```bash
 curl -X POST http://localhost:8080/attribute \
@@ -636,13 +647,14 @@ curl -X POST http://localhost:8080/attribute \
 
 ## 12. Batched Attribution Endpoint
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 class BatchAttributionRequest(BaseModel):

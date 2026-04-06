@@ -83,11 +83,13 @@ Input: News, fundamental data, technical levels
 Output: Narrative assessment with conviction
 
 **Step 2: Signal Extraction**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 {
@@ -124,11 +126,13 @@ If $|D_{\text{agg}}| < \theta$ (threshold), signals conflict → reduce position
 
 ### Core Signal Framework
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -464,11 +468,13 @@ print(f"\nReasoning:\n{aggregate.reasoning}")
 
 ### Position Sizing from Signals
 
+
+<span class="filename">positionsizer.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">positionsizer.py</span>
-</div>
 
 ```python
 class PositionSizer:

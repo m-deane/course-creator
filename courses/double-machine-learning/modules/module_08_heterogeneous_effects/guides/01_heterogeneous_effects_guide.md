@@ -47,12 +47,13 @@ The approach:
 
 Commodity example: heterogeneous effects of inventory surprises on commodity futures across sectors. Some sectors (energy) are highly sensitive to inventory news, while others (precious metals) are barely affected.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -92,12 +93,13 @@ print(f"  Overall ATE: {np.mean(tau):.2f}")
 
 ## How to Estimate CATE with CausalForestDML
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # CausalForestDML: nonparametric CATE estimation
@@ -125,12 +127,13 @@ for s, name in enumerate(['Energy', 'Metals', 'Agriculture']):
 
 Best Linear Projection (BLP) tests whether CATE varies with observable characteristics:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # BLP: project CATE onto covariates
@@ -155,12 +158,13 @@ The BLP summary shows which covariates significantly predict treatment effect he
 
 Group Average Treatment Effects (GATES) sorts observations by estimated CATE and computes group averages:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # GATES: sort by estimated CATE, compute group means
@@ -196,12 +200,13 @@ GATES provides a simple visual test: if the group averages are flat, there is no
 
 ## How to Visualise Treatment Effect Heterogeneity
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt

@@ -180,13 +180,14 @@ The backward pass for computing $G_t$ is a key implementation detail — it avoi
 
 ## Python Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import numpy as np

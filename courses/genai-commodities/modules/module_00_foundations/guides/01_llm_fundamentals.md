@@ -221,11 +221,13 @@ Text: {text}
 
 Provide examples for complex extractions:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 FEW_SHOT_PROMPT = """
@@ -261,11 +263,13 @@ Now extract from:
 
 For complex reasoning:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 REASONING_PROMPT = """
@@ -319,11 +323,13 @@ API costs accumulate quickly with long documents:
 3. **Use smaller models**: For simple tasks
 4. **Cache responses**: Avoid duplicate processing
 
+
+<span class="filename">get_cache_key.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">get_cache_key.py</span>
-</div>
 
 ```python
 import hashlib
@@ -350,11 +356,13 @@ def cached_extraction(cache_key, text, prompt_template):
 
 Always validate LLM outputs:
 
+
+<span class="filename">inventoryreport.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">inventoryreport.py</span>
-</div>
 
 ```python
 from pydantic import BaseModel, validator
@@ -398,11 +406,13 @@ LLMs may fabricate data. Mitigate with:
 3. **Confidence scores**: "Rate your confidence 0-1 for each extraction"
 4. **Cross-validation**: Compare multiple model outputs
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 ANTI_HALLUCINATION_PROMPT = """

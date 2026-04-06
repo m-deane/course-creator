@@ -98,11 +98,13 @@ Demand = Consumption + Exports + Inventory_Build
 
 ### Supply/Demand Data Aggregation
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -445,11 +447,13 @@ Consider:
 
 ### Natural Gas Supply/Demand (Seasonal Model)
 
+
+<span class="filename">naturalgassdanalyzer.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">naturalgassdanalyzer.py</span>
-</div>
 
 ```python
 class NaturalGasSDAnalyzer:

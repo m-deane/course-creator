@@ -462,11 +462,13 @@ print(f"\nState prediction accuracy: {accuracy:.2%}")
 
 ### Visualization
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -517,11 +519,13 @@ plt.show()
    - Solution: Run with multiple random initializations
    - Select model with highest final likelihood
 
+
+<span class="filename">fit_with_multiple_initializations.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">fit_with_multiple_initializations.py</span>
-</div>
 
 ```python
 def fit_with_multiple_initializations(observations, n_states, n_inits=10):
@@ -549,11 +553,13 @@ def fit_with_multiple_initializations(observations, n_states, n_inits=10):
    - Multiplying many small numbers → underflow to zero
    - Solution: Use log-space computation or scaling
 
+
+<span class="filename">forward_scaled.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">forward_scaled.py</span>
-</div>
 
 ```python
 def forward_scaled(self, observations):
@@ -587,11 +593,13 @@ def forward_scaled(self, observations):
    - But may not generalize to new data
    - Solution: Use BIC/AIC for model selection
 
+
+<span class="filename">compute_bic.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compute_bic.py</span>
-</div>
 
 ```python
 def compute_bic(log_likelihood, n_params, n_observations):
@@ -632,11 +640,13 @@ def select_num_states(observations, max_states=5):
    - Random initialization may start far from good solution
    - Better: K-means clustering of observations for initial state assignment
 
+
+<span class="filename">initialize_with_kmeans.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">initialize_with_kmeans.py</span>
-</div>
 
 ```python
 from sklearn.cluster import KMeans

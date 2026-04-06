@@ -148,11 +148,13 @@ Larger hypervolume = better Pareto approximation.
 
 ### Basic Multi-Objective Fitness
 
+
+<span class="filename">multi_objective_fitness.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">multi_objective_fitness.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -219,11 +221,13 @@ print(f"MSE: {objectives[0]:.4f}, Complexity: {objectives[1]:.4f}")
 
 ### NSGA-II with DEAP
 
+
+<span class="filename">nsga2_feature_selection.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">nsga2_feature_selection.py</span>
-</div>
 
 ```python
 from deap import base, creator, tools, algorithms

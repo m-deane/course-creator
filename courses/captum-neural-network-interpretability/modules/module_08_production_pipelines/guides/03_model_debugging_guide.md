@@ -63,13 +63,14 @@ Attribution methods make these shortcuts visible before deployment.
 
 ### Setup: Biased CIFAR Classifier
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -92,13 +93,14 @@ ig = IntegratedGradients(lambda x: model(x))
 
 ### Attribution on Correct Predictions
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def attribution_for_prediction(model, inputs, target_class, n_steps=50):
@@ -129,13 +131,14 @@ def attribution_for_prediction(model, inputs, target_class, n_steps=50):
 
 ### Visualizing What the Model Relies On
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import matplotlib.pyplot as plt
@@ -185,13 +188,14 @@ def debug_attribution_plot(image_tensor, attrs_unsigned, title=""):
 
 ### Step 1: Compute Attribution Statistics Per Class
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def class_attribution_statistics(
@@ -229,13 +233,14 @@ def class_attribution_statistics(
 
 ### Step 2: Compare Mean Attributions Across Classes
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def compare_class_attributions(model, dataloader, class_names, n_steps=30):
@@ -273,13 +278,14 @@ def compare_class_attributions(model, dataloader, class_names, n_steps=30):
 
 **Diagnosis code:**
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
@@ -315,13 +321,14 @@ def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
 
 **Diagnosis code:**
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def measure_border_attribution(attrs_map, border_fraction=0.1):
@@ -381,13 +388,14 @@ def screen_for_border_artifacts(model, dataloader, threshold=0.20, n_steps=30):
 
 **Diagnosis:** Use TCAV with texture-concept images (see Module 06) or compare attribution across stylized variants of the same image.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def texture_vs_shape_score(attrs_map, edge_mask):
@@ -411,13 +419,14 @@ def texture_vs_shape_score(attrs_map, edge_mask):
 
 ### Attribution Comparison: Correct vs. Incorrect Predictions
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
@@ -467,13 +476,14 @@ For high-stakes models (credit, hiring, medical), regulators may require:
 
 ### Attribution Report Structure
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from dataclasses import dataclass, field
@@ -581,13 +591,14 @@ Attribution patterns shift when the data distribution shifts. Monitoring attribu
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import numpy as np

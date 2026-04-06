@@ -266,12 +266,13 @@ plt.show()
 
 ### Comparing Static vs Dynamic Estimation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -334,12 +335,13 @@ So: $\frac{\partial F_{t+h}}{\partial \eta_t} = \Phi^h$
 
 ### Implementation
 
+
+<span class="filename">compute_irf.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compute_irf.py</span>
-
-</div>
 
 ```python
 def compute_irf(Phi, horizons=20):
@@ -501,12 +503,13 @@ print(cum_irf[-1])
 ### Implementation
 
 7. **Simulation Study**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # Simulate DFM with T=500, N=30, r=3, VAR(2) factors
@@ -519,12 +522,13 @@ print(cum_irf[-1])
 </div>
 
 8. **VAR Estimation**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # Given simulated factors F from problem 7:
@@ -536,12 +540,13 @@ print(cum_irf[-1])
 </div>
 
 9. **Model Comparison**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # Simulate data from static model (Phi = 0)

@@ -94,12 +94,13 @@ resource_name: your-resource-name
 
 ### Basic Usage
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -120,12 +121,13 @@ print(response.text)
 
 ### Chat Interface
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.llm import LLM, ChatSession
@@ -156,12 +158,13 @@ for message in chat.messages:
 
 ### Structured Output
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.llm import LLM
@@ -194,12 +197,13 @@ print(data)
 
 ### Listing Available Connections
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -221,12 +225,13 @@ for conn in llm_connections:
 
 ### Connection Testing
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def test_llm_connection(connection_name: str) -> dict:
@@ -261,12 +266,13 @@ for conn_name in ['anthropic-claude', 'openai-gpt4']:
 
 ### Automatic Failover
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.llm import LLM
@@ -297,12 +303,13 @@ result = router.complete("Summarize recent OPEC decisions")
 
 ### Cost-Based Routing
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 MODEL_COSTS = {
@@ -363,12 +370,13 @@ llm_permissions:
 
 ### Usage Quotas
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.llm import LLM, UsageTracker

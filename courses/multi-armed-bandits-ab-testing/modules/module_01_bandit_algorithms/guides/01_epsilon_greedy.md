@@ -157,11 +157,13 @@ Think of epsilon-greedy as a commodity trader with a simple rule:
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -195,11 +197,13 @@ for t in range(1000):
 </div>
 
 **Decaying ε variant:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 class DecayingEpsilonGreedy(EpsilonGreedyBandit):
@@ -252,11 +256,13 @@ epsilon = lambda t: min(1.0, 10 / np.sqrt(t + 1))  # Decays as 1/√t
 **Problem:** If two arms have identical Q̂ values, `argmax` picks the first one (biases towards lower-indexed arms).
 
 **Fix:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def select_action(self):

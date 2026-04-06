@@ -90,11 +90,13 @@ Event = {
 
 ### Multi-Source News Acquisition
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 import feedparser
@@ -333,11 +335,13 @@ class CommodityNewsAcquisition:
 
 ### Commodity Relevance Filtering
 
+
+<span class="filename">relevancefilter.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">relevancefilter.py</span>
-</div>
 
 ```python
 from anthropic import Anthropic
@@ -426,11 +430,13 @@ Consider NOT relevant if:
 
 ### Entity and Fact Extraction
 
+
+<span class="filename">class.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">class.py</span>
-</div>
 
 ```python
 @dataclass
@@ -521,11 +527,13 @@ Extract specific numbers where mentioned. Use standard units:
 
 ### Complete News Processing Pipeline
 
+
+<span class="filename">class.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">class.py</span>
-</div>
 
 ```python
 @dataclass

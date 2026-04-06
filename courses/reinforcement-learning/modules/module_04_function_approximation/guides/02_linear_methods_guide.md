@@ -84,13 +84,14 @@ $$\mathbf{x}(\mathbf{s}) = [1, s_1, s_2, s_1^2, s_1 s_2, s_2^2]^T$$
 
 Total features: $\binom{k+n}{n}$. For $k=4$ (CartPole) and $n=3$: $\binom{7}{3} = 35$ features.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -140,13 +141,14 @@ $$\alpha_i = \alpha \Big/ \sqrt{1 + \|\mathbf{c}_i\|^2}$$
 
 Higher-frequency features get smaller learning rates, which improves stability.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 def fourier_features(state, order=3, state_low=None, state_high=None):
@@ -194,13 +196,14 @@ For a $k$-dimensional state with $m$ tiles per dimension and $n$ tilings:
 3. Non-zero features per state: exactly $n$ (one per tiling)
 4. Offset for tiling $i$: shift by $(i/n) \times (\text{tile width})$ in each dimension
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 class TileCoder:
@@ -300,12 +303,13 @@ n tilings: Resolution = tile_width / n
 
 ### 2.4 Radial Basis Functions
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def rbf_features(state, centers, sigma=1.0):

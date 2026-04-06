@@ -54,11 +54,13 @@ Commodity trading agents autonomously gather data, analyze markets, and generate
 
 ### Core Agent Class
 
+
+<span class="filename">class.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">class.py</span>
-</div>
 
 ```python
 from anthropic import Anthropic
@@ -198,11 +200,13 @@ Return JSON:
 
 ### EIA Report Agent
 
+
+<span class="filename">create_eia_agent.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">create_eia_agent.py</span>
-</div>
 
 ```python
 import requests
@@ -280,11 +284,13 @@ Focus on surprises vs expectations and their price implications."""
 
 ### Agent Orchestration
 
+
+<span class="filename">agentorchestrator.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">agentorchestrator.py</span>
-</div>
 
 ```python
 class AgentOrchestrator:
@@ -349,11 +355,13 @@ Provide:
 
 ### Example Multi-Agent Setup
 
+
+<span class="filename">create_commodity_analysis_system.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">create_commodity_analysis_system.py</span>
-</div>
 
 ```python
 def create_commodity_analysis_system():
@@ -384,11 +392,13 @@ print(synthesis)
 
 ### Event-Driven Triggers
 
+
+<span class="filename">agentscheduler.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">agentscheduler.py</span>
-</div>
 
 ```python
 from datetime import datetime, time

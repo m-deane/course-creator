@@ -8,12 +8,13 @@ Dataiku Python recipes provide full flexibility for custom LLM applications.
 
 ### Basic LLM Recipe
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Python Recipe: process_reports
@@ -73,12 +74,13 @@ output_dataset.write_with_schema(output_df)
 
 ### Parallel Processing
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -132,12 +134,13 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 
 ### Chunked Processing for Large Datasets
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -191,12 +194,13 @@ process_in_chunks("large_reports", "summarized_reports")
 
 ### API Node Endpoint
 
+
+<span class="filename">api_endpoint.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">api_endpoint.py</span>
-
-</div>
 
 ```python
 # api_endpoint.py - Deploy as API endpoint
@@ -248,12 +252,13 @@ def api_handler(request):
 
 ### Webapp Backend
 
+
+<span class="filename">webapp_backend.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">webapp_backend.py</span>
-
-</div>
 
 ```python
 # webapp_backend.py - For Dataiku Webapp
@@ -314,12 +319,13 @@ def get_history():
 
 ### Multi-Stage Processing
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -413,12 +419,13 @@ dataiku.Dataset("trading_signals").write_with_schema(output_df)
 
 ### Robust Processing
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku

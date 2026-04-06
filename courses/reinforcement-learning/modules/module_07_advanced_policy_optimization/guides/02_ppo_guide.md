@@ -141,13 +141,14 @@ Where:
 
 PPO collects a batch of experience under $\pi_{\theta_{old}}$, then performs **multiple gradient epochs** over the same batch. This amortizes the environment interaction cost:
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import torch
@@ -309,13 +310,14 @@ def ppo_update(model, optimizer, rollout, n_epochs=4, batch_size=64,
 
 PPO uses Generalized Advantage Estimation (Schulman et al., 2016) to compute $\hat{A}_t$:
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 def compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):

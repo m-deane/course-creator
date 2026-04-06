@@ -218,12 +218,13 @@ def pca_sklearn(X, n_components=None):
 
 Plot eigenvalues in descending order; look for "elbow" where decline levels off.
 
+
+<span class="filename">scree_plot.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">scree_plot.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -268,12 +269,13 @@ Retain enough components to explain a target proportion (e.g., 90%) of total var
 
 Specialized criteria balancing fit and complexity for large panels (covered in Module 3).
 
+
+<span class="filename">variance_explained.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">variance_explained.py</span>
-
-</div>
 
 ```python
 def variance_explained(eigenvalues, threshold=0.9):
@@ -299,12 +301,13 @@ Each loading $v_{jk}$ tells us how variable $j$ loads on component $k$:
 
 ### Example: Macroeconomic Factors
 
+
+<span class="filename">interpret_loadings.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">interpret_loadings.py</span>
-
-</div>
 
 ```python
 def interpret_loadings(loadings, variable_names, n_top=5):
@@ -347,12 +350,13 @@ PC loadings can be rotated for easier interpretation without changing fit:
 - **Varimax:** Orthogonal rotation maximizing variance of squared loadings
 - **Promax:** Oblique rotation allowing correlated components
 
+
+<span class="filename">varimax_rotation.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">varimax_rotation.py</span>
-
-</div>
 
 ```python
 from scipy.stats import special_ortho_group
@@ -416,12 +420,13 @@ For large $N$ with strong factors, PCA estimates converge to true factor loading
 
 ### Code Comparison
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from sklearn.decomposition import PCA, FactorAnalysis

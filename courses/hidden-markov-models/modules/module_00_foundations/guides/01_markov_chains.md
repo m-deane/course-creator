@@ -204,11 +204,13 @@ The rate of convergence to the stationary distribution depends on the **second l
 
 $$\|\pi_t - \pi^*\| \leq C \cdot |\lambda_2|^t$$
 
+
+<span class="filename">convergence_rate.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">convergence_rate.py</span>
-</div>
 
 ```python
 def convergence_rate(mc: MarkovChain) -> float:
@@ -228,11 +230,13 @@ print(f"Half-life: {np.log(2) / np.log(1/rate):.1f} steps")
 
 The expected number of steps to reach state $j$ starting from state $i$:
 
+
+<span class="filename">expected_hitting_time.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">expected_hitting_time.py</span>
-</div>
 
 ```python
 def expected_hitting_time(mc: MarkovChain, target_state: int) -> np.ndarray:
@@ -272,11 +276,13 @@ print(f"Expected steps to Bear from Bull: {hitting[0]:.1f}")
 
 ### Maximum Likelihood Estimation
 
+
+<span class="filename">estimate_transitions.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">estimate_transitions.py</span>
-</div>
 
 ```python
 def estimate_transitions(states: List[int], n_states: int) -> np.ndarray:
@@ -307,11 +313,13 @@ print(mc.A)
 
 ### Bayesian Estimation
 
+
+<span class="filename">bayesian_transitions.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">bayesian_transitions.py</span>
-</div>
 
 ```python
 def bayesian_transitions(
@@ -353,11 +361,13 @@ def bayesian_transitions(
 
 ## Visualization
 
+
+<span class="filename">plot_markov_chain.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">plot_markov_chain.py</span>
-</div>
 
 ```python
 import matplotlib.pyplot as plt

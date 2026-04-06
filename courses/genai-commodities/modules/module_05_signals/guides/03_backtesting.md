@@ -100,11 +100,13 @@ For 1000 signals, $0.01 per call, 10 variants → $100/backtest
 ### Traditional vs LLM Backtesting
 
 **Traditional (Fast):**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Compute indicator once
@@ -119,11 +121,13 @@ for threshold in range(20, 80):
 Time: Seconds for thousands of tests
 
 **LLM-Based (Expensive):**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Must call LLM for each signal generation
@@ -137,11 +141,13 @@ for date in dates:
 Time: Hours for single test
 
 **Hybrid Approach:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Cache LLM responses
@@ -181,11 +187,13 @@ Report: Average of out-of-sample test periods
 
 ### Backtest Engine with Caching
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 import numpy as np

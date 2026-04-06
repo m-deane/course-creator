@@ -166,12 +166,13 @@ $$R_i^2 = \frac{\hat{\lambda}_i' \hat{\lambda}_i}{\text{Var}(X_i)} = \frac{\sum_
 
 ### Complete Implementation from Scratch
 
+
+<span class="filename">stockwatsonestimator.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">stockwatsonestimator.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -560,12 +561,13 @@ First forecast:
 
 ### Using with scikit-learn API
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from sklearn.decomposition import PCA

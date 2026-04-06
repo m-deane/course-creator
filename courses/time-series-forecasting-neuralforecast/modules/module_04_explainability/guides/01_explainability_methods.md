@@ -6,13 +6,14 @@
 
 Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" Start with the working API call below, then dig into the theory behind each method.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -104,13 +105,14 @@ The attributions sum to the difference between the prediction and the baseline p
 
 **Implementation note.** NeuralForecast uses the `captum` library under the hood, which implements IG via `IntegratedGradients` from `captum.attr`.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # IG is the default explainer and the recommended starting point
@@ -131,13 +133,14 @@ $$\text{IxG}_i(x) = x_i \times \frac{\partial f(x)}{\partial x_i}$$
 
 **The bias problem with ReLU networks.** IxG violates additivity. For networks with ReLU activations, the gradient is zero wherever the neuron is off. A feature can have a large input value but zero gradient if the ReLU is inactive, and IxG will attribute zero to that feature — even if it was causally important in training. This is the **saturation problem** and it means IxG attributions should be interpreted with caution in deep networks.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="InputXGradient")
@@ -169,12 +172,13 @@ This requires 100 to 1000 forward passes per prediction, making Shapley the slow
 
 $$\sum_{i=1}^{n} \phi_i = f(x) - E[f(x)]$$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSampling")

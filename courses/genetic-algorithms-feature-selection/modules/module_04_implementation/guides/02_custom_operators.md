@@ -154,11 +154,13 @@ Child:    [0, 1, 0, 1, 1]  ✓ (LA, income, age)
 - Noise features: $p_m = 0.02$ (lower exploration)
 - Focus search on promising features
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Feature importances from random forest

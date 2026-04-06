@@ -130,11 +130,13 @@ Test:                                            [first test]─────
 
 ### Stationarity Testing
 
+
+<span class="filename">__str__.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">__str__.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -348,11 +350,13 @@ def test_stationarity_multiple_series(
 
 ### Transformation to Stationarity
 
+
+<span class="filename">stationarity_transforms.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">stationarity_transforms.py</span>
-</div>
 
 ```python
 def make_stationary(
@@ -588,11 +592,13 @@ def auto_make_stationary(
 
 ### GA Feature Selection with Stationarity Handling
 
+
+<span class="filename">stationary_fitness.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">stationary_fitness.py</span>
-</div>
 
 ```python
 def stationary_feature_selection_fitness(

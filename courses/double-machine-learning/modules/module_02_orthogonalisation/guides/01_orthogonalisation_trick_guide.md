@@ -78,12 +78,13 @@ This is the residual-on-residual regression. The treatment effect $\theta$ is th
 
 ## How to Implement DML in 30 Lines
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -142,12 +143,13 @@ This function implements the full DML algorithm with cross-fitting. Each fold tr
 
 ## How to Apply It to Weather Shocks on Natural Gas
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 np.random.seed(42)

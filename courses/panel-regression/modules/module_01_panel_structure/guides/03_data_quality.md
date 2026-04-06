@@ -162,12 +162,13 @@ One bad year affects all years for that entity.
 
 ### Detecting Missing Patterns
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -253,12 +254,13 @@ print("\nMissing patterns visualization saved to missing_patterns.png")
 
 ### Testing for Missing Data Bias
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -317,12 +319,13 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
 
 ### Handling Unbalanced Panels
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Create strongly unbalanced panel

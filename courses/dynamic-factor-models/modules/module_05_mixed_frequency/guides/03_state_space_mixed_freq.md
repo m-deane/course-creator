@@ -132,12 +132,13 @@ Note the third row sums factors (flow aggregation).
 
 ### Code Implementation
 
+
+<span class="filename">mixedfrequencydfm.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">mixedfrequencydfm.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -412,12 +413,13 @@ Aggregation constraint $\Lambda^{(Q)} = C \Lambda^{(H)}$ can be:
 
 ### Code Implementation Sketch
 
+
+<span class="filename">em_algorithm_mixed_freq.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">em_algorithm_mixed_freq.py</span>
-
-</div>
 
 ```python
 def em_algorithm_mixed_freq(data_monthly, data_quarterly, quarterly_periods,
@@ -493,12 +495,13 @@ The Kalman filter automatically weights new information based on its signal-to-n
 
 ### Code Example: Real-Time Nowcasting
 
+
+<span class="filename">nowcast_with_ragged_edge.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">nowcast_with_ragged_edge.py</span>
-
-</div>
 
 ```python
 def nowcast_with_ragged_edge(model, historical_monthly, historical_quarterly,

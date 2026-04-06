@@ -70,13 +70,14 @@ For a 224×224 image with window size 15×15 and stride 8: approximately $28 \ti
 
 ## 3. Captum Occlusion API
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import Occlusion
@@ -109,13 +110,14 @@ attributions = occ.attribute(
 
 ### Postprocessing for Visualization
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import numpy as np
@@ -167,13 +169,14 @@ Occlusion uses a sliding window to define feature groups. **Feature Ablation** g
 
 Feature Ablation is the most general perturbation method in Captum:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import FeatureAblation
@@ -215,13 +218,14 @@ For images, superpixel segmentation provides semantically meaningful feature gro
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from skimage.segmentation import slic
@@ -268,13 +272,14 @@ Superpixel ablation produces cleaner heatmaps than pixel-level occlusion: each c
 
 For tabular models, Feature Ablation is the standard perturbation attribution method. Each feature is ablated individually:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -360,13 +365,14 @@ The baseline choice changes what question you're asking. Always select the basel
 
 For models with multiple input modalities (e.g., image + metadata):
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Model with two inputs: image and metadata vector

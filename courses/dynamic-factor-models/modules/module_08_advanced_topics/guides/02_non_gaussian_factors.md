@@ -98,12 +98,13 @@ Example: $\nu = 5 \implies \kappa = 9$ (much heavier than Gaussian)
 
 ### Code Implementation: Detecting Non-Gaussianty
 
+
+<span class="filename">test_gaussianity.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">test_gaussianity.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -312,12 +313,13 @@ This is weighted least squares with weights $w_t$!
 
 ### Code Implementation: Student-t Factor Model
 
+
+<span class="filename">studenttfactormodel.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">studenttfactormodel.py</span>
-
-</div>
 
 ```python
 from scipy.special import digamma, logsumexp

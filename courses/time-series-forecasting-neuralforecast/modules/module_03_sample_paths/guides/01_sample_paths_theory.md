@@ -8,13 +8,14 @@ A probabilistic forecast gives you marginal distributions: the uncertainty aroun
 
 Start here: generating sample paths from a random walk in six lines.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -72,13 +73,14 @@ $$\omega^{(s)} = \left(y_1^{(s)}, y_2^{(s)}, \ldots, y_H^{(s)}\right), \quad s =
 
 Each path is internally consistent: if Monday is high, Tuesday in that path reflects the realistic follow-on, not an independent draw.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -133,13 +135,14 @@ This framework is universal. The function $f$ can be:
 - A threshold crossing (first day stock runs out)
 - A complex business rule (trigger reorder when cumulative demand exceeds safety stock)
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # The universal Monte Carlo template
@@ -194,12 +197,13 @@ $$Q_{0.8}\left(\sum_{t=1}^H y_t\right) \neq \sum_{t=1}^H Q_{0.8}(y_t)$$
 
 The gap between these two quantities depends on the inter-step correlation. For positively correlated series (common in demand), the right side overestimates. For negatively correlated series (mean-reverting), it underestimates. The only correct approach uses the joint distribution — which sample paths provide.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Demonstrate the inequality concretely

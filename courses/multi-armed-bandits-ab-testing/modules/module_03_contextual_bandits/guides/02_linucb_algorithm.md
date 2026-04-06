@@ -175,11 +175,13 @@ LinUCB learns the linear relationship: "Energy performs well when VIX is low and
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -302,11 +304,13 @@ Use neural network for feature representation, LinUCB on final layer embeddings.
 ### 3. Implementation Exercise
 **Task:** Add a method to compute prediction uncertainty for a given context and arm.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def get_uncertainty(self, arm, context):

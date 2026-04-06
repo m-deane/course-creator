@@ -28,12 +28,13 @@ $$Var(\hat{\beta}) = (X'X)^{-1} \left(\sum_{g} X_g' \hat{u}_g \hat{u}_g' X_g\rig
 
 where $g$ indexes clusters (entities).
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -128,12 +129,13 @@ df = demonstrate_clustering_importance()
 
 The most common approach for panel data.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def entity_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -162,12 +164,13 @@ fe_model = entity_clustering(df, 'y', ['x'], 'entity', 'time')
 
 For cross-sectional correlation across entities.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def time_clustering(df, y_col, x_cols, entity_col, time_col):

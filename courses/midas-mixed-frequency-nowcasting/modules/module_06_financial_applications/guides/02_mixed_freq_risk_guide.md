@@ -63,11 +63,13 @@ A simpler but equivalent two-step approach:
 
 ### 1.3 Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -146,11 +148,13 @@ def backtest_var(returns, var_estimates, alpha=0.01):
 
 Beyond unconditional coverage, violations should be **serially independent** — clustering indicates model inadequacy:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def christoffersen_test(violations):
@@ -225,11 +229,13 @@ $$y_t(\tau) = \beta_{1t} + \beta_{2t}\frac{1-e^{-\lambda\tau}}{\lambda\tau} + \b
 
 Then apply MIDAS to each factor:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from sklearn.decomposition import PCA

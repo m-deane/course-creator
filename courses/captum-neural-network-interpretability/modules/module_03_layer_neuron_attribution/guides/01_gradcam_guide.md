@@ -107,13 +107,14 @@ Captum implements GradCAM as `LayerGradCam`, which can target any convolutional 
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import LayerGradCam, LayerAttribution
@@ -148,13 +149,14 @@ attr_upsampled = LayerAttribution.interpolate(
 
 The raw output has shape `(1, channels, 7, 7)`. To get a single 2D heatmap:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -180,13 +182,14 @@ heatmap = (heatmap - heatmap.min()) / (heatmap.max() - heatmap.min() + 1e-8)
 
 One powerful feature of Captum's `LayerGradCam` is the ability to target intermediate layers, not just the final conv layer. This reveals what earlier layers "see":
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Early layer: edges, textures
@@ -217,13 +220,14 @@ Comparing GradCAM across layers shows the hierarchical nature of CNN representat
 
 A key advantage of GradCAM over class-agnostic methods is that it can produce different heatmaps for different classes. For an image containing both a dog and a cat:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Heatmap explaining "dog" prediction
@@ -255,13 +259,14 @@ Beyond visual inspection, GradCAM can be evaluated quantitatively using the **In
 
 **Insertion:** Starting from the baseline, progressively reveal pixels in order of decreasing attribution importance. Measure how fast confidence rises. Faster rise = better attribution.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def deletion_score(model, image, heatmap, n_steps=100, target_class=None):
@@ -330,13 +335,14 @@ In training mode, batch normalization uses batch statistics, which changes the g
 **4. Ignoring negative GradCAM:**
 The ReLU in GradCAM removes negative contributions. To see the full picture (what the model actively suppresses), compute GradCAM without ReLU and visualize both positive and negative regions.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Full signed GradCAM (no ReLU in aggregation)

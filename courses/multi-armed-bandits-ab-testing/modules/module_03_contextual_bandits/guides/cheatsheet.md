@@ -56,11 +56,13 @@ At each round t:
 
 ## LinUCB Implementation Template
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -133,11 +135,13 @@ month_cos = np.cos(2 * np.pi * month / 12)
 ```
 
 **Trend:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 ma_short = prices.rolling(20).mean()
@@ -148,11 +152,13 @@ trend = (ma_short - ma_long) / ma_long
 </div>
 
 **Macro Regime:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Dollar + VIX composite

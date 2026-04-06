@@ -142,11 +142,13 @@ After a year, you've learned:
 
 Complete simulation of the Creator Bandit Playbook over 52 weeks:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -299,11 +301,13 @@ A food blogger uses a bandit to optimize content. Arms are recipe types. Reward 
 
 ### Problem 3: Simulate Arm Retirement (Implementation)
 Implement the retirement logic from the playbook:
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def should_retire(arm_idx, avg_rewards, pulls, week):

@@ -117,11 +117,13 @@ Imagine driving with GPS directions. If the GPS uses traffic data from last week
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -168,11 +170,13 @@ for t in range(1000):
 
 **Sliding-Window UCB:**
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from collections import deque
@@ -312,11 +316,13 @@ During COVID-19 crash (March 2020), oil went negative. Standard TS with data fro
 With γ=0.95 (half-life ~14 days), post-crash data quickly dominated. Algorithm shifted to natural gas and heating oil within 2-3 weeks.
 
 **Implementation:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Pseudo-code

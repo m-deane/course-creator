@@ -139,12 +139,13 @@ This is the **local linear regression** estimator. It:
 - Allows different slopes on each side
 - Reduces boundary bias compared to global polynomials
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -189,12 +190,13 @@ The IK bandwidth minimises the asymptotic mean squared error of the local linear
 - The density of the running variable at the cutoff
 - The outcome variance
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Using rdrobust package
@@ -221,12 +223,13 @@ If units can precisely control their running variable value and prefer to be tre
 
 **Detection:** Histogram density test (McCrary test)
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from rdrobust import rddensity
@@ -246,12 +249,13 @@ If another variable also jumps discontinuously at the cutoff, you cannot separat
 
 **Detection:** Run the RDD on **baseline covariates** — they should show no jump at the cutoff.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 for covariate in ['age', 'income', 'prior_score']:
@@ -294,12 +298,13 @@ This local nature is both a strength (high internal validity) and a weakness (li
 
 ## 10. CausalPy RDD: Quick Look
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp

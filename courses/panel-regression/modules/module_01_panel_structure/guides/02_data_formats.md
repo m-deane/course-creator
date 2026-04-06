@@ -111,12 +111,13 @@ $$\text{melt}(\text{df}_{\text{wide}}, \text{id\_vars}=i, \text{var\_name}=t, \t
 ### Real-World Example: Wage Data
 
 **Long Format (Analysis-Ready):**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 person_id | year | wage | education | experience
@@ -131,12 +132,13 @@ person_id | year | wage | education | experience
 </div>
 
 **Wide Format (Time Series View):**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 person_id | wage_2019 | wage_2020 | wage_2021
@@ -164,12 +166,13 @@ person_id | wage_2019 | wage_2020 | wage_2021
 
 ### Format Conversion
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np

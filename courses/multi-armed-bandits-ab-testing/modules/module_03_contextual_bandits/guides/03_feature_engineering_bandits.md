@@ -116,11 +116,13 @@ You should be able to explain why the feature might matter.
 ## Commodity-Specific Feature Recipes
 
 ### Recipe 1: Volatility Regime
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def compute_volatility_regime(prices, window=20):
@@ -139,11 +141,13 @@ def compute_volatility_regime(prices, window=20):
 **Typical range:** -2 to +2 (z-score), standardized
 
 ### Recipe 2: Term Structure Indicator
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def compute_term_structure(front_price, back_price):
@@ -160,11 +164,13 @@ def compute_term_structure(front_price, back_price):
 **Typical range:** -0.2 to +0.2 (20% annualized)
 
 ### Recipe 3: Seasonality Features
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def compute_seasonality(date):

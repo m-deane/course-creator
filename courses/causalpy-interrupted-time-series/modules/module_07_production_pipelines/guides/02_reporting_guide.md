@@ -36,12 +36,13 @@ Example:
 
 ### Frequentist Reporting
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -65,12 +66,13 @@ The 95% CI means: "If we repeated this experiment many times, 95% of the CIs con
 
 ### Bayesian Reporting
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp
@@ -103,12 +105,13 @@ The 94% HDI means: "There is 94% posterior probability the true effect is in thi
 
 Useful when the outcome is not on an interpretable scale:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Cohen's d: treatment effect in standard deviations of the outcome
@@ -128,12 +131,13 @@ print(f"  d = 0.8: large")
 
 For outcomes on a ratio scale:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 baseline_mean = df[df['post']==0]['outcome'].mean()
@@ -148,12 +152,13 @@ print(f"Effect as % of baseline: {pct_change:.1f}%")
 
 For binary outcomes and policy evaluation:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # If outcome is probability of employment (0-1)
@@ -172,12 +177,13 @@ Robustness checks should be concise and structured. Present them in a table rath
 
 ### Template Robustness Table
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import pandas as pd
@@ -219,12 +225,13 @@ print("All specifications show positive, significant effects.")
 
 For technical presentations, a forest plot showing the primary estimate with robustness checks is effective:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -266,12 +273,13 @@ def forest_plot(results_list, title='Treatment Effect Estimates', ax=None):
 
 For Bayesian results, show the full posterior distribution:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def posterior_summary_plot(samples, true_value=None, title='Posterior Distribution'):
@@ -320,12 +328,13 @@ Sensitivity analysis answers: "What would have to be true for my conclusion to b
 
 How large a pre-trend violation would overturn the result?
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Conceptual: bound effect under pre-trend violations
@@ -345,12 +354,13 @@ def roth_sensitivity_table(estimate, se, pre_trend_range):
 
 ### For RDD: Bandwidth Sensitivity Table
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def bandwidth_sensitivity_table(rdd_results_by_bandwidth):

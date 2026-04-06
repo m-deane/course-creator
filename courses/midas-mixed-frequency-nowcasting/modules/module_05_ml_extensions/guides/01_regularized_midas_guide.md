@@ -81,11 +81,13 @@ where $d_j$ are singular values of $X$. As $\lambda \to 0$, df approaches rank($
 
 ### 2.4 Python Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -182,11 +184,13 @@ where $r_{-j} = y - X_{-j}\hat{\beta}_{-j}$ is the partial residual and $\mathca
 
 ### 3.5 Python Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from sklearn.linear_model import Lasso, LassoCV
@@ -246,11 +250,13 @@ $$\hat{\beta}^{\text{EN}} = \arg\min_{\beta} \left\{ \frac{1}{T}\|y - X\beta\|_2
 
 ### 4.3 Python Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from sklearn.linear_model import ElasticNetCV, ElasticNet

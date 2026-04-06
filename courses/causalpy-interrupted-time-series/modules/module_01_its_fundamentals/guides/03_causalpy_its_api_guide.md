@@ -20,12 +20,13 @@ CausalPy is a wrapper around PyMC that adds causal inference semantics: it knows
 
 ## Installation and Import
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Install (if not already done in Module 00)
@@ -43,12 +44,13 @@ import matplotlib.pyplot as plt
 
 ### Package Version Check
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 print(f"CausalPy: {cp.__version__}")
@@ -72,12 +74,13 @@ The function `treatment_time` accepts an integer index (row number in the DataFr
 
 ### Canonical Data Preparation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -141,12 +144,13 @@ def prepare_its_dataframe(
 
 ### Constructor Arguments
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 cp.InterruptedTimeSeries(
@@ -163,12 +167,13 @@ cp.InterruptedTimeSeries(
 
 The formula follows the standard Python formula language (Wilkinson notation, via `formulaic`):
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Full ITS model: level change + slope change
@@ -204,12 +209,13 @@ CausalPy provides several built-in model objects. For ITS, you will primarily us
 
 Standard Gaussian linear regression with weakly informative default priors.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 model = cp.pymc_models.LinearRegression(
@@ -240,12 +246,13 @@ model = cp.pymc_models.LinearRegression(
 
 ## Fitting the Model
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp
@@ -285,12 +292,13 @@ CausalPy will:
 
 ### Summary Table
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Human-readable summary of posterior estimates
@@ -310,12 +318,13 @@ print(summary)
 
 ### Raw Posterior Samples
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # All posterior samples (4 chains × 1000 draws × n_variables)
@@ -335,12 +344,13 @@ beta_slope_samples = posterior["t_post"].values.flatten()
 
 ### Counterfactual Prediction
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # The InferenceData contains posterior predictive samples
@@ -359,12 +369,13 @@ if "mu_cf" in result.idata.posterior:
 
 ### Built-in Plot
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # CausalPy's standard ITS plot (two panels)
@@ -387,12 +398,13 @@ The two-panel plot shows:
 
 ### Posterior Distribution Plots (ArviZ)
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Posterior distributions of all parameters
@@ -432,12 +444,13 @@ plt.show()
 
 Always check convergence before interpreting results.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # R-hat (should be < 1.01 for all parameters)
@@ -467,12 +480,13 @@ if n_divergences > 10:
 
 ## Computing the Cumulative Causal Impact
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def compute_cumulative_impact(
@@ -538,12 +552,13 @@ For advanced use cases, you can pass custom PyMC models to CausalPy. This allows
 
 ### Example: Informative Priors
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import pymc as pm
@@ -580,12 +595,13 @@ class InformativeITSModel(cp.pymc_models.LinearRegression):
 
 ## Complete Workflow Example
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp

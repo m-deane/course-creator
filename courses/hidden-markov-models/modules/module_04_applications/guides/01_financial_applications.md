@@ -179,11 +179,13 @@ for k, v in results.items():
 
 ### Multi-State Volatility Model
 
+
+<span class="filename">volatilityregimemodel.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">volatilityregimemodel.py</span>
-</div>
 
 ```python
 class VolatilityRegimeModel:
@@ -247,11 +249,13 @@ class VolatilityRegimeModel:
 
 ## Asset Allocation with Regimes
 
+
+<span class="filename">regimeawareallocator.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">regimeawareallocator.py</span>
-</div>
 
 ```python
 class RegimeAwareAllocator:
@@ -310,11 +314,13 @@ class RegimeAwareAllocator:
 
 ## Regime-Switching Risk Models
 
+
+<span class="filename">regimeswitchingvar.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">regimeswitchingvar.py</span>
-</div>
 
 ```python
 class RegimeSwitchingVaR:
@@ -385,11 +391,13 @@ class RegimeSwitchingVaR:
 
 ### Look-Ahead Bias
 
+
+<span class="filename">expanding_window_regime.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">expanding_window_regime.py</span>
-</div>
 
 ```python
 def expanding_window_regime(
@@ -419,11 +427,13 @@ def expanding_window_regime(
 
 ### Multiple Random Starts
 
+
+<span class="filename">fit_with_multiple_starts.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">fit_with_multiple_starts.py</span>
-</div>
 
 ```python
 def fit_with_multiple_starts(

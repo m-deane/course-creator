@@ -76,12 +76,13 @@ $$\hat{\theta} = \frac{\sum \tilde{D}_i \tilde{Y}_i}{\sum \tilde{D}_i^2}$$
 
 With artificially small $\tilde{D}_i$ in the denominator, $\hat{\theta}$ is inflated.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -123,12 +124,13 @@ Cross-fitting uses K-fold sample splitting. For each fold $k$:
 
 Then concatenate all out-of-sample residuals and estimate $\theta$:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Cross-fitting (CORRECT)
@@ -171,12 +173,13 @@ $$\hat{\theta}_{DML2} = \frac{\sum_{i=1}^n \tilde{D}_i \tilde{Y}_i}{\sum_{i=1}^n
 
 DML2 is generally preferred — it is more stable and recommended by the `doubleml` package.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # DML1: average fold-specific estimates
@@ -199,12 +202,13 @@ print(f"Fold estimates:   {[f'{t:.3f}' for t in thetas_per_fold]}")
 
 ## How the Number of Folds Affects Results
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 for K in [2, 3, 5, 10, 20]:

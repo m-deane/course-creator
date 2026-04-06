@@ -113,11 +113,13 @@ Economic data is subject to revision. The value published in month $t+1$ for var
 - Train only on data available as of each forecast date (avoid look-ahead bias)
 - Use a vintage database such as ALFRED (Archival FRED) or the St. Louis Fed's vintage data
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import pandas_datareader.data as web
@@ -158,11 +160,13 @@ GDP Advance      |     |     |      | available Apr 28
 
 **Handling ragged edges in MIDAS**:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def handle_ragged_edge(df, target_date, method='last'):
@@ -249,11 +253,13 @@ A production-grade nowcasting system uses a **publication calendar** to know exa
 
 A practical MIDAS-based GDP nowcast uses 5-8 monthly indicators:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 NOWCAST_VARIABLES = {

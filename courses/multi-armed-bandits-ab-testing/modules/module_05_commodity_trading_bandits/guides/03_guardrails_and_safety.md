@@ -99,11 +99,13 @@ Guardrails force the bandit to:
 
 **Rule:** No single arm can exceed a maximum weight in the bandit sleeve.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def apply_position_limits(weights, max_weight=0.40):
@@ -127,11 +129,13 @@ def apply_position_limits(weights, max_weight=0.40):
 - Aggressive: 50% max per arm
 
 **Commodity example:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Bandit proposes: [0.70, 0.15, 0.10, 0.05, 0.00]
@@ -156,11 +160,13 @@ safe_weights = apply_position_limits(weights, max_weight=0.40)
 
 **Rule:** Every arm must maintain a minimum weight, even after poor performance.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def apply_minimum_allocation(weights, min_weight=0.05):

@@ -215,12 +215,13 @@ Factors represent these common shocks. Forecasting with factors means forecastin
 
 ### Basic Diffusion Index Forecast
 
+
+<span class="filename">diffusionindexforecaster.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">diffusionindexforecaster.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -437,12 +438,13 @@ class DiffusionIndexForecaster:
 
 ### Example Application
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Generate synthetic data
@@ -493,12 +495,13 @@ for i, var_ratio in enumerate(di_model.explained_variance_ratio(), 1):
 
 ### Real Data Example: Forecasting GDP
 
+
+<span class="filename">load_fredmd_example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">load_fredmd_example.py</span>
-
-</div>
 
 ```python
 import pandas as pd
@@ -609,12 +612,13 @@ print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 
 **Solution:** Use only training data to estimate factors. Transform test data using training-period loadings.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # WRONG

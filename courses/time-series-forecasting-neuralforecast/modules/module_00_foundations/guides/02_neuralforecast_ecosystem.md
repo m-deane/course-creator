@@ -8,13 +8,14 @@ This guide is a hands-on tour of the neuralforecast API. By the end, you will ha
 
 Start here: load the dataset and inspect its structure.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -74,13 +75,14 @@ The `NeuralForecast` class is the entry point for everything. It wraps one or mo
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -149,13 +151,14 @@ NHITS decomposes a time series into multiple frequency components using hierarch
 
 A linear model trained across all series simultaneously. Extremely fast and interpretable. Use it as a baseline before any neural model.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import NHITS, XLinear
@@ -188,12 +191,13 @@ neuralforecast's `.predict()` method generates out-of-sample forecasts for the n
 
 neuralforecast's `.predict()` method generates out-of-sample forecasts for the next `h` steps after the last observed date. To evaluate on held-out data, split before fitting.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Split: hold out last 7 days per series for evaluation

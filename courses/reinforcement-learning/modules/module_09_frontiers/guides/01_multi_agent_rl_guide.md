@@ -108,13 +108,14 @@ The simplest MARL approach: each agent runs a standard single-agent RL algorithm
 
 **Cons:** The environment is non-stationary from each agent's perspective (other agents are learning simultaneously), breaking convergence guarantees. Q-values estimated during early training become stale as other agents' policies change.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 class IndependentLearner:
@@ -149,13 +150,14 @@ class IndependentLearner:
 
 CTDE is the dominant paradigm for cooperative MARL. During training, agents have access to global information (all observations, all actions, even ground-truth state). At execution time, each agent acts using only its local observation.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -216,13 +218,14 @@ When agents can send messages, the effective observation of agent $i$ becomes $(
 | Bandwidth | Continuous vs. quantized vs. binary messages |
 | Timing | Synchronous vs. asynchronous |
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 class CommunicatingAgent:

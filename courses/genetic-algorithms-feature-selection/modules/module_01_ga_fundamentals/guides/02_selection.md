@@ -68,11 +68,13 @@ Think of selection as choosing participants for a breeding program:
 
 ### Tournament Selection
 
+
+<span class="filename">copy.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">copy.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -170,11 +172,13 @@ def adaptive_tournament_selection(
 
 ### Roulette Wheel Selection
 
+
+<span class="filename">roulette_wheel_selection.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">roulette_wheel_selection.py</span>
-</div>
 
 ```python
 def roulette_wheel_selection(
@@ -287,11 +291,13 @@ def stochastic_universal_sampling(
 
 ### Rank Selection
 
+
+<span class="filename">rank_selection.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">rank_selection.py</span>
-</div>
 
 ```python
 def rank_selection(

@@ -118,12 +118,13 @@ $$Y_i = \alpha + \beta \hat{X}_i + \delta W_i + \epsilon_i$$
 
 The coefficient $\hat{\beta}$ from Stage 2 is the 2SLS estimate of the causal effect.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -205,12 +206,13 @@ Each instrument works because it shifts the endogenous variable (education, fami
 
 The first stage F-statistic tests whether the instruments are jointly significant in predicting the endogenous variable. A conventional rule of thumb: F > 10 for a single instrument. More formally, use the effective F-statistic from Olea & Pflueger (2013).
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Check first stage F-statistic
@@ -228,12 +230,13 @@ If you have more instruments than endogenous variables (overidentified), you can
 
 **Caveat:** The test requires assuming at least one instrument is valid to identify the causal effect of the others. You cannot test all instruments simultaneously.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Sargan-Hansen J-test (overidentification)

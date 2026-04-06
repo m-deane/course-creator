@@ -75,12 +75,13 @@ Think of Prompt Studios like a specialized IDE for prompt engineering. Just as y
 
 ### Accessing Prompt Studios Programmatically
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -114,12 +115,13 @@ print(f"Cost: ${test_result['cost']:.4f}")
 
 ### Creating Prompts in Code (Alternative to GUI)
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def create_prompt_studio(
@@ -198,12 +200,13 @@ Format as structured markdown.''',
 
 ### Adding Test Cases
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def add_test_case(
@@ -272,12 +275,13 @@ well above the five-year average of 72% for this time of year.'''
 
 ### Running All Tests
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def run_all_tests(studio: PromptStudio) -> pd.DataFrame:
@@ -327,12 +331,13 @@ print(test_results)
 
 ### Version Management
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def create_version(
@@ -430,12 +435,13 @@ print(f"Cost difference: ${comparison['cost_diff']:.4f}")
 
 ### Deploying to Production
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def deploy_to_recipe(

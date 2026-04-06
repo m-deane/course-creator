@@ -23,12 +23,13 @@ NeuralForecast produces probabilistic forecasts by training with a loss function
 
 ## Start Here: Training with MQLoss
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pandas as pd
@@ -114,12 +115,13 @@ Which simplifies to:
 
 $$\rho_q(u) = u \cdot (q - \mathbf{1}[u < 0])$$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # ── Visualize the pinball loss for different quantiles ────────────────────────
@@ -201,12 +203,13 @@ $$\mathcal{L}_{\text{MQ}} = \frac{1}{H \cdot |Q|} \sum_{t=1}^{H} \sum_{q \in Q} 
 
 where $Q$ is the set of quantile levels and $H$ is the forecast horizon.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # ── Compare single vs multi-quantile training ─────────────────────────────────
@@ -247,12 +250,13 @@ print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 
 NeuralForecast uses a consistent naming convention for quantile output columns:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # ── Decode output column names ────────────────────────────────────────────────

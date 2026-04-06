@@ -133,12 +133,14 @@ $$S_t = \sum_{k=1}^K \left[ a_k \sin\left(\frac{2\pi k t}{m}\right) + b_k \cos\l
 
 ### 1. Visual Inspection
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pandas as pd
@@ -169,12 +171,14 @@ plt.show()
 
 ### 2. Classical Decomposition
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Ensure time series index
@@ -201,12 +205,14 @@ seasonal_pattern = decomposition.seasonal
 
 ### 3. Seasonal Dummies Regression
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import statsmodels.api as sm
@@ -234,12 +240,14 @@ print(seasonal_effects)
 
 ### 4. Fourier Seasonal Model
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def fourier_terms(t, period, K):
@@ -277,12 +285,14 @@ seasonal_fourier = fourier_model.predict(X)
 
 ### 5. Bayesian Seasonal Model (PyMC)
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pymc as pm
@@ -372,12 +382,14 @@ Dec   │ +$2.00 │ Heating demand rises
 **Problem:** Seasonality can evolve over time (e.g., climate change affects heating demand)
 
 **Example:**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # BAD: Assume fixed seasonal pattern
@@ -400,12 +412,14 @@ seasonal_avg = df.groupby('month')['price'].mean()
 - Seasonality: Returns to same level after period $m$
 
 **Test:**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Check for unit root (trend) vs stationary seasonality
@@ -432,12 +446,14 @@ print(f"ADF p-value: {adf_result[1]:.4f}")
 **Problem:** Different months have different numbers of days/trading days
 
 **Fix:** Adjust for calendar effects
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 df['trading_days'] = df.groupby('month')['date'].transform('count')
@@ -456,12 +472,14 @@ df['price_per_day'] = df['price'] / df['trading_days']
 - If seasonal swings constant → Additive
 
 **Test:**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Plot seasonal variance over time
@@ -544,12 +562,14 @@ Implement a Bayesian hierarchical model where:
 - Test if seasonality has changed over time
 
 **PyMC structure:**
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 seasonal_year[year, month] ~ Normal(seasonal_mean[month], tau)

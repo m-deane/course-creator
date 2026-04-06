@@ -21,11 +21,13 @@
 ## Key Formulas
 
 ### Epsilon-Greedy
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Action selection
@@ -49,18 +51,16 @@ epsilon_t = min(1.0, C / sqrt(t + 1))  # C ∈ [1, 10]
 **Expected regret:** E[R_T] = ε·T + (K·Δ²)/ε
 
 ### UCB1
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-insight">
+**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-insight">
-
-**Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
-
-</div>
-
 
 ```python
 # Action selection (after pulling each arm once)
@@ -161,11 +161,13 @@ tau_t = tau_0 / log(t + 2)
 **Rule of thumb:** ε·T ≥ 10K (explore each arm ~10 times in expectation)
 
 **Decay schedule:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Aggressive (fast decay)

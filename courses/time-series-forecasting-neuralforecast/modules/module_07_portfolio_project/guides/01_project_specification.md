@@ -36,13 +36,14 @@ Design and implement a **demand forecasting system** that goes from raw time ser
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -97,13 +98,14 @@ Train either NHITS or XLinear using `MQLoss`. Your trained model must:
 - Be calibrated: 80% intervals should cover actuals 80% of the time (±5%)
 - Produce quantile forecasts at minimum levels [10, 50, 90]
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import NHITS
@@ -127,13 +129,14 @@ Use `.simulate()` to generate at least 200 sample paths over the full forecast h
 - Be used to answer the business question (Requirement 4)
 - Be visualized as a fan chart or spaghetti plot
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 paths_df = nf.models[0].simulate(
@@ -172,12 +175,13 @@ Run `.explain()` on your trained model and report:
 - A bar chart of attributions ordered by magnitude
 - One sentence interpreting the most important feature in business terms
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 explanations = nf.models[0].explain(df=df_test, level=90)

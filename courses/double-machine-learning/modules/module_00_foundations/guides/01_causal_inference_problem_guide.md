@@ -63,12 +63,13 @@ Consider estimating the effect of OPEC production cuts on crude oil calendar spr
 
 Here is what happens when you run OLS with too few controls:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -102,12 +103,13 @@ The naive estimate is biased upward because demand conditions ($X_0$) drive both
 
 Now add all controls. With 5 controls this works fine, but watch what happens when we scale to realistic dimensions:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Scale up: 200 controls (realistic for commodity markets)
@@ -149,12 +151,13 @@ $$\hat{\theta}_{FWL} = \frac{\tilde{D}'\tilde{Y}}{\tilde{D}'\tilde{D}} \quad \te
 
 In commodity terms: strip out everything that global demand, inventories, and other controls explain about both the production cut and the spread. Whatever correlation remains between the residuals IS the causal effect.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # FWL with 5 controls (works perfectly)
@@ -188,12 +191,13 @@ $$\hat{\theta}_{DML} = \frac{\tilde{D}'\tilde{Y}}{\tilde{D}'\tilde{D}}$$
 
 The critical addition: cross-fitting and Neyman orthogonal scores ensure that ML estimation errors in $\hat{g}$ and $\hat{m}$ do not contaminate the treatment effect $\hat{\theta}$.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from sklearn.ensemble import RandomForestRegressor
@@ -258,12 +262,13 @@ You estimate the effect of carbon tax increases on power generation fuel mix. Yo
 **2. FWL vs OLS Equivalence:**
 Implement the FWL decomposition and verify it gives identical point estimates to OLS with controls:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def verify_fwl_equivalence(Y, D, X):

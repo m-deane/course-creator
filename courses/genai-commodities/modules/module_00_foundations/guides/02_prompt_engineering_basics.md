@@ -184,11 +184,13 @@ def analyze_with_cot(report_text, llm_client):
 
 ### JSON Mode
 
+
+<span class="filename">extract_eia_data.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">extract_eia_data.py</span>
-</div>
 
 ```python
 json_extraction_prompt = """
@@ -248,11 +250,13 @@ def extract_eia_data(report_excerpt, llm_client):
 
 ### Oil Market Analysis
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 oil_analysis_prompt = """
@@ -305,11 +309,13 @@ Analyze:
 
 ### Uncertainty Acknowledgment
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 uncertainty_aware_prompt = """
@@ -345,11 +351,13 @@ DATA GAPS:
 
 ### Hallucination Prevention
 
+
+<span class="filename">create_grounded_prompt.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">create_grounded_prompt.py</span>
-</div>
 
 ```python
 def create_grounded_prompt(data, question):
@@ -373,11 +381,13 @@ ANSWER (cite specific data points):
 
 ## Evaluation and Testing
 
+
+<span class="filename">evaluate_prompt_quality.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">evaluate_prompt_quality.py</span>
-</div>
 
 ```python
 def evaluate_prompt_quality(prompt, test_cases, llm_client):

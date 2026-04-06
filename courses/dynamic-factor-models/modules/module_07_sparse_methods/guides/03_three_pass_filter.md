@@ -201,12 +201,13 @@ Pass 3: Forecast Aggregation
 
 ### Complete Three-Pass Regression Filter
 
+
+<span class="filename">threepassregressionfilter.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">threepassregressionfilter.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -543,12 +544,13 @@ class ThreePassRegressionFilter:
 
 ### Example Application
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Generate realistic data
@@ -628,12 +630,13 @@ plt.show()
 
 ### Comparison: 3PRF vs Standard Methods
 
+
+<span class="filename">compare_methods.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compare_methods.py</span>
-
-</div>
 
 ```python
 def compare_methods(X_train, y_train, X_test, y_test, n_factors=5, horizon=1):
@@ -737,12 +740,13 @@ for method, rmse in comparison.items():
 
 **Solution:** Always regress $y_{t+h}$ on $X_t$ (and $y_t$ if using AR term).
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # WRONG for h-step forecast

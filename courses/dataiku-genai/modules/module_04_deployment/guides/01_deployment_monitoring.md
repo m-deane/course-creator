@@ -28,12 +28,13 @@ Deploy LLM applications as REST APIs:
 
 ### Creating an API Service
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # In Dataiku API Designer
@@ -137,12 +138,13 @@ Dataiku automatically tracks:
 
 ### Custom Metrics
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import dataiku
@@ -198,12 +200,13 @@ class MonitoredLLM:
 
 Create monitoring dashboard in Dataiku:
 
+
+<span class="filename">dashboard_config.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">dashboard_config.py</span>
-
-</div>
 
 ```python
 # dashboard_config.py
@@ -296,12 +299,13 @@ alerts:
 
 ### Programmatic Alerts
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.monitoring import AlertManager
@@ -346,12 +350,13 @@ def check_llm_health():
 
 ### Cost Tracking
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.llm import LLM
@@ -417,12 +422,13 @@ class CostTracker:
 
 ### Budget Enforcement
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class BudgetEnforcedLLM:

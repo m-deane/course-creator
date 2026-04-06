@@ -179,13 +179,14 @@ Same transition $(S_t, A_t, R_{t+1}, S_{t+1})$ is used by both. The difference i
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import numpy as np

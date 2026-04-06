@@ -204,11 +204,13 @@ Where uncertainty bonus = "how wrong could I be, given how little I've traded th
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -243,11 +245,13 @@ class UCB1:
 </div>
 
 **Usage:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 ucb = UCB1(k_arms=5)
@@ -296,11 +300,13 @@ ucb_values = q + c * np.sqrt(np.log(t) / (counts + 1e-10))
 
 ### 3. Wrong Time Index
 **Problem:** Using N(a) instead of t in the logarithm:
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # WRONG

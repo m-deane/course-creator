@@ -137,13 +137,14 @@ This is practical because:
 
 TracIn requires model checkpoints saved during training:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -174,13 +175,14 @@ for epoch in range(50):
 
 ### Running TracInCPFast
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.influence import TracInCPFast
@@ -220,13 +222,14 @@ proponents = tracin.influence(
 
 Captum also provides `SimilarityInfluence`, which finds training examples most similar to a test input in the model's learned representation space:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.influence import SimilarityInfluence
@@ -268,13 +271,14 @@ The most useful TracIn analysis finds:
 - Opponents push against the prediction
 - May reveal contradictory information in the training set
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Get both proponents and opponents
@@ -317,13 +321,14 @@ High self-influence examples are "difficult" — the model had high loss on them
 - Atypical examples (genuine but unusual)
 - Ambiguous examples near the decision boundary
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Compute self-influence for all training examples

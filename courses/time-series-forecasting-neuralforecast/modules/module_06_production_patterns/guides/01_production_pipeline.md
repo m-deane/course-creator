@@ -8,13 +8,14 @@ This guide shows how to build a complete, production-ready forecasting pipeline 
 
 Start here: the pipeline below runs end-to-end on the French Bakery dataset and answers "How many baguettes should we order for next week at an 80% service level?"
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -103,26 +104,19 @@ A `ForecastPipeline` class solves all three by making every stage explicit, test
 
 ## 2. Pipeline Architecture
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-key">
+<strong>Key Point:</strong> example.py
+The following implementation builds on the approach above:
+Each stage is a method on `ForecastPipeline`.
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-key">
-
-<strong>Key Point:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
-Each stage is a method on `ForecastPipeline`.
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -153,26 +147,19 @@ Each stage is a method on `ForecastPipeline`. This makes unit testing trivial an
 
 ## 3. The ForecastPipeline Class
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-info">
+<strong>Info:</strong> example.py
+The following implementation builds on the approach above:
+---
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-info">
-
-<strong>Info:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
----
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -404,12 +391,13 @@ The choice of model depends on three factors: series length, available features,
 
 **Decision rule:**
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def select_model(series_length: int, n_features: int, needs_explanation: bool) -> str:

@@ -43,11 +43,13 @@ Transcripts  Classification  Timeseries     Ranking       Correlation   Slippage
 
 ### Inventory Surprise Signal
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 import pandas as pd
@@ -144,11 +146,13 @@ class InventorySurpriseSignal:
 
 ### Production Forecast Signal
 
+
+<span class="filename">productionforecastsignal.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">productionforecastsignal.py</span>
-</div>
 
 ```python
 from anthropic import Anthropic
@@ -237,11 +241,13 @@ Report:
 
 ### Aggregated News Sentiment
 
+
+<span class="filename">newssentimentsignal.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">newssentimentsignal.py</span>
-</div>
 
 ```python
 class NewsSentimentSignal:
@@ -330,11 +336,13 @@ class NewsSentimentSignal:
 
 ### Multi-Signal Aggregation
 
+
+<span class="filename">commoditysignalaggregator.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">commoditysignalaggregator.py</span>
-</div>
 
 ```python
 class CommoditySignalAggregator:
@@ -400,11 +408,13 @@ class CommoditySignalAggregator:
 
 ### Signal-to-Position Conversion
 
+
+<span class="filename">positionsizer.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">positionsizer.py</span>
-</div>
 
 ```python
 class PositionSizer:

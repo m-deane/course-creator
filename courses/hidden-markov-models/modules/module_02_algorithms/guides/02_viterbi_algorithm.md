@@ -117,11 +117,13 @@ $$\psi_t(j) = \arg\max_i [\delta_{t-1}(i) \cdot a_{ij}]$$
 
 ### Implementation
 
+
+<span class="filename">viterbi_algorithm.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">viterbi_algorithm.py</span>
-</div>
 
 ```python
 def viterbi_algorithm(observations, pi, A, B):
@@ -211,11 +213,13 @@ print(psi)
 
 For numerical stability with long sequences:
 
+
+<span class="filename">viterbi_log.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">viterbi_log.py</span>
-</div>
 
 ```python
 def viterbi_log(observations, log_pi, log_A, log_B):
@@ -268,11 +272,13 @@ print(f"Prob:      {np.exp(log_prob):.6e}")
 
 ## Gaussian HMM Viterbi
 
+
+<span class="filename">viterbi_gaussian.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">viterbi_gaussian.py</span>
-</div>
 
 ```python
 from scipy import stats
@@ -394,11 +400,13 @@ print(f"\nDecoding accuracy: {accuracy:.1%}")
 
 ## Viterbi vs Forward-Backward
 
+
+<span class="filename">compare_viterbi_forward_backward.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compare_viterbi_forward_backward.py</span>
-</div>
 
 ```python
 def compare_viterbi_forward_backward(observations, pi, A, B):
@@ -473,11 +481,13 @@ gamma, viterbi, marginal = compare_viterbi_forward_backward(
 
 ## Applications in Finance
 
+
+<span class="filename">regime_detection_with_viterbi.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">regime_detection_with_viterbi.py</span>
-</div>
 
 ```python
 def regime_detection_with_viterbi():

@@ -80,13 +80,14 @@ $$s_{\text{indicators}} = \left[\text{RSI}_{14}, \text{MACD}, \text{BB}_{20}, \t
 
 $$s_{\text{macro}} = \left[\text{VIX}, \text{yield spread}, \text{FX rates}, \text{commodity indices}\right]$$
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -207,13 +208,14 @@ $$R_t = \sum_i w^i_t (p^i_{t+1} - p^i_t) - \kappa \sum_i |w^i_t - w^i_{t-1}|$$
 
 where $\kappa$ is the cost per unit of turnover (bid-ask spread + market impact).
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 def trading_reward(
@@ -301,13 +303,14 @@ Backtesting is the primary evaluation tool for trading strategies. Poor backtest
 
 ### Correct Backtesting Protocol
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 def walk_forward_backtest(
@@ -403,12 +406,13 @@ Backtesting on only companies that exist today, excluding those that were delist
 
 **Normalize all features** before feeding to the neural network:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Rolling Z-score normalization (uses only past data — no look-ahead)

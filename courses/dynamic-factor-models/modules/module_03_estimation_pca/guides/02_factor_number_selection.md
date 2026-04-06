@@ -198,12 +198,13 @@ Information criteria approximate leave-one-out cross-validation error. For facto
 
 ### Complete Implementation
 
+
+<span class="filename">factornumberselector.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">factornumberselector.py</span>
-
-</div>
 
 ```python
 import numpy as np

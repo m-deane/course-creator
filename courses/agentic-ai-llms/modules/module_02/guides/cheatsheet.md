@@ -18,12 +18,14 @@
 ## Common Patterns
 
 ### Basic Tool Definition (Claude)
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 tools = [
@@ -221,12 +223,14 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 ## Tool Design Principles
 
 ### Good Tool Names
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Use clear verbs
@@ -283,12 +287,14 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 ## Security Checklist
 
 - [ ] **Input validation** - Validate all parameters against schema
-  <div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
   from jsonschema import validate
@@ -360,12 +366,14 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 ## Gotchas
 
 - **Tool description quality** - LLM relies heavily on description to choose tools
-  <div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
   # Bad: LLM won't know when to use this

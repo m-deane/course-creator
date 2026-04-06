@@ -41,12 +41,13 @@ $$E[u_i | X_{it}] = 0 \quad \forall t$$
 
 This means the entity effect is uncorrelated with all regressors across all time periods.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -145,12 +146,13 @@ $$Cov(v_{it}, v_{is}) = \sigma_u^2 \quad (t \neq s)$$
 
 $$Cov(v_{it}, v_{jt}) = 0 \quad (i \neq j)$$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def visualize_error_structure():
@@ -225,12 +227,13 @@ visualize_error_structure()
 
 OLS ignores the error correlation structure, leading to inefficient (though still consistent, if RE assumption holds) estimates.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def compare_ols_gls_efficiency():

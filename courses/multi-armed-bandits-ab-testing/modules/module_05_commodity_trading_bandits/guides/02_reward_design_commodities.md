@@ -80,11 +80,13 @@ The reward function isn't just a metric. It's the objective your system optimize
 
 ### Bad Reward 1: Raw Returns
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def naive_reward(returns):
@@ -109,11 +111,13 @@ def naive_reward(returns):
 
 ### Bad Reward 2: Sharpe Ratio Only
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def sharpe_only_reward(returns, volatility):
@@ -137,11 +141,13 @@ def sharpe_only_reward(returns, volatility):
 
 ### Bad Reward 3: Win Rate Only
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def win_rate_reward(returns):

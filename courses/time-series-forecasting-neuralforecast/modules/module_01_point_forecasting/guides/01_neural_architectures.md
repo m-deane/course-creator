@@ -4,26 +4,19 @@
 
 ## Start Here: Training NHITS in 60 Seconds
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+The following implementation builds on the approach above:
+Run this first.
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
-Run this first.
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -113,13 +106,14 @@ A multi-layer perceptron (MLP) is the simplest neural forecaster. It flattens th
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import MLP
@@ -160,13 +154,14 @@ Stack 2 (seasonality): learns f(t) ≈ sum of sinusoids
 Residual connection:   next stack gets what's left unexplained
 ```
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import NBEATS
@@ -220,12 +215,13 @@ Where `Interp_s` upsamples stack $s$'s coarse output to the full `h`-step horizo
 
 ### NHITS Architecture Diagram
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%

@@ -56,12 +56,14 @@ Both get you there, but optimization saves time and money.
 
 ### Cost Optimization: Model Routing
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from anthropic import Anthropic
@@ -493,12 +495,14 @@ print(f"Cost: ${metrics['cost']:.4f}, Latency: {metrics['latency_ms']:.0f}ms")
 ### 1. Premature Optimization
 **Problem:** Optimizing before measuring impact.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # DON'T: Optimize everything immediately

@@ -138,11 +138,13 @@ This is the maximum likelihood estimate given soft assignments!
 
 ### Complete Gaussian HMM with EM
 
+
+<span class="filename">gaussianhmm.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">gaussianhmm.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -599,11 +601,13 @@ model = GaussianHMM(n_states=2, covariance_type='diag')
    - State 0 in one run might be State 1 in another
    - Solution: Identify states by learned parameters (e.g., highest mean = bull)
 
+
+<span class="filename">identify_states.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">identify_states.py</span>
-</div>
 
 ```python
 def identify_states(model):
@@ -623,11 +627,13 @@ def identify_states(model):
    - Random initialization can lead to poor local optima
    - Better: K-means initialization
 
+
+<span class="filename">initialize_from_kmeans.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">initialize_from_kmeans.py</span>
-</div>
 
 ```python
 from sklearn.cluster import KMeans

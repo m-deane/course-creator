@@ -112,11 +112,13 @@ Observations (Clothing):
 
 ### The Inference Problem
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # What we have:
@@ -183,11 +185,13 @@ The hidden state layer provides continuity even when observations are missing.
 
 ### Observable vs Hidden Markov Chain
 
+
+<span class="filename">observablemarkovchain.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">observablemarkovchain.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -322,11 +326,13 @@ print(f"True state changes: {sum(1 for i in range(1, len(hidden_states)) if hidd
 
 ### Why States are "Hidden"
 
+
+<span class="filename">demonstrate_hidden_ambiguity.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">demonstrate_hidden_ambiguity.py</span>
-</div>
 
 ```python
 def demonstrate_hidden_ambiguity(hmm, observations):
@@ -364,11 +370,13 @@ P(return=0.0 | state=Bear) = 19.9471
 
 ### The Three Fundamental Questions
 
+
+<span class="filename">hmmquestions.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">hmmquestions.py</span>
-</div>
 
 ```python
 class HMMQuestions:

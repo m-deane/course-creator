@@ -95,11 +95,13 @@ Assessment = {
 
 ### Storage Data Analyzer
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -460,11 +462,13 @@ CRITICAL SEASONAL CONTEXT:
 
 ### Historical Pattern Comparison
 
+
+<span class="filename">storagepatternanalyzer.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">storagepatternanalyzer.py</span>
-</div>
 
 ```python
 class StoragePatternAnalyzer:

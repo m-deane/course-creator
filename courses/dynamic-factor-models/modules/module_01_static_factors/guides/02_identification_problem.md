@@ -192,12 +192,13 @@ With normalization:
 
 ### Demonstrating Rotational Indeterminacy
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -271,12 +272,13 @@ print("\nFactors are completely different, but X is identical!")
 
 ### Implementing PCA Normalization
 
+
+<span class="filename">pca_normalization.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">pca_normalization.py</span>
-
-</div>
 
 ```python
 def pca_normalization(X, r):
@@ -340,12 +342,13 @@ print(Lambda_hat.round(3))
 
 ### Sign Normalization
 
+
+<span class="filename">sign_normalize.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">sign_normalize.py</span>
-
-</div>
 
 ```python
 def sign_normalize(F, Lambda, reference_variables):
@@ -407,12 +410,13 @@ print(Lambda_signed[:3, :].round(3))
 
 ### Example: Macro Factor Identification
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # After PCA extraction

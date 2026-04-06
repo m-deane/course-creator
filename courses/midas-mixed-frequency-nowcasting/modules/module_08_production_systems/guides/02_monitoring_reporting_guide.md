@@ -66,11 +66,13 @@ Each goal requires a different diagnostic tool.
 
 After each GDP release, compare the terminal nowcast (the last estimate before the advance release) to the advance GDP figure. Accumulate these pairs into a rolling error database.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -147,11 +149,13 @@ A single outlier quarter (e.g. COVID-19 2020-Q2) inflates RMSE temporarily but i
 
 Systematic bias is detected with a simple t-test on the mean forecast error.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from scipy import stats
@@ -213,11 +217,13 @@ $$F = \frac{(RSS_R - RSS_{U1} - RSS_{U2}) / k}{(RSS_{U1} + RSS_{U2}) / (n - 2k)}
 
 where $k$ is the number of parameters, $n$ is total observations, and $R$, $U1$, $U2$ denote restricted (pooled) and unrestricted (split) regressions.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def chow_test(

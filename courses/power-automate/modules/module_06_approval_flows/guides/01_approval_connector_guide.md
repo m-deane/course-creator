@@ -184,13 +184,14 @@ The **Details** field in the approval action supports a limited set of HTML. Thi
 
 ### Basic HTML Structure
 
+
+<span class="filename">example.html</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.html</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```html
 <b>Expense Request Details</b><br>

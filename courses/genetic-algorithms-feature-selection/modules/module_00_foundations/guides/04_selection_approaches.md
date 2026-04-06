@@ -144,11 +144,13 @@ The **regularization path** shows which features are eliminated at each $\lambda
 
 ### Filter Method: Mutual Information
 
+
+<span class="filename">filter_selection_mi.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">filter_selection_mi.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -222,11 +224,13 @@ Now that we have seen how filters evaluate features independently using statisti
 
 ### Wrapper Method: Forward Selection
 
+
+<span class="filename">forward_selection_wrapper.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">forward_selection_wrapper.py</span>
-</div>
 
 ```python
 from sklearn.linear_model import LinearRegression
@@ -314,11 +318,13 @@ Wrapper methods give us interaction-aware selection, but they require explicitly
 
 ### Embedded Method: Lasso
 
+
+<span class="filename">lasso_selection.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">lasso_selection.py</span>
-</div>
 
 ```python
 from sklearn.linear_model import LassoCV, Lasso

@@ -8,13 +8,14 @@ This guide covers the patterns that bridge the gap between a working notebook an
 
 Each pattern is self-contained — copy the snippet, adapt the parameters, use it.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # Quickcheck: confirm your environment supports GPU training
@@ -52,13 +53,14 @@ NeuralForecast ships `MQLoss` (quantile), `DistributionLoss` (full distribution)
 
 Stockout costs more than overstock. Express this by weighting upper quantiles.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import NHITS
@@ -89,13 +91,14 @@ model = NHITS(
 
 `DistributionLoss` fits a parametric distribution (Normal, StudentT, NegativeBinomial) instead of individual quantiles. Use this when you need sample paths or when demand follows a known distributional family.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.losses.pytorch import DistributionLoss
@@ -143,12 +146,13 @@ NeuralForecast uses PyTorch Lightning, which auto-detects GPU.
 
 NeuralForecast uses PyTorch Lightning, which auto-detects GPU. Override if needed.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from neuralforecast.models import NHITS

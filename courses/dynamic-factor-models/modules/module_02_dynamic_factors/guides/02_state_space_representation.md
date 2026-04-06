@@ -255,12 +255,13 @@ print(T)
 
 ### Simulating from State-Space Form
 
+
+<span class="filename">simulate_statespace.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">simulate_statespace.py</span>
-
-</div>
 
 ```python
 def simulate_statespace(Z, H, T, R, Q, T_periods, alpha_0=None, P_0=None):
@@ -393,12 +394,13 @@ State-space representation handles missing data elegantly:
 - No need for imputation or balanced panels
 
 **Implementation:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Mark missing values as np.nan
@@ -599,12 +601,13 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 ### Implementation
 
 7. **Build State-Space from Scratch**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # Specifications:
@@ -623,12 +626,13 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 </div>
 
 8. **Simulate and Reconstruct**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # 1. Simulate 500 periods from state-space model
@@ -641,12 +645,13 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 </div>
 
 9. **Missing Data Handling**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # 1. Simulate data with 20% missing values (random)

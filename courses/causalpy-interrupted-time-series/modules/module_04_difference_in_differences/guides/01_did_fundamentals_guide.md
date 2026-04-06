@@ -165,12 +165,13 @@ By convention, $\beta_{-1} = 0$ (the period immediately before treatment is the 
 
 ### Practical Guidance for Pre-Trend Assessment
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp
@@ -240,12 +241,13 @@ Before running a DiD analysis, verify:
 
 ## 8. A Minimal CausalPy DiD Example
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp

@@ -163,11 +163,13 @@ The contextual bandit is the same idea, but:
 
 **Why it matters:** High-vol and low-vol regimes require different strategies.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def compute_realized_volatility(returns, window=20):
@@ -196,11 +198,13 @@ def compute_realized_volatility(returns, window=20):
 
 **Why it matters:** Contango vs backwardation affects carry returns.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def compute_term_structure_slope(front_month, back_month):
@@ -229,11 +233,13 @@ def compute_term_structure_slope(front_month, back_month):
 
 **Why it matters:** Trending vs mean-reverting markets need different allocations.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def compute_trend_strength(prices, short_window=20, long_window=50):

@@ -69,12 +69,13 @@ $$\text{Bias} \approx -\frac{1.5}{4} = -0.375$$
 
 > ⚠️ **Warning:** This is severe negative bias — applying FE to a dynamic panel with $T=5$ can bias $\hat{\rho}$ by as much as -0.375, nearly as large as the true coefficient itself. Never apply standard FE to a dynamic panel without checking for Nickell bias first.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -160,12 +161,13 @@ Use $y_{i,t-2}$ as an instrument for $\Delta y_{i,t-1}$:
 - **Relevant**: $y_{i,t-2}$ correlates with $\Delta y_{i,t-1}$
 - **Valid**: $y_{i,t-2}$ is uncorrelated with $\Delta\epsilon_{it}$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -239,12 +241,13 @@ $$E[y_{i,s} \cdot \Delta\epsilon_{it}] = 0 \quad \text{for } s \leq t-2$$
 
 ### Implementation
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from linearmodels.panel import PanelOLS

@@ -198,11 +198,13 @@ Benefit: Selection pressure toward "improvable" genotypes, not just locally opti
 
 ### Basic Memetic Algorithm
 
+
+<span class="filename">__init__.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">__init__.py</span>
-</div>
 
 ```python
 import numpy as np

@@ -41,13 +41,14 @@ Different baselines give different but equally valid answers to different questi
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 baseline = torch.zeros_like(input_tensor)
@@ -67,13 +68,14 @@ baseline = torch.zeros_like(input_tensor)
 
 ### Blurred Image Baseline
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from torchvision.transforms.functional import gaussian_blur
@@ -98,13 +100,14 @@ def create_blurred_baseline(input_tensor, kernel_size=41, sigma=15.0):
 
 ### Random Noise Baseline (Averaged)
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def random_noise_baseline(input_tensor, n_samples=50):
@@ -128,13 +131,14 @@ def random_noise_baseline(input_tensor, n_samples=50):
 
 ### Training Set Mean Baseline (Tabular)
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
@@ -153,13 +157,14 @@ baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
 ### Domain-Specific Baselines
 
 **Text (token-level attribution):**
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Use [MASK] token embedding as baseline
@@ -175,13 +180,14 @@ baseline_ids = tokenizer(
 </div>
 
 **Tabular — adversarial baseline:**
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Use the mean of the *opposite* class as baseline
@@ -209,13 +215,14 @@ The right way to choose a baseline: run attribution with multiple baselines and 
 2. **Quantitative:** How much does the attribution ranking change across baselines?
 3. **Completeness check:** Does the convergence delta remain small?
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import IntegratedGradients
@@ -261,13 +268,14 @@ def compare_baselines(model, input_tensor, target_class, n_steps=50):
 
 If attributions are robust to baseline choice, the rankings should agree:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import scipy.stats
@@ -306,13 +314,14 @@ The convergence delta $\delta$ measures the numerical integration error:
 $$\delta = \left| \sum_i \text{IG}_i^{\text{approx}}(x) - (f(x) - f(x')) \right|$$
 
 In Captum:
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 attr, delta = ig.attribute(
@@ -345,13 +354,14 @@ Large convergence delta usually means:
 
 ### Fixing Large Delta
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Start with n_steps=50, increase if delta > 0.05
@@ -382,13 +392,14 @@ Applying SmoothGrad to IG produces smooth, high-quality attributions:
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import IntegratedGradients, NoiseTunnel
@@ -444,13 +455,14 @@ For transformer models, token-level attribution requires `LayerIntegratedGradien
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -501,13 +513,14 @@ def attribute_text(text, tokenizer, lig_method, target_class=1):
 
 ### Visualizing Token Attributions
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import matplotlib.pyplot as plt

@@ -134,12 +134,13 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 
 ### Basic Architecture Components
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Conceptual implementation showing key architecture components
@@ -373,12 +374,13 @@ class LLMMesh:
 
 ### Using LLM Mesh in Dataiku
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # In a Dataiku Python recipe or notebook
@@ -421,12 +423,13 @@ llm = LLM("claude-production")
 ```
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Good - use project variables
@@ -441,12 +444,13 @@ llm = LLM(connection_name)
 ### 2. Ignoring Rate Limits
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Will hit rate limits quickly
@@ -457,12 +461,13 @@ for text in large_dataset:
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import time
@@ -494,12 +499,13 @@ data = json.loads(response.text)  # What if not valid JSON?
 ```
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 try:
@@ -524,12 +530,13 @@ except Exception as e:
 ### 4. Not Monitoring Costs
 
 **Problem:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # No cost awareness
@@ -540,12 +547,13 @@ for row in df.iterrows():
 </div>
 
 **Solution:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from dataiku.monitoring import CostTracker
@@ -654,12 +662,13 @@ LLM Mesh (return path)
 <details>
 <summary>Solution</summary>
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class ResilientLLMRouter:
@@ -744,12 +753,13 @@ class ResilientLLMRouter:
 <details>
 <summary>Solution</summary>
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def optimize_batch_processing(reviews, budget=50.0):

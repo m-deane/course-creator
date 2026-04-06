@@ -135,12 +135,13 @@ Autocovariance measures how much knowing today's value tells you about values $h
 
 ### Sample Autocovariance
 
+
+<span class="filename">sample_autocovariance.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">sample_autocovariance.py</span>
-
-</div>
 
 ```python
 def sample_autocovariance(y, max_lag=20):
@@ -191,12 +192,13 @@ print("Theoretical ACF for AR(1):", [phi**h for h in range(6)])
 
 ### Visualizing ACF
 
+
+<span class="filename">plot_acf_pacf.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">plot_acf_pacf.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -243,12 +245,13 @@ $$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + ... + \phi_p y_{t-p} + \varepsilon
 
 ### Code Implementation
 
+
+<span class="filename">simulate_ar.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">simulate_ar.py</span>
-
-</div>
 
 ```python
 def simulate_ar(phi, c=0, sigma=1, T=100, burn=100, seed=None):
@@ -306,12 +309,13 @@ y_ar2 = simulate_ar(phi, T=200, seed=42)
 
 ### Estimation
 
+
+<span class="filename">estimate_ar.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">estimate_ar.py</span>
-
-</div>
 
 ```python
 from statsmodels.tsa.ar_model import AutoReg
@@ -391,12 +395,13 @@ where $F_t$ is the $r \times 1$ vector of factors. Understanding VAR is essentia
 
 ### Code Implementation
 
+
+<span class="filename">estimate_var.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">estimate_var.py</span>
-
-</div>
 
 ```python
 from statsmodels.tsa.api import VAR

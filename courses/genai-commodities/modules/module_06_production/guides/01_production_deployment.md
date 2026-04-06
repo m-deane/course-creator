@@ -136,11 +136,13 @@ def call_llm_api(prompt: str) -> str:
 
 ### Circuit Breaker
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -232,11 +234,13 @@ def call_llm_with_circuit_breaker(prompt: str) -> str:
 
 ### Token Budgeting
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -320,11 +324,13 @@ def budgeted_llm_call(prompt: str, estimated_tokens: int) -> str:
 
 ### Caching Strategy
 
+
+<span class="filename">llmcache.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">llmcache.py</span>
-</div>
 
 ```python
 import hashlib
@@ -404,11 +410,13 @@ def cached_llm_call(prompt: str, model: str = "claude-sonnet-4-20250514") -> str
 
 ### Metrics Collection
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass
@@ -482,11 +490,13 @@ class MetricsCollector:
 
 ### Alerting
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from dataclasses import dataclass

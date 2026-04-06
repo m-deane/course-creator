@@ -66,11 +66,13 @@ If you use the same prompt for all four:
 - **Comparative analysis:** Compare commodities or time periods
 
 **How to extract:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def classify_task_type(query):
@@ -109,11 +111,13 @@ Different sectors have different:
 - **Key drivers:** Energy = inventory; agriculture = yield forecasts; metals = industrial production
 
 **How to extract:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def classify_commodity_sector(query):
@@ -143,11 +147,13 @@ When your RAG system retrieves rich context (5 relevant documents), use evidence
 When retrieval is sparse (0-1 documents), evidence-only prompts will just say "not found" — use analytical prompts instead.
 
 **How to measure:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def assess_data_availability(retrieved_docs, query):

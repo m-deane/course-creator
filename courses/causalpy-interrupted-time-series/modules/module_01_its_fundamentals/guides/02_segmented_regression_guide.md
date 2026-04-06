@@ -54,12 +54,13 @@ The formula `y ~ 1 + t + treated + t_post` in CausalPy maps to:
 
 Note: at $t = t^*$, the `t_post` variable is 0 (the level change applies but no slope accumulation yet). This is the standard convention.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -160,12 +161,13 @@ $$DW = \frac{\sum_{t=2}^T (\hat{\varepsilon}_t - \hat{\varepsilon}_{t-1})^2}{\su
 
 where $\hat{\rho}$ is the estimated first-order autocorrelation. Values close to 2 indicate no autocorrelation.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from statsmodels.stats.stattools import durbin_watson
@@ -207,12 +209,13 @@ def check_autocorrelation(df: pd.DataFrame, formula: str) -> dict:
 
 The Newey-West (HAC) estimator produces consistent standard errors under autocorrelation without changing the point estimates.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -239,12 +242,13 @@ This transforms the original model to remove autocorrelation. Implemented in sta
 
 The cleanest approach: include an AR(1) process in the PyMC model definition. The posterior for $\rho$ captures the autocorrelation, and all other parameters are estimated conditionally on it.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import pymc as pm
@@ -306,12 +310,13 @@ If $\gamma$ is significantly different from zero, a linear pre-trend may be inad
 
 For flexible non-linear pre-trends, natural cubic splines provide a smooth non-parametric fit:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 from patsy import dmatrix
@@ -351,12 +356,13 @@ Lower AIC = better fit penalized for complexity. BIC penalizes complexity more s
 
 Use **Leave-One-Out Cross-Validation (LOO)** via ArviZ:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import arviz as az
@@ -396,12 +402,13 @@ Many policy-relevant outcomes have seasonal patterns (hospital admissions, crime
 
 Add indicator variables for each calendar month (or quarter, depending on data frequency):
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Add month indicators to the dataframe
@@ -423,12 +430,13 @@ $$\text{Seasonal}(t) = \sum_{k=1}^K \left[ a_k \sin\left(\frac{2\pi k t}{P}\righ
 
 where $P$ is the seasonal period (12 for monthly data, 52 for weekly data).
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def add_fourier_terms(df: pd.DataFrame, period: int, n_terms: int = 2) -> pd.DataFrame:

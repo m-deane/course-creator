@@ -78,13 +78,14 @@ Summing over neurons $j$ in layer $l$ and applying the FTC to the layer activati
 
 ## 4. Captum Layer Conductance API
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import LayerConductance
@@ -118,13 +119,14 @@ For a convolutional layer (e.g., `model.layer3[-1]`):
 - Each value: conductance of that specific neuron at that spatial location
 - Aggregate to compare layers:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Total conductance of this layer (sum of absolute values)
@@ -147,13 +149,14 @@ channel_importance = attr.abs().mean(dim=(-2, -1)).squeeze()  # (1024,)
 
 The completeness property allows fair comparison across layers:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 layers_to_examine = {
@@ -213,19 +216,17 @@ This is the same formula as Layer Conductance, but interpreted at the level of a
 
 ## 7. Captum Neuron Conductance API
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
 
+<span class="filename">example.py</span>
 </div>
 <div class="code-body">
 <div class="callout-key">
-
 <strong>Key Point:</strong> from captum.attr import NeuronConductance
-
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from captum.attr import NeuronConductance
@@ -255,13 +256,14 @@ Neuron Conductance returns the *input attribution* for a single intermediate neu
 
 ### Finding the Most Important Neurons
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def top_neurons_for_prediction(model, layer, input_tensor, baseline,
@@ -304,13 +306,14 @@ def top_neurons_for_prediction(model, layer, input_tensor, baseline,
 
 Before computing conductance, it is useful to understand the distribution of activations in each layer. Neurons with zero activation have zero conductance regardless of weights.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Get activations without computing attribution
@@ -370,13 +373,14 @@ Activation patching is popular in mechanistic interpretability research (circuit
 
 Captum also provides `InternalInfluence`, which is the simpler gradient-based internal attribution (no integration):
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import InternalInfluence

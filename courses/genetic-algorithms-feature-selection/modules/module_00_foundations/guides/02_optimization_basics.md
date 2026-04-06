@@ -48,11 +48,13 @@ This combinatorial explosion makes exhaustive search infeasible.
 
 ### Exhaustive Search
 
+
+<span class="filename">exhaustive_search.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">exhaustive_search.py</span>
-</div>
 
 ```python
 from itertools import combinations
@@ -90,11 +92,13 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
 
 ### Greedy Search (Forward Selection)
 
+
+<span class="filename">forward_selection.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">forward_selection.py</span>
-</div>
 
 ```python
 def forward_selection(X, y, model_fn, max_features=None):

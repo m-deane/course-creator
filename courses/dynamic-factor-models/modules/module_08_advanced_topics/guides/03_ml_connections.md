@@ -72,12 +72,13 @@ This is the eigenvalue problem! Columns of $W_1$ are eigenvectors of $\Sigma_X$.
 
 ### Code Implementation: Verifying Equivalence
 
+
+<span class="filename">linearautoencoder.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">linearautoencoder.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -369,12 +370,13 @@ where $R(W)$ is regularization (L2, dropout).
 
 ### Code Implementation: Deep Autoencoder
 
+
+<span class="filename">deepautoencoder.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">deepautoencoder.py</span>
-
-</div>
 
 ```python
 class DeepAutoencoder(nn.Module):
@@ -645,12 +647,13 @@ $$\log p(X) \geq \mathbb{E}_{q(F|X)}[\log p(X|F)] - D_{KL}(q(F|X) \| p(F))$$
 
 ### Code Implementation: VAE for Factors
 
+
+<span class="filename">variationalautoencoder.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">variationalautoencoder.py</span>
-
-</div>
 
 ```python
 class VariationalAutoencoder(nn.Module):

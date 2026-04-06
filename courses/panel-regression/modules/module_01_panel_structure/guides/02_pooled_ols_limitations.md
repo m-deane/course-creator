@@ -44,12 +44,13 @@ This ignores:
 
 ### Simulation: Omitted Entity Effects
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -112,12 +113,13 @@ $$E[\hat{\beta}_{OLS}] = \beta + \frac{Cov(X_{it}, \alpha_i)}{Var(X_{it})}$$
 
 When $Cov(X_{it}, \alpha_i) \neq 0$, the estimate is biased.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Visualize the endogeneity
@@ -160,12 +162,13 @@ plt.show()
 
 Even without endogeneity, pooled OLS ignores within-entity correlation:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def demonstrate_serial_correlation(df, entity_col, time_col, y_col, x_cols):

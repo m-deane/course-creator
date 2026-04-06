@@ -187,12 +187,13 @@ expected:
 
 ### Automated Evaluation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def evaluate_prompt_output(output: str, test_case: dict) -> dict:
@@ -253,12 +254,13 @@ Version History:
 
 ### Comparing Versions
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Compare outputs between prompt versions
@@ -295,12 +297,13 @@ def compare_prompt_versions(
 2. Select target recipe type (Python, LLM Recipe)
 3. Configure input datasets
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Auto-generated recipe code

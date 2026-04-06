@@ -180,11 +180,13 @@ Softs:        exp(0.2/0.5) / Z = $2K   (2%)
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -218,11 +220,13 @@ class SoftmaxBandit:
 </div>
 
 **Usage:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 bandit = SoftmaxBandit(k_arms=5, tau=0.5)
@@ -255,11 +259,13 @@ class DecayingSoftmax(SoftmaxBandit):
 ```
 
 **Preference-based variant (add learning to preferences):**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 class GradientBandit(SoftmaxBandit):

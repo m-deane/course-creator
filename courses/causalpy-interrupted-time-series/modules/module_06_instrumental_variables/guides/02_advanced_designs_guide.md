@@ -27,12 +27,13 @@ The conventional threshold is **F > 10** for a single instrument (Stock, Wright 
 
 For multiple instruments, use the **Angrist-Pischke** (AP) F-statistic for each instrument individually, and the **effective F-statistic** (Olea & Pflueger, 2013) for the joint first stage.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -64,12 +65,13 @@ for var in ['college_nearby', 'mother_educ']:
 | Fuller's modified LIML | Reduces bias further |
 | Find a stronger instrument | Best solution if available |
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Anderson-Rubin confidence intervals (weak-instrument robust)
@@ -93,12 +95,13 @@ ar_ci = KClass(k=1).fit_regularized(
 
 ### Setup with Two Instruments
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -151,12 +154,13 @@ print(f"\nFirst stage F-statistic: {model_iv.first_stage.diagnostics['f.stat']:.
 
 With two instruments and one endogenous variable (overidentified), test whether the instruments give consistent estimates:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Sargan-Hansen J-test
@@ -191,12 +195,13 @@ where $f(t)$ allows different pre-period trends for the treated group.
 - DiD without time series: parallel trends may be implausible
 - Combined: control group removes common shocks; time series provides rich pre-period
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -231,12 +236,13 @@ The fuzzy RDD estimator is:
 
 $$\tau_{fuzzy} = \frac{\lim_{x\downarrow c} E[Y \mid X=x] - \lim_{x\uparrow c} E[Y \mid X=x]}{\lim_{x\downarrow c} E[D \mid X=x] - \lim_{x\uparrow c} E[D \mid X=x]}$$
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Fuzzy RDD as local IV
@@ -281,12 +287,13 @@ The parameter $\tau$ captures:
 - The change in the gap between above-cutoff and below-cutoff units after treatment
 - After removing pre-existing differences and common time trends
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # RD-DiD: panel with pre and post periods

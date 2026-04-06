@@ -44,12 +44,13 @@ Effective retrieval is critical for RAG performance. This guide covers strategie
 
 ### Vector Similarity Search
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Conceptual implementation within Dataiku
@@ -90,12 +91,13 @@ class VectorRetriever:
 
 ### Distance Metrics
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -131,12 +133,13 @@ retrieval_config = {
 
 Combine vector search with keyword matching:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class HybridRetriever:
@@ -228,12 +231,13 @@ hybrid_config = {
 
 Improve retrieval by expanding the original query:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class QueryExpander:
@@ -298,12 +302,13 @@ Return only the alternative queries, one per line, without numbering."""
 
 Reduce retrieved content to most relevant portions:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class ContextualCompressor:
@@ -350,12 +355,13 @@ Relevant excerpts (return only the relevant sentences, nothing else):"""
 
 Search across multiple knowledge banks:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class MultiIndexRetriever:
@@ -454,12 +460,13 @@ multi_index_config = {
 
 Improve result quality with a reranking model:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class Reranker:
@@ -544,12 +551,13 @@ rerank_config = {
 
 ### Caching
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 class CachedRetriever:

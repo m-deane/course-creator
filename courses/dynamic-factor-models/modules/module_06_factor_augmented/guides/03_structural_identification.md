@@ -239,12 +239,13 @@ Structural Shock              State Variables              All Variables
 
 ### Structural FAVAR Class
 
+
+<span class="filename">structuralfavar.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">structuralfavar.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -691,12 +692,13 @@ class StructuralFAVAR:
 
 ### Example: Monetary Policy Shock
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt

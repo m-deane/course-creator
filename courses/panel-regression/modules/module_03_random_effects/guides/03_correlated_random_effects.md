@@ -42,12 +42,13 @@ This:
 - Allows estimation of time-invariant effects
 - Provides a natural Hausman test
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -151,12 +152,13 @@ Including $\bar{X}_i$ in the model:
 2. **The within-variation** in $X_{it}$ identifies $\beta$ (same as FE)
 3. **Time-invariant variables** remain estimable (unlike FE)
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def visualize_cre_mechanics(df):
@@ -234,12 +236,13 @@ visualize_cre_mechanics(df)
 
 ### 1. OLS with Group Means
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def cre_ols(df, y_col, x_cols, z_cols, entity_col):

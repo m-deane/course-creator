@@ -26,12 +26,13 @@ Tests whether entity fixed effects are jointly significant.
 
 $$H_0: \alpha_1 = \alpha_2 = ... = \alpha_N$$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -130,12 +131,13 @@ Tests for random effects vs pooled OLS.
 
 $$H_0: \sigma_u^2 = 0$$ (No random effects)
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def breusch_pagan_lm(df, y_col, x_cols, entity_col, time_col):
@@ -202,12 +204,13 @@ breusch_pagan_lm(df, 'y', ['x1', 'x2'], 'entity', 'time')
 
 The standard Hausman test can have size distortions with heteroskedasticity. A robust version:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from linearmodels.panel import RandomEffects

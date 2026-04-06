@@ -151,11 +151,13 @@ Dividing by `p` corrects this bias (importance sampling).
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -238,11 +240,13 @@ for t in range(1000):
 
 The above assumes rewards in `[0, 1]`. For arbitrary ranges `[r_min, r_max]`:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def normalize_reward(reward, r_min, r_max):
@@ -380,11 +384,13 @@ What signals would trigger the switch? How would you prevent oscillation between
 
 **EXP3 Solution:**
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Initialize EXP3 for 3 exchanges

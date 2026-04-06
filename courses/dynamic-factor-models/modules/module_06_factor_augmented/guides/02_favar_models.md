@@ -231,12 +231,13 @@ $$\text{IR}_{IP}(s) = \lambda_{IP}^f \cdot \text{SIR}_F(s) + \lambda_{IP}^y \cdo
 
 ### FAVAR Class
 
+
+<span class="filename">favar.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">favar.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -583,12 +584,13 @@ class FAVAR:
 
 ### Example: Monetary Policy Analysis
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt

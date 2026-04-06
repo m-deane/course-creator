@@ -333,11 +333,13 @@ You can test it for N weeks, then decide whether to adopt it permanently or stic
 **3. Utility-Based Arm Selection:**
 Implement a bandit algorithm that chooses arms based on **expected utility** instead of expected reward:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np

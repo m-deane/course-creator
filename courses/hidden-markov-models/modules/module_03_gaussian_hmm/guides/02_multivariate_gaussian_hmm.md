@@ -34,11 +34,13 @@ For $d$-dimensional observations:
 
 $$b_k(\mathbf{o}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}_k|^{1/2}} \exp\left(-\frac{1}{2}(\mathbf{o} - \boldsymbol{\mu}_k)^\top \boldsymbol{\Sigma}_k^{-1}(\mathbf{o} - \boldsymbol{\mu}_k)\right)$$
 
+
+<span class="filename">multivariategaussianhmm.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">multivariategaussianhmm.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -179,11 +181,13 @@ plt.show()
 
 Different covariance structures trade off flexibility vs. parameters:
 
+
+<span class="filename">compare_covariance_types.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compare_covariance_types.py</span>
-</div>
 
 ```python
 def compare_covariance_types():
@@ -277,11 +281,13 @@ compare_covariance_types()
 
 ## Using hmmlearn for Multivariate Data
 
+
+<span class="filename">fit_multivariate_hmm_hmmlearn.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">fit_multivariate_hmm_hmmlearn.py</span>
-</div>
 
 ```python
 def fit_multivariate_hmm_hmmlearn():
@@ -395,11 +401,13 @@ model, obs, true_states = fit_multivariate_hmm_hmmlearn()
 
 ## Feature Engineering for HMMs
 
+
+<span class="filename">prepare_features_for_hmm.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">prepare_features_for_hmm.py</span>
-</div>
 
 ```python
 def prepare_features_for_hmm(prices, window=20):
@@ -455,11 +463,13 @@ print(f"  Stds:  {features.std(axis=0).round(4)}")
 
 ## Model Selection for Multivariate HMMs
 
+
+<span class="filename">select_multivariate_hmm.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">select_multivariate_hmm.py</span>
-</div>
 
 ```python
 def select_multivariate_hmm(observations, max_states=5):

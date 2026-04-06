@@ -82,11 +82,13 @@ Imagine predicting tomorrow's temperature. Yesterday's temperature is obviously 
 
 ### Lag Feature Engineering
 
+
+<span class="filename">create_lag_features.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">create_lag_features.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -319,11 +321,13 @@ def identify_significant_lags(
 
 ### Multicollinearity Detection and Handling
 
+
+<span class="filename">multicollinearity.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">multicollinearity.py</span>
-</div>
 
 ```python
 def compute_vif(X: pd.DataFrame) -> pd.Series:
@@ -483,11 +487,13 @@ The `lag_aware_mutation` function in the code below implements this idea. When i
 
 ### GA Fitness Function for Lag Selection
 
+
+<span class="filename">lag_selection_fitness.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">lag_selection_fitness.py</span>
-</div>
 
 ```python
 from sklearn.base import BaseEstimator

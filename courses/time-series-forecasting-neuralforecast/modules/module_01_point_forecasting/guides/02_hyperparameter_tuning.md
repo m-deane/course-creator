@@ -4,26 +4,19 @@
 
 ## Start Here: See the Impact of input_size
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+The following implementation builds on the approach above:
+Run this first.
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
-Run this first.
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -100,13 +93,14 @@ For `h=7`:
 
 With weekly data and `h=7`, an `input_size=28` gives the model four complete weekly cycles. The NHITS MaxPool layers can extract the weekly pattern at multiple scales. If you are forecasting daily bakery sales and the summer slowdown matters, extend to `input_size=112` or `input_size=365` to give the model access to annual patterns.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # Short horizon — keep lookback tight
@@ -162,13 +156,14 @@ $$x_{\text{scaled}} = \frac{x - \text{median}(x)}{\text{IQR}(x)}$$
 
 A single Christmas surge does not distort the normalization for the entire series.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # Compare scalers on bakery data
@@ -203,12 +198,13 @@ The loss function determines what the model minimizes during training, which dir
 
 ### Available Loss Functions
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from neuralforecast.losses.pytorch import MAE, MSE, MQLoss, HuberLoss

@@ -37,12 +37,13 @@ The problem: $\tilde{y}_{i,t-1}$ is correlated with $\tilde{\epsilon}_{it}$ beca
 - $y_{it}$ depends on $\epsilon_{it}$
 - Therefore $\tilde{y}_{i,t-1}$ depends on $\epsilon_{it}$
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -164,12 +165,13 @@ Key insights:
 - Bias decreases as T increases
 - Bias is larger when true ρ is larger
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def plot_bias_magnitude():
@@ -236,12 +238,13 @@ plot_bias_magnitude()
 
 Use deeper lags as instruments for the differenced equation.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 from linearmodels.iv import IV2SLS

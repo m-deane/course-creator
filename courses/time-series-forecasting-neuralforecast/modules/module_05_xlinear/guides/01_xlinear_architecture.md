@@ -8,13 +8,14 @@ XLinear achieves transformer-competitive accuracy on long-horizon multivariate f
 
 Start here: the code below trains XLinear on the ETTm1 dataset in under five minutes.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -148,28 +149,20 @@ See detailed comparison in the table above.
 
 ## 3. Architecture Overview
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="callout-info">
+<strong>Info:</strong> example.py
+The following implementation builds on the approach above:
+The four architectural components each solve a distinct subproblem:
+1.
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-<div class="callout-info">
-
-<strong>Info:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
-The four architectural components each solve a distinct subproblem:
-
-1.
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
@@ -233,13 +226,14 @@ $$\mathbf{E} = \mathbf{X} \mathbf{W}_e + \mathbf{b}_e, \quad \mathbf{W}_e \in \m
 
 **Global context tokens.** This is the key innovation borrowed from vision transformers: a small set of learnable vectors (`[CLS]`-style tokens) are concatenated to the sequence. These tokens are not tied to any time step — they aggregate global information across the entire window and act as a summary representation that both TGM and VGM can attend to.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # Conceptual illustration of global context token injection

@@ -492,12 +492,13 @@ def kalman_smoother(result_filter, T):
 
 ### Comparing Filtered vs Smoothed
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Run smoother
@@ -578,12 +579,13 @@ State-space framework handles missing data naturally.
 4. Prediction step unchanged
 
 **Example:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 # Mark missing observations
@@ -611,12 +613,13 @@ $$P_{T+h|T} = T^h P_{T|T} (T^h)' + \sum_{j=0}^{h-1} T^j R Q R' (T^j)'$$
 $$\hat{y}_{T+h|T} = Z \hat{\alpha}_{T+h|T}$$
 
 **Implementation:**
+
+<span class="filename">forecast_statespace.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">forecast_statespace.py</span>
-
-</div>
 
 ```python
 def forecast_statespace(result_filter, Z, T, R, Q, horizons):
@@ -791,12 +794,13 @@ print(f"Forecasted factors: {alpha_fc.shape}")
    ```
 
 8. **Diagnostic Checks**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # After running Kalman filter:
@@ -809,12 +813,13 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 </div>
 
 9. **Missing Data Experiment**
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
    # Simulate data with 30% missing observations

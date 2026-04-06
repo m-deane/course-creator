@@ -108,11 +108,13 @@ The offspring inherits all three building blocks and outperforms both parents. T
 
 ### Crossover Operators
 
+
+<span class="filename">copy.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">copy.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -363,11 +365,13 @@ This is why adaptive mutation rates (higher later in the run) can be effective: 
 
 ### Mutation Operators
 
+
+<span class="filename">mutation_operators.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">mutation_operators.py</span>
-</div>
 
 ```python
 def bit_flip_mutation(
@@ -545,11 +549,13 @@ def inversion_mutation(
 
 ### Combined Operators and Analysis
 
+
+<span class="filename">combined_operators.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">combined_operators.py</span>
-</div>
 
 ```python
 def apply_genetic_operators(

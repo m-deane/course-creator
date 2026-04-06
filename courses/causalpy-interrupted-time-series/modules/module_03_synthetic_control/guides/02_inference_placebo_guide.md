@@ -43,12 +43,13 @@ of donors from their own synthetic counterparts.
    c. Compute the post-intervention gap for unit $j$
 2. Compare the treated unit's gap to the distribution of donor gaps
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -158,12 +159,13 @@ poor pre-period fit (high RMSPE_pre) will naturally have larger post-period gaps
 Normalizing by RMSPE_pre focuses attention on post-period gaps that are large *relative to
 pre-period fit quality*.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def placebo_p_value(gaps, rmspe_pre, n_pre, treated_idx=0):
@@ -225,12 +227,13 @@ def filtered_p_value(gaps, rmspe_pre, treated_idx=0, rmspe_multiplier=2.0):
 The canonical synthetic control inference plot shows all placebo gaps alongside the treated
 unit's gap. The treated unit should stand out — its gap should be clearly larger in the post-period.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -291,12 +294,13 @@ treatment), the synthetic control should show no divergence at that placebo date
 a large gap at a placebo date, either the pre-period fit is poor or the donor pool is poorly
 chosen.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
@@ -367,12 +371,13 @@ For a null hypothesis $H_0: \alpha = \alpha_0$ (effect is exactly $\alpha_0$), s
 from the treated unit's post-intervention outcomes and rerun the placebo test. The confidence set
 at level $1 - \alpha$ is the set of $\alpha_0$ values for which the null is not rejected.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 def confidence_set_sc(Y_all, n_pre, treated_idx=0, alpha=0.1, alpha0_grid=None):

@@ -161,11 +161,13 @@ Report:
 
 ### From USDA WASDE
 
+
+<span class="filename">extract_wasde_balance.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">extract_wasde_balance.py</span>
-</div>
 
 ```python
 def extract_wasde_balance(wasde_text: str, commodity: str) -> dict:
@@ -226,11 +228,13 @@ Report:
 
 ### Time Series of Balances
 
+
+<span class="filename">balancetracker.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">balancetracker.py</span>
-</div>
 
 ```python
 import pandas as pd
@@ -277,11 +281,13 @@ class BalanceTracker:
 
 ### Surprise Analysis
 
+
+<span class="filename">analyze_balance_surprise.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">analyze_balance_surprise.py</span>
-</div>
 
 ```python
 def analyze_balance_surprise(
@@ -339,11 +345,13 @@ Return JSON:
 
 ### Generating Balance Projections
 
+
+<span class="filename">generate_balance_forecast.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">generate_balance_forecast.py</span>
-</div>
 
 ```python
 def generate_balance_forecast(
@@ -416,11 +424,13 @@ Return JSON:
 
 ### Cross-Source Validation
 
+
+<span class="filename">reconcile_balance_sources.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">reconcile_balance_sources.py</span>
-</div>
 
 ```python
 def reconcile_balance_sources(

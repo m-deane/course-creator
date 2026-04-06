@@ -50,12 +50,14 @@ A: Let me calculate step by step:
 
 The simplest form—just add "Let's think step by step":
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 prompt = """A bat and ball cost $1.10 in total. The bat costs $1.00 more than the ball.
@@ -278,12 +280,14 @@ Answer: France has approximately 68 million people.
 
 Ask for abstract principles before specific solutions:
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 prompt = """Before solving this problem, let's step back.
@@ -326,12 +330,14 @@ Sub-question 1: ...
 
 ### Basic CoT Wrapper
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def with_cot(prompt: str, cot_trigger: str = "Let's think step by step.") -> str:
@@ -450,12 +456,14 @@ Chain-of-thought isn't always beneficial:
 2. **Token-limited contexts**: Reasoning consumes output tokens
 3. **Overconfident reasoning**: Model may rationalize incorrect answers
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">agent.py</span>
 </div>
 <div class="code-body">
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:

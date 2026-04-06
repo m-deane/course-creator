@@ -32,13 +32,14 @@ Train NHITS with quantile loss on the French Bakery dataset and look at what you
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -75,13 +76,14 @@ print(baguettes.head(10))
 
 The following implementation builds on the approach above:
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # ── Train NHITS with quantile loss ───────────────────────────────────────────
@@ -141,12 +143,13 @@ $$P(Y_t \leq q_t^{0.8}) = 0.80$$
 
 This is what NHITS produces for each day. It is correct and useful. For a single-day decision — "should I order enough inventory to cover today's demand at 80% service level?" — this is exactly what you need.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # ── Visualize the marginal prediction intervals ───────────────────────────────
@@ -204,12 +207,13 @@ A natural (wrong) answer: sum up the 80th percentile for each da...
 
 A natural (wrong) answer: sum up the 80th percentile for each day.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # ── The naive (wrong) approach ────────────────────────────────────────────────

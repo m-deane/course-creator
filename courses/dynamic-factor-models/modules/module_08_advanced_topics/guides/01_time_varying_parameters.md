@@ -95,12 +95,13 @@ where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_
 
 ### Code Implementation
 
+
+<span class="filename">tvpdynamicfactormodel.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">tvpdynamicfactormodel.py</span>
-
-</div>
 
 ```python
 import numpy as np
@@ -494,12 +495,13 @@ $$\hat{\tau} = \arg\min_{\tau} \left[ SSR_1(\tau) + SSR_2(\tau) \right]$$
 
 ### Code Implementation: Change-Point Detection
 
+
+<span class="filename">detect_loading_breaks.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">detect_loading_breaks.py</span>
-
-</div>
 
 ```python
 def detect_loading_breaks(X, F, max_breaks=3, min_segment=20):

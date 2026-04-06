@@ -92,13 +92,14 @@ where $A^l = \frac{1}{H}\sum_h \alpha^{l,h}$ is the mean-head attention at layer
 
 This accounts for the fact that token representations at layer $l$ are mixtures of inputs from all previous layers.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def attention_rollout(attentions_list: list[torch.Tensor]) -> torch.Tensor:
@@ -136,13 +137,14 @@ $$\text{GradAttn}_{ij} = \alpha_{ij} \cdot \left|\frac{\partial F}{\partial \alp
 
 This is analogous to Saliency × Input for regular inputs and has better empirical correlation with gold-standard rationale annotations than raw attention.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import LayerGradientXActivation
@@ -230,13 +232,14 @@ For **exploratory analysis** — understanding how a model processes text, not e
 
 While individual heads don't explain predictions, analyzing which heads specialize in different linguistic patterns is informative for understanding BERT's representations:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Extract all attention matrices

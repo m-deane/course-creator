@@ -156,11 +156,13 @@ $$\hat{V}_{Replay}(\pi_1) = \text{mean}(r_i : \pi_1(c_i) = a_i)$$
 
 ## Production Code Template
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 class ProductionBanditSystem:

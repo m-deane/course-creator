@@ -108,11 +108,13 @@ The context vector encodes the current market state. The bandit learns which all
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -228,11 +230,13 @@ arm = bandit.choose_arm(context)
 **Task:** Modify the code above to use ridge regression for prediction instead of simple averaging.
 
 **Hint:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 from sklearn.linear_model import Ridge

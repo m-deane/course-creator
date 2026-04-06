@@ -94,11 +94,13 @@ $$\text{Maximize: } Q(\text{Model}) - \lambda \times C(\text{Model})$$
 ### The Cost Problem
 
 **Naive Implementation:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Every signal: full context, large model
@@ -111,11 +113,13 @@ for news in news_feed:
 </div>
 
 **Optimized Implementation:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Smart routing and caching
@@ -167,11 +171,13 @@ Total: 110ms (acceptable for trading)
 
 ### Intelligent Caching System
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 import hashlib

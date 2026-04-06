@@ -166,11 +166,13 @@ Or equivalently, $\pi$ is a left eigenvector of $A$ with eigenvalue 1.
 
 ### Computing the Stationary Distribution
 
+
+<span class="filename">compute_stationary_distribution.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compute_stationary_distribution.py</span>
-</div>
 
 ```python
 def compute_stationary_distribution(A, method='eigenvalue'):
@@ -230,11 +232,13 @@ for method in ['eigenvalue', 'power', 'linear_solve']:
 
 Expected steps to reach state $j$ starting from state $i$:
 
+
+<span class="filename">compute_hitting_times.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compute_hitting_times.py</span>
-</div>
 
 ```python
 def compute_hitting_times(A, target_state):
@@ -294,11 +298,13 @@ for target in range(3):
 
 States $i$ and $j$ communicate if you can get from $i$ to $j$ and from $j$ to $i$.
 
+
+<span class="filename">if.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">if.py</span>
-</div>
 
 ```python
 def find_communicating_classes(A, max_power=100):
@@ -358,11 +364,13 @@ print(f"(This chain has {len(classes)} communicating classes - it's reducible)")
 
 ### Periodicity
 
+
+<span class="filename">compute_period.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">compute_period.py</span>
-</div>
 
 ```python
 def compute_period(A, state=0, max_steps=100):
@@ -415,11 +423,13 @@ print(f"Period: {compute_period(A_periodic)}")
 
 ## Visualization
 
+
+<span class="filename">visualize_transition_matrix.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">visualize_transition_matrix.py</span>
-</div>
 
 ```python
 def visualize_transition_matrix(A, state_names=None):

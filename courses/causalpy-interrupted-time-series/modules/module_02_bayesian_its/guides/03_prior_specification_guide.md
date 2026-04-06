@@ -47,12 +47,13 @@ $\beta_2$ (level change) and $\beta_3$ (slope change) are the causal parameters 
 
 Compute the standard deviation and range of the pre-intervention outcome:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 pre_std = df.loc[df["treated"] == 0, "outcome"].std()
@@ -79,12 +80,13 @@ For a smoking ban on AMI rates:
 
 Before fitting, sample from the prior and generate hypothetical outcomes. Ask: "Do these look like plausible data from my system?"
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import pymc as pm
@@ -220,12 +222,13 @@ If all three give similar posteriors, the result is prior-robust. If they differ
 - The data are not informative enough to overcome the prior
 - The prior is genuinely strong (informative)
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
 
 ```python
 import causalpy as cp

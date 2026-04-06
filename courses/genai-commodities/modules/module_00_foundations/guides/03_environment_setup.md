@@ -238,11 +238,13 @@ else:
 ### Test Vector Database
 
 **ChromaDB (local, no API key needed):**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import chromadb
@@ -307,11 +309,13 @@ genai-commodities/
 **1. API Rate Limits**
 - **Issue:** Exceeding free tier limits or hitting rate limits
 - **Solution:** Implement caching, use exponential backoff, monitor usage
+
+<span class="filename">retry_with_backoff.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">retry_with_backoff.py</span>
-</div>
 
 ```python
 import time
@@ -347,11 +351,13 @@ load_dotenv()  # Must be called before os.getenv()
 **3. ChromaDB Persistence Issues**
 - **Issue:** Vector database data lost between sessions
 - **Solution:** Use persistent client
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import chromadb
@@ -365,11 +371,13 @@ client = chromadb.PersistentClient(path="./chroma_db")
 **4. Large Response Truncation**
 - **Issue:** LLM responses cut off mid-sentence
 - **Solution:** Increase max_tokens parameter
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 response = client.messages.create(
@@ -385,11 +393,13 @@ response = client.messages.create(
 - **Issue:** LLM returns malformed JSON
 - **Solution:** Use libraries like instructor or manual validation
 
+
+<span class="filename">safe_json_parse.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">safe_json_parse.py</span>
-</div>
 
 ```python
 import json

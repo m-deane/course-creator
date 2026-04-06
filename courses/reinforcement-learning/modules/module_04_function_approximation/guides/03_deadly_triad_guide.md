@@ -129,13 +129,14 @@ The divergence occurs because the off-policy mismatch causes updates to push wei
 
 Gradient descent would descend to $\mathbf{w} = \mathbf{0}$. But semi-gradient TD does not follow the gradient of any objective — its update direction depends on the off-policy distribution, which creates a net positive push on the weights at $\mathbf{w} = \mathbf{0}$.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 # Conceptual illustration of Baird's counterexample
@@ -202,13 +203,14 @@ Store past transitions $(S_t, A_t, R_{t+1}, S_{t+1})$ in a replay buffer. Sample
 
 **How it fails:** The replay buffer still contains off-policy data (transitions from old policies). The deadly triad is still present.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 from collections import deque
@@ -246,13 +248,14 @@ $$\delta_t = R_{t+1} + \gamma \max_{a'} \hat{q}(S_{t+1}, a', \mathbf{w}^-) - \ha
 
 **How it fails:** The target network is still a function of the same class. The triad is not eliminated, just slowed. On very long training runs, divergence can still occur.
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```python
 def update_target_network_hard(online_params, target_params):

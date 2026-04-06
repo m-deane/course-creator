@@ -53,13 +53,14 @@ This guide builds a complete IT helpdesk Copilot agent from scratch. By the end 
 
 ### Conversation Flow Overview
 
+
+<span class="filename">example.py</span>
+</div>
+The following implementation builds on the approach above:
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
-
-The following implementation builds on the approach above:
 
 ```text
 User message

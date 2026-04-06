@@ -70,12 +70,13 @@ Long format "slices" this cube horizontally (by time) and stacks the slices on t
 
 ## Code Implementation
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import pandas as pd
@@ -330,12 +331,13 @@ if __name__ == "__main__":
 - **Issue:** Time stored as strings ('2020-Q1'), dates, or integers inconsistently.
 - **Consequence:** Sorting fails; time operations produce errors.
 - **Solution:** Standardize time format before analysis:
-  <div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
   # For dates
@@ -360,12 +362,13 @@ if __name__ == "__main__":
 **6. Implicit vs Explicit Panel Structure**
 - **Issue:** Assuming data is panel when it's actually repeated cross-sections (different entities each period).
 - **Detection:** Check if same entities appear in multiple periods:
-  <div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
   entities_per_period = df.groupby('time')['entity_id'].nunique()

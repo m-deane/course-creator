@@ -142,11 +142,13 @@ $$\text{GDP growth}_t = \alpha + \beta \sum_{j=0}^{8} w_j(\theta) \cdot \text{IP
 
 with $K = 9$ (3 quarterly lags × 3 months) and Beta polynomial weights.
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -290,11 +292,13 @@ def estimate_midas(Y, X, theta0=(1.0, 5.0)):
 
 After estimation, plot the weights $w_j(\hat{\theta})$:
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import matplotlib.pyplot as plt

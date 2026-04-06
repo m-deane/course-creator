@@ -80,11 +80,13 @@ Sentiment = {
 
 ### LLM-Based Sentiment Extraction
 
+
+<span class="filename">from.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">from.py</span>
-</div>
 
 ```python
 from anthropic import Anthropic
@@ -310,11 +312,13 @@ Examples:
 
 ### Aspect-Based Sentiment Analysis
 
+
+<span class="filename">aspectsentimentextractor.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">aspectsentimentextractor.py</span>
-</div>
 
 ```python
 class AspectSentimentExtractor:
@@ -393,11 +397,13 @@ For each aspect:
 
 ### Sentiment Aggregation Across Sources
 
+
+<span class="filename">sentimentaggregator.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">sentimentaggregator.py</span>
-</div>
 
 ```python
 from collections import defaultdict
@@ -520,11 +526,13 @@ class SentimentAggregator:
 
 ### Example Usage
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Initialize extractor

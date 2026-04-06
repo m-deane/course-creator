@@ -126,11 +126,13 @@ Imagine you're a new portfolio manager (policy $\pi_1$) and you want to prove yo
 
 ## Code Implementation
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 import numpy as np
@@ -218,11 +220,13 @@ class OfflineEvaluator:
 </div>
 
 **Commodity Application:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Evaluate new commodity allocation policy on historical data
@@ -329,11 +333,13 @@ If new policy is very different from old policy, replay method discards most dat
 4. **Design Challenge:** You're building an offline evaluation pipeline for commodity allocation. What data do you need to log during production to enable IPS, doubly robust, and replay methods? Design the schema.
 
 5. **Code Review:** What's wrong with this IPS implementation?
+
+<span class="filename">example.py</span>
+</div>
+
    <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
    def ips_estimate(data, new_policy):

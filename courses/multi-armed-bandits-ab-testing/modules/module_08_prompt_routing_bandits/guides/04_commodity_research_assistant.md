@@ -85,11 +85,13 @@ This prompt worked well for open-ended research questions ("Analyze the crude oi
 - Data availability (high, medium, low) — from RAG retrieval score
 
 **Reward function:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def research_bot_reward(query, response, retrieved_docs, ground_truth=None):
@@ -146,11 +148,13 @@ After 2 weeks of production use (500 queries):
 
 ### Implementation Code
 
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 # Initialize router
@@ -268,11 +272,13 @@ A single prompt was optimized for tables but terrible at narratives.
 - User role (trader, analyst, portfolio manager)
 
 **Reward function:**
+
+<span class="filename">example.py</span>
+</div>
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-</div>
 
 ```python
 def eia_extraction_reward(section_type, response, ground_truth):

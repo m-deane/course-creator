@@ -24,13 +24,14 @@ The uniformity of Captum's API means you can compare all four methods with a sin
 
 Every gradient attribution in this module follows this setup:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import torch
@@ -79,13 +80,14 @@ with torch.no_grad():
 
 ### API
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import Saliency
@@ -118,13 +120,14 @@ attributions = saliency.attribute(
 
 ### Visualization Pattern
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import visualization as viz
@@ -153,13 +156,14 @@ fig, axes = viz.visualize_image_attr_multiple(
 
 ### API
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import InputXGradient
@@ -185,13 +189,14 @@ Unlike Saliency (which takes absolute value), Input×Gradient returns signed att
 
 For visualization, you can show all, only positive, or absolute value:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Show only positive attributions (evidence FOR the class)
@@ -214,13 +219,14 @@ fig, axes = viz.visualize_image_attr_multiple(
 
 ### API
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import GuidedBackprop
@@ -241,13 +247,14 @@ attributions = gbp.attribute(
 
 GuidedBackprop registers **hooks** on the model's ReLU layers to modify the backward pass. These hooks are registered when the method is instantiated and removed when the attribution is complete. This is handled transparently by Captum.
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # Captum handles hook registration/removal automatically
@@ -264,13 +271,14 @@ attributions = gbp.attribute(inputs, target=class_idx)  # Runs modified backward
 
 This is the critical validation that reveals Guided Backprop's failure mode:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 import copy
@@ -311,13 +319,14 @@ print(f"Correlation between trained and random model attributions: {correlation:
 
 ### API
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import Deconvolution
@@ -348,13 +357,14 @@ The canonical comparison pattern for all four methods:
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 from captum.attr import Saliency, InputXGradient, GuidedBackprop, Deconvolution
@@ -461,13 +471,14 @@ def plot_attribution_comparison(attributions, image_np, predicted_class):
 
 Beyond visual inspection, quantitative metrics help compare attribution quality:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def attribution_statistics(attributions, image_np):
@@ -515,13 +526,14 @@ def attribution_statistics(attributions, image_np):
 </div>
 
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # WRONG: will raise RuntimeError about grad requirement
@@ -540,13 +552,14 @@ attr = saliency.attribute(input_tensor, target=0)
 
 ### Mistake 2: Model in Training Mode
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # WRONG: dropout produces different gradients each run
@@ -565,13 +578,14 @@ attr = saliency.attribute(input_tensor, target=0)  # Deterministic
 
 ### Mistake 3: Wrong Target Type
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # WRONG: target should be int, not float or one-hot
@@ -589,13 +603,14 @@ attr = saliency.attribute(input_tensor, target=281)    # Class index 281
 
 ### Mistake 4: Batch Target Mismatch
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 # For batch attribution, target can be a list/tensor
@@ -618,13 +633,14 @@ attr = saliency.attribute(inputs, target=[0, 281, 483])  # Different class per i
 
 Different attribution methods produce values at different scales. Normalize for fair visual comparison:
 
+
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-<span class="filename">example.py</span>
-
-</div>
-<div class="code-body">
 
 ```python
 def normalize_attribution(attr_np, percentile=99):

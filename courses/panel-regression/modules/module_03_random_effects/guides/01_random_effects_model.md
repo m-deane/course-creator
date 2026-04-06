@@ -91,12 +91,13 @@ As $\sigma_\alpha^2 \to \infty$ or $T \to \infty$, $\theta \to 1$ (RE approaches
 
 ## Implementation in Python
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 import numpy as np
@@ -144,12 +145,13 @@ print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 
 ### Method of Moments
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 def estimate_variance_components(data, y_col, x_cols, entity_col, time_col):
@@ -216,12 +218,13 @@ for k, v in var_components.items():
 
 A key advantage of RE: estimating effects of time-invariant variables.
 
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+
 <span class="filename">example.py</span>
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
 # Add time-invariant variable

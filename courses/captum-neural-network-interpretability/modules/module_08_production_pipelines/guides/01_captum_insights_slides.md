@@ -30,11 +30,15 @@ Every project, practitioners write the same boilerplate:
 
 <!-- Speaker notes: Before Insights, every interpretability workflow required custom matplotlib code. Insights provides a standardized interactive UI so you can focus on understanding the model rather than debugging visualization code. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Captum Insights Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     M[Your Model] --> AV[AttributionVisualizer]
     D[Dataset<br/>Batch objects] --> AV
@@ -47,6 +51,9 @@ graph LR
 
 <!-- Speaker notes: The AttributionVisualizer is the central object. It wraps your model, feature descriptors, and dataset, then exposes a Flask endpoint. The browser UI handles all rendering including image overlays, text coloring, and method comparison. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Installation
@@ -69,6 +76,9 @@ print("Captum Insights ready")
 
 <!-- Speaker notes: The [insights] extra pulls in Flask and flask-compress. These are lightweight and do not affect your training environment. The standard captum install does NOT include them — always use pip install captum[insights] for this module. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Core Class: `AttributionVisualizer`
@@ -90,6 +100,9 @@ All parameters are required. No optional shortcuts.
 
 <!-- Speaker notes: The models list supports multiple models for side-by-side comparison. score_func is critical — it must return a probability vector (0 to 1 per class, summing to 1). For classification, torch.softmax(output, dim=1) is almost always correct. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Feature Descriptors

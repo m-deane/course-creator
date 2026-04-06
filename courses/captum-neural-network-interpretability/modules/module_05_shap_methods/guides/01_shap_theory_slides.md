@@ -34,6 +34,9 @@ All three:        earn $100
 
 <!-- Speaker notes: Start with an intuition before the math. The fair division problem is ancient — how do you credit contributions when value emerges from collaboration? This is exactly what SHAP solves for model predictions. Feature A alone might not be predictive, but combined with feature B, they become powerful. SHAP allocates credit for that joint contribution fairly. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## From Game Theory to Machine Learning
@@ -57,6 +60,9 @@ The value function **averages over missing features** — if a feature isn't in 
 
 <!-- Speaker notes: The translation from game theory to ML is elegant. Features are players. A coalition is a subset of features we reveal to the model. The value is the model's expected output given only those features. The expectation over missing features is crucial — it means we're computing what the model would predict if it only had access to the coalition features, averaging over all possible values of the rest. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Shapley Value Formula
@@ -75,6 +81,9 @@ $$\boxed{\phi_i(v) = \sum_{S \subseteq \{1,\ldots,d\} \setminus \{i\}} \frac{|S|
 
 <!-- Speaker notes: This formula looks dense but the intuition is simple. For each possible coalition S that doesn't include feature i, we compute: what does adding feature i to that coalition change? Then we average these marginal contributions, weighted by how often each coalition appears in a random ordering. The weighting term ensures we average uniformly over all n! orderings. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Visualizing Marginal Contributions
@@ -94,6 +103,9 @@ $$\phi_B = \frac{1}{6}\left[(v(\{A,B\})-v(\{A\})) + 2(v(\{A,B,C\})-v(\{A,C\})) +
 
 <!-- Speaker notes: This slide makes the averaging concrete. With 3 features, there are 6 orderings. For each ordering, we look at the marginal contribution of B when it enters — what did B add to whoever came before it? Average these 6 marginal contributions and you have the Shapley value for B. With more features, this becomes 2^d coalitions to evaluate. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Four Axioms
@@ -195,6 +207,7 @@ Small coalitions (few features included) and large coalitions (most features inc
 ## KernelSHAP Algorithm
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Sample M coalitions\nz' ~ π_x] --> B[Map z' to input\nhx: {0,1}^d → R^d]
     B --> C[Evaluate model\nf for each masked input]

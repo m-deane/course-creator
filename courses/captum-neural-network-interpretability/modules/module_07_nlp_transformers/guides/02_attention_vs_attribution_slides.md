@@ -34,6 +34,9 @@ BERT attention (layer 11, head 5):
 
 <!-- Speaker notes: The intuition is tempting: the model attended to "brilliant" the most, so "brilliant" drove the prediction. But this is just one head in one layer of a 12-layer, 12-head model. The other 143 attention matrices might show completely different patterns. And even if we aggregate across all heads and layers, attention weight is NOT the same as causal attribution — it measures information routing, not counterfactual impact. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## What Attention Weights Actually Measure
@@ -52,6 +55,9 @@ It does NOT mean: "changing token $j$ would change the final prediction"
 
 <!-- Speaker notes: The attention formula is a weighted average of value vectors. Alpha_ij controls how much of value_j goes into the representation of position i. This is a routing decision in the information flow. But the value vector V_j is itself a function of the input token — and if V_j doesn't change much between "brilliant" and a random word, high attention to "brilliant" might not matter for the prediction. Attribution measures counterfactual impact; attention measures information routing. These are different things. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Formal Problem: Missing Properties
@@ -69,6 +75,9 @@ Attention weights are **softmax-normalized to sum to 1** — this normalization 
 
 <!-- Speaker notes: The formal argument is crisp. Attribution methods must satisfy axioms derived from cooperative game theory. The efficiency axiom says attributions sum to the prediction minus the baseline — nothing is unaccounted for. Attention weights sum to 1 because of softmax normalization, but this 1 is arbitrary — it doesn't represent the total "prediction credit" that needs to be distributed. A dummy feature (irrelevant for the prediction) can receive high attention (the model might attend to it while doing something else), but a proper attribution method would give it zero. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Empirical Evidence: Jain & Wallace (2019)
@@ -87,6 +96,9 @@ If attention explained the prediction, permuting it should destroy performance.
 
 <!-- Speaker notes: Jain and Wallace's 2019 NAACL paper ran this experiment across multiple tasks. If attention explains predictions, then scrambling the attention weights should break the model. But in many cases, models with permuted attention performed just as well. This is because the model's actual decision mechanism runs through the weights and activations, not directly through attention patterns. Attention is a useful description of information flow, but not an explanation of the prediction. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Case Study: Negation
@@ -235,6 +247,7 @@ Critical cases where attention misleads:
 ## Practical Decision Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Need to explain BERT/GPT prediction] --> B{Purpose?}
     B -->|Exploration/debugging| C[Attention visualization + rollout\nFast, interactive, imperfect]

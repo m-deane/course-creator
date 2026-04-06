@@ -1,5 +1,8 @@
 # Why Interpretability Matters
 
+> **Reading time:** ~8 min | **Module:** 0 — Foundations | **Prerequisites:** PyTorch basics, neural network fundamentals
+
+
 ## In Brief
 
 Neural network interpretability is the practice of understanding *why* a model produces a specific output — not just *what* it produces. It sits at the intersection of debugging, trust-building, regulatory compliance, and scientific understanding.
@@ -7,6 +10,11 @@ Neural network interpretability is the practice of understanding *why* a model p
 ## Key Insight
 
 A model that you cannot explain is a model you cannot safely deploy. Interpretability is not an academic luxury; it is an engineering requirement for any ML system that affects real decisions.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Neural network interpretability is the practice of understanding *why* a model produces a specific output — not just *what* it produces.
+</div>
 
 ---
 
@@ -25,6 +33,10 @@ This opacity creates three categories of risk:
 ---
 
 ## 2. Real-World Failures from Uninterpretable Models
+<div class="callout-warning">
+<strong>Warning:</strong> A high-accuracy image classifier trained to distinguish huskies from wolves achieved 85% test accuracy. Researchers applied LIME to explain its predictions and discovered the model had learned to classify images by **background snow** rather than the animal's features.
+</div>
+
 
 ### The Husky vs Wolf Case (Ribeiro et al., 2016)
 
@@ -154,6 +166,17 @@ The choice of method depends on your goal. Module 00 Guide 02 provides the full 
 ## 6. Code Example: The Stakes of Interpretability
 
 The following demonstrates how a model can achieve good accuracy while learning wrong features:
+<div class="callout-key">
+<strong>Key Point:</strong> The following demonstrates how a model can achieve good accuracy while learning wrong features:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -179,6 +202,9 @@ ig = IntegratedGradients(model)
 # Without this, we only know the prediction, not the reasoning
 ```
 
+</div>
+</div>
+
 This is the foundation for everything in this course: the ability to move from *output* to *explanation*.
 
 ---
@@ -200,6 +226,19 @@ This is the foundation for everything in this course: the ability to move from *
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving why interpretability matters, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Ribeiro et al. (2016). "Why Should I Trust You?": Explaining the Predictions of Any Classifier. *KDD 2016* — Introduces LIME and the husky/wolf case study.
@@ -207,3 +246,12 @@ This is the foundation for everything in this course: the ability to move from *
 - EU AI Act (2024). Official text at eur-lex.europa.eu — Regulatory requirements for high-risk AI.
 - ProPublica (2016). Machine Bias. *ProPublica* — COMPAS recidivism investigation.
 - Caruana et al. (2015). Intelligible Models for Healthcare. *KDD 2015* — Medical AI interpretability case study.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

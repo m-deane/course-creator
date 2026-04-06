@@ -32,6 +32,9 @@ pip install captum
 
 <!-- Speaker notes: Captum's institutional backing from Meta and its role as the official PyTorch interpretability library means it is the natural default choice for PyTorch models. The BSD-3 license removes any IP concerns for production use. The pip install is genuinely simple — no CUDA-specific compilation needed, no conflicts with standard PyTorch installations. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # The Unified API Design
@@ -57,6 +60,9 @@ attributions = method.attribute(
 
 <!-- Speaker notes: The single most important design decision in Captum is this API uniformity. Demonstrate this by showing that replacing IntegratedGradients with Saliency is a one-word change. This makes comparative studies trivially easy to implement: write attribution computation once, parameterize the method, loop over methods. This is what makes Module 01's side-by-side comparison notebook so clean. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Comparing Methods: 10 Methods in 10 Lines
@@ -86,11 +92,15 @@ This is impossible without a unified interface.
 
 <!-- Speaker notes: Show how the unified interface enables systematic comparison. In practice, practitioners often want to see whether multiple methods agree — agreement increases confidence in the explanation. With Captum, this comparison requires about 5 minutes of code, not days of integration work. The dictionary comprehension pattern is worth showing explicitly as a practical idiom. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Three Method Families
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Captum Methods] --> B[Input Attribution<br/>φ has same shape as input]
     A --> C[Layer Attribution<br/>φ has shape of target layer]
@@ -103,6 +113,9 @@ graph TD
 
 <!-- Speaker notes: The three families produce attributions at different levels of the network. Input attribution answers "which input features mattered?" — the output is a heatmap overlaid on the input. Layer attribution answers "which neurons in this specific layer mattered?" — useful for understanding intermediate representations. Neuron attribution answers "given this neuron is active, what in the input caused it?" — useful for understanding what individual neurons detect. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Layer-Based Methods: Accessing Internal Layers
@@ -214,6 +227,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 # When to Use Each Tool
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Need to explain a prediction] --> B{PyTorch model?}
     B -->|Yes| C{Need layer/neuron info?}
@@ -313,6 +327,7 @@ assert abs(attr_sum - (pred_in - pred_bl)) < 0.01
 # The Attribution Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Pretrained Model] --> B[Choose Method]
     B --> C[Captum Instance]

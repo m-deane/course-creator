@@ -1,5 +1,8 @@
 # Token-Level Attribution for NLP Models
 
+> **Reading time:** ~8 min | **Module:** 7 — NLP & Transformers | **Prerequisites:** Module 2 Integrated Gradients
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -9,11 +12,20 @@ By the end of this guide, you will be able to:
 4. Visualize token attributions with colored text (green = positive, red = negative)
 5. Implement token attribution for any HuggingFace sequence classification model
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of token-level attribution for nlp models.
+</div>
+
 ---
 
 ## 1. The NLP Attribution Challenge
 
 Neural network attribution methods are defined on continuous input spaces. Text inputs are discrete (tokens from a vocabulary of 30K+ tokens), which creates two challenges:
+<div class="callout-key">
+<strong>Key Point:</strong> Neural network attribution methods are defined on continuous input spaces. Text inputs are discrete (tokens from a vocabulary of 30K+ tokens), which creates two challenges:
+</div>
+
 
 ### Challenge 1: Discrete Inputs
 Gradient methods require the input to be differentiable. Text token IDs are integers — they have no meaningful gradient.
@@ -60,6 +72,13 @@ $$\phi_i = \sum_j \text{IG}_{i,j}$$
 
 Captum's `LayerIntegratedGradients` applies IG at a specific layer — the embedding layer:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from captum.attr import LayerIntegratedGradients
 
@@ -83,9 +102,19 @@ lig = LayerIntegratedGradients(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Baseline Construction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def create_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
@@ -110,9 +139,19 @@ def create_mask_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
     return baselines
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Computing Token Attributions End-to-End
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -167,11 +206,25 @@ attributions, delta = lig.attribute(
 token_attrs = attributions.sum(dim=-1).squeeze(0)  # shape: (seq_len,)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Token Attribution Visualization
 
 The standard visualization uses colored text: green for positive attributions, red for negative.
+<div class="callout-warning">
+<strong>Warning:</strong> The standard visualization uses colored text: green for positive attributions, red for negative.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import matplotlib.pyplot as plt
@@ -228,6 +281,9 @@ def visualize_token_attributions(tokens: list, attributions: np.ndarray,
     return fig
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Special Tokens in Attribution
@@ -248,6 +304,13 @@ Best practice: Exclude or minimize special token attributions when communicating
 
 After computing per-embedding-dimension attributions, several aggregation methods give different insights:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Method 1: Sum across embedding dim (signed, preserves direction)
 token_attrs_sum = attributions.sum(dim=-1)
@@ -258,6 +321,9 @@ token_attrs_l2 = attributions.norm(dim=-1)
 # Method 3: Mean across embedding dim
 token_attrs_mean = attributions.mean(dim=-1)
 ```
+
+</div>
+</div>
 
 **Sum:** Best for understanding direction (positive = toward target class, negative = away from target class).
 
@@ -288,6 +354,13 @@ Transformers handle long-range dependencies. Attribution at the token level may 
 ### Subword Tokenization
 BERT uses WordPiece tokenization, splitting words into subwords. "Unhappy" might become ["un", "##happy"]. Attribution should be aggregated back to the word level for readability.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
     """Merge subword attributions back to word level."""
@@ -314,7 +387,23 @@ def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
     return word_tokens, word_attrs
 ```
 
+</div>
+</div>
+
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The NLP Attribution Challenge" and why it matters in practice.
+
+2. Given a real-world scenario involving token-level attribution for nlp models, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -335,3 +424,12 @@ def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
 - DeYoung, J., et al. (2020). ERASER: A benchmark to evaluate rationalized NLP models. *ACL*.
 - Bastings, J., & Filippova, K. (2020). The elephant in the interpretability room: Why use attention as explanation when we have saliency methods? *BlackboxNLP workshop*.
 - Captum LayerIntegratedGradients: https://captum.ai/api/layer.html#layerintegratedgradients
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_bert_sentiment_ig.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

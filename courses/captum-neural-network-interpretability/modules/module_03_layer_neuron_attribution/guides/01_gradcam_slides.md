@@ -37,11 +37,15 @@ gradcam_attr.shape  # (1, 2048, 7, 7) → upsampled to (1, 2048, 224, 224)
 
 <!-- Speaker notes: The two methods are complementary. IG is the right choice when you need provable correctness and exact per-pixel attribution. GradCAM is the right choice when you need fast spatial localization for a CNN. In practice, many teams use both: GradCAM for rapid exploration and communication, IG for rigorous analysis. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # CNN Representation Hierarchy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Input\n224×224×3"] --> B["layer1\nEdges, textures\n56×56"]
     B --> C["layer2\nParts, corners\n28×28"]
@@ -57,6 +61,9 @@ Before pooling collapses space, the 7×7 grid still encodes "where" in the image
 
 <!-- Speaker notes: The 7×7 feature map from ResNet-50's final conv layer is the key to GradCAM. Each cell of this 7×7 grid corresponds to a 32×32 patch of the original 224×224 image. The 2048 channels at each spatial location encode high-level semantic features. GradCAM weights these 2048 channels by their gradient importance and sums them to produce a single 7×7 heatmap indicating which spatial regions matter most. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # GradCAM Derivation: Step 1 — Gradient Weights
@@ -75,6 +82,9 @@ Average gradient = global importance of the entire feature map.
 
 <!-- Speaker notes: The global average pooling of gradients is the key insight. Rather than using the gradient at each spatial location independently, GradCAM pools them into a single weight per feature map. This has two effects: (1) it smooths out spatial noise in the gradients, and (2) it tells us the overall importance of each feature map (its 2048-dimensional "concept") for the target class. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # GradCAM Derivation: Step 2 — Weighted Map
@@ -96,6 +106,9 @@ Without ReLU: regions that suppress the class (negative gradients) contaminate t
 
 <!-- Speaker notes: The ReLU is a design choice, not a theoretical requirement. It reflects the question GradCAM is answering: "which regions increase confidence in class c?" Removing the ReLU would answer "which regions have any gradient influence (positive or negative)?" For most visualization purposes, the positive-only map is cleaner and more interpretable. But for debugging — e.g., finding regions that suppress a class — the signed version is informative. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # GradCAM in Captum: Full Code
@@ -338,6 +351,7 @@ Before trusting any GradCAM heatmap:
 # GradCAM vs. IG: Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A{What question?} --> B{Where is the model looking?}
     A --> C{Which exact features matter?}

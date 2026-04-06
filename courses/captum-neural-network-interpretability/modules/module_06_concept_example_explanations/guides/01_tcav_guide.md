@@ -1,5 +1,8 @@
 # TCAV: Testing with Concept Activation Vectors
 
+> **Reading time:** ~7 min | **Module:** 6 — Concept & Example Explanations | **Prerequisites:** Module 3 Layer Attribution
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Implement TCAV in Captum to test whether a model uses a specific concept
 4. Interpret TCAV sensitivity scores and statistical significance
 5. Design meaningful concept datasets for TCAV experiments
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of tcav: testing with concept activation vectors.
+</div>
 
 ---
 
@@ -26,6 +34,10 @@ TCAV (Kim et al., 2018) answers these questions by testing whether the model's i
 ## 2. The Core TCAV Idea
 
 TCAV asks: **"How sensitive is the model's prediction of class C to a concept K?"**
+<div class="callout-insight">
+<strong>Insight:</strong> TCAV asks: **"How sensitive is the model's prediction of class C to a concept K?"**
+</div>
+
 
 ### Step 1: Define a Concept
 
@@ -110,6 +122,13 @@ The quality of TCAV results depends heavily on the concept dataset.
 
 ## 6. Captum TCAV Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import torch
 from torch.utils.data import DataLoader, TensorDataset
@@ -150,11 +169,21 @@ scores = tcav.interpret(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Interpreting TCAV Results
 
 ### Reading the Scores
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # scores is a dict: layer -> concept_name -> TCAV score
@@ -162,6 +191,9 @@ for layer, concept_scores in scores.items():
     for concept_name, score in concept_scores.items():
         print(f"Layer: {layer}, Concept: {concept_name}, TCAV: {score:.3f}")
 ```
+
+</div>
+</div>
 
 ### Example Output for a Zebra Classifier
 
@@ -182,6 +214,13 @@ Layer: layer4, Concept: 4-legged, TCAV: 0.731  ← model uses leg structure
 
 Running TCAV on multiple layers reveals at which depth the concept is encoded:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 tcav = TCAV(
     model=model,
@@ -190,6 +229,9 @@ tcav = TCAV(
     save_path="./tcav_multilayer/",
 )
 ```
+
+</div>
+</div>
 
 Typical findings:
 - **Early layers** (layer1, layer2): Encode low-level concepts (edges, colors, textures)
@@ -232,6 +274,19 @@ TCAV and attribution methods are **complementary**:
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Why Concept-Based Explanations?" and why it matters in practice.
+
+2. Given a real-world scenario involving tcav: testing with concept activation vectors, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 | Step | Description | Key Formula |
@@ -249,3 +304,12 @@ TCAV and attribution methods are **complementary**:
 - Kim, B., et al. (2018). Interpretability beyond classification uncertainty: Quantitative testing with concept activation vectors (TCAV). *ICML*.
 - Ghassemi, M., et al. (2021). The false hope of current approaches to explainable artificial intelligence in health care. *The Lancet Digital Health*.
 - Captum TCAV documentation: https://captum.ai/api/concept.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_tcav_texture_shape.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

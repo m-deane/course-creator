@@ -36,6 +36,9 @@ attr = occ.attribute(input, ...)  # Only model(x) calls
 
 <!-- Speaker notes: The key differentiator is model-agnosticism. Perturbation methods are the only attribution approach that works on non-differentiable models. If you're explaining a random forest, a gradient boosted tree, or a model exposed via an API, perturbation methods are your only option. They're also useful for verifying gradient-based results: if IG says feature X is important and Occlusion agrees, you have strong convergent evidence. If they disagree, investigate why. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # The Perturbation Principle
@@ -53,11 +56,15 @@ This is **causal**: directly measures the effect of feature presence/absence.
 
 <!-- Speaker notes: The causal framing is important. Gradient methods measure local sensitivity — how the output changes with infinitesimal perturbations of a feature. Perturbation methods measure the full effect of removing a feature entirely, replaced by a baseline. These are different questions. Gradient sensitivity can be zero even for important features (saturation problem). Perturbation importance correctly captures large-scale feature contributions. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Occlusion: Sliding Window Algorithm
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Input Image\n224×224"] --> B["Slide W×W window\nacross image"]
     B --> C["At each position (u,v):\nReplace window with baseline"]
@@ -71,6 +78,9 @@ flowchart LR
 
 <!-- Speaker notes: The sliding window algorithm is conceptually simple but computationally expensive. For a 224×224 image with stride 8, you need about 784 forward passes, compared to just 50 for IG. However, Captum implements Occlusion with batching so all occluded versions are processed in a single batched inference call, which is much faster than sequential evaluation. On a GPU, 784 passes with a small batch size might take only 2-3 seconds for ResNet-50. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Occlusion in Captum
@@ -97,6 +107,9 @@ attributions = occ.attribute(
 
 <!-- Speaker notes: The parameter naming in Captum's Occlusion can be confusing. The strides parameter uses (3, s, s) not (1, s, s) because we want to occlude all three color channels simultaneously at each spatial location. Using strides=(1, s, s) would occlude only one channel at a time, producing three heatmaps. The sliding_window_shapes=(3, W, W) means the window covers the full depth of the image. This is the standard configuration for image classification. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Occlusion Resolution vs. Cost
@@ -248,6 +261,7 @@ plt.title('Feature Ablation Importances')
 # Occlusion vs. IG: Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A{Is your model differentiable?} --> |No| B[Use Occlusion or Feature Ablation]
     A --> |Yes| C{Do you need pixel-level accuracy?}

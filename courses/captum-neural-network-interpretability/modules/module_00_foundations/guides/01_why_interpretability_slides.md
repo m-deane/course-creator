@@ -28,6 +28,9 @@ A ResNet-50 prediction involves:
 
 <!-- Speaker notes: Start concrete. ResNet-50 is a familiar model. The numbers make the opacity visceral: 25 million parameters means 25 million things that could be wrong. The quote is intentionally provocative. We will spend this course building the tooling to see what happens in between. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # Three Categories of Risk
@@ -53,6 +56,9 @@ A ResNet-50 prediction involves:
 
 <!-- Speaker notes: Three failure modes, all real, all expensive. The regulatory category is accelerating: the EU AI Act came into force in 2024 and the US is developing analogous frameworks. Financial services (SR 11-7) and healthcare (FDA SaMD guidance) have had interpretability requirements for years. This is not hypothetical. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Case Study: The Husky vs Wolf Classifier
@@ -74,11 +80,15 @@ Actual feature used: BACKGROUND SNOW
 
 <!-- Speaker notes: This is the classic illustration of the gap between accuracy and correctness. The model was not wrong on the test set — it really did achieve 85% accuracy. But it was learning a spurious correlation in the dataset. Wolves are typically photographed outdoors in snowy environments; huskies often in domestic settings. The model learned photography context, not zoology. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Why Accuracy Metrics Miss This
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Training Data<br/>Wolves in snow<br/>Huskies indoors] --> B[Model Learns<br/>snow = wolf<br/>no snow = husky]
     B --> C[Test Set<br/>Same distribution]
@@ -92,6 +102,9 @@ Accuracy measures **outcome correlation**, not **causal reasoning**.
 
 <!-- Speaker notes: The failure chain is inevitable given the training data distribution. Accuracy metrics only detect failures when the test distribution differs from training. Spurious correlations that exist uniformly in both sets are invisible to accuracy metrics. This is why interpretability is complementary to, not replaceable by, accuracy evaluation. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Case Study: IBM Watson for Oncology
@@ -157,6 +170,7 @@ The model learned **clinical photography practice**, not dermatology.
 # The Five Dimensions of Interpretability Value
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 mindmap
   root((Interpretability))
     Debugging
@@ -237,6 +251,7 @@ Common myth: "Interpretable models sacrifice accuracy."
 # The Debugging Loop with Interpretability
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Train model] --> B[Evaluate accuracy]
     B --> C{Good enough?}
@@ -295,19 +310,13 @@ Systems requiring mandatory interpretability documentation:
 # What This Course Covers
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Module 00<br/>Foundations] --> B[Module 01<br/>Gradient Methods]
     B --> C[Module 02<br/>Integrated Gradients]
     C --> D[Module 03<br/>Layer Attribution]
     D --> E[Module 04<br/>Perturbation Methods]
     E --> F[Module 05+<br/>Advanced Topics]
-
-    style A fill:#e1f5fe
-    style B fill:#e8f5e9
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
-    style E fill:#fff3e0
-    style F fill:#fce4ec
 ```
 
 Every method answers the question: **"Why did the model predict this?"**

@@ -28,11 +28,15 @@ Without a taxonomy, you will:
 
 <!-- Speaker notes: The interpretability literature is cluttered with method names: LIME, SHAP, GradCAM, IG, Saliency, DeepLIFT, TCAV — each new paper introduces new acronyms. Without a conceptual framework, practitioners either default to the most popular method or experiment randomly. The taxonomy converts this alphabet soup into a structured decision tree. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # The Three Primary Dimensions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Interpretability Methods] --> B[Intrinsic<br/>Model IS the explanation]
     A --> C[Post-hoc<br/>Explanation computed after training]
@@ -46,6 +50,9 @@ graph TD
 
 <!-- Speaker notes: These three dimensions are orthogonal. A method can be post-hoc AND local AND model-specific (GradCAM). Or post-hoc AND local AND model-agnostic (LIME). Understanding which combination you need is the first step to choosing the right method. Intrinsic methods are architecturally constrained, so the interesting space for this course is all post-hoc methods. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Dimension 1: Intrinsic vs Post-hoc
@@ -76,6 +83,9 @@ Cons: Approximation, may not reflect true computation
 
 <!-- Speaker notes: The intrinsic vs post-hoc distinction is fundamental because it determines whether the explanation IS the model or is a separate artifact. Post-hoc explanations can be wrong — they are approximations. This is not a flaw unique to post-hoc methods; all measurement has error. But it means post-hoc explanations require validation, not just production. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Dimension 2: Local vs Global
@@ -102,6 +112,9 @@ What patterns does the model learn across *all* inputs?
 
 <!-- Speaker notes: The local-global confusion is the most common mistake in interpretability practice. A practitioner who generates local explanations for 100 test examples and averages them has produced a rough approximation of the global explanation — but with potential bias. Methods designed for local explanation (Integrated Gradients for one image) behave differently when naively aggregated versus methods designed for global explanation (TCAV). -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Dimension 3: Model-specific vs Model-agnostic
@@ -131,6 +144,7 @@ Advantage: Universal, architecture-independent
 # Attribution Types: Input, Layer, Neuron
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Input["Input x\n(image/text/table)"] --> L1[Layer 1]
     L1 --> L2[Layer 2]
@@ -150,6 +164,7 @@ flowchart LR
 # The Full Taxonomy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 mindmap
   root((Post-hoc<br/>Methods))
     Local
@@ -216,6 +231,7 @@ $$\text{If } f(x) = g(x) \text{ for all } x, \text{ then } \phi_f(x) = \phi_g(x)
 # Decision Rule: Choosing Your Method
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[What do you need?] --> B{Local or Global?}
     B -->|Local| C{Architecture?}

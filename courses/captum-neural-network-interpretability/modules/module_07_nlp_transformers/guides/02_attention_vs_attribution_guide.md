@@ -1,5 +1,8 @@
 # Attention Weights vs. Integrated Gradients: Why They Disagree
 
+> **Reading time:** ~7 min | **Module:** 7 — NLP & Transformers | **Prerequisites:** Module 2 Integrated Gradients
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Empirically compare attention vs. IG attributions on the same BERT model
 4. Apply rollout and gradient-weighted attention as improved attention-based explanations
 5. Make principled decisions about when (not) to use attention as explanation
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of attention weights vs. integrated gradients: why they disagree.
+</div>
 
 ---
 
@@ -69,12 +77,23 @@ None of these have the theoretical grounding of Integrated Gradients.
 ## 5. Attention Rollout
 
 Attention rollout (Abnar & Zuidema, 2020) improves over raw attention by propagating attention weights through all layers:
+<div class="callout-insight">
+<strong>Insight:</strong> Attention rollout (Abnar & Zuidema, 2020) improves over raw attention by propagating attention weights through all layers:
+</div>
+
 
 $$\tilde{A}^l = A^l \tilde{A}^{l-1} \quad \text{with} \quad \tilde{A}^0 = I$$
 
 where $A^l = \frac{1}{H}\sum_h \alpha^{l,h}$ is the mean-head attention at layer $l$.
 
 This accounts for the fact that token representations at layer $l$ are mixtures of inputs from all previous layers.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def attention_rollout(attentions_list: list[torch.Tensor]) -> torch.Tensor:
@@ -98,6 +117,9 @@ def attention_rollout(attentions_list: list[torch.Tensor]) -> torch.Tensor:
     return result
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Gradient-Weighted Attention
@@ -107,6 +129,13 @@ Serrano & Smith (2019) proposed multiplying attention weights by the gradient of
 $$\text{GradAttn}_{ij} = \alpha_{ij} \cdot \left|\frac{\partial F}{\partial \alpha_{ij}}\right|$$
 
 This is analogous to Saliency × Input for regular inputs and has better empirical correlation with gold-standard rationale annotations than raw attention.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import LayerGradientXActivation
@@ -124,6 +153,9 @@ for attn_layer in model.bert.encoder.layer:
         target=pred_class,
     )
 ```
+
+</div>
+</div>
 
 ---
 
@@ -188,6 +220,13 @@ For **exploratory analysis** — understanding how a model processes text, not e
 
 While individual heads don't explain predictions, analyzing which heads specialize in different linguistic patterns is informative for understanding BERT's representations:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Extract all attention matrices
 outputs = model(input_ids, attention_mask=attention_mask,
@@ -208,9 +247,25 @@ plt.colorbar(im)
 plt.title("BERT Layer 0, Head 0 Attention Pattern")
 ```
 
+</div>
+</div>
+
 Some heads specialize in: next-token attention, previous-token attention, [CLS]-to-all, coreference, syntactic dependencies.
 
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The "Attention is Explanation" Assumption" and why it matters in practice.
+
+2. Given a real-world scenario involving attention weights vs. integrated gradients: why they disagree, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -232,3 +287,12 @@ Some heads specialize in: next-token attention, previous-token attention, [CLS]-
 - Wiegreffe, S., & Pinter, Y. (2019). Attention is not not explanation. *EMNLP*.
 - Abnar, S., & Zuidema, W. (2020). Quantifying attention flow in transformers. *ACL*.
 - Bastings, J., & Filippova, K. (2020). The elephant in the interpretability room. *BlackboxNLP*.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_bert_sentiment_ig.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

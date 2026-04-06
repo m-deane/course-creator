@@ -1,5 +1,8 @@
 # Guide 01: Occlusion and Feature Ablation
 
+> **Reading time:** ~9 min | **Module:** 4 — Perturbation Methods | **Prerequisites:** Module 0 Foundations
+
+
 ## Overview
 
 Perturbation methods are a fundamentally different paradigm from gradient-based attribution. Instead of backpropagating through the model to measure sensitivity, they directly observe what happens to the model's output when features are removed or replaced. This makes them:
@@ -10,6 +13,11 @@ Perturbation methods are a fundamentally different paradigm from gradient-based 
 4. **Robust:** not susceptible to gradient vanishing or saturation issues
 
 This guide covers two closely related perturbation methods: Occlusion (sliding window) and Feature Ablation (arbitrary feature groups).
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 01: occlusion and feature ablation.
+</div>
 
 ---
 
@@ -28,6 +36,10 @@ This is a **causal** definition of importance: we measure the actual effect of r
 ## 2. Occlusion (Sliding Window)
 
 Occlusion was introduced by Zeiler & Fergus (2014) as a way to explain CNN predictions. The algorithm:
+<div class="callout-insight">
+<strong>Insight:</strong> Occlusion was introduced by Zeiler & Fergus (2014) as a way to explain CNN predictions. The algorithm:
+</div>
+
 
 1. Select a rectangular sliding window of size $W \times W$ pixels
 2. For each position $(u, v)$ of the window:
@@ -54,6 +66,13 @@ For a 224×224 image with window size 15×15 and stride 8: approximately $28 \ti
 
 ## 3. Captum Occlusion API
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from captum.attr import Occlusion
 
@@ -71,6 +90,9 @@ attributions = occ.attribute(
 # attributions: (1, 3, 224, 224) — same shape as input
 ```
 
+</div>
+</div>
+
 ### Parameter Details
 
 **`strides`:** A tuple `(channel_stride, h_stride, w_stride)`. For images, always use `strides=(3, s, s)` where `3` is the number of color channels (occlude full pixel) and `s` is the spatial stride.
@@ -80,6 +102,13 @@ attributions = occ.attribute(
 **`baselines`:** The value used to fill the occluded region. Scalar `0` = black pixels. Can also be a tensor matching input shape for image-specific baselines.
 
 ### Postprocessing for Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -92,6 +121,9 @@ vmin = np.percentile(attr_2d, 1)
 vmax = np.percentile(attr_2d, 99)
 attr_norm = np.clip((attr_2d - vmin) / (vmax - vmin + 1e-8), 0, 1)
 ```
+
+</div>
+</div>
 
 ---
 
@@ -114,12 +146,23 @@ attr_norm = np.clip((attr_2d - vmin) / (vmax - vmin + 1e-8), 0, 1)
 ## 5. Feature Ablation: Generalizing Occlusion
 
 Occlusion uses a sliding window to define feature groups. **Feature Ablation** generalizes this to arbitrary feature groupings:
+<div class="callout-insight">
+<strong>Insight:</strong> Occlusion uses a sliding window to define feature groups. **Feature Ablation** generalizes this to arbitrary feature groupings:
+</div>
+
 
 - For images: superpixels (semantically coherent regions) instead of rectangular windows
 - For tabular: individual features or groups of correlated features
 - For text: individual tokens, n-grams, or semantic chunks
 
 Feature Ablation is the most general perturbation method in Captum:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import FeatureAblation
@@ -145,11 +188,25 @@ attributions_grouped = fa.attribute(
 # attributions_grouped: (1, 1, 224, 224) with one value per group
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Superpixel-Based Feature Ablation
 
 For images, superpixel segmentation provides semantically meaningful feature groups. SLIC (Simple Linear Iterative Clustering) segments the image into compact, color-coherent regions:
+<div class="callout-warning">
+<strong>Warning:</strong> For images, superpixel segmentation provides semantically meaningful feature groups. SLIC (Simple Linear Iterative Clustering) segments the image into compact, color-coherent regions:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from skimage.segmentation import slic
@@ -184,6 +241,9 @@ attr = fa.attribute(
 )
 ```
 
+</div>
+</div>
+
 Superpixel ablation produces cleaner heatmaps than pixel-level occlusion: each colored region is a semantically coherent area, and the attribution reflects whether that semantic region matters for the prediction.
 
 ---
@@ -191,6 +251,13 @@ Superpixel ablation produces cleaner heatmaps than pixel-level occlusion: each c
 ## 7. Tabular Feature Ablation
 
 For tabular models, Feature Ablation is the standard perturbation attribution method. Each feature is ablated individually:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -225,6 +292,9 @@ sorted_idx = importances.argsort()
 plt.barh([feature_names[i] for i in sorted_idx], importances[sorted_idx])
 plt.title('Feature Ablation Importances — Wine Quality Prediction')
 ```
+
+</div>
+</div>
 
 ---
 
@@ -272,6 +342,13 @@ The baseline choice changes what question you're asking. Always select the basel
 
 For models with multiple input modalities (e.g., image + metadata):
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Model with two inputs: image and metadata vector
 def multimodal_model(image, metadata):
@@ -298,7 +375,23 @@ attr_meta = fa.attribute(
 )
 ```
 
+</div>
+</div>
+
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Perturbation Principle" and why it matters in practice.
+
+2. Given a real-world scenario involving guide 01: occlusion and feature ablation, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -317,3 +410,12 @@ attr_meta = fa.attribute(
 - Ribeiro et al., "Why Should I Trust You?: LIME", KDD 2016 — related perturbation approach
 - Captum Occlusion documentation: https://captum.ai/api/occlusion.html
 - Captum FeatureAblation documentation: https://captum.ai/api/feature_ablation.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_occlusion_image.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

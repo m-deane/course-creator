@@ -1,5 +1,8 @@
 # Taxonomy of Interpretability Methods
 
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** PyTorch basics, neural network fundamentals
+
+
 ## In Brief
 
 The interpretability landscape contains dozens of methods that answer fundamentally different questions. Choosing the wrong method produces an answer to a question nobody asked. This guide maps the full taxonomy and provides decision rules for selecting the right tool.
@@ -8,11 +11,20 @@ The interpretability landscape contains dozens of methods that answer fundamenta
 
 Every interpretability method makes implicit choices about: what level of abstraction to explain (input, layer, or concept), whose predictions to explain (one instance or the whole model), and what relationship to maintain with the underlying model (use internal gradients or treat as black box). Understanding these dimensions eliminates confusion about which method to apply.
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The interpretability landscape contains dozens of methods that answer fundamentally different questions.
+</div>
+
 ---
 
 ## 1. The Primary Taxonomy Dimensions
 
 ### Dimension 1: Intrinsic vs Post-hoc
+<div class="callout-insight">
+<strong>Insight:</strong> **Intrinsic interpretability** — The model *is* the explanation.
+</div>
+
 
 **Intrinsic interpretability** — The model *is* the explanation.
 
@@ -105,6 +117,10 @@ Examples:
 ## 2. Attribution Types Within Post-hoc Methods
 
 Within post-hoc interpretability, there is a further taxonomy based on *what is being attributed*:
+<div class="callout-warning">
+<strong>Warning:</strong> Within post-hoc interpretability, there is a further taxonomy based on *what is being attributed*:
+</div>
+
 
 ### Input Attribution (Feature Attribution)
 
@@ -248,6 +264,10 @@ Integrated Gradients is uniquely satisfying both axioms among gradient-based met
 ## 6. Practical Considerations
 
 ### The Baseline Problem
+<div class="callout-key">
+<strong>Key Point:</strong> Gradient-based attribution methods require a reference point (baseline) representing the "absence of information." The choice of baseline affects all attributions.
+</div>
+
 
 Gradient-based attribution methods require a reference point (baseline) representing the "absence of information." The choice of baseline affects all attributions.
 
@@ -333,9 +353,31 @@ Captum (PyTorch's interpretability library) provides implementations spanning th
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving taxonomy of interpretability methods, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Sundararajan et al. (2017). Axiomatic Attribution for Deep Networks. *ICML 2017* — The foundational paper for Integrated Gradients and the sensitivity/implementation invariance axioms.
 - Doshi-Velez & Kim (2017). Towards a Rigorous Science of Interpretable Machine Learning. *arXiv* — Framework for evaluating interpretability methods.
 - Samek et al. (2019). Explainable AI: Interpreting, Explaining and Visualizing Deep Learning. *Springer* — Comprehensive textbook.
 - Rudin (2019). Stop Explaining Black Box Machine Learning Models for High Stakes Decisions. *Nature Machine Intelligence* — Argues for intrinsic interpretability in high-stakes settings.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

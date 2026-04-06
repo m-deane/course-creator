@@ -30,11 +30,15 @@ High accuracy does not guarantee correct reasoning.
 
 <!-- Speaker notes: Geirhos et al. (2020) coined "shortcut learning" for this pattern. Models that learn shortcuts generalize well in-distribution but fail catastrophically on distribution shifts. Attribution methods are the primary tool for detecting shortcuts before they cause harm in production. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Debugging Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Train model] --> B[Compute attributions<br/>on correct + incorrect predictions]
     B --> C{Attribution on<br/>object?}
@@ -48,6 +52,9 @@ graph TD
 
 <!-- Speaker notes: The key test is counterfactual: if you remove the feature the model is attributing to, does accuracy drop? If yes, the model genuinely relies on that feature. The question then is whether that feature is a legitimate signal or a dataset artifact. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Setting Up Attribution Debugging
@@ -77,6 +84,9 @@ def attribution_for_prediction(inputs, target_class, n_steps=50):
 
 <!-- Speaker notes: Start with Saliency for fast scanning across many examples, then switch to IG for examples that look suspicious. Saliency is ~50x faster and often sufficient to detect obvious shortcuts. Use IG for the final audit report where completeness guarantees matter. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Debugging Visualization
@@ -105,6 +115,9 @@ def debug_plot(image_tensor, attr_map, title=""):
 
 <!-- Speaker notes: The three-panel layout is the standard debugging view. Input shows what the model saw, Attribution shows where it looked, Overlay combines both. When attribution concentrates on background (snow, sky, hospital text) rather than the object, you have found a shortcut. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Pattern 1: Background Attribution

@@ -34,6 +34,9 @@ Both are valid. Choose the one that matches your question.
 
 <!-- Speaker notes: The baseline framing is the key conceptual shift. Practitioners often treat the baseline as a technical parameter to tune for best-looking results. This is wrong. The baseline defines the question. A black image baseline asks about pixel contribution above a dark background. A blurred image baseline asks about fine-grained detail contribution above the overall gist. These are legitimately different questions, and the right baseline depends on what you want to know. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # Four Standard Baselines
@@ -79,11 +82,15 @@ Domain-appropriate null hypothesis
 
 <!-- Speaker notes: The four baselines cover the main use cases. Black is the default and works for most image classification tasks. Blurred is better when you want to understand which fine-grained details distinguish the prediction. Random is useful when you want baseline-independent attributions (at high computational cost). Domain-specific baselines are essential for non-image data: tabular data should use the training mean, text should use mask tokens. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Zero vs Blurred Baseline: Visual Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Input Image\n(cat, 224×224)"] --> B["IG with\nZero Baseline"]
     A --> C["IG with\nBlurred Baseline"]
@@ -98,6 +105,9 @@ flowchart LR
 
 <!-- Speaker notes: The comparison framework is practical: run both baselines, compare the top-20% most attributed regions. If they agree, you have a robust finding. If they disagree strongly, the attribution is baseline-sensitive, meaning the interpretation depends heavily on your choice of null hypothesis. This is not a failure — it may reflect genuinely different questions. But it should be disclosed and understood. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # The Convergence Delta: Your Validation Tool
@@ -122,6 +132,9 @@ print(f"Delta: {delta.item():.5f}")
 
 <!-- Speaker notes: The convergence delta is a free sanity check that every IG computation should include. It costs nothing extra (requires one additional forward pass to compute f(x) and f(x')). A delta above 0.05 means the numerical integration error is significant relative to the total attribution, and the attribution map may be unreliable. This is especially common when using very few steps (n_steps=5 or 10) for speed, when the model is highly non-linear, or when the baseline is very far from the input. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Finding the Right n_steps
@@ -239,6 +252,7 @@ def visualize_token_attribution(tokens, attributions, text, predicted_label):
 # Baseline Selection Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[What data type?] --> B{Images}
     A --> C{Text}

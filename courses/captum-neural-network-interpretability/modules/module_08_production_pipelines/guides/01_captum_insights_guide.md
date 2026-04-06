@@ -1,5 +1,8 @@
 # Captum Insights: Interactive Web-Based Visualization
 
+> **Reading time:** ~5 min | **Module:** 8 — Production Pipelines | **Prerequisites:** Modules 1-7
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Navigate the Insights interface to explore attributions interactively
 4. Use Insights for multi-class attribution comparison
 5. Export and share attribution visualizations from Insights
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of captum insights: interactive web-based visualization.
+</div>
 
 ---
 
@@ -34,17 +42,34 @@ Captum Insights is a web-based visualization interface built on top of Captum's 
 
 Captum Insights requires Flask and additional dependencies:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.sh</span>
+</div>
+<div class="code-body">
+
 ```bash
 pip install captum[insights]
 # or
 pip install captum flask flask-compress
 ```
 
+</div>
+</div>
+
 ---
 
 ## 3. Core API: `AttributionVisualizer`
 
 The main class is `AttributionVisualizer`, which wraps your model and attribution methods:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.insights import AttributionVisualizer, Batch
@@ -60,9 +85,19 @@ visualizer = AttributionVisualizer(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Image Classification Setup
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -102,11 +137,25 @@ image_feature = ImageFeature(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Dataset for Insights
 
 Captum Insights expects an iterable of `Batch` objects:
+<div class="callout-insight">
+<strong>Insight:</strong> Captum Insights expects an iterable of `Batch` objects:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.insights import Batch
@@ -127,7 +176,17 @@ def load_imagenet_samples(image_dir: str, transform, class_names: list, n=20):
             yield Batch(inputs=img_tensor, labels=label_tensor)
 ```
 
+</div>
+</div>
+
 For a quick demo with synthetic images:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -148,9 +207,19 @@ def synthetic_image_dataset(n_batches=10, n_classes=10):
         yield Batch(inputs=img_t, labels=torch.tensor([label]))
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Starting the Insights Server
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 visualizer = AttributionVisualizer(
@@ -166,9 +235,19 @@ visualizer = AttributionVisualizer(
 visualizer.serve(debug=False, port=5001)
 ```
 
+</div>
+</div>
+
 Navigate to `http://localhost:5001` in your browser to access the Insights dashboard.
 
 **Jupyter Notebook usage:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.insights.widget import CaptumInsightsWidget
@@ -177,6 +256,9 @@ from captum.insights.widget import CaptumInsightsWidget
 widget = CaptumInsightsWidget(visualizer)
 widget.render()
 ```
+
+</div>
+</div>
 
 ---
 
@@ -199,6 +281,13 @@ Run two attribution methods simultaneously and view side by side.
 ---
 
 ## 8. Text Classification Setup
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.insights.attr_vis.features import TextFeature
@@ -228,6 +317,9 @@ text_visualizer = AttributionVisualizer(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 9. Limitations and Workarounds
@@ -249,6 +341,19 @@ Captum Insights is designed for local development and exploration, not productio
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "What Is Captum Insights?" and why it matters in practice.
+
+2. Given a real-world scenario involving captum insights: interactive web-based visualization, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 | Component | Purpose |
@@ -267,3 +372,12 @@ Captum Insights is designed for local development and exploration, not productio
 
 - Captum Insights documentation: https://captum.ai/docs/captum_insights
 - Captum Insights GitHub examples: https://github.com/pytorch/captum/tree/master/captum/insights
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_captum_insights_demo.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

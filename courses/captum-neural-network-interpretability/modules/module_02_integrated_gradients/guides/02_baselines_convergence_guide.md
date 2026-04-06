@@ -1,5 +1,8 @@
 # Baselines, Convergence, and NoiseTunnel
 
+> **Reading time:** ~8 min | **Module:** 2 — Integrated Gradients | **Prerequisites:** Module 1 Gradient Methods
+
+
 ## In Brief
 
 The baseline is the most consequential practical decision when applying Integrated Gradients. It defines the reference point and shapes all attributions. This guide covers empirical baseline selection, convergence diagnostics, and variance reduction with NoiseTunnel.
@@ -7,6 +10,11 @@ The baseline is the most consequential practical decision when applying Integrat
 ## Key Insight
 
 The baseline is not a hyperparameter to tune for best-looking results — it defines the question you are asking. Choosing the right baseline means choosing the right null hypothesis: "what does the model predict when input feature $i$ carries *this specific kind* of no information?"
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The baseline is the most consequential practical decision when applying Integrated Gradients.
+</div>
 
 ---
 
@@ -24,10 +32,24 @@ Different baselines give different but equally valid answers to different questi
 ## 2. Standard Baseline Choices
 
 ### Zero Baseline (Black Image)
+<div class="callout-warning">
+<strong>Warning:</strong> baseline = torch.zeros_like(input_tensor)
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 baseline = torch.zeros_like(input_tensor)
 ```
+
+</div>
+</div>
 
 **Interpretation:** "Compared to a completely black image."
 
@@ -39,6 +61,13 @@ baseline = torch.zeros_like(input_tensor)
 
 ### Blurred Image Baseline
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from torchvision.transforms.functional import gaussian_blur
 
@@ -47,6 +76,9 @@ def create_blurred_baseline(input_tensor, kernel_size=41, sigma=15.0):
     return gaussian_blur(input_tensor, kernel_size=[kernel_size, kernel_size],
                          sigma=[sigma, sigma])
 ```
+
+</div>
+</div>
 
 **Interpretation:** "Compared to the same image without local detail (only low-frequency global structure)."
 
@@ -58,6 +90,13 @@ def create_blurred_baseline(input_tensor, kernel_size=41, sigma=15.0):
 
 ### Random Noise Baseline (Averaged)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def random_noise_baseline(input_tensor, n_samples=50):
     """Average of multiple random noise baselines."""
@@ -68,6 +107,9 @@ def random_noise_baseline(input_tensor, n_samples=50):
     return torch.stack(baselines).mean(0)
 ```
 
+</div>
+</div>
+
 **Interpretation:** Averaged over many "completely random" references.
 
 **When to use:** When you want attributions that are less dependent on any specific baseline choice.
@@ -76,9 +118,19 @@ def random_noise_baseline(input_tensor, n_samples=50):
 
 ### Training Set Mean Baseline (Tabular)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
 ```
+
+</div>
+</div>
 
 **Interpretation:** "Compared to a typical input from the training distribution."
 
@@ -89,6 +141,13 @@ baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
 ### Domain-Specific Baselines
 
 **Text (token-level attribution):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Use [MASK] token embedding as baseline
 # This represents "no token" in transformer models
@@ -98,22 +157,46 @@ baseline_ids = tokenizer(
 )["input_ids"]
 ```
 
+</div>
+</div>
+
 **Tabular — adversarial baseline:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Use the mean of the *opposite* class as baseline
 # For a fraud detection model: use mean legitimate transaction as baseline
 baseline_fraud = X_train[y_train == 0].mean(axis=0)  # legitimate average
 ```
 
+</div>
+</div>
+
 ---
 
 ## 3. Empirical Baseline Comparison
 
 The right way to choose a baseline: run attribution with multiple baselines and check:
+<div class="callout-key">
+<strong>Key Point:</strong> The right way to choose a baseline: run attribution with multiple baselines and check:
+</div>
+
 
 1. **Qualitative:** Do the high-attribution regions make semantic sense?
 2. **Quantitative:** How much does the attribution ranking change across baselines?
 3. **Completeness check:** Does the convergence delta remain small?
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import IntegratedGradients
@@ -151,9 +234,19 @@ def compare_baselines(model, input_tensor, target_class, n_steps=50):
     return results
 ```
 
+</div>
+</div>
+
 ### Measuring Baseline Agreement
 
 If attributions are robust to baseline choice, the rankings should agree:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import scipy.stats
@@ -171,17 +264,31 @@ def baseline_rank_correlation(results):
             print(f"  {n1} vs {n2}: rho = {rho:.3f}")
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Convergence Diagnostics
 
 ### The Convergence Delta
+<div class="callout-insight">
+<strong>Insight:</strong> The convergence delta $\delta$ measures the numerical integration error:
+</div>
+
 
 The convergence delta $\delta$ measures the numerical integration error:
 
 $$\delta = \left| \sum_i \text{IG}_i^{\text{approx}}(x) - (f(x) - f(x')) \right|$$
 
 In Captum:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 attr, delta = ig.attribute(
     inputs, baselines=baseline, target=class_idx,
@@ -189,6 +296,9 @@ attr, delta = ig.attribute(
 )
 print(f"Convergence delta: {delta.item():.5f}")
 ```
+
+</div>
+</div>
 
 ### What Delta Values Mean
 
@@ -209,6 +319,13 @@ Large convergence delta usually means:
 
 ### Fixing Large Delta
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Start with n_steps=50, increase if delta > 0.05
 for n_steps in [50, 100, 200, 300, 500]:
@@ -222,11 +339,25 @@ for n_steps in [50, 100, 200, 300, 500]:
         break
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. NoiseTunnel on Integrated Gradients
 
 Applying SmoothGrad to IG produces smooth, high-quality attributions:
+<div class="callout-warning">
+<strong>Warning:</strong> Applying SmoothGrad to IG produces smooth, high-quality attributions:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import IntegratedGradients, NoiseTunnel
@@ -245,6 +376,9 @@ smooth_ig_attr = nt.attribute(
     n_steps=50
 )
 ```
+
+</div>
+</div>
 
 **Cost:** `nt_samples × n_steps` total passes. With `nt_samples=10, n_steps=50`: 500 passes.
 
@@ -271,6 +405,17 @@ For most practical purposes, IG at 50 steps is the best balance.
 ## 6. Layer Integrated Gradients for Text
 
 For transformer models, token-level attribution requires `LayerIntegratedGradients`:
+<div class="callout-key">
+<strong>Key Point:</strong> For transformer models, token-level attribution requires `LayerIntegratedGradients`:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -315,7 +460,17 @@ def attribute_text(text, tokenizer, lig_method, target_class=1):
     return tokens, token_attr
 ```
 
+</div>
+</div>
+
 ### Visualizing Token Attributions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import matplotlib.pyplot as plt
@@ -350,6 +505,9 @@ def visualize_token_attribution(tokens, attributions, title=""):
     plt.show()
 ```
 
+</div>
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -369,8 +527,30 @@ def visualize_token_attribution(tokens, attributions, title=""):
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving baselines, convergence, and noisetunnel, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Sturmfels et al. (2020). Visualizing the Impact of Feature Attribution Baselines. *Distill* — Visual exploration of how baseline choice affects attributions.
 - Smilkov et al. (2017). SmoothGrad. *arXiv* — Original SmoothGrad paper.
 - Fong & Vedaldi (2017). Interpretable Explanations of Black Boxes by Meaningful Perturbation. *ICCV* — Blurred baseline and meaningful perturbation.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_ig_image_classification.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

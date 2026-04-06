@@ -30,6 +30,9 @@ Module 01 showed:
 
 <!-- Speaker notes: Set up the module as a resolution to Module 01's cliffhanger. Every limitation identified in Module 01 should be present in learners' minds. This deck resolves those limitations definitively. The two axioms are the constraints, IG is the solution. The proof of uniqueness (mentioned later) shows this is THE solution, not A solution. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # Key Insight: Integration vs Evaluation
@@ -54,11 +57,15 @@ Captures: the full contribution along the path.
 
 <!-- Speaker notes: This is the conceptual core. Saliency takes a snapshot at one location on the gradient landscape. IG films the entire journey from baseline to input. In regions where the network is saturated (gradient = 0 at the endpoint), saliency sees nothing. But IG integrates gradients at all intermediate points along the path — including the region where the neuron transitions from inactive to active. This is the intuitive resolution to the saturation failure. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # The Integration Path Visualized
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Baseline x'\n(black image)"] -->|"α=0.0"| B["Interp. 0%"]
     B -->|"α=0.2"| C["Interp. 20%"]
@@ -77,6 +84,9 @@ flowchart LR
 
 <!-- Speaker notes: This flowchart makes the algorithm concrete. We generate m interpolation points between the baseline and the input. At each point, we compute the gradient via backpropagation. We average these gradients and multiply by (x - baseline). This is the Riemann sum approximation of the integral. The key insight: even if the gradient is zero at the final input x (saturation), some intermediate points along the path may have non-zero gradients — and those contribute to the attribution. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Why FTC Makes This Exact
@@ -98,6 +108,9 @@ $$\sum_i \text{IG}_i(x) = f(x) - f(x') \quad \checkmark$$
 
 <!-- Speaker notes: The FTC connection is the mathematical heart of IG. It guarantees that the sum of attributions equals the model output difference between input and baseline. This is not an approximation — it is an exact mathematical identity. The approximation only enters when we discretize the integral with m steps. The more steps we use, the smaller the approximation error. This is the completeness property and it provides a diagnostic: if sum(IG) is far from f(x) - f(x'), we need more steps. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Formal Definition

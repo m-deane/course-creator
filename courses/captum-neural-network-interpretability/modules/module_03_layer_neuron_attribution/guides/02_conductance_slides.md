@@ -32,6 +32,9 @@ But deep networks have 50+ layers of intermediate computation.
 
 <!-- Speaker notes: The motivation for layer attribution is that deep networks are deep — there are many intermediate representations between input and output. Understanding which layers are critical is important for model debugging, compression (remove low-conductance layers), and mechanistic interpretability (understand what each layer computes). Layer Conductance provides this with the same completeness guarantee as IG. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # Internal Influence: The Simple Baseline
@@ -54,6 +57,9 @@ attr = ii.attribute(input_tensor, target=class_idx)
 
 <!-- Speaker notes: Internal Influence is the simplest form of layer attribution. It's essentially saliency computed at an intermediate layer rather than the input. Just as saliency can saturate (zero gradient at a ReLU boundary even though the neuron was crucial), Internal Influence has the same saturation problem. A neuron with a very large activation change from baseline to input, but with zero gradient at the input point, would get zero internal influence even though it clearly contributed to the prediction. Layer Conductance solves this with integration. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Layer Conductance: IG at the Hidden Layer
@@ -72,6 +78,9 @@ This is remarkable: sum the conductance of any layer → get the same total.
 
 <!-- Speaker notes: The completeness property across layers is the key insight. It means that no matter which layer you examine, summing the conductance values gives the same total prediction difference. This allows fair comparison across layers: you can directly compare "how much does layer3 contribute?" vs "how much does layer4 contribute?" without normalization. The mathematical foundation is the chain rule applied to the IG integral, which causes the integral to telescope through the network layers. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Conductance Across All Layers
@@ -104,6 +113,9 @@ Layer4 → highest conductance → primary decision layer for this image.
 
 <!-- Speaker notes: The expected result for ResNet-50 on ImageNet is that layer4 has the highest conductance, confirming our understanding that the final residual block makes the semantic classification decision. However, this varies by task: for low-level visual tasks (detecting edges, colors), early layers may have comparable conductance. For fine-grained recognition tasks (distinguishing 120 dog breeds), layer3 often has substantial conductance because breed-distinguishing features (ear shape, coat color) are captured there. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Visualizing Layer Conductance
@@ -227,6 +239,7 @@ The channel map shows which learned features (channels) matter.
 # Layer Conductance vs. GradCAM
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Input Image\n224×224"] --> B["CNN Forward Pass"]
     B --> C["GradCAM\nWeighted feature map\n→ spatial heatmap"]
@@ -302,6 +315,7 @@ For ResNets, always target the full block output for completeness to hold proper
 # Practical Workflow: Layer and Neuron Analysis
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[New prediction to explain] --> B[Run Layer Conductance\non all major layers]
     B --> C{Which layer has highest\ntotal conductance?}

@@ -1,5 +1,8 @@
 # Guide 01: GradCAM, Guided GradCAM, and LayerGradCam
 
+> **Reading time:** ~8 min | **Module:** 3 — Layer & Neuron Attribution | **Prerequisites:** Module 2 Integrated Gradients
+
+
 ## Overview
 
 Gradient-weighted Class Activation Mapping (GradCAM) answers a different question than input-level attribution methods like IG. Instead of asking "which input pixels mattered?", GradCAM asks "which spatial regions in a convolutional feature map drove this prediction?" The result is a coarse heatmap aligned to the image, produced by analyzing the gradients flowing into the final convolutional layer.
@@ -9,6 +12,11 @@ GradCAM is the most widely used CNN attribution method in practice because it:
 2. Works on any CNN without architectural modification
 3. Runs in a single forward-backward pass (fast)
 4. Highlights entire object regions rather than scattered pixels
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 01: gradcam, guided gradcam, and layergradcam.
+</div>
 
 ---
 
@@ -28,6 +36,10 @@ The final convolutional layer retains spatial information before the global aver
 ## 2. GradCAM Derivation
 
 Let $A^k$ denote the $k$-th feature map of the final convolutional layer, with spatial dimensions $u \times v$. Let $y^c$ be the score (pre-softmax) for class $c$.
+<div class="callout-insight">
+<strong>Insight:</strong> Let $A^k$ denote the $k$-th feature map of the final convolutional layer, with spatial dimensions $u \times v$. Let $y^c$ be the score (pre-softmax) for class $c$.
+</div>
+
 
 ### Step 1: Compute Gradient Weights
 
@@ -84,6 +96,17 @@ The result preserves the fine detail of Guided Backpropagation while focusing it
 ## 5. LayerGradCam in Captum
 
 Captum implements GradCAM as `LayerGradCam`, which can target any convolutional layer:
+<div class="callout-insight">
+<strong>Insight:</strong> Captum implements GradCAM as `LayerGradCam`, which can target any convolutional layer:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import LayerGradCam, LayerAttribution
@@ -110,9 +133,19 @@ attr_upsampled = LayerAttribution.interpolate(
 # attr_upsampled shape: (1, 2048, 224, 224)
 ```
 
+</div>
+</div>
+
 ### Aggregating Channels
 
 The raw output has shape `(1, channels, 7, 7)`. To get a single 2D heatmap:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -128,11 +161,21 @@ heatmap = torch.relu(attr).sum(dim=1).squeeze(0)
 heatmap = (heatmap - heatmap.min()) / (heatmap.max() - heatmap.min() + 1e-8)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Intermediate Layer GradCAM
 
 One powerful feature of Captum's `LayerGradCam` is the ability to target intermediate layers, not just the final conv layer. This reveals what earlier layers "see":
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Early layer: edges, textures
@@ -151,6 +194,9 @@ lg_final = LayerGradCam(model, final_layer)
 attr_final = lg_final.attribute(input_tensor, target=class_idx)
 ```
 
+</div>
+</div>
+
 Comparing GradCAM across layers shows the hierarchical nature of CNN representations: early layers respond to local edges, middle layers to object parts, final layers to whole object regions.
 
 ---
@@ -158,6 +204,13 @@ Comparing GradCAM across layers shows the hierarchical nature of CNN representat
 ## 7. GradCAM for Multiple Classes
 
 A key advantage of GradCAM over class-agnostic methods is that it can produce different heatmaps for different classes. For an image containing both a dog and a cat:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Heatmap explaining "dog" prediction
@@ -167,6 +220,9 @@ attr_dog = lg.attribute(input_tensor, target=dog_class_idx)
 attr_cat = lg.attribute(input_tensor, target=cat_class_idx)
 ```
 
+</div>
+</div>
+
 The dog heatmap should highlight the dog region; the cat heatmap should highlight the cat region. If they are the same, the model may be using shared features (texture, background) rather than class-specific object features.
 
 ---
@@ -174,10 +230,21 @@ The dog heatmap should highlight the dog region; the cat heatmap should highligh
 ## 8. Quantitative GradCAM: Insertion/Deletion Score
 
 Beyond visual inspection, GradCAM can be evaluated quantitatively using the **Insertion** and **Deletion** metrics (Petsiuk et al., 2018):
+<div class="callout-insight">
+<strong>Insight:</strong> Beyond visual inspection, GradCAM can be evaluated quantitatively using the **Insertion** and **Deletion** metrics (Petsiuk et al., 2018):
+</div>
+
 
 **Deletion:** Starting from the full image, progressively replace pixels with baseline (black) in order of decreasing attribution importance. Measure how fast the model's confidence drops. Faster drop = better attribution.
 
 **Insertion:** Starting from the baseline, progressively reveal pixels in order of decreasing attribution importance. Measure how fast confidence rises. Faster rise = better attribution.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def deletion_score(model, image, heatmap, n_steps=100, target_class=None):
@@ -207,6 +274,9 @@ def deletion_score(model, image, heatmap, n_steps=100, target_class=None):
 
     return np.trapz(scores) / n_steps  # AUC — lower is better
 ```
+
+</div>
+</div>
 
 ---
 
@@ -242,6 +312,13 @@ In training mode, batch normalization uses batch statistics, which changes the g
 **4. Ignoring negative GradCAM:**
 The ReLU in GradCAM removes negative contributions. To see the full picture (what the model actively suppresses), compute GradCAM without ReLU and visualize both positive and negative regions.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Full signed GradCAM (no ReLU in aggregation)
 heatmap_signed = attr.sum(dim=1).squeeze(0)
@@ -249,7 +326,23 @@ positive_map = torch.relu(heatmap_signed)
 negative_map = torch.relu(-heatmap_signed)
 ```
 
+</div>
+</div>
+
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Motivation: Why Convolutional Feature Maps?" and why it matters in practice.
+
+2. Given a real-world scenario involving guide 01: gradcam, guided gradcam, and layergradcam, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -271,3 +364,12 @@ In practice, GradCAM is the first tool to reach for when explaining CNN predicti
 - Chattopadhay et al., "Grad-CAM++: Improved Visual Explanations for Deep Convolutional Networks", WACV 2018
 - Petsiuk et al., "RISE: Randomized Input Sampling for Explanation of Black-box Models", BMVC 2018
 - Captum LayerGradCam documentation: https://captum.ai/api/layer.html#layergradcam
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_gradcam_resnet.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

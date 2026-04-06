@@ -1,5 +1,8 @@
 # SHAP Theory: Shapley Values and KernelSHAP
 
+> **Reading time:** ~7 min | **Module:** 5 — SHAP Methods | **Prerequisites:** Module 4 Perturbation Methods
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Describe how KernelSHAP approximates Shapley values using weighted linear regression
 4. Identify the computational trade-offs between exact SHAP and approximate methods
 5. Implement KernelSHAP via Captum's `KernelShap` class
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of shap theory: shapley values and kernelshap.
+</div>
 
 ---
 
@@ -51,6 +59,10 @@ $$\sum_{i=1}^{d} \phi_i = f(x) - \mathbb{E}[f(X)]$$
 ## 3. The Four Shapley Axioms
 
 The Shapley value is the **unique** attribution method satisfying all four axioms simultaneously:
+<div class="callout-warning">
+<strong>Warning:</strong> The Shapley value is the **unique** attribution method satisfying all four axioms simultaneously:
+</div>
+
 
 ### Axiom 1: Efficiency
 The attributions sum exactly to the difference between the model output and the expected output:
@@ -95,6 +107,10 @@ This is computationally intractable for most real models. KernelSHAP provides an
 ---
 
 ## 5. KernelSHAP: Shapley Values as Weighted Linear Regression
+<div class="callout-insight">
+<strong>Insight:</strong> Lundberg and Lee (2017) showed that Shapley values can be computed by solving a specially weighted linear regression problem.
+</div>
+
 
 Lundberg and Lee (2017) showed that Shapley values can be computed by solving a specially weighted linear regression problem.
 
@@ -145,6 +161,13 @@ This marginalizes over the distribution of missing features, matching the theore
 
 ## 7. Captum KernelSHAP Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import torch
 from captum.attr import KernelShap
@@ -170,6 +193,9 @@ attributions = kernel_shap.attribute(
 )
 # attributions shape: same as input_tensor
 ```
+
+</div>
+</div>
 
 The `n_samples` parameter controls the approximation quality — more samples yield more accurate Shapley value estimates.
 
@@ -220,6 +246,19 @@ This unification is one of SHAP's major theoretical contributions.
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Cooperative Game Theory Background" and why it matters in practice.
+
+2. Given a real-world scenario involving shap theory: shapley values and kernelshap, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 | Concept | Key Formula |
@@ -237,3 +276,12 @@ This unification is one of SHAP's major theoretical contributions.
 - Shapley, L. S. (1953). A value for n-person games. *Contributions to the Theory of Games*.
 - Lundberg, S. M., et al. (2020). From local explanations to global understanding with explainable AI for trees. *Nature Machine Intelligence*.
 - Captum KernelShap documentation: https://captum.ai/api/kernel_shap.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_kernelshap_vs_gradientshap.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

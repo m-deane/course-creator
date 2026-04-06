@@ -1,5 +1,8 @@
 # Model Debugging with Attribution Methods
 
+> **Reading time:** ~9 min | **Module:** 8 — Production Pipelines | **Prerequisites:** Modules 1-7
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Use attribution to generate hypotheses for model improvement
 4. Produce attribution-based evidence for regulatory reporting
 5. Build a systematic debugging workflow for classification models
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of model debugging with attribution methods.
+</div>
 
 ---
 
@@ -52,6 +60,13 @@ Attribution methods make these shortcuts visible before deployment.
 
 ### Setup: Biased CIFAR Classifier
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import torch
 import torchvision
@@ -67,7 +82,17 @@ model.eval()
 ig = IntegratedGradients(lambda x: model(x))
 ```
 
+</div>
+</div>
+
 ### Attribution on Correct Predictions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def attribution_for_prediction(model, inputs, target_class, n_steps=50):
@@ -88,11 +113,21 @@ def attribution_for_prediction(model, inputs, target_class, n_steps=50):
     return attrs_signed, attrs_unsigned, delta.item()
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Attribution Heatmap Analysis
 
 ### Visualizing What the Model Relies On
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import matplotlib.pyplot as plt
@@ -132,11 +167,21 @@ def debug_attribution_plot(image_tensor, attrs_unsigned, title=""):
     return fig
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Spurious Correlation Detection Protocol
 
 ### Step 1: Compute Attribution Statistics Per Class
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def class_attribution_statistics(
@@ -168,7 +213,17 @@ def class_attribution_statistics(
     return attribution_accumulator, count
 ```
 
+</div>
+</div>
+
 ### Step 2: Compare Mean Attributions Across Classes
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def compare_class_attributions(model, dataloader, class_names, n_steps=30):
@@ -186,15 +241,29 @@ def compare_class_attributions(model, dataloader, class_names, n_steps=30):
     return class_attr_maps
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Common Spurious Patterns and Their Signatures
 
 ### Pattern 1: Background Attribution
+<div class="callout-warning">
+<strong>Warning:</strong> **Symptom:** High attribution in sky, grass, water, snow — not the object.
+</div>
+
 
 **Symptom:** High attribution in sky, grass, water, snow — not the object.
 
 **Diagnosis code:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
@@ -216,6 +285,9 @@ def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
     }
 ```
 
+</div>
+</div>
+
 **Fix:** Background augmentation (random background replacement), Grad-CAM guided cropping, or object-centric training data collection.
 
 ---
@@ -225,6 +297,13 @@ def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
 **Symptom:** High attribution on image borders, watermarks, hospital system overlays, or systematic pixel patterns.
 
 **Diagnosis code:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def measure_border_attribution(attrs_map, border_fraction=0.1):
@@ -272,6 +351,9 @@ def screen_for_border_artifacts(model, dataloader, threshold=0.20, n_steps=30):
     return flagged
 ```
 
+</div>
+</div>
+
 ---
 
 ### Pattern 3: Texture vs. Shape Bias
@@ -279,6 +361,13 @@ def screen_for_border_artifacts(model, dataloader, threshold=0.20, n_steps=30):
 **Symptom:** For object classifiers, attribution concentrates on textures (fur, fabric) rather than shape outlines.
 
 **Diagnosis:** Use TCAV with texture-concept images (see Module 06) or compare attribution across stylized variants of the same image.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def texture_vs_shape_score(attrs_map, edge_mask):
@@ -292,11 +381,21 @@ def texture_vs_shape_score(attrs_map, edge_mask):
     return shape_attr / (total + 1e-8)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Debugging Failed Predictions
 
 ### Attribution Comparison: Correct vs. Incorrect Predictions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
@@ -319,6 +418,9 @@ def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
     }
 ```
 
+</div>
+</div>
+
 **Interpretation:**
 - `attrs_toward_true`: Features present in the image that support the correct class but were insufficient
 - `attrs_toward_pred`: Features that drove the wrong prediction — often the spurious signal
@@ -328,6 +430,10 @@ def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
 ## 8. Attribution-Based Regulatory Reporting
 
 ### What Regulators Require
+<div class="callout-insight">
+<strong>Insight:</strong> For high-stakes models (credit, hiring, medical), regulators may require:
+</div>
+
 
 For high-stakes models (credit, hiring, medical), regulators may require:
 - Per-prediction explanation of which features influenced the outcome
@@ -335,6 +441,13 @@ For high-stakes models (credit, hiring, medical), regulators may require:
 - Consistent explanations across similar inputs (stability)
 
 ### Attribution Report Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from dataclasses import dataclass, field
@@ -426,11 +539,25 @@ def generate_attribution_report(
     )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 9. Monitoring Attribution Drift
 
 Attribution patterns shift when the data distribution shifts. Monitoring attribution statistics over time detects distribution drift before accuracy degrades.
+<div class="callout-warning">
+<strong>Warning:</strong> Attribution patterns shift when the data distribution shifts. Monitoring attribution statistics over time detects distribution drift before accuracy degrades.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -488,7 +615,23 @@ class AttributionDriftMonitor:
                 "drift_detected": w_dist > 0.1}
 ```
 
+</div>
+</div>
+
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Why Attribution-Based Debugging?" and why it matters in practice.
+
+2. Given a real-world scenario involving model debugging with attribution methods, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -509,3 +652,12 @@ class AttributionDriftMonitor:
 - "Right for the Wrong Reasons" — Ross et al. (2017)
 - LIME explanations for debugging: https://github.com/marcotcr/lime
 - EU AI Act explainability requirements: https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_captum_insights_demo.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

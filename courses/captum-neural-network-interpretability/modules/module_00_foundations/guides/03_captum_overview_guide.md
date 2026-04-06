@@ -1,5 +1,8 @@
 # Captum Library Architecture and Philosophy
 
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** PyTorch basics, neural network fundamentals
+
+
 ## In Brief
 
 Captum is PyTorch's official interpretability library, developed by Facebook AI Research. It provides a unified, extensible framework for attribution methods that works on any PyTorch model. This guide covers the library's design philosophy, API conventions, and comparison with alternatives.
@@ -7,6 +10,11 @@ Captum is PyTorch's official interpretability library, developed by Facebook AI 
 ## Key Insight
 
 Captum's design principle — every method implements a single `.attribute()` interface — makes it trivial to swap methods and run comparisons. This unified interface is more valuable than any individual method it contains.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Captum is PyTorch's official interpretability library, developed by Facebook AI Research.
+</div>
 
 ---
 
@@ -29,6 +37,17 @@ Captum (from Latin: "to perceive, understand") was released in 2019 and is maint
 ### Basic Attribution Pattern
 
 Every Captum method follows this pattern:
+<div class="callout-warning">
+<strong>Warning:</strong> Every Captum method follows this pattern:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import IntegratedGradients
@@ -46,6 +65,9 @@ attributions = ig.attribute(
 # 3. attributions has the same shape as inputs
 assert attributions.shape == inputs.shape
 ```
+
+</div>
+</div>
 
 The `attribute()` method signature varies slightly between methods, but the pattern is always:
 1. Create method instance with model
@@ -67,6 +89,13 @@ The `attribute()` method signature varies slightly between methods, but the patt
 
 Captum requires inputs to have gradients enabled. The standard pattern:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import torch
 from torchvision import transforms
@@ -87,11 +116,25 @@ input_tensor = preprocess(image).unsqueeze(0)  # Add batch dimension
 input_tensor = input_tensor.requires_grad_(True)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 3. Method Families in Captum
 
 ### Primary Attribution Methods
+<div class="callout-key">
+<strong>Key Point:</strong> from captum.attr import Saliency              # Vanilla gradient magnitude
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Gradient-based
@@ -124,9 +167,19 @@ from captum.attr import FeaturePermutation    # Feature permutation importance
 from captum.attr import TCAV                  # Testing with concept activation vectors
 ```
 
+</div>
+</div>
+
 ### The NoiseTunnel Wrapper
 
 `NoiseTunnel` adds variance reduction to any attribution method:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import IntegratedGradients, NoiseTunnel
@@ -155,11 +208,25 @@ attributions_var = nt.attribute(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Captum Visualization Utilities
 
 Captum includes `captum.attr.visualization` for common attribution visualizations:
+<div class="callout-insight">
+<strong>Insight:</strong> Captum includes `captum.attr.visualization` for common attribution visualizations:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import visualization as viz
@@ -190,6 +257,9 @@ fig, axes = viz.visualize_image_attr_multiple(
 )
 ```
 
+</div>
+</div>
+
 ### Available Visualization Modes
 
 | Mode | Description |
@@ -206,6 +276,13 @@ fig, axes = viz.visualize_image_attr_multiple(
 
 ### SHAP (SHapley Additive exPlanations)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # SHAP usage (separate library)
 import shap
@@ -214,6 +291,9 @@ explainer = shap.DeepExplainer(model, background_data)
 shap_values = explainer.shap_values(input_data)
 shap.image_plot(shap_values, input_data)
 ```
+
+</div>
+</div>
 
 **SHAP strengths:**
 - Game-theoretically grounded Shapley values
@@ -233,6 +313,13 @@ shap.image_plot(shap_values, input_data)
 
 ### LIME (Local Interpretable Model-agnostic Explanations)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # LIME usage (separate library)
 from lime import lime_image
@@ -244,6 +331,9 @@ explanation = explainer.explain_instance(
     num_samples=1000
 )
 ```
+
+</div>
+</div>
 
 **LIME strengths:**
 - Truly model-agnostic (only needs input-output pairs)
@@ -260,7 +350,20 @@ explanation = explainer.explain_instance(
 - Captum: faster (gradient-based), more precise, layer attribution
 - LIME: model-agnostic (works on non-differentiable models), simpler interpretation
 
-### Summary Comparison
+#
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving captum library architecture and philosophy, what would be your first three steps to apply the techniques from this guide?
+</div>
+
+## Summary Comparison
 
 | Feature | Captum | SHAP | LIME |
 |---------|--------|------|------|
@@ -281,6 +384,17 @@ explanation = explainer.explain_instance(
 ## 6. Working with Pretrained Models
 
 Captum works with any pretrained PyTorch model out of the box:
+<div class="callout-key">
+<strong>Key Point:</strong> Captum works with any pretrained PyTorch model out of the box:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -297,7 +411,17 @@ from captum.attr import IntegratedGradients
 ig = IntegratedGradients(resnet50.eval())
 ```
 
+</div>
+</div>
+
 ### HuggingFace Transformers
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -315,9 +439,19 @@ from captum.attr import LayerIntegratedGradients
 lig = LayerIntegratedGradients(model, model.distilbert.embeddings)
 ```
 
+</div>
+</div>
+
 ### Accessing Named Layers
 
 For layer-based attribution, you need to specify which layer to attribute to:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # For ResNet50
@@ -333,13 +467,27 @@ from captum.attr import LayerGradCam
 lgc = LayerGradCam(resnet50.eval(), target_layer)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Performance and Practical Considerations
 
 ### Memory Management
+<div class="callout-insight">
+<strong>Insight:</strong> Attribution computation creates a full backward pass (for gradient methods). For large batches or high-resolution images, this can exceed GPU memory:
+</div>
+
 
 Attribution computation creates a full backward pass (for gradient methods). For large batches or high-resolution images, this can exceed GPU memory:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # For memory-constrained settings, process one image at a time
@@ -356,9 +504,19 @@ for i in range(batch_size):
 attributions = torch.cat(results, dim=0)
 ```
 
+</div>
+</div>
+
 ### Evaluation Mode
 
 Always call `model.eval()` before computing attributions. Training mode enables dropout and batch norm in training behavior, which makes attributions non-deterministic and unreliable:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 model.eval()  # CRITICAL: disables dropout, uses running stats for BN
@@ -371,9 +529,19 @@ attributions = ig.attribute(inputs, baselines=baseline, target=class_idx)
 # Captum handles gradient computation internally
 ```
 
+</div>
+</div>
+
 ### Internal Batching
 
 For Integrated Gradients with many steps, Captum supports internal batching to control memory:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 attributions = ig.attribute(
@@ -385,11 +553,21 @@ attributions = ig.attribute(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. Quick Validation: Is Your Attribution Working?
 
 Before trusting attributions, run these sanity checks:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # 1. Completeness check (for Integrated Gradients)
@@ -424,6 +602,9 @@ attr_random = ig_random.attribute(inputs, baselines=baseline, target=class_idx)
 # This should look like noise, not structured attribution
 ```
 
+</div>
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -450,3 +631,12 @@ attr_random = ig_random.attribute(inputs, baselines=baseline, target=class_idx)
 - Captum documentation: captum.ai/docs — Full API reference.
 - PyTorch Captum tutorials: captum.ai/tutorials — Official worked examples.
 - Adebayo et al. (2018). Sanity Checks for Saliency Maps. *NeurIPS 2018* — Critical evaluation of attribution methods including randomization tests.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -31,11 +31,15 @@ Every method trades across four dimensions:
 
 <!-- Speaker notes: The trade-off table is the first thing to internalize. Speed and faithfulness trade against each other — the most accurate methods (IG, KernelSHAP) are the slowest. The framework helps navigate these trade-offs based on what actually matters for your use case. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Primary Decision: Input Type
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[What input?] --> B[Image]
     A --> C[Text / Tokens]
@@ -53,6 +57,9 @@ graph TD
 
 <!-- Speaker notes: Start with input type because it determines which methods are even applicable. GradCAM requires conv layers — inapplicable to ViTs or MLPs. Gradient methods require differentiability — inapplicable to tree models. Get the architecture constraint right first, then optimize within the feasible set. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## CNN Models: Method Map
@@ -75,6 +82,9 @@ attrs = gc.attribute(inputs, target=pred_class)
 
 <!-- Speaker notes: For CNNs, GradCAM is the default starting point — one backward pass, spatial visualization, no baseline needed. Switch to IG when you need pixel-level precision or the completeness guarantee for audit purposes. GradientSHAP sits in between: faster than IG but needs multiple baselines. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Text / Transformer Models: Method Map
@@ -101,6 +111,9 @@ attrs, delta = lig.attribute(
 
 <!-- Speaker notes: For text models, the critical insight is that you cannot differentiate with respect to discrete token IDs — you differentiate with respect to continuous token embeddings. LayerIntegratedGradients handles this by targeting the embedding layer. The result is one attribution score per token (after summing over the embedding dimension). -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Attention Warning
@@ -156,6 +169,7 @@ attrs, delta = dl_shap.attribute(
 ## Decision by Purpose
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     P[Purpose] --> D[Debugging]
     P --> E[Single explanation]

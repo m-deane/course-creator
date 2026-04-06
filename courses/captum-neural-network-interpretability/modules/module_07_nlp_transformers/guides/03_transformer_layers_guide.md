@@ -1,5 +1,8 @@
 # Layer-Wise Attribution in Transformers
 
+> **Reading time:** ~7 min | **Module:** 7 — NLP & Transformers | **Prerequisites:** Module 2 Integrated Gradients
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Use `LayerConductance` to measure information flow at each layer
 4. Analyze how different task types affect which layers carry attribution
 5. Extend layer attribution to GPT-2 and other architectures
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of layer-wise attribution in transformers.
+</div>
 
 ---
 
@@ -40,6 +48,17 @@ For sentiment classification, layers 10-12 carry most attribution. For syntax-he
 ## 3. LayerIntegratedGradients Across All Layers
 
 Apply IG at each encoder layer independently:
+<div class="callout-warning">
+<strong>Warning:</strong> Apply IG at each encoder layer independently:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -98,6 +117,9 @@ def compute_layer_attributions(
     return layer_attributions
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. LayerConductance: A Cleaner Approach
@@ -107,6 +129,13 @@ def compute_layer_attributions(
 $$C_l = \int_0^1 \frac{\partial F(x'+ \alpha(x-x'))}{\partial h_l(\alpha)} \cdot \frac{dh_l(\alpha)}{d\alpha} d\alpha$$
 
 This is the chain-rule application of IG at each layer — it measures how much the layer's activation contributes to the final output difference.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import LayerConductance
@@ -138,9 +167,19 @@ def layer_conductance_all_layers(model, tokenizer, text, target_class):
     return layer_scores
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Visualizing Layer Importance
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import matplotlib.pyplot as plt
@@ -172,6 +211,9 @@ def plot_layer_importance(layer_scores: list, title: str):
     plt.tight_layout()
     return fig
 ```
+
+</div>
+</div>
 
 ---
 
@@ -212,6 +254,13 @@ L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
 
 A comprehensive visualization shows how token importance varies across layers:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def plot_token_layer_heatmap(
     layer_token_attrs: dict,
@@ -244,11 +293,21 @@ def plot_token_layer_heatmap(
     return fig
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. GPT-2 Layer Attribution
 
 GPT-2 uses causal (left-to-right) attention, unlike BERT's bidirectional attention. This changes the layer attribution pattern:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
@@ -268,6 +327,9 @@ for block_idx, block in enumerate(gpt2_model.transformer.h):
     lig = LayerIntegratedGradients(forward_gpt2, block)
     # ... same as BERT
 ```
+
+</div>
+</div>
 
 GPT-2's layer attribution pattern differs: since attention is causal, early layers process local context while later layers integrate longer-range dependencies.
 
@@ -290,6 +352,13 @@ A layer can encode rich linguistic information (high probing accuracy) but not u
 ### Memory Efficiency
 Computing LayerIG for all 12 BERT layers plus the embedding layer requires 13 separate backward passes. For production analysis:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Process in batches and free gradients
 for layer_idx, encoder_layer in enumerate(model.bert.encoder.layer):
@@ -304,10 +373,26 @@ for layer_idx, encoder_layer in enumerate(model.bert.encoder.layer):
     torch.cuda.empty_cache() if torch.cuda.is_available() else None
 ```
 
+</div>
+</div>
+
 ### Normalization
 When comparing layer importance across texts of different length, normalize by sequence length or use the mean attribution per token rather than the sum.
 
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Why Analyze Individual Layers?" and why it matters in practice.
+
+2. Given a real-world scenario involving layer-wise attribution in transformers, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -331,3 +416,12 @@ When comparing layer importance across texts of different length, normalize by s
 - Jawahar, G., et al. (2019). What does BERT learn about the structure of language? *ACL*.
 - Michel, P., et al. (2019). Are sixteen heads really better than one? *NeurIPS*.
 - Voita, E., et al. (2019). Analyzing multi-head self-attention: Specialized heads do the heavy lifting, the rest can be pruned. *ACL*.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_bert_sentiment_ig.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

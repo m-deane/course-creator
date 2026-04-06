@@ -1,5 +1,8 @@
 # GradientSHAP and DeepLIFT SHAP
 
+> **Reading time:** ~8 min | **Module:** 5 — SHAP Methods | **Prerequisites:** Module 4 Perturbation Methods
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Implement DeepLIFT and DeepLIFTSHAP in Captum for any differentiable model
 4. Identify when to prefer propagation-based methods over KernelSHAP
 5. Interpret the differences between gradient and propagation attributions
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of gradientshap and deeplift shap.
+</div>
 
 ---
 
@@ -22,6 +30,10 @@ GradientSHAP and DeepLIFT SHAP exploit the differentiable structure of neural ne
 ## 2. GradientSHAP: Integrated Gradients Meets SHAP
 
 ### The Core Idea
+<div class="callout-insight">
+<strong>Insight:</strong> Integrated Gradients (IG) computes attributions for a single baseline $x'$:
+</div>
+
 
 Integrated Gradients (IG) computes attributions for a single baseline $x'$:
 
@@ -52,6 +64,13 @@ In practice, GradientSHAP:
 
 ## 3. GradientSHAP in Captum
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import torch
 from captum.attr import GradientShap
@@ -78,6 +97,9 @@ attributions, delta = grad_shap.attribute(
 print(f"Convergence delta: {delta.mean().item():.4f}")
 ```
 
+</div>
+</div>
+
 The `return_convergence_delta=True` argument returns the approximation error — a useful quality check.
 
 ### Convergence Delta Interpretation
@@ -93,6 +115,10 @@ A delta close to 0 indicates reliable attributions. Large delta values suggest i
 ## 4. DeepLIFT: Propagation-Based Attribution
 
 ### Motivation
+<div class="callout-key">
+<strong>Key Point:</strong> Gradient-based methods have a fundamental problem: when a network saturates (outputs near 0 or 1), gradients vanish even though the saturated feature clearly influences the prediction. DeepLIFT was designed to overcome this.
+</div>
+
 
 Gradient-based methods have a fundamental problem: when a network saturates (outputs near 0 or 1), gradients vanish even though the saturated feature clearly influences the prediction. DeepLIFT was designed to overcome this.
 
@@ -136,6 +162,13 @@ Consider a sigmoid activation with:
 - Reference $x' = 0.0$ (neutral point)
 - $\sigma(5) \approx 0.993$, $\sigma(0) = 0.5$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Gradient at saturated input: near zero (vanishing gradient)
 gradient = sigma(5) * (1 - sigma(5)) ≈ 0.007
@@ -146,11 +179,21 @@ delta_y = sigma(5) - sigma(0) = 0.993 - 0.5 = 0.493
 deeplift_attribution = delta_y = 0.493  # much larger, more meaningful
 ```
 
+</div>
+</div>
+
 DeepLIFT correctly attributes the large change in output to the input difference, while the gradient essentially reports "nothing changed" because of saturation.
 
 ---
 
 ## 6. DeepLIFT in Captum
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -178,6 +221,9 @@ print(f"Attributions: {attributions}")
 print(f"Convergence delta: {delta.item():.6f}")  # should be ~0
 ```
 
+</div>
+</div>
+
 **Important:** DeepLIFT requires the model to be a standard sequential network or use hooks-compatible architecture. Custom activation functions may require additional configuration.
 
 ---
@@ -191,6 +237,13 @@ DeepLIFT SHAP combines:
 $$\phi_i^{\text{DeepLIFT-SHAP}} = \frac{1}{n_{bg}} \sum_{k=1}^{n_{bg}} C_{\Delta x_i \Delta y}(x, x'_k)$$
 
 This runs DeepLIFT once per background sample, then averages. For $n_{bg} = 50$ background samples, this requires 50 forward-backward passes — much cheaper than KernelSHAP's hundreds of passes but more expensive than single-baseline DeepLIFT.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import DeepLiftShap
@@ -209,6 +262,9 @@ attributions, delta = deep_lift_shap.attribute(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. Handling Custom Architectures
@@ -226,6 +282,13 @@ BatchNorm statistics differ between training and eval mode. Always ensure `model
 ### Residual Connections
 Residual connections in ResNets/Transformers require the `DeepLiftShap` variant which handles skip connections more robustly.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # For models with residual connections
 from captum.attr import DeepLiftShap
@@ -235,6 +298,9 @@ attrs = DeepLiftShap(model).attribute(
     x, baselines=background, target=target
 )
 ```
+
+</div>
+</div>
 
 ---
 
@@ -259,6 +325,13 @@ attrs = DeepLiftShap(model).attribute(
 
 ### For Tabular Data
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -281,7 +354,17 @@ plt.tight_layout()
 plt.savefig("gradient_vs_deeplift_attributions.png", dpi=150, bbox_inches="tight")
 ```
 
+</div>
+</div>
+
 ### For Images
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import visualization as viz
@@ -302,11 +385,21 @@ fig, _ = viz.visualize_image_attr_multiple(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 11. Numerical Comparison
 
 When comparing methods, always check that attributions are on the same scale:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Normalize by L2 norm for fair comparison
@@ -325,9 +418,25 @@ corr_gs_dl, _ = spearmanr(attrs_gs_norm.flatten(), attrs_dl_norm.flatten())
 print(f"GradientSHAP vs DeepLIFT SHAP (Spearman r): {corr_gs_dl:.3f}")
 ```
 
+</div>
+</div>
+
 High correlation ($r > 0.9$) between methods on the same input indicates robust, model-supported attributions.
 
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Speed-Theory Trade-off" and why it matters in practice.
+
+2. Given a real-world scenario involving gradientshap and deeplift shap, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -350,3 +459,12 @@ All three methods:
 - Lundberg, S. M., & Lee, S. I. (2017). A unified approach to interpreting model predictions. *NeurIPS*.
 - Ancona, M., et al. (2018). Towards better understanding of gradient-based attribution methods for deep neural networks. *ICLR*.
 - Captum DeepLift documentation: https://captum.ai/api/deep_lift.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_kernelshap_vs_gradientshap.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

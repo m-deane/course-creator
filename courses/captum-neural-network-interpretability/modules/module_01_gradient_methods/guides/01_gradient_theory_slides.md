@@ -28,6 +28,9 @@ This is the **local sensitivity** of the model to feature $i$ at input $x$.
 
 <!-- Speaker notes: The gradient is the most natural sensitivity measure. It tells you, locally, how much the model cares about each input dimension. For a linear model f(x) = w^T x, the gradient equals w everywhere — attributions equal the weights. For non-linear models, the gradient varies by input location, which is why it is a local (not global) explanation. The limit notation emphasizes that gradients capture infinitesimally small changes, not the finite changes that matter for real attribution. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # Method 1: Saliency (Vanilla Gradient)
@@ -43,6 +46,9 @@ $$\phi_i^{\text{saliency}}(x) = \left| \frac{\partial f(x)}{\partial x_i} \right
 
 <!-- Speaker notes: Saliency is the simplest possible gradient attribution: run backpropagation, take the absolute value of each gradient. The absolute value removes sign information but gives a measure of "how much does any change here matter?" The two-pass cost (one forward, one backward) is essentially free compared to the model's forward pass. This makes saliency the go-to method when speed is critical. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Saliency: Intuition with a 1D Example
@@ -60,6 +66,9 @@ At $x = 0.4$: the input affects the output (change $x$ to $0.6$, output goes fro
 
 <!-- Speaker notes: This 1D example illustrates the saturation failure. Below the ReLU threshold (x < 0.5 for this example), the gradient is exactly zero — the ReLU is in its inactive region. But the input IS relevant: moving from x=0.4 to x=0.6 changes the output from 0 to 0.2. The gradient at x=0.4 cannot see this because it only measures infinitesimal perturbations at the current point. This is the fundamental limitation that motivates Integrated Gradients: we need to look at the whole path from baseline to input, not just the local derivative. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Method 2: Input × Gradient
@@ -74,6 +83,9 @@ Multiplying by $x_i$ creates a measure of actual contribution, not just local se
 
 <!-- Speaker notes: Input times Gradient addresses a real weakness of saliency: a feature with tiny value contributes little to the output regardless of the gradient. The product x_i * gradient is closer to measuring contribution than gradient alone. This is also related to a first-order Taylor approximation: f(x) ≈ f(0) + sum_i x_i * (∂f/∂x_i), so the product approximates each term's contribution in this linear approximation. The approximation is exact for linear models and asymptotically valid near the origin. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Input × Gradient as Taylor Approximation
@@ -113,6 +125,7 @@ $$\delta^l = \frac{\partial f}{\partial h^l} \cdot \mathbf{1}[h^l > 0] \cdot \ma
 # Guided Backprop vs Standard Gradient
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     L1[Layer output\nh^l] --> ReLU{ReLU\nbackward}
     G1[Gradient from\nlayer l+1] --> ReLU

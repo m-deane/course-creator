@@ -1,5 +1,8 @@
 # Integrated Gradients: Theory and Axiomatic Derivation
 
+> **Reading time:** ~8 min | **Module:** 2 — Integrated Gradients | **Prerequisites:** Module 1 Gradient Methods
+
+
 ## In Brief
 
 Integrated Gradients (Sundararajan, Taly, Yan, 2017) is the uniquely principled gradient-based attribution method — the only one satisfying both the sensitivity and implementation invariance axioms simultaneously. It computes attribution by integrating gradients along a straight-line path from a baseline to the input.
@@ -7,6 +10,11 @@ Integrated Gradients (Sundararajan, Taly, Yan, 2017) is the uniquely principled 
 ## Key Insight
 
 Saliency evaluates the gradient at one point. Integrated Gradients evaluates the gradient at every point along the path from baseline to input and accumulates (integrates) all contributions. This single change resolves both the saturation problem and converts an approximation into an exact decomposition.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Integrated Gradients (Sundararajan, Taly, Yan, 2017) is the uniquely principled gradient-based attribution method — the only one satisfying both the sensitivity and implementation invariance axioms simultaneously.
+</div>
 
 ---
 
@@ -27,6 +35,10 @@ The question: can we construct an attribution method satisfying both axioms? Sun
 ## 2. The Integration Idea
 
 ### From Approximation to Exactness
+<div class="callout-warning">
+<strong>Warning:</strong> For a linear model $f(x) = w^T x$, the exact decomposition is:
+</div>
+
 
 For a linear model $f(x) = w^T x$, the exact decomposition is:
 
@@ -73,6 +85,10 @@ $$= \sum_i (x_i - x'_i) \int_0^1 \frac{\partial f(x' + \alpha(x - x'))}{\partial
 ### Axiom 1: Sensitivity
 
 For any two inputs $x$ and $x'$ that differ in exactly one feature $i$, and where $f(x) \neq f(x')$:
+<div class="callout-key">
+<strong>Key Point:</strong> For any two inputs $x$ and $x'$ that differ in exactly one feature $i$, and where $f(x) \neq f(x')$:
+</div>
+
 
 $$\phi_i(x, x') \neq 0$$
 
@@ -107,6 +123,10 @@ If swapping features $i$ and $j$ does not change the model (symmetric in $i$ and
 ## 4. Numerical Approximation
 
 The integral is approximated by a Riemann sum with $m$ steps:
+<div class="callout-insight">
+<strong>Insight:</strong> The integral is approximated by a Riemann sum with $m$ steps:
+</div>
+
 
 $$\text{IG}_i^{\text{approx}}(x) \approx (x_i - x'_i) \cdot \frac{1}{m} \sum_{k=1}^{m} \frac{\partial f\left(x' + \frac{k}{m}(x - x')\right)}{\partial x_i}$$
 
@@ -153,6 +173,10 @@ Other paths produce different but equally valid attributions. This motivates the
 ## 6. Interpreting IG Attributions
 
 ### Sign Interpretation
+<div class="callout-key">
+<strong>Key Point:</strong> - **Positive attribution** $(\text{IG}_i > 0)$: feature $i$ contributed positively to $f(x)$ relative to the baseline
+</div>
+
 
 - **Positive attribution** $(\text{IG}_i > 0)$: feature $i$ contributed positively to $f(x)$ relative to the baseline
 - **Negative attribution** $(\text{IG}_i < 0)$: feature $i$ contributed negatively to $f(x)$ relative to the baseline
@@ -214,9 +238,31 @@ For tabular data with independent features, SHAP provides stronger game-theoreti
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving integrated gradients: theory and axiomatic derivation, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Sundararajan, Taly & Yan (2017). Axiomatic Attribution for Deep Networks. *ICML 2017* — The foundational paper. Required reading.
 - Shrikumar et al. (2017). Learning Important Features Through Propagating Activation Differences. *ICML 2017* — DeepLIFT, closely related to IG.
 - Erion et al. (2019). Learning Explainability with Output-Weighted Active Sampling. *arXiv* — Expected Gradients (SHAP connection to IG).
 - Kapishnikov et al. (2021). Guided Integrated Gradients. *CVPR 2021* — Path choice and guided variants.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_ig_image_classification.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

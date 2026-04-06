@@ -1,5 +1,8 @@
 # Building an Interpretability API with FastAPI and Captum
 
+> **Reading time:** ~8 min | **Module:** 8 — Production Pipelines | **Prerequisites:** Modules 1-7
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Handle input validation and error responses for attribution endpoints
 4. Structure attribution responses as JSON for downstream consumers
 5. Deploy an interpretability service with health checks and logging
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of building an interpretability api with fastapi and captum.
+</div>
 
 ---
 
@@ -76,6 +84,13 @@ Content-Type: application/json
 
 ## 3. FastAPI Application Structure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, validator
@@ -92,7 +107,17 @@ app = FastAPI(title="Captum Interpretability Service", version="1.0.0")
 logger = logging.getLogger(__name__)
 ```
 
+</div>
+</div>
+
 ### Pydantic Request Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from typing import List, Optional, Literal
@@ -115,9 +140,19 @@ class AttributionRequest(BaseModel):
         return v
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Model Registry
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import threading
@@ -159,9 +194,19 @@ class ModelRegistry:
 registry = ModelRegistry()
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Baseline Construction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def build_baseline(
@@ -189,9 +234,19 @@ def build_baseline(
         raise ValueError(f"Unknown baseline type: {baseline_type}")
 ```
 
+</div>
+</div>
+
 ---
 
 ## 6. Attribution Computation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def compute_attribution(
@@ -253,9 +308,19 @@ def compute_attribution(
         return {"attributions": attrs, "delta": None}
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Attribution Caching
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import hashlib
@@ -305,9 +370,19 @@ class AttributionCache:
 attribution_cache = AttributionCache(max_size=512)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. The Attribution Endpoint
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @app.post("/attribute")
@@ -396,9 +471,19 @@ async def attribute(request: AttributionRequest):
     return response
 ```
 
+</div>
+</div>
+
 ---
 
 ## 9. Health and Utility Endpoints
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @app.get("/health")
@@ -420,9 +505,19 @@ async def clear_cache():
     return {"status": "cleared"}
 ```
 
+</div>
+</div>
+
 ---
 
 ## 10. Application Startup
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from contextlib import asynccontextmanager
@@ -454,9 +549,19 @@ app = FastAPI(title="Captum Interpretability Service",
               version="1.0.0", lifespan=lifespan)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 11. Running the Service
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.sh</span>
+</div>
+<div class="code-body">
 
 ```bash
 # Development
@@ -474,7 +579,17 @@ docker run -p 8080:8080 \
     interpretability-service:latest
 ```
 
+</div>
+</div>
+
 ### Test with curl
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.sh</span>
+</div>
+<div class="code-body">
 
 ```bash
 curl -X POST http://localhost:8080/attribute \
@@ -489,9 +604,19 @@ curl -X POST http://localhost:8080/attribute \
   }'
 ```
 
+</div>
+</div>
+
 ---
 
 ## 12. Batched Attribution Endpoint
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class BatchAttributionRequest(BaseModel):
@@ -527,7 +652,23 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
     }
 ```
 
+</div>
+</div>
+
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Why a Dedicated Interpretability API?" and why it matters in practice.
+
+2. Given a real-world scenario involving building an interpretability api with fastapi and captum, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -550,3 +691,12 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
 - Pydantic v2 validators: https://docs.pydantic.dev
 - Captum attribution methods: https://captum.ai/docs/algorithms
 - Uvicorn deployment: https://www.uvicorn.org/deployment/
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_captum_insights_demo.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

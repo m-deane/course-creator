@@ -1,5 +1,8 @@
 # Attribution Method Selection: A Comprehensive Decision Framework
 
+> **Reading time:** ~11 min | **Module:** 8 — Production Pipelines | **Prerequisites:** Modules 1-7
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Apply the decision framework to novel model types
 4. Choose the right baseline strategy for each method and domain
 5. Combine methods strategically for comprehensive interpretability coverage
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of attribution method selection: a comprehensive decision framework.
+</div>
 
 ---
 
@@ -54,6 +62,10 @@ Purpose?
 ## 3. Image Models
 
 ### CNNs (ResNet, VGG, EfficientNet, MobileNet)
+<div class="callout-warning">
+<strong>Warning:</strong> **Architecture note:** GradCAM requires a convolutional layer. For the last conv layer (e.g., `model.layer4[-1]` in ResNet), it produces a class activation map that is upsampled to input resolution. For pixel-level attribution, use IG or GradientSHAP.
+</div>
+
 
 | Use Case | Recommended Method | Why |
 |----------|--------------------|-----|
@@ -88,6 +100,10 @@ Purpose?
 | Attention exploration | Last-layer mean attention | Exploratory only — not attribution |
 | Layer importance | LayerConductance over encoder layers | Identifies task-relevant depth |
 | Multi-token output (seq2seq) | LayerIG with target per output step | Run separately per output token |
+<div class="callout-key">
+<strong>Key Point:</strong> Attribution and attention serve different purposes:
+</div>
+
 
 ### The Attention Warning
 
@@ -100,6 +116,13 @@ These disagree on negation, adversarial inputs, and compositional sentences. Use
 
 ### Baseline Selection for Text
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # BERT-family: PAD baseline
 baseline = torch.full_like(input_ids, tokenizer.pad_token_id)
@@ -111,6 +134,9 @@ def zero_embedding_baseline(inputs_embeds):
 # Uniform random tokens (second choice for BERT)
 baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 ```
+
+</div>
+</div>
 
 **Prefer PAD for BERT:** BERT was trained with `[PAD]` tokens in attention masking, so PAD produces near-neutral predictions — a well-defined reference point. GPT models have no PAD concept; use zero embeddings.
 
@@ -128,6 +154,13 @@ baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 
 ### Baseline for Tabular Data
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Option 1: Zero vector (if features are normalized)
 baseline = torch.zeros_like(inputs)
@@ -142,6 +175,9 @@ baseline = train_features.median(dim=0).values.unsqueeze(0).expand_as(inputs)
 # Use 50-100 random training examples as background
 background = train_features[torch.randperm(len(train_features))[:100]]
 ```
+
+</div>
+</div>
 
 **Recommendation:** Use training-set mean as baseline. It represents "a typical example" and makes attribution differences directly interpretable as deviation from average behavior.
 
@@ -163,6 +199,10 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 ## 7. Method Selection by Use Case
 
 ### Development and Debugging
+<div class="callout-key">
+<strong>Key Point:</strong> **Goal:** Find spurious correlations quickly across many examples.
+</div>
+
 
 **Goal:** Find spurious correlations quickly across many examples.
 
@@ -194,6 +234,13 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 
 **Only IG satisfies all three requirements.**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Compliance-grade configuration
 ig = IntegratedGradients(model)
@@ -205,6 +252,9 @@ attrs, delta = ig.attribute(
 )
 assert abs(delta.item()) < 0.05, f"Completeness violation: delta={delta.item()}"
 ```
+
+</div>
+</div>
 
 ### Real-Time Production Serving
 
@@ -223,6 +273,10 @@ assert abs(delta.item()) < 0.05, f"Completeness violation: delta={delta.item()}"
 ## 8. Baseline Strategy Guide
 
 The baseline is as important as the method. It defines the reference point: "What prediction does the model make when this feature is absent?"
+<div class="callout-insight">
+<strong>Insight:</strong> The baseline is as important as the method. It defines the reference point: "What prediction does the model make when this feature is absent?"
+</div>
+
 
 ### Baseline Selection Matrix
 
@@ -239,6 +293,13 @@ The baseline is as important as the method. It defines the reference point: "Wha
 
 For GradientSHAP and DeepLIFTSHAP, provide 50-200 background samples:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from captum.attr import GradientShap
 
@@ -250,6 +311,9 @@ attrs, delta = grad_shap.attribute(
     return_convergence_delta=True,
 )
 ```
+
+</div>
+</div>
 
 Multiple baselines reduce sensitivity to the choice of reference point.
 
@@ -331,6 +395,19 @@ Attribution methods frequently produce different outputs on the same input. This
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Core Trade-Off Space" and why it matters in practice.
+
+2. Given a real-world scenario involving attribution method selection: a comprehensive decision framework, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - "Axiomatic Attribution for Deep Networks" (Sundararajan et al., 2017) — IG foundations
@@ -338,3 +415,12 @@ Attribution methods frequently produce different outputs on the same input. This
 - "Grad-CAM" (Selvaraju et al., 2017) — GradCAM
 - "Learning Important Features Through Propagating Activation Differences" (Shrikumar et al., 2017) — DeepLIFT
 - Captum documentation: https://captum.ai/docs/algorithms_comparison_matrix
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_captum_insights_demo.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

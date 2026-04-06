@@ -37,6 +37,9 @@ attrs = method.attribute(           # 2. Attribute
 
 <!-- Speaker notes: The pattern slide should be the first thing learners see when opening their notebook. The three-line pattern covers 90% of gradient attribution use cases. The key invariant is that attributions always have the same shape as inputs. This makes it trivial to loop over methods: create a dictionary of method instances, iterate, call .attribute() on each. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # Four Methods: API Reference
@@ -71,6 +74,9 @@ attr = ixg.attribute(
 
 <!-- Speaker notes: Show both APIs simultaneously to emphasize the pattern similarity. The only difference for the student is the class name. The abs parameter on Saliency controls whether absolute value is taken — set to False to see signed gradients. InputXGradient does not have abs parameter: it returns signed values by default, which is important because the sign tells you whether the feature supports or opposes the prediction. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # GuidedBackprop and Deconvolution API
@@ -107,6 +113,9 @@ Both modify the backward pass via **hooks**. Captum handles registration/removal
 
 <!-- Speaker notes: The hook mechanism is an internal implementation detail that students do not need to manage. Captum's GuidedBackprop and Deconvolution register forward hooks on ReLU layers to capture activations and modify the backward gradient. This is done inside the method class. Students should know it exists to understand why the method has architecture requirements (must have ReLU layers) but do not need to implement it. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # Comparison Loop: All Methods in Parallel
@@ -135,6 +144,9 @@ print({k: v.shape for k, v in attributions.items()})
 
 <!-- Speaker notes: The dictionary pattern is a practical idiom for comparative attribution studies. By cloning the input tensor before each attribution call, we ensure that gradient graph state does not leak between methods. The .detach() call at the end releases the gradient computation graph from memory, which is important when processing many images. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Visualization: Multi-Row Grid
@@ -228,6 +240,7 @@ For faithful methods: correlation ≈ 0. For Guided Backprop: often > 0.5.
 # Expected Results: Sanity Check
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Trained Model] --> B[Attribution Method]
     C[Random Model\nsame architecture] --> B

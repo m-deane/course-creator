@@ -36,11 +36,15 @@ Sum across embedding dimension $j$ gives one scalar per token.
 
 <!-- Speaker notes: The fundamental challenge is that token IDs are integers. You can't take a gradient with respect to an integer. But every token ID maps to a continuous embedding vector, and we CAN take gradients with respect to those embeddings. Captum's LayerIntegratedGradients handles this automatically — you specify the embedding layer, and it applies IG at that layer. The output is an attribution tensor of shape (seq_len, embedding_dim), which we then aggregate to (seq_len,) by summing across the embedding dimension. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Attribution Pipeline for Text
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Input text\n'The movie was brilliant'"] --> B["Tokenizer\n→ input_ids, attention_mask"]
     B --> C["Embedding layer\n→ e ∈ R^(seq_len × 768)"]
@@ -53,6 +57,9 @@ flowchart LR
 
 <!-- Speaker notes: The pipeline has these stages: tokenize the input, pass through the embedding layer to get continuous vectors, apply LayerIG which integrates the gradient between the input embedding and the baseline embedding, sum across the embedding dimension to get one score per token, and visualize. The baseline is typically all-PAD tokens, giving a reference point of "no information." -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Choosing a Baseline for Text
@@ -72,6 +79,9 @@ baseline_ids = torch.full_like(input_ids, tokenizer.pad_token_id)
 
 <!-- Speaker notes: Baseline choice matters more for text than for images. For BERT, the PAD token is the most natural "absent" state — it's what the model sees for padding positions. Some researchers prefer MASK, arguing it better represents "we don't know this word." Zero embedding is numerically convenient but may be completely out of distribution. The key test: run the baseline through the model and check that the output probability is close to 0.5 or some neutral value. If the baseline already strongly predicts a class, your attributions will be skewed. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Captum LayerIntegratedGradients
@@ -99,6 +109,9 @@ lig = LayerIntegratedGradients(
 
 <!-- Speaker notes: The Captum API for LayerIntegratedGradients takes a forward function and a layer. We target model.bert.embeddings — this is the module that converts token IDs to continuous vectors. Captum automatically hooks into this layer to apply IG. The forward function wraps the model and returns logits. We'll target a specific class (positive or negative sentiment) using the target argument in attribute(). -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Computing Token Attributions

@@ -36,6 +36,9 @@ BERT architecture:
 
 <!-- Speaker notes: Different BERT layers encode different types of linguistic information. This is not a design choice — it emerges from pretraining on masked language modeling. The model develops a hierarchical representation where earlier layers handle simpler, more local patterns and later layers handle complex, task-specific semantics. By measuring which layers contribute most to a specific prediction, we can understand what kind of information the model is using. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## LayerConductance: Formula
@@ -53,6 +56,9 @@ Sums to the total attribution (efficiency maintained across layers).
 
 <!-- Speaker notes: LayerConductance is the natural layer-level analogue of Integrated Gradients. The first term measures how sensitive the output is to changes in layer l's activations. The second term measures how much layer l's activations actually change as we move from baseline to input. The product tells us how much attribution credit passes through this layer. Crucially, the sum of LayerConductance across all layers equals the total IG attribution — the efficiency property is maintained. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Captum LayerConductance
@@ -82,6 +88,9 @@ for layer_idx, encoder_layer in enumerate(model.bert.encoder.layer):
 
 <!-- Speaker notes: The Captum API for LayerConductance is nearly identical to LayerIntegratedGradients. You pass the model layer as the second argument. We're computing one LayerConductance call per encoder layer — for BERT-base that's 12 calls plus the embedding layer. Each call does n_steps forward+backward passes. We use n_steps=20 instead of 50 for layer analysis since we're summarizing to a scalar per layer anyway, and the precision requirement is lower than for token-level attribution. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Layer Importance Visualization
@@ -105,11 +114,15 @@ ax.grid(axis='y', alpha=0.3)
 
 <!-- Speaker notes: The visualization is a simple bar chart. For sentiment classification, you should see a clear pattern where the later layers (10, 11) have much higher importance than earlier layers. This is consistent with probing studies showing that semantic features relevant to sentiment are encoded in the upper layers of BERT. The contrast between tasks is informative — NER shows more uniform importance across layers because it requires both syntactic structure and semantic labeling. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Cross-Task Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Sentiment (SST-2)"
     A1[L0-3: low] --> A2[L4-9: medium] --> A3[L10-11: HIGH]

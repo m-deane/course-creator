@@ -34,6 +34,9 @@ This is **not visible in a gradient heatmap** unless you know to look.
 
 <!-- Speaker notes: This example from the deep learning literature is illuminating. Ribeiro et al. found that a neural network was classifying wolves by whether the image contained snow, not by wolf features. Attribution heatmaps on individual predictions might show the wolf body region as important — but if you look at the training examples that drove the prediction, they all have snowy backgrounds. Example-based explanation revealed the spurious correlation that feature attribution missed. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Classical Influence Functions
@@ -51,6 +54,9 @@ If gradients align: removing $z_i$ would hurt test performance → it's a **prop
 
 <!-- Speaker notes: Classical influence functions from statistics were adapted for deep learning by Koh and Liang in 2017. The formula measures how removing a training example changes the test loss, via a first-order Taylor expansion in parameter space. The Hessian term corrects for the curvature of the loss landscape. This is theoretically exact for convex models. For neural networks, the approximation quality depends on how well the local Hessian captures the non-convex landscape. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Hessian Problem
@@ -70,6 +76,9 @@ Memory needed: ~5 petabytes  ← impossible
 
 <!-- Speaker notes: The Hessian problem is fatal for classical influence functions at scale. A 25 million parameter network has a 25M × 25M Hessian — you can't even store it in memory, let alone invert it. Various approximations exist (LiSSA, Conjugate Gradient), but they can be numerically unstable and are still expensive. This is why Pruthi et al. developed TracIn — a completely different approach that avoids the Hessian entirely. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## TracIn: A Completely Different Approach
@@ -77,6 +86,7 @@ Memory needed: ~5 petabytes  ← impossible
 **Key idea:** Instead of using the Hessian, trace the training trajectory.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Save checkpoints\nθ_t during training"] --> B["At each checkpoint,\ncompute gradient alignment"]
     B --> C["TracIn score =\nsum of alignments × lr"]
@@ -88,6 +98,9 @@ $$\text{TracIn}(z, z_{test}) = \sum_{t \in \text{checkpoints}} \eta_t \cdot \nab
 
 <!-- Speaker notes: TracIn's insight is elegant. Rather than computing the Hessian at the final parameters, it asks: throughout training, whenever the model took a step on example z, did that step also help with z_test? The gradient dot product measures gradient alignment — if both gradients point in the same direction, training on z helped with z_test. Sum this across all training checkpoints and learning rates, and you have the TracIn score. No Hessian required. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## TracIn Score Decomposition

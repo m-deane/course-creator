@@ -40,11 +40,15 @@ Module 08 · Production Interpretability Pipelines
 
 <!-- Speaker notes: The decision is straightforward: if a human is looking at attributions, use Insights. If code is consuming attributions — dashboards, compliance tools, monitoring systems — build an API. The two tools are complementary, not competing. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## API Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Client[Client / Dashboard / Monitor] -->|POST /attribute| API[FastAPI Service]
     API --> Cache{Cache hit?}
@@ -57,6 +61,9 @@ graph TD
 
 <!-- Speaker notes: The cache is the most important performance optimization. Many attribution requests are repeated — same image, same method, different dashboard user. A 16-byte hash key lets you return previously computed attributions in under 1ms instead of re-running IG for 300ms. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Request / Response Shape
@@ -85,6 +92,9 @@ graph TD
 
 <!-- Speaker notes: The input_shape field is essential because JSON arrays lose dimension information. The client serializes the tensor as a flat list and provides input_shape separately so the server can reconstruct the correct tensor shape. Attributions are returned in the same shape as inputs. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Pydantic Validation
@@ -114,6 +124,9 @@ class AttributionRequest(BaseModel):
 
 <!-- Speaker notes: The Literal type for method is critical — it prevents arbitrary strings reaching the attribution dispatch logic. The n_steps validator catches both too-small values (inaccurate) and too-large values (timeout risk). FastAPI returns a 422 Unprocessable Entity automatically for validation failures. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Model Registry

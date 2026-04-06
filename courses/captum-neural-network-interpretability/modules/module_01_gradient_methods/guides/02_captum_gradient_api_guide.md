@@ -1,5 +1,8 @@
 # Captum Gradient API: Practical Usage
 
+> **Reading time:** ~8 min | **Module:** 1 — Gradient Methods | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 
 This guide covers the Captum API for all four gradient-based attribution methods. The focus is on practical patterns: correct input preparation, visualization, side-by-side comparison, and the sanity checks that validate attribution quality.
@@ -8,11 +11,23 @@ This guide covers the Captum API for all four gradient-based attribution methods
 
 The uniformity of Captum's API means you can compare all four methods with a single function that takes the method as a parameter. Write your attribution pipeline once, parameterize the method.
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the Captum API for all four gradient-based attribution methods.
+</div>
+
 ---
 
 ## 1. Common Setup Pattern
 
 Every gradient attribution in this module follows this setup:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -51,11 +66,21 @@ with torch.no_grad():
     top_class = probs.argmax().item()
 ```
 
+</div>
+</div>
+
 ---
 
 ## 2. Saliency (Vanilla Gradient)
 
 ### API
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import Saliency
@@ -68,6 +93,9 @@ attributions = saliency.attribute(
     abs=True  # Default True: returns absolute gradient values
 )
 ```
+
+</div>
+</div>
 
 ### Parameters
 
@@ -83,6 +111,13 @@ attributions = saliency.attribute(
 `attributions.shape == inputs.shape` — e.g., `(1, 3, 224, 224)` for a single image.
 
 ### Visualization Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import visualization as viz
@@ -101,11 +136,21 @@ fig, axes = viz.visualize_image_attr_multiple(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 3. Input × Gradient
 
 ### API
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import InputXGradient
@@ -119,6 +164,9 @@ attributions = ixg.attribute(
 # Returns: x * ∂f/∂x (signed, no absolute value taken)
 ```
 
+</div>
+</div>
+
 ### Sign Information
 
 Unlike Saliency (which takes absolute value), Input×Gradient returns signed attributions:
@@ -126,6 +174,13 @@ Unlike Saliency (which takes absolute value), Input×Gradient returns signed att
 - **Negative values:** feature decreases the predicted class score
 
 For visualization, you can show all, only positive, or absolute value:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Show only positive attributions (evidence FOR the class)
@@ -138,11 +193,21 @@ fig, axes = viz.visualize_image_attr_multiple(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## 4. Guided Backpropagation
 
 ### API
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import GuidedBackprop
@@ -155,9 +220,19 @@ attributions = gbp.attribute(
 )
 ```
 
+</div>
+</div>
+
 ### Important Note
 
 GuidedBackprop registers **hooks** on the model's ReLU layers to modify the backward pass. These hooks are registered when the method is instantiated and removed when the attribution is complete. This is handled transparently by Captum.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Captum handles hook registration/removal automatically
@@ -166,9 +241,19 @@ attributions = gbp.attribute(inputs, target=class_idx)  # Runs modified backward
 # Hooks are removed after .attribute() completes
 ```
 
+</div>
+</div>
+
 ### Sanity Check: Randomization Test
 
 This is the critical validation that reveals Guided Backprop's failure mode:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import copy
@@ -199,11 +284,21 @@ print(f"Correlation between trained and random model attributions: {correlation:
 # High correlation (> 0.5) indicates architecture dependence
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Deconvolution
 
 ### API
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import Deconvolution
@@ -216,6 +311,9 @@ attributions = deconv.attribute(
 )
 ```
 
+</div>
+</div>
+
 Like GuidedBackprop, Deconvolution uses hooks to modify the backward pass through ReLU layers.
 
 ---
@@ -223,6 +321,17 @@ Like GuidedBackprop, Deconvolution uses hooks to modify the backward pass throug
 ## 6. Side-by-Side Comparison Pattern
 
 The canonical comparison pattern for all four methods:
+<div class="callout-key">
+<strong>Key Point:</strong> The canonical comparison pattern for all four methods:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import Saliency, InputXGradient, GuidedBackprop, Deconvolution
@@ -319,11 +428,21 @@ def plot_attribution_comparison(attributions, image_np, predicted_class):
     plt.show()
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Quantitative Method Comparison
 
 Beyond visual inspection, quantitative metrics help compare attribution quality:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def attribution_statistics(attributions, image_np):
@@ -355,11 +474,25 @@ def attribution_statistics(attributions, image_np):
     return stats
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. Common API Mistakes and Fixes
 
 ### Mistake 1: Forgetting `requires_grad_(True)`
+<div class="callout-warning">
+<strong>Warning:</strong> input_tensor = preprocess(image).unsqueeze(0)
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # WRONG: will raise RuntimeError about grad requirement
@@ -372,7 +505,17 @@ input_tensor = preprocess(image).unsqueeze(0).requires_grad_(True)
 attr = saliency.attribute(input_tensor, target=0)
 ```
 
+</div>
+</div>
+
 ### Mistake 2: Model in Training Mode
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # WRONG: dropout produces different gradients each run
@@ -385,7 +528,17 @@ model.eval()  # Call eval() before any attribution
 attr = saliency.attribute(input_tensor, target=0)  # Deterministic
 ```
 
+</div>
+</div>
+
 ### Mistake 3: Wrong Target Type
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # WRONG: target should be int, not float or one-hot
@@ -397,7 +550,17 @@ attr = saliency.attribute(input_tensor, target=0)      # Class index 0
 attr = saliency.attribute(input_tensor, target=281)    # Class index 281
 ```
 
+</div>
+</div>
+
 ### Mistake 4: Batch Target Mismatch
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # For batch attribution, target can be a list/tensor
@@ -410,11 +573,21 @@ attr = saliency.attribute(inputs, target=0)  # Explains class 0 for ALL images
 attr = saliency.attribute(inputs, target=[0, 281, 483])  # Different class per image
 ```
 
+</div>
+</div>
+
 ---
 
 ## 9. Normalizing Attributions for Display
 
 Different attribution methods produce values at different scales. Normalize for fair visual comparison:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def normalize_attribution(attr_np, percentile=99):
@@ -445,6 +618,9 @@ def normalize_attribution(attr_np, percentile=99):
     return attr_clipped / (vmax + 1e-8)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -463,8 +639,30 @@ def normalize_attribution(attr_np, percentile=99):
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving captum gradient api: practical usage, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Captum API docs for gradient methods: captum.ai/api/#attribution — Full parameter documentation.
 - Adebayo et al. (2018). Sanity Checks for Saliency Maps. *NeurIPS* — The randomization test every practitioner should run.
 - Smilkov et al. (2017). SmoothGrad: removing noise by adding noise. *arXiv* — Variance reduction via noise averaging.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_gradient_methods_cnn.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

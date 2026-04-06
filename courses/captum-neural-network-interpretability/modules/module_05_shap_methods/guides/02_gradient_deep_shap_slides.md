@@ -32,6 +32,9 @@ KernelSHAP: $O(M \times n_{bg})$ model evaluations
 
 <!-- Speaker notes: The speed problem is real. KernelSHAP requires hundreds of model evaluations to estimate Shapley values. For tabular models this is fine, but for image models requiring forward passes through ResNet, or BERT for text, this becomes prohibitively slow. GradientSHAP and DeepLIFT reduce this to tens of model evaluations by using the model's gradient information. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## GradientSHAP: IG Meets SHAP
@@ -46,6 +49,9 @@ $$\phi_i^{\text{GradSHAP}} = \mathbb{E}_{x' \sim \mathcal{D}_{bg},\, \alpha \sim
 
 <!-- Speaker notes: GradientSHAP is a natural extension of Integrated Gradients. IG uses a single baseline and integrates the gradient along the straight-line path. GradientSHAP takes this further by averaging over multiple baselines sampled from the background distribution. This expectation is what connects it to Shapley values — the background distribution substitutes for the coalition sampling in KernelSHAP. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## GradientSHAP Monte Carlo Estimation
@@ -71,6 +77,9 @@ attributions = total_attribution / n_samples
 
 <!-- Speaker notes: The Monte Carlo estimation is straightforward. For each sample, we pick a random baseline and a random interpolation scalar alpha, compute the gradient at the interpolated point, multiply by the input difference, and accumulate. With enough samples, this converges to the expected value which approximates the Shapley value. In practice, 50-200 samples is usually sufficient for stable estimates. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## GradientSHAP in Captum
@@ -101,6 +110,9 @@ print(f"Max |δ|: {delta.abs().max().item():.4f}")
 
 <!-- Speaker notes: Captum's GradientShap API is simple. Pass your background as the baselines argument — Captum will sample from them during Monte Carlo estimation. The convergence delta checks how well the attributions satisfy the efficiency axiom. A small delta means the attributions sum closely to f(x) minus E[f(x')], which is what we want. If delta is large, increase n_samples. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Saturation Problem
@@ -148,6 +160,7 @@ $$C = \frac{(5.0 - 0.0)}{(5.0 - 0.0)} \times (0.993 - 0.500) = 1.0 \times 0.493 
 ## DeepLIFT Propagation Rules
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Input x<br/>Reference x'"] --> B["Layer 1: Linear<br/>Linear rule: C = Δx·w"]
     B --> C["ReLU<br/>Rescale rule: C = Δx/Δpre × Δpost"]

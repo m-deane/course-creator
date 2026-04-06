@@ -1,5 +1,8 @@
 # Influence Functions, TracIn, and TracInCPFast
 
+> **Reading time:** ~8 min | **Module:** 6 — Concept & Example Explanations | **Prerequisites:** Module 3 Layer Attribution
+
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -8,6 +11,11 @@ By the end of this guide, you will be able to:
 3. Implement TracInCPFast in Captum to find proponents and opponents for a test prediction
 4. Visualize and interpret influential training examples
 5. Apply influence methods for data debugging and mislabeled example detection
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of influence functions, tracin, and tracincpfast.
+</div>
 
 ---
 
@@ -117,8 +125,19 @@ This is practical because:
 ## 7. Captum TracIn Implementation
 
 ### Setup: Saving Checkpoints
+<div class="callout-key">
+<strong>Key Point:</strong> TracIn requires model checkpoints saved during training:
+</div>
+
 
 TracIn requires model checkpoints saved during training:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -143,7 +162,17 @@ for epoch in range(50):
         checkpoint_paths.append((path, 0.01))  # (path, learning_rate)
 ```
 
+</div>
+</div>
+
 ### Running TracInCPFast
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.influence import TracInCPFast
@@ -173,11 +202,21 @@ proponents = tracin.influence(
 # proponents: (influences, indices) for most helpful training examples
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. SimilarityInfluence: Representation Similarity
 
 Captum also provides `SimilarityInfluence`, which finds training examples most similar to a test input in the model's learned representation space:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.influence import SimilarityInfluence
@@ -199,6 +238,9 @@ top_similar = sim_influence.influence(
 )
 ```
 
+</div>
+</div>
+
 `SimilarityInfluence` is a simpler, faster alternative when you care about similarity rather than gradient-based influence.
 
 ---
@@ -214,6 +256,13 @@ The most useful TracIn analysis finds:
 **Top opponents:** Training examples whose removal would most increase test confidence
 - Opponents push against the prediction
 - May reveal contradictory information in the training set
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Get both proponents and opponents
@@ -232,6 +281,9 @@ for i, (idx, inf_val) in enumerate(zip(train_indices[0], influences[0])):
     axes[i+1].imshow(to_numpy(train_img))
     axes[i+1].set_title(f'Proponent {i+1}\nInf={inf_val:.3f}\nLabel={label_names[train_label]}')
 ```
+
+</div>
+</div>
 
 ---
 
@@ -252,6 +304,13 @@ High self-influence examples are "difficult" — the model had high loss on them
 - Atypical examples (genuine but unusual)
 - Ambiguous examples near the decision boundary
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Compute self-influence for all training examples
 self_influences = tracin.self_influence(
@@ -262,6 +321,9 @@ self_influences = tracin.self_influence(
 # Visualize high self-influence examples (likely mislabeled or unusual)
 high_si_indices = self_influences.argsort(descending=True)[:20]
 ```
+
+</div>
+</div>
 
 ---
 
@@ -294,6 +356,19 @@ For most practical use cases, **TracInCPFast** (when checkpoints exist) or **Sim
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Core Question: Example-Based Explanations" and why it matters in practice.
+
+2. Given a real-world scenario involving influence functions, tracin, and tracincpfast, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 | Concept | Description |
@@ -313,3 +388,12 @@ For most practical use cases, **TracInCPFast** (when checkpoints exist) or **Sim
 - Pruthi, G., et al. (2020). Estimating training data influence by tracing gradient descent. *NeurIPS*.
 - Feldman, V., & Zhang, C. (2020). What neural networks memorize and why: Discovering the long tail via influence estimation. *NeurIPS*.
 - Captum TracIn documentation: https://captum.ai/api/influence.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_tcav_texture_shape.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

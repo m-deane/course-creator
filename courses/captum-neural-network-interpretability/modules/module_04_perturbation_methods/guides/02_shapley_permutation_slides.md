@@ -32,6 +32,9 @@ $\phi_i$ = average marginal contribution of feature $i$ across all orderings.
 
 <!-- Speaker notes: The cooperative game theory framing is the right way to think about Shapley values. The key intuition is: imagine randomly ordering all features and adding them one by one. Each time we add feature i, we measure how much the prediction changes. The Shapley value of feature i is the average of this marginal contribution across all possible orderings. This averaging is what makes Shapley values fair: it considers every possible context in which a feature might be evaluated. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 # The Four Shapley Axioms
@@ -50,6 +53,9 @@ These are the ONLY attribution values satisfying all four:
 
 <!-- Speaker notes: The four axioms are worth understanding individually. Efficiency is the completeness property we saw in IG. Symmetry says that if two features have identical effects on every coalition, they should get the same attribution — this is a fairness condition that rules out many ad-hoc methods. Dummy ensures features that have zero effect get zero attribution — obvious, but important to state formally. Additivity allows Shapley values to decompose cleanly when models are sums of sub-models. The uniqueness result (that only Shapley values satisfy all four) is the key theoretical achievement. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 # Why Not Exact Computation?
@@ -70,6 +76,9 @@ Sample random orderings, estimate average marginal contribution.
 
 <!-- Speaker notes: The exponential explosion of subsets is the fundamental challenge. For 11 tabular features (wine dataset), 2^11 = 2048 model calls is feasible. For a 100-feature model, 2^100 is completely infeasible. The Monte Carlo sampling approach solves this by averaging marginal contributions from randomly sampled orderings rather than all orderings. With n_samples random orderings, the standard error decreases as 1/sqrt(n_samples), so 100 samples gives a reasonable estimate and 500 samples gives a very accurate one. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 # ShapleyValueSampling in Captum
@@ -95,6 +104,9 @@ attr = svs.attribute(
 
 <!-- Speaker notes: The n_samples parameter controls the bias-variance trade-off. With n_samples=25 (the default), you get a rough estimate suitable for rapid exploration. With n_samples=200, the estimate is good enough for model comparison and documentation. For paper-quality results or regulatory reporting, use n_samples=500 or more. The computational cost scales linearly with n_samples, so doubling the samples doubles the time but halves the standard error. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 # Shapley Values vs. IG: Key Difference
@@ -129,6 +141,7 @@ Local methods explain one prediction.
 Permutation Feature Importance explains the model across a dataset.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Baseline score\non validation set"] --> B["For each feature i:"]
     B --> C["Shuffle feature i\nacross all samples"]

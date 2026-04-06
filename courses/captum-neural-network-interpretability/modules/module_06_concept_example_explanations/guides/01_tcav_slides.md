@@ -34,6 +34,9 @@ Attribution: "These pixels in the upper-right quadrant were most important."
 
 <!-- Speaker notes: This is a key motivation slide. Pixel-level attributions are technically precise but semantically opaque. A doctor doesn't think in pixels — they think in clinical concepts: irregular borders, lobulated margins, spiculation. TCAV lets us test whether the model also thinks in those terms. This is directly relevant for regulatory compliance, clinical validation, and bias auditing. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## TCAV's Central Question
@@ -56,11 +59,15 @@ Score close to 0.5 → concept not systematically used.
 
 <!-- Speaker notes: TCAV produces a single interpretable number for each (concept, class, layer) triple. A score of 0.84 for stripes in zebra classification means 84% of zebra images have internal activations that align with the "stripes" direction. A score of 0.51 for dots means the model isn't using dots — it's essentially random. These numbers are actionable in a way that heatmaps are not. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The TCAV Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Concept examples\n(e.g., striped images)"] --> B["Extract layer activations\nf_l(x) for concept + random"]
     B --> C["Train linear probe\n(CAV = w from SVM)"]
@@ -74,6 +81,9 @@ Three ingredients: concept examples, model layer activations, class test images.
 
 <!-- Speaker notes: The TCAV pipeline is a three-step process. First, you define your concept with positive examples and collect random negative examples. Second, you train a linear classifier (CAV) on the layer activations to separate concept from random. Third, you measure how often the test class images have activations that move in the concept direction. The key mathematical object is the Concept Activation Vector — the normal vector to the separating hyperplane. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## What is a CAV?
@@ -99,6 +109,9 @@ The CAV direction points **toward the concept** in activation space.
 
 <!-- Speaker notes: A CAV is simply the weight vector of a linear SVM trained to separate concept activations from random activations in a specific layer's representation space. If the layer can cleanly separate "striped" from "not striped" examples, the SVM will have a clear decision boundary, and the CAV will point from the random cluster toward the concept cluster. A poorly-separable layer (low SVM accuracy) suggests the concept isn't represented at that layer. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Directional Derivative

@@ -1,8 +1,16 @@
 # Guide 02: Layer Conductance, Neuron Conductance, and Internal Influence
 
+> **Reading time:** ~9 min | **Module:** 3 — Layer & Neuron Attribution | **Prerequisites:** Module 2 Integrated Gradients
+
+
 ## Overview
 
 GradCAM tells us *where* in the image the model looks. Conductance methods tell us *which layer* and *which neurons* within that layer are doing the most work. Layer Conductance decomposes the model's output prediction across all layers in the network. Neuron Conductance identifies which specific neurons in a layer are responsible for a prediction. Together, they provide an inside-out view of neural network computation.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 02: layer conductance, neuron conductance, and internal influence.
+</div>
 
 ---
 
@@ -33,6 +41,10 @@ This is simply the gradient of the output with respect to the hidden unit's acti
 ## 3. Layer Conductance
 
 Layer Conductance extends Integrated Gradients to intermediate layers. For each neuron $h_i$ in layer $l$:
+<div class="callout-warning">
+<strong>Warning:</strong> Layer Conductance extends Integrated Gradients to intermediate layers. For each neuron $h_i$ in layer $l$:
+</div>
+
 
 $$\text{Cond}_i = \underbrace{(h_i(x) - h_i(x'))}_{\text{activation change}} \cdot \int_0^1 \frac{\partial y^c}{\partial h_i(x(\alpha))} \, d\alpha$$
 
@@ -62,6 +74,13 @@ Summing over neurons $j$ in layer $l$ and applying the FTC to the layer activati
 
 ## 4. Captum Layer Conductance API
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from captum.attr import LayerConductance
 
@@ -83,12 +102,22 @@ attr = lc.attribute(
 # attr shape: (1, N)       for fully connected layers
 ```
 
+</div>
+</div>
+
 ### Interpreting the Output
 
 For a convolutional layer (e.g., `model.layer3[-1]`):
 - Output shape: `(1, 1024, 14, 14)` for ResNet-50 layer3
 - Each value: conductance of that specific neuron at that spatial location
 - Aggregate to compare layers:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Total conductance of this layer (sum of absolute values)
@@ -101,11 +130,21 @@ spatial_map = attr.abs().sum(dim=1).squeeze()  # (14, 14)
 channel_importance = attr.abs().mean(dim=(-2, -1)).squeeze()  # (1024,)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 5. Comparing Conductance Across Layers
 
 The completeness property allows fair comparison across layers:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 layers_to_examine = {
@@ -129,6 +168,9 @@ for name, layer in layers_to_examine.items():
 print(layer_conductances)
 ```
 
+</div>
+</div>
+
 Because conductance is complete, the values across all layers should be consistent with the total prediction difference $f(x) - f(x')$.
 
 **Expected finding for ResNet-50:** layer4 typically has the highest conductance for ImageNet classification, confirming it is where the semantic decision is made. However, for fine-grained tasks (e.g., distinguishing dog breeds), layer3 and layer4 may have comparable conductance.
@@ -138,6 +180,10 @@ Because conductance is complete, the values across all layers should be consiste
 ## 6. Neuron Conductance
 
 While Layer Conductance measures the importance of entire layers, **Neuron Conductance** measures the importance of individual neurons:
+<div class="callout-warning">
+<strong>Warning:</strong> While Layer Conductance measures the importance of entire layers, **Neuron Conductance** measures the importance of individual neurons:
+</div>
+
 
 $$\text{NeuronCond}_i = (h_i(x) - h_i(x')) \cdot \int_0^1 \frac{\partial y^c}{\partial h_i(x(\alpha))} \, d\alpha$$
 
@@ -154,6 +200,17 @@ This is the same formula as Layer Conductance, but interpreted at the level of a
 ---
 
 ## 7. Captum Neuron Conductance API
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+<div class="callout-key">
+<strong>Key Point:</strong> from captum.attr import NeuronConductance
+</div>
+
 
 ```python
 from captum.attr import NeuronConductance
@@ -175,9 +232,19 @@ neuron_attr = nc.attribute(
 # neuron_attr: (1, 3, 224, 224) — attribution on INPUT for this neuron
 ```
 
+</div>
+</div>
+
 Neuron Conductance returns the *input attribution* for a single intermediate neuron. It answers: "which input features caused neuron 42 at position (3,3) in layer4 to activate as it did?"
 
 ### Finding the Most Important Neurons
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def top_neurons_for_prediction(model, layer, input_tensor, baseline,
@@ -210,11 +277,21 @@ def top_neurons_for_prediction(model, layer, input_tensor, baseline,
     return sorted(results, reverse=True)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. Layer Activation Analysis
 
 Before computing conductance, it is useful to understand the distribution of activations in each layer. Neurons with zero activation have zero conductance regardless of weights.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Get activations without computing attribution
@@ -241,6 +318,9 @@ for name, act in activations.items():
     print(f"{name}: {n_active:.1%} neurons active, "
           f"mean={act.mean():.3f}, std={act.std():.3f}")
 ```
+
+</div>
+</div>
 
 ---
 
@@ -270,6 +350,13 @@ Activation patching is popular in mechanistic interpretability research (circuit
 
 Captum also provides `InternalInfluence`, which is the simpler gradient-based internal attribution (no integration):
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from captum.attr import InternalInfluence
 
@@ -281,6 +368,9 @@ attr = ii.attribute(
 )
 # Gradient of output w.r.t. layer activations
 ```
+
+</div>
+</div>
 
 `InternalInfluence` is faster than `LayerConductance` (no integration) but does not satisfy completeness. Use it for rapid exploration; use `LayerConductance` for rigorous analysis.
 
@@ -300,6 +390,19 @@ All three share the same mathematical foundation (IG integral), completeness pro
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Motivation: What Happens Between Input and Output?" and why it matters in practice.
+
+2. Given a real-world scenario involving guide 02: layer conductance, neuron conductance, and internal influence, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 1. **Internal Influence** = gradient of output w.r.t. hidden activations (fast, no integration)
@@ -316,3 +419,12 @@ All three share the same mathematical foundation (IG integral), completeness pro
 - Elhage et al., "A Mathematical Framework for Transformer Circuits", Anthropic 2021 — mechanistic interpretability
 - Bau et al., "Network Dissection: Quantifying Interpretability of Deep Visual Representations", CVPR 2017 — neuron concept detection
 - Captum Layer Attribution documentation: https://captum.ai/api/layer.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_gradcam_resnet.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

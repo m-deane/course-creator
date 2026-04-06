@@ -1,8 +1,16 @@
 # Guide 02: Shapley Values and Permutation Feature Importance
 
+> **Reading time:** ~8 min | **Module:** 4 — Perturbation Methods | **Prerequisites:** Module 0 Foundations
+
+
 ## Overview
 
 Shapley values provide the game-theoretic foundation for feature attribution. Unlike Occlusion (which measures feature removal one at a time), Shapley values consider all possible feature coalitions, capturing interaction effects and providing uniquely fair attribution under four axioms. This guide covers Shapley Value Sampling in Captum and its connection to SHAP, as well as Permutation Feature Importance for global model understanding.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 02: shapley values and permutation feature importance.
+</div>
 
 ---
 
@@ -56,10 +64,21 @@ These axioms make Shapley values the **uniquely fair** attribution: no other met
 ## 3. Computational Challenge
 
 Exact Shapley value computation requires evaluating $v(S)$ for all $2^n$ subsets. For $n=11$ tabular features, this is $2^{11} = 2048$ model calls. For $n=100$ features, $2^{100}$ is infeasible.
+<div class="callout-warning">
+<strong>Warning:</strong> Exact Shapley value computation requires evaluating $v(S)$ for all $2^n$ subsets. For $n=11$ tabular features, this is $2^{11} = 2048$ model calls. For $n=100$ features, $2^{100}$ is infeasible.
+</div>
+
 
 **Solution: Shapley Value Sampling**
 
 Estimate Shapley values by sampling random orderings:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Conceptual algorithm
@@ -78,11 +97,25 @@ for _ in range(n_samples):
 shapley_estimates = {i: v / n_samples for i, v in shapley_estimates.items()}
 ```
 
+</div>
+</div>
+
 Each sample requires $n$ model evaluations (one per position in the ordering). With $n\_\text{samples}$ Monte Carlo samples: total cost = $n \times n\_\text{samples}$ forward passes.
 
 ---
 
 ## 4. Captum ShapleyValueSampling API
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+<div class="callout-key">
+<strong>Key Point:</strong> from captum.attr import ShapleyValueSampling
+</div>
+
 
 ```python
 from captum.attr import ShapleyValueSampling
@@ -101,6 +134,9 @@ attributions = svs.attribute(
 # attributions: same shape as input
 ```
 
+</div>
+</div>
+
 **n_samples trade-off:**
 - `n_samples=25`: fast, high variance — good for exploration
 - `n_samples=200`: slower, lower variance — good for reporting
@@ -109,6 +145,13 @@ attributions = svs.attribute(
 ### Error Estimate
 
 Captum does not provide variance estimates directly, but you can estimate via bootstrap:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from scipy.stats import sem
@@ -122,6 +165,9 @@ runs = [
 shapley_mean = np.stack(runs).mean(axis=0)
 shapley_stderr = sem(np.stack(runs), axis=0)
 ```
+
+</div>
+</div>
 
 ---
 
@@ -156,6 +202,13 @@ SHAP (SHapley Additive exPlanations) is a family of Shapley-based methods:
 
 Captum's `ShapleyValueSampling` is equivalent to the Monte Carlo version of KernelSHAP. For neural networks in PyTorch, Captum's implementation is more convenient than the standalone `shap` library.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Captum (PyTorch native, works with arbitrary nn.Module)
 from captum.attr import ShapleyValueSampling
@@ -168,9 +221,16 @@ explainer = shap.KernelExplainer(model_fn, background_data)
 shap_vals = explainer.shap_values(x)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 7. Feature Permutation Importance: Global Attribution
+<div class="callout-key">
+<strong>Key Point:</strong> While Occlusion and Shapley values explain individual predictions (local), **Permutation Feature Importance** provides global feature importance across a dataset:
+</div>
+
 
 While Occlusion and Shapley values explain individual predictions (local), **Permutation Feature Importance** provides global feature importance across a dataset:
 
@@ -183,6 +243,13 @@ While Occlusion and Shapley values explain individual predictions (local), **Per
 3. Features with high importance decrease performance when permuted
 
 **Key property:** No need to define a baseline value — permuting breaks the relationship between feature and prediction without removing the feature from the input space.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def permutation_importance(model, X_val, y_val, n_repeats=5):
@@ -224,11 +291,21 @@ def permutation_importance(model, X_val, y_val, n_repeats=5):
     return all_importances.mean(axis=0), all_importances.std(axis=0)
 ```
 
+</div>
+</div>
+
 ---
 
 ## 8. Captum KernelShap
 
 Captum also provides `KernelShap` as a specific implementation following the original KernelSHAP methodology with a weighted regression approach:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from captum.attr import KernelShap
@@ -243,6 +320,9 @@ attr = ks.attribute(
     n_samples=100          # Samples for regression
 )
 ```
+
+</div>
+</div>
 
 `KernelShap` vs `ShapleyValueSampling`:
 - Both approximate Shapley values
@@ -273,6 +353,13 @@ attr = ks.attribute(
 
 ShapleyValueSampling is a stochastic estimate — it has variance that decreases with n_samples. Monitor convergence:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def shapley_with_convergence_check(model, input_x, baseline, target,
                                     max_samples=500, tolerance=0.01):
@@ -301,7 +388,23 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
     return attr
 ```
 
+</div>
+</div>
+
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Shapley Values: Game Theory Foundation" and why it matters in practice.
+
+2. Given a real-world scenario involving guide 02: shapley values and permutation feature importance, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Summary
 
@@ -320,3 +423,12 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
 - Lundberg & Lee, "A Unified Approach to Interpreting Model Predictions (SHAP)", NeurIPS 2017
 - Strumbelj & Kononenko, "Explaining prediction models and individual predictions with feature contributions", Knowledge and Information Systems 2014
 - Captum ShapleyValueSampling: https://captum.ai/api/shapley_value_sampling.html
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_occlusion_image.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

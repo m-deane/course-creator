@@ -7,11 +7,15 @@
 LLM integration into Dataiku data pipelines transforms unstructured text into structured, actionable data at scale. By embedding LLM processing steps alongside traditional ETL operations, you create end-to-end workflows that combine data engineering and generative AI capabilities in a unified, governed environment.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The real power of LLMs in data pipelines comes from treating them as transformation steps—not standalone applications. When LLMs process data as it flows through pipelines, you gain automatic dependency tracking, version control, scheduling, monitoring, and governance that would require extensive custom engineering otherwise.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> LLM integration into Dataiku data pipelines transforms unstructured text into structured, actionable data at scale. By embedding LLM processing steps alongside traditional ETL operations, you create end-to-end workflows that combine data engineering and generative AI capabilities in a unified, go...
+
 </div>
 
 ## Formal Definition
@@ -30,6 +34,7 @@ Think of a manufacturing assembly line: raw materials enter, pass through variou
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │              Dataiku Pipeline with LLM Integration          │
 └─────────────────────────────────────────────────────────────┘
@@ -73,6 +78,7 @@ Think of a manufacturing assembly line: raw materials enter, pass through variou
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -159,6 +165,7 @@ print(f"Total cost: ${results['cost_usd'].sum():.2f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -310,6 +317,7 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -444,6 +452,7 @@ dataiku.Dataset("processed_long_reports").write_with_schema(output_df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -632,6 +641,7 @@ summary = pipeline.process_dataset(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -745,7 +755,9 @@ incremental_llm_processing(
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

@@ -7,16 +7,21 @@
 You will learn how to estimate causal effects using `doubleml.DoubleMLPLR` end-to-end, including data preparation, nuisance model selection, hyperparameter tuning, and inference. This module takes you from manual DML (Module 02) to production-ready estimation with a battle-tested library.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The `doubleml` package handles cross-fitting, orthogonal scores, and standard errors automatically. Your job is to choose good nuisance ML models and validate the results — the library handles the econometric machinery.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn how to estimate causal effects using `doubleml.DoubleMLPLR` end-to-end, including data preparation, nuisance model selection, hyperparameter tuning, and inference. This module takes you from manual DML (Module 02) to production-ready estimation with a battle-tested library.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 doubleml PLR PIPELINE
 
 Data(Y, D, X) → DoubleMLData → DoubleMLPLR(ml_l, ml_m) → .fit() → .summary
@@ -35,6 +40,7 @@ The commodity example: estimating the causal effect of carbon price policy chang
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -86,6 +92,7 @@ The two nuisance models predict $E[Y|X]$ and $E[D|X]$. These are pure prediction
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -109,7 +116,9 @@ ml_m_lasso = LassoCV(cv=5, random_state=42)
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The nuisance models should be tuned for PREDICTION accuracy, not for interpretability. A poorly tuned nuisance model produces noisy residuals, which widens confidence intervals (though orthogonality protects against bias). Use cross-validated prediction scores to select the best model.
+
 </div>
 
 ## How to Fit and Interpret Results
@@ -118,6 +127,7 @@ ml_m_lasso = LassoCV(cv=5, random_state=42)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -147,6 +157,7 @@ The `summary` output includes the coefficient, standard error, t-statistic, and 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -177,6 +188,7 @@ If all nuisance models give similar treatment effects, the result is robust. If 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -207,7 +219,9 @@ plt.show()
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

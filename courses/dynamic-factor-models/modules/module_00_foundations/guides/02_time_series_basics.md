@@ -51,6 +51,7 @@ A time series is **weakly (covariance) stationary** if:
 <div class="flow-step blue">2. Forecasting:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step amber">3. Factor dynamics:</div>
+
 </div>
 
 
@@ -138,6 +139,7 @@ Autocovariance measures how much knowing today's value tells you about values $h
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sample_autocovariance.py</span>
+
 </div>
 
 ```python
@@ -193,6 +195,7 @@ print("Theoretical ACF for AR(1):", [phi**h for h in range(6)])
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">plot_acf_pacf.py</span>
+
 </div>
 
 ```python
@@ -244,6 +247,7 @@ $$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + ... + \phi_p y_{t-p} + \varepsilon
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">simulate_ar.py</span>
+
 </div>
 
 ```python
@@ -306,6 +310,7 @@ y_ar2 = simulate_ar(phi, T=200, seed=42)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">estimate_ar.py</span>
+
 </div>
 
 ```python
@@ -390,6 +395,7 @@ where $F_t$ is the $r \times 1$ vector of factors. Understanding VAR is essentia
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">estimate_var.py</span>
+
 </div>
 
 ```python

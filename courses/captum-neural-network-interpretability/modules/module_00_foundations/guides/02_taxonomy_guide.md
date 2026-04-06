@@ -13,7 +13,9 @@ Every interpretability method makes implicit choices about: what level of abstra
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The interpretability landscape contains dozens of methods that answer fundamentally different questions.
+
 </div>
 
 ---
@@ -22,7 +24,9 @@ Every interpretability method makes implicit choices about: what level of abstra
 
 ### Dimension 1: Intrinsic vs Post-hoc
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Intrinsic interpretability** — The model *is* the explanation.
+
 </div>
 
 
@@ -118,7 +122,9 @@ Examples:
 
 Within post-hoc interpretability, there is a further taxonomy based on *what is being attributed*:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Within post-hoc interpretability, there is a further taxonomy based on *what is being attributed*:
+
 </div>
 
 
@@ -163,6 +169,7 @@ where the target is maximizing neuron $n$'s activation rather than the model out
 ## 3. Full Taxonomy Map
 
 ```
+
 Interpretability Methods
 ├── Intrinsic
 │   ├── Linear models (coefficients)
@@ -265,7 +272,9 @@ Integrated Gradients is uniquely satisfying both axioms among gradient-based met
 
 ### The Baseline Problem
 <div class="callout-key">
+
 <strong>Key Point:</strong> Gradient-based attribution methods require a reference point (baseline) representing the "absence of information." The choice of baseline affects all attributions.
+
 </div>
 
 
@@ -359,11 +368,13 @@ Captum (PyTorch's interpretability library) provides implementations spanning th
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving taxonomy of interpretability methods, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

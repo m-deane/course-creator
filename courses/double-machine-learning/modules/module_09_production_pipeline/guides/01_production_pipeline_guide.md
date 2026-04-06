@@ -7,16 +7,21 @@
 You will learn how to design an end-to-end DML pipeline for production use, including data validation, nuisance model selection with cross-validation, sensitivity analysis, and automated reporting. This module takes DML from research notebooks to deployable code.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> A production DML pipeline needs four layers beyond the core estimator: data validation (catch problems before they corrupt results), model selection (systematic comparison of nuisance models), sensitivity analysis (how robust is the result?), and reporting (communicate results to stakeholders who do not understand DML internals).
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn how to design an end-to-end DML pipeline for production use, including data validation, nuisance model selection with cross-validation, sensitivity analysis, and automated reporting. This module takes DML from research notebooks to deployable code.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 PRODUCTION DML PIPELINE
 
 Data → Validate → Select Models → Estimate → Sensitivity → Report
@@ -36,6 +41,7 @@ The pipeline below is designed for commodity market causal analysis — estimati
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -258,13 +264,17 @@ Results:
 This pipeline class encapsulates the full DML workflow. Each method handles one phase: validation, model selection, estimation, sensitivity analysis, and reporting.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Production pipelines should log all decisions (model selection, trimming, dropped observations) for reproducibility. Include the random seed, library versions, and data hash in every report.
+
 </div>
 
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

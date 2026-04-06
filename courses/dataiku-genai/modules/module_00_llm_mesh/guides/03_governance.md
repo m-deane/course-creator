@@ -7,11 +7,15 @@
 LLM Mesh governance enables centralized control over LLM access, cost tracking, and usage policies across your organization. It provides visibility into who uses LLMs, how much they cost, and ensures compliance with security policies.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Enterprise Gen AI requires governance layer that balances innovation with control. LLM Mesh provides this through connection-level access control, project-based quotas, and comprehensive audit trails without requiring changes to application code.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> LLM Mesh governance enables centralized control over LLM access, cost tracking, and usage policies across your organization. It provides visibility into who uses LLMs, how much they cost, and ensures compliance with security policies.
+
 </div>
 
 ## Formal Definition
@@ -30,6 +34,7 @@ Think of LLM Mesh governance like corporate credit card management. Each employe
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                   LLM Mesh Governance Layer                 │
 ├─────────────────────────────────────────────────────────────┤
@@ -61,6 +66,7 @@ Think of LLM Mesh governance like corporate credit card management. Each employe
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -123,6 +129,7 @@ configure_connection_access(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -179,6 +186,7 @@ set_project_llm_quota(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -266,6 +274,7 @@ print(user_usage.head(10))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -338,6 +347,7 @@ print(f"Errors in last 24h: {len(error_logs)}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -466,7 +476,9 @@ for prompt in batch_prompts:
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

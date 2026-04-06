@@ -7,16 +7,21 @@
 You will learn how to estimate Conditional Average Treatment Effects (CATE) — how treatment effects vary across individuals — using `econml.dml.DML`. Beyond the average effect, CATE reveals WHO benefits most from a treatment. BLP and GATES analyses provide formal tests for heterogeneity.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The ATE tells you the treatment works on average. CATE tells you FOR WHOM it works best. In commodity markets, this means identifying which sectors, regions, or time periods are most affected by inventory surprises, policy changes, or supply shocks.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn how to estimate Conditional Average Treatment Effects (CATE) — how treatment effects vary across individuals — using `econml.dml.DML`. Beyond the average effect, CATE reveals WHO benefits most from a treatment.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 FROM ATE TO CATE
 
 ATE (one number):                 CATE (function of X):
@@ -46,6 +51,7 @@ Commodity example: heterogeneous effects of inventory surprises on commodity fut
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -90,6 +96,7 @@ print(f"  Overall ATE: {np.mean(tau):.2f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -122,6 +129,7 @@ Best Linear Projection (BLP) tests whether CATE varies with observable character
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -151,6 +159,7 @@ Group Average Treatment Effects (GATES) sorts observations by estimated CATE and
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -180,7 +189,9 @@ print(gates_df.to_string(index=False))
 GATES provides a simple visual test: if the group averages are flat, there is no heterogeneity. If they increase monotonically, the CATE model captures real variation.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> CATE estimation requires large samples. With small samples, the CATE function overfits and the BLP/GATES tests are underpowered. A sample of 5,000+ is a reasonable starting point for reliable CATE estimation.
+
 </div>
 
 ## How to Visualise Treatment Effect Heterogeneity
@@ -189,6 +200,7 @@ GATES provides a simple visual test: if the group averages are flat, there is no
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -226,7 +238,9 @@ plt.show()
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

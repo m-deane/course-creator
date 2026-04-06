@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 ---
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> DiD compares how treated and control groups change over time, rather than comparing their levels. By "differencing out" the time trend, DiD isolates the treatment effect even when groups have different baseline levels.
+
 </div>
 
 ## 1. Motivation: The Counterfactual Problem Revisited
@@ -67,7 +69,9 @@ The interaction term $\text{Post}_t \times \text{Treated}_i$ is 1 only for treat
 ---
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The DiD estimator is biased if parallel trends is violated. No amount of additional data or fancier estimation will fix this -- it is a design assumption, not a statistical assumption.
+
 </div>
 
 ## 3. The Parallel Trends Assumption
@@ -96,6 +100,7 @@ This says the *counterfactual* change for the treated equals the *observed* chan
 ### Visualising Parallel Trends
 
 ```
+
 Outcome
   |                            * (treated, observed post)
   |               /
@@ -164,6 +169,7 @@ By convention, $\beta_{-1} = 0$ (the period immediately before treatment is the 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -238,6 +244,7 @@ Before running a DiD analysis, verify:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

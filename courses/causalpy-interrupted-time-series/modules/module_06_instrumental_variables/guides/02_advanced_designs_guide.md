@@ -31,6 +31,7 @@ For multiple instruments, use the **Angrist-Pischke** (AP) F-statistic for each 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -67,6 +68,7 @@ for var in ['college_nearby', 'mother_educ']:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -95,6 +97,7 @@ ar_ci = KClass(k=1).fit_regularized(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -152,6 +155,7 @@ With two instruments and one endogenous variable (overidentified), test whether 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -191,6 +195,7 @@ where $f(t)$ allows different pre-period trends for the treated group.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -230,6 +235,7 @@ $$\tau_{fuzzy} = \frac{\lim_{x\downarrow c} E[Y \mid X=x] - \lim_{x\uparrow c} E
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -279,6 +285,7 @@ The parameter $\tau$ captures:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -360,8 +367,10 @@ graph TD
 **Next:** [Module 06 Notebooks](../notebooks/)
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> **Previous:** [01 — IV Fundamentals](01_iv_fundamentals_guide.md)
 **Next:** [Module 06 Notebooks](../notebooks/)
+
 </div>
 
 

@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of model debugging with attribution methods.
+
 </div>
 
 ---
@@ -40,6 +42,7 @@ Attribution methods make these shortcuts visible before deployment.
 ## 2. The Debugging Workflow
 
 ```
+
 1. Train model → evaluate metrics (accuracy, AUC, F1)
 2. Select representative examples per class
 3. Compute attributions for correct AND incorrect predictions
@@ -64,6 +67,7 @@ Attribution methods make these shortcuts visible before deployment.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -83,6 +87,7 @@ ig = IntegratedGradients(lambda x: model(x))
 ```
 
 </div>
+
 </div>
 
 ### Attribution on Correct Predictions
@@ -91,6 +96,7 @@ ig = IntegratedGradients(lambda x: model(x))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -114,6 +120,7 @@ def attribution_for_prediction(model, inputs, target_class, n_steps=50):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -126,6 +133,7 @@ def attribution_for_prediction(model, inputs, target_class, n_steps=50):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -168,6 +176,7 @@ def debug_attribution_plot(image_tensor, attrs_unsigned, title=""):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -180,6 +189,7 @@ def debug_attribution_plot(image_tensor, attrs_unsigned, title=""):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -214,6 +224,7 @@ def class_attribution_statistics(
 ```
 
 </div>
+
 </div>
 
 ### Step 2: Compare Mean Attributions Across Classes
@@ -222,6 +233,7 @@ def class_attribution_statistics(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -242,6 +254,7 @@ def compare_class_attributions(model, dataloader, class_names, n_steps=30):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -250,7 +263,9 @@ def compare_class_attributions(model, dataloader, class_names, n_steps=30):
 
 ### Pattern 1: Background Attribution
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Symptom:** High attribution in sky, grass, water, snow — not the object.
+
 </div>
 
 
@@ -262,6 +277,7 @@ def compare_class_attributions(model, dataloader, class_names, n_steps=30):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -286,6 +302,7 @@ def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
 ```
 
 </div>
+
 </div>
 
 **Fix:** Background augmentation (random background replacement), Grad-CAM guided cropping, or object-centric training data collection.
@@ -302,6 +319,7 @@ def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -352,6 +370,7 @@ def screen_for_border_artifacts(model, dataloader, threshold=0.20, n_steps=30):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -366,6 +385,7 @@ def screen_for_border_artifacts(model, dataloader, threshold=0.20, n_steps=30):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -382,6 +402,7 @@ def texture_vs_shape_score(attrs_map, edge_mask):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -394,6 +415,7 @@ def texture_vs_shape_score(attrs_map, edge_mask):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -419,6 +441,7 @@ def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
 ```
 
 </div>
+
 </div>
 
 **Interpretation:**
@@ -431,7 +454,9 @@ def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
 
 ### What Regulators Require
 <div class="callout-insight">
+
 <strong>Insight:</strong> For high-stakes models (credit, hiring, medical), regulators may require:
+
 </div>
 
 
@@ -446,6 +471,7 @@ For high-stakes models (credit, hiring, medical), regulators may require:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -540,6 +566,7 @@ def generate_attribution_report(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -548,7 +575,9 @@ def generate_attribution_report(
 
 Attribution patterns shift when the data distribution shifts. Monitoring attribution statistics over time detects distribution drift before accuracy degrades.
 <div class="callout-warning">
+
 <strong>Warning:</strong> Attribution patterns shift when the data distribution shifts. Monitoring attribution statistics over time detects distribution drift before accuracy degrades.
+
 </div>
 
 
@@ -556,6 +585,7 @@ Attribution patterns shift when the data distribution shifts. Monitoring attribu
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -616,6 +646,7 @@ class AttributionDriftMonitor:
 ```
 
 </div>
+
 </div>
 
 ---
@@ -626,11 +657,13 @@ class AttributionDriftMonitor:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Why Attribution-Based Debugging?" and why it matters in practice.
 
 2. Given a real-world scenario involving model debugging with attribution methods, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

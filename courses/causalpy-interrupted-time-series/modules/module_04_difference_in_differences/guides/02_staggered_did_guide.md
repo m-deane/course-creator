@@ -83,6 +83,7 @@ These are the fundamental building blocks. Any aggregate estimand (overall ATT, 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -135,6 +136,7 @@ An event study plot displays treatment effects over time relative to treatment a
 ### Interpreting the Plot
 
 ```
+
 β_k
   |
   |                   ●—●—●   (treatment effect stabilises)
@@ -170,6 +172,7 @@ Test $H_0: \beta_{-5} = \beta_{-4} = \ldots = \beta_{-2} = 0$ (excluding $\beta_
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -238,6 +241,7 @@ $$\theta^{cal}(t) = \sum_{g \leq t} w_g \cdot ATT(g, t)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -367,8 +371,10 @@ plt.show()
 **Next:** [03 — CausalPy DiD API](03_causalpy_did_api_guide.md)
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> **Previous:** [01 — DiD Fundamentals](01_did_fundamentals_guide.md)
 **Next:** [03 — CausalPy DiD API](03_causalpy_did_api_guide.md)
+
 </div>
 
 

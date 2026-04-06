@@ -3,7 +3,9 @@
 > **Reading time:** ~5 min | **Module:** 2 — Rag | **Prerequisites:** Module 1 — Prompt Studios
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Knowledge Banks are Dataiku's managed RAG pipeline -- they handle document ingestion, chunking, embedding, and vector retrieval so you can ground LLM outputs in your organisation's actual data without building infrastructure from scratch.
+
 </div>
 
 ## What are Knowledge Banks?
@@ -16,11 +18,13 @@
 <div class="flow-step mint">3. Embed Vectors</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Retrieve & Generate</div>
+
 </div>
 
 Knowledge Banks are Dataiku's managed solution for Retrieval-Augmented Generation (RAG):
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                      Knowledge Bank                          │
 ├─────────────────────────────────────────────────────────────┤
@@ -76,6 +80,7 @@ knowledge_bank:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -113,6 +118,7 @@ print(f"Knowledge bank created with {kb.document_count} documents")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -132,6 +138,7 @@ chunking_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -152,6 +159,7 @@ chunking_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -192,6 +200,7 @@ def custom_chunker(document: dict) -> list:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -220,6 +229,7 @@ for result in results:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -245,6 +255,7 @@ results = kb.search(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -268,6 +279,7 @@ results = kb.search(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -354,6 +366,7 @@ print(f"\nSources used: {len(result['sources'])}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -410,6 +423,7 @@ Return just a number 1-5."""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -439,6 +453,7 @@ def update_knowledge_bank(kb_name: str, new_documents: list):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

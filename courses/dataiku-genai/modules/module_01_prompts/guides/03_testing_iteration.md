@@ -7,11 +7,15 @@
 Systematic prompt testing and iteration transforms prompt engineering from trial-and-error into an engineering discipline. By measuring outputs against success criteria, tracking metrics across versions, and applying structured improvement methods, you can reliably build prompts that perform well in production.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The best prompt is rarely the first prompt. Systematic iteration—test, measure, hypothesize improvement, implement, retest—yields 2-3x better results than ad-hoc experimentation. The key is defining clear success criteria upfront and measuring every change against them.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Systematic prompt testing and iteration transforms prompt engineering from trial-and-error into an engineering discipline. By measuring outputs against success criteria, tracking metrics across versions, and applying structured improvement methods, you can reliably build prompts that perform well...
+
 </div>
 
 ## Formal Definition
@@ -31,6 +35,7 @@ Think of prompt iteration like recipe development. You don't create the perfect 
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │           Prompt Iteration Workflow                         │
 └─────────────────────────────────────────────────────────────┘
@@ -92,6 +97,7 @@ Think of prompt iteration like recipe development. You don't create the perfect 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -228,6 +234,7 @@ def estimate_tokens(text: str) -> int:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -343,6 +350,7 @@ baseline_results = test_suite.run_all_tests()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -430,6 +438,7 @@ print(comparison)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -605,6 +614,7 @@ best = iterator.get_best_version()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -709,7 +719,9 @@ else:
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

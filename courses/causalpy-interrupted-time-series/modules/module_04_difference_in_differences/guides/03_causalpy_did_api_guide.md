@@ -45,6 +45,7 @@ CausalPy's `DifferenceInDifferences` expects a `pandas.DataFrame` with:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -88,6 +89,7 @@ print(f"\nGroup counts:\n{nj_data.groupby(['state', 'period']).size()}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -120,6 +122,7 @@ You can add covariates to control for observed differences:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -141,6 +144,7 @@ result = cp.DifferenceInDifferences(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -185,6 +189,7 @@ For the Bayesian backend, you get:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -222,6 +227,7 @@ CausalPy's DiD plot shows:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -257,6 +263,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -292,6 +299,7 @@ By default, CausalPy uses weakly informative priors:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -322,6 +330,7 @@ result_informative = cp.DifferenceInDifferences(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -372,6 +381,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -407,6 +417,7 @@ If $\hat{R} > 1.01$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -508,8 +519,10 @@ The key to correct usage is:
 **Next:** [Module 05 — Regression Discontinuity](../../module_05_regression_discontinuity/guides/01_rdd_fundamentals_guide.md)
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> **Previous:** [02 — Staggered DiD](02_staggered_did_guide.md)
 **Next:** [Module 05 — Regression Discontinuity](../../module_05_regression_discontinuity/guides/01_rdd_fundamentals_guide.md)
+
 </div>
 
 

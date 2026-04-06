@@ -7,7 +7,9 @@
 Interrupted Time Series (ITS) is a quasi-experimental design that estimates the causal effect of an intervention using longitudinal data from a single unit (or a few units). It uses the pre-intervention trend as the counterfactual for what would have happened absent the intervention.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Interrupted Time Series (ITS) is a quasi-experimental design that estimates the causal effect of an intervention using longitudinal data from a single unit (or a few units). It uses the pre-intervention trend as the counterfactual for what would have happened absent the intervention.
+
 </div>
 
 ## Key Insight
@@ -40,7 +42,9 @@ ITS is appropriate when:
 | Crime | Policing interventions | Crime rates by type |
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ITS is the "minimum viable causal design" -- it requires only a single treated unit with a long time series. When you lack a control group, ITS is often your strongest option for credible causal inference.
+
 </div>
 
 ---
@@ -59,6 +63,7 @@ ITS is appropriate when:
 - **Best for:** policy changes with clear timing
 
 </div>
+
 </div>
 <div class="compare-card">
 <div class="header after">DiD / Synthetic Control</div>
@@ -71,7 +76,9 @@ ITS is appropriate when:
 - **Best for:** when untreated comparisons exist
 
 </div>
+
 </div>
+
 </div>
 
 ---
@@ -267,6 +274,7 @@ A **controlled ITS** (also called ITS with a comparison group) adds a comparison
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -340,7 +348,9 @@ def fit_its_model(df, outcome, formula=None):
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Potential outcomes (Module 00), DAGs and confounding (Module 00)

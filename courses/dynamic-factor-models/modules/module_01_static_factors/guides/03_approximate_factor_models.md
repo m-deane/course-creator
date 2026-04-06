@@ -90,6 +90,7 @@ This **eigenvalue separation** allows identifying $r$ even when idiosyncratic er
 ### Visual Representation
 
 ```
+
 Eigenvalue Spectrum in Approximate Factor Model:
 
 Eigenvalue
@@ -202,6 +203,7 @@ $$\hat{r} = \arg\min_k IC_p(k)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">simulate_approximate_factor_model.py</span>
+
 </div>
 
 ```python
@@ -283,6 +285,7 @@ print(idio_corr[:5, :5].round(3))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">analyze_eigenvalue_spectrum.py</span>
+
 </div>
 
 ```python
@@ -355,6 +358,7 @@ analyze_eigenvalue_spectrum(X, true_r=r)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">bai_ng_ic.py</span>
+
 </div>
 
 ```python
@@ -466,6 +470,7 @@ ic_results = bai_ng_ic(X, k_max=10)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">check_weak_dependence.py</span>
+
 </div>
 
 ```python

@@ -136,6 +136,7 @@ Note the third row sums factors (flow aggregation).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">mixedfrequencydfm.py</span>
+
 </div>
 
 ```python
@@ -401,6 +402,7 @@ Aggregation constraint $\Lambda^{(Q)} = C \Lambda^{(H)}$ can be:
 <div class="flow-step blue">2. Tested:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step amber">3. Relaxed:</div>
+
 </div>
 
 
@@ -414,6 +416,7 @@ Aggregation constraint $\Lambda^{(Q)} = C \Lambda^{(H)}$ can be:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">em_algorithm_mixed_freq.py</span>
+
 </div>
 
 ```python
@@ -494,6 +497,7 @@ The Kalman filter automatically weights new information based on its signal-to-n
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">nowcast_with_ragged_edge.py</span>
+
 </div>
 
 ```python

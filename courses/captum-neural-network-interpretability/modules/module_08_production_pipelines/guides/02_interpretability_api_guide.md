@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of building an interpretability api with fastapi and captum.
+
 </div>
 
 ---
@@ -45,6 +47,7 @@ Captum Insights is a development tool. When you need attributions accessible to 
 ### Attribution Request
 
 ```
+
 POST /attribute
 Content-Type: application/json
 
@@ -88,6 +91,7 @@ Content-Type: application/json
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -108,6 +112,7 @@ logger = logging.getLogger(__name__)
 ```
 
 </div>
+
 </div>
 
 ### Pydantic Request Model
@@ -116,6 +121,7 @@ logger = logging.getLogger(__name__)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -141,6 +147,7 @@ class AttributionRequest(BaseModel):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -151,6 +158,7 @@ class AttributionRequest(BaseModel):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -195,6 +203,7 @@ registry = ModelRegistry()
 ```
 
 </div>
+
 </div>
 
 ---
@@ -205,6 +214,7 @@ registry = ModelRegistry()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -235,6 +245,7 @@ def build_baseline(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -245,6 +256,7 @@ def build_baseline(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -309,6 +321,7 @@ def compute_attribution(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -319,6 +332,7 @@ def compute_attribution(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -371,6 +385,7 @@ attribution_cache = AttributionCache(max_size=512)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -381,6 +396,7 @@ attribution_cache = AttributionCache(max_size=512)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -472,6 +488,7 @@ async def attribute(request: AttributionRequest):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -482,6 +499,7 @@ async def attribute(request: AttributionRequest):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -506,6 +524,7 @@ async def clear_cache():
 ```
 
 </div>
+
 </div>
 
 ---
@@ -516,6 +535,7 @@ async def clear_cache():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -550,6 +570,7 @@ app = FastAPI(title="Captum Interpretability Service",
 ```
 
 </div>
+
 </div>
 
 ---
@@ -560,6 +581,7 @@ app = FastAPI(title="Captum Interpretability Service",
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.sh</span>
+
 </div>
 <div class="code-body">
 
@@ -580,6 +602,7 @@ docker run -p 8080:8080 \
 ```
 
 </div>
+
 </div>
 
 ### Test with curl
@@ -588,6 +611,7 @@ docker run -p 8080:8080 \
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.sh</span>
+
 </div>
 <div class="code-body">
 
@@ -605,6 +629,7 @@ curl -X POST http://localhost:8080/attribute \
 ```
 
 </div>
+
 </div>
 
 ---
@@ -615,6 +640,7 @@ curl -X POST http://localhost:8080/attribute \
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -653,6 +679,7 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -663,11 +690,13 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Why a Dedicated Interpretability API?" and why it matters in practice.
 
 2. Given a real-world scenario involving building an interpretability api with fastapi and captum, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

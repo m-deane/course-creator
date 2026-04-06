@@ -173,6 +173,7 @@ For $\gamma$ in soft thresholding:
 ### Visual Intuition
 
 ```
+
 All Predictors (N=100)
      |
      | Marginal Correlation Screening
@@ -190,6 +191,7 @@ Targeted Factors (r=5)
 
 Compare to standard approach:
 ```
+
 All Predictors (N=100)
      |
      | PCA on Full Set
@@ -225,6 +227,7 @@ Standard Factors (r=5)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">targetedpredictors.py</span>
+
 </div>
 
 ```python
@@ -505,6 +508,7 @@ class TargetedPredictors:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -605,6 +609,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">select_threshold_cv.py</span>
+
 </div>
 
 ```python
@@ -741,6 +746,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -781,6 +787,7 @@ correlations = [pearsonr(X_train[:, j], y_train)[0] for j in range(N)]
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

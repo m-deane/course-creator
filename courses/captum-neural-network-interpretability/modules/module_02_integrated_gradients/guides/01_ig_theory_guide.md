@@ -13,7 +13,9 @@ Saliency evaluates the gradient at one point. Integrated Gradients evaluates the
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Integrated Gradients (Sundararajan, Taly, Yan, 2017) is the uniquely principled gradient-based attribution method — the only one satisfying both the sensitivity and implementation invariance axioms simultaneously.
+
 </div>
 
 ---
@@ -36,7 +38,9 @@ The question: can we construct an attribution method satisfying both axioms? Sun
 
 ### From Approximation to Exactness
 <div class="callout-warning">
+
 <strong>Warning:</strong> For a linear model $f(x) = w^T x$, the exact decomposition is:
+
 </div>
 
 
@@ -86,7 +90,9 @@ $$= \sum_i (x_i - x'_i) \int_0^1 \frac{\partial f(x' + \alpha(x - x'))}{\partial
 
 For any two inputs $x$ and $x'$ that differ in exactly one feature $i$, and where $f(x) \neq f(x')$:
 <div class="callout-key">
+
 <strong>Key Point:</strong> For any two inputs $x$ and $x'$ that differ in exactly one feature $i$, and where $f(x) \neq f(x')$:
+
 </div>
 
 
@@ -124,7 +130,9 @@ If swapping features $i$ and $j$ does not change the model (symmetric in $i$ and
 
 The integral is approximated by a Riemann sum with $m$ steps:
 <div class="callout-insight">
+
 <strong>Insight:</strong> The integral is approximated by a Riemann sum with $m$ steps:
+
 </div>
 
 
@@ -133,6 +141,7 @@ $$\text{IG}_i^{\text{approx}}(x) \approx (x_i - x'_i) \cdot \frac{1}{m} \sum_{k=
 ### Algorithm
 
 ```
+
 1. Choose baseline x' (zero image, blurred, etc.)
 2. Generate m interpolation points:
    x^(k) = x' + (k/m) * (x - x'),  k = 1, ..., m
@@ -174,7 +183,9 @@ Other paths produce different but equally valid attributions. This motivates the
 
 ### Sign Interpretation
 <div class="callout-key">
+
 <strong>Key Point:</strong> - **Positive attribution** $(\text{IG}_i > 0)$: feature $i$ contributed positively to $f(x)$ relative to the baseline
+
 </div>
 
 
@@ -244,11 +255,13 @@ For tabular data with independent features, SHAP provides stronger game-theoreti
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving integrated gradients: theory and axiomatic derivation, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

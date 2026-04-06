@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of tcav: testing with concept activation vectors.
+
 </div>
 
 ---
@@ -35,7 +37,9 @@ TCAV (Kim et al., 2018) answers these questions by testing whether the model's i
 
 TCAV asks: **"How sensitive is the model's prediction of class C to a concept K?"**
 <div class="callout-insight">
+
 <strong>Insight:</strong> TCAV asks: **"How sensitive is the model's prediction of class C to a concept K?"**
+
 </div>
 
 
@@ -126,6 +130,7 @@ The quality of TCAV results depends heavily on the concept dataset.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -170,6 +175,7 @@ scores = tcav.interpret(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -182,6 +188,7 @@ scores = tcav.interpret(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -193,11 +200,13 @@ for layer, concept_scores in scores.items():
 ```
 
 </div>
+
 </div>
 
 ### Example Output for a Zebra Classifier
 
 ```
+
 Layer: layer4, Concept: striped,  TCAV: 0.847  ← high! model uses stripes
 Layer: layer4, Concept: dotted,   TCAV: 0.523  ← ~random, not using dots
 Layer: layer4, Concept: curved,   TCAV: 0.612  ← moderate use of curves
@@ -218,6 +227,7 @@ Running TCAV on multiple layers reveals at which depth the concept is encoded:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -231,6 +241,7 @@ tcav = TCAV(
 ```
 
 </div>
+
 </div>
 
 Typical findings:
@@ -280,11 +291,13 @@ TCAV and attribution methods are **complementary**:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Why Concept-Based Explanations?" and why it matters in practice.
 
 2. Given a real-world scenario involving tcav: testing with concept activation vectors, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

@@ -74,6 +74,7 @@ Maximizing $Q$ with respect to $\theta$ increases $\log L(\theta)$ because the s
 ### Visual Flow
 
 ```
+
 Iteration k:
     θ⁽ᵏ⁾ → Kalman Filter → Predictions
            ↓
@@ -187,6 +188,7 @@ $$\|\theta^{(k+1)} - \theta^{(k)}\| < \delta$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">emdynamicfactormodel.py</span>
+
 </div>
 
 ```python

@@ -35,6 +35,7 @@ There is no universal best design — each is appropriate for specific contexts.
 <div class="flow-step mint">3. Assess Key Assumption</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Run Diagnostics</div>
+
 </div>
 
 ### Primary Dimension: Source of Variation
@@ -53,6 +54,7 @@ The first question is always: **where does the exogenous variation in treatment 
 ### The Decision Tree
 
 ```
+
 START: Do you have random assignment?
 ├── YES → RCT (gold standard, stop here)
 └── NO ↓
@@ -83,11 +85,15 @@ Do you have suitable donor units and pre-treatment period?
 ```
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The decision tree above is not about picking the "fanciest" method. It is about identifying which design has the most credible source of exogenous variation in your specific setting. A well-executed ITS beats a poorly-justified DiD every time.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> If you cannot articulate where your exogenous variation comes from in one sentence, your causal design is not ready. Go back to the question formulation stage.
+
 </div>
 
 ---

@@ -96,6 +96,7 @@ Now you can see policy effects on the entire economy through factor responses.
 ### Visual Representation
 
 ```
+
 Information Set (X_t):                    State Vector (G_t):
 ┌─────────────────────┐                   ┌──────────────┐
 │ Industrial Prod.    │                   │   Factor 1   │
@@ -120,6 +121,7 @@ Information Set (X_t):                    State Vector (G_t):
 <div class="flow-step amber">3. Dynamics:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Analysis:</div>
+
 </div>
 
 
@@ -233,6 +235,7 @@ $$\text{IR}_{IP}(s) = \lambda_{IP}^f \cdot \text{SIR}_F(s) + \lambda_{IP}^y \cdo
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">favar.py</span>
+
 </div>
 
 ```python
@@ -584,6 +587,7 @@ class FAVAR:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

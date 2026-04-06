@@ -181,6 +181,7 @@ $$\hat{y}_{jt} \approx E[y_{t+h} | X_{jt}] \approx \lambda_j' F_t$$
 ### Visual Intuition
 
 ```
+
 Pass 1: Individual Forecasts
 X₁ → Regression → ŷ₁
 X₂ → Regression → ŷ₂
@@ -204,6 +205,7 @@ Pass 3: Forecast Aggregation
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">threepassregressionfilter.py</span>
+
 </div>
 
 ```python
@@ -545,6 +547,7 @@ class ThreePassRegressionFilter:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -629,6 +632,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compare_methods.py</span>
+
 </div>
 
 ```python
@@ -737,6 +741,7 @@ for method, rmse in comparison.items():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

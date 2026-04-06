@@ -13,7 +13,9 @@ A model that you cannot explain is a model you cannot safely deploy. Interpretab
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Neural network interpretability is the practice of understanding *why* a model produces a specific output — not just *what* it produces.
+
 </div>
 
 ---
@@ -34,7 +36,9 @@ This opacity creates three categories of risk:
 
 ## 2. Real-World Failures from Uninterpretable Models
 <div class="callout-warning">
+
 <strong>Warning:</strong> A high-accuracy image classifier trained to distinguish huskies from wolves achieved 85% test accuracy. Researchers applied LIME to explain its predictions and discovered the model had learned to classify images by **background snow** rather than the animal's features.
+
 </div>
 
 
@@ -76,6 +80,7 @@ The model learned an artifact of clinical photography practice, not dermatologic
 **The core debugging loop:**
 
 ```
+
 1. Train model
 2. Evaluate on test set → good accuracy
 3. Apply interpretability → discover spurious correlations
@@ -167,7 +172,9 @@ The choice of method depends on your goal. Module 00 Guide 02 provides the full 
 
 The following demonstrates how a model can achieve good accuracy while learning wrong features:
 <div class="callout-key">
+
 <strong>Key Point:</strong> The following demonstrates how a model can achieve good accuracy while learning wrong features:
+
 </div>
 
 
@@ -175,6 +182,7 @@ The following demonstrates how a model can achieve good accuracy while learning 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -203,6 +211,7 @@ ig = IntegratedGradients(model)
 ```
 
 </div>
+
 </div>
 
 This is the foundation for everything in this course: the ability to move from *output* to *explanation*.
@@ -232,11 +241,13 @@ This is the foundation for everything in this course: the ability to move from *
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving why interpretability matters, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

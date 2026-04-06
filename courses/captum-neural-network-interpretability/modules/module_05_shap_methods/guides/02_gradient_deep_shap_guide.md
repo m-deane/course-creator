@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of gradientshap and deeplift shap.
+
 </div>
 
 ---
@@ -31,7 +33,9 @@ GradientSHAP and DeepLIFT SHAP exploit the differentiable structure of neural ne
 
 ### The Core Idea
 <div class="callout-insight">
+
 <strong>Insight:</strong> Integrated Gradients (IG) computes attributions for a single baseline $x'$:
+
 </div>
 
 
@@ -68,6 +72,7 @@ In practice, GradientSHAP:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -98,6 +103,7 @@ print(f"Convergence delta: {delta.mean().item():.4f}")
 ```
 
 </div>
+
 </div>
 
 The `return_convergence_delta=True` argument returns the approximation error — a useful quality check.
@@ -116,7 +122,9 @@ A delta close to 0 indicates reliable attributions. Large delta values suggest i
 
 ### Motivation
 <div class="callout-key">
+
 <strong>Key Point:</strong> Gradient-based methods have a fundamental problem: when a network saturates (outputs near 0 or 1), gradients vanish even though the saturated feature clearly influences the prediction. DeepLIFT was designed to overcome this.
+
 </div>
 
 
@@ -166,6 +174,7 @@ Consider a sigmoid activation with:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -180,6 +189,7 @@ deeplift_attribution = delta_y = 0.493  # much larger, more meaningful
 ```
 
 </div>
+
 </div>
 
 DeepLIFT correctly attributes the large change in output to the input difference, while the gradient essentially reports "nothing changed" because of saturation.
@@ -192,6 +202,7 @@ DeepLIFT correctly attributes the large change in output to the input difference
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -222,6 +233,7 @@ print(f"Convergence delta: {delta.item():.6f}")  # should be ~0
 ```
 
 </div>
+
 </div>
 
 **Important:** DeepLIFT requires the model to be a standard sequential network or use hooks-compatible architecture. Custom activation functions may require additional configuration.
@@ -242,6 +254,7 @@ This runs DeepLIFT once per background sample, then averages. For $n_{bg} = 50$ 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -263,6 +276,7 @@ attributions, delta = deep_lift_shap.attribute(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -286,6 +300,7 @@ Residual connections in ResNets/Transformers require the `DeepLiftShap` variant 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -300,6 +315,7 @@ attrs = DeepLiftShap(model).attribute(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -329,6 +345,7 @@ attrs = DeepLiftShap(model).attribute(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -355,6 +372,7 @@ plt.savefig("gradient_vs_deeplift_attributions.png", dpi=150, bbox_inches="tight
 ```
 
 </div>
+
 </div>
 
 ### For Images
@@ -363,6 +381,7 @@ plt.savefig("gradient_vs_deeplift_attributions.png", dpi=150, bbox_inches="tight
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -386,6 +405,7 @@ fig, _ = viz.visualize_image_attr_multiple(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -398,6 +418,7 @@ When comparing methods, always check that attributions are on the same scale:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -419,6 +440,7 @@ print(f"GradientSHAP vs DeepLIFT SHAP (Spearman r): {corr_gs_dl:.3f}")
 ```
 
 </div>
+
 </div>
 
 High correlation ($r > 0.9$) between methods on the same input indicates robust, model-supported attributions.
@@ -431,11 +453,13 @@ High correlation ($r > 0.9$) between methods on the same input indicates robust,
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Speed-Theory Trade-off" and why it matters in practice.
 
 2. Given a real-world scenario involving gradientshap and deeplift shap, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

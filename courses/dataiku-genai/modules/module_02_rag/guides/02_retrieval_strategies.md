@@ -3,7 +3,9 @@
 > **Reading time:** ~6 min | **Module:** 2 — Rag | **Prerequisites:** Module 1 — Prompt Studios
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> RAG quality is 80% retrieval quality. The best LLM in the world produces hallucinations if it receives irrelevant or incomplete context. Optimising retrieval is the highest-leverage investment in any RAG system.
+
 </div>
 
 ## Introduction
@@ -21,6 +23,7 @@ Effective retrieval is critical for RAG performance. This guide covers strategie
 - Misses multi-hop reasoning
 
 </div>
+
 </div>
 <div class="compare-card">
 <div class="header after">Optimised Retrieval</div>
@@ -32,7 +35,9 @@ Effective retrieval is critical for RAG performance. This guide covers strategie
 - Re-ranking for relevance
 
 </div>
+
 </div>
+
 </div>
 
 ## Embedding-Based Retrieval
@@ -43,6 +48,7 @@ Effective retrieval is critical for RAG performance. This guide covers strategie
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -88,6 +94,7 @@ class VectorRetriever:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -128,6 +135,7 @@ Combine vector search with keyword matching:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -224,6 +232,7 @@ Improve retrieval by expanding the original query:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -293,6 +302,7 @@ Reduce retrieved content to most relevant portions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -344,6 +354,7 @@ Search across multiple knowledge banks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -447,6 +458,7 @@ Improve result quality with a reranking model:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -536,6 +548,7 @@ rerank_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

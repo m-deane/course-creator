@@ -35,6 +35,7 @@ Consider forecasting inflation using a factor model. In the 1970s, oil prices ha
 <div class="flow-step amber">3. Monetary Policy Regi...</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Globalization:</div>
+
 </div>
 
 
@@ -97,6 +98,7 @@ where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">tvpdynamicfactormodel.py</span>
+
 </div>
 
 ```python
@@ -495,6 +497,7 @@ $$\hat{\tau} = \arg\min_{\tau} \left[ SSR_1(\tau) + SSR_2(\tau) \right]$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">detect_loading_breaks.py</span>
+
 </div>
 
 ```python

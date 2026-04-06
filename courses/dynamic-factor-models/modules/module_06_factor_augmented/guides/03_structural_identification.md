@@ -75,6 +75,7 @@ $$B = \text{cholesky}(\Sigma_v)$$
 
 **Example (Monetary FAVAR):**
 ```
+
 Ordering:  [F_real, F_prices, F_credit, FFR]
 Interpretation:
   - Real activity shock affects everything
@@ -222,6 +223,7 @@ Similarly:
 ### Visual: Shock Propagation
 
 ```
+
 Structural Shock              State Variables              All Variables
     εₜᵖᵒˡⁱᶜʸ         →         [F₁, F₂, F₃, FFR]    →    [X₁, ..., Xₙ]
        ↓                              ↓                        ↓
@@ -241,6 +243,7 @@ Structural Shock              State Variables              All Variables
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">structuralfavar.py</span>
+
 </div>
 
 ```python
@@ -692,6 +695,7 @@ class StructuralFAVAR:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

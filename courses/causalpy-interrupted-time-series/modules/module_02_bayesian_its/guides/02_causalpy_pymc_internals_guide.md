@@ -7,7 +7,9 @@
 CausalPy is a thin wrapper around PyMC that adds causal semantics: it knows what the treatment variable is, when the intervention occurred, and how to compute the counterfactual. Understanding the internals lets you debug, extend, and customize ITS models for cases the default API does not handle.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> CausalPy is a thin wrapper around PyMC that adds causal semantics: it knows what the treatment variable is, when the intervention occurred, and how to compute the counterfactual. Understanding the internals lets you debug, extend, and customize ITS models for cases the default API does not handle.
+
 </div>
 
 ## Key Insight
@@ -26,6 +28,7 @@ CausalPy uses `formulaic` (a Python port of R's formula parser) to build the des
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -60,6 +63,7 @@ The `LinearRegression` model object builds the PyMC model. The actual PyMC code 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -118,6 +122,7 @@ After sampling, CausalPy computes the counterfactual predictions by:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -153,6 +158,7 @@ After fitting, the PyMC model is accessible at `result.model`:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -193,6 +199,7 @@ CausalPy stores all results in an ArviZ `InferenceData` object at `result.idata`
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -234,6 +241,7 @@ PyMC can visualize the model as a Bayesian network:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -271,6 +279,7 @@ ITS models for count data (hospital admissions, crime counts, accident numbers) 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -325,6 +334,7 @@ class PoissonITSModel(cp.pymc_models.LinearRegression):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -379,6 +389,7 @@ CausalPy supports prior predictive sampling through the underlying PyMC model:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -433,7 +444,9 @@ The source is available at: https://github.com/pymc-labs/CausalPy
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Bayesian ITS motivation (Guide 1)

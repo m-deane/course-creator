@@ -7,11 +7,15 @@
 Template variables enable dynamic content injection into prompts using `{{variable_name}}` syntax. They transform single-purpose prompts into reusable templates that can process thousands of inputs without code modification.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The power of production LLM applications comes from separating prompt logic (the template) from prompt data (the variables). This separation enables batch processing, A/B testing, and maintainability—turning prompts from one-off scripts into engineered software components.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Template variables enable dynamic content injection into prompts using `{{variable_name}}` syntax. They transform single-purpose prompts into reusable templates that can process thousands of inputs without code modification.
+
 </div>
 
 ## Formal Definition
@@ -30,6 +34,7 @@ Template variables work like mail merge in email—you write one template letter
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                  Prompt Template                            │
 │  ┌───────────────────────────────────────────────────────┐  │
@@ -62,6 +67,7 @@ Template variables work like mail merge in email—you write one template letter
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -127,6 +133,7 @@ print(result.text)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -213,6 +220,7 @@ result = studio.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -292,6 +300,7 @@ full_result = studio.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -375,6 +384,7 @@ result = studio.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -493,6 +503,7 @@ except ValueError as e:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -618,7 +629,9 @@ print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

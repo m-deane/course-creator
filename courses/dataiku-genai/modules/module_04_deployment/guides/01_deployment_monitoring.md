@@ -9,6 +9,7 @@
 Deploy LLM applications as REST APIs:
 
 ```
+
 ┌──────────────────────────────────────────────────────────────┐
 │                    Dataiku API Node                           │
 ├──────────────────────────────────────────────────────────────┤
@@ -31,6 +32,7 @@ Deploy LLM applications as REST APIs:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -139,6 +141,7 @@ Dataiku automatically tracks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -199,6 +202,7 @@ Create monitoring dashboard in Dataiku:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">dashboard_config.py</span>
+
 </div>
 
 ```python
@@ -296,6 +300,7 @@ alerts:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -345,6 +350,7 @@ def check_llm_health():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -415,6 +421,7 @@ class CostTracker:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -488,7 +495,9 @@ class BudgetEnforcedLLM:
 5. **Production checklist** ensures nothing is missed before go-live
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> 5. **Production checklist** ensures nothing is missed before go-live
+
 </div>
 
 

@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of token-level attribution for nlp models.
+
 </div>
 
 ---
@@ -23,7 +25,9 @@ By the end of this guide, you will be able to:
 
 Neural network attribution methods are defined on continuous input spaces. Text inputs are discrete (tokens from a vocabulary of 30K+ tokens), which creates two challenges:
 <div class="callout-key">
+
 <strong>Key Point:</strong> Neural network attribution methods are defined on continuous input spaces. Text inputs are discrete (tokens from a vocabulary of 30K+ tokens), which creates two challenges:
+
 </div>
 
 
@@ -76,6 +80,7 @@ Captum's `LayerIntegratedGradients` applies IG at a specific layer — the embed
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -103,6 +108,7 @@ lig = LayerIntegratedGradients(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -113,6 +119,7 @@ lig = LayerIntegratedGradients(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -140,6 +147,7 @@ def create_mask_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
 ```
 
 </div>
+
 </div>
 
 ---
@@ -150,6 +158,7 @@ def create_mask_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -207,6 +216,7 @@ token_attrs = attributions.sum(dim=-1).squeeze(0)  # shape: (seq_len,)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -215,7 +225,9 @@ token_attrs = attributions.sum(dim=-1).squeeze(0)  # shape: (seq_len,)
 
 The standard visualization uses colored text: green for positive attributions, red for negative.
 <div class="callout-warning">
+
 <strong>Warning:</strong> The standard visualization uses colored text: green for positive attributions, red for negative.
+
 </div>
 
 
@@ -223,6 +235,7 @@ The standard visualization uses colored text: green for positive attributions, r
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -282,6 +295,7 @@ def visualize_token_attributions(tokens: list, attributions: np.ndarray,
 ```
 
 </div>
+
 </div>
 
 ---
@@ -308,6 +322,7 @@ After computing per-embedding-dimension attributions, several aggregation method
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -323,6 +338,7 @@ token_attrs_mean = attributions.mean(dim=-1)
 ```
 
 </div>
+
 </div>
 
 **Sum:** Best for understanding direction (positive = toward target class, negative = away from target class).
@@ -358,6 +374,7 @@ BERT uses WordPiece tokenization, splitting words into subwords. "Unhappy" might
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -388,6 +405,7 @@ def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -398,11 +416,13 @@ def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The NLP Attribution Challenge" and why it matters in practice.
 
 2. Given a real-world scenario involving token-level attribution for nlp models, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

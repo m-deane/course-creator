@@ -7,11 +7,15 @@
 Prompt Studios is Dataiku's visual interface for designing, testing, and versioning prompts without writing code. It provides a structured environment for prompt development with built-in testing, variable templating, and one-click deployment to production recipes.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The fastest way to iterate on prompts is through visual testing with immediate feedback. Prompt Studios eliminates the code-test-debug cycle by providing inline execution, variable substitution, and version comparison—reducing prompt development time from hours to minutes.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Prompt Studios is Dataiku's visual interface for designing, testing, and versioning prompts without writing code. It provides a structured environment for prompt development with built-in testing, variable templating, and one-click deployment to production recipes.
+
 </div>
 
 ## Formal Definition
@@ -30,6 +34,7 @@ Think of Prompt Studios like a specialized IDE for prompt engineering. Just as y
 ## Visual Representation
 
 ```
+
 ┌───────────────────────────────────────────────────────────────┐
 │  Prompt Studio: Market Report Analyzer               [⚙ Save] │
 ├───────────────────────────────────────────────────────────────┤
@@ -74,6 +79,7 @@ Think of Prompt Studios like a specialized IDE for prompt engineering. Just as y
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -112,6 +118,7 @@ print(f"Cost: ${test_result['cost']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -195,6 +202,7 @@ Format as structured markdown.''',
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -268,6 +276,7 @@ well above the five-year average of 72% for this time of year.'''
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -322,6 +331,7 @@ print(test_results)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -424,6 +434,7 @@ print(f"Cost difference: ${comparison['cost_diff']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -519,7 +530,9 @@ print(f"Deployed to recipe: {deployment['recipe_name']}")
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

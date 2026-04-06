@@ -80,6 +80,7 @@ This is exactly what the Kalman filter computes!
 ### Visual Representation
 
 ```
+
 Time:     t=1      t=2      t=3      t=4     ...      t=T
           │        │        │        │                 │
 Data:    X₁  →   X₂  →   X₃  →   X₄  →  ...  →      Xₜ
@@ -171,6 +172,7 @@ Usually computed numerically via finite differences.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">kalman_filter_likelihood.py</span>
+
 </div>
 
 ```python

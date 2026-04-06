@@ -7,7 +7,9 @@
 CausalPy's `InterruptedTimeSeries` class provides a high-level interface to Bayesian ITS models built on PyMC. It handles design matrix construction, model building, sampling, and visualization, while exposing enough flexibility to customize priors, formulas, and sampling parameters.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> CausalPy's `InterruptedTimeSeries` class provides a high-level interface to Bayesian ITS models built on PyMC. It handles design matrix construction, model building, sampling, and visualization, while exposing enough flexibility to customize priors, formulas, and sampling parameters.
+
 </div>
 
 ## Key Insight
@@ -22,6 +24,7 @@ CausalPy is a wrapper around PyMC that adds causal inference semantics: it knows
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -44,6 +47,7 @@ import matplotlib.pyplot as plt
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -72,6 +76,7 @@ The function `treatment_time` accepts an integer index (row number in the DataFr
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -140,6 +145,7 @@ def prepare_its_dataframe(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -161,6 +167,7 @@ The formula follows the standard Python formula language (Wilkinson notation, vi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -201,6 +208,7 @@ Standard Gaussian linear regression with weakly informative default priors.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -236,6 +244,7 @@ model = cp.pymc_models.LinearRegression(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -280,6 +289,7 @@ CausalPy will:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -304,6 +314,7 @@ print(summary)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -328,6 +339,7 @@ beta_slope_samples = posterior["t_post"].values.flatten()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -351,6 +363,7 @@ if "mu_cf" in result.idata.posterior:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -378,6 +391,7 @@ The two-panel plot shows:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -422,6 +436,7 @@ Always check convergence before interpreting results.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -456,6 +471,7 @@ if n_divergences > 10:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -526,6 +542,7 @@ For advanced use cases, you can pass custom PyMC models to CausalPy. This allows
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -567,6 +584,7 @@ class InformativeITSModel(cp.pymc_models.LinearRegression):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -641,7 +659,9 @@ print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** ITS Introduction (Guide 1), Segmented Regression (Guide 2)

@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of shap theory: shapley values and kernelshap.
+
 </div>
 
 ---
@@ -60,7 +62,9 @@ $$\sum_{i=1}^{d} \phi_i = f(x) - \mathbb{E}[f(X)]$$
 
 The Shapley value is the **unique** attribution method satisfying all four axioms simultaneously:
 <div class="callout-warning">
+
 <strong>Warning:</strong> The Shapley value is the **unique** attribution method satisfying all four axioms simultaneously:
+
 </div>
 
 
@@ -108,7 +112,9 @@ This is computationally intractable for most real models. KernelSHAP provides an
 
 ## 5. KernelSHAP: Shapley Values as Weighted Linear Regression
 <div class="callout-insight">
+
 <strong>Insight:</strong> Lundberg and Lee (2017) showed that Shapley values can be computed by solving a specially weighted linear regression problem.
+
 </div>
 
 
@@ -165,6 +171,7 @@ This marginalizes over the distribution of missing features, matching the theore
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -195,6 +202,7 @@ attributions = kernel_shap.attribute(
 ```
 
 </div>
+
 </div>
 
 The `n_samples` parameter controls the approximation quality — more samples yield more accurate Shapley value estimates.
@@ -252,11 +260,13 @@ This unification is one of SHAP's major theoretical contributions.
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Cooperative Game Theory Background" and why it matters in practice.
 
 2. Given a real-world scenario involving shap theory: shapley values and kernelshap, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

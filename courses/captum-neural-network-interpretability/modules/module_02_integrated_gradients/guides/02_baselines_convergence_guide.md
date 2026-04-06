@@ -13,7 +13,9 @@ The baseline is not a hyperparameter to tune for best-looking results — it def
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The baseline is the most consequential practical decision when applying Integrated Gradients.
+
 </div>
 
 ---
@@ -33,7 +35,9 @@ Different baselines give different but equally valid answers to different questi
 
 ### Zero Baseline (Black Image)
 <div class="callout-warning">
+
 <strong>Warning:</strong> baseline = torch.zeros_like(input_tensor)
+
 </div>
 
 
@@ -41,6 +45,7 @@ Different baselines give different but equally valid answers to different questi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -49,6 +54,7 @@ baseline = torch.zeros_like(input_tensor)
 ```
 
 </div>
+
 </div>
 
 **Interpretation:** "Compared to a completely black image."
@@ -65,6 +71,7 @@ baseline = torch.zeros_like(input_tensor)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -78,6 +85,7 @@ def create_blurred_baseline(input_tensor, kernel_size=41, sigma=15.0):
 ```
 
 </div>
+
 </div>
 
 **Interpretation:** "Compared to the same image without local detail (only low-frequency global structure)."
@@ -94,6 +102,7 @@ def create_blurred_baseline(input_tensor, kernel_size=41, sigma=15.0):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -108,6 +117,7 @@ def random_noise_baseline(input_tensor, n_samples=50):
 ```
 
 </div>
+
 </div>
 
 **Interpretation:** Averaged over many "completely random" references.
@@ -122,6 +132,7 @@ def random_noise_baseline(input_tensor, n_samples=50):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -130,6 +141,7 @@ baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
 ```
 
 </div>
+
 </div>
 
 **Interpretation:** "Compared to a typical input from the training distribution."
@@ -145,6 +157,7 @@ baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -158,6 +171,7 @@ baseline_ids = tokenizer(
 ```
 
 </div>
+
 </div>
 
 **Tabular — adversarial baseline:**
@@ -165,6 +179,7 @@ baseline_ids = tokenizer(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -175,6 +190,7 @@ baseline_fraud = X_train[y_train == 0].mean(axis=0)  # legitimate average
 ```
 
 </div>
+
 </div>
 
 ---
@@ -183,7 +199,9 @@ baseline_fraud = X_train[y_train == 0].mean(axis=0)  # legitimate average
 
 The right way to choose a baseline: run attribution with multiple baselines and check:
 <div class="callout-key">
+
 <strong>Key Point:</strong> The right way to choose a baseline: run attribution with multiple baselines and check:
+
 </div>
 
 
@@ -195,6 +213,7 @@ The right way to choose a baseline: run attribution with multiple baselines and 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -235,6 +254,7 @@ def compare_baselines(model, input_tensor, target_class, n_steps=50):
 ```
 
 </div>
+
 </div>
 
 ### Measuring Baseline Agreement
@@ -245,6 +265,7 @@ If attributions are robust to baseline choice, the rankings should agree:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -265,6 +286,7 @@ def baseline_rank_correlation(results):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -273,7 +295,9 @@ def baseline_rank_correlation(results):
 
 ### The Convergence Delta
 <div class="callout-insight">
+
 <strong>Insight:</strong> The convergence delta $\delta$ measures the numerical integration error:
+
 </div>
 
 
@@ -286,6 +310,7 @@ In Captum:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -298,6 +323,7 @@ print(f"Convergence delta: {delta.item():.5f}")
 ```
 
 </div>
+
 </div>
 
 ### What Delta Values Mean
@@ -323,6 +349,7 @@ Large convergence delta usually means:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -340,6 +367,7 @@ for n_steps in [50, 100, 200, 300, 500]:
 ```
 
 </div>
+
 </div>
 
 ---
@@ -348,7 +376,9 @@ for n_steps in [50, 100, 200, 300, 500]:
 
 Applying SmoothGrad to IG produces smooth, high-quality attributions:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Applying SmoothGrad to IG produces smooth, high-quality attributions:
+
 </div>
 
 
@@ -356,6 +386,7 @@ Applying SmoothGrad to IG produces smooth, high-quality attributions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -378,6 +409,7 @@ smooth_ig_attr = nt.attribute(
 ```
 
 </div>
+
 </div>
 
 **Cost:** `nt_samples × n_steps` total passes. With `nt_samples=10, n_steps=50`: 500 passes.
@@ -406,7 +438,9 @@ For most practical purposes, IG at 50 steps is the best balance.
 
 For transformer models, token-level attribution requires `LayerIntegratedGradients`:
 <div class="callout-key">
+
 <strong>Key Point:</strong> For transformer models, token-level attribution requires `LayerIntegratedGradients`:
+
 </div>
 
 
@@ -414,6 +448,7 @@ For transformer models, token-level attribution requires `LayerIntegratedGradien
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -461,6 +496,7 @@ def attribute_text(text, tokenizer, lig_method, target_class=1):
 ```
 
 </div>
+
 </div>
 
 ### Visualizing Token Attributions
@@ -469,6 +505,7 @@ def attribute_text(text, tokenizer, lig_method, target_class=1):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -506,6 +543,7 @@ def visualize_token_attribution(tokens, attributions, title=""):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -533,11 +571,13 @@ def visualize_token_attribution(tokens, attributions, title=""):
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving baselines, convergence, and noisetunnel, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

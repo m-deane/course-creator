@@ -7,16 +7,21 @@
 You will learn how to combine instrumental variables with DML using the Partially Linear IV (PLIV) model. When treatment is endogenous (correlated with unobservable confounders), standard DML fails. PLIV uses an instrument $Z$ that affects $Y$ only through $D$, with ML first stages replacing the traditional linear 2SLS.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Classical 2SLS uses linear first stages that miss nonlinear relationships between the instrument and the endogenous treatment. PLIV replaces these with ML models while preserving the IV identification strategy. The result: valid causal estimates even when the first-stage relationship is complex and controls are high-dimensional.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn how to combine instrumental variables with DML using the Partially Linear IV (PLIV) model. When treatment is endogenous (correlated with unobservable confounders), standard DML fails.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 PLIV DAG
 
     Z (instrument)
@@ -46,6 +51,7 @@ where $Z$ is the instrument, $g_0(X)$ captures control effects on $Y$, and $r_0(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -88,6 +94,7 @@ print(f"Corr(Z, U): {np.corrcoef(Z, U)[0,1]:.3f} (instrument exogenous)")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -116,7 +123,9 @@ print(f"\nTrue effect: {true_theta}")
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Weak instruments (low correlation between $Z$ and $D$) produce unreliable estimates with wide confidence intervals. Check the first-stage F-statistic (or its ML analogue) before trusting PLIV results.
+
 </div>
 
 ## How to Check Instrument Strength
@@ -125,6 +134,7 @@ print(f"\nTrue effect: {true_theta}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -153,7 +163,9 @@ The partial $R^2$ measures how much additional predictive power the instrument a
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

@@ -130,6 +130,7 @@ After burn-in, samples converge to draws from joint posterior $p(\theta, F | X)$
 ### Visual Flow
 
 ```
+
 Initialize: θ⁽⁰⁾, F⁽⁰⁾
 
 Iteration k:
@@ -257,6 +258,7 @@ $$\tilde{S} = S_0 + \sum_{t=p+1}^T (F_t - \Phi F_{t-1})(F_t - \Phi F_{t-1})'$$
 ### MCMC Algorithm Summary
 
 ```
+
 1. Initialize: Λ⁽⁰⁾, Φ⁽⁰⁾, Σₑ⁽⁰⁾, Σₙ⁽⁰⁾ (from PCA/VAR)
 
 2. For k = 1, ..., K:
@@ -288,6 +290,7 @@ $$\tilde{S} = S_0 + \sum_{t=p+1}^T (F_t - \Phi F_{t-1})(F_t - \Phi F_{t-1})'$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">bayesiandfm.py</span>
+
 </div>
 
 ```python

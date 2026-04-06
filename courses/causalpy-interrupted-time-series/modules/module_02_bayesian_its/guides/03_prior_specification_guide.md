@@ -7,7 +7,9 @@
 Choosing priors is the most subjective step in Bayesian modeling, and therefore the most important to get right. A prior encodes your beliefs about parameter values before seeing the post-intervention data. The goal is to be honest: neither too restrictive (overriding the data) nor too vague (allowing physically impossible values).
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Choosing priors is the most subjective step in Bayesian modeling, and therefore the most important to get right. A prior encodes your beliefs about parameter values before seeing the post-intervention data.
+
 </div>
 
 ## Key Insight
@@ -49,6 +51,7 @@ Compute the standard deviation and range of the pre-intervention outcome:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -80,6 +83,7 @@ Before fitting, sample from the prior and generate hypothetical outcomes. Ask: "
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -180,6 +184,7 @@ prior_beta2 = pm.Normal("beta2", mu=0, sigma=y_pre_std)
 ```
 
 If domain knowledge strongly suggests the direction (e.g., a safety intervention can only reduce accidents):
+
 ```python
 # Informative prior: effect is probably negative, within 0 to -2*sigma
 prior_beta2 = pm.Normal("beta2", mu=-y_pre_std / 2, sigma=y_pre_std)
@@ -219,6 +224,7 @@ If all three give similar posteriors, the result is prior-robust. If they differ
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -291,7 +297,9 @@ In this example, all three priors give essentially the same conclusion. The data
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Bayesian ITS (Guide 1), CausalPy internals (Guide 2)

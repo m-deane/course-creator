@@ -7,16 +7,21 @@
 You will learn how to estimate causal effects of binary treatments using the Interactive Regression Model (IRM), which extends DML to handle heterogeneous treatment effects and propensity score nuisance functions. The IRM estimates both ATE and ATTE using `doubleml.DoubleMLIRM`.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> When treatment is binary (sanctions on/off, policy adopted/not), the PLR model is too restrictive because it assumes a constant treatment effect. The IRM allows the treatment effect to vary with covariates by modelling both the outcome function AND the propensity score.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn how to estimate causal effects of binary treatments using the Interactive Regression Model (IRM), which extends DML to handle heterogeneous treatment effects and propensity score nuisance functions. The IRM estimates both ATE and ATTE using `doubleml.DoubleMLIRM`.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 IRM vs PLR
 
 PLR (continuous treatment):        IRM (binary treatment):
@@ -45,6 +50,7 @@ In the commodity example: sanctions impact on shipping freight rates. Treatment 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -85,6 +91,7 @@ print(f"Treatment prevalence: {D.mean():.1%}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -117,7 +124,9 @@ print(irm_atte.summary)
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The `trimming_threshold` parameter drops observations with extreme propensity scores (very close to 0 or 1). Without trimming, the AIPW score can be numerically unstable. Set to 0.01-0.05 depending on your treatment prevalence.
+
 </div>
 
 ## How to Diagnose Propensity Score Quality
@@ -126,6 +135,7 @@ print(irm_atte.summary)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -159,7 +169,9 @@ Good overlap between treated and untreated propensity distributions is essential
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

@@ -90,6 +90,7 @@ Common choices:
 <div class="flow-step amber">3. Maximum iterations:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Derive E-Step:</div>
+
 </div>
 
 
@@ -142,6 +143,7 @@ If we observe other variables at time $t$, we can infer $F_t$ from them. Then, $
 ### Visual Intuition
 
 ```
+
 Data matrix with missing values (× = missing)
 
      t=1  t=2  t=3  t=4  t=5
@@ -213,6 +215,7 @@ Same rate as complete-data PCA! The key requirement: missingness proportion does
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">empca.py</span>
+
 </div>
 
 ```python
@@ -618,6 +621,7 @@ print("\n\nSaved convergence plot to 'empca_convergence.png'")
 ### Output (Representative)
 
 ```
+
 ======================================================================
 MISSING DATA IMPUTATION COMPARISON
 ======================================================================

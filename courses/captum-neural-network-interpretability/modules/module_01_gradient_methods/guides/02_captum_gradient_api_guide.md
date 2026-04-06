@@ -13,7 +13,9 @@ The uniformity of Captum's API means you can compare all four methods with a sin
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the Captum API for all four gradient-based attribution methods.
+
 </div>
 
 ---
@@ -26,6 +28,7 @@ Every gradient attribution in this module follows this setup:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -67,6 +70,7 @@ with torch.no_grad():
 ```
 
 </div>
+
 </div>
 
 ---
@@ -79,6 +83,7 @@ with torch.no_grad():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -95,6 +100,7 @@ attributions = saliency.attribute(
 ```
 
 </div>
+
 </div>
 
 ### Parameters
@@ -116,6 +122,7 @@ attributions = saliency.attribute(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -137,6 +144,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -149,6 +157,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -165,6 +174,7 @@ attributions = ixg.attribute(
 ```
 
 </div>
+
 </div>
 
 ### Sign Information
@@ -179,6 +189,7 @@ For visualization, you can show all, only positive, or absolute value:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -194,6 +205,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -206,6 +218,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -221,6 +234,7 @@ attributions = gbp.attribute(
 ```
 
 </div>
+
 </div>
 
 ### Important Note
@@ -231,6 +245,7 @@ GuidedBackprop registers **hooks** on the model's ReLU layers to modify the back
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -242,6 +257,7 @@ attributions = gbp.attribute(inputs, target=class_idx)  # Runs modified backward
 ```
 
 </div>
+
 </div>
 
 ### Sanity Check: Randomization Test
@@ -252,6 +268,7 @@ This is the critical validation that reveals Guided Backprop's failure mode:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -285,6 +302,7 @@ print(f"Correlation between trained and random model attributions: {correlation:
 ```
 
 </div>
+
 </div>
 
 ---
@@ -297,6 +315,7 @@ print(f"Correlation between trained and random model attributions: {correlation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -312,6 +331,7 @@ attributions = deconv.attribute(
 ```
 
 </div>
+
 </div>
 
 Like GuidedBackprop, Deconvolution uses hooks to modify the backward pass through ReLU layers.
@@ -322,7 +342,9 @@ Like GuidedBackprop, Deconvolution uses hooks to modify the backward pass throug
 
 The canonical comparison pattern for all four methods:
 <div class="callout-key">
+
 <strong>Key Point:</strong> The canonical comparison pattern for all four methods:
+
 </div>
 
 
@@ -330,6 +352,7 @@ The canonical comparison pattern for all four methods:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -429,6 +452,7 @@ def plot_attribution_comparison(attributions, image_np, predicted_class):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -441,6 +465,7 @@ Beyond visual inspection, quantitative metrics help compare attribution quality:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -475,6 +500,7 @@ def attribution_statistics(attributions, image_np):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -483,7 +509,9 @@ def attribution_statistics(attributions, image_np):
 
 ### Mistake 1: Forgetting `requires_grad_(True)`
 <div class="callout-warning">
+
 <strong>Warning:</strong> input_tensor = preprocess(image).unsqueeze(0)
+
 </div>
 
 
@@ -491,6 +519,7 @@ def attribution_statistics(attributions, image_np):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -506,6 +535,7 @@ attr = saliency.attribute(input_tensor, target=0)
 ```
 
 </div>
+
 </div>
 
 ### Mistake 2: Model in Training Mode
@@ -514,6 +544,7 @@ attr = saliency.attribute(input_tensor, target=0)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -529,6 +560,7 @@ attr = saliency.attribute(input_tensor, target=0)  # Deterministic
 ```
 
 </div>
+
 </div>
 
 ### Mistake 3: Wrong Target Type
@@ -537,6 +569,7 @@ attr = saliency.attribute(input_tensor, target=0)  # Deterministic
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -551,6 +584,7 @@ attr = saliency.attribute(input_tensor, target=281)    # Class index 281
 ```
 
 </div>
+
 </div>
 
 ### Mistake 4: Batch Target Mismatch
@@ -559,6 +593,7 @@ attr = saliency.attribute(input_tensor, target=281)    # Class index 281
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -574,6 +609,7 @@ attr = saliency.attribute(inputs, target=[0, 281, 483])  # Different class per i
 ```
 
 </div>
+
 </div>
 
 ---
@@ -586,6 +622,7 @@ Different attribution methods produce values at different scales. Normalize for 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -619,6 +656,7 @@ def normalize_attribution(attr_np, percentile=99):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -645,11 +683,13 @@ def normalize_attribution(attr_np, percentile=99):
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving captum gradient api: practical usage, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

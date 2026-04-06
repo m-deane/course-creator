@@ -7,11 +7,15 @@
 You will learn Robinson's partially linear model and implement the residual-on-residual regression that forms the core of DML. The orthogonalisation trick partials out confounders using ML, then estimates the treatment effect from the cleaned-up residuals in about 30 lines of Python.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Instead of selecting which controls to include, DML residualises BOTH the outcome and the treatment using ML. The treatment effect lives in the correlation between residuals — everything ML explains is confounding, everything left over is the causal signal.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn Robinson's partially linear model and implement the residual-on-residual regression that forms the core of DML. The orthogonalisation trick partials out confounders using ML, then estimates the treatment effect from the cleaned-up residuals in about 30 lines of Python.
+
 </div>
 
 ## The Orthogonalisation Pipeline
@@ -24,9 +28,11 @@ You will learn Robinson's partially linear model and implement the residual-on-r
 <div class="flow-step mint">3. Compute residuals</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. OLS on residuals</div>
+
 </div>
 
 ```
+
 THE DML PIPELINE (Orthogonalisation)
 
      Y (outcome)              D (treatment)
@@ -47,7 +53,9 @@ THE DML PIPELINE (Orthogonalisation)
 ```
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> If you only residualise the outcome (Y) but not the treatment (D), you get the Frisch-Waugh-Lovell result for OLS but NOT a valid DML estimator. Both must be residualised to achieve orthogonality.
+
 </div>
 
 ## How Robinson's Partially Linear Model Works
@@ -74,6 +82,7 @@ This is the residual-on-residual regression. The treatment effect $\theta$ is th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -137,6 +146,7 @@ This function implements the full DML algorithm with cross-fitting. Each fold tr
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -175,7 +185,9 @@ print(f"OLS SE:        {ols_model.bse[1]:.3f}")
 DML handles the nonlinear relationships (sin, squared terms, interactions) that OLS misses. The ML first stages capture these patterns, and the residuals isolate the causal signal.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The residualisation must be done out-of-sample (cross-fitting). Using in-sample ML predictions creates overfitting bias that contaminates the treatment effect. Module 04 covers why this matters and how cross-fitting fixes it.
+
 </div>
 
 ## Why This Works: The Orthogonality Intuition
@@ -195,7 +207,9 @@ Point 3 is the orthogonality property that gives DML its name. Module 03 formali
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

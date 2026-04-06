@@ -7,13 +7,17 @@
 Dataiku LLM Mesh is an abstraction layer that provides unified access to multiple Large Language Model providers through a single, governed interface. It centralizes configuration, cost tracking, access control, and monitoring while allowing seamless switching between providers without code changes.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> **The core value proposition:** LLM Mesh transforms enterprise LLM usage from fragmented, ungoverned API calls scattered across projects into a centralized, auditable, cost-managed platform that enables experimentation while maintaining control.
+
 </div>
 
 Think of LLM Mesh as a "router" sitting between your applications and multiple LLM providers—it handles authentication, load balancing, fallback, cost tracking, and compliance while presenting a simple, unified API to developers.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Dataiku LLM Mesh is an abstraction layer that provides unified access to multiple Large Language Model providers through a single, governed interface. It centralizes configuration, cost tracking, access control, and monitoring while allowing seamless switching between providers without code changes.
+
 </div>
 
 ## Formal Definition
@@ -39,6 +43,7 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 <div class="flow-step mint">3. Provider Executes</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Telemetry Captured</div>
+
 </div>
 
 ## Intuitive Explanation
@@ -57,6 +62,7 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 - Ungoverned, unauditable usage
 
 </div>
+
 </div>
 <div class="compare-card">
 <div class="header after">With LLM Mesh</div>
@@ -69,16 +75,21 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 - Centralized audit logs for compliance
 
 </div>
+
 </div>
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Without centralized LLM governance, organizations routinely discover 3-5x more LLM spend than expected, scattered across teams with no audit trail or access control.
+
 </div>
 
 ### Architecture Diagram
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Dataiku DSS Platform                          │
 ├─────────────────────────────────────────────────────────────────┤
@@ -127,6 +138,7 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -365,6 +377,7 @@ class LLMMesh:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -401,6 +414,7 @@ print(f"Cost: ${response.estimated_cost:.4f}")
 ### 1. Hardcoding Connection Names
 
 **Problem:**
+
 ```python
 # Bad - hardcoded connection
 llm = LLM("claude-production")
@@ -411,6 +425,7 @@ llm = LLM("claude-production")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -430,6 +445,7 @@ llm = LLM(connection_name)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -445,6 +461,7 @@ for text in large_dataset:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -470,6 +487,7 @@ with ThreadPoolExecutor(max_workers=5) as executor:
 ### 3. No Error Handling
 
 **Problem:**
+
 ```python
 response = llm.complete(prompt)  # What if it fails?
 data = json.loads(response.text)  # What if not valid JSON?
@@ -480,6 +498,7 @@ data = json.loads(response.text)  # What if not valid JSON?
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -509,6 +528,7 @@ except Exception as e:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -524,6 +544,7 @@ for row in df.iterrows():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -581,6 +602,7 @@ print(f"Total cost today: ${tracker.daily_total:.2f}")
 <summary>Solution</summary>
 
 ```
+
 Python Recipe
      │
      ├─ User: data_scientist
@@ -620,6 +642,7 @@ LLM Mesh (return path)
      │
      └─ Return response to recipe
 ```
+
 </details>
 
 ### Problem 2: Failover Configuration
@@ -635,6 +658,7 @@ LLM Mesh (return path)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -724,6 +748,7 @@ class ResilientLLMRouter:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

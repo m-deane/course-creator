@@ -222,6 +222,7 @@ Plot eigenvalues in descending order; look for "elbow" where decline levels off.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">scree_plot.py</span>
+
 </div>
 
 ```python
@@ -271,6 +272,7 @@ Specialized criteria balancing fit and complexity for large panels (covered in M
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">variance_explained.py</span>
+
 </div>
 
 ```python
@@ -301,6 +303,7 @@ Each loading $v_{jk}$ tells us how variable $j$ loads on component $k$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">interpret_loadings.py</span>
+
 </div>
 
 ```python
@@ -348,6 +351,7 @@ PC loadings can be rotated for easier interpretation without changing fit:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">varimax_rotation.py</span>
+
 </div>
 
 ```python
@@ -416,6 +420,7 @@ For large $N$ with strong factors, PCA estimates converge to true factor loading
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

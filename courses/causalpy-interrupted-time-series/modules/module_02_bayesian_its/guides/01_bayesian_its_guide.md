@@ -7,7 +7,9 @@
 The Bayesian approach to ITS models uncertainty at every level: over parameters, over the counterfactual trajectory, and over the causal effect. Instead of a point estimate with a standard error, you get a full probability distribution over the quantity of interest. This transforms causal inference from "reject the null" to "quantify the evidence."
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> The Bayesian approach to ITS models uncertainty at every level: over parameters, over the counterfactual trajectory, and over the causal effect. Instead of a point estimate with a standard error, you get a full probability distribution over the quantity of interest.
+
 </div>
 
 ## Key Insight
@@ -111,6 +113,7 @@ This is a direct probability statement about the parameter. The HDI contains the
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -160,6 +163,7 @@ Before fitting the model to data, check that the prior is reasonable by sampling
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -270,7 +274,9 @@ CausalPy uses PyMC, which uses the **No-U-Turn Sampler (NUTS)** by default. NUTS
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Potential outcomes (Module 00), ITS fundamentals (Module 01)

@@ -7,7 +7,9 @@
 Segmented regression (also called piecewise linear regression) is the statistical engine of ITS. It fits two separate regression lines to the pre- and post-intervention periods, with constraints ensuring continuity. The difference between the two fitted lines gives the level and slope change estimates.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Segmented regression (also called piecewise linear regression) is the statistical engine of ITS. It fits two separate regression lines to the pre- and post-intervention periods, with constraints ensuring continuity.
+
 </div>
 
 ## Key Insight
@@ -56,6 +58,7 @@ Note: at $t = t^*$, the `t_post` variable is 0 (the level change applies but no 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -161,6 +164,7 @@ where $\hat{\rho}$ is the estimated first-order autocorrelation. Values close to
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -207,6 +211,7 @@ The Newey-West (HAC) estimator produces consistent standard errors under autocor
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -238,6 +243,7 @@ The cleanest approach: include an AR(1) process in the PyMC model definition. Th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -304,6 +310,7 @@ For flexible non-linear pre-trends, natural cubic splines provide a smooth non-p
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -348,6 +355,7 @@ Use **Leave-One-Out Cross-Validation (LOO)** via ArviZ:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -392,6 +400,7 @@ Add indicator variables for each calendar month (or quarter, depending on data f
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -418,6 +427,7 @@ where $P$ is the seasonal period (12 for monthly data, 52 for weekly data).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -452,7 +462,9 @@ formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** ITS Introduction (Guide 1)

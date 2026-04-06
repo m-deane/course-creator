@@ -7,6 +7,7 @@
 Dataiku LLM Mesh provides a unified interface to multiple LLM providers:
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                    Your Dataiku Project                      │
 └───────────────────────────┬─────────────────────────────────┘
@@ -97,6 +98,7 @@ resource_name: your-resource-name
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -122,6 +124,7 @@ print(response.text)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -157,6 +160,7 @@ for message in chat.messages:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -194,6 +198,7 @@ print(data)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -220,6 +225,7 @@ for conn in llm_connections:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -259,6 +265,7 @@ for conn_name in ['anthropic-claude', 'openai-gpt4']:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -294,6 +301,7 @@ result = router.complete("Summarize recent OPEC decisions")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -359,6 +367,7 @@ llm_permissions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -392,7 +401,9 @@ print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 5. **Failover routing** improves reliability across providers
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> 5. **Failover routing** improves reliability across providers
+
 </div>
 
 

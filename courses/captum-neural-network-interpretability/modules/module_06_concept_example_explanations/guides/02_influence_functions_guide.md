@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of influence functions, tracin, and tracincpfast.
+
 </div>
 
 ---
@@ -97,6 +99,7 @@ $\text{TracIn}(z, z_{test}) < 0$ means training on $z$ **decreased** the loss on
 ## 5. TracIn Algorithm
 
 ```
+
 For each training checkpoint θ_t:
     1. Compute gradient of test loss: g_test = ∇_θ L(z_test, θ_t)
     2. Compute gradient of training loss: g_train = ∇_θ L(z, θ_t)
@@ -126,7 +129,9 @@ This is practical because:
 
 ### Setup: Saving Checkpoints
 <div class="callout-key">
+
 <strong>Key Point:</strong> TracIn requires model checkpoints saved during training:
+
 </div>
 
 
@@ -136,6 +141,7 @@ TracIn requires model checkpoints saved during training:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -163,6 +169,7 @@ for epoch in range(50):
 ```
 
 </div>
+
 </div>
 
 ### Running TracInCPFast
@@ -171,6 +178,7 @@ for epoch in range(50):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -203,6 +211,7 @@ proponents = tracin.influence(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -215,6 +224,7 @@ Captum also provides `SimilarityInfluence`, which finds training examples most s
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -239,6 +249,7 @@ top_similar = sim_influence.influence(
 ```
 
 </div>
+
 </div>
 
 `SimilarityInfluence` is a simpler, faster alternative when you care about similarity rather than gradient-based influence.
@@ -261,6 +272,7 @@ The most useful TracIn analysis finds:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -283,6 +295,7 @@ for i, (idx, inf_val) in enumerate(zip(train_indices[0], influences[0])):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -308,6 +321,7 @@ High self-influence examples are "difficult" — the model had high loss on them
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -323,6 +337,7 @@ high_si_indices = self_influences.argsort(descending=True)[:20]
 ```
 
 </div>
+
 </div>
 
 ---
@@ -362,11 +377,13 @@ For most practical use cases, **TracInCPFast** (when checkpoints exist) or **Sim
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Core Question: Example-Based Explanations" and why it matters in practice.
 
 2. Given a real-world scenario involving influence functions, tracin, and tracincpfast, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

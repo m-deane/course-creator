@@ -15,7 +15,9 @@ GradCAM is the most widely used CNN attribution method in practice because it:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 01: gradcam, guided gradcam, and layergradcam.
+
 </div>
 
 ---
@@ -37,7 +39,9 @@ The final convolutional layer retains spatial information before the global aver
 
 Let $A^k$ denote the $k$-th feature map of the final convolutional layer, with spatial dimensions $u \times v$. Let $y^c$ be the score (pre-softmax) for class $c$.
 <div class="callout-insight">
+
 <strong>Insight:</strong> Let $A^k$ denote the $k$-th feature map of the final convolutional layer, with spatial dimensions $u \times v$. Let $y^c$ be the score (pre-softmax) for class $c$.
+
 </div>
 
 
@@ -97,7 +101,9 @@ The result preserves the fine detail of Guided Backpropagation while focusing it
 
 Captum implements GradCAM as `LayerGradCam`, which can target any convolutional layer:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Captum implements GradCAM as `LayerGradCam`, which can target any convolutional layer:
+
 </div>
 
 
@@ -105,6 +111,7 @@ Captum implements GradCAM as `LayerGradCam`, which can target any convolutional 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -134,6 +141,7 @@ attr_upsampled = LayerAttribution.interpolate(
 ```
 
 </div>
+
 </div>
 
 ### Aggregating Channels
@@ -144,6 +152,7 @@ The raw output has shape `(1, channels, 7, 7)`. To get a single 2D heatmap:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -162,6 +171,7 @@ heatmap = (heatmap - heatmap.min()) / (heatmap.max() - heatmap.min() + 1e-8)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -174,6 +184,7 @@ One powerful feature of Captum's `LayerGradCam` is the ability to target interme
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -195,6 +206,7 @@ attr_final = lg_final.attribute(input_tensor, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 Comparing GradCAM across layers shows the hierarchical nature of CNN representations: early layers respond to local edges, middle layers to object parts, final layers to whole object regions.
@@ -209,6 +221,7 @@ A key advantage of GradCAM over class-agnostic methods is that it can produce di
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -221,6 +234,7 @@ attr_cat = lg.attribute(input_tensor, target=cat_class_idx)
 ```
 
 </div>
+
 </div>
 
 The dog heatmap should highlight the dog region; the cat heatmap should highlight the cat region. If they are the same, the model may be using shared features (texture, background) rather than class-specific object features.
@@ -231,7 +245,9 @@ The dog heatmap should highlight the dog region; the cat heatmap should highligh
 
 Beyond visual inspection, GradCAM can be evaluated quantitatively using the **Insertion** and **Deletion** metrics (Petsiuk et al., 2018):
 <div class="callout-insight">
+
 <strong>Insight:</strong> Beyond visual inspection, GradCAM can be evaluated quantitatively using the **Insertion** and **Deletion** metrics (Petsiuk et al., 2018):
+
 </div>
 
 
@@ -243,6 +259,7 @@ Beyond visual inspection, GradCAM can be evaluated quantitatively using the **In
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -276,6 +293,7 @@ def deletion_score(model, image, heatmap, n_steps=100, target_class=None):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -316,6 +334,7 @@ The ReLU in GradCAM removes negative contributions. To see the full picture (wha
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -327,6 +346,7 @@ negative_map = torch.relu(-heatmap_signed)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -337,11 +357,13 @@ negative_map = torch.relu(-heatmap_signed)
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Motivation: Why Convolutional Feature Maps?" and why it matters in practice.
 
 2. Given a real-world scenario involving guide 01: gradcam, guided gradcam, and layergradcam, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

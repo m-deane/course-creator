@@ -64,6 +64,7 @@ $$\alpha_1 \sim N(a_1, P_1)$$
 <div class="flow-step amber">3. Independence:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Serial Independence:</div>
+
 </div>
 
 
@@ -258,6 +259,7 @@ print(T)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">simulate_statespace.py</span>
+
 </div>
 
 ```python
@@ -395,6 +397,7 @@ State-space representation handles missing data elegantly:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -448,6 +451,7 @@ $$X_t = \Lambda F_t + e_t = (\Lambda G)(G^{-1} F_t) + e_t = \tilde{\Lambda} \til
 ### Graphical Representation
 
 ```
+
 Time t-1                      Time t                       Time t+1
 --------                      ------                       --------
 
@@ -498,6 +502,7 @@ Legend:
 **Problem:** Misplacing identity matrices in lower blocks of $T$.
 
 **Example of error:**
+
 ```python
 # WRONG: Identity in wrong position
 T[r:2*r, 0:r] = np.eye(r)  # Should be T[r:2*r, r:2*r]
@@ -512,6 +517,7 @@ T[r:2*r, 0:r] = np.eye(r)  # Should be T[r:2*r, r:2*r]
 **Problem:** In companion form, lagged factors should not load on observables.
 
 **Solution:**
+
 ```python
 Z = np.zeros((N, r*p))
 Z[:, :r] = Lambda  # Only first r columns are non-zero
@@ -522,6 +528,7 @@ Z[:, :r] = Lambda  # Only first r columns are non-zero
 **Problem:** Setting $R$ to identity when it should be $rp \times r$ selector.
 
 **Solution:**
+
 ```python
 R = np.zeros((r*p, r))
 R[:r, :] = np.eye(r)  # Innovations only enter first r states
@@ -596,6 +603,7 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -619,6 +627,7 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -636,6 +645,7 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

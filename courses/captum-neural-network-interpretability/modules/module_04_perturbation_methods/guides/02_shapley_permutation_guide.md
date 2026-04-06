@@ -9,7 +9,9 @@ Shapley values provide the game-theoretic foundation for feature attribution. Un
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 02: shapley values and permutation feature importance.
+
 </div>
 
 ---
@@ -65,7 +67,9 @@ These axioms make Shapley values the **uniquely fair** attribution: no other met
 
 Exact Shapley value computation requires evaluating $v(S)$ for all $2^n$ subsets. For $n=11$ tabular features, this is $2^{11} = 2048$ model calls. For $n=100$ features, $2^{100}$ is infeasible.
 <div class="callout-warning">
+
 <strong>Warning:</strong> Exact Shapley value computation requires evaluating $v(S)$ for all $2^n$ subsets. For $n=11$ tabular features, this is $2^{11} = 2048$ model calls. For $n=100$ features, $2^{100}$ is infeasible.
+
 </div>
 
 
@@ -77,6 +81,7 @@ Estimate Shapley values by sampling random orderings:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -98,6 +103,7 @@ shapley_estimates = {i: v / n_samples for i, v in shapley_estimates.items()}
 ```
 
 </div>
+
 </div>
 
 Each sample requires $n$ model evaluations (one per position in the ordering). With $n\_\text{samples}$ Monte Carlo samples: total cost = $n \times n\_\text{samples}$ forward passes.
@@ -110,10 +116,13 @@ Each sample requires $n$ model evaluations (one per position in the ordering). W
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 <div class="callout-key">
+
 <strong>Key Point:</strong> from captum.attr import ShapleyValueSampling
+
 </div>
 
 
@@ -135,6 +144,7 @@ attributions = svs.attribute(
 ```
 
 </div>
+
 </div>
 
 **n_samples trade-off:**
@@ -150,6 +160,7 @@ Captum does not provide variance estimates directly, but you can estimate via bo
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -167,6 +178,7 @@ shapley_stderr = sem(np.stack(runs), axis=0)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -206,6 +218,7 @@ Captum's `ShapleyValueSampling` is equivalent to the Monte Carlo version of Kern
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -222,13 +235,16 @@ shap_vals = explainer.shap_values(x)
 ```
 
 </div>
+
 </div>
 
 ---
 
 ## 7. Feature Permutation Importance: Global Attribution
 <div class="callout-key">
+
 <strong>Key Point:</strong> While Occlusion and Shapley values explain individual predictions (local), **Permutation Feature Importance** provides global feature importance across a dataset:
+
 </div>
 
 
@@ -248,6 +264,7 @@ While Occlusion and Shapley values explain individual predictions (local), **Per
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -292,6 +309,7 @@ def permutation_importance(model, X_val, y_val, n_repeats=5):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -304,6 +322,7 @@ Captum also provides `KernelShap` as a specific implementation following the ori
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -322,6 +341,7 @@ attr = ks.attribute(
 ```
 
 </div>
+
 </div>
 
 `KernelShap` vs `ShapleyValueSampling`:
@@ -357,6 +377,7 @@ ShapleyValueSampling is a stochastic estimate — it has variance that decreases
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -389,6 +410,7 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
 ```
 
 </div>
+
 </div>
 
 ---
@@ -399,11 +421,13 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Shapley Values: Game Theory Foundation" and why it matters in practice.
 
 2. Given a real-world scenario involving guide 02: shapley values and permutation feature importance, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

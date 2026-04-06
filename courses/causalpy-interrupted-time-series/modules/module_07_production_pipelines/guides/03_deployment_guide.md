@@ -34,6 +34,7 @@ Causal models don't get "better" by seeing more data in the predictive ML sense.
 A production causal pipeline has these stages:
 
 ```
+
 Stage 1: Data Ingestion
   ├── Load raw data
   ├── Validate schema and types
@@ -74,6 +75,7 @@ Stage 6: Output and Logging
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -290,6 +292,7 @@ Once a causal model is deployed and producing regular estimates, monitor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -346,6 +349,7 @@ Unlike predictive models, causal models don't "degrade" in accuracy — they can
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -394,6 +398,7 @@ Every causal analysis run should be reproducible. Best practices:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -442,8 +447,10 @@ Before deploying a causal pipeline:
 **Next:** [Module 07 Notebooks](../notebooks/)
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> **Previous:** [02 — Reporting Guide](02_reporting_guide.md)
 **Next:** [Module 07 Notebooks](../notebooks/)
+
 </div>
 
 

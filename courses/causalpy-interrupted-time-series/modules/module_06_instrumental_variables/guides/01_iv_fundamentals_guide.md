@@ -122,6 +122,7 @@ The coefficient $\hat{\beta}$ from Stage 2 is the 2SLS estimate of the causal ef
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -208,6 +209,7 @@ The first stage F-statistic tests whether the instruments are jointly significan
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -230,6 +232,7 @@ If you have more instruments than endogenous variables (overidentified), you can
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -293,10 +296,12 @@ The exclusion restriction cannot be tested — it requires theoretical justifica
 - Imbens & Rosenbaum (2005), "Robust, Accurate Confidence Intervals with a Weak Instrument"
 - Murray (2006), "Avoiding Invalid Instruments and Coping With Weak Instruments"
 <div class="callout-key">
+
 <strong>Key Concept:</strong> - Angrist & Pischke (2009), *Mostly Harmless Econometrics*, Chapters 4
 - Angrist, Imbens & Rubin (1996), "Identification of Causal Effects Using Instrumental Variables"
 - Card (1995), "Using Geographic Variation in College Proximity to Estimate the Return to Schooling"
 - Imbens & Rosenbaum (2005)...
+
 </div>
 
 

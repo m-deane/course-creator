@@ -52,6 +52,7 @@ This is the difference in the expected outcome just above the cutoff versus just
 ### Visual Intuition
 
 ```
+
 Outcome
   |                                    /
   |                                   / ← treated units above cutoff
@@ -142,6 +143,7 @@ This is the **local linear regression** estimator. It:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -191,6 +193,7 @@ The IK bandwidth minimises the asymptotic mean squared error of the local linear
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -222,6 +225,7 @@ If units can precisely control their running variable value and prefer to be tre
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -246,6 +250,7 @@ If another variable also jumps discontinuously at the cutoff, you cannot separat
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -293,6 +298,7 @@ This local nature is both a strength (high internal validity) and a weakness (li
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -348,10 +354,12 @@ The `epsilon` parameter defines the neighbourhood of the cutoff used for the tre
 - Cattaneo, Idrobo & Titiunik (2019-2020), *A Practical Introduction to Regression Discontinuity Designs* (Cambridge Elements)
 - Gelman & Imbens (2019), "Why High-Order Polynomials Should Not Be Used in Regression Discontinuity Designs"
 <div class="callout-key">
+
 <strong>Key Concept:</strong> - Imbens & Lemieux (2008), "Regression Discontinuity Designs: A Guide to Practice"
 - Lee & Lemieux (2010), "Regression Discontinuity Designs in Economics"
 - Cattaneo, Idrobo & Titiunik (2019-2020), *A Practical Introduction to Regression Discontinuity Designs* (Cambridge Elements)
 - Gelman & Imbe...
+
 </div>
 
 

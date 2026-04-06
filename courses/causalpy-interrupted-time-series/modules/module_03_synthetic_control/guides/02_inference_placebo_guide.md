@@ -12,9 +12,11 @@ the distribution of placebo estimates. If the treated unit's effect is larger th
 placebo effects, the result is statistically significant by permutation.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Classical frequentist inference assumes a large number of independent observations. Synthetic
 control has one treated unit and a small number of post-intervention periods — classical standard
 errors are not valid.
+
 </div>
 
 ## The Fundamental Inference Problem
@@ -45,6 +47,7 @@ of donors from their own synthetic counterparts.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -159,6 +162,7 @@ pre-period fit quality*.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -225,6 +229,7 @@ unit's gap. The treated unit should stand out — its gap should be clearly larg
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -290,6 +295,7 @@ chosen.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -365,6 +371,7 @@ at level $1 - \alpha$ is the set of $\alpha_0$ values for which the null is not 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -440,7 +447,9 @@ A complete synthetic control report includes:
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Guide 01 (synthetic control basics), Module 00 (potential outcomes)

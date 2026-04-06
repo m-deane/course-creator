@@ -54,6 +54,7 @@ $$\min_\beta \sum_{t=1}^T (y_t - x_t' \beta)^2$$
 <div class="flow-step amber">3. Overfitting:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Interpretation:</div>
+
 </div>
 
 
@@ -280,6 +281,7 @@ LASSO says: "Include all variables, but penalize complexity."
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">highdimensionalregression.py</span>
+
 </div>
 
 ```python
@@ -542,6 +544,7 @@ class HighDimensionalRegression:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -620,6 +623,7 @@ print("=" * 60)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -694,6 +698,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -730,6 +735,7 @@ model.fit(X_scaled, y)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

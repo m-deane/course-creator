@@ -15,6 +15,7 @@ Prompt Studios provides a visual interface for designing, testing, and iterating
 ## Prompt Studio Interface
 
 ```
+
 ┌────────────────────────────────────────────────────────────────┐
 │  Prompt Studios                                    [Save] [Run] │
 ├────────────────────────────────────────────────────────────────┤
@@ -49,6 +50,7 @@ Prompt Studios provides a visual interface for designing, testing, and iterating
 Use double curly braces for variables:
 
 ```
+
 Analyze the following {{commodity}} market data:
 
 {{market_data}}
@@ -64,6 +66,7 @@ Format as a {{output_format}} summary.
 ### System vs User Messages
 
 ```
+
 # System Message (sets behavior)
 You are a senior commodity analyst at a major trading firm.
 You analyze market data with precision and objectivity.
@@ -84,6 +87,7 @@ Provide:
 ### Extraction Pattern
 
 ```
+
 TASK: Extract structured data from commodity reports.
 
 INPUT:
@@ -102,6 +106,7 @@ OUTPUT FORMAT: JSON only, no explanation.
 ### Analysis Pattern
 
 ```
+
 CONTEXT: You are analyzing {{commodity}} market fundamentals.
 
 DATA:
@@ -134,6 +139,7 @@ Provide analysis in structured format.
 ### Comparison Pattern
 
 ```
+
 Compare these two reports on {{commodity}}:
 
 REPORT 1 ({{source_1}}):
@@ -185,6 +191,7 @@ expected:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -236,6 +243,7 @@ def evaluate_prompt_output(output: str, test_case: dict) -> dict:
 3. Compare versions over time
 
 ```
+
 Version History:
 ├── v1.0 - Initial prompt
 ├── v1.1 - Added JSON output format
@@ -249,6 +257,7 @@ Version History:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -290,6 +299,7 @@ def compare_prompt_versions(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -350,7 +360,9 @@ Use the visual LLM Recipe for simpler cases:
 5. **Direct deployment** moves prompts to production recipes
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> 5. **Direct deployment** moves prompts to production recipes
+
 </div>
 
 

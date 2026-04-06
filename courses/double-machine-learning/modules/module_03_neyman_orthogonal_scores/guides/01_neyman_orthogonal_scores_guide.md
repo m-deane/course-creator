@@ -7,16 +7,21 @@
 You will learn why DML uses Neyman orthogonal score functions to achieve robustness against first-stage ML estimation errors. The orthogonal score $\psi(W; \theta_0, \eta_0)$ is insensitive to small perturbations in the nuisance parameter $\eta$, which means imperfect ML models still produce valid treatment effect estimates.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> A naive plug-in estimator has bias proportional to the first-stage ML error. The orthogonal score makes bias proportional to the PRODUCT of two errors — outcome model error times treatment model error — which vanishes much faster. This is the "double" in Double Machine Learning.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn why DML uses Neyman orthogonal score functions to achieve robustness against first-stage ML estimation errors. The orthogonal score $\psi(W; \theta_0, \eta_0)$ is insensitive to small perturbations in the nuisance parameter $\eta$, which means imperfect ML models still produce vali...
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 SENSITIVITY TO FIRST-STAGE ERRORS
 
 Naive Plug-in:                    DML (Orthogonal Score):
@@ -54,6 +59,7 @@ Consider estimating the effect of OPEC production announcements on crude oil cal
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -117,6 +123,7 @@ Compare the orthogonal score to a naive plug-in that only residualises $Y$ (not 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -150,7 +157,9 @@ for nl in noise_levels:
 The naive plug-in diverges as noise increases, while DML stays close to the true effect. The "double" residualisation is essential.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The orthogonal score requires residualising BOTH $Y$ and $D$. Residualising only one gives a non-orthogonal moment condition that is sensitive to first-stage errors. This is why the method is called "Double" ML — both nuisance functions must be estimated.
+
 </div>
 
 ## How to Interpret the Score Function
@@ -168,7 +177,9 @@ This is the familiar residual-on-residual formula, but the score function reveal
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

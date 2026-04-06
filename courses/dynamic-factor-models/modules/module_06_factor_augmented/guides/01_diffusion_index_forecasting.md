@@ -191,6 +191,7 @@ These factors capture information from all 100+ variables in just 3-5 numbers.
 ### Visual Intuition
 
 ```
+
 Raw Data (100 variables)          Factors (5 dimensions)       Forecast
     [X₁, X₂, ..., X₁₀₀]     →     [F₁, F₂, F₃, F₄, F₅]    →    ŷₜ₊ₕ
          ↓                              ↓
@@ -218,6 +219,7 @@ Factors represent these common shocks. Forecasting with factors means forecastin
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">diffusionindexforecaster.py</span>
+
 </div>
 
 ```python
@@ -439,6 +441,7 @@ class DiffusionIndexForecaster:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -494,6 +497,7 @@ for i, var_ratio in enumerate(di_model.explained_variance_ratio(), 1):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">load_fredmd_example.py</span>
+
 </div>
 
 ```python
@@ -609,6 +613,7 @@ print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

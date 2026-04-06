@@ -7,11 +7,15 @@
 Deployment governance ensures Gen AI applications run reliably, securely, and cost-effectively in production. It encompasses deployment pipelines, monitoring, cost management, access control, compliance tracking, and incident response—transforming experimental LLM prototypes into enterprise-grade production systems.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Production Gen AI requires treating LLM applications with the same rigor as traditional software: version control, automated testing, staged deployments, monitoring, alerting, and rollback capabilities. The difference is that Gen AI governance also includes unique concerns like prompt versioning, token budgets, model drift, and output quality monitoring.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Deployment governance ensures Gen AI applications run reliably, securely, and cost-effectively in production. It encompasses deployment pipelines, monitoring, cost management, access control, compliance tracking, and incident response—transforming experimental LLM prototypes into enterprise-grade...
+
 </div>
 
 ## Formal Definition
@@ -32,6 +36,7 @@ Think of deployment governance like air traffic control for Gen AI applications.
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │           Gen AI Deployment Governance Framework            │
 └─────────────────────────────────────────────────────────────┘
@@ -83,6 +88,7 @@ The `DeploymentConfig` dataclass centralizes all environment-specific settings �
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">deployment_config.py</span>
+
 </div>
 
 ```python
@@ -200,6 +206,7 @@ def get_config(env: Environment) -> DeploymentConfig:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">deployment_pipeline.py</span>
+
 </div>
 
 ```python
@@ -414,6 +421,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">monitoring.py</span>
+
 </div>
 
 ```python
@@ -711,7 +719,9 @@ monitor.run_monitoring_cycle()
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

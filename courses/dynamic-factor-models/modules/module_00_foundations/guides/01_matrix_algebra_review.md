@@ -53,6 +53,7 @@ where:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">eigendecomposition_symmetric.py</span>
+
 </div>
 
 ```python
@@ -147,6 +148,7 @@ SVD decomposes a data matrix into three parts:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">svd_decomposition.py</span>
+
 </div>
 
 ```python
@@ -229,6 +231,7 @@ Covariance matrices must be PSD (and typically PD in practice):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">check_positive_definite.py</span>
+
 </div>
 
 ```python

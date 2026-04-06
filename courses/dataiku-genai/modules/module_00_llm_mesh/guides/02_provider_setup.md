@@ -7,11 +7,15 @@
 Provider setup in Dataiku LLM Mesh involves configuring connections to external LLM APIs (Anthropic, OpenAI, Azure, etc.) with proper authentication, model selection, and operational parameters. Each provider connection becomes a managed resource that can be used across all projects with centralized governance.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> **The power of provider abstraction:** Configure once, use everywhere. A well-configured provider connection eliminates the need for developers to manage API keys, handle rate limits, or implement retry logic—all of this becomes infrastructure managed by the platform.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Provider setup in Dataiku LLM Mesh involves configuring connections to external LLM APIs (Anthropic, OpenAI, Azure, etc.) with proper authentication, model selection, and operational parameters. Each provider connection becomes a managed resource that can be used across all projects with centrali...
+
 </div>
 
 ## Formal Definition
@@ -40,6 +44,7 @@ Similarly, LLM Mesh provider setup centralizes all LLM infrastructure management
 ### Configuration Levels
 
 ```
+
 ┌─────────────────────────────────────────────────────────┐
 │          Administrator (Platform Level)                  │
 │  • Configure provider connections                        │
@@ -73,6 +78,7 @@ Similarly, LLM Mesh provider setup centralizes all LLM infrastructure management
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -142,6 +148,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -192,6 +199,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -245,6 +253,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -300,6 +309,7 @@ result = generate_with_fallback("Summarize this report: ...")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -315,6 +325,7 @@ client = anthropic.Anthropic(api_key="sk-ant-api03-...")  # Exposed!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -332,6 +343,7 @@ llm = LLM("claude-production")  # API key in secure storage
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -350,6 +362,7 @@ response = llm.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -370,6 +383,7 @@ response = llm.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -385,6 +399,7 @@ for i in range(1000):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -413,6 +428,7 @@ for i in range(1000):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -428,6 +444,7 @@ llm = LLM("new-connection")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -471,6 +488,7 @@ for conn in ["claude-production", "openai-gpt4", "azure-openai-prod"]:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -489,6 +507,7 @@ response = llm.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -542,6 +561,7 @@ elif provider == "openai":
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -652,6 +672,7 @@ llm = LLM(connection_name)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

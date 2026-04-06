@@ -7,11 +7,15 @@
 Dataiku webapps provide a framework for building interactive user interfaces that integrate LLM capabilities. By combining Dataiku's visual webapp builder with LLM Mesh, you create production-ready Gen AI applications with authentication, governance, and monitoring built-in—without managing infrastructure.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The best Gen AI applications hide complexity from users. A well-designed webapp transforms complex LLM interactions into simple, intuitive interfaces that non-technical users can leverage. Dataiku webapps handle the infrastructure, security, and deployment so you can focus on user experience and business logic.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Dataiku webapps provide a framework for building interactive user interfaces that integrate LLM capabilities. By combining Dataiku's visual webapp builder with LLM Mesh, you create production-ready Gen AI applications with authentication, governance, and monitoring built-in—without managing infra...
+
 </div>
 
 ## Formal Definition
@@ -30,6 +34,7 @@ Think of Dataiku webapps like building a custom dashboard in Tableau or PowerBI,
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │              Dataiku Webapp Architecture                    │
 └─────────────────────────────────────────────────────────────┘
@@ -73,6 +78,7 @@ Think of Dataiku webapps like building a custom dashboard in Tableau or PowerBI,
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backend.py</span>
+
 </div>
 
 ```python
@@ -376,6 +382,7 @@ def health_check():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backend.py</span>
+
 </div>
 
 ```python
@@ -624,6 +631,7 @@ def chat_history():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backend.py</span>
+
 </div>
 
 ```python
@@ -733,7 +741,9 @@ async function streamAnalysis() {
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

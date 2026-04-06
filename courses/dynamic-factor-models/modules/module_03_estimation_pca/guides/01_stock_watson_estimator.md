@@ -89,6 +89,7 @@ The projections are the factor estimates $\hat{F}_t$.
 ### Visual Analogy
 
 ```
+
 Original Data (N = 3, r = 2)           PCA Factor Space
         X₃                                   F₂
          ↑                                    ↑
@@ -124,6 +125,7 @@ where $H$ is an $r \times r$ rotation matrix. Key points:
 <div class="flow-step amber">3. Rate of convergence:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Fast rate:</div>
+
 </div>
 
 
@@ -168,6 +170,7 @@ $$R_i^2 = \frac{\hat{\lambda}_i' \hat{\lambda}_i}{\text{Var}(X_i)} = \frac{\sum_
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">stockwatsonestimator.py</span>
+
 </div>
 
 ```python
@@ -530,6 +533,7 @@ print(f"First forecast:\n{F_forecast[0, :]}")
 ### Output (Representative)
 
 ```
+
 Simulating dynamic factor model...
 Data dimensions: T=300, N=60
 
@@ -560,6 +564,7 @@ First forecast:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -591,6 +596,7 @@ F_hat_sklearn = pca.fit_transform(X_scaled)
 **Example:** GDP (trillions) vs. unemployment rate (percentage points) will make PCA extract "GDP" as the first factor.
 
 **Solution:** Always standardize to unit variance before PCA:
+
 ```python
 X_std = (X - X.mean(axis=0)) / X.std(axis=0, ddof=1)
 ```
@@ -602,6 +608,7 @@ X_std = (X - X.mean(axis=0)) / X.std(axis=0, ddof=1)
 **Consequence:** Factors don't satisfy $F'F/T = I_r$ normalization, breaking asymptotic theory.
 
 **Check:** After estimation, verify:
+
 ```python
 np.allclose(F_hat.T @ F_hat / T, np.eye(r), atol=1e-6)
 ```

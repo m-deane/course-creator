@@ -9,7 +9,9 @@ GradCAM tells us *where* in the image the model looks. Conductance methods tell 
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of guide 02: layer conductance, neuron conductance, and internal influence.
+
 </div>
 
 ---
@@ -42,7 +44,9 @@ This is simply the gradient of the output with respect to the hidden unit's acti
 
 Layer Conductance extends Integrated Gradients to intermediate layers. For each neuron $h_i$ in layer $l$:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Layer Conductance extends Integrated Gradients to intermediate layers. For each neuron $h_i$ in layer $l$:
+
 </div>
 
 
@@ -78,6 +82,7 @@ Summing over neurons $j$ in layer $l$ and applying the FTC to the layer activati
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -103,6 +108,7 @@ attr = lc.attribute(
 ```
 
 </div>
+
 </div>
 
 ### Interpreting the Output
@@ -116,6 +122,7 @@ For a convolutional layer (e.g., `model.layer3[-1]`):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -131,6 +138,7 @@ channel_importance = attr.abs().mean(dim=(-2, -1)).squeeze()  # (1024,)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -143,6 +151,7 @@ The completeness property allows fair comparison across layers:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -169,6 +178,7 @@ print(layer_conductances)
 ```
 
 </div>
+
 </div>
 
 Because conductance is complete, the values across all layers should be consistent with the total prediction difference $f(x) - f(x')$.
@@ -181,7 +191,9 @@ Because conductance is complete, the values across all layers should be consiste
 
 While Layer Conductance measures the importance of entire layers, **Neuron Conductance** measures the importance of individual neurons:
 <div class="callout-warning">
+
 <strong>Warning:</strong> While Layer Conductance measures the importance of entire layers, **Neuron Conductance** measures the importance of individual neurons:
+
 </div>
 
 
@@ -205,10 +217,13 @@ This is the same formula as Layer Conductance, but interpreted at the level of a
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 <div class="callout-key">
+
 <strong>Key Point:</strong> from captum.attr import NeuronConductance
+
 </div>
 
 
@@ -233,6 +248,7 @@ neuron_attr = nc.attribute(
 ```
 
 </div>
+
 </div>
 
 Neuron Conductance returns the *input attribution* for a single intermediate neuron. It answers: "which input features caused neuron 42 at position (3,3) in layer4 to activate as it did?"
@@ -243,6 +259,7 @@ Neuron Conductance returns the *input attribution* for a single intermediate neu
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -278,6 +295,7 @@ def top_neurons_for_prediction(model, layer, input_tensor, baseline,
 ```
 
 </div>
+
 </div>
 
 ---
@@ -290,6 +308,7 @@ Before computing conductance, it is useful to understand the distribution of act
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -320,6 +339,7 @@ for name, act in activations.items():
 ```
 
 </div>
+
 </div>
 
 ---
@@ -354,6 +374,7 @@ Captum also provides `InternalInfluence`, which is the simpler gradient-based in
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -370,6 +391,7 @@ attr = ii.attribute(
 ```
 
 </div>
+
 </div>
 
 `InternalInfluence` is faster than `LayerConductance` (no integration) but does not satisfy completeness. Use it for rapid exploration; use `LayerConductance` for rigorous analysis.
@@ -396,11 +418,13 @@ All three share the same mathematical foundation (IG integral), completeness pro
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Motivation: What Happens Between Input and Output?" and why it matters in practice.
 
 2. Given a real-world scenario involving guide 02: layer conductance, neuron conductance, and internal influence, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

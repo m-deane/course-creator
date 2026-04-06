@@ -30,6 +30,7 @@ Dataiku's LLM Mesh provides a unified interface to connect various LLM providers
 ### Step 1: Navigate to LLM Mesh
 
 ```
+
 Administration → Connections → LLM Mesh
 ```
 
@@ -39,6 +40,7 @@ Administration → Connections → LLM Mesh
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -65,6 +67,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -89,6 +92,7 @@ model_settings = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -125,6 +129,7 @@ openai_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -152,6 +157,7 @@ azure_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -186,6 +192,7 @@ bedrock_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -225,6 +232,7 @@ print(f"Connection status: {result['status']}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -270,6 +278,7 @@ def benchmark_connection(connection_name, n_requests=10):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -301,6 +310,7 @@ connection_group = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -349,6 +359,7 @@ class LLMConnectionManager:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -407,6 +418,7 @@ class TokenUsageTracker:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -431,6 +443,7 @@ llm = dataiku.LLMConnection("openai-production")
 ### Access Control
 
 ```
+
 Connection Security Settings:
 ├── Allowed Projects: [project1, project2]
 ├── Allowed Users: [user1, user2, group:data-science]
@@ -455,7 +468,9 @@ Connection Security Settings:
 6. **Test connections** thoroughly before production deployment
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> 6. **Test connections** thoroughly before production deployment
+
 </div>
 
 

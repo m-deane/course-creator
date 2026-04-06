@@ -54,6 +54,7 @@ Financial returns exhibit fat tails, asymmetry, and occasional extreme outliersâ
 <div class="flow-step amber">3. Inefficient Estimati...</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Misleading Inference</div>
+
 </div>
 
 
@@ -101,6 +102,7 @@ Example: $\nu = 5 \implies \kappa = 9$ (much heavier than Gaussian)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">test_gaussianity.py</span>
+
 </div>
 
 ```python
@@ -314,6 +316,7 @@ This is weighted least squares with weights $w_t$!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">studenttfactormodel.py</span>
+
 </div>
 
 ```python

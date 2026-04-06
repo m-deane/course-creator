@@ -48,6 +48,7 @@ $$X_t = \Lambda F_t = \Lambda (H H^{-1}) F_t = (\Lambda H)(H^{-1} F_t) = \tilde{
 <div class="flow-step amber">3. Arbitrary scaling:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Arbitrary ordering:</div>
+
 </div>
 
 
@@ -59,6 +60,7 @@ $$X_t = \Lambda F_t = \Lambda (H H^{-1}) F_t = (\Lambda H)(H^{-1} F_t) = \tilde{
 ### Visual Representation
 
 ```
+
 Original Model:              Rotated Model:
 X = Λ F + e                  X = Λ̃ F̃ + e
 
@@ -194,6 +196,7 @@ With normalization:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -272,6 +275,7 @@ print("\nFactors are completely different, but X is identical!")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">pca_normalization.py</span>
+
 </div>
 
 ```python
@@ -340,6 +344,7 @@ print(Lambda_hat.round(3))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sign_normalize.py</span>
+
 </div>
 
 ```python
@@ -406,6 +411,7 @@ print(Lambda_signed[:3, :].round(3))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

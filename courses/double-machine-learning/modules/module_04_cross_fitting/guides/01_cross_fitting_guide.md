@@ -7,16 +7,21 @@
 You will learn why training ML models on the same data used for inference creates overfitting bias, and how K-fold cross-fitting eliminates it. Cross-fitting is the second pillar of DML (alongside orthogonal scores) — without it, even orthogonal estimators can be biased.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> In-sample ML predictions are too good — the model has partially memorised the training data. This makes residuals artificially small, which inflates the treatment effect. Cross-fitting ensures all predictions are genuinely out-of-sample, removing overfitting bias without sacrificing efficiency.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn why training ML models on the same data used for inference creates overfitting bias, and how K-fold cross-fitting eliminates it. Cross-fitting is the second pillar of DML (alongside orthogonal scores) — without it, even orthogonal estimators can be biased.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 CROSS-FITTING (K=5 folds)
 
 Fold 1: [TRAIN TRAIN TRAIN TRAIN | TEST ]  → predict on fold 5
@@ -40,6 +45,7 @@ Result: Every observation has an OUT-OF-SAMPLE prediction.
 - Bias does not vanish with more data
 
 </div>
+
 </div>
 <div class="compare-card">
 <div class="header after">Cross-Fitted Prediction (Unbiased)</div>
@@ -51,7 +57,9 @@ Result: Every observation has an OUT-OF-SAMPLE prediction.
 - Converges at parametric rate
 
 </div>
+
 </div>
+
 </div>
 
 ## Why In-Sample Predictions Create Bias
@@ -72,6 +80,7 @@ With artificially small $\tilde{D}_i$ in the denominator, $\hat{\theta}$ is infl
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -118,6 +127,7 @@ Then concatenate all out-of-sample residuals and estimate $\theta$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -144,7 +154,9 @@ print(f"Mean |resid_D| cross-fitted: {np.mean(np.abs(resid_D_cf)):.4f}")
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Simple sample splitting (50/50 train/test) also works but wastes half the data for inference. Cross-fitting uses all observations for both training and prediction, achieving full efficiency. Always use cross-fitting over simple splitting.
+
 </div>
 
 ## How DML1 and DML2 Differ
@@ -163,6 +175,7 @@ DML2 is generally preferred — it is more stable and recommended by the `double
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -190,6 +203,7 @@ print(f"Fold estimates:   {[f'{t:.3f}' for t in thetas_per_fold]}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -215,7 +229,9 @@ $K = 5$ is the default in most implementations and works well in practice. Large
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

@@ -13,7 +13,9 @@ Captum's design principle — every method implements a single `.attribute()` in
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Captum is PyTorch's official interpretability library, developed by Facebook AI Research.
+
 </div>
 
 ---
@@ -38,7 +40,9 @@ Captum (from Latin: "to perceive, understand") was released in 2019 and is maint
 
 Every Captum method follows this pattern:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Every Captum method follows this pattern:
+
 </div>
 
 
@@ -46,6 +50,7 @@ Every Captum method follows this pattern:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -67,6 +72,7 @@ assert attributions.shape == inputs.shape
 ```
 
 </div>
+
 </div>
 
 The `attribute()` method signature varies slightly between methods, but the pattern is always:
@@ -93,6 +99,7 @@ Captum requires inputs to have gradients enabled. The standard pattern:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -117,6 +124,7 @@ input_tensor = input_tensor.requires_grad_(True)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -125,7 +133,9 @@ input_tensor = input_tensor.requires_grad_(True)
 
 ### Primary Attribution Methods
 <div class="callout-key">
+
 <strong>Key Point:</strong> from captum.attr import Saliency              # Vanilla gradient magnitude
+
 </div>
 
 
@@ -133,6 +143,7 @@ input_tensor = input_tensor.requires_grad_(True)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -168,6 +179,7 @@ from captum.attr import TCAV                  # Testing with concept activation 
 ```
 
 </div>
+
 </div>
 
 ### The NoiseTunnel Wrapper
@@ -178,6 +190,7 @@ from captum.attr import TCAV                  # Testing with concept activation 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -209,6 +222,7 @@ attributions_var = nt.attribute(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -217,7 +231,9 @@ attributions_var = nt.attribute(
 
 Captum includes `captum.attr.visualization` for common attribution visualizations:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Captum includes `captum.attr.visualization` for common attribution visualizations:
+
 </div>
 
 
@@ -225,6 +241,7 @@ Captum includes `captum.attr.visualization` for common attribution visualization
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -258,6 +275,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 ```
 
 </div>
+
 </div>
 
 ### Available Visualization Modes
@@ -280,6 +298,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -293,6 +312,7 @@ shap.image_plot(shap_values, input_data)
 ```
 
 </div>
+
 </div>
 
 **SHAP strengths:**
@@ -317,6 +337,7 @@ shap.image_plot(shap_values, input_data)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -333,6 +354,7 @@ explanation = explainer.explain_instance(
 ```
 
 </div>
+
 </div>
 
 **LIME strengths:**
@@ -356,11 +378,13 @@ explanation = explainer.explain_instance(
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving captum library architecture and philosophy, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary Comparison
@@ -385,7 +409,9 @@ explanation = explainer.explain_instance(
 
 Captum works with any pretrained PyTorch model out of the box:
 <div class="callout-key">
+
 <strong>Key Point:</strong> Captum works with any pretrained PyTorch model out of the box:
+
 </div>
 
 
@@ -393,6 +419,7 @@ Captum works with any pretrained PyTorch model out of the box:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -412,6 +439,7 @@ ig = IntegratedGradients(resnet50.eval())
 ```
 
 </div>
+
 </div>
 
 ### HuggingFace Transformers
@@ -420,6 +448,7 @@ ig = IntegratedGradients(resnet50.eval())
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -440,6 +469,7 @@ lig = LayerIntegratedGradients(model, model.distilbert.embeddings)
 ```
 
 </div>
+
 </div>
 
 ### Accessing Named Layers
@@ -450,6 +480,7 @@ For layer-based attribution, you need to specify which layer to attribute to:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -468,6 +499,7 @@ lgc = LayerGradCam(resnet50.eval(), target_layer)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -476,7 +508,9 @@ lgc = LayerGradCam(resnet50.eval(), target_layer)
 
 ### Memory Management
 <div class="callout-insight">
+
 <strong>Insight:</strong> Attribution computation creates a full backward pass (for gradient methods). For large batches or high-resolution images, this can exceed GPU memory:
+
 </div>
 
 
@@ -486,6 +520,7 @@ Attribution computation creates a full backward pass (for gradient methods). For
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -505,6 +540,7 @@ attributions = torch.cat(results, dim=0)
 ```
 
 </div>
+
 </div>
 
 ### Evaluation Mode
@@ -515,6 +551,7 @@ Always call `model.eval()` before computing attributions. Training mode enables 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -530,6 +567,7 @@ attributions = ig.attribute(inputs, baselines=baseline, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 ### Internal Batching
@@ -540,6 +578,7 @@ For Integrated Gradients with many steps, Captum supports internal batching to c
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -554,6 +593,7 @@ attributions = ig.attribute(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -566,6 +606,7 @@ Before trusting attributions, run these sanity checks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -603,6 +644,7 @@ attr_random = ig_random.attribute(inputs, baselines=baseline, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 ---

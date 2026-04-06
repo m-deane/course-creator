@@ -13,7 +13,9 @@ The gradient $\frac{\partial f}{\partial x_i}$ tells you: "if I increase input f
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Gradient-based attribution methods use the partial derivatives of a neural network's output with respect to its input to measure feature importance.
+
 </div>
 
 ---
@@ -22,7 +24,9 @@ The gradient $\frac{\partial f}{\partial x_i}$ tells you: "if I increase input f
 
 ### Definition
 <div class="callout-insight">
+
 <strong>Insight:</strong> Given a model $f: \mathbb{R}^d \rightarrow \mathbb{R}$ and an input $x$, the **saliency attribution** for feature $i$ is:
+
 </div>
 
 
@@ -42,6 +46,7 @@ The gradient is the direction of steepest ascent in the output surface. Features
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -62,6 +67,7 @@ attributions = saliency.attribute(input_tensor, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 ### The Gradient Computation (Manual)
@@ -72,6 +78,7 @@ Understanding what Captum does internally:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -84,6 +91,7 @@ gradients = input_tensor.grad.abs()  # Take absolute value
 ```
 
 </div>
+
 </div>
 
 ### Known Failure: Saturation
@@ -102,7 +110,9 @@ This violates the sensitivity axiom: a feature can be relevant (changing it chan
 
 The **Input × Gradient** method multiplies each gradient by the corresponding input value:
 <div class="callout-warning">
+
 <strong>Warning:</strong> The **Input × Gradient** method multiplies each gradient by the corresponding input value:
+
 </div>
 
 
@@ -128,6 +138,7 @@ This approximation is exact for linear models and approximate for non-linear mod
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -140,6 +151,7 @@ attributions = ixg.attribute(input_tensor, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 ### Known Failure: Input Dependency
@@ -154,7 +166,9 @@ Input×Gradient inherits saliency's saturation problem. Additionally, because it
 
 Guided Backpropagation (Springenberg et al., 2014) modifies the standard gradient backpropagation through ReLU layers. During the backward pass, a standard gradient propagates negative values through ReLUs (zeroing them out). Guided Backprop additionally zeroes out gradients in the backward pass where the *gradient itself* is negative:
 <div class="callout-key">
+
 <strong>Key Point:</strong> Guided Backpropagation (Springenberg et al., 2014) modifies the standard gradient backpropagation through ReLU layers. During the backward pass, a standard gradient propagates negative values through ReLUs (zeroing them out). Guided Backprop additionally zeroes out gradients in the backward pass where the *gradient itself* is negative:
+
 </div>
 
 
@@ -176,6 +190,7 @@ This modification produces cleaner, sharper visualizations by removing gradient 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -187,6 +202,7 @@ attributions = gbp.attribute(input_tensor, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 ### Critical Failure: Not Attribution
@@ -209,7 +225,9 @@ This violates implementation invariance: two models with different weights (one 
 
 Deconvolution (Zeiler & Fergus, 2014) is similar to Guided Backpropagation but uses a different rule: during backward pass through ReLU, deconvolution zeroes out negative gradient values but NOT based on the forward activation.
 <div class="callout-insight">
+
 <strong>Insight:</strong> Deconvolution (Zeiler & Fergus, 2014) is similar to Guided Backpropagation but uses a different rule: during backward pass through ReLU, deconvolution zeroes out negative gradient values but NOT based on the forward activation.
+
 </div>
 
 
@@ -236,6 +254,7 @@ Like Guided Backprop, deconvolution fails implementation invariance and is not a
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -247,6 +266,7 @@ attributions = deconv.attribute(input_tensor, target=class_idx)
 ```
 
 </div>
+
 </div>
 
 ---
@@ -255,7 +275,9 @@ attributions = deconv.attribute(input_tensor, target=class_idx)
 
 ### What Each Method Computes
 <div class="callout-warning">
+
 <strong>Warning:</strong> None of these methods satisfies both axioms. This motivates Integrated Gradients.
+
 </div>
 
 
@@ -290,7 +312,9 @@ None of these methods satisfies both axioms. This motivates Integrated Gradients
 
 Gradients of deep networks are notoriously noisy. The gradient at a specific input is highly sensitive to local perturbations, producing "salt and pepper" noise in saliency maps.
 <div class="callout-key">
+
 <strong>Key Point:</strong> Gradients of deep networks are notoriously noisy. The gradient at a specific input is highly sensitive to local perturbations, producing "salt and pepper" noise in saliency maps.
+
 </div>
 
 
@@ -314,6 +338,7 @@ In Captum, this is implemented via `NoiseTunnel`:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -333,6 +358,7 @@ smooth_attr = nt.attribute(
 ```
 
 </div>
+
 </div>
 
 SmoothGrad is covered in depth in Module 02 (Notebook 03).
@@ -362,11 +388,13 @@ SmoothGrad is covered in depth in Module 02 (Notebook 03).
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving gradient-based attribution methods: theory, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

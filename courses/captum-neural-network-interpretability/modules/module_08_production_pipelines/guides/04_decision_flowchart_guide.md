@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of attribution method selection: a comprehensive decision framework.
+
 </div>
 
 ---
@@ -39,6 +41,7 @@ No method dominates all dimensions. The choice depends on what matters most for 
 ### Question 1: What kind of input does your model take?
 
 ```
+
 Input type?
 ├── Image (CNN or ViT) → Section 3
 ├── Text (Transformer) → Section 4
@@ -49,6 +52,7 @@ Input type?
 ### Question 2: What are you trying to do with the attribution?
 
 ```
+
 Purpose?
 ├── Debug the model during development → Section 7
 ├── Explain a single prediction → Section 8
@@ -63,7 +67,9 @@ Purpose?
 
 ### CNNs (ResNet, VGG, EfficientNet, MobileNet)
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Architecture note:** GradCAM requires a convolutional layer. For the last conv layer (e.g., `model.layer4[-1]` in ResNet), it produces a class activation map that is upsampled to input resolution. For pixel-level attribution, use IG or GradientSHAP.
+
 </div>
 
 
@@ -101,7 +107,9 @@ Purpose?
 | Layer importance | LayerConductance over encoder layers | Identifies task-relevant depth |
 | Multi-token output (seq2seq) | LayerIG with target per output step | Run separately per output token |
 <div class="callout-key">
+
 <strong>Key Point:</strong> Attribution and attention serve different purposes:
+
 </div>
 
 
@@ -120,6 +128,7 @@ These disagree on negation, adversarial inputs, and compositional sentences. Use
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -136,6 +145,7 @@ baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 ```
 
 </div>
+
 </div>
 
 **Prefer PAD for BERT:** BERT was trained with `[PAD]` tokens in attention masking, so PAD produces near-neutral predictions — a well-defined reference point. GPT models have no PAD concept; use zero embeddings.
@@ -158,6 +168,7 @@ baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -177,6 +188,7 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 ```
 
 </div>
+
 </div>
 
 **Recommendation:** Use training-set mean as baseline. It represents "a typical example" and makes attribution differences directly interpretable as deviation from average behavior.
@@ -200,7 +212,9 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 
 ### Development and Debugging
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Goal:** Find spurious correlations quickly across many examples.
+
 </div>
 
 
@@ -238,6 +252,7 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -254,6 +269,7 @@ assert abs(delta.item()) < 0.05, f"Completeness violation: delta={delta.item()}"
 ```
 
 </div>
+
 </div>
 
 ### Real-Time Production Serving
@@ -274,7 +290,9 @@ assert abs(delta.item()) < 0.05, f"Completeness violation: delta={delta.item()}"
 
 The baseline is as important as the method. It defines the reference point: "What prediction does the model make when this feature is absent?"
 <div class="callout-insight">
+
 <strong>Insight:</strong> The baseline is as important as the method. It defines the reference point: "What prediction does the model make when this feature is absent?"
+
 </div>
 
 
@@ -297,6 +315,7 @@ For GradientSHAP and DeepLIFTSHAP, provide 50-200 background samples:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -313,6 +332,7 @@ attrs, delta = grad_shap.attribute(
 ```
 
 </div>
+
 </div>
 
 Multiple baselines reduce sensitivity to the choice of reference point.
@@ -322,6 +342,7 @@ Multiple baselines reduce sensitivity to the choice of reference point.
 ## 9. The Complete Decision Flowchart
 
 ```
+
 START: What is your model architecture?
 │
 ├── CNN (ResNet, EfficientNet, MobileNet, VGG)
@@ -401,11 +422,13 @@ Attribution methods frequently produce different outputs on the same input. This
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Core Trade-Off Space" and why it matters in practice.
 
 2. Given a real-world scenario involving attribution method selection: a comprehensive decision framework, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

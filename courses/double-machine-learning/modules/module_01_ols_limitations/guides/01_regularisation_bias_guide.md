@@ -7,16 +7,21 @@
 You will learn why the obvious fix for high-dimensional confounding — using Lasso to select variables, then running OLS — produces biased treatment effects and invalid confidence intervals. The post-selection inference problem is fundamental, not a fixable nuance.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Lasso selects variables that predict the outcome $Y$ well, not variables that confound the treatment $D$. Dropping a confounder of $D$ that is a weak predictor of $Y$ reintroduces omitted variable bias — and the standard errors do not account for the selection step.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> You will learn why the obvious fix for high-dimensional confounding — using Lasso to select variables, then running OLS — produces biased treatment effects and invalid confidence intervals. The post-selection inference problem is fundamental, not a fixable nuance.
+
 </div>
 
 ## Visual Explanation
 
 ```
+
 THE POST-SELECTION INFERENCE TRAP
 
 Step 1: Lasso selects         Step 2: OLS on selected
@@ -45,6 +50,7 @@ In commodity markets, consider estimating the effect of carbon tax increases on 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -91,6 +97,7 @@ After Lasso selection, running OLS on the selected variables ignores the uncerta
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -113,7 +120,9 @@ print(f"True effect in CI:      {in_ci}")
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The standard errors from post-selection OLS are WRONG. They ignore the model selection step, producing confidence intervals that are too narrow. The actual coverage of "95% CIs" from post-Lasso OLS is often 60-80% — far below the nominal 95%.
+
 </div>
 
 ## How to Demonstrate the Coverage Problem
@@ -124,6 +133,7 @@ Run a Monte Carlo simulation to check actual coverage:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -181,6 +191,7 @@ This ensures confounders of $D$ are not dropped, even if they are weak predictor
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -211,7 +222,9 @@ Double selection improves over single Lasso, but DML goes further — it replace
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**
@@ -243,6 +256,7 @@ Extend the coverage simulation to compare three methods: (a) post-Lasso OLS, (b)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

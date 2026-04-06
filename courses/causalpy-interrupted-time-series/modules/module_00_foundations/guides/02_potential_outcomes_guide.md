@@ -7,7 +7,9 @@
 The potential outcomes framework, developed by Donald Rubin building on earlier work by Jerzy Neyman, provides a formal mathematical language for causal questions. It defines causal effects in terms of counterfactual outcomes — what would have happened under a treatment condition that was not actually received.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> The potential outcomes framework, developed by Donald Rubin building on earlier work by Jerzy Neyman, provides a formal mathematical language for causal questions. It defines causal effects in terms of counterfactual outcomes — what would have happened under a treatment condition that was not act...
+
 </div>
 
 ## Key Insight
@@ -86,6 +88,7 @@ Selection bias is the difference in baseline potential outcomes between treated 
 ### Visualizing the Problem
 
 ```
+
 Unit 1 (Treated):    observe Y(1)=80    missing Y(0)=?
 Unit 2 (Control):    missing Y(1)=?     observe Y(0)=55
 Unit 3 (Treated):    observe Y(1)=90    missing Y(0)=?
@@ -167,6 +170,7 @@ $$\tau_t = Y_t(1) - Y_t(0) \quad \text{for } t \geq t^*$$
 But $Y_t(0)$ is never observed for $t \geq t^*$ — it is the counterfactual trajectory. The core assumption of ITS is that the **pre-intervention trend would have continued** absent the intervention. This is our counterfactual model.
 
 ```
+
 Time:           Pre-intervention                Post-intervention
                 t=1  t=2  t=3  t=4  t=5  |  t=6  t=7  t=8  t=9  t=10
                                            |
@@ -211,6 +215,7 @@ $$P(\tau_t > 0 | \text{data}) = P(Y_t(1) > Y_t(0) | \text{data})$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -300,7 +305,9 @@ For policy evaluation, the ATT is often more relevant. If we implemented a job t
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Causal vs predictive thinking (Guide 1)

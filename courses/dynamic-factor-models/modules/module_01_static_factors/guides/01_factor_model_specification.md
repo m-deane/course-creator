@@ -67,6 +67,7 @@ where:
 ### Visual Representation
 
 ```
+
                     Latent Factors F_t (r x 1)
                          [F_1t]
                          [F_2t]
@@ -178,6 +179,7 @@ Expected loading pattern:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

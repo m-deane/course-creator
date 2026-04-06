@@ -496,6 +496,7 @@ def kalman_smoother(result_filter, T):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -581,6 +582,7 @@ State-space framework handles missing data naturally.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -613,6 +615,7 @@ $$\hat{y}_{T+h|T} = Z \hat{\alpha}_{T+h|T}$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">forecast_statespace.py</span>
+
 </div>
 
 ```python
@@ -792,6 +795,7 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -809,6 +813,7 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

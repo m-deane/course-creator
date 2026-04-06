@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of attention weights vs. integrated gradients: why they disagree.
+
 </div>
 
 ---
@@ -78,7 +80,9 @@ None of these have the theoretical grounding of Integrated Gradients.
 
 Attention rollout (Abnar & Zuidema, 2020) improves over raw attention by propagating attention weights through all layers:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Attention rollout (Abnar & Zuidema, 2020) improves over raw attention by propagating attention weights through all layers:
+
 </div>
 
 
@@ -92,6 +96,7 @@ This accounts for the fact that token representations at layer $l$ are mixtures 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -118,6 +123,7 @@ def attention_rollout(attentions_list: list[torch.Tensor]) -> torch.Tensor:
 ```
 
 </div>
+
 </div>
 
 ---
@@ -134,6 +140,7 @@ This is analogous to Saliency × Input for regular inputs and has better empiric
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -155,6 +162,7 @@ for attn_layer in model.bert.encoder.layer:
 ```
 
 </div>
+
 </div>
 
 ---
@@ -165,6 +173,7 @@ On most well-functioning models, attention and IG broadly agree on the top token
 
 ### Case 1: Negation
 ```
+
 Text: "The movie was NOT boring at all."
 IG:   "NOT" has high negative attribution (flips sentiment)
 Attn: "boring" has high attention (attended to most)
@@ -174,6 +183,7 @@ Attention focuses on the sentiment word; IG correctly identifies the negation mo
 
 ### Case 2: Adversarial Inputs
 ```
+
 Text: "movie great terrible film"  (adversarial)
 IG:   attributes heavily to "terrible" (correct)
 Attn: distributes attention broadly across all words
@@ -224,6 +234,7 @@ While individual heads don't explain predictions, analyzing which heads speciali
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -248,6 +259,7 @@ plt.title("BERT Layer 0, Head 0 Attention Pattern")
 ```
 
 </div>
+
 </div>
 
 Some heads specialize in: next-token attention, previous-token attention, [CLS]-to-all, coreference, syntactic dependencies.
@@ -260,11 +272,13 @@ Some heads specialize in: next-token attention, previous-token attention, [CLS]-
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The "Attention is Explanation" Assumption" and why it matters in practice.
 
 2. Given a real-world scenario involving attention weights vs. integrated gradients: why they disagree, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

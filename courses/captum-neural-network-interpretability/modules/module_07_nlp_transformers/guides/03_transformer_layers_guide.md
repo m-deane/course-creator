@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of layer-wise attribution in transformers.
+
 </div>
 
 ---
@@ -49,7 +51,9 @@ For sentiment classification, layers 10-12 carry most attribution. For syntax-he
 
 Apply IG at each encoder layer independently:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Apply IG at each encoder layer independently:
+
 </div>
 
 
@@ -57,6 +61,7 @@ Apply IG at each encoder layer independently:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -118,6 +123,7 @@ def compute_layer_attributions(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -134,6 +140,7 @@ This is the chain-rule application of IG at each layer — it measures how much 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -168,6 +175,7 @@ def layer_conductance_all_layers(model, tokenizer, text, target_class):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -178,6 +186,7 @@ def layer_conductance_all_layers(model, tokenizer, text, target_class):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -213,6 +222,7 @@ def plot_layer_importance(layer_scores: list, title: str):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -223,6 +233,7 @@ Different tasks show different layer importance patterns:
 
 ### Sentiment Analysis (SST-2)
 ```
+
 Layer importance profile:
 L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
  ░   ░   ░   ░   ░   ░   ░   ▒   ▒   ▓  ▓▓  ▓▓▓
@@ -232,6 +243,7 @@ L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
 
 ### Named Entity Recognition (NER)
 ```
+
 Layer importance profile:
 L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
  ░   ▒   ▓   ▓▓  ▓   ▒   ░   ░   ░   ░   ░   ░
@@ -241,6 +253,7 @@ L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
 
 ### Question Answering (SQuAD)
 ```
+
 Layer importance profile:
 L0  L1  L2  L3  L4  L5  L6  L7  L8  L9 L10 L11
  ░   ░   ░   ░   ▒   ▒   ▓   ▓▓  ▓▓  ▓  ░   ░
@@ -258,6 +271,7 @@ A comprehensive visualization shows how token importance varies across layers:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -294,6 +308,7 @@ def plot_token_layer_heatmap(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -306,6 +321,7 @@ GPT-2 uses causal (left-to-right) attention, unlike BERT's bidirectional attenti
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -329,6 +345,7 @@ for block_idx, block in enumerate(gpt2_model.transformer.h):
 ```
 
 </div>
+
 </div>
 
 GPT-2's layer attribution pattern differs: since attention is causal, early layers process local context while later layers integrate longer-range dependencies.
@@ -356,6 +373,7 @@ Computing LayerIG for all 12 BERT layers plus the embedding layer requires 13 se
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -374,6 +392,7 @@ for layer_idx, encoder_layer in enumerate(model.bert.encoder.layer):
 ```
 
 </div>
+
 </div>
 
 ### Normalization
@@ -387,11 +406,13 @@ When comparing layer importance across texts of different length, normalize by s
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Why Analyze Individual Layers?" and why it matters in practice.
 
 2. Given a real-world scenario involving layer-wise attribution in transformers, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

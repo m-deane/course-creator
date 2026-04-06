@@ -40,6 +40,7 @@ Nowcasting GDP and other key economic indicators requires careful handling of re
 <div class="flow-step amber">3. Different publicatio...</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Ragged edge:</div>
+
 </div>
 
 
@@ -81,6 +82,7 @@ Consider nowcasting Q1 2024 GDP on March 15, 2024:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">vintagedatamanager.py</span>
+
 </div>
 
 ```python
@@ -208,6 +210,7 @@ print(f"  Latest GDP: {gdp_available.index[-1]} (value: {gdp_available.iloc[-1]:
 
 **Example (March 15, 2024):**
 ```
+
 Series          Frequency    Last Available
 ---------------------------------------------
 Stock Prices    Daily        March 14, 2024
@@ -239,6 +242,7 @@ GDP             Quarterly    Q4 2023
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">raggededgedataset.py</span>
+
 </div>
 
 ```python
@@ -389,6 +393,7 @@ $$\text{RMSFE}_j = \sqrt{\frac{1}{T} \sum_{t=1}^{T} \left(Y_t - \hat{Y}_{t|t+j}\
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">realtimebacktest.py</span>
+
 </div>
 
 ```python
@@ -627,6 +632,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">nowcasttracker.py</span>
+
 </div>
 
 ```python
@@ -877,6 +883,7 @@ The next module explores Factor-Augmented models (FAR, FAVAR), which use extract
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python

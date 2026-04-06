@@ -7,11 +7,15 @@
 Custom model wrappers extend Dataiku's LLM Mesh to add preprocessing, postprocessing, routing logic, or integration with custom endpoints. They enable advanced patterns like retry logic, response parsing, multi-model ensembles, and specialized prompt templates while maintaining compatibility with Dataiku's standard LLM interfaces.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Production LLM applications require more than just API calls—they need error handling, response validation, cost optimization, and domain-specific logic. Custom wrappers provide a clean abstraction layer that encapsulates this complexity, making advanced LLM patterns reusable across projects without duplicating code.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Custom model wrappers extend Dataiku's LLM Mesh to add preprocessing, postprocessing, routing logic, or integration with custom endpoints. They enable advanced patterns like retry logic, response parsing, multi-model ensembles, and specialized prompt templates while maintaining compatibility with...
+
 </div>
 
 ## Formal Definition
@@ -30,6 +34,7 @@ Think of custom model wrappers like middleware in web development. Just as middl
 ## Visual Representation
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                 Your Application Code                       │
 └──────────────────────────┬──────────────────────────────────┘
@@ -64,6 +69,7 @@ Think of custom model wrappers like middleware in web development. Just as middl
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -146,6 +152,7 @@ class BaseLLMWrapper:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -245,6 +252,7 @@ print(result)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -341,6 +349,7 @@ result = resilient_llm.complete("Summarize this report...")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -483,6 +492,7 @@ result3 = cost_optimized.complete("...", force_tier='high')
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -630,6 +640,7 @@ print(f"Consensus: {comparison['consensus']}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -733,7 +744,9 @@ result2 = cached_llm.complete("Analyze this report...")  # Free!
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 **Builds on:**

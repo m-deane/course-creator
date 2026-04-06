@@ -57,6 +57,7 @@ This scales as $n^{-1/5}$ — bandwidth shrinks as sample size grows.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -110,6 +111,7 @@ The goal of sensitivity analysis is to show that your treatment effect estimate 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -190,6 +192,7 @@ Use **local linear** (order 1) or at most **local quadratic** (order 2). Higher-
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -227,6 +230,7 @@ The triangular kernel is optimal for the boundary regression problem in RDD — 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -274,6 +278,7 @@ The "donut" removes observations very close to the cutoff, testing whether resul
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -310,6 +315,7 @@ If estimates are stable across donut widths, manipulation of the running variabl
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -396,8 +402,10 @@ plt.show()
 **Next:** [Module 05 Notebooks](../notebooks/)
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> **Previous:** [01 — RDD Fundamentals](01_rdd_fundamentals_guide.md)
 **Next:** [Module 05 Notebooks](../notebooks/)
+
 </div>
 
 

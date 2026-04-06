@@ -10,9 +10,11 @@ closely matches the treated unit's pre-intervention trajectory. After the interv
 divergence between the treated unit and its synthetic counterpart is the estimated causal effect.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Synthetic control (SC) constructs a counterfactual for a treated unit by forming a weighted
 combination of untreated "donor" units. The weights are chosen so the weighted donor average
 closely matches the treated unit's pre-intervention trajectory.
+
 </div>
 
 ## The Core Problem That SC Solves
@@ -109,6 +111,7 @@ The synthetic control estimate is credible only if the pre-intervention fit is g
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -166,6 +169,7 @@ Not all available units should be included in the donor pool. Exclude units that
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -192,6 +196,7 @@ a Dirichlet prior on the weights and estimating the posterior distribution of th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -236,6 +241,7 @@ For a pointwise effect estimate with uncertainty bounds:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -327,7 +333,9 @@ distinguish the treated unit from its donors.
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Module 00 (potential outcomes, SUTVA), Module 01 (ITS fundamentals)

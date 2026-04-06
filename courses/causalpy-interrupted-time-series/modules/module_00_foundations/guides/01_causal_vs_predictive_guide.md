@@ -7,7 +7,9 @@
 Causal inference asks "what would happen if we intervened?" while predictive modeling asks "given what we observe, what will happen next?" Both use data, but they answer fundamentally different questions and require different methodologies.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Causal inference asks "what would happen if we intervened?" while predictive modeling asks "given what we observe, what will happen next?" Both use data, but they answer fundamentally different questions and require different methodologies.
+
 </div>
 
 ## Key Insight
@@ -53,6 +55,7 @@ Should we reduce firefighter deployment to reduce damage? Obviously not.
 The causal direction is reversed: large fires cause both more firefighters to be dispatched AND more damage. Firefighters are a consequence of fire severity, not a cause of damage.
 
 ```
+
 Fire Severity → More Firefighters (observed)
 Fire Severity → More Damage (observed)
 ```
@@ -66,6 +69,7 @@ Monthly ice cream sales correlate strongly with drowning deaths. A model trained
 The causal structure involves a confounder:
 
 ```
+
 Temperature → Ice Cream Sales
 Temperature → Swimming Activity → Drownings
 ```
@@ -100,6 +104,7 @@ Treatment B looks better overall, but treatment A is better for every patient su
 - **Use when:** observing, not acting
 
 </div>
+
 </div>
 <div class="compare-card">
 <div class="header after">Causal Inference (Intervention)</div>
@@ -112,11 +117,15 @@ Treatment B looks better overall, but treatment A is better for every patient su
 - **Use when:** deciding what to do
 
 </div>
+
 </div>
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Using a predictive model to select actions is the most common and most costly mistake in applied data science. If the word "if we do X" appears in the question, you need causal methods.
+
 </div>
 
 ---
@@ -154,6 +163,7 @@ The classic failure mode is using a predictive model to select actions. If a ban
 <div class="flow-step amber">2. Intervention (Doing)</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">3. Counterfactual (Imagining)</div>
+
 </div>
 
 Judea Pearl's hierarchy of causal reasoning has three rungs:
@@ -202,7 +212,9 @@ Each method makes explicit assumptions about the data-generating process. These 
 ## Common Pitfalls in Causal Thinking
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Each of these pitfalls can lead to completely wrong policy recommendations. Real-world consequences include wasted budgets, harmful interventions, and flawed regulatory decisions.
+
 </div>
 
 ### Pitfall 1: Confusing statistical significance with causation
@@ -225,6 +237,7 @@ We can never simultaneously observe both potential outcomes for the same unit. T
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 
 ```python
@@ -276,7 +289,9 @@ The naive model overstates the benefit of exercise because healthier people exer
 ## Connections
 
 <div class="callout-info">
+
 <strong>How this connects to the rest of the course:</strong>
+
 </div>
 
 - **Builds on:** Basic statistics, regression, probability

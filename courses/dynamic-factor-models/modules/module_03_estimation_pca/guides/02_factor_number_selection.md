@@ -123,6 +123,7 @@ Bai-Ng criteria account for large-$N$ asymptotics where factors converge at $\sq
 Plot eigenvalues in descending order. Look for an "elbow" where eigenvalues flatten:
 
 ```
+
 Eigenvalue
     |
   5 |●
@@ -201,6 +202,7 @@ Information criteria approximate leave-one-out cross-validation error. For facto
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">factornumberselector.py</span>
+
 </div>
 
 ```python
@@ -604,6 +606,7 @@ print(f"\n  True value: r = {r_true}")
 ### Output (Representative)
 
 ```
+
 Simulating data with r=4 true factors...
 Data shape: (300, 80)
 True number of factors: 4
@@ -780,6 +783,7 @@ Selecting the number of factors is a model selection problem requiring trade-off
 <div class="flow-step blue">2. Scree plots:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step amber">3. Eigenvalue ratios:</div>
+
 </div>
 
 

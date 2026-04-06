@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide covers the core concepts of captum insights: interactive web-based visualization.
+
 </div>
 
 ---
@@ -46,6 +48,7 @@ Captum Insights requires Flask and additional dependencies:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.sh</span>
+
 </div>
 <div class="code-body">
 
@@ -56,6 +59,7 @@ pip install captum flask flask-compress
 ```
 
 </div>
+
 </div>
 
 ---
@@ -68,6 +72,7 @@ The main class is `AttributionVisualizer`, which wraps your model and attributio
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -86,6 +91,7 @@ visualizer = AttributionVisualizer(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -96,6 +102,7 @@ visualizer = AttributionVisualizer(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -138,6 +145,7 @@ image_feature = ImageFeature(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -146,7 +154,9 @@ image_feature = ImageFeature(
 
 Captum Insights expects an iterable of `Batch` objects:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Captum Insights expects an iterable of `Batch` objects:
+
 </div>
 
 
@@ -154,6 +164,7 @@ Captum Insights expects an iterable of `Batch` objects:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -177,6 +188,7 @@ def load_imagenet_samples(image_dir: str, transform, class_names: list, n=20):
 ```
 
 </div>
+
 </div>
 
 For a quick demo with synthetic images:
@@ -185,6 +197,7 @@ For a quick demo with synthetic images:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -208,6 +221,7 @@ def synthetic_image_dataset(n_batches=10, n_classes=10):
 ```
 
 </div>
+
 </div>
 
 ---
@@ -218,6 +232,7 @@ def synthetic_image_dataset(n_batches=10, n_classes=10):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -236,6 +251,7 @@ visualizer.serve(debug=False, port=5001)
 ```
 
 </div>
+
 </div>
 
 Navigate to `http://localhost:5001` in your browser to access the Insights dashboard.
@@ -246,6 +262,7 @@ Navigate to `http://localhost:5001` in your browser to access the Insights dashb
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -258,6 +275,7 @@ widget.render()
 ```
 
 </div>
+
 </div>
 
 ---
@@ -286,6 +304,7 @@ Run two attribution methods simultaneously and view side by side.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+
 </div>
 <div class="code-body">
 
@@ -318,6 +337,7 @@ text_visualizer = AttributionVisualizer(
 ```
 
 </div>
+
 </div>
 
 ---
@@ -347,11 +367,13 @@ Captum Insights is designed for local development and exploration, not productio
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "What Is Captum Insights?" and why it matters in practice.
 
 2. Given a real-world scenario involving captum insights: interactive web-based visualization, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

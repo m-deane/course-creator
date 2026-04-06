@@ -462,7 +462,7 @@ def _render_mixed_content(text: str):
         chunk = "\n".join(html_buffer).strip()
         html_buffer.clear()
         if chunk:
-            styled_html(chunk)
+            _render_html_component(chunk)
 
     for line in lines:
         stripped = line.strip()
@@ -493,6 +493,33 @@ def _render_mixed_content(text: str):
     flush_markdown()
     if html_buffer:
         flush_html()
+
+
+def _render_html_component(chunk: str):
+    """Render an HTML component block. For code-windows, extract the fenced
+    code and render the header via styled_html() + code via st.code().
+    For other components (callouts, flows, comparisons), render via styled_html()."""
+    if 'class="code-window"' in chunk:
+        # Extract code fence from the code-window
+        fence_match = re.search(r'```(\w*)\n(.*?)```', chunk, re.DOTALL)
+        if fence_match:
+            lang = fence_match.group(1) or 'python'
+            code = fence_match.group(2).rstrip('\n')
+
+            # Render the header (everything before the code fence)
+            header_html = chunk[:fence_match.start()].strip()
+            # Remove trailing blank lines from header
+            if header_html:
+                styled_html(header_html + '\n</div>')
+
+            # Render the code with syntax highlighting
+            st.code(code, language=lang)
+        else:
+            # No code fence found — render as-is
+            styled_html(chunk)
+    else:
+        # Callouts, flows, comparisons — render as styled HTML
+        styled_html(chunk)
 
 
 def _render_markdown_chunk(text: str):

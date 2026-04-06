@@ -23,11 +23,18 @@ math: mathjax
 The core operation: decomposing a covariance matrix to separate **signal** (common factors) from **noise** (idiosyncratic variation).
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Covariance Matrix\n$$\Sigma_X$$"] --> B["Eigendecomposition\n$$V \Lambda V'$$"]
     B --> C["Large Eigenvalues\n= Signal (Factors)"]
     B --> D["Small Eigenvalues\n= Noise (Idiosyncratic)"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -71,6 +78,7 @@ For a covariance matrix:
 - The **largest eigenvalues** capture the most important variation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Covariance Matrix Decomposition"
         direction LR
@@ -80,6 +88,12 @@ flowchart TD
     L1["$$\lambda_1$$ = large\n(important)"] --> E1
     L2["$$\lambda_2$$ = small\n(less important)"] --> E2
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -102,6 +116,12 @@ def eigendecomposition_symmetric(A):
     return eigenvalues, eigenvectors
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 > **Warning:** `np.linalg.eigh` returns ascending order -- always sort descending for PCA!
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
@@ -119,6 +139,12 @@ print(f"Eigenvalues: {eigenvalues}")
 print(f"Sum of eigenvalues (=trace): {eigenvalues.sum():.4f}")
 print(f"Trace of cov matrix: {np.trace(cov_matrix):.4f}")
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 > 🔑 The sum of eigenvalues always equals the trace (total variance).
 
@@ -200,6 +226,7 @@ where $\lambda_i$ are eigenvalues of $X'X$
 <div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TB
     X["Data Matrix X\n(T x N)"] --> SVD["SVD\nX = U S V'"]
     SVD --> V["V columns\n= Loadings\n(variable space)"]
@@ -317,6 +344,12 @@ $$\Sigma_X = \Lambda\Lambda' + \Sigma_e \quad \text{must be PSD}$$
 
 **Check PD:**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_positive_definite.py</span>
+</div>
+
 ```python
 def check_positive_definite(A, tol=1e-10):
     eigenvalues = np.linalg.eigvalsh(A)
@@ -326,9 +359,17 @@ def check_positive_definite(A, tol=1e-10):
 ```
 
 </div>
+
+</div>
 <div>
 
 **Make PD:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">make_positive_definite.py</span>
+</div>
 
 ```python
 def make_positive_definite(A,
@@ -342,6 +383,14 @@ def make_positive_definite(A,
 ```
 
 </div>
+
+</div>
+</div>
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
 </div>
 
 ```python
@@ -349,6 +398,8 @@ A = np.array([[1, 0.9, 0.9], [0.9, 1, 0.9], [0.9, 0.9, 1]])
 is_pd, min_eig = check_positive_definite(A)
 print(f"Is PD: {is_pd}, min eigenvalue: {min_eig:.4f}")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -415,6 +466,7 @@ $$a'Xa = \text{tr}(a'Xa) = \text{tr}(Xaa')$$
 # Factor Model Decomposition Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Raw Data\nX (T x N)"] --> B["Center\nX - mean"]
     B --> C{"Choose Method"}

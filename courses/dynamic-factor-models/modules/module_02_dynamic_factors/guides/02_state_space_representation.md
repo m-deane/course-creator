@@ -1,12 +1,29 @@
 # State-Space Representation of Dynamic Factor Models
 
+> **Reading time:** ~15 min | **Module:** Module 2: Dynamic Factors | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** The state-space form provides a unified framework for dynamic factor models, expressing them as two equations: a measurement equation linking observables to latent states, and a transition equation governing state evolution. This representation enables the Kalman filter for optimal factor estimat...
+
+</div>
+
 ## In Brief
 
 The state-space form provides a unified framework for dynamic factor models, expressing them as two equations: a measurement equation linking observables to latent states, and a transition equation governing state evolution. This representation enables the Kalman filter for optimal factor estimation and likelihood computation.
 
-> 💡 **Key Insight:** Every dynamic factor model can be written in state-space form, which separates what we observe from what we don't. The "state" contains all the information needed to predict the future—current and lagged factors. The state-space formulation is not just mathematical convenience; it's the gateway to optimal estimation via the Kalman filter, handling missing data, forecasting, and computing likelihoods for parameter estimation.
+<div class="callout-insight">
 
+**Insight:** Every dynamic factor model can be written in state-space form, which separates what we observe from what we don't. The "state" contains all the information needed to predict the future—current and lagged factors. The state-space formulation is not just mathematical convenience; it's the gateway to optimal estimation via the Kalman filter, handling missing data, forecasting, and computing likelihoods for parameter estimation.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Generic State-Space Model
 
@@ -38,6 +55,17 @@ $$\alpha_1 \sim N(a_1, P_1)$$
 | $Q$ | $q \times q$ | Innovation covariance |
 
 ### Key Assumptions
+
+<div class="flow">
+<div class="flow-step mint">1. Gaussian Innovations...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Time Invariance:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Independence:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Serial Independence:</div>
+</div>
+
 
 1. **Gaussian Innovations:** $\epsilon_t$ and $\eta_t$ are normally distributed
 2. **Time Invariance:** Matrices $Z, T, H, Q, R$ do not depend on $t$ (standard form)
@@ -226,6 +254,12 @@ print(T)
 
 ### Simulating from State-Space Form
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">simulate_statespace.py</span>
+</div>
+
 ```python
 def simulate_statespace(Z, H, T, R, Q, T_periods, alpha_0=None, P_0=None):
     """
@@ -307,6 +341,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 5. Special Cases and Extensions
@@ -355,6 +391,12 @@ State-space representation handles missing data elegantly:
 - No need for imputation or balanced panels
 
 **Implementation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Mark missing values as np.nan
 y_sim[50:60, 3] = np.nan  # Variable 3 missing for periods 50-60
@@ -362,6 +404,8 @@ y_sim[100:110, [5, 7]] = np.nan  # Variables 5 and 7 missing
 
 # Kalman filter will skip these observations in the update step
 ```
+
+</div>
 
 ---
 
@@ -548,7 +592,13 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 ### Implementation
 
 7. **Build State-Space from Scratch**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # Specifications:
    # - N = 15 variables
    # - r = 3 factors
@@ -562,8 +612,16 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
    # 4. Check stationarity of T
    ```
 
+</div>
+
 8. **Simulate and Reconstruct**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # 1. Simulate 500 periods from state-space model
    # 2. Given only simulated y (not states), verify:
    #    - Sample covariance matches implied covariance
@@ -571,13 +629,23 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
    # 3. Compare to direct DFM simulation (without state-space)
    ```
 
+</div>
+
 9. **Missing Data Handling**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # 1. Simulate data with 20% missing values (random)
    # 2. Implement simple Kalman filter (next guide preview)
    # 3. Show that factor estimates still converge
    # 4. Compare to listwise deletion approach
    ```
+
+</div>
 
 ### Extension
 
@@ -595,6 +663,12 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
     - What complications arise for identification?
 
 ---
+
+<div class="callout-insight">
+
+**Insight:** Understanding state-space representation of dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
 
 ## Further Reading
 
@@ -622,3 +696,42 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 ---
 
 **Next Guide:** Kalman Filter Derivation - optimal recursive estimation of the state vector with full mathematical intuition.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_state_space_representation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_kalman_filter_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_from_static_to_dynamic.md">
+  <div class="link-card-title">01 From Static To Dynamic</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_kalman_filter_derivation.md">
+  <div class="link-card-title">03 Kalman Filter Derivation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

@@ -1,12 +1,29 @@
 # The Factor Model Identification Problem
 
+> **Reading time:** ~9 min | **Module:** Module 1: Static Factors | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** Factor models are not uniquely identified: any invertible transformation of factors and loadings produces observationally equivalent models. This means estimated factors and loadings can be rotated, scaled, or reordered arbitrarily without changing the model's predictions. Identification requires...
+
+</div>
+
 ## In Brief
 
 Factor models are not uniquely identified: any invertible transformation of factors and loadings produces observationally equivalent models. This means estimated factors and loadings can be rotated, scaled, or reordered arbitrarily without changing the model's predictions. Identification requires imposing normalization constraints.
 
-> 💡 **Key Insight:** If you multiply factors by a matrix H and loadings by H^(-1), you get a different but statistically indistinguishable model. This is the **rotational indeterminacy** problem. Without constraints, there are infinitely many equally valid factor representations. Interpretation requires choosing a specific normalization, and different normalizations give different factors.
+<div class="callout-insight">
 
+**Insight:** If you multiply factors by a matrix H and loadings by H^(-1), you get a different but statistically indistinguishable model. This is the **rotational indeterminacy** problem. Without constraints, there are infinitely many equally valid factor representations. Interpretation requires choosing a specific normalization, and different normalizations give different factors.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Fundamental Identification Problem
 
@@ -22,6 +39,17 @@ These produce identical observables:
 $$X_t = \Lambda F_t = \Lambda (H H^{-1}) F_t = (\Lambda H)(H^{-1} F_t) = \tilde{\Lambda} \tilde{F}_t$$
 
 ### Implications
+
+<div class="flow">
+<div class="flow-step mint">1. Non-uniqueness:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Arbitrary rotations:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Arbitrary scaling:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Arbitrary ordering:</div>
+</div>
+
 
 1. **Non-uniqueness:** Infinitely many $(F, \Lambda)$ pairs fit the data equally well
 2. **Arbitrary rotations:** Factors can be rotated in factor space without changing fit
@@ -162,6 +190,12 @@ With normalization:
 
 ### Demonstrating Rotational Indeterminacy
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -230,7 +264,15 @@ plt.show()
 print("\nFactors are completely different, but X is identical!")
 ```
 
+</div>
+
 ### Implementing PCA Normalization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">pca_normalization.py</span>
+</div>
 
 ```python
 def pca_normalization(X, r):
@@ -290,7 +332,15 @@ print("\nEstimated loading matrix:")
 print(Lambda_hat.round(3))
 ```
 
+</div>
+
 ### Sign Normalization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sign_normalize.py</span>
+</div>
 
 ```python
 def sign_normalize(F, Lambda, reference_variables):
@@ -335,6 +385,8 @@ print("Sign-normalized loadings (first 3 variables):")
 print(Lambda_signed[:3, :].round(3))
 ```
 
+</div>
+
 ---
 
 ## 6. Identification in Practice
@@ -349,6 +401,12 @@ print(Lambda_signed[:3, :].round(3))
 6. **Label factors:** Assign economic meanings based on loadings
 
 ### Example: Macro Factor Identification
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # After PCA extraction
@@ -374,6 +432,8 @@ for j in range(r):
 # Factor 1: GDP, Employment, Hours, Investment → "Real Activity"
 # Factor 2: CPI, PPI, Wages → "Inflation"
 ```
+
+</div>
 
 ---
 
@@ -441,6 +501,12 @@ for j in range(r):
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding the factor model identification problem is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 ### Foundational
@@ -465,3 +531,42 @@ for j in range(r):
 ---
 
 **Key Takeaway:** Factor models describe covariance structure but don't uniquely identify factors without constraints. PCA normalization is conventional and convenient, but interpretation requires economic judgment and careful sign/label choices.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_identification_problem_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_static_factor_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_factor_model_specification.md">
+  <div class="link-card-title">01 Factor Model Specification</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_approximate_factor_models.md">
+  <div class="link-card-title">03 Approximate Factor Models</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

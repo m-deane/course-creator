@@ -21,6 +21,7 @@ math: mathjax
 > The Kalman filter naturally handles mixed frequencies by skipping the update step when observations are missing.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     MO["Monthly Data\n(always observed)"] --> KF["Kalman Filter"]
     QO["Quarterly Data\n(every 3rd month)"] --> KF
@@ -29,6 +30,12 @@ flowchart LR
     FACTORS --> FORE["Forecast\nFuture Quarters"]
     MISS["Missing Q obs\n(months 1, 2)"] -.->|"Skip update"| KF
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -66,6 +73,7 @@ $$X_t^{(Q)} = \Lambda^{(Q)} F_t + e_t^{(Q)}$$
 **Observation:** $Y_t = Z_t \alpha_t + \varepsilon_t$ (note: $Z_t$ is **time-varying**)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "State Vector alpha_t"
         F0["F_t (current)"]
@@ -83,6 +91,12 @@ flowchart TD
     F1 --> ZQ
     F2 --> ZQ
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -107,6 +121,7 @@ Quarterly: -    -    Q1   -    -    ?   (Q2 pending)
 **Solution:** The Kalman filter operates in two modes:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PRED["PREDICT\n(always active)\nPropagate factor\nforward using dynamics"]
     UPDATE["UPDATE\n(only when data available)\nCorrect prediction\nusing new information"]
@@ -118,6 +133,12 @@ flowchart TD
     FULL --> PRED
     SKIP --> PRED
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -187,6 +208,12 @@ class MixedFrequencyDFM:
         self.T[2, 1] = 1     # F_{t-2} = F_{t-1} (lagged)
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -229,6 +256,12 @@ def kalman_filter(self, data_monthly, data_quarterly, quarterly_periods):
 
 # Kalman Filter with Mixed Frequency (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
         # Remove NaN observations
@@ -241,6 +274,8 @@ def kalman_filter(self, data_monthly, data_quarterly, quarterly_periods):
         K_t = P_pred @ Z_t.T @ inv(F_t)        # Kalman gain
         state_filt = state_pred + K_t @ v_t     # Filtered state
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -255,6 +290,7 @@ def kalman_filter(self, data_monthly, data_quarterly, quarterly_periods):
 # EM Algorithm for Mixed-Frequency DFM
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize Parameters\n(PCA on monthly data)"]
     INIT --> E["E-Step: Kalman Smoother\nE[F_t|Y_{1:T}] and E[F_t F_t'|Y_{1:T}]"]
@@ -284,6 +320,7 @@ flowchart TD
 **Goal:** Estimate current quarter GDP before all data is available.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Information Available"
         M1["Month 1\nof quarter"]
@@ -307,6 +344,12 @@ where $j \in \{1, 2, 3\}$ = months into quarter.
 
 # Real-Time Nowcasting Code
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nowcast_with_ragged_edge.py</span>
+</div>
+
 ```python
 def nowcast_with_ragged_edge(model, historical_monthly,
                               historical_quarterly,
@@ -323,10 +366,18 @@ def nowcast_with_ragged_edge(model, historical_monthly,
     quarterly_periods[len(historical_monthly):] = False
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Real-Time Nowcasting Code (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -339,6 +390,8 @@ def nowcast_with_ragged_edge(model, historical_monthly,
     factor_sum = state_filtered[idx-2:idx+1, 0].sum()
     return model.Z_quarterly[0, 0] * factor_sum
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -377,6 +430,7 @@ def nowcast_with_ragged_edge(model, historical_monthly,
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TA["Temporal Aggregation\n(Guide 1)"] --> SS["State-Space MF-DFM\n(this guide)"]
     MIDAS["MIDAS Regression\n(Guide 2)"] --> SS

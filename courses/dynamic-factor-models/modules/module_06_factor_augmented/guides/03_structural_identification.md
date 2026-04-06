@@ -1,12 +1,29 @@
 # Structural Identification in Factor-Augmented Models
 
+> **Reading time:** ~17 min | **Module:** Module 6: Factor Augmented | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Structural identification in FAVARs recovers economically meaningful shocks from reduced-form innovations by imposing theory-based restrictions. This enables causal analysis of policy interventions, business cycle shocks, and financial disturbances across hundreds of economic variables, revealing...
+
+</div>
+
 ## In Brief
 
 Structural identification in FAVARs recovers economically meaningful shocks from reduced-form innovations by imposing theory-based restrictions. This enables causal analysis of policy interventions, business cycle shocks, and financial disturbances across hundreds of economic variables, revealing transmission mechanisms invisible in small VARs.
 
-> 💡 **Key Insight:** Reduced-form FAVAR residuals are linear combinations of structural shocks. Without restrictions, infinitely many structural interpretations exist. Identification schemes—recursive orderings, sign restrictions, external instruments, or high-frequency surprises—use economic theory to isolate specific shocks and trace their propagation through the entire economy via factor responses.
+<div class="callout-insight">
 
+**Insight:** Reduced-form FAVAR residuals are linear combinations of structural shocks. Without restrictions, infinitely many structural interpretations exist. Identification schemes—recursive orderings, sign restrictions, external instruments, or high-frequency surprises—use economic theory to isolate specific shocks and trace their propagation through the entire economy via factor responses.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Identification Problem
 
@@ -219,6 +236,12 @@ Structural Shock              State Variables              All Variables
 ## 5. Code Implementation
 
 ### Structural FAVAR Class
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">structuralfavar.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -661,7 +684,15 @@ class StructuralFAVAR:
         return eps
 ```
 
+</div>
+
 ### Example: Monetary Policy Shock
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -760,6 +791,8 @@ print(f"\nEstimated impact matrix (Cholesky):\n{sfavar_chol.B_}")
 print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 ```
 
+</div>
+
 ---
 
 ## 6. Common Pitfalls
@@ -855,6 +888,12 @@ print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding structural identification in factor-augmented models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## 9. Further Reading
 
 ### Identification Theory
@@ -896,3 +935,42 @@ print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 
 - **Ramey, V.A. (2016).** "Macroeconomic Shocks and Their Propagation." *Handbook of Macroeconomics*, Vol 2A, 71-162.
   - Survey of identification strategies across methods
+
+---
+
+## Conceptual Practice Questions
+
+1. What happens if you skip the identification step in a factor model? Describe the practical consequence.
+
+2. Compare the PC1 normalization and lower-triangular restrictions. When would you prefer each?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_structural_identification_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_diffusion_index_forecasting.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_diffusion_index_forecasting.md">
+  <div class="link-card-title">01 Diffusion Index Forecasting</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_favar_models.md">
+  <div class="link-card-title">02 Favar Models</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

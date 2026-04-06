@@ -1,12 +1,29 @@
 # Nowcasting Practice: Real-Time Evaluation and Implementation
 
+> **Reading time:** ~16 min | **Module:** Module 5: Mixed Frequency | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Nowcasting GDP and other key economic indicators requires careful handling of real-time data flows, publication lags, and data revisions. This guide covers practical implementation including ragged-edge handling, real-time forecast evaluation using Root Mean Squared Forecast Error (RMSFE), and op...
+
+</div>
+
 ## In Brief
 
 Nowcasting GDP and other key economic indicators requires careful handling of real-time data flows, publication lags, and data revisions. This guide covers practical implementation including ragged-edge handling, real-time forecast evaluation using Root Mean Squared Forecast Error (RMSFE), and operational considerations for production nowcasting systems.
 
-> 💡 **Key Insight:** The fundamental challenge in real-time nowcasting is not model specification but data management: tracking what information was actually available at each historical forecast origin, accounting for publication lags and revisions, and evaluating forecasts using the vintage of data that would have been used in practice. Ignoring this leads to misleading backtests that overstate actual forecast performance.
+<div class="callout-insight">
 
+**Insight:** The fundamental challenge in real-time nowcasting is not model specification but data management: tracking what information was actually available at each historical forecast origin, accounting for publication lags and revisions, and evaluating forecasts using the vintage of data that would have been used in practice. Ignoring this leads to misleading backtests that overstate actual forecast performance.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Real-Time Data Problem
 
@@ -15,6 +32,17 @@ Nowcasting GDP and other key economic indicators requires careful handling of re
 **Data Vintage:** The dataset available at a specific point in time.
 
 **Key Issues:**
+<div class="flow">
+<div class="flow-step mint">1. Publication lags:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Revisions:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Different publicatio...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Ragged edge:</div>
+</div>
+
+
 1. **Publication lags:** GDP for Q1 2024 released in April 2024, not March
 2. **Revisions:** Initial releases revised in subsequent months/years
 3. **Different publication schedules:** Monthly vs quarterly vs annual data
@@ -48,6 +76,12 @@ Consider nowcasting Q1 2024 GDP on March 15, 2024:
 - Results: Realistic assessment of forecast accuracy
 
 ### Code Implementation: Vintage Tracker
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">vintagedatamanager.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -162,6 +196,8 @@ print(f"  Latest IP: {ip_available.index[-1].date()} (value: {ip_available.iloc[
 print(f"  Latest GDP: {gdp_available.index[-1]} (value: {gdp_available.iloc[-1]:.2f})")
 ```
 
+</div>
+
 ---
 
 ## 2. Ragged-Edge Handling
@@ -198,6 +234,12 @@ GDP             Quarterly    Q4 2023
 - Simple but wasteful
 
 ### Code Implementation: Ragged-Edge Dataset
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">raggededgedataset.py</span>
+</div>
 
 ```python
 class RaggedEdgeDataset:
@@ -315,6 +357,8 @@ print(f"\nMonthly data shape: {aligned['monthly'].shape}")
 print(f"Quarterly data shape: {aligned['quarterly'].shape}")
 ```
 
+</div>
+
 ---
 
 ## 3. Real-Time Forecast Evaluation
@@ -340,6 +384,12 @@ $$\text{RMSFE}_j = \sqrt{\frac{1}{T} \sum_{t=1}^{T} \left(Y_t - \hat{Y}_{t|t+j}\
 5. **Test statistical significance** (Diebold-Mariano test)
 
 ### Code Implementation: Real-Time Backtest
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">realtimebacktest.py</span>
+</div>
 
 ```python
 class RealTimeBacktest:
@@ -531,6 +581,8 @@ else:
     print(f"  Result: No significant difference in accuracy")
 ```
 
+</div>
+
 ---
 
 ## 4. Operational Nowcasting System
@@ -570,6 +622,12 @@ else:
 - June 30, 2024 (Q1 data + all Q2 monthly data)
 
 ### Code Implementation: Nowcast Tracker
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nowcasttracker.py</span>
+</div>
 
 ```python
 class NowcastTracker:
@@ -652,6 +710,8 @@ fig = tracker.plot_evolution(actual_value=true_value)
 plt.savefig('nowcast_evolution.png', dpi=150)
 print("Nowcast evolution plot saved to nowcast_evolution.png")
 ```
+
+</div>
 
 ---
 
@@ -805,7 +865,19 @@ The next module explores Factor-Augmented models (FAR, FAVAR), which use extract
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding nowcasting practice is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Appendix: Code Integration Example
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Complete workflow: Real-time nowcasting evaluation
@@ -871,3 +943,44 @@ plt.tight_layout()
 plt.savefig('backtest_results.png', dpi=150)
 print("\nBacktest results saved to backtest_results.png")
 ```
+
+</div>
+
+---
+
+## Conceptual Practice Questions
+
+1. What is nowcasting and why is it valuable for economic policy decisions?
+
+2. How does the information set expand as new data releases arrive within a quarter?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./04_nowcasting_practice_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_midas_regression.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_temporal_aggregation.md">
+  <div class="link-card-title">01 Temporal Aggregation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_midas_regression.md">
+  <div class="link-card-title">02 Midas Regression</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

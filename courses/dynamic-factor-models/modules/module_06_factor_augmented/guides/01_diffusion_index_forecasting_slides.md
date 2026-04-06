@@ -21,12 +21,19 @@ math: mathjax
 > With $N$ predictors and $T$ observations, if $N > T$, OLS is infeasible. Diffusion indices solve this elegantly.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RAW["Raw Data\nN = 100+ predictors\nHigh-dimensional\nCorrelated, noisy"] --> PCA["Factor Extraction\n(PCA)"]
     PCA --> FACTORS["r = 3-8 Factors\nLow-dimensional\nOrthogonal, signal"]
     FACTORS --> REG["Forecast Regression\ny_{t+h} = a + b'F_t + e"]
     REG --> FORE["h-Step Ahead\nForecast"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Method | Parameters | Overfitting | Information Used |
 |--------|:----------:|:-----------:|:----------------:|
@@ -53,6 +60,7 @@ $$\hat{F} = \sqrt{T} \cdot \text{eigenvectors}_{1:r}\left(\frac{X'X}{T}\right)$$
 $$y_{t+h} = \alpha + \sum_{j=1}^r \beta_j \hat{F}_{jt} + \varepsilon_{t+h}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     X["Panel X\n(T x N)"] --> SCALE["Standardize\n(zero mean, unit var)"]
     SCALE --> EIGEN["Eigendecomposition\nof X'X/T"]
@@ -62,6 +70,12 @@ flowchart TD
     OLS --> BETA["Coefficients\nalpha, beta_1, ..., beta_r"]
     BETA --> PRED["Forecast\ny_{T+h|T} = a + b'F_T"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -121,12 +135,19 @@ Factor estimation error **does not** affect asymptotic distribution when $N, T \
 $$\underbrace{y_{T+h} - \hat{y}_{T+h|T}}_{\text{Total error}} = \underbrace{y_{T+h} - y_{T+h}^*}_{\text{Fundamental}} + \underbrace{y_{T+h}^* - \hat{y}_{T+h|T}}_{\text{Estimation}}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     TOTAL["Total Forecast Error"] --> FUND["Fundamental Error\n(irreducible)"]
     TOTAL --> EST["Estimation Error\n(vanishes as N grows)"]
     EST --> FACTOR["Factor Error\n(vanishes fast)"]
     EST --> BETA_E["Beta Error\n(vanishes at sqrt(T))"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -160,6 +181,7 @@ $$\text{se}(\hat{y}_{T+h|T}) = \sqrt{\hat{\sigma}^2_\varepsilon \cdot (1 + \hat{
 **Residual Bootstrap** (more accurate):
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     EST["1. Estimate F, alpha, beta"] --> RES["2. Compute residuals\ne_hat = y - alpha - beta'F"]
     RES --> BOOT["3. Resample residuals\ne* ~ e_hat"]
@@ -168,6 +190,12 @@ flowchart TD
     REEST --> REPEAT["6. Repeat B times"]
     REPEAT --> QUANT["7. Compute quantiles\nfor prediction intervals"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 **95% prediction interval:** $\hat{y}_{T+h|T} \pm 1.96 \cdot \text{se}(\hat{y}_{T+h|T})$
 
@@ -201,6 +229,12 @@ class DiffusionIndexForecaster:
 
 # DiffusionIndexForecaster Class (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit.py</span>
+</div>
+
 ```python
     def fit(self, X, y):
         X_scaled = self.scaler.fit_transform(X)
@@ -217,10 +251,18 @@ class DiffusionIndexForecaster:
         return self
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Forecasting and Model Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Compare different factor counts
@@ -236,6 +278,8 @@ for n_factors in range(1, 11):
 best_r = min(results, key=lambda x: x['RMSE'])['n_factors']
 print(f"Optimal factors: {best_r}")
 ```
+
+</div>
 
 > Variance explained:
 > Factor 1 (Real activity): ~30-40%
@@ -254,6 +298,12 @@ print(f"Optimal factors: {best_r}")
 | Overfitting factor count | Too many factors | OOS validation or Bai-Ng criteria |
 | Raw data without transforms | Non-stationarity dominates | Log-differences + standardize |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG: Extract factors from all data (lookahead bias!)
 factors_all = PCA().fit_transform(X_all)
@@ -263,6 +313,8 @@ pca = PCA().fit(X_train)
 factors_train = pca.transform(X_train)
 factors_test = pca.transform(X_test)  # Training loadings only
 ```
+
+</div>
 
 <!-- Speaker notes: Emphasize these common mistakes. Ask learners if they have encountered any of these in practice. -->
 ---
@@ -290,6 +342,7 @@ factors_test = pca.transform(X_test)  # Training loadings only
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PCA["PCA / Static Factors\n(Module 1)"] --> DI["Diffusion Index\nForecasting\n(this guide)"]
     FORE["Forecasting Theory"] --> DI

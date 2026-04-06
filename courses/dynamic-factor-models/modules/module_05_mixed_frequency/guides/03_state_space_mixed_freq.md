@@ -1,12 +1,29 @@
 # State-Space Mixed-Frequency Dynamic Factor Models
 
+> **Reading time:** ~13 min | **Module:** Module 5: Mixed Frequency | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Mixed-frequency dynamic factor models in state-space form use the Kalman filter to optimally combine monthly and quarterly data, handling the "ragged edge" problem where high-frequency data extend beyond the latest low-frequency observation. This framework unifies factor extraction, nowcasting, a...
+
+</div>
+
 ## In Brief
 
 Mixed-frequency dynamic factor models in state-space form use the Kalman filter to optimally combine monthly and quarterly data, handling the "ragged edge" problem where high-frequency data extend beyond the latest low-frequency observation. This framework unifies factor extraction, nowcasting, and forecasting in a single coherent system.
 
-> 💡 **Key Insight:** The key insight is treating low-frequency observations as "missing data" in months without quarterly releases. The Kalman filter automatically handles this by skipping the update step when observations are unavailable, allowing seamless integration of all available information at any point in time.
+<div class="callout-insight">
 
+**Insight:** The key insight is treating low-frequency observations as "missing data" in months without quarterly releases. The Kalman filter automatically handles this by skipping the update step when observations are unavailable, allowing seamless integration of all available information at any point in time.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. State-Space Representation
 
@@ -114,6 +131,12 @@ $$\begin{bmatrix} X_t^{IP} \\ X_t^{EMP} \\ X_t^{GDP} \end{bmatrix} = \begin{bmat
 Note the third row sums factors (flow aggregation).
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">mixedfrequencydfm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -352,6 +375,8 @@ print(f"\nQ2 Nowcast (using months 4-5): {q2_nowcast:.3f}")
 print(f"Q2 Actual: {q2_actual:.3f}")
 ```
 
+</div>
+
 ---
 
 ## 4. Maximum Likelihood Estimation
@@ -370,11 +395,26 @@ Since we have missing data (unobserved factors + missing quarterly observations)
 ### Handling Parameter Constraints
 
 Aggregation constraint $\Lambda^{(Q)} = C \Lambda^{(H)}$ can be:
+<div class="flow">
+<div class="flow-step mint">1. Imposed:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Tested:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Relaxed:</div>
+</div>
+
+
 1. **Imposed:** Enforce in M-step (constrained regression)
 2. **Tested:** Estimate freely, test restriction
 3. **Relaxed:** Allow separate loadings if data strongly reject
 
 ### Code Implementation Sketch
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">em_algorithm_mixed_freq.py</span>
+</div>
 
 ```python
 def em_algorithm_mixed_freq(data_monthly, data_quarterly, quarterly_periods,
@@ -416,6 +456,8 @@ def em_algorithm_mixed_freq(data_monthly, data_quarterly, quarterly_periods,
     return params, factors_smoothed
 ```
 
+</div>
+
 ---
 
 ## 5. Nowcasting with Ragged Edge
@@ -447,6 +489,12 @@ As more monthly data arrives within quarter:
 The Kalman filter automatically weights new information based on its signal-to-noise ratio.
 
 ### Code Example: Real-Time Nowcasting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nowcast_with_ragged_edge.py</span>
+</div>
 
 ```python
 def nowcast_with_ragged_edge(model, historical_monthly, historical_quarterly,
@@ -531,6 +579,8 @@ for n_months in [1, 2, 3]:
     print(f"  Error:   {nowcast - actual:.3f}")
 ```
 
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -607,6 +657,12 @@ for n_months in [1, 2, 3]:
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding state-space mixed-frequency dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 **Key Takeaways:**
@@ -617,3 +673,42 @@ for n_months in [1, 2, 3]:
 
 **Next Steps:**
 The final guide covers nowcasting practice, including ragged-edge evaluation, real-time forecast assessment using RMSFE, and practical considerations for operational nowcasting systems.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_state_space_mixed_freq_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_midas_regression.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_temporal_aggregation.md">
+  <div class="link-card-title">01 Temporal Aggregation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_midas_regression.md">
+  <div class="link-card-title">02 Midas Regression</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

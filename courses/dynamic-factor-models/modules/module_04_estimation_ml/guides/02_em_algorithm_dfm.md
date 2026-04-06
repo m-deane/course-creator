@@ -1,12 +1,31 @@
 # EM Algorithm for Dynamic Factor Models
 
+> **Reading time:** ~12 min | **Module:** Module 4: Estimation Ml | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Expectation-Maximization (EM) algorithm provides an iterative approach to maximum likelihood estimation that treats the latent factors as missing data. It alternates between computing expected sufficient statistics given current parameters (E-step via Kalman smoother) and maximizing the expec...
+
+</div>
+
 ## In Brief
 
 The Expectation-Maximization (EM) algorithm provides an iterative approach to maximum likelihood estimation that treats the latent factors as missing data. It alternates between computing expected sufficient statistics given current parameters (E-step via Kalman smoother) and maximizing the expected complete-data log-likelihood (M-step with closed-form updates).
 
-> 💡 **Key Insight:** Direct maximization of the likelihood is challenging because factors are latent. The EM algorithm's brilliance is treating factors as "missing data" - if we knew the factors, ML estimation would be trivial (just regression). So we iterate: (1) pretend we know the factors by using their conditional expectations, (2) update parameters as if those expectations were true, (3) repeat until convergence. Each iteration is guaranteed to increase the likelihood.
+<div class="callout-insight">
 
+**Insight:** Direct maximization of the likelihood is challenging because factors are latent. The EM algorithm's brilliance is treating factors as "missing data" - if we knew the factors, ML estimation would be trivial (just regression). So we iterate: (1) pretend we know the factors by using their conditional expectations, (2) update parameters as if those expectations were true, (3) repeat until convergence. Each iteration is guaranteed to increase the likelihood.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -28,8 +47,6 @@ $$\theta^{(k+1)} = \arg\max_\theta Q(\theta | \theta^{(k)})$$
 **Theorem:** EM guarantees $\log L(\theta^{(k+1)}) \geq \log L(\theta^{(k)})$ (non-decreasing likelihood).
 
 ---
-
-## Intuitive Explanation
 
 ### The Missing Data Perspective
 
@@ -165,6 +182,12 @@ $$\|\theta^{(k+1)} - \theta^{(k)}\| < \delta$$
 ## Code Implementation
 
 ### Complete EM Algorithm
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">emdynamicfactormodel.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -530,6 +553,8 @@ if __name__ == '__main__':
     plt.show()
 ```
 
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -608,6 +633,12 @@ if __name__ == '__main__':
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding em algorithm for dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - **Dempster, Laird & Rubin (1977).** "Maximum Likelihood from Incomplete Data via the EM Algorithm." *Journal of the Royal Statistical Society: Series B* 39(1), 1-38.
@@ -624,3 +655,42 @@ if __name__ == '__main__':
 
 - **Banbura & Modugno (2014).** "Maximum Likelihood Estimation of Factor Models on Datasets with Arbitrary Pattern of Missing Data." *Journal of Applied Econometrics* 29(1), 133-160.
   - EM with realistic missing data patterns
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_em_algorithm_dfm_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_em_algorithm_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_mle_via_kalman.md">
+  <div class="link-card-title">01 Mle Via Kalman</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_bayesian_dfm.md">
+  <div class="link-card-title">03 Bayesian Dfm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

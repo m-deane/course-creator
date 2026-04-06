@@ -21,6 +21,7 @@ math: mathjax
 > Standard PCA extracts factors from $X$ without using $y$. 3PRF innovates by using $y$ in all three passes.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Standard Diffusion Index"
         A1["X (predictors)"] --> A2["PCA on X"]
@@ -44,6 +45,12 @@ flowchart TD
     end
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 **Key difference:** 3PRF factors are extracted from forecast space, not predictor space.
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
@@ -62,6 +69,7 @@ For each predictor $j = 1, ..., N$, run:
 $$y_{t+h} = \mu_j + \phi_j y_t + \beta_j X_{jt} + \varepsilon_{jt}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "N Individual Regressions"
         X1["X₁"] --> R1["y_{t+h} = μ₁ + φ₁y_t + β₁X₁ₜ"] --> Y1["ŷ₁ₜ"]
@@ -72,6 +80,12 @@ flowchart LR
     Y2 --> MAT
     YN --> MAT
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 **Purpose:** Quantify each predictor's individual forecasting power.
 
@@ -90,12 +104,19 @@ $$\hat{Y} = \hat{G} \hat{H}' + \text{residuals}$$
 - $L$: number of factors (typically 2-5)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     YHAT["Forecast Matrix Ŷ\n(T × N)\nEach column = one predictor's forecast"] --> PCA["PCA on Ŷ"]
     PCA --> G["Forecasting Factors G\n(T × L)"]
     PCA --> H["Loadings H\n(N × L)"]
     G --> INTERP["Interpretation:\nCommon patterns across\nindividual forecasts"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 **Intuition:** If multiple predictors forecast $y$ similarly, they share an underlying factor. Pass 2 finds these common "narratives."
 
@@ -111,11 +132,18 @@ $$y_{t+h} = \alpha + \gamma' \hat{G}_t + u_t$$
 $$\hat{y}_{T+h|T} = \hat{\alpha} + \hat{\gamma}' \hat{G}_T$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     G["Forecasting\nFactors G_T"] --> REG["OLS:\ny_{t+h} = α + γ'G_t + u_t"]
     REG --> FORECAST["Final Forecast\nŷ_{T+h|T} = α̂ + γ̂'G_T"]
     FORECAST --> EVAL["Evaluate\nRMSE, R²"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 **Optional extension:** Include both factors and selected individual predictors:
 $$y_{t+h} = \alpha + \gamma' \hat{G}_t + \sum_{j \in S} \delta_j X_{jt} + u_t$$
@@ -141,6 +169,7 @@ $$y_{t+h} = \alpha + \gamma' \hat{G}_t + \sum_{j \in S} \delta_j X_{jt} + u_t$$
 | **Pass 3** | Final decision | Weight narratives by historical accuracy |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Pass 1 Narratives"
         N1["Group 1: Financial indicators\n'We predict recession'"]
@@ -190,6 +219,12 @@ $$y_{t+h} = F_t' \beta + u_t, \quad X_{jt} = F_t' \lambda_j + e_{jt}$$
 
 # ThreePassRegressionFilter Class (Core)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">threepassregressionfilter.py</span>
+</div>
+
 ```python
 class ThreePassRegressionFilter:
     def __init__(self, n_factors=3, horizon=1, include_ar=True):
@@ -203,10 +238,18 @@ class ThreePassRegressionFilter:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # ThreePassRegressionFilter Class (Core) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
         # PASS 1: N univariate regressions
@@ -228,12 +271,15 @@ class ThreePassRegressionFilter:
         return self
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Method Comparison Results
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Typical RMSE Rankings"
         BEST["3PRF\n(best when factors\npredict y)"]
@@ -245,6 +291,12 @@ flowchart LR
     BEST --> SECOND --> THIRD --> FOURTH --> FIFTH
 ```
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_methods.py</span>
+</div>
+
 ```python
 def compare_methods(X_train, y_train, X_test, y_test):
     results = {}
@@ -255,6 +307,8 @@ def compare_methods(X_train, y_train, X_test, y_test):
     # Diffusion index, LASSO, AR(1) ...
     return results
 ```
+
+</div>
 
 > Rankings vary by dataset. Always compare to simple benchmarks.
 
@@ -278,6 +332,7 @@ def compare_methods(X_train, y_train, X_test, y_test):
 | Inconsistent standardization | Scale mismatch in prediction | Apply same transforms in fit and predict |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Choose 3PRF\nSpecification"] --> Q1{"Include\nAR terms?"}
     Q1 -->|"Persistent y"| YES["Yes: y_{t+h} = μ + φy_t + βX_jt"]
@@ -316,6 +371,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DI["Diffusion Index\n(Module 6)"] --> TPF["Three-Pass Filter\n(this guide)"]
     TARGET["Targeted Predictors\n(Guide 2)"] --> TPF

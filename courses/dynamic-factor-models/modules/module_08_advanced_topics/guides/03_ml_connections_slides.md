@@ -21,6 +21,7 @@ math: mathjax
 > Factor models and neural networks solve the same problem: find low-dimensional structure in high-dimensional data.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Traditional (Econometrics)"
         X1["X (N dim)"] --> PCA["PCA / Factor Model\nX = ΛF + e"]
@@ -34,6 +35,12 @@ flowchart LR
     end
     PCA -.->|"Equivalent\n(tied weights)"| ENC
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 **Trade-off:** Traditional methods provide statistical theory (SEs, tests, interpretability). ML relaxes linearity but sacrifices interpretability.
 
@@ -59,6 +66,7 @@ $$\min_{\Lambda, F} \sum_t \|X_t - \Lambda F_t\|^2 \quad \text{s.t. } \Lambda^T\
 **Theorem:** With tied weights ($W_2 = W_1$) and orthogonality on $W_1$, these are equivalent. Columns of $W$ are eigenvectors of $\Sigma_X$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OBJ["min ||X - WW'X||²"] --> DERIV["∂L/∂W = 0"]
     DERIV --> EIGEN["Σ_X W = Σ_X W W'W"]
@@ -66,6 +74,12 @@ flowchart TD
     CONSTRAINT -->|"Yes (tied + ortho)"| PCA_SOL["W = eigenvectors(Σ_X)\n= PCA solution"]
     CONSTRAINT -->|"No (untied)"| AE_SOL["Non-unique solution\n(same span, different basis)"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -98,6 +112,12 @@ class LinearAutoencoder(nn.Module):
         return reconstructed, latent
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
 
@@ -118,6 +138,7 @@ class LinearAutoencoder(nn.Module):
 - Interaction effects and thresholds
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Linear Factor Model"
         LF["Factor F_t"] --> LX1["X₁ = λ₁F + e₁\n(linear)"]
@@ -132,6 +153,12 @@ flowchart TD
     end
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
 
@@ -140,6 +167,12 @@ flowchart TD
 **Encoder:** $X \xrightarrow{W_1,\sigma} h_1 \xrightarrow{W_2,\sigma} h_2 \xrightarrow{W_3} F$ (bottleneck)
 
 **Decoder:** $F \xrightarrow{W_4,\sigma} h_3 \xrightarrow{W_5,\sigma} h_4 \xrightarrow{W_6} \hat{X}$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">deepautoencoder.py</span>
+</div>
 
 ```python
 class DeepAutoencoder(nn.Module):
@@ -152,10 +185,18 @@ class DeepAutoencoder(nn.Module):
             encoder_layers += [nn.Linear(prev_dim, h_dim),
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Deep Autoencoder Architecture (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
                                nn.ReLU(), nn.BatchNorm1d(h_dim),
@@ -167,6 +208,8 @@ class DeepAutoencoder(nn.Module):
         # Decoder: F -> h3 -> h4 -> X_hat (mirror architecture)
         # ... (symmetric to encoder)
 ```
+
+</div>
 
 **Objective:** $\min \sum_t \|X_t - \hat{X}_t\|^2 + \lambda R(W)$ with regularization.
 
@@ -190,6 +233,7 @@ $$p(X | F; \theta) = N(X; \mu_\theta(F), \Sigma_\theta(F))$$
 $$q(F | X; \phi) = N(F; \mu_\phi(X), \Sigma_\phi(X))$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     X["X (data)"] --> ENC["Encoder Network\nq(F|X;φ)"]
     ENC --> MU["μ_φ(X)"]
@@ -218,6 +262,12 @@ $$\log p(X) \geq \underbrace{E_q[\log p(X|F)]}_{\text{Reconstruction}} - \underb
 | Overfitting resistance | Moderate | Good |
 | Latent space structure | Arbitrary | Smooth (regularized) |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">variationalautoencoder.py</span>
+</div>
+
 ```python
 class VariationalAutoencoder(nn.Module):
     def loss_function(self, x_reconstructed, x, mu, log_var):
@@ -227,6 +277,8 @@ class VariationalAutoencoder(nn.Module):
         kl_loss = -0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp())
         return recon_loss + kl_loss
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -241,6 +293,7 @@ class VariationalAutoencoder(nn.Module):
 # Decision Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Factor extraction\ntask"] --> Q1{"Interpretation\nneeded?"}
     Q1 -->|"Yes (policy, structural)"| TRAD["Traditional Factor Model\n(PCA, MLE, Bayesian)"]
@@ -295,6 +348,7 @@ flowchart TD
 | Sacrificing interpretability for marginal gains | Lost insights, no performance gain | Always compare to linear baseline |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     LINEAR["Linear baseline\n(PCA)"] --> COMPARE{"Deep AE\nsignificantly better?"}
     COMPARE -->|"Yes (>5% RMSE gain)"| USE_DEEP["Use deep AE\n(justify complexity)"]
@@ -328,6 +382,7 @@ flowchart LR
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PCA["PCA / Static Factors\n(Module 1)"] --> ML["ML Connections\n(this guide)"]
     FM["Factor Models\n(Modules 1-7)"] --> ML

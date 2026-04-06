@@ -23,12 +23,19 @@ math: mathjax
 This is **rotational indeterminacy**: infinitely many equally valid factor representations exist.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Original\nX = Lambda * F + e"] -->|"Multiply by H"| B["Rotated\nX = (Lambda*H)(H^{-1}*F) + e"]
     B -->|"Same X!"| A
     C["Any invertible\nr x r matrix H"] --> A
     C --> B
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -123,6 +130,7 @@ $$\lambda_{ij} = 0 \text{ for economically justified pairs}$$
 Example: "Real activity" factor loads on GDP but not on inflation.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Normalization Strategies"
         P["PCA\nF'F/T = I\nOrdered eigenvalues"]
@@ -133,6 +141,12 @@ flowchart TD
     FA --> R
     EC --> I["Fully identified\n(if enough restrictions)"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -252,6 +266,12 @@ e = np.random.randn(T, N) * 0.3
 X = F_true @ Lambda_true.T + e
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -267,6 +287,12 @@ H = np.array([[np.cos(theta), -np.sin(theta)],
 F_rotated = F_true @ H.T
 Lambda_rotated = Lambda_true @ H
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -327,6 +353,12 @@ def pca_normalization(X, r):
 
 # Sign Normalization
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sign_normalize.py</span>
+</div>
+
 ```python
 def sign_normalize(F, Lambda, reference_variables):
     """Normalize signs: each factor loads positively on its reference."""
@@ -339,10 +371,18 @@ def sign_normalize(F, Lambda, reference_variables):
             Lambda_norm[:, j] *= -1
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Sign Normalization (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -353,6 +393,8 @@ F_signed, Lambda_signed = sign_normalize(
     F_hat, Lambda_hat, reference_variables=[0, 5]
 )
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -367,6 +409,7 @@ F_signed, Lambda_signed = sign_normalize(
 # Step-by-Step Strategy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["1. Extract factors\n(PCA or ML)"] --> B["2. Check normalization\nF'F/T = I, Lambda'Lambda diagonal"]
     B --> C["3. Inspect loadings\nWhich variables load strongly?"]
@@ -379,6 +422,12 @@ flowchart TD
 ---
 
 # Example: Macro Factor Identification
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 variable_names = ["GDP", "Employment", "Hours", "Investment",
@@ -394,6 +443,8 @@ for j in range(r):
 # Factor 1: GDP, Employment, Hours, Investment -> "Real Activity"
 # Factor 2: CPI, PPI, Wages -> "Inflation"
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---

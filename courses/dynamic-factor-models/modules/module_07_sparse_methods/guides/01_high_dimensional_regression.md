@@ -1,12 +1,29 @@
 # High-Dimensional Regression: LASSO and Elastic Net
 
+> **Reading time:** ~15 min | **Module:** Module 7: Sparse Methods | **Prerequisites:** Modules 0-6
+
+<div class="callout-key">
+
+**Key Concept Summary:** High-dimensional regression addresses the challenge of estimating models when the number of predictors exceeds or approaches the number of observations. LASSO (Least Absolute Shrinkage and Selection Operator) and elastic net use penalized regression to perform simultaneous variable selection and ...
+
+</div>
+
 ## In Brief
 
 High-dimensional regression addresses the challenge of estimating models when the number of predictors exceeds or approaches the number of observations. LASSO (Least Absolute Shrinkage and Selection Operator) and elastic net use penalized regression to perform simultaneous variable selection and coefficient estimation, providing sparse solutions that identify the most relevant predictors while avoiding overfitting.
 
-> 💡 **Key Insight:** When you have more predictors than observations (or comparable numbers), ordinary least squares fails. LASSO adds an L1 penalty that shrinks some coefficients exactly to zero, automatically selecting variables. Elastic net combines L1 and L2 penalties to handle correlated predictors better than LASSO alone, making it ideal for factor models where predictors often move together.
+<div class="callout-insight">
 
+**Insight:** When you have more predictors than observations (or comparable numbers), ordinary least squares fails. LASSO adds an L1 penalty that shrinks some coefficients exactly to zero, automatically selecting variables. Elastic net combines L1 and L2 penalties to handle correlated predictors better than LASSO alone, making it ideal for factor models where predictors often move together.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The High-Dimensional Regression Problem
 
@@ -29,6 +46,17 @@ Standard OLS minimizes:
 $$\min_\beta \sum_{t=1}^T (y_t - x_t' \beta)^2$$
 
 **Problems when $N$ is large:**
+<div class="flow">
+<div class="flow-step mint">1. Non-uniqueness:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Multicollinearity:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Overfitting:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Interpretation:</div>
+</div>
+
+
 1. **Non-uniqueness:** If $N > T$, infinitely many solutions exist
 2. **Multicollinearity:** High correlation makes estimates unstable
 3. **Overfitting:** Model fits training noise, poor out-of-sample performance
@@ -247,6 +275,12 @@ LASSO says: "Include all variables, but penalize complexity."
 ## 7. Code Implementation
 
 ### Basic LASSO Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">highdimensionalregression.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -500,7 +534,15 @@ class HighDimensionalRegression:
         return important_idx
 ```
 
+</div>
+
 ### Example Application
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Generate high-dimensional data
@@ -570,7 +612,15 @@ print(f"  Elastic Net recovered: {enet_recovery}/{len(true_support)} true featur
 print("=" * 60)
 ```
 
+</div>
+
 ### Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Plot CV results
@@ -626,6 +676,8 @@ plt.savefig('coefficient_comparison.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 8. Common Pitfalls
@@ -638,6 +690,12 @@ plt.show()
 
 **Solution:** Always standardize predictors before applying LASSO/elastic net.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG
 model = Lasso(alpha=0.1)
@@ -649,6 +707,8 @@ X_scaled = scaler.fit_transform(X_raw)
 model = Lasso(alpha=0.1)
 model.fit(X_scaled, y)
 ```
+
+</div>
 
 ### 2. Not Centering the Response
 
@@ -666,6 +726,12 @@ model.fit(X_scaled, y)
 
 **Solution:** Use nested cross-validation or separate validation set.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG
 model = LassoCV(cv=5)
@@ -677,6 +743,8 @@ model = LassoCV(cv=5)
 model.fit(X_train, y_train)
 score = model.score(X_test, y_test)  # Honest estimate
 ```
+
+</div>
 
 ### 4. Interpreting Selected Variables as "Causal"
 
@@ -756,6 +824,12 @@ score = model.score(X_test, y_test)  # Honest estimate
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding high-dimensional regression is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## 11. Further Reading
 
 ### Foundational Papers
@@ -791,3 +865,42 @@ score = model.score(X_test, y_test)  # Honest estimate
 
 - **Scikit-learn Documentation:** [Linear Models](https://scikit-learn.org/stable/modules/linear_model.html)
   - Practical guide to implementation
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the core idea of high-dimensional regression: lasso and elastic net in your own words to a colleague who has not studied it.
+
+2. What is the most common mistake practitioners make when applying high-dimensional regression, and how would you avoid it?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_high_dimensional_regression_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_lasso_factor_selection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_targeted_predictors.md">
+  <div class="link-card-title">02 Targeted Predictors</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_three_pass_filter.md">
+  <div class="link-card-title">03 Three Pass Filter</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

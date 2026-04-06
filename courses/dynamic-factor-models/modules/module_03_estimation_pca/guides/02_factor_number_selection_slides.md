@@ -21,6 +21,7 @@ math: mathjax
 > Too few factors underfit common variation; too many overfit idiosyncratic noise. Information criteria formalize the fit-complexity trade-off.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Bias-Variance Trade-off"
         FEW["r too small\nHigh bias\n(missing factors)"]
@@ -30,6 +31,12 @@ flowchart LR
     FEW -->|"Add factors"| OPT
     OPT -->|"Add factors"| MANY
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Choice | Consequence |
 |--------|------------|
@@ -135,6 +142,7 @@ $$PC_p(r) = V(r) + r \hat{\sigma}^2 g(N, T)$$
 where $\hat{\sigma}^2$ estimates idiosyncratic variance.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "IC Criteria"
         IC["IC = ln(V) + r * g(N,T)\nLog-scale residuals"]
@@ -145,6 +153,12 @@ flowchart TD
     IC --> SEL["Both consistent\nIC preferred in practice"]
     PC --> SEL
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -196,12 +210,19 @@ $$(d_r - d_{r+1}) \quad \text{vs.} \quad (d_{r+1} - d_{r+2})$$
 to distinguish signal from random matrix noise.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     SCREE["Scree Plot\n(visual)"] --> COMBINE["Combine\nevidence"]
     RATIO["Eigenvalue Ratios\n(quantitative)"] --> COMBINE
     IC["Bai-Ng IC\n(formal)"] --> COMBINE
     COMBINE --> R["Selected r"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -274,6 +295,12 @@ class FactorNumberSelector:
 
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -316,6 +343,12 @@ def _compute_ic(self, T, N):
 
 # IC Computation (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_ic.py</span>
+</div>
+
 ```python
         # IC1
         ic['IC1'][r] = log_V + r*((N+T)/NT)*np.log(NT/(N+T))
@@ -329,10 +362,18 @@ def select_ic(self, criterion='IC1'):
     return np.argmin(self.ic_values_[criterion])
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Eigenvalue Ratio Method
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_eigenvalue_ratio.py</span>
+</div>
 
 ```python
 def select_eigenvalue_ratio(self, threshold=2.0):
@@ -344,16 +385,26 @@ def select_eigenvalue_ratio(self, threshold=2.0):
     return significant[0] + 1
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
 
 # Demonstration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 selector = FactorNumberSelector(r_max=12, standardize=True)
 selector.fit(X)
 selector.summary()
 ```
+
+</div>
 
 ```
 FACTOR NUMBER SELECTION SUMMARY
@@ -382,6 +433,7 @@ True value: r = 4
 # Decision Process
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["1. Plot scree plot\n(eigenvalue decay)"] --> B["2. Compute IC1, IC2, IC3\nfor r = 1,...,r_max"]
     B --> C["3. Check agreement\nacross criteria"]
@@ -470,6 +522,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PCA["PCA / Eigenvalues\n(Module 0)"] --> FS["Factor Number Selection\n(this guide)"]
     SW["Stock-Watson Estimator\n(previous guide)"] --> FS

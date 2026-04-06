@@ -1,12 +1,31 @@
 # Maximum Likelihood Estimation via Kalman Filter
 
+> **Reading time:** ~12 min | **Module:** Module 4: Estimation Ml | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Maximum likelihood estimation of dynamic factor models uses the Kalman filter to construct the likelihood function via prediction error decomposition. The likelihood is computed recursively by evaluating one-step-ahead prediction errors and their variances at each time point, providing an exact l...
+
+</div>
+
 ## In Brief
 
 Maximum likelihood estimation of dynamic factor models uses the Kalman filter to construct the likelihood function via prediction error decomposition. The likelihood is computed recursively by evaluating one-step-ahead prediction errors and their variances at each time point, providing an exact likelihood evaluation even with latent factors.
 
-> 💡 **Key Insight:** The genius of the Kalman filter approach is that it transforms an intractable likelihood (marginalizing over all latent factor paths) into a tractable sequential computation. Each observation contributes its prediction error - the surprise relative to what the model expected - and the likelihood measures how well the model predicts the data one step ahead.
+<div class="callout-insight">
 
+**Insight:** The genius of the Kalman filter approach is that it transforms an intractable likelihood (marginalizing over all latent factor paths) into a tractable sequential computation. Each observation contributes its prediction error - the surprise relative to what the model expected - and the likelihood measures how well the model predicts the data one step ahead.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -30,8 +49,6 @@ where:
 - $P_{t|t-1}$ is the predicted state covariance
 
 ---
-
-## Intuitive Explanation
 
 ### Why Prediction Errors?
 
@@ -149,6 +166,12 @@ Usually computed numerically via finite differences.
 ## Code Implementation
 
 ### Complete Likelihood Function
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">kalman_filter_likelihood.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -506,6 +529,8 @@ if __name__ == '__main__':
     print(Phi_true.round(3))
 ```
 
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -584,6 +609,12 @@ if __name__ == '__main__':
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding maximum likelihood estimation via kalman filter is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - **Durbin & Koopman (2012).** *Time Series Analysis by State Space Methods*, 2nd ed., Chapter 7.
@@ -600,3 +631,42 @@ if __name__ == '__main__':
 
 - **Doz, Giannone & Reichlin (2012).** "A Quasi-Maximum Likelihood Approach for Large, Approximate Dynamic Factor Models." *Review of Economics and Statistics* 94(4), 1014-1024.
   - Two-step QML for computational efficiency with large N
+
+---
+
+## Conceptual Practice Questions
+
+1. Walk through one iteration of the Kalman filter in your own words — what is predicted, what is updated, and why?
+
+2. Why is the Kalman gain matrix central to the algorithm? What happens when observation noise is very large?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_mle_via_kalman_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_em_algorithm_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_em_algorithm_dfm.md">
+  <div class="link-card-title">02 Em Algorithm Dfm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_bayesian_dfm.md">
+  <div class="link-card-title">03 Bayesian Dfm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

@@ -21,6 +21,7 @@ math: mathjax
 > With $N$ predictors and $T$ observations, if $N > T$, OLS is infeasible. Penalized regression solves this elegantly.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OLS["OLS: min ||y - Xβ||²"] --> Q1{"N vs T?"}
     Q1 -->|"N < T"| OK["OLS works\n(unique solution)"]
@@ -32,6 +33,12 @@ flowchart TD
     PEN --> RIDGE["Ridge (L2)\nSmooth shrinkage"]
     PEN --> ENET["Elastic Net\nBest of both"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 **Examples:** Forecasting GDP with 100+ indicators, selecting relevant factors, identifying sparse loadings.
 
@@ -55,6 +62,7 @@ $$\hat{\beta}^{\text{LASSO}} = \arg\min_\beta \left\{ \frac{1}{2T} \sum_{t=1}^T 
 - $\lambda \geq 0$: regularization parameter controlling sparsity
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Lambda = 0"
         OLS["OLS solution\nAll N coefficients non-zero"]
@@ -68,6 +76,12 @@ flowchart LR
     OLS -->|"Increase λ"| SPARSE -->|"Increase λ"| ZERO
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
 
@@ -76,6 +90,7 @@ flowchart LR
 **Geometric Intuition:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "L1 (LASSO) - Diamond"
         L1["Constraint region:\ndiamond shape in 2D\nCorners lie on axes"]
@@ -86,6 +101,12 @@ flowchart TD
         L2 --> SMOOTH["OLS contour hits SMOOTHLY\n→ coefficients shrink, never zero"]
     end
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 **Mathematical reason:** L1 norm $|\beta|$ has a "corner" at zero (non-differentiable), allowing exact zeros in solution.
 
@@ -135,9 +156,16 @@ $$\hat{\beta}^{\text{EN}} = \arg\min_\beta \left\{ \frac{1}{2T} \|y - X\beta\|_2
 - $\alpha \in (0,1)$: elastic net
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RIDGE["Ridge (α=0)\nAll coefficients shrink\nNone zeroed"] --> MIX["Elastic Net (0<α<1)\nGrouped selection\nStable estimates"] --> LASSO["LASSO (α=1)\nSparse selection\nMay miss correlated"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 **Grouping effect:** When $x_j \approx x_k$, elastic net assigns $\hat{\beta}_j \approx \hat{\beta}_k$.
 
@@ -203,6 +231,7 @@ z + \gamma & \text{if } z < -\gamma
 \end{cases}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize: β = 0"] --> CYCLE["For j = 1, ..., N:"]
     CYCLE --> PARTIAL["Compute partial residual\nr_{-j} = y - Σ_{k≠j} x_k β_k"]
@@ -229,6 +258,7 @@ flowchart TD
 **K-fold CV procedure:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA["Data (T observations)"] --> SPLIT["Split into K folds"]
     SPLIT --> GRID["For each candidate λ:"]
@@ -254,6 +284,12 @@ where $\text{df}_\lambda$ = number of non-zero coefficients.
 
 # HighDimensionalRegression Class (Core)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">highdimensionalregression.py</span>
+</div>
+
 ```python
 class HighDimensionalRegression:
     def __init__(self, method='lasso', alpha=None, l1_ratio=0.5,
@@ -265,10 +301,18 @@ class HighDimensionalRegression:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # HighDimensionalRegression Class (Core) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit.py</span>
+</div>
 
 ```python
     def fit(self, X, y):
@@ -285,6 +329,8 @@ class HighDimensionalRegression:
         self.selected_features_ = np.where(self.model.coef_ != 0)[0]
         return self
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -306,6 +352,12 @@ class HighDimensionalRegression:
 | Interpreting as "causal" | LASSO selects for prediction, not causality | Use for prediction or screening only |
 | Pure LASSO with correlated predictors | Arbitrarily picks one from group | Use elastic net ($\alpha < 1$) |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG: Extract alpha and evaluate on same data
 model = LassoCV(cv=5)
@@ -317,6 +369,8 @@ model = LassoCV(cv=5)
 model.fit(X_train, y_train)
 score = model.score(X_test, y_test)  # Honest estimate
 ```
+
+</div>
 
 <!-- Speaker notes: Emphasize these common mistakes. Ask learners if they have encountered any of these in practice. -->
 ---
@@ -344,6 +398,7 @@ score = model.score(X_test, y_test)  # Honest estimate
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     LIN["Linear Regression"] --> HD["High-Dimensional\nRegression\n(this guide)"]
     RIDGE["Ridge Regression"] --> HD

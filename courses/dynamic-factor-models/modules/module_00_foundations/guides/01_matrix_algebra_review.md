@@ -1,15 +1,33 @@
 # Matrix Algebra Review for Factor Models
 
+> **Reading time:** ~6 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Factor models rely heavily on matrix decompositions—particularly eigendecomposition and SVD—to extract latent structure from high-dimensional data. This guide reviews the essential linear algebra you'll use throughout the course.
+
+</div>
+
 ## In Brief
 
 Factor models rely heavily on matrix decompositions—particularly eigendecomposition and SVD—to extract latent structure from high-dimensional data. This guide reviews the essential linear algebra you'll use throughout the course.
 
-> 💡 **Key Insight:** The core operation in factor analysis is decomposing a covariance matrix into components that separate "signal" (common factors) from "noise" (idiosyncratic variation). Eigendecomposition provides this separation directly.
+<div class="callout-insight">
 
+**Insight:** The core operation in factor analysis is decomposing a covariance matrix into components that separate "signal" (common factors) from "noise" (idiosyncratic variation). Eigendecomposition provides this separation directly.
+
+</div>
 ---
 
 ## 1. Eigendecomposition
 
+### Intuitive Explanation
+
+<div class="callout-insight">
+
+**Insight:** Think of eigendecomposition as finding the "natural axes" of a transformation. For a covariance matrix, eigenvectors point in directions of maximum/minimum variance, eigenvalues measure the variance in each direction, and the largest eigenvalues capture the most important variation.
+
+</div>
 ### Formal Definition
 
 For a square matrix $A \in \mathbb{R}^{n \times n}$, an eigenvalue-eigenvector pair $(\lambda, v)$ satisfies:
@@ -29,11 +47,13 @@ where:
 - $\Lambda = \text{diag}(\lambda_1, ..., \lambda_n)$ contains eigenvalues
 - Eigenvalues are real; eigenvectors are orthogonal
 
-### Intuitive Explanation
-
-> 💡 **Intuition:** Think of eigendecomposition as finding the "natural axes" of a transformation. For a covariance matrix, eigenvectors point in directions of maximum/minimum variance, eigenvalues measure the variance in each direction, and the largest eigenvalues capture the most important variation.
-
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">eigendecomposition_symmetric.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -74,6 +94,8 @@ print(f"Eigenvalues: {eigenvalues}")
 print(f"Sum of eigenvalues (=trace): {eigenvalues.sum():.4f}")
 print(f"Trace of cov matrix: {np.trace(cov_matrix):.4f}")
 ```
+
+</div>
 
 ### Why This Matters for Factor Models
 
@@ -121,6 +143,12 @@ SVD decomposes a data matrix into three parts:
 
 ### Code Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">svd_decomposition.py</span>
+</div>
+
 ```python
 def svd_decomposition(X, n_components=None):
     """
@@ -161,6 +189,8 @@ reconstruction_error = np.linalg.norm(X_centered - X_reconstructed, 'fro')
 print(f"Reconstruction error (rank-2): {reconstruction_error:.4f}")
 ```
 
+</div>
+
 ### Why SVD for Factor Models?
 
 For large panels ($N$ large), SVD of the data matrix is more efficient than eigendecomposition of the covariance matrix:
@@ -194,6 +224,12 @@ Covariance matrices must be PSD (and typically PD in practice):
 - Factor model covariance: $\Sigma_X = \Lambda\Lambda' + \Sigma_e$ must be PSD
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_positive_definite.py</span>
+</div>
 
 ```python
 def check_positive_definite(A, tol=1e-10):
@@ -230,6 +266,8 @@ A = np.array([[1, 0.9, 0.9],
 is_pd, min_eig = check_positive_definite(A)
 print(f"Is PD: {is_pd}, min eigenvalue: {min_eig:.4f}")
 ```
+
+</div>
 
 ---
 
@@ -304,3 +342,42 @@ This simplifies expected value calculations in factor models.
 - Strang, G. (2016). *Introduction to Linear Algebra*, 5th ed. Chapters 6-7.
 - Golub, G.H. & Van Loan, C.F. (2013). *Matrix Computations*, 4th ed.
 - Petersen, K.B. & Pedersen, M.S. (2012). *The Matrix Cookbook*. [Online]
+
+---
+
+## Conceptual Practice Questions
+
+1. If a covariance matrix has eigenvalues [5.2, 3.1, 0.1, 0.05], how many factors would you extract and why?
+
+2. Explain why eigenvectors of a covariance matrix must be orthogonal and what this means for factor interpretation.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_matrix_algebra_review_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_foundations_review.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_time_series_basics.md">
+  <div class="link-card-title">02 Time Series Basics</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_pca_refresher.md">
+  <div class="link-card-title">03 Pca Refresher</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

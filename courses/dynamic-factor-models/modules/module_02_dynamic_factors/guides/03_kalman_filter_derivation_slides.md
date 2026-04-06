@@ -21,12 +21,19 @@ math: mathjax
 > The Kalman filter is Bayesian updating in action. At each step, combine *where the model predicts the state should be* with *where observations suggest it is*.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P["Model Prediction\nalpha_{t|t-1}"] --> K["Kalman Filter\n(optimal weighting)"]
     O["New Observation\ny_t"] --> K
     K --> F["Filtered Estimate\nalpha_{t|t}"]
     K --> L["Log-Likelihood\n(byproduct)"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 Provably **optimal** under Gaussian assumptions.
 
@@ -112,6 +119,7 @@ $$P_{t|t} = P_{t|t-1} - K_tZP_{t|t-1}$$
 # Kalman Filter Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize\na_1, P_1"] --> PRED["PREDICT\nalpha_{t|t-1} = T * alpha_{t-1|t-1}\nP_{t|t-1} = T*P*T' + RQR'"]
     PRED --> VT["Prediction Error\nv_t = y_t - Z * alpha_{t|t-1}"]
@@ -121,6 +129,12 @@ flowchart TD
     UPDATE -->|"t = t+1"| PRED
     UPDATE --> LL["Accumulate\nlog-likelihood"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -245,6 +259,12 @@ def kalman_filter(y, Z, H, T, R, Q, a1, P1):
     m = Z.shape[1]
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -261,6 +281,12 @@ def kalman_filter(y, Z, H, T, R, Q, a1, P1):
 
     a_f, P_f = a1.copy(), P1.copy()
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -336,6 +362,7 @@ $$P_{t|T} = P_{t|t} + J_t(P_{t+1|T} - P_{t+1|t})J_t'$$
 > $J_t$ propagates corrections from future data backward to time $t$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     KF["Kalman Filter\n(forward: t=1..T)"] --> SM["RTS Smoother\n(backward: t=T-1..1)"]
     SM --> SE["Smoothed Estimates\nalpha_{t|T} for all t"]
@@ -362,6 +389,12 @@ def kalman_smoother(result_filter, T_mat):
 
 # Code: RTS Smoother (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
     for t in range(T_periods-2, -1, -1):
@@ -374,6 +407,8 @@ def kalman_smoother(result_filter, T_mat):
 
     return alpha_sm, P_sm
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -409,6 +444,12 @@ State-space handles missing data **naturally**:
 3. Run update step with reduced observation
 4. Prediction step unchanged
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 y_missing = y.copy()
 y_missing[50:60, 3] = np.nan
@@ -416,6 +457,8 @@ y_missing[100:110, [5, 7]] = np.nan
 # Kalman filter handles automatically
 result = kalman_filter(y_missing, Z, H, T, R, Q, a1, P1)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -431,6 +474,12 @@ $$\hat{y}_{T+h|T} = Z\hat{\alpha}_{T+h|T}$$
 
 $$P_{T+h|T} = T^hP_{T|T}(T^h)' + \sum_{j=0}^{h-1}T^jRQR'(T^j)'$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forecast.py</span>
+</div>
+
 ```python
 def forecast(result, Z, T, R, Q, horizons):
     alpha_h = result['alpha_filtered'][-1]
@@ -442,6 +491,8 @@ def forecast(result, Z, T, R, Q, horizons):
         forecasts.append(Z @ alpha_h)
     return np.array(forecasts)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -496,6 +547,7 @@ $$P_{t|t} = (I - K_tZ)P_{t|t-1}(I - K_tZ)' + K_tHK_t'$$
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["State-Space\nRepresentation"] --> B["Kalman Filter\n(this guide)"]
     B --> C["Prediction Errors v_t"]

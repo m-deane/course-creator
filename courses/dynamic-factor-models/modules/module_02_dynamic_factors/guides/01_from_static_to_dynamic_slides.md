@@ -21,6 +21,7 @@ math: mathjax
 > Real-world factors don't jump randomly -- they evolve smoothly with persistence. A recession today predicts weaker activity tomorrow.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Static Model"
         SF1["F_t (random)"] --> SX["X_t"]
@@ -32,6 +33,12 @@ flowchart LR
         DF2 -->|"Lambda"| DX["X_t"]
     end
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -126,6 +133,7 @@ Think of factors as economic **currents** pushing variables around.
 # Static vs Dynamic: GDP Example
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Static Perspective"
         S1["Month t: Extract F_t"] --> S2["Month t+1: Extract F_{t+1}"]
@@ -136,6 +144,12 @@ flowchart TD
         D2 -->|"phi = 0.8"| D3["Month t+2: Predict F_{t+2}"]
     end
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -221,6 +235,12 @@ Lambda[:10, 0] = np.abs(Lambda[:10, 0]) * 1.5   # Group 1 on factor 1
 Lambda[10:, 1] = np.abs(Lambda[10:, 1]) * 1.5   # Group 2 on factor 2
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -237,6 +257,12 @@ eigenvalues = np.linalg.eigvals(Phi)
 print(f"Max modulus: {np.max(np.abs(eigenvalues)):.3f}")
 assert np.max(np.abs(eigenvalues)) < 1, "Not stationary!"
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -261,6 +287,12 @@ F[0] = np.random.multivariate_normal(np.zeros(r), Sigma_F)
 
 # Simulating Factors and Data (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
 for t in range(1, T + burn_in):
@@ -272,10 +304,18 @@ e = np.random.multivariate_normal(np.zeros(N), Sigma_e, T)
 X = F @ Lambda.T + e
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Static vs Dynamic Estimation Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -294,6 +334,8 @@ for i in range(r):
     corr = np.corrcoef(F[:, i], F_static_aligned[:, i])[0, 1]
     print(f"Correlation (True vs PCA) Factor {i+1}: {corr:.3f}")
 ```
+
+</div>
 
 > PCA provides reasonable estimates even ignoring dynamics, but **Kalman filter** (next guide) improves by exploiting time-series structure.
 
@@ -315,6 +357,12 @@ $$\text{IRF}_k(h, j) = \frac{\partial F_{k,t+h}}{\partial \eta_{jt}}$$
 
 For VAR(1): $\frac{\partial F_{t+h}}{\partial \eta_t} = \Phi^h$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_irf.py</span>
+</div>
+
 ```python
 def compute_irf(Phi, horizons=20):
     """Compute IRF for VAR(1)."""
@@ -326,12 +374,15 @@ def compute_irf(Phi, horizons=20):
     return irf
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
 
 # IRF Interpretation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S["Shock to\nFactor 1\nat t=0"] -->|"Phi^0 = I"| H0["h=0: Full impact"]
     H0 -->|"Phi^1"| H1["h=1: Decaying"]
@@ -384,6 +435,7 @@ flowchart LR
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Static Factor Models\n(Module 1)"] --> B["Dynamic Factor Models\n(this guide)"]
     C["VAR Models\n(Module 0)"] --> B

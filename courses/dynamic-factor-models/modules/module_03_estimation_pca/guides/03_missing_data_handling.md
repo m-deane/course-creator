@@ -1,12 +1,29 @@
 # Missing Data Handling: EM-PCA Algorithm
 
+> **Reading time:** ~17 min | **Module:** Module 3: Estimation Pca | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Economic datasets commonly have missing observations due to publication lags, survey non-response, or ragged edges in real-time forecasting. The Expectation-Maximization (EM) algorithm adapts PCA to incomplete panels by iteratively imputing missing values and re-estimating factors, leveraging cro...
+
+</div>
+
 ## In Brief
 
 Economic datasets commonly have missing observations due to publication lags, survey non-response, or ragged edges in real-time forecasting. The Expectation-Maximization (EM) algorithm adapts PCA to incomplete panels by iteratively imputing missing values and re-estimating factors, leveraging cross-sectional information to produce more efficient estimates than naive deletion or mean imputation.
 
-> 💡 **Key Insight:** The key insight of EM-PCA: if we had the factors, we could impute missing values using the factor model; if we had complete data, we could extract factors using PCA. EM alternates between these two steps, starting from an initial guess and iterating until convergence. Under MAR (missing at random) assumptions, this produces consistent and efficient factor estimates even with substantial missingness.
+<div class="callout-insight">
 
+**Insight:** The key insight of EM-PCA: if we had the factors, we could impute missing values using the factor model; if we had complete data, we could extract factors using PCA. EM alternates between these two steps, starting from an initial guess and iterating until convergence. Under MAR (missing at random) assumptions, this produces consistent and efficient factor estimates even with substantial missingness.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Formal Definition
 
@@ -64,6 +81,17 @@ Use available pairwise covariances to estimate loading space, project incomplete
 ### Convergence Criterion
 
 Common choices:
+
+<div class="flow">
+<div class="flow-step mint">1. Factor change:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Objective change:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Maximum iterations:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Derive E-Step:</div>
+</div>
+
 
 1. **Factor change:** $\|\hat{F}^{(k+1)} - \hat{F}^{(k)}\|_F / \|\hat{F}^{(k)}\|_F < \epsilon$
 2. **Objective change:** $|V^{(k+1)} - V^{(k)}| < \epsilon$ where $V$ is residual sum of squares
@@ -180,6 +208,12 @@ Same rate as complete-data PCA! The key requirement: missingness proportion does
 ## 4. Code Implementation
 
 ### Complete EM-PCA Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">empca.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -579,6 +613,8 @@ plt.savefig('empca_convergence.png', dpi=150, bbox_inches='tight')
 print("\n\nSaved convergence plot to 'empca_convergence.png'")
 ```
 
+</div>
+
 ### Output (Representative)
 
 ```
@@ -842,6 +878,12 @@ Handles outliers in observed data.
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding missing data handling is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 Missing data is pervasive in economic applications. EM-PCA provides a principled solution:
@@ -869,3 +911,42 @@ Missing data is pervasive in economic applications. EM-PCA provides a principled
 - Report sensitivity to missing data assumptions
 
 **Next Module:** We turn to maximum likelihood estimation, which provides formal statistical inference and handles missing data in a unified state-space framework.
+
+---
+
+## Conceptual Practice Questions
+
+1. What is the relationship between PCA and the eigendecomposition of the sample covariance matrix?
+
+2. When would PCA-based factor extraction fail, and what alternative would you use?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_missing_data_handling_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_stock_watson_estimation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_stock_watson_estimator.md">
+  <div class="link-card-title">01 Stock Watson Estimator</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_factor_number_selection.md">
+  <div class="link-card-title">02 Factor Number Selection</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

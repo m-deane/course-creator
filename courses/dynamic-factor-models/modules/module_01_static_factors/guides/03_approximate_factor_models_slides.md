@@ -23,6 +23,7 @@ math: mathjax
 Approximate factor models: factors capture **pervasive** covariation, while **weak local dependencies** are allowed but don't dominate.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Exact Model"
         E1["All correlation\nthrough factors"]
@@ -35,6 +36,12 @@ flowchart LR
     E1 -->|"Relax"| A1
     E2 -->|"Relax"| A2
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -113,6 +120,7 @@ This **eigenvalue separation** allows identifying $r$ even with correlated error
 # Eigenvalue Spectrum Visualization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TB
     subgraph "Eigenvalue Spectrum"
         direction TB
@@ -126,6 +134,12 @@ flowchart TB
     end
     L1 --- L2 --- L3 --- GAP --- L4 --- L5 --- LN
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 > As $N \to \infty$: the gap widens, making factors identifiable.
 
@@ -218,6 +232,7 @@ Choose: $\hat{r} = \arg\min_k IC_p(k)$
 # Practical Factor Number Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["1. Plot scree plot\n(eigenvalue decay)"] --> B["2. Compute IC1, IC2, IC3\nfor k = 1,...,10"]
     B --> C["3. Look for agreement\nacross criteria"]
@@ -225,6 +240,12 @@ flowchart TD
     D --> E["5. Test stability\nin subsamples"]
     E --> F["Selected r"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 > Rule of thumb for macro panels: **3--8 factors** typically sufficient.
 
@@ -246,6 +267,12 @@ def bai_ng_ic(X, k_max=10):
     C_NT = min(np.sqrt(N), np.sqrt(T))
     results = {}
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
@@ -300,6 +327,12 @@ def simulate_approximate_factor_model(T, N, r, local_corr=0.3):
 
 # Simulating Approximate Factor Model (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
     X = F_true @ Lambda_true.T + e
@@ -309,10 +342,18 @@ T, N, r = 200, 100, 3
 X, F_true, Lambda_true = simulate_approximate_factor_model(T, N, r)
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Weak Dependence Diagnostics
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_weak_dependence.py</span>
+</div>
 
 ```python
 def check_weak_dependence(X, r=3, threshold=0.3):
@@ -325,10 +366,18 @@ def check_weak_dependence(X, r=3, threshold=0.3):
     evecs = evecs[:, idx]
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Weak Dependence Diagnostics (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -343,6 +392,8 @@ def check_weak_dependence(X, r=3, threshold=0.3):
     print(f"Mean |correlation|: {np.mean(np.abs(off_diag)):.3f}")
     print(f"% above {threshold}: {np.mean(np.abs(off_diag)>threshold)*100:.1f}%")
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -406,6 +457,7 @@ def check_weak_dependence(X, r=3, threshold=0.3):
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Exact Factor Model\n(Sigma_e diagonal)"] -->|"Relax"| B["Approximate Factor Model\n(weak Sigma_e correlation)"]
     B --> C["Large-N Theory\n(Bai & Ng 2002)"]

@@ -1,14 +1,47 @@
 # Time-Varying Parameters in Dynamic Factor Models
 
+> **Reading time:** ~16 min | **Module:** Module 8: Advanced Topics | **Prerequisites:** Modules 0-7
+
+<div class="callout-key">
+
+**Key Concept Summary:** Economic structure evolves—the relationship between factors and observables changes with policy regimes, technological innovation, and structural transformations. Time-varying parameter dynamic factor models (TVP-DFM) allow factor loadings and dynamics to drift smoothly or shift discretely, captu...
+
+</div>
+
 ## In Brief
 
 Economic structure evolves—the relationship between factors and observables changes with policy regimes, technological innovation, and structural transformations. Time-varying parameter dynamic factor models (TVP-DFM) allow factor loadings and dynamics to drift smoothly or shift discretely, capturing phenomena like the Great Moderation and evolving industry structures.
 
-> 💡 **Key Insight:** Static parameters assume stable economic relationships indefinitely. Reality shows the factor structure governing GDP, inflation, and financial markets has changed substantially over decades. TVP-DFMs nest constant-parameter models as special cases while providing flexibility to detect and model structural evolution—critical for robust long-horizon forecasting and policy analysis.
+<div class="callout-insight">
 
+**Insight:** Static parameters assume stable economic relationships indefinitely. Reality shows the factor structure governing GDP, inflation, and financial markets has changed substantially over decades. TVP-DFMs nest constant-parameter models as special cases while providing flexibility to detect and model structural evolution—critical for robust long-horizon forecasting and policy analysis.
+
+</div>
 ---
 
 ## 1. Motivation for Time-Varying Parameters
+
+### Intuitive Explanation
+
+Consider forecasting inflation using a factor model. In the 1970s, oil prices had enormous impact on inflation (high loading). By the 2000s, energy's direct effect diminished due to efficiency improvements and monetary policy changes (lower loading). A constant-parameter model averages these periods, performing poorly in both. A TVP model adapts loadings to each era.
+
+**Economic Examples of Parameter Change:**
+
+<div class="flow">
+<div class="flow-step mint">1. Great Moderation (19...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Evolving Industry St...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Monetary Policy Regi...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Globalization:</div>
+</div>
+
+
+1. **Great Moderation (1984-2007):** Macroeconomic volatility declined—lower variance parameters
+2. **Evolving Industry Structure:** Tech sector's loading on traditional factors changed post-internet
+3. **Monetary Policy Regime Shifts:** Central bank reaction functions evolve, changing factor dynamics
+4. **Globalization:** Increased international co-movement altered cross-country factor loadings
 
 ### Formal Definition
 
@@ -19,17 +52,6 @@ $$X_t = \Lambda_t F_t + e_t$$
 $$F_t = \Phi_t F_{t-1} + \eta_t$$
 
 where $\Lambda_t$ and/or $\Phi_t$ follow specified evolution processes.
-
-### Intuitive Explanation
-
-Consider forecasting inflation using a factor model. In the 1970s, oil prices had enormous impact on inflation (high loading). By the 2000s, energy's direct effect diminished due to efficiency improvements and monetary policy changes (lower loading). A constant-parameter model averages these periods, performing poorly in both. A TVP model adapts loadings to each era.
-
-**Economic Examples of Parameter Change:**
-
-1. **Great Moderation (1984-2007):** Macroeconomic volatility declined—lower variance parameters
-2. **Evolving Industry Structure:** Tech sector's loading on traditional factors changed post-internet
-3. **Monetary Policy Regime Shifts:** Central bank reaction functions evolve, changing factor dynamics
-4. **Globalization:** Increased international co-movement altered cross-country factor loadings
 
 ### Mathematical Framework
 
@@ -55,8 +77,11 @@ $$\theta_t = \omega + A \cdot s_{t-1} + B \cdot \theta_{t-1}$$
 
 where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_t$ is scaling matrix.
 
-> 💡 **Key Insight:** Score-driven models are adaptive: parameters update based on how surprising recent data is.
+<div class="callout-insight">
 
+**Insight:** Score-driven models are adaptive: parameters update based on how surprising recent data is.
+
+</div>
 ### Choosing the Right Approach
 
 | Approach | Parameters Evolve... | Best When | Computational Cost |
@@ -67,6 +92,12 @@ where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_
 | Score-Driven | Based on prediction surprise | Unknown dynamics; robust to misspecification | Medium |
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tvpdynamicfactormodel.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -354,6 +385,8 @@ print(f"  At t=50 (pre-break): {model.get_loadings(50)[0, 0]:.3f}")
 print(f"  At t=150 (post-break): {model.get_loadings(150)[0, 0]:.3f}")
 ```
 
+</div>
+
 ---
 
 ## 2. Estimation Approaches for TVP-DFM
@@ -457,6 +490,12 @@ $$\hat{\tau} = \arg\min_{\tau} \left[ SSR_1(\tau) + SSR_2(\tau) \right]$$
 **Multiple Breaks:** Sequential testing or global optimization.
 
 ### Code Implementation: Change-Point Detection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">detect_loading_breaks.py</span>
+</div>
 
 ```python
 def detect_loading_breaks(X, F, max_breaks=3, min_segment=20):
@@ -575,6 +614,8 @@ if len(regimes) >= 2:
     print(f"  Regime 2: {regimes[1][0, 0]:.3f}")
     print(f"  Change: {regimes[1][0, 0] - regimes[0][0, 0]:.3f}")
 ```
+
+</div>
 
 ---
 
@@ -747,3 +788,42 @@ where:
 **Next Steps:**
 
 The next guide explores non-Gaussian factor models—relaxing normality to handle heavy tails, asymmetry, and outliers through Student-t distributions and robust estimation.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_time_varying_parameters_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_time_varying_factors.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_non_gaussian_factors.md">
+  <div class="link-card-title">02 Non Gaussian Factors</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_ml_connections.md">
+  <div class="link-card-title">03 Ml Connections</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

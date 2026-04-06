@@ -1,12 +1,31 @@
 # Bayesian Estimation for Dynamic Factor Models
 
+> **Reading time:** ~13 min | **Module:** Module 4: Estimation Ml | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Bayesian estimation treats DFM parameters as random variables with prior distributions, combining prior information with data likelihood to obtain posterior distributions. Inference proceeds via Markov Chain Monte Carlo (MCMC), typically using a Gibbs sampler that iteratively draws factors and pa...
+
+</div>
+
 ## In Brief
 
 Bayesian estimation treats DFM parameters as random variables with prior distributions, combining prior information with data likelihood to obtain posterior distributions. Inference proceeds via Markov Chain Monte Carlo (MCMC), typically using a Gibbs sampler that iteratively draws factors and parameters from their conditional distributions. This provides full uncertainty quantification and naturally handles identification through informative priors.
 
-> 💡 **Key Insight:** Frequentist MLE gives point estimates. Bayesian estimation gives distributions representing uncertainty. This matters enormously for policy: instead of "the loading is 0.8," we get "the loading is between 0.6 and 1.0 with 95% probability." Priors regularize estimates (like ridge regression), prevent overfitting, and incorporate economic theory. The posterior distribution fully characterizes what we know about parameters given the data.
+<div class="callout-insight">
 
+**Insight:** Frequentist MLE gives point estimates. Bayesian estimation gives distributions representing uncertainty. This matters enormously for policy: instead of "the loading is 0.8," we get "the loading is between 0.6 and 1.0 with 95% probability." Priors regularize estimates (like ridge regression), prevent overfitting, and incorporate economic theory. The posterior distribution fully characterizes what we know about parameters given the data.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -61,8 +80,6 @@ Typical: $\nu_\eta = r + 2$, $S_\eta = I_r$ (mean = $I_r/(r+1-r-2) = I_r$ if $\n
 Often **constrained** to $\Sigma_\eta = I_r$ for identification.
 
 ---
-
-## Intuitive Explanation
 
 ### Why Bayesian?
 
@@ -266,6 +283,12 @@ $$\tilde{S} = S_0 + \sum_{t=p+1}^T (F_t - \Phi F_{t-1})(F_t - \Phi F_{t-1})'$$
 ## Code Implementation
 
 ### Complete Gibbs Sampler
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bayesiandfm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -587,6 +610,8 @@ if __name__ == '__main__':
     print(f"[{Phi_lower[0,0]:.3f}, {Phi_upper[0,0]:.3f}]")
 ```
 
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -665,6 +690,12 @@ if __name__ == '__main__':
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding bayesian estimation for dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - **Kim & Nelson (1999).** *State-Space Models with Regime Switching*, Chapter 6.
@@ -684,3 +715,42 @@ if __name__ == '__main__':
 
 - **Koop & Korobilis (2014).** "A New Index of Financial Conditions." *European Economic Review* 71, 101-116.
   - Bayesian DFM for financial conditions index
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_bayesian_dfm_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_em_algorithm_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_mle_via_kalman.md">
+  <div class="link-card-title">01 Mle Via Kalman</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_em_algorithm_dfm.md">
+  <div class="link-card-title">02 Em Algorithm Dfm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

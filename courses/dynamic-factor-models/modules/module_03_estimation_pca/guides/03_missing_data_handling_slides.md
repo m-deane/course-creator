@@ -21,6 +21,7 @@ math: mathjax
 > Economic datasets commonly have missing observations due to publication lags, survey non-response, or ragged edges. EM-PCA leverages cross-sectional information to fill gaps.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "EM-PCA Cycle"
         E["E-Step\nImpute missing values\nusing current factors"]
@@ -31,6 +32,12 @@ flowchart LR
     INIT["Initialize\n(mean imputation)"] --> E
     M -->|"Converged?"| DONE["Final estimates\nF, Lambda, X_imputed"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -101,6 +108,7 @@ Typical tolerance: $\epsilon = 10^{-4}$ to $10^{-6}$.
 # Complete Algorithm Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Input: X with NaN"] --> INIT["Initialize:\nReplace NaN with column means"]
     INIT --> PCA["M-Step: PCA on X_filled\nGet F, Lambda"]
@@ -109,6 +117,12 @@ flowchart TD
     CHECK -->|"No"| PCA
     CHECK -->|"Yes"| OUTPUT["Output:\nF, Lambda, X_imputed"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -195,6 +209,7 @@ $$\|\hat{F}_t^{EM} - H F_t\| = O_p\left(\min\left(N^{-1/2}, T^{-1/2}\right)\righ
 **Same rate as complete-data PCA!**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Why EM-PCA works"
         N["Large N:\nMany variables at each t\npin down F_t"]
@@ -203,6 +218,12 @@ flowchart LR
     N --> RATE["Same convergence rate\nas complete data"]
     T --> RATE
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 > The key requirement: missingness proportion does not grow too fast with $N, T$.
 
@@ -232,6 +253,12 @@ class EMPCA:
         self.verbose = verbose
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -257,6 +284,12 @@ class EMPCA:
 
 # EM Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 for iteration in range(self.max_iter):
             # M-step: PCA on filled data
@@ -269,10 +302,18 @@ for iteration in range(self.max_iter):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # EM Loop (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
             # Check convergence
@@ -286,10 +327,18 @@ for iteration in range(self.max_iter):
             self.Lambda_hat = Lambda_new
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # PCA Step and Scoring
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">_pca_step.py</span>
+</div>
 
 ```python
 def _pca_step(self, X_filled):
@@ -308,6 +357,8 @@ def score(self, X_true, X_incomplete):
     errors = (self.X_imputed - X_true)[missing]
     return np.sqrt(np.mean(errors**2))
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -333,6 +384,7 @@ results = compare_imputation_methods(X_true, missing_pct=0.20, r=3)
 | Listwise deletion | N/A | Only 2% of rows complete |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Imputation Quality"
         MEAN["Mean\n(baseline)"]
@@ -377,6 +429,7 @@ flowchart LR
 | **Multiple imputation** | Generate $M$ plausible datasets for uncertainty |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     EMPCA["EM-PCA\n(this guide)"] --> KS["Kalman Smoother\n(Module 4)"]
     EMPCA --> REG["Regularized EM\n(high missingness)"]
@@ -428,6 +481,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SW["Stock-Watson Estimator\n(Guide 1)"] --> EM["EM-PCA\n(this guide)"]
     FS["Factor Number Selection\n(Guide 2)"] --> EM

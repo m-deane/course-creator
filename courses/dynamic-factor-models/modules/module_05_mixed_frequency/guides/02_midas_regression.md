@@ -1,12 +1,29 @@
 # MIDAS Regression: Mixed Data Sampling
 
+> **Reading time:** ~11 min | **Module:** Module 5: Mixed Frequency | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** MIDAS (Mixed Data Sampling) regression provides a parsimonious approach to forecasting low-frequency variables using high-frequency predictors through parametric lag weighting schemes. Unlike traditional distributed lag models, MIDAS uses beta or exponential Almon polynomials to reduce parameter ...
+
+</div>
+
 ## In Brief
 
 MIDAS (Mixed Data Sampling) regression provides a parsimonious approach to forecasting low-frequency variables using high-frequency predictors through parametric lag weighting schemes. Unlike traditional distributed lag models, MIDAS uses beta or exponential Almon polynomials to reduce parameter dimensionality while capturing rich lag dynamics.
 
-> 💡 **Key Insight:** The key innovation of MIDAS is replacing potentially hundreds of lag coefficients with just 2-3 hyperparameters that control a smooth weighting function. This achieves both parsimony and flexibility—you can incorporate 60 days of data with 3 parameters instead of 60.
+<div class="callout-insight">
 
+**Insight:** The key innovation of MIDAS is replacing potentially hundreds of lag coefficients with just 2-3 hyperparameters that control a smooth weighting function. This achieves both parsimony and flexibility—you can incorporate 60 days of data with 3 parameters instead of 60.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The MIDAS Framework
 
@@ -66,6 +83,12 @@ and $B(\theta_1, \theta_2) = \frac{\Gamma(\theta_1)\Gamma(\theta_2)}{\Gamma(\the
 - Flexible enough to capture various lag patterns
 
 ### Code Implementation: Beta Weights
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midas_beta_weights.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -141,6 +164,8 @@ plt.savefig('midas_beta_weights.png', dpi=150)
 print("Beta weight patterns saved to midas_beta_weights.png")
 ```
 
+</div>
+
 ### Exponential Almon Lag Weights
 
 Alternative specification using exponential of polynomial:
@@ -150,6 +175,12 @@ $$w(k; \theta) = \frac{\exp\left(\theta_1 k + \theta_2 k^2 + \ldots\right)}{\sum
 Typically use polynomial of degree 1 or 2.
 
 ### Code Implementation: Exponential Almon Weights
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midas_almon_weights.py</span>
+</div>
 
 ```python
 def midas_almon_weights(K, theta, normalize=True):
@@ -207,6 +238,8 @@ plt.tight_layout()
 plt.savefig('midas_almon_weights.png', dpi=150)
 ```
 
+</div>
+
 ---
 
 ## 3. MIDAS Regression Estimation
@@ -233,6 +266,12 @@ The MIDAS regression is **nonlinear** in $\theta$ (but linear in $\beta_0, \beta
 4. Optimize over $\theta$ to minimize RSS
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midasregression.py</span>
+</div>
 
 ```python
 from scipy.optimize import minimize
@@ -419,6 +458,8 @@ Y_pred = midas.predict(ip_monthly)
 print(f"\nOut-of-sample RMSE: {np.sqrt(mean_squared_error(Y_test, Y_pred[-len(Y_test):])):.4f}")
 ```
 
+</div>
+
 ---
 
 ## 4. Extensions and Variations
@@ -523,6 +564,12 @@ where $\hat{F}_t$ are factors extracted from many high-frequency predictors.
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding midas regression is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 **Key Takeaways:**
@@ -533,3 +580,42 @@ where $\hat{F}_t$ are factors extracted from many high-frequency predictors.
 
 **Next Steps:**
 The next guide integrates MIDAS concepts into state-space DFMs, showing how to estimate mixed-frequency factor models using the Kalman filter with proper temporal aggregation.
+
+---
+
+## Conceptual Practice Questions
+
+1. What is the fundamental insight behind MIDAS regression?
+
+2. Why does MIDAS use polynomial weight functions instead of unrestricted coefficients?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_midas_regression_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_midas_regression.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_temporal_aggregation.md">
+  <div class="link-card-title">01 Temporal Aggregation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_state_space_mixed_freq.md">
+  <div class="link-card-title">03 State Space Mixed Freq</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

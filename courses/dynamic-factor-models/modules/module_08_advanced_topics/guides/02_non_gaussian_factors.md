@@ -1,25 +1,31 @@
 # Non-Gaussian Factor Models
 
+> **Reading time:** ~13 min | **Module:** Module 8: Advanced Topics | **Prerequisites:** Modules 0-7
+
+<div class="callout-key">
+
+**Key Concept Summary:** Financial returns exhibit fat tails, asymmetry, and occasional extreme outliers—phenomena inconsistent with Gaussian assumptions. Non-Gaussian factor models use heavy-tailed distributions (Student-t, mixture of Gaussians) and robust estimation to capture realistic data-generating processes, impro...
+
+</div>
+
 ## In Brief
 
 Financial returns exhibit fat tails, asymmetry, and occasional extreme outliers—phenomena inconsistent with Gaussian assumptions. Non-Gaussian factor models use heavy-tailed distributions (Student-t, mixture of Gaussians) and robust estimation to capture realistic data-generating processes, improving both parameter estimates and risk assessment.
 
-> 💡 **Key Insight:** Gaussian factor models minimize squared residuals, giving extreme observations enormous influence. A single outlier can distort all loadings. Non-Gaussian models downweight outliers automatically through likelihood-based mechanisms, producing stable estimates. Student-t distributions with low degrees of freedom accommodate fat tails while maintaining tractable inference via EM algorithms.
+<div class="callout-insight">
 
+**Insight:** Gaussian factor models minimize squared residuals, giving extreme observations enormous influence. A single outlier can distort all loadings. Non-Gaussian models downweight outliers automatically through likelihood-based mechanisms, producing stable estimates. Student-t distributions with low degrees of freedom accommodate fat tails while maintaining tractable inference via EM algorithms.
+
+</div>
 ---
 
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
 ## 1. Limitations of Gaussian Assumptions
-
-### Formal Definition
-
-**Standard Gaussian Factor Model:**
-$$X_t = \Lambda F_t + e_t, \quad e_t \sim N(0, \Sigma_e)$$
-$$F_t \sim N(\mu_F, \Sigma_F)$$
-
-Assumes:
-- All shocks Gaussian (thin tails)
-- Symmetric distributions
-- Quadratic loss (squared errors)
 
 ### Intuitive Explanation
 
@@ -40,10 +46,32 @@ Assumes:
 
 **Consequences of Gaussian Misspecification:**
 
+<div class="flow">
+<div class="flow-step mint">1. Biased Parameters</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Poor Risk Assessment</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Inefficient Estimati...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Misleading Inference</div>
+</div>
+
+
 1. **Biased Parameters**: Outliers pull loadings away from bulk of data
 2. **Poor Risk Assessment**: Underestimate tail probabilities
 3. **Inefficient Estimation**: Not using optimal weighting
 4. **Misleading Inference**: Confidence intervals too narrow
+
+### Formal Definition
+
+**Standard Gaussian Factor Model:**
+$$X_t = \Lambda F_t + e_t, \quad e_t \sim N(0, \Sigma_e)$$
+$$F_t \sim N(\mu_F, \Sigma_F)$$
+
+Assumes:
+- All shocks Gaussian (thin tails)
+- Symmetric distributions
+- Quadratic loss (squared errors)
 
 ### Mathematical Framework
 
@@ -68,6 +96,12 @@ $$\kappa = 3 + \frac{6}{\nu - 4}, \quad \nu > 4$$
 Example: $\nu = 5 \implies \kappa = 9$ (much heavier than Gaussian)
 
 ### Code Implementation: Detecting Non-Gaussianty
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">test_gaussianity.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -228,6 +262,8 @@ test_gaussianity(data_gauss, "Gaussian Data")
 comp_gauss = compare_distributions(data_gauss, "Gaussian Data")
 ```
 
+</div>
+
 ---
 
 ## 2. Student-t Factor Models
@@ -273,6 +309,12 @@ $$\Lambda^{\text{new}} = \left(\sum_t w_t X_t F_t'\right) \left(\sum_t w_t F_t F
 This is weighted least squares with weights $w_t$!
 
 ### Code Implementation: Student-t Factor Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">studenttfactormodel.py</span>
+</div>
 
 ```python
 from scipy.special import digamma, logsumexp
@@ -546,6 +588,8 @@ print(f"PCA: {Lambda_pca[0]}")
 print(f"Student-t: {t_model.Lambda[0]}")
 ```
 
+</div>
+
 ---
 
 ## 3. Alternative Heavy-Tailed Specifications
@@ -687,6 +731,12 @@ k|u| - \frac{1}{2}k^2 & |u| > k
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding non-gaussian factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 **Key Takeaways:**
@@ -700,3 +750,42 @@ k|u| - \frac{1}{2}k^2 & |u| > k
 **Next Steps:**
 
 The final guide explores connections between factor models and machine learning—particularly autoencoders, which provide nonlinear generalizations of PCA, and neural network approaches to factor extraction. We'll see how deep learning both extends and challenges traditional factor modeling.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_non_gaussian_factors_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_time_varying_factors.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_time_varying_parameters.md">
+  <div class="link-card-title">01 Time Varying Parameters</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_ml_connections.md">
+  <div class="link-card-title">03 Ml Connections</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

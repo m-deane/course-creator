@@ -21,6 +21,7 @@ math: mathjax
 > Ignoring aggregation rules leads to misspecified models and biased forecasts.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     HIGH["High-Frequency Data\n(Monthly)"] --> AGG{"Aggregation\nType?"}
     AGG -->|"Flow Variable"| SUM["Sum\nY_Q = Y_m1 + Y_m2 + Y_m3"]
@@ -30,6 +31,12 @@ flowchart TD
     LAST --> LOW
     AVG --> LOW
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -77,6 +84,7 @@ where $(H)$ = high frequency, $(L)$ = low frequency.
 # Variable Classification Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["Does summing values\nacross time make\neconomic sense?"]
     Q -->|"Yes"| FLOW["FLOW Variable\n(Sum to aggregate)"]
@@ -88,6 +96,12 @@ flowchart TD
     EOP --> EX2["Stock prices, FX rates,\nInventory levels"]
     AVGQ --> EX3["Unemployment rate,\nCapacity utilization"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -107,6 +121,12 @@ def aggregate_stock_eop(monthly_data, freq='Q'):
     return monthly_data.resample(freq).last()
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -123,6 +143,12 @@ quarterly_gdp = aggregate_flow(monthly_gdp)
 # Unemployment (stock) -> end-of-period or average
 quarterly_unemp = aggregate_stock_eop(monthly_unemp)
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -143,6 +169,7 @@ $$\Lambda^{(L)} = C \Lambda^{(H)}$$
 where $C$ is an aggregation matrix encoding the temporal relationship.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     LH["Lambda^(H)\nHigh-freq loadings"] --> MUL["C x Lambda^(H)"]
     C["C\nAggregation Matrix"] --> MUL
@@ -197,6 +224,12 @@ def create_aggregation_matrix(n_high, n_low, m, agg_type='flow'):
 
 # Code: Aggregation Matrix Construction (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
     elif agg_type == 'stock_avg':
         for i in range(n_low):
@@ -211,6 +244,8 @@ monthly_values = np.arange(1, 13)
 C_flow = create_aggregation_matrix(12, 4, m=3, agg_type='flow')
 print(C_flow @ monthly_values)  # [6, 15, 24, 33]
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -231,6 +266,7 @@ $$X_t^{(H)} = \Lambda^{(H)} F_t + e_t^{(H)}$$
 $$X_t^{(L)} = C \Lambda^{(H)} F_t + e_t^{(L)} = \Lambda^{(L)} F_t + e_t^{(L)}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     F["Latent Factor F_t"] --> HF["High-Freq Obs\nX^(H) = Lambda^(H) * F + e"]
     F --> LF["Low-Freq Obs\nX^(L) = C*Lambda^(H) * F + e"]
@@ -275,6 +311,12 @@ flowchart TD
 
 # ConstrainedMixedFrequencyDFM Class
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">constrainedmixedfrequencydfm.py</span>
+</div>
+
 ```python
 class ConstrainedMixedFrequencyDFM:
     def __init__(self, n_factors, agg_type='flow', m=3):
@@ -290,10 +332,18 @@ class ConstrainedMixedFrequencyDFM:
         )
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # ConstrainedMixedFrequencyDFM Class (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
         # Initialize from PCA on high-frequency data
@@ -305,6 +355,8 @@ class ConstrainedMixedFrequencyDFM:
         # EM iterations with constraint enforcement...
         return self
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -326,6 +378,7 @@ class ConstrainedMixedFrequencyDFM:
 | Neglecting uneven periods | Assuming equal month lengths | Use date-aware pandas operations |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DATA["Raw Data"] --> CHECK{"Variable\nType Check"}
     CHECK -->|"Sum makes sense"| FLOW["Apply Flow\nAggregation"]
@@ -359,6 +412,7 @@ flowchart LR
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TS["Time Series Basics"] --> TA["Temporal Aggregation\n(this guide)"]
     FREQ["Data Frequency\nConcepts"] --> TA

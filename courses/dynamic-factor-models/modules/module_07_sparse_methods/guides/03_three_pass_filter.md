@@ -1,12 +1,29 @@
 # Three-Pass Regression Filter
 
+> **Reading time:** ~15 min | **Module:** Module 7: Sparse Methods | **Prerequisites:** Modules 0-6
+
+<div class="callout-key">
+
+**Key Concept Summary:** The three-pass regression filter (3PRF), developed by Kelly and Pruitt (2015), is a sophisticated method for forecasting with many predictors that combines variable selection, factor extraction, and forecast aggregation. Unlike standard diffusion indices or targeted predictors, 3PRF explicitly ac...
+
+</div>
+
 ## In Brief
 
 The three-pass regression filter (3PRF), developed by Kelly and Pruitt (2015), is a sophisticated method for forecasting with many predictors that combines variable selection, factor extraction, and forecast aggregation. Unlike standard diffusion indices or targeted predictors, 3PRF explicitly accounts for the relationship between predictors and the target variable at each stage, providing a unified framework that often outperforms alternative methods.
 
-> 💡 **Key Insight:** Standard factor methods extract factors from predictors $X$ without using target information, then regress $y$ on these factors. This two-step approach can miss predictors that matter for $y$ but don't load heavily on dominant factors. The three-pass filter innovates by using $y$ in all three passes: (1) identify predictors correlated with $y$, (2) extract latent factors from these relationships, (3) forecast using both factors and individual predictors, selecting the best combination.
+<div class="callout-insight">
 
+**Insight:** Standard factor methods extract factors from predictors $X$ without using target information, then regress $y$ on these factors. This two-step approach can miss predictors that matter for $y$ but don't load heavily on dominant factors. The three-pass filter innovates by using $y$ in all three passes: (1) identify predictors correlated with $y$, (2) extract latent factors from these relationships, (3) forecast using both factors and individual predictors, selecting the best combination.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Three-Pass Philosophy
 
@@ -182,6 +199,12 @@ Pass 3: Forecast Aggregation
 ## 5. Code Implementation
 
 ### Complete Three-Pass Regression Filter
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">threepassregressionfilter.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -514,7 +537,15 @@ class ThreePassRegressionFilter:
         return fig, axes
 ```
 
+</div>
+
 ### Example Application
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Generate realistic data
@@ -590,7 +621,15 @@ plt.savefig('three_pass_filter_results.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+
 ### Comparison: 3PRF vs Standard Methods
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_methods.py</span>
+</div>
 
 ```python
 def compare_methods(X_train, y_train, X_test, y_test, n_factors=5, horizon=1):
@@ -672,6 +711,8 @@ for method, rmse in comparison.items():
     print(f"{method:20s}: +{rel_perf:.1f}% vs best")
 ```
 
+</div>
+
 ---
 
 ## 6. Common Pitfalls
@@ -692,6 +733,12 @@ for method, rmse in comparison.items():
 
 **Solution:** Always regress $y_{t+h}$ on $X_t$ (and $y_t$ if using AR term).
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG for h-step forecast
 y_ahead = y[:-h]  # Off by one!
@@ -699,6 +746,8 @@ y_ahead = y[:-h]  # Off by one!
 # CORRECT
 y_ahead = y[h:T_eff + h]  # Properly aligned
 ```
+
+</div>
 
 ### 3. Not Including AR Terms
 
@@ -773,6 +822,12 @@ y_ahead = y[h:T_eff + h]  # Properly aligned
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding three-pass regression filter is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## 9. Further Reading
 
 ### Foundational Paper
@@ -811,3 +866,42 @@ y_ahead = y[h:T_eff + h]  # Properly aligned
 
 - **Python Implementation:** Kelly-Pruitt provide MATLAB code; Python adaptations available in various econometrics packages
 - **R Package:** `tfr` implements three-pass regression filter
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the core idea of three-pass regression filter in your own words to a colleague who has not studied it.
+
+2. What is the most common mistake practitioners make when applying three-pass regression filter, and how would you avoid it?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_three_pass_filter_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_lasso_factor_selection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_high_dimensional_regression.md">
+  <div class="link-card-title">01 High Dimensional Regression</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_targeted_predictors.md">
+  <div class="link-card-title">02 Targeted Predictors</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

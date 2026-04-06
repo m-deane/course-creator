@@ -1,12 +1,29 @@
 # Machine Learning Connections to Factor Models
 
+> **Reading time:** ~16 min | **Module:** Module 8: Advanced Topics | **Prerequisites:** Modules 0-7
+
+<div class="callout-key">
+
+**Key Concept Summary:** Linear autoencoders with tied weights are mathematically equivalent to PCA—both seek low-dimensional representations minimizing reconstruction error. Deep neural networks generalize this to nonlinear factor structures, while variational autoencoders add probabilistic interpretations. Understandin...
+
+</div>
+
 ## In Brief
 
 Linear autoencoders with tied weights are mathematically equivalent to PCA—both seek low-dimensional representations minimizing reconstruction error. Deep neural networks generalize this to nonlinear factor structures, while variational autoencoders add probabilistic interpretations. Understanding these connections reveals when to use traditional econometric methods versus modern machine learning, and how to combine both.
 
-> 💡 **Key Insight:** Factor models and neural networks solve the same fundamental problem: find low-dimensional structure in high-dimensional data. Traditional factor models assume linearity and provide statistical theory (standard errors, hypothesis tests). Deep learning relaxes linearity but sacrifices interpretability and theory. The frontier lies in hybrid approaches that preserve economic interpretability while leveraging neural network flexibility.
+<div class="callout-insight">
 
+**Insight:** Factor models and neural networks solve the same fundamental problem: find low-dimensional structure in high-dimensional data. Traditional factor models assume linearity and provide statistical theory (standard errors, hypothesis tests). Deep learning relaxes linearity but sacrifices interpretability and theory. The frontier lies in hybrid approaches that preserve economic interpretability while leveraging neural network flexibility.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Linear Autoencoders and PCA
 
@@ -54,6 +71,12 @@ This is the eigenvalue problem! Columns of $W_1$ are eigenvectors of $\Sigma_X$.
 | Interpretation | Variance maximization | Reconstruction minimization |
 
 ### Code Implementation: Verifying Equivalence
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">linearautoencoder.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -297,6 +320,8 @@ X_data = (X_data - X_data.mean(axis=0)) / X_data.std(axis=0)
 results = compare_pca_autoencoder(X_data, n_components=r_true)
 ```
 
+</div>
+
 ---
 
 ## 2. Deep Autoencoders for Nonlinear Factors
@@ -342,6 +367,12 @@ where $R(W)$ is regularization (L2, dropout).
 **Universal Approximation:** Deep networks can approximate any continuous function arbitrarily well.
 
 ### Code Implementation: Deep Autoencoder
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">deepautoencoder.py</span>
+</div>
 
 ```python
 class DeepAutoencoder(nn.Module):
@@ -575,6 +606,8 @@ print("Data contains both linear and nonlinear factor relationships.")
 results = compare_linear_deep_autoencoder(X_data, n_factors=r)
 ```
 
+</div>
+
 ---
 
 ## 3. Variational Autoencoders (VAE)
@@ -609,6 +642,12 @@ $$\log p(X) \geq \mathbb{E}_{q(F|X)}[\log p(X|F)] - D_{KL}(q(F|X) \| p(F))$$
 - Generative model (can sample new data)
 
 ### Code Implementation: VAE for Factors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">variationalautoencoder.py</span>
+</div>
 
 ```python
 class VariationalAutoencoder(nn.Module):
@@ -770,6 +809,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 4. When to Use ML vs Traditional Factor Models
@@ -790,6 +831,17 @@ plt.show()
 ### Decision Framework
 
 **Use Traditional Factor Models When:**
+<div class="flow">
+<div class="flow-step mint">1. Interpretation matte...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Statistical inferenc...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Small/moderate sampl...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Linear relationships...</div>
+</div>
+
+
 1. **Interpretation matters** (policy analysis, structural models)
 2. **Statistical inference needed** (hypothesis tests, confidence intervals)
 3. **Small/moderate sample** (T < 1000)
@@ -896,6 +948,12 @@ plt.show()
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding machine learning connections to factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 **Key Takeaways:**
@@ -930,3 +988,42 @@ You've now completed a comprehensive journey through factor models:
 - Develop novel extensions addressing unsolved problems
 
 **The field continues to evolve rapidly. Stay curious, rigorous, and always validate with out-of-sample data!**
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_ml_connections_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_time_varying_factors.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_time_varying_parameters.md">
+  <div class="link-card-title">01 Time Varying Parameters</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_non_gaussian_factors.md">
+  <div class="link-card-title">02 Non Gaussian Factors</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

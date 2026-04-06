@@ -21,6 +21,7 @@ math: mathjax
 > Static parameters assume stable economic relationships indefinitely. Reality shows the factor structure has changed substantially over decades.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     STATIC["Static DFM\nX_t = Λ F_t + e_t\nΛ fixed for all t"] --> PROB{"Economic\nstructure\nchanges?"}
     PROB -->|"Great Moderation\n(1984-2007)"| VOL["Volatility declined\n→ Σ_t changed"]
@@ -32,6 +33,12 @@ flowchart TD
     DYN --> TVP
     CROSS --> TVP
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -53,6 +60,7 @@ flowchart TD
 | **Score-Driven** | $\theta_t = \omega + As_{t-1} + B\theta_{t-1}$ | Adaptive, robust |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"How do parameters\nchange?"} --> DISC["Discrete jumps\n→ Regime Switching"]
     Q1 --> SMOOTH["Smooth drift\n→ Random Walk TVP"]
@@ -63,6 +71,12 @@ flowchart TD
     MEAN --> KALMAN
     ADAPT --> SCORE["Score-based update"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -97,6 +111,7 @@ Parameters update based on how surprising recent data is. Outliers have bounded 
 # Estimation Approaches Compared
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Rolling Window"
         RW1["Choose window W\n(e.g., 40 quarters)"]
@@ -115,6 +130,12 @@ flowchart TD
     end
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 | Method | Pros | Cons |
 |--------|------|------|
 | Rolling window | Simple, no assumptions | Discrete jumps, inefficient |
@@ -125,6 +146,12 @@ flowchart TD
 ---
 
 # TVPDynamicFactorModel Class (Core)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">tvpdynamicfactormodel.py</span>
+</div>
 
 ```python
 class TVPDynamicFactorModel:
@@ -140,10 +167,24 @@ class TVPDynamicFactorModel:
         self.F_t = pca.fit_transform(X)
 ```
 
+</div>
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # TVPDynamicFactorModel Class (Core) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -157,6 +198,8 @@ class TVPDynamicFactorModel:
             self.Phi = self._estimate_var_dynamics(self.F_t)
         return self
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -173,6 +216,7 @@ class TVPDynamicFactorModel:
 **Alternative to smooth TVP:** Test for discrete breaks.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA["Data X, estimated F"] --> CAND["For each candidate\nbreak date τ:"]
     CAND --> PRE["Estimate Λ₁ on\nt = 1,...,τ"]
@@ -229,6 +273,7 @@ $$X_t = \Lambda_t F_t + e_t \quad \text{(NONLINEAR in augmented state!)}$$
 | Ignoring parameter uncertainty | Underestimated forecast uncertainty | Include $P_{t|t}$ covariance in forecast distributions |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Suspect parameter\ninstability"] --> TEST{"Break test\n(Bai-Perron)?"}
     TEST -->|"Break found"| REGIME["Regime-specific\nstatic models"]
@@ -264,6 +309,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SS["State-Space\n(Module 2)"] --> TVP["TVP-DFM\n(this guide)"]
     KF["Kalman Filter"] --> TVP

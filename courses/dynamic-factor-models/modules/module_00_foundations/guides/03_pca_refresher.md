@@ -1,12 +1,29 @@
 # Principal Component Analysis Refresher
 
+> **Reading time:** ~8 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Principal Component Analysis (PCA) is the workhorse method for factor extraction. It finds orthogonal directions that maximize variance in the data, providing a natural way to reduce dimensionality while preserving the most important variation.
+
+</div>
+
 ## In Brief
 
 Principal Component Analysis (PCA) is the workhorse method for factor extraction. It finds orthogonal directions that maximize variance in the data, providing a natural way to reduce dimensionality while preserving the most important variation.
 
-> 💡 **Key Insight:** PCA answers: "What are the most important directions of variation in my data?" The first principal component captures the most variance, the second captures the most remaining variance orthogonal to the first, and so on. In factor models, these directions approximate the latent factors driving co-movement.
+<div class="callout-insight">
 
+**Insight:** PCA answers: "What are the most important directions of variation in my data?" The first principal component captures the most variance, the second captures the most remaining variance orthogonal to the first, and so on. In factor models, these directions approximate the latent factors driving co-movement.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The PCA Problem
 
@@ -201,6 +218,12 @@ def pca_sklearn(X, n_components=None):
 
 Plot eigenvalues in descending order; look for "elbow" where decline levels off.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">scree_plot.py</span>
+</div>
+
 ```python
 import matplotlib.pyplot as plt
 
@@ -230,6 +253,8 @@ def scree_plot(eigenvalues, title="Scree Plot"):
     return fig
 ```
 
+</div>
+
 ### Kaiser Criterion
 
 Retain components with eigenvalues > 1 (for correlation-matrix PCA).
@@ -242,6 +267,12 @@ Retain enough components to explain a target proportion (e.g., 90%) of total var
 
 Specialized criteria balancing fit and complexity for large panels (covered in Module 3).
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">variance_explained.py</span>
+</div>
+
 ```python
 def variance_explained(eigenvalues, threshold=0.9):
     """Find number of components explaining threshold proportion of variance."""
@@ -250,6 +281,8 @@ def variance_explained(eigenvalues, threshold=0.9):
     n_components = np.searchsorted(cumulative, threshold) + 1
     return n_components, cumulative
 ```
+
+</div>
 
 ---
 
@@ -263,6 +296,12 @@ Each loading $v_{jk}$ tells us how variable $j$ loads on component $k$:
 - Near zero: Variable unrelated to the component
 
 ### Example: Macroeconomic Factors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">interpret_loadings.py</span>
+</div>
 
 ```python
 def interpret_loadings(loadings, variable_names, n_top=5):
@@ -297,11 +336,19 @@ def interpret_loadings(loadings, variable_names, n_top=5):
                 print(f"  {variable_names[i]}: {loadings[i, k]:.3f}")
 ```
 
+</div>
+
 ### Rotation
 
 PC loadings can be rotated for easier interpretation without changing fit:
 - **Varimax:** Orthogonal rotation maximizing variance of squared loadings
 - **Promax:** Oblique rotation allowing correlated components
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">varimax_rotation.py</span>
+</div>
 
 ```python
 from scipy.stats import special_ortho_group
@@ -343,6 +390,8 @@ def varimax_rotation(loadings, max_iter=100, tol=1e-6):
     return rotated
 ```
 
+</div>
+
 ---
 
 ## 6. PCA vs Factor Analysis
@@ -362,6 +411,12 @@ def varimax_rotation(loadings, max_iter=100, tol=1e-6):
 For large $N$ with strong factors, PCA estimates converge to true factor loadings (up to rotation). This is the basis for the Stock-Watson approach.
 
 ### Code Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA, FactorAnalysis
@@ -388,6 +443,8 @@ loadings_fa = fa.components_.T
 print(f"PCA variance explained: {pca.explained_variance_ratio_.sum():.3f}")
 print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 ```
+
+</div>
 
 ---
 
@@ -437,8 +494,53 @@ print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding principal component analysis refresher is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - Jolliffe, I.T. (2002). *Principal Component Analysis*, 2nd ed. Springer.
 - Shlens, J. (2014). "A Tutorial on Principal Component Analysis." arXiv:1404.1100.
 - Tipping, M.E. & Bishop, C.M. (1999). "Probabilistic Principal Component Analysis." *JRSS-B*.
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the core idea of principal component analysis refresher in your own words to a colleague who has not studied it.
+
+2. What is the most common mistake practitioners make when applying principal component analysis refresher, and how would you avoid it?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_pca_refresher_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_foundations_review.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_matrix_algebra_review.md">
+  <div class="link-card-title">01 Matrix Algebra Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_time_series_basics.md">
+  <div class="link-card-title">02 Time Series Basics</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

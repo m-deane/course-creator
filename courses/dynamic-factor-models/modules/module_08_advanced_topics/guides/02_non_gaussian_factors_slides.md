@@ -21,6 +21,7 @@ math: mathjax
 > A single outlier under Gaussian assumptions can distort all loadings. Non-Gaussian models provide automatic robustness.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GAUSS["Gaussian Factor Model\ne_t ~ N(0, Σ)"] --> PROB{"Financial\ndata features?"}
     PROB --> FAT["Fat Tails\nBlack Monday: -22.6%\n(>20σ under Gaussian!)"]
@@ -31,6 +32,12 @@ flowchart TD
     OUT --> CONSEQUENCE
     CONSEQUENCE --> SOLUTION["Non-Gaussian Models\nStudent-t, mixtures, robust M-est"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -72,6 +79,7 @@ $$X_t | F_t, w_t \sim N(\Lambda F_t, w_t^{-1} \Sigma_e)$$
 $$w_t \sim \text{Gamma}(\nu/2, \nu/2)$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     WT["Latent weight w_t\n~ Gamma(ν/2, ν/2)"] --> OBS["Observation:\nX_t | F_t, w_t ~ N(ΛF_t, w_t⁻¹Σ_e)"]
     OBS --> INTERP{"w_t value?"}
@@ -79,6 +87,12 @@ flowchart LR
     INTERP -->|"w_t << 1"| OUTLIER["Outlier\n(high variance, downweighted)"]
     INTERP -->|"w_t >> 1"| PRECISE["Precise observation\n(low variance, upweighted)"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 **EM algorithm treats $w_t$ as missing data:**
 - E-step: $E[w_t | X_t] = \frac{\nu + N}{\nu + \delta_t^2}$
@@ -90,6 +104,7 @@ flowchart LR
 # EM Algorithm for Student-t Factors
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize with PCA\nΛ₀, F₀, w₀ = 1"] --> E["E-Step"]
     subgraph "E-Step: Update latent variables"
@@ -109,12 +124,24 @@ flowchart TD
     CONV -->|"Yes"| DONE["Final estimates:\nΛ, F, w, ν"]
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 **Key property:** M-step is weighted least squares. Outliers get small weights automatically.
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # StudentTFactorModel Class (Core)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">studenttfactormodel.py</span>
+</div>
 
 ```python
 class StudentTFactorModel:
@@ -130,10 +157,24 @@ class StudentTFactorModel:
         self.weights = np.ones(T)
 ```
 
+</div>
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # StudentTFactorModel Class (Core) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">_e_step.py</span>
+</div>
 
 ```python
 
@@ -152,6 +193,8 @@ class StudentTFactorModel:
     def get_outlier_scores(self):
         return 1 / self.weights  # Low weight = outlier
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -201,6 +244,7 @@ k|u| - \frac{1}{2}k^2 & |u| > k
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     GAUSS["Gaussian\n(thin tails)"] --> T["Student-t\n(symmetric fat tails)"]
     T --> MIX["Mixture\n(multimodal)"]
@@ -231,6 +275,7 @@ flowchart LR
 | Likelihood Ratio | $H_0$: Gaussian vs Student-t | Heavy tails specifically |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA["Residuals from\nGaussian factor model"] --> JB{"Jarque-Bera\np < 0.05?"}
     JB -->|"No"| OK["Gaussian adequate\n(keep standard model)"]
@@ -248,6 +293,7 @@ flowchart TD
 **Student-t model provides automatic outlier identification:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     FIT["Fit Student-t\nfactor model"] --> WEIGHTS["Extract weights\nw_t for each t"]
     WEIGHTS --> SCORE["Outlier score\n= 1/w_t"]
@@ -284,6 +330,7 @@ flowchart LR
 | Assuming Student-t always better | Added complexity without improvement | Compare OOS forecasts, cross-validate |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RESID["Factor model residuals"] --> TEST1{"GARCH\neffects?"}
     TEST1 -->|"Yes"| GARCH["Add GARCH/SV\nto factor model"]
@@ -319,6 +366,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GAUSS_FM["Gaussian Factor Model\n(Modules 1-4)"] --> NG["Non-Gaussian Factors\n(this guide)"]
     EM["EM Algorithm\n(Module 4)"] --> NG

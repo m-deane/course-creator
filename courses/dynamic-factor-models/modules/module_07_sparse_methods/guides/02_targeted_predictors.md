@@ -1,12 +1,29 @@
 # Targeted Predictors: Bai-Ng Factor Selection
 
+> **Reading time:** ~15 min | **Module:** Module 7: Sparse Methods | **Prerequisites:** Modules 0-6
+
+<div class="callout-key">
+
+**Key Concept Summary:** Targeted predictors, developed by Bai and Ng (2008), improve forecasting by extracting factors specifically designed to predict a target variable, rather than merely summarizing variation in the predictor panel. This approach combines principal components analysis with variable selection, using s...
+
+</div>
+
 ## In Brief
 
 Targeted predictors, developed by Bai and Ng (2008), improve forecasting by extracting factors specifically designed to predict a target variable, rather than merely summarizing variation in the predictor panel. This approach combines principal components analysis with variable selection, using soft or hard thresholding to identify predictors most relevant for forecasting the target.
 
-> 💡 **Key Insight:** Standard PCA extracts factors that explain maximum variance in predictors $X$, but this doesn't guarantee good prediction of target $y$. Targeted factor methods first screen predictors based on their individual correlation with $y$, then extract factors from this reduced set. This focuses factor extraction on predictors that matter for the forecasting task, often dramatically improving forecast accuracy.
+<div class="callout-insight">
 
+**Insight:** Standard PCA extracts factors that explain maximum variance in predictors $X$, but this doesn't guarantee good prediction of target $y$. Targeted factor methods first screen predictors based on their individual correlation with $y$, then extract factors from this reduced set. This focuses factor extraction on predictors that matter for the forecasting task, often dramatically improving forecast accuracy.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Targeting Problem
 
@@ -203,6 +220,12 @@ Standard Factors (r=5)
 ## 5. Code Implementation
 
 ### Basic Targeted Predictors Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">targetedpredictors.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -474,7 +497,15 @@ class TargetedPredictors:
         return self.pca.explained_variance_ratio_
 ```
 
+</div>
+
 ### Example: Comparing Standard vs Targeted Factors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Generate data with sparse relevance structure
@@ -566,7 +597,15 @@ plt.savefig('targeting_results.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+
 ### Threshold Selection via Cross-Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_threshold_cv.py</span>
+</div>
 
 ```python
 def select_threshold_cv(X, y, n_factors=5, thresholds=None,
@@ -684,6 +723,8 @@ plt.savefig('threshold_cv.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 6. Common Pitfalls
@@ -696,6 +737,12 @@ plt.show()
 
 **Solution:** Compute correlations only on training data.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG
 correlations = [pearsonr(X[:, j], y)[0] for j in range(N)]
@@ -703,6 +750,8 @@ correlations = [pearsonr(X[:, j], y)[0] for j in range(N)]
 # CORRECT (for out-of-sample evaluation)
 correlations = [pearsonr(X_train[:, j], y_train)[0] for j in range(N)]
 ```
+
+</div>
 
 ### 2. Targeting Without Standardization
 
@@ -728,6 +777,12 @@ correlations = [pearsonr(X_train[:, j], y_train)[0] for j in range(N)]
 
 **Solution:** Compute correlation with $y_{t+h}$ matching forecast horizon.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG for h-step forecast
 corr = pearsonr(X[:, j], y)[0]
@@ -735,6 +790,8 @@ corr = pearsonr(X[:, j], y)[0]
 # CORRECT
 corr = pearsonr(X[:-h, j], y[h:])[0]
 ```
+
+</div>
 
 ---
 
@@ -797,6 +854,12 @@ corr = pearsonr(X[:-h, j], y[h:])[0]
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding targeted predictors is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## 9. Further Reading
 
 ### Foundational Paper
@@ -827,3 +890,42 @@ corr = pearsonr(X[:-h, j], y[h:])[0]
 
 - **Fan, J. & Lv, J. (2008).** "Sure Independence Screening for Ultrahigh Dimensional Feature Space." *Journal of the Royal Statistical Society: Series B*, 70(5), 849-911.
   - General theory of correlation-based screening
+
+---
+
+## Conceptual Practice Questions
+
+1. What is the targeted predictor approach and when is it preferable to PCA?
+
+2. How does soft thresholding differ from hard thresholding in predictor selection?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_targeted_predictors_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_lasso_factor_selection.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_high_dimensional_regression.md">
+  <div class="link-card-title">01 High Dimensional Regression</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_three_pass_filter.md">
+  <div class="link-card-title">03 Three Pass Filter</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

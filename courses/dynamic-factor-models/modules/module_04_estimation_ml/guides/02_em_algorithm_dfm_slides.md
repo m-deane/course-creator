@@ -21,6 +21,7 @@ math: mathjax
 > Direct likelihood maximization requires nonlinear optimization with many parameters. EM decomposes the problem: if we knew the factors, estimation would be trivial regression.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "E-Step"
         KF["Kalman Filter\n(forward)"] --> KS["Kalman Smoother\n(backward)"]
@@ -31,6 +32,12 @@ flowchart LR
     end
     UPD -->|"Iterate"| KF
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Property | Direct MLE | EM |
 |----------|:---------:|:--:|
@@ -85,6 +92,7 @@ This requires:
 **Theorem:** $\log L(\theta^{(k+1)}) \geq \log L(\theta^{(k)})$ at every iteration.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize theta^(0)\nfrom PCA"] --> ESTEP["E-Step:\nKalman filter + smoother\nGet alpha_t|T, P_t|T, P_t,t-1|T"]
     ESTEP --> MSTEP["M-Step:\nUpdate Lambda, Phi, Q, H\n(closed-form)"]
@@ -92,6 +100,12 @@ flowchart TD
     CHECK -->|"No"| ESTEP
     CHECK -->|"Yes"| DONE["Final estimates\ntheta_hat"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -203,6 +217,12 @@ class EMDynamicFactorModel:
         for iteration in range(max_iter):
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -226,10 +246,22 @@ class EMDynamicFactorModel:
         return self
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # M-Step Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">m_step.py</span>
+</div>
 
 ```python
 def m_step(self, X, alpha_smooth, P_smooth, P_smooth_lag):
@@ -244,10 +276,18 @@ def m_step(self, X, alpha_smooth, P_smooth, P_smooth_lag):
                for t in range(T-1))
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # M-Step Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -263,10 +303,18 @@ def m_step(self, X, alpha_smooth, P_smooth, P_smooth_lag):
         H_new[i,i] = residual_variance(X, Z_new, alpha_smooth, P_smooth, i)
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Extracting Smoothed Factors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">smooth_factors.py</span>
+</div>
 
 ```python
 def smooth_factors(self, X):
@@ -278,6 +326,8 @@ def smooth_factors(self, X):
     F_smooth = alpha_smooth[:, :self.r]
     return F_smooth, P_smooth
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -298,6 +348,7 @@ def smooth_factors(self, X):
 | Maximum iterations | $k > k_{\max}$ | 100-500 |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     FAST["Fast Convergence\n(PCA initialization)"] --> CONV["Typical: 20-50 iterations"]
     SLOW["Slow Convergence\n(random initialization)"] --> MANY["Can take 100+ iterations"]
@@ -374,6 +425,7 @@ flowchart LR
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     KS["Kalman Smoother\n(Module 2)"] --> EM["EM Algorithm\n(this guide)"]
     MLE["Direct MLE\n(previous guide)"] --> EM

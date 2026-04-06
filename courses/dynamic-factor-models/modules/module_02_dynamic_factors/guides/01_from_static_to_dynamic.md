@@ -1,12 +1,29 @@
 # From Static to Dynamic Factor Models
 
+> **Reading time:** ~12 min | **Module:** Module 2: Dynamic Factors | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** Dynamic factor models extend static factor models by allowing factors to evolve over time according to autoregressive processes. This temporal structure captures persistence, co-movement dynamics, and enables optimal forecasting of both factors and observed variables.
+
+</div>
+
 ## In Brief
 
 Dynamic factor models extend static factor models by allowing factors to evolve over time according to autoregressive processes. This temporal structure captures persistence, co-movement dynamics, and enables optimal forecasting of both factors and observed variables.
 
-> 💡 **Key Insight:** Real-world factors don't jump randomly from one value to another—they evolve smoothly with persistence. A recession today predicts weaker activity tomorrow; high inflation tends to persist. By modeling factor dynamics explicitly, we gain three capabilities: better factor estimation (using time-series information), forecasting (propagating factor dynamics forward), and structural interpretation (understanding shock propagation).
+<div class="callout-insight">
 
+**Insight:** Real-world factors don't jump randomly from one value to another—they evolve smoothly with persistence. A recession today predicts weaker activity tomorrow; high inflation tends to persist. By modeling factor dynamics explicitly, we gain three capabilities: better factor estimation (using time-series information), forecasting (propagating factor dynamics forward), and structural interpretation (understanding shock propagation).
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Formal Definition
 
@@ -249,6 +266,12 @@ plt.show()
 
 ### Comparing Static vs Dynamic Estimation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.decomposition import PCA
 
@@ -288,6 +311,8 @@ for i in range(r):
     print(f"Correlation: True Factor {i+1} vs PCA: {corr:.3f}")
 ```
 
+</div>
+
 **Note:** PCA still provides reasonable factor estimates even ignoring dynamics, but dynamic methods (Kalman filter in next guide) will improve estimates by exploiting time-series structure.
 
 ---
@@ -307,6 +332,12 @@ For VAR(1): $F_{t+h} = \Phi^h F_t + \Phi^{h-1}\eta_{t+1} + ... + \Phi \eta_{t+h-
 So: $\frac{\partial F_{t+h}}{\partial \eta_t} = \Phi^h$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_irf.py</span>
+</div>
 
 ```python
 def compute_irf(Phi, horizons=20):
@@ -362,6 +393,8 @@ cum_irf = np.cumsum(irf, axis=0)
 print("\nCumulative responses at horizon 20:")
 print(cum_irf[-1])
 ```
+
+</div>
 
 ---
 
@@ -466,7 +499,13 @@ print(cum_irf[-1])
 ### Implementation
 
 7. **Simulation Study**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # Simulate DFM with T=500, N=30, r=3, VAR(2) factors
    # Verify:
    # - Factors have correct autocovariance structure
@@ -474,22 +513,40 @@ print(cum_irf[-1])
    # - PCA recovers approximately correct factors
    ```
 
+</div>
+
 8. **VAR Estimation**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # Given simulated factors F from problem 7:
    # - Estimate Phi using OLS
    # - Compare true vs estimated IRFs
    # - Test residuals for autocorrelation
    ```
 
+</div>
+
 9. **Model Comparison**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # Simulate data from static model (Phi = 0)
    # Simulate data from dynamic model (Phi ≠ 0)
    # Can you distinguish them using:
    # - Sample autocovariances of X?
    # - Forecasting performance?
    ```
+
+</div>
 
 ### Extension
 
@@ -499,6 +556,12 @@ print(cum_irf[-1])
     - Compute structural IRFs and compare to reduced-form IRFs.
 
 ---
+
+<div class="callout-insight">
+
+**Insight:** Understanding from static to dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
 
 ## Further Reading
 
@@ -526,3 +589,42 @@ print(cum_irf[-1])
 ---
 
 **Next Guide:** State-Space Representation - converting DFM to the standard form for Kalman filtering.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_from_static_to_dynamic_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_kalman_filter_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_state_space_representation.md">
+  <div class="link-card-title">02 State Space Representation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_kalman_filter_derivation.md">
+  <div class="link-card-title">03 Kalman Filter Derivation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

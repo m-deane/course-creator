@@ -22,6 +22,7 @@ math: mathjax
 > When many variables co-move, there's likely a common cause. Factor models formalize this: instead of modeling $N$ series with $N(N-1)/2$ pairwise correlations, we model $r \ll N$ factors.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Direct Modeling (Intractable)"
         X1["X_1"] --- X2["X_2"]
@@ -38,6 +39,12 @@ flowchart TD
         F --> YN["X_N"]
     end
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -101,6 +108,7 @@ $$X = F\Lambda' + e$$
 # Visual: Factor Model Data Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Latent (Unobserved)"
         F1["F_1t"]
@@ -122,6 +130,12 @@ flowchart LR
     L --> X2
     L --> XN
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -183,12 +197,19 @@ With normalized factors ($\Sigma_F = I_r$):
 $$\boxed{\Sigma_X = \Lambda\Lambda' + \Sigma_e}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Total Covariance\nSigma_X"] --> B["Common Component\nLambda * Lambda'"]
     A --> C["Idiosyncratic Component\nSigma_e"]
     B --> D["Driven by r factors\nLow rank"]
     C --> E["Variable-specific\nDiagonal (exact model)"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -246,6 +267,12 @@ $$\begin{bmatrix} X_{1t} \\ X_{2t} \\ X_{3t} \\ X_{4t} \end{bmatrix} = \begin{bm
 
 # Code: Simulating the Two-Factor Model
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -260,10 +287,24 @@ Lambda_true = np.array([
 ])
 ```
 
+</div>
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Code: Simulating the Two-Factor Model (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -275,6 +316,8 @@ X = F_true @ Lambda_true.T + e
 cov_implied = Lambda_true @ Lambda_true.T + np.diag(psi**2)
 print("Implied covariance:\n", cov_implied.round(2))
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -325,6 +368,7 @@ print("Implied covariance:\n", cov_implied.round(2))
 # The Curse of Dimensionality
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "VAR Approach"
         V["VAR(1) with N=127\n16,129 parameters\nHopeless with T=500"]
@@ -395,6 +439,7 @@ Factors can represent economic concepts:
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Multivariate Statistics\nPCA"] --> B["Static Factor Model\n(this guide)"]
     B --> C["Identification Problem\n(next guide)"]

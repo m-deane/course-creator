@@ -19,6 +19,7 @@ math: mathjax
 # The Real-Time Data Challenge
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Data Available on March 15, 2024"
         IP["IP: Jan, Feb\n(released Feb 15, Mar 15)"]
@@ -35,6 +36,12 @@ flowchart TD
     MAR -.->|"FUTURE"| NOW
     Q1 -.->|"FUTURE"| NOW
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 > **Real-time constraint:** Can only use data published before the forecast date.
 
@@ -60,12 +67,19 @@ flowchart TD
 | Ragged edge | Some series more current | Unbalanced information |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     V1["Vintage: Jan 30\nGDP Q4 released"] --> V2["Vintage: Feb 15\nJan IP released"]
     V2 --> V3["Vintage: Mar 15\nFeb IP released"]
     V3 --> V4["Vintage: Apr 30\nQ1 GDP released"]
     V3 -.->|"Nowcast window"| V4
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -92,12 +106,19 @@ flowchart LR
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PSEUDO["Pseudo Real-Time\n(final data, no lags)"] --> BIAS["BIASED\nOverstates performance"]
     REAL["True Real-Time\n(vintage data, pub lags)"] --> HONEST["HONEST\nRealistic assessment"]
     BIAS -.->|"Looks great\nin backtest"| FAIL["Disappointing\nin production"]
     HONEST -.->|"Modest in\nbacktest"| MATCH["Matches\nproduction"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -117,6 +138,12 @@ class VintageDataManager:
                 self.vintages[vintage_date] = {}
             self.vintages[vintage_date][series_name] = vintage_data
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
@@ -160,6 +187,7 @@ GDP             Quarterly    Q4 2023
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RE["Ragged Edge\nProblem"] --> S1["Strategy 1: Kalman\n(treat as missing)"]
     RE --> S2["Strategy 2: Bridge\n(forecast missing values)"]
@@ -236,6 +264,7 @@ $$\text{RMSFE}_j = \sqrt{\frac{1}{T} \sum_{t=1}^{T} \left(Y_t - \hat{Y}_{t|t+j}\
 # Evaluation Best Practices
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     VINT["1. Use actual vintage data\n(not revised final data)"]
     LAG["2. Respect publication lags\n(no future peeking)"]
@@ -276,6 +305,12 @@ dm_stat, p_val = diebold_mariano_test(errors1, errors2)
 
 # RealTimeBacktest Class
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">realtimebacktest.py</span>
+</div>
+
 ```python
 class RealTimeBacktest:
     def __init__(self, model, vintage_manager):
@@ -289,10 +324,18 @@ class RealTimeBacktest:
             for forecast_date in forecast_dates_per_quarter[quarter]:
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # RealTimeBacktest Class (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
                 data = self.vintage_manager.get_vintage(forecast_date, 'all')
@@ -307,6 +350,8 @@ class RealTimeBacktest:
         return pd.DataFrame(results)
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
@@ -320,6 +365,7 @@ class RealTimeBacktest:
 # Production System Components
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Data Pipeline"
         COLLECT["Automated Collection\n(FRED, BEA, BLS)"]
@@ -351,6 +397,7 @@ flowchart TD
 **Show how nowcast for fixed target evolves as more data arrives:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Nowcast for Q2 2024 GDP"
         T1["Mar 1\n2.0% +/- 1.5"]
@@ -363,6 +410,12 @@ flowchart LR
     ACTUAL["Actual: 2.5%"] -.-> T5
 ```
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">nowcasttracker.py</span>
+</div>
+
 ```python
 class NowcastTracker:
     def __init__(self, target_quarter):
@@ -374,6 +427,8 @@ class NowcastTracker:
             'date': as_of_date, 'nowcast': nowcast_value, 'se': nowcast_se
         })
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -472,6 +527,7 @@ Always compare to simple benchmarks:
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SS["State-Space MF-DFM\n(Guide 3)"] --> NOW["Nowcasting Practice\n(this guide)"]
     KF["Kalman Filtering\n(Module 2)"] --> NOW

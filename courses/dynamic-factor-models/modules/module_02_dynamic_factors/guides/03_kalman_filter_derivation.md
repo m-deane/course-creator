@@ -1,12 +1,29 @@
 # Kalman Filter: Derivation and Intuition
 
+> **Reading time:** ~17 min | **Module:** Module 2: Dynamic Factors | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Kalman filter is the optimal recursive algorithm for estimating the state of a linear Gaussian state-space model. It produces minimum mean squared error estimates by combining model predictions with new observations, updating both state estimates and their uncertainty at each time step.
+
+</div>
+
 ## In Brief
 
 The Kalman filter is the optimal recursive algorithm for estimating the state of a linear Gaussian state-space model. It produces minimum mean squared error estimates by combining model predictions with new observations, updating both state estimates and their uncertainty at each time step.
 
-> 💡 **Key Insight:** The Kalman filter is Bayesian updating in action. At each time step, you have two sources of information: (1) where the model predicts the state should be, and (2) where the new observations suggest it is. The Kalman filter optimally weights these two sources based on their relative uncertainties, producing filtered state estimates and a likelihood for the parameters. It's not just a clever algorithm—it's provably optimal under Gaussian assumptions, and the foundation for all modern dynamic factor model estimation.
+<div class="callout-insight">
 
+**Insight:** The Kalman filter is Bayesian updating in action. At each time step, you have two sources of information: (1) where the model predicts the state should be, and (2) where the new observations suggest it is. The Kalman filter optimally weights these two sources based on their relative uncertainties, producing filtered state estimates and a likelihood for the parameters. It's not just a clever algorithm—it's provably optimal under Gaussian assumptions, and the foundation for all modern dynamic factor model estimation.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Filtering Problem
 
@@ -475,6 +492,12 @@ def kalman_smoother(result_filter, T):
 
 ### Comparing Filtered vs Smoothed
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Run smoother
 alpha_smoothed, P_smoothed = kalman_smoother(result, T)
@@ -505,6 +528,8 @@ for i in range(r):
     print(f"Factor {i+1} MSE - Filtered: {mse_filt:.4f}, Smoothed: {mse_smooth:.4f}")
     print(f"  Improvement: {(1 - mse_smooth/mse_filt)*100:.1f}%")
 ```
+
+</div>
 
 ---
 
@@ -552,6 +577,12 @@ State-space framework handles missing data naturally.
 4. Prediction step unchanged
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Mark missing observations
 y_missing = y.copy()
@@ -561,6 +592,8 @@ y_missing[100:110, [5, 7]] = np.nan  # Variables 5, 7 missing
 # Kalman filter handles automatically (see implementation above)
 result_missing = kalman_filter(y_missing, Z, H, T, R, Q, a1, P1)
 ```
+
+</div>
 
 ### Forecasting
 
@@ -576,6 +609,12 @@ $$P_{T+h|T} = T^h P_{T|T} (T^h)' + \sum_{j=0}^{h-1} T^j R Q R' (T^j)'$$
 $$\hat{y}_{T+h|T} = Z \hat{\alpha}_{T+h|T}$$
 
 **Implementation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forecast_statespace.py</span>
+</div>
+
 ```python
 def forecast_statespace(result_filter, Z, T, R, Q, horizons):
     """
@@ -636,6 +675,8 @@ y_fc, alpha_fc, P_fc = forecast_statespace(result, Z, T, R, Q, horizons=10)
 print(f"Forecasted observations: {y_fc.shape}")
 print(f"Forecasted factors: {alpha_fc.shape}")
 ```
+
+</div>
 
 ---
 
@@ -747,7 +788,13 @@ print(f"Forecasted factors: {alpha_fc.shape}")
    ```
 
 8. **Diagnostic Checks**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # After running Kalman filter:
    # 1. Plot standardized innovations (should be N(0,1))
    # 2. Test for autocorrelation (Ljung-Box)
@@ -755,8 +802,16 @@ print(f"Forecasted factors: {alpha_fc.shape}")
    # 4. Check innovation variance equals F_t empirically
    ```
 
+</div>
+
 9. **Missing Data Experiment**
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
    # Simulate data with 30% missing observations
    # Compare three approaches:
    # 1. Listwise deletion + Kalman filter
@@ -764,6 +819,8 @@ print(f"Forecasted factors: {alpha_fc.shape}")
    # 3. Kalman filter with missing data handling
    # Which produces best factor estimates (MSE vs true)?
    ```
+
+</div>
 
 ### Extension
 
@@ -783,6 +840,12 @@ print(f"Forecasted factors: {alpha_fc.shape}")
     - Compare to `statsmodels.tsa.arima.ARIMA`.
 
 ---
+
+<div class="callout-insight">
+
+**Insight:** Understanding kalman filter is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
 
 ## Further Reading
 
@@ -814,3 +877,42 @@ print(f"Forecasted factors: {alpha_fc.shape}")
 ---
 
 **Next Steps:** With the Kalman filter in hand, you can now estimate dynamic factor models via maximum likelihood (Module 4) and handle mixed-frequency data (Module 5). The three guides in this module form the theoretical foundation for all advanced DFM methods.
+
+---
+
+## Conceptual Practice Questions
+
+1. Walk through one iteration of the Kalman filter in your own words — what is predicted, what is updated, and why?
+
+2. Why is the Kalman gain matrix central to the algorithm? What happens when observation noise is very large?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_kalman_filter_derivation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_kalman_filter_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_from_static_to_dynamic.md">
+  <div class="link-card-title">01 From Static To Dynamic</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_state_space_representation.md">
+  <div class="link-card-title">02 State Space Representation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

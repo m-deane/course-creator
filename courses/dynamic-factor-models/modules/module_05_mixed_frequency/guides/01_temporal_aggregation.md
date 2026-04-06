@@ -1,14 +1,39 @@
 # Temporal Aggregation in Mixed-Frequency Models
 
+> **Reading time:** ~9 min | **Module:** Module 5: Mixed Frequency | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Mixed-frequency data requires understanding how variables aggregate over time—monthly industrial production and quarterly GDP follow different temporal aggregation rules. This guide covers stock versus flow variables and the constraints that preserve consistency across frequencies.
+
+</div>
+
 ## In Brief
 
 Mixed-frequency data requires understanding how variables aggregate over time—monthly industrial production and quarterly GDP follow different temporal aggregation rules. This guide covers stock versus flow variables and the constraints that preserve consistency across frequencies.
 
-> 💡 **Key Insight:** The relationship between high-frequency and low-frequency observations is not arbitrary: flow variables (GDP, consumption) sum over periods while stock variables (unemployment rate, inventory levels) reflect point-in-time values. Ignoring these aggregation constraints leads to misspecified models and biased forecasts.
+<div class="callout-insight">
 
+**Insight:** The relationship between high-frequency and low-frequency observations is not arbitrary: flow variables (GDP, consumption) sum over periods while stock variables (unemployment rate, inventory levels) reflect point-in-time values. Ignoring these aggregation constraints leads to misspecified models and biased forecasts.
+
+</div>
 ---
 
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
 ## 1. Stock Variables vs Flow Variables
+
+### Intuitive Explanation
+
+Think of a bathtub analogy:
+- **Flow variable**: The water flowing in per minute (can be added up over time)
+- **Stock variable**: The water level at specific moments (discrete snapshots)
+
+You can add up water inflow over 3 months to get quarterly inflow, but the water level at month's end is just one measurement—you don't add water levels together.
 
 ### Formal Definition
 
@@ -21,14 +46,6 @@ Mixed-frequency data requires understanding how variables aggregate over time—
 - Examples: Unemployment rate, inventory levels, money supply, exchange rates
 - Quarterly value = value at specific point (usually end of quarter)
 - Mathematical: $Y_t^Q = Y_{3t}^M$ (end-of-period sampling)
-
-### Intuitive Explanation
-
-Think of a bathtub analogy:
-- **Flow variable**: The water flowing in per minute (can be added up over time)
-- **Stock variable**: The water level at specific moments (discrete snapshots)
-
-You can add up water inflow over 3 months to get quarterly inflow, but the water level at month's end is just one measurement—you don't add water levels together.
 
 ### Mathematical Framework
 
@@ -46,6 +63,12 @@ $$Y_t^{(L)} = \frac{1}{m} \sum_{j=1}^{m} Y_{mt-(m-j)}^{(H)}$$
 where superscript $(H)$ denotes high frequency, $(L)$ denotes low frequency.
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">aggregate_flow.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -138,6 +161,8 @@ print("\nStock aggregation - Average (Unemployment):")
 print(quarterly_unemp_avg.head())
 ```
 
+</div>
+
 ---
 
 ## 2. Aggregation Constraints in Factor Models
@@ -175,6 +200,12 @@ $$C_{\text{stock}} = \begin{bmatrix}
 Each row selects the last month of each quarter.
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_aggregation_matrix.py</span>
+</div>
 
 ```python
 def create_aggregation_matrix(n_high, n_low, m, agg_type='flow'):
@@ -248,6 +279,8 @@ print(f"Q1 flow (sum of 1,2,3): {quarterly_flow[0]}")
 print(f"Q1 stock (value at 3): {quarterly_stock[0]}")
 ```
 
+</div>
+
 ---
 
 ## 3. Mixed-Frequency Factor Models with Constraints
@@ -275,6 +308,12 @@ With constraints:
 - Theoretically consistent forecasts
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">constrainedmixedfrequencydfm.py</span>
+</div>
 
 ```python
 class ConstrainedMixedFrequencyDFM:
@@ -376,6 +415,8 @@ print(f"High-freq loadings shape: {loadings['high_freq'].shape}")
 print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 ```
 
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -457,6 +498,12 @@ print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding temporal aggregation in mixed-frequency models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 **Key Takeaways:**
@@ -467,3 +514,42 @@ print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 
 **Next Steps:**
 The next guide introduces MIDAS regression, which provides flexible weighting schemes for mixed-frequency relationships without requiring explicit factor structure.
+
+---
+
+## Conceptual Practice Questions
+
+1. Why does temporal aggregation create a measurement problem for factor models?
+
+2. Give an example of how quarterly GDP and monthly industrial production can coexist in a state space model.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_temporal_aggregation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_midas_regression.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_midas_regression.md">
+  <div class="link-card-title">02 Midas Regression</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_state_space_mixed_freq.md">
+  <div class="link-card-title">03 State Space Mixed Freq</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

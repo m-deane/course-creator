@@ -23,6 +23,7 @@ math: mathjax
 **Stationarity** ensures statistical properties remain constant over time, which is necessary for consistent estimation.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Static Factor Model\nX = Lambda * F + e"] --> B["Add Dynamics\nF_t = Phi * F_{t-1} + eta_t"]
     B --> C["Dynamic Factor Model"]
@@ -31,6 +32,12 @@ flowchart LR
     D --> F["Autocovariance"]
     D --> G["AR Processes"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -66,6 +73,7 @@ Imagine taking snapshots of your time series at different points. For a stationa
 - **No trend**, no changing volatility, no structural breaks
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Stationary
         S1["Snapshot t=50\nmean=0, var=1"] --- S2["Snapshot t=150\nmean=0, var=1"] --- S3["Snapshot t=250\nmean=0, var=1"]
@@ -74,6 +82,12 @@ flowchart LR
         N1["Snapshot t=50\nmean=2"] --- N2["Snapshot t=150\nmean=5"] --- N3["Snapshot t=250\nmean=12"]
     end
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -104,6 +118,12 @@ def test_stationarity(y, significance=0.05):
     kpss_stat, kpss_pval, _, kpss_crit = kpss(y, regression='c', nlags='auto')
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -121,6 +141,12 @@ def test_stationarity(y, significance=0.05):
     }
     return results
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -345,6 +371,12 @@ def estimate_ar(y, max_lag=10, criterion='aic'):
 
 # Code: AR Estimation with Lag Selection (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
     if criterion == 'aic':
@@ -354,6 +386,8 @@ def estimate_ar(y, max_lag=10, criterion='aic'):
 
     return {'best_lag': best_p, 'best_model': results[best_p]['model']}
 ```
+
+</div>
 
 > Use BIC for consistent selection, AIC for better prediction.
 
@@ -385,6 +419,7 @@ Factor dynamics are modeled as VAR:
 $$F_t = \Phi F_{t-1} + \eta_t$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TB
     F1["Factors F_{t-1}"] -->|"Phi (transition)"| F2["Factors F_t"]
     F2 -->|"Lambda (loadings)"| X["Observed X_t"]
@@ -406,6 +441,12 @@ Essential for:
 
 # Code: VAR Estimation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">estimate_var.py</span>
+</div>
+
 ```python
 from statsmodels.tsa.api import VAR
 
@@ -417,10 +458,18 @@ def estimate_var(Y, max_lag=10, criterion='aic'):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Code: VAR Estimation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Example: Bivariate VAR
@@ -435,6 +484,8 @@ var_results = estimate_var(Y, max_lag=5)
 print(f"Selected lag order: {var_results.k_ar}")
 print(f"Estimated Phi:\n{var_results.coefs[0].round(3)}")
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -457,6 +508,7 @@ $$\alpha_t = T \alpha_{t-1} + c + R\eta_t, \quad \eta_t \sim N(0, Q)$$
 where $\alpha_t$ is the **unobserved state vector**.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["State alpha_{t-1}"] -->|"T (transition)"| B["State alpha_t"]
     B -->|"Z (measurement)"| C["Observation y_t"]
@@ -535,6 +587,7 @@ This enables:
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Basic Statistics\nLinear Regression"] --> B["Stationarity &\nAutocovariance"]
     B --> C["AR Processes"]

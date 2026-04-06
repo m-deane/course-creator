@@ -1,14 +1,38 @@
 # Time Series Basics for Factor Models
 
+> **Reading time:** ~8 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Dynamic factor models extend static factors by allowing factors to evolve over time following autoregressive dynamics. This guide reviews the time series concepts—stationarity, autocovariance, and AR processes—essential for understanding factor dynamics.
+
+</div>
+
 ## In Brief
 
 Dynamic factor models extend static factors by allowing factors to evolve over time following autoregressive dynamics. This guide reviews the time series concepts—stationarity, autocovariance, and AR processes—essential for understanding factor dynamics.
 
-> 💡 **Key Insight:** Stationarity ensures that statistical properties remain constant over time, which is necessary for consistent estimation. Factor models assume factors follow stationary (or trend-stationary) processes, allowing us to estimate dynamics from historical data.
+<div class="callout-insight">
 
+**Insight:** Stationarity ensures that statistical properties remain constant over time, which is necessary for consistent estimation. Factor models assume factors follow stationary (or trend-stationary) processes, allowing us to estimate dynamics from historical data.
+
+</div>
 ---
 
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
 ## 1. Stationarity
+
+### Intuitive Explanation
+
+Imagine taking snapshots of your time series at different points. For a stationary series:
+- Each snapshot has the same "shape" (distribution)
+- The relationship between observations $h$ periods apart is always the same
+- There's no trend, no changing volatility, no structural breaks
 
 ### Formal Definition
 
@@ -19,14 +43,16 @@ A time series is **weakly (covariance) stationary** if:
 2. $\text{Var}(y_t) = \sigma^2 < \infty$ (constant, finite variance)
 3. $\text{Cov}(y_t, y_{t-h}) = \gamma(h)$ depends only on lag $h$, not on $t$
 
-### Intuitive Explanation
-
-Imagine taking snapshots of your time series at different points. For a stationary series:
-- Each snapshot has the same "shape" (distribution)
-- The relationship between observations $h$ periods apart is always the same
-- There's no trend, no changing volatility, no structural breaks
-
 ### Why Stationarity Matters for Factor Models
+
+<div class="flow">
+<div class="flow-step mint">1. Consistent estimatio...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Forecasting:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Factor dynamics:</div>
+</div>
+
 
 1. **Consistent estimation:** Sample moments converge to population moments
 2. **Forecasting:** Past patterns are informative about future behavior
@@ -108,6 +134,12 @@ Autocovariance measures how much knowing today's value tells you about values $h
 
 ### Sample Autocovariance
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sample_autocovariance.py</span>
+</div>
+
 ```python
 def sample_autocovariance(y, max_lag=20):
     """
@@ -153,7 +185,15 @@ print("Sample ACF:", acf[:6].round(3))
 print("Theoretical ACF for AR(1):", [phi**h for h in range(6)])
 ```
 
+</div>
+
 ### Visualizing ACF
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_acf_pacf.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -171,6 +211,8 @@ def plot_acf_pacf(y, lags=20, title=""):
 
 # Confidence bands at ±1.96/√T indicate significance at 5% level
 ```
+
+</div>
 
 ---
 
@@ -197,6 +239,12 @@ $$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + ... + \phi_p y_{t-p} + \varepsilon
 **Stationarity condition:** All roots of the characteristic polynomial $1 - \phi_1 z - ... - \phi_p z^p = 0$ lie outside the unit circle.
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">simulate_ar.py</span>
+</div>
 
 ```python
 def simulate_ar(phi, c=0, sigma=1, T=100, burn=100, seed=None):
@@ -250,7 +298,15 @@ phi = [0.5, 0.3]  # phi_1 = 0.5, phi_2 = 0.3
 y_ar2 = simulate_ar(phi, T=200, seed=42)
 ```
 
+</div>
+
 ### Estimation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">estimate_ar.py</span>
+</div>
 
 ```python
 from statsmodels.tsa.ar_model import AutoReg
@@ -303,6 +359,8 @@ print(f"Selected lag order: {ar_results['best_lag']}")
 print(f"Estimated coefficients: {ar_results['best_model'].params}")
 ```
 
+</div>
+
 ---
 
 ## 4. Vector Autoregressions (VAR)
@@ -327,6 +385,12 @@ where $F_t$ is the $r \times 1$ vector of factors. Understanding VAR is essentia
 - Structural analysis (FAVAR)
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">estimate_var.py</span>
+</div>
 
 ```python
 from statsmodels.tsa.api import VAR
@@ -368,6 +432,8 @@ var_results = estimate_var(Y, max_lag=5)
 print(f"Selected lag order: {var_results.k_ar}")
 print(f"Estimated Phi:\n{var_results.coefs[0].round(3)}")
 ```
+
+</div>
 
 ---
 
@@ -445,8 +511,53 @@ This enables:
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding time series basics for factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - Hamilton, J.D. (1994). *Time Series Analysis*. Princeton. Chapters 2-3, 10-11.
 - Lütkepohl, H. (2005). *New Introduction to Multiple Time Series Analysis*. Springer.
 - Shumway, R.H. & Stoffer, D.S. (2017). *Time Series Analysis and Its Applications*. Springer.
+
+---
+
+## Conceptual Practice Questions
+
+1. Why does stationarity matter for factor model estimation? What happens if the data is non-stationary?
+
+2. How would you test whether a macroeconomic time series is stationary before including it in a factor model?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_time_series_basics_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_foundations_review.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_matrix_algebra_review.md">
+  <div class="link-card-title">01 Matrix Algebra Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_pca_refresher.md">
+  <div class="link-card-title">03 Pca Refresher</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

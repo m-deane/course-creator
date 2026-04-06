@@ -1,12 +1,29 @@
 # The Static Factor Model: Specification and Assumptions
 
+> **Reading time:** ~7 min | **Module:** Module 1: Static Factors | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** The static factor model posits that a large number of observed variables are driven by a small number of latent common factors plus variable-specific idiosyncratic components. This decomposition captures the idea that macroeconomic and financial variables move together because they respond to com...
+
+</div>
+
 ## In Brief
 
 The static factor model posits that a large number of observed variables are driven by a small number of latent common factors plus variable-specific idiosyncratic components. This decomposition captures the idea that macroeconomic and financial variables move together because they respond to common underlying shocks.
 
-> 💡 **Key Insight:** When many variables co-move, there's likely a common cause. Factor models formalize this: instead of modeling $N$ separate series with $N(N-1)/2$ pairwise correlations, we model $r \ll N$ factors that generate all the co-movement. This is both dimensionality reduction and a structural hypothesis about how the world works.
+<div class="callout-insight">
 
+**Insight:** When many variables co-move, there's likely a common cause. Factor models formalize this: instead of modeling $N$ separate series with $N(N-1)/2$ pairwise correlations, we model $r \ll N$ factors that generate all the co-movement. This is both dimensionality reduction and a structural hypothesis about how the world works.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Model Specification
 
@@ -157,6 +174,12 @@ Expected loading pattern:
 
 ### Simulated Example
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -190,6 +213,8 @@ cov_implied = Lambda_true @ Lambda_true.T + np.diag(psi**2)
 print("Sample covariance:\n", cov_X.round(2))
 print("\nImplied covariance:\n", cov_implied.round(2))
 ```
+
+</div>
 
 ---
 
@@ -305,8 +330,53 @@ Enables structural analysis without committing to specific observables.
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding the static factor model is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - Lawley, D.N. & Maxwell, A.E. (1971). *Factor Analysis as a Statistical Method*. Classic reference.
 - Anderson, T.W. (2003). *An Introduction to Multivariate Statistical Analysis*, 3rd ed. Chapter 14.
 - Bai, J. & Ng, S. (2008). "Large Dimensional Factor Analysis." Sections 1-2.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_factor_model_specification_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_static_factor_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_identification_problem.md">
+  <div class="link-card-title">02 Identification Problem</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_approximate_factor_models.md">
+  <div class="link-card-title">03 Approximate Factor Models</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

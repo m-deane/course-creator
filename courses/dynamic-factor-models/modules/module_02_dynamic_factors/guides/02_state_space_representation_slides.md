@@ -21,6 +21,7 @@ math: mathjax
 > Every DFM can be written in state-space form, which separates **what we observe** from **what we don't**.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Latent (Unobserved)"
         A1["alpha_{t-1}"] -->|"T (transition)"| A2["alpha_t"]
@@ -32,6 +33,12 @@ flowchart LR
         EP["eps_t"] --> Y
     end
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 Enables: Kalman filter, missing data handling, likelihood computation, forecasting
 
@@ -159,6 +166,7 @@ $$X_t = \underbrace{\begin{bmatrix} \Lambda & 0 & \cdots & 0 \end{bmatrix}}_{Z} 
 # Companion Form: Dimension Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Inputs"
         N["N variables"]
@@ -182,6 +190,12 @@ flowchart TD
     M --> RD
     R --> QD
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -223,6 +237,12 @@ def dfm_to_statespace(Lambda, Phi_list, Sigma_e, Q):
     H = np.diag(Sigma_e) if Sigma_e.ndim == 1 else Sigma_e
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -243,10 +263,22 @@ def dfm_to_statespace(Lambda, Phi_list, Sigma_e, Q):
     return Z, H, T, R, Q
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Simulating from State-Space
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">simulate_statespace.py</span>
+</div>
 
 ```python
 def simulate_statespace(Z, H, T, R, Q, T_periods):
@@ -262,10 +294,18 @@ def simulate_statespace(Z, H, T, R, Q, T_periods):
     alpha[0] = np.random.multivariate_normal(np.zeros(m), Sigma_alpha)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Simulating from State-Space (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -278,6 +318,8 @@ def simulate_statespace(Z, H, T, R, Q, T_periods):
 
     return y, alpha
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -300,11 +342,19 @@ def simulate_statespace(Z, H, T, R, Q, T_periods):
 
 **Missing data handling:**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 y_sim[50:60, 3] = np.nan     # Variable 3 missing
 y_sim[100:110, [5, 7]] = np.nan  # Variables 5, 7 missing
 # Kalman filter skips these in update step
 ```
+
+</div>
 
 > State-space framework handles missing data **naturally** -- no imputation needed.
 
@@ -340,6 +390,7 @@ $$X_t = \Lambda F_t + e_t = (\Lambda G)(G^{-1}F_t) + e_t$$
 # Information Flow in State-Space
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TB
     subgraph "t-1"
         A1["alpha_{t-1}"]
@@ -406,6 +457,7 @@ Always verify: `Z.shape[1] == T.shape[0] == T.shape[1] == R.shape[0]`
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["DFM with VAR(1)\nm = r"] --> C["State-Space Form"]
     B["DFM with VAR(p)\nm = rp"] -->|"Companion form"| C

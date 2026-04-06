@@ -1,12 +1,29 @@
 # Diffusion Index Forecasting
 
+> **Reading time:** ~13 min | **Module:** Module 6: Factor Augmented | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Diffusion index forecasting uses extracted factors from large datasets to predict target variables, leveraging information from hundreds of economic indicators without directly estimating high-dimensional models. This approach, pioneered by Stock and Watson, provides robust forecasts by aggregati...
+
+</div>
+
 ## In Brief
 
 Diffusion index forecasting uses extracted factors from large datasets to predict target variables, leveraging information from hundreds of economic indicators without directly estimating high-dimensional models. This approach, pioneered by Stock and Watson, provides robust forecasts by aggregating signals across many variables while quantifying prediction uncertainty.
 
-> 💡 **Key Insight:** Instead of choosing which predictors to include in a forecasting model, diffusion index methods extract common factors from all available predictors and use these factors as regressors. This transforms a high-dimensional forecasting problem ($N$ predictors) into a low-dimensional one ($r$ factors), combining information optimally while avoiding overfitting.
+<div class="callout-insight">
 
+**Insight:** Instead of choosing which predictors to include in a forecasting model, diffusion index methods extract common factors from all available predictors and use these factors as regressors. This transforms a high-dimensional forecasting problem ($N$ predictors) into a low-dimensional one ($r$ factors), combining information optimally while avoiding overfitting.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. The Diffusion Index Approach
 
@@ -196,6 +213,12 @@ Factors represent these common shocks. Forecasting with factors means forecastin
 ## 6. Code Implementation
 
 ### Basic Diffusion Index Forecast
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">diffusionindexforecaster.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -408,7 +431,15 @@ class DiffusionIndexForecaster:
         return predictors
 ```
 
+</div>
+
 ### Example Application
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Generate synthetic data
@@ -455,7 +486,15 @@ for i, var_ratio in enumerate(di_model.explained_variance_ratio(), 1):
     print(f"  Factor {i}: {var_ratio:.3f}")
 ```
 
+</div>
+
 ### Real Data Example: Forecasting GDP
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">load_fredmd_example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -552,6 +591,8 @@ print(f"Optimal number of factors: {int(best_r)}")
 print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 ```
 
+</div>
+
 ---
 
 ## 7. Common Pitfalls
@@ -564,6 +605,12 @@ print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 
 **Solution:** Use only training data to estimate factors. Transform test data using training-period loadings.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG
 factors_all = PCA().fit_transform(X_all)  # Uses future data!
@@ -573,6 +620,8 @@ pca = PCA().fit(X_train)
 factors_train = pca.transform(X_train)
 factors_test = pca.transform(X_test)  # Uses only training loadings
 ```
+
+</div>
 
 ### 2. Ignoring Forecast Horizon
 
@@ -660,6 +709,12 @@ factors_test = pca.transform(X_test)  # Uses only training loadings
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding diffusion index forecasting is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## 10. Further Reading
 
 ### Foundational Papers
@@ -690,3 +745,42 @@ factors_test = pca.transform(X_test)  # Uses only training loadings
 
 - **Stock, J.H. & Watson, M.W. (2016).** "Dynamic Factor Models, Factor-Augmented Vector Autoregressions, and Structural Vector Autoregressions in Macroeconomics." *Handbook of Macroeconomics*, Vol 2, 415-525.
   - Comprehensive survey of factor-based forecasting methods
+
+---
+
+## Conceptual Practice Questions
+
+1. What is a diffusion index and how does it relate to factor-augmented forecasting?
+
+2. Why do diffusion index forecasts often outperform individual variable forecasts?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_diffusion_index_forecasting_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_diffusion_index_forecasting.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_favar_models.md">
+  <div class="link-card-title">02 Favar Models</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_structural_identification.md">
+  <div class="link-card-title">03 Structural Identification</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

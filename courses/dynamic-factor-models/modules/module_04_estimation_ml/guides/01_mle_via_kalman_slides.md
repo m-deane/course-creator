@@ -21,6 +21,7 @@ math: mathjax
 > PCA is fast but gives no standard errors and ignores dynamics during factor extraction. MLE jointly estimates all parameters with proper statistical inference.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     SS["State-Space\nDFM"] --> KF["Kalman Filter\n(forward pass)"]
     KF --> PE["Prediction Errors\nv_t, F_t"]
@@ -28,6 +29,12 @@ flowchart LR
     LL --> OPT["Numerical\nOptimization"]
     OPT --> MLE["MLE Estimates\ntheta_hat"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Method | Standard Errors | Efficiency | Computation |
 |--------|:-:|:-:|:-:|
@@ -76,6 +83,7 @@ $$\log L(\theta) = -\frac{TN}{2}\log(2\pi) - \frac{1}{2}\sum_{t=1}^T \left[\log|
 # Intuition: Sequential Prediction
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     X1["X_1\nobserve"] --> P2["Predict X_2"]
     P2 --> V2["v_2 = X_2 - X_hat_2\n(surprise)"]
@@ -85,6 +93,12 @@ flowchart LR
     PT --> VT["v_T = X_T - X_hat_T"]
     VT --> LL["Likelihood =\nProduct of N(v_t; 0, F_t)"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 At each step:
 1. **Predict** $X_t$ from past data and current parameters
@@ -147,6 +161,12 @@ for t in range(T):
     loglik += -0.5 * (log_det + w @ w)
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 > Use Cholesky decomposition to avoid direct matrix inversion.
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
@@ -157,6 +177,7 @@ for t in range(T):
 $$\hat{\theta}_{MLE} = \arg\max_\theta \log L(\theta)$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize theta\nfrom PCA estimates"] --> KF["Kalman Filter\ncompute L(theta)"]
     KF --> CHECK{"Converged?"}
@@ -164,6 +185,12 @@ flowchart TD
     OPT --> KF
     CHECK -->|"Yes"| RESULT["MLE estimates\ntheta_hat, std errors, AIC/BIC"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -233,6 +260,12 @@ def kalman_filter_likelihood(params, X, constrain_fn):
 
 # Likelihood Function (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
     for t in range(T_obs):
@@ -245,10 +278,18 @@ def kalman_filter_likelihood(params, X, constrain_fn):
     return -loglik  # Negative for minimization
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Full Estimation Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">estimate_dfm_mle.py</span>
+</div>
 
 ```python
 def estimate_dfm_mle(X, r=2, p=1):
@@ -263,10 +304,18 @@ def estimate_dfm_mle(X, r=2, p=1):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Full Estimation Pipeline (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     # Pack initial parameters
@@ -280,6 +329,8 @@ def estimate_dfm_mle(X, r=2, p=1):
     )
     return unpack_results(result, N, r, p)
 ```
+
+</div>
 
 > Always initialize from PCA -- usually close to global optimum.
 
@@ -352,6 +403,7 @@ def estimate_dfm_mle(X, r=2, p=1):
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     KF["Kalman Filter\n(Module 2)"] --> MLE["MLE via Kalman\n(this guide)"]
     SS["State-Space Form\n(Module 2)"] --> MLE

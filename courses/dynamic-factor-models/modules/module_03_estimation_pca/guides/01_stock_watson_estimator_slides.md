@@ -21,11 +21,18 @@ math: mathjax
 > Joint estimation of factors and dynamics requires iterative optimization. Two-step estimation decomposes the problem into two simple, closed-form solutions.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     X["Panel Data\nX (T x N)"] --> S1["Step 1: PCA\nExtract factors F"]
     S1 --> S2["Step 2: OLS\nEstimate VAR dynamics"]
     S2 --> R["DFM Estimates\nF, Lambda, Phi"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Method | Computation | Starting Values | Consistency |
 |--------|:-----------:|:---------------:|:-----------:|
@@ -72,6 +79,7 @@ $$\hat{F}_t = \hat{\Phi}_1 \hat{F}_{t-1} + \cdots + \hat{\Phi}_p \hat{F}_{t-p} +
 for $t = p+1, \ldots, T$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Step 1: PCA"
         D["Data X (T x N)"] --> COV["Covariance\nSigma = X'X / T"]
@@ -85,6 +93,12 @@ flowchart TD
         VAR --> ETA["Residuals: eta_t"]
     end
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -134,6 +148,7 @@ $$\|\hat{F}_t - H F_t\| = O_p\left(\min\left(N^{-1/2}, T^{-1/2}\right)\right)$$
 $$\Sigma_X = \Lambda \Sigma_F \Lambda' + \Sigma_e$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Eigenvalue Separation"
         F1["Factor eigenvalues\nO(N) -- diverge"]
@@ -142,6 +157,12 @@ flowchart LR
     end
     F1 --> GAP --> E1
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 **Signal-to-noise ratio:**
 $$\text{SNR} \sim \frac{N \cdot \text{factor variance}}{\text{idiosyncratic variance}} \to \infty$$
@@ -187,6 +208,12 @@ class StockWatsonEstimator:
         X = np.asarray(X)
         T, N = X.shape
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
@@ -278,6 +305,12 @@ def forecast(self, h=1):
 
 # Forecasting and Transform (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">transform.py</span>
+</div>
+
 ```python
                 F_t += self.Phi_hat[:, :, lag] @ F_history[p+t-lag-1, :]
             else:
@@ -291,10 +324,18 @@ def transform(self, X):
     return X_std @ np.linalg.pinv(self.Lambda_hat.T)
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Demonstration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 model = StockWatsonEstimator(n_factors=3, factor_lags=2, standardize=True)
@@ -310,6 +351,8 @@ H, _ = orthogonal_procrustes(model.F_hat, F_true)
 F_aligned = model.F_hat @ H
 # Correlations: 0.987, 0.971, 0.963
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -337,6 +380,7 @@ For $N = 127$, $T = 500$, $r = 5$:
 - For $N > 10{,}000$: Use randomized PCA
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Parallelization"
         S1["Step 1: PCA\nBLAS/LAPACK\n(automatic)"]
@@ -349,6 +393,12 @@ flowchart LR
 ---
 
 # Using with scikit-learn
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -363,6 +413,8 @@ F_hat_sklearn = pca.fit_transform(X_scaled)
 # Step 2: Manual VAR estimation on F_hat_sklearn
 # (Same OLS procedure as our implementation)
 ```
+
+</div>
 
 > sklearn PCA gives equivalent results -- choice is a matter of ecosystem preference.
 
@@ -397,6 +449,7 @@ F_hat_sklearn = pca.fit_transform(X_scaled)
 - Comfortable: $T > 100$, $N > 50$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CHECK["Check: T and N large enough?"]
     CHECK -->|"T > 100, N > 50"| OK["Proceed with\nStock-Watson"]
@@ -427,6 +480,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["PCA\n(Module 0)"] --> SW["Stock-Watson\nTwo-Step Estimator\n(this guide)"]
     B["Static Factor Models\n(Module 1)"] --> SW

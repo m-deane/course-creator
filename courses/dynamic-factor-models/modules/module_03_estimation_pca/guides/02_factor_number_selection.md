@@ -1,12 +1,29 @@
 # Factor Number Selection: Information Criteria and Diagnostics
 
+> **Reading time:** ~15 min | **Module:** Module 3: Estimation Pca | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Choosing the number of factors $r$ is critical in factor model estimation. Too few factors underfit the common variation; too many overfit idiosyncratic noise. Information criteria like Bai-Ng penalize model complexity while rewarding fit, providing data-driven factor selection. Visual diagnostic...
+
+</div>
+
 ## In Brief
 
 Choosing the number of factors $r$ is critical in factor model estimation. Too few factors underfit the common variation; too many overfit idiosyncratic noise. Information criteria like Bai-Ng penalize model complexity while rewarding fit, providing data-driven factor selection. Visual diagnostics like scree plots and eigenvalue ratios complement formal criteria.
 
-> 💡 **Key Insight:** The core trade-off: adding factors always reduces in-sample fit (smaller residuals), but additional factors may capture noise rather than signal. Information criteria formalize this trade-off by penalizing parameters. The key innovation of Bai-Ng criteria is designing penalties that reflect the large-$N$-large-$T$ asymptotics of factor models, unlike AIC/BIC which assume fixed dimension.
+<div class="callout-insight">
 
+**Insight:** The core trade-off: adding factors always reduces in-sample fit (smaller residuals), but additional factors may capture noise rather than signal. Information criteria formalize this trade-off by penalizing parameters. The key innovation of Bai-Ng criteria is designing penalties that reflect the large-$N$-large-$T$ asymptotics of factor models, unlike AIC/BIC which assume fixed dimension.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Formal Definition
 
@@ -179,6 +196,12 @@ Information criteria approximate leave-one-out cross-validation error. For facto
 ## 4. Code Implementation
 
 ### Complete Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">factornumberselector.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -576,6 +599,8 @@ print(f"  IC3 (fewer factors): r = {r_hat_ic3}")
 print(f"\n  True value: r = {r_true}")
 ```
 
+</div>
+
 ### Output (Representative)
 
 ```
@@ -738,11 +763,26 @@ Recommended choices:
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding factor number selection is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 Selecting the number of factors is a model selection problem requiring trade-off between fit and complexity:
 
 **Key Methods:**
+<div class="flow">
+<div class="flow-step mint">1. Bai-Ng IC criteria:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Scree plots:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Eigenvalue ratios:</div>
+</div>
+
+
 1. **Bai-Ng IC criteria:** Formal tests with penalties calibrated to large-$N$-large-$T$ asymptotics
 2. **Scree plots:** Visual diagnostic for "elbow" in eigenvalue decay
 3. **Eigenvalue ratios:** Identify jumps in eigenvalue spectrum
@@ -757,3 +797,42 @@ Selecting the number of factors is a model selection problem requiring trade-off
 **Asymptotic Guarantee:** All IC criteria consistently select true $r_0$ as $N, T \to \infty$.
 
 **Next:** We extend PCA estimation to handle missing data via EM algorithm.
+
+---
+
+## Conceptual Practice Questions
+
+1. Compare the Bai-Ng IC criteria with the scree plot. When would they disagree?
+
+2. Why is choosing the number of factors so important for forecasting performance?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_factor_number_selection_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_stock_watson_estimation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_stock_watson_estimator.md">
+  <div class="link-card-title">01 Stock Watson Estimator</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_missing_data_handling.md">
+  <div class="link-card-title">03 Missing Data Handling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

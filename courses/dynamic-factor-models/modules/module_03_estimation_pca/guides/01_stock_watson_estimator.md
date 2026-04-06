@@ -1,12 +1,29 @@
 # Stock-Watson Two-Step Estimator
 
+> **Reading time:** ~16 min | **Module:** Module 3: Estimation Pca | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Stock-Watson two-step estimator provides a computationally efficient method for estimating dynamic factor models: first extract factors via principal components analysis, then estimate factor dynamics via OLS regression. This approach avoids the computational burden of joint maximum likelihoo...
+
+</div>
+
 ## In Brief
 
 The Stock-Watson two-step estimator provides a computationally efficient method for estimating dynamic factor models: first extract factors via principal components analysis, then estimate factor dynamics via OLS regression. This approach avoids the computational burden of joint maximum likelihood while maintaining consistency under large N and T asymptotics.
 
-> 💡 **Key Insight:** Instead of estimating factors and loadings jointly (which requires iterative optimization), we leverage the observation that PCA consistently estimates the factor space when N and T are large. Once we have factor estimates, the dynamics reduce to a standard VAR that can be estimated by OLS. This decomposition transforms a difficult high-dimensional problem into two simple steps.
+<div class="callout-insight">
 
+**Insight:** Instead of estimating factors and loadings jointly (which requires iterative optimization), we leverage the observation that PCA consistently estimates the factor space when N and T are large. Once we have factor estimates, the dynamics reduce to a standard VAR that can be estimated by OLS. This decomposition transforms a difficult high-dimensional problem into two simple steps.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Formal Definition
 
@@ -99,6 +116,17 @@ $$\|\hat{F}_t - H F_t\| = O_p\left(\min\left(N^{-1/2}, T^{-1/2}\right)\right)$$
 
 where $H$ is an $r \times r$ rotation matrix. Key points:
 
+<div class="flow">
+<div class="flow-step mint">1. Consistency:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Rotation indetermina...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Rate of convergence:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Fast rate:</div>
+</div>
+
+
 1. **Consistency:** Estimation error vanishes asymptotically
 2. **Rotation indeterminacy:** Factors estimated up to rotation $H$
 3. **Rate of convergence:** $\min(\sqrt{N}, \sqrt{T})$ rate
@@ -135,6 +163,12 @@ $$R_i^2 = \frac{\hat{\lambda}_i' \hat{\lambda}_i}{\text{Var}(X_i)} = \frac{\sum_
 ## 4. Code Implementation
 
 ### Complete Implementation from Scratch
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stockwatsonestimator.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -491,6 +525,8 @@ print(f"Forecast shape: {F_forecast.shape}")
 print(f"First forecast:\n{F_forecast[0, :]}")
 ```
 
+</div>
+
 ### Output (Representative)
 
 ```
@@ -520,6 +556,12 @@ First forecast:
 
 ### Using with scikit-learn API
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -535,6 +577,8 @@ F_hat_sklearn = pca.fit_transform(X_scaled)
 # Step 2: Estimate VAR manually
 # (Similar to our implementation above)
 ```
+
+</div>
 
 ---
 
@@ -710,6 +754,12 @@ Step 2 (VAR OLS) can parallelize across equations (estimate each factor separate
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding stock-watson two-step estimator is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Summary
 
 The Stock-Watson two-step estimator provides a simple, fast, and asymptotically valid method for estimating dynamic factor models:
@@ -729,3 +779,42 @@ The Stock-Watson two-step estimator provides a simple, fast, and asymptotically 
 - Requires both $N$ and $T$ large
 
 **Next:** We formalize the asymptotic theory justifying this procedure.
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the core idea of stock-watson two-step estimator in your own words to a colleague who has not studied it.
+
+2. What is the most common mistake practitioners make when applying stock-watson two-step estimator, and how would you avoid it?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_stock_watson_estimator_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_stock_watson_estimation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_factor_number_selection.md">
+  <div class="link-card-title">02 Factor Number Selection</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_missing_data_handling.md">
+  <div class="link-card-title">03 Missing Data Handling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

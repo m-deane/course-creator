@@ -1,12 +1,29 @@
 # Approximate Factor Models and Large-N Theory
 
+> **Reading time:** ~12 min | **Module:** Module 1: Static Factors | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** Approximate factor models relax the strict assumption that idiosyncratic errors are uncorrelated. Instead, they allow weak cross-sectional dependence in idiosyncratic components while maintaining that common factors explain the dominant covariation. This makes factor models realistic for large ma...
+
+</div>
+
 ## In Brief
 
 Approximate factor models relax the strict assumption that idiosyncratic errors are uncorrelated. Instead, they allow weak cross-sectional dependence in idiosyncratic components while maintaining that common factors explain the dominant covariation. This makes factor models realistic for large macroeconomic and financial panels where some residual correlation is inevitable.
 
-> 💡 **Key Insight:** In exact factor models, ALL correlation comes through factors. But real data has local correlations (e.g., oil prices and gas prices) that aren't purely factor-driven. Approximate factor models say: "Factors capture the PERVASIVE covariation, while weak local dependencies are allowed but don't dominate." As $N \to \infty$, weak dependencies average out, making PCA consistent for factor estimation.
+<div class="callout-insight">
 
+**Insight:** In exact factor models, ALL correlation comes through factors. But real data has local correlations (e.g., oil prices and gas prices) that aren't purely factor-driven. Approximate factor models say: "Factors capture the PERVASIVE covariation, while weak local dependencies are allowed but don't dominate." As $N \to \infty$, weak dependencies average out, making PCA consistent for factor estimation.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Exact vs. Approximate Factor Models
 
@@ -181,6 +198,12 @@ $$\hat{r} = \arg\min_k IC_p(k)$$
 
 ### Simulating Approximate Factor Model
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">simulate_approximate_factor_model.py</span>
+</div>
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -252,7 +275,15 @@ print(f"\nIdiosyncratic correlation matrix (first 5x5):")
 print(idio_corr[:5, :5].round(3))
 ```
 
+</div>
+
 ### Eigenvalue Spectrum Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_eigenvalue_spectrum.py</span>
+</div>
 
 ```python
 def analyze_eigenvalue_spectrum(X, true_r=None):
@@ -316,7 +347,15 @@ def analyze_eigenvalue_spectrum(X, true_r=None):
 analyze_eigenvalue_spectrum(X, true_r=r)
 ```
 
+</div>
+
 ### Bai-Ng Information Criteria
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bai_ng_ic.py</span>
+</div>
 
 ```python
 def bai_ng_ic(X, k_max=10):
@@ -419,7 +458,15 @@ def bai_ng_ic(X, k_max=10):
 ic_results = bai_ng_ic(X, k_max=10)
 ```
 
+</div>
+
 ### Weak Dependence Verification
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_weak_dependence.py</span>
+</div>
 
 ```python
 def check_weak_dependence(X, threshold=0.3):
@@ -501,6 +548,8 @@ def check_weak_dependence(X, threshold=0.3):
 
 diagnostics = check_weak_dependence(X, threshold=0.3)
 ```
+
+</div>
 
 ---
 
@@ -595,6 +644,12 @@ diagnostics = check_weak_dependence(X, threshold=0.3)
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding approximate factor models and large-n theory is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 ### Foundational Theory
@@ -632,3 +687,42 @@ diagnostics = check_weak_dependence(X, threshold=0.3)
 ---
 
 **Key Takeaway:** Approximate factor models make factor analysis practical for large, realistic datasets by allowing weak idiosyncratic correlation. Large-N asymptotics ensure PCA remains consistent, and information criteria help determine the number of pervasive factors. This framework underpins modern empirical macroeconomics and finance.
+
+---
+
+## Conceptual Practice Questions
+
+1. In your own words, explain the difference between common factors and idiosyncratic components.
+
+2. Why do factor models require identification restrictions? Give a concrete example.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_approximate_factor_models_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_static_factor_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_factor_model_specification.md">
+  <div class="link-card-title">01 Factor Model Specification</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_identification_problem.md">
+  <div class="link-card-title">02 Identification Problem</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

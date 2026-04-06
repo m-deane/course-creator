@@ -21,6 +21,7 @@ math: mathjax
 > MLE gives point estimates. Bayesian estimation gives entire distributions -- "the loading is between 0.6 and 1.0 with 95% probability."
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PRIOR["Prior\np(theta)"] --> BAYES["Bayes' Theorem"]
     DATA["Likelihood\np(X | theta)"] --> BAYES
@@ -28,6 +29,12 @@ flowchart LR
     POST --> CRED["Credible Intervals\nUncertainty Quantification"]
     POST --> FORE["Predictive Distributions\nForecast Uncertainty"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Feature | MLE | Bayesian |
 |---------|:---:|:--------:|
@@ -89,6 +96,7 @@ $$p(\theta, F_{1:T} | X_{1:T}) \propto p(X | F, \theta) \cdot p(F | \theta) \cdo
 **Iteration $k$:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     F["1. Draw F^(k)\n| X, Lambda^(k-1), Phi^(k-1), Sigma_e^(k-1)\n(Simulation smoother)"]
     F --> L["2. Draw Lambda^(k)\n| X, F^(k), Sigma_e^(k-1)\n(Normal posterior)"]
@@ -97,6 +105,12 @@ flowchart TD
     SE --> SN["5. Draw Sigma_eta^(k)\n| F^(k), Phi^(k)\n(Inverse-Wishart or fixed)"]
     SN -->|"k = k+1"| F
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 After burn-in, samples $\{\theta^{(k)}\}$ converge to draws from $p(\theta | X)$.
 
@@ -178,6 +192,12 @@ class BayesianDFM:
         Sigma_e = np.diag(sigma_e)
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -193,10 +213,22 @@ class BayesianDFM:
         # ... Gibbs loop ...
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Gibbs Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 save_idx = 0
@@ -211,10 +243,18 @@ save_idx = 0
             Phi = self.draw_dynamics(F)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Gibbs Loop (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -229,10 +269,18 @@ save_idx = 0
                 save_idx += 1
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Posterior Inference
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Posterior means
@@ -246,6 +294,8 @@ Phi_upper = np.percentile(samples['Phi'], 97.5, axis=0)
 print(f"Phi[0,0]: {Phi_mean[0,0]:.3f}")
 print(f"  95% CI: [{Phi_lower[0,0]:.3f}, {Phi_upper[0,0]:.3f}]")
 ```
+
+</div>
 
 > Unlike MLE confidence intervals, Bayesian credible intervals have a direct probability interpretation.
 
@@ -269,6 +319,7 @@ print(f"  95% CI: [{Phi_lower[0,0]:.3f}, {Phi_upper[0,0]:.3f}]")
 | Geweke test | Stationarity of mean | $p > 0.05$ |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RUN["Run K chains\nfrom different starts"] --> DIAG["Compute Diagnostics\nR-hat, ESS, trace plots"]
     DIAG -->|"R-hat > 1.1"| MORE["Run longer\nor fix mixing"]
@@ -372,6 +423,7 @@ flowchart LR
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     KF["Kalman Filter/Smoother\n(Module 2)"] --> BAYES["Bayesian DFM\n(this guide)"]
     MLE["MLE\n(Guide 1)"] --> BAYES

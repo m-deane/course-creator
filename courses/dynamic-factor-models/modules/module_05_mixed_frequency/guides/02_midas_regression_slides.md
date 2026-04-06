@@ -21,6 +21,7 @@ math: mathjax
 > Standard distributed lag: 60 parameters for 60 daily lags. MIDAS: 3 parameters for the same information.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     HF["High-Frequency\nPredictor X^(H)"] --> W["Weight Function\nw(k; theta)"]
     W --> Z["Weighted Regressor\nZ_t = sum w(k)*X_{t-k}"]
@@ -28,6 +29,12 @@ flowchart LR
     REG --> FORE["Low-Frequency\nForecast Y^(L)"]
     THETA["theta (2-3 params)\nControls weight shape"] --> W
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 | Approach | Parameters | Flexibility | Overfitting Risk |
 |----------|:----------:|:-----------:|:----------------:|
@@ -67,6 +74,7 @@ $$Y_t = \beta_0 + \sum_{k=0}^{K-1} \sum_{j=1}^{m} \beta_{k,j} X_{t-k,j}^{(H)} + 
 # How MIDAS Weights Work
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Weight Function w(k; theta)"
         K["Lag positions\nk = 1, 2, ..., K"]
@@ -80,6 +88,12 @@ flowchart TD
     NORM --> APPLY["Apply to\nhigh-freq lags"]
     APPLY --> AGG["Aggregated\nregressor Z_t"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -112,6 +126,7 @@ where $f(x; \theta_1, \theta_2) = \frac{x^{\theta_1 - 1}(1-x)^{\theta_2 - 1}}{B(
 # Beta Weight Patterns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Decay (theta1=1, theta2=5)"
         D1["|||||||..."]
@@ -126,6 +141,12 @@ flowchart LR
         I2["Older lags\nget most weight"]
     end
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 ```python
 def midas_beta_weights(K, theta1, theta2, normalize=True):
@@ -151,6 +172,12 @@ Alternative specification using exponential of polynomial:
 
 $$w(k; \theta) = \frac{\exp\left(\theta_1 k + \theta_2 k^2 + \ldots\right)}{\sum_{j=1}^{K} \exp\left(\theta_1 j + \theta_2 j^2 + \ldots\right)}$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midas_almon_weights.py</span>
+</div>
+
 ```python
 def midas_almon_weights(K, theta, normalize=True):
     theta = np.atleast_1d(theta)
@@ -166,6 +193,14 @@ w_almon = midas_almon_weights(20, theta=[-0.1])
 # Quadratic hump
 w_almon_hump = midas_almon_weights(20, theta=[-0.05, 0.005])
 ```
+
+</div>
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -184,6 +219,7 @@ MIDAS is **nonlinear** in $\theta$ but linear in $\beta_0, \beta_1$:
 $$Y_t = \beta_0 + \beta_1 \sum_{k=1}^{K} w(k; \theta) X_{t-(k-1)/m}^{(H)} + \varepsilon_t$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize theta\n(e.g., theta1=1.5, theta2=5)"]
     INIT --> WEIGHTS["Compute weights\nw(k; theta)"]
@@ -201,6 +237,12 @@ flowchart TD
 
 # MIDASRegression Class
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">midasregression.py</span>
+</div>
+
 ```python
 class MIDASRegression:
     def __init__(self, K, weight_function='beta', m=3):
@@ -210,10 +252,18 @@ class MIDASRegression:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # MIDASRegression Class (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit.py</span>
+</div>
 
 ```python
     def fit(self, Y_low, X_high, theta_init=None):
@@ -232,6 +282,8 @@ class MIDASRegression:
         self.beta_opt = np.linalg.lstsq(X_ols, Y_low, rcond=None)[0]
         return self
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -267,6 +319,7 @@ $$Y_t = \beta_0 + \beta_1 B(L; \theta) \hat{F}_t + \varepsilon_t$$
 Factors from many high-freq predictors, then MIDAS weighting.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BASIC["Basic MIDAS\n(1 predictor)"]
     BASIC --> UMIDAS["U-MIDAS\n(multiple predictors)"]
@@ -314,6 +367,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TA["Temporal Aggregation\n(Guide 1)"] --> MIDAS["MIDAS Regression\n(this guide)"]
     DL["Distributed Lag\nModels"] --> MIDAS

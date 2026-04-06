@@ -21,6 +21,7 @@ math: mathjax
 > High-variance predictors dominate PCA factors, but they may be irrelevant for forecasting your target.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Standard PCA Problem"
         ALL["All 100 predictors"] --> PCA["PCA: maximize\nvariance in X"]
@@ -36,6 +37,12 @@ flowchart TD
         TF --> GOOD["Better inflation\nforecast"]
     end
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -58,6 +65,7 @@ $$\mathcal{S}_{\text{hard}} = \{j : |\hat{\rho}_j| > c\}$$
 **Step 3:** Extract factors from selected predictors via PCA.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PRED["N = 100\npredictors"] --> CORR["Compute\n|ρ_j| for each"]
     CORR --> THRESH{"| ρ_j | > c ?"}
@@ -67,6 +75,12 @@ flowchart LR
     PCA --> FACTORS["r targeted\nfactors"]
     FACTORS --> FORECAST["Forecast\ny_{t+h}"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 **Threshold choice:** Too high = miss important predictors. Too low = include noise. Typical: select top 20-50%.
 
@@ -107,6 +121,7 @@ $$w_j = \frac{|\hat{\rho}_j|^{\gamma}}{\sum_{k=1}^N |\hat{\rho}_k|^{\gamma}}$$
 # Comparing Standard vs Targeted PCA
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Standard Approach"
         A1["All N predictors"] --> A2["PCA on full set"]
@@ -128,6 +143,12 @@ flowchart TD
         C5 --> C6["Forecast regression"]
     end
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -168,6 +189,12 @@ Targeting never hurts asymptotically and often helps substantially.
 
 # TargetedPredictors Class (Core)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">targetedpredictors.py</span>
+</div>
+
 ```python
 class TargetedPredictors:
     def __init__(self, n_factors=5, threshold_type='hard',
@@ -185,10 +212,24 @@ class TargetedPredictors:
 
 ```
 
+</div>
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # TargetedPredictors Class (Core) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
         # Step 2: Screen/weight predictors
@@ -207,12 +248,15 @@ class TargetedPredictors:
         return self
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Threshold Selection via Cross-Validation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CANDS["Generate candidate\nthresholds:\npercentiles 10, 20, ..., 90\nof |ρ_j|"] --> CV["K-fold CV for each c:"]
     CV --> FOLD["For each fold k:"]
@@ -248,6 +292,12 @@ flowchart TD
 | Over-aggressive threshold | Discard useful information | Ensure at least $2r$-$3r$ predictors selected |
 | Wrong horizon alignment | Screening not matched to forecast task | Use $\text{Corr}(X_t, y_{t+h})$, not $\text{Corr}(X_t, y_t)$ |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG for h-step forecast
 corr = pearsonr(X[:, j], y)[0]  # Contemporaneous!
@@ -255,6 +305,8 @@ corr = pearsonr(X[:, j], y)[0]  # Contemporaneous!
 # CORRECT
 corr = pearsonr(X[:-h, j], y[h:])[0]  # Horizon-aligned
 ```
+
+</div>
 
 <!-- Speaker notes: Emphasize these common mistakes. Ask learners if they have encountered any of these in practice. -->
 ---
@@ -282,6 +334,7 @@ corr = pearsonr(X[:-h, j], y[h:])[0]  # Horizon-aligned
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PCA["PCA / Static Factors\n(Module 1)"] --> TARGET["Targeted Predictors\n(this guide)"]
     DI["Diffusion Index\nForecasting\n(Module 6)"] --> TARGET

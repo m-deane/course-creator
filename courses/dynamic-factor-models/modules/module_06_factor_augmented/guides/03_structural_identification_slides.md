@@ -21,6 +21,7 @@ math: mathjax
 > Reduced-form residuals are forecast errors, not economic shocks. Infinitely many structural interpretations exist without restrictions.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RF["Reduced-Form FAVAR\nv_t = forecast errors\nSigma_v = BB'"] --> PROBLEM{"Indeterminacy:\nBQ(BQ)' = BB'\nfor any orthogonal Q"}
     PROBLEM --> CHOL["Cholesky\n(recursive ordering)"]
@@ -28,6 +29,12 @@ flowchart TD
     PROBLEM --> IV["External Instruments\n(outside information)"]
     PROBLEM --> HF["High-Frequency ID\n(financial market reactions)"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 **Need:** $(K+M)(K+M-1)/2$ additional restrictions beyond $\Sigma_v = BB'$.
 
@@ -50,6 +57,7 @@ $$B = \text{cholesky}(\Sigma_v) \quad \text{(lower-triangular)}$$
 **Monetary FAVAR Example:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Ordering: [F_real, F_prices, F_credit, FFR]"
         S1["Real activity shock\n-> affects everything"]
@@ -59,6 +67,12 @@ flowchart TD
     end
     S1 --> S2 --> S3 --> S4
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 | Advantage | Limitation |
 |-----------|-----------|
@@ -86,6 +100,7 @@ flowchart TD
 - Policy rate rises: $\text{IR}_{rate}(s) \geq 0$ for $s = 0, ..., S$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DRAW["1. Draw random\northogonal Q"] --> CAND["2. Compute B_Q = B_chol * Q"]
     CAND --> IRF["3. Calculate IRFs"]
@@ -96,6 +111,12 @@ flowchart TD
     ENOUGH -->|"No"| DRAW
     ENOUGH -->|"Yes"| MEDIAN["5. Median over\naccepted draws"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 **Advantage:** Order-invariant, transparent assumptions. **Limitation:** Set identification (range of answers).
 
@@ -123,11 +144,18 @@ $$b_j \propto E[v_t Z_t']$$
 where $b_j$ is the $j$th column of impact matrix $B$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Z["Instrument Z_t\n(e.g., FOMC surprise)"] --> PROJ["Project v_t on Z_t\nb_j ~ v_t * Z_t'"]
     PROJ --> COL["Identified column\nb_j of B"]
     COL --> IRF["Structural IRF\nfor shock j"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 **Example:** 30-minute Fed funds futures change around FOMC announcement (Gertler-Karadi 2015).
 
@@ -166,6 +194,7 @@ $$G_t^{(j)} = \sum_{s=0}^{\infty} \Psi_s b_j \varepsilon_{j,t-s}$$
 For observables: $X_{it}^{(j)} = \lambda_i' G_t^{(j)}$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     HISTORY["Realized Path\nX_{it}"] --> DEC["Decompose"]
     DEC --> MON["Monetary Shock\nContribution"]
@@ -180,6 +209,12 @@ flowchart LR
 ---
 
 # StructuralFAVAR Class (Core)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">structuralfavar.py</span>
+</div>
 
 ```python
 class StructuralFAVAR:
@@ -199,10 +234,18 @@ class StructuralFAVAR:
         return self
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # StructuralFAVAR Class (Core) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">structural_irf.py</span>
+</div>
 
 ```python
 
@@ -213,6 +256,8 @@ class StructuralFAVAR:
         irf_observed = irf_state @ self.loadings_.T
         return irf_state, irf_observed
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -248,6 +293,7 @@ class StructuralFAVAR:
 | Mixing incompatible schemes | Over-identification or inconsistency | One coherent strategy per shock |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Choose ID\nStrategy"] --> Q1{"Have instrument\nfor target shock?"}
     Q1 -->|"Yes"| IV["External Instrument\n(strongest causal claim)"]
@@ -284,6 +330,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FAVAR["FAVAR\n(Guide 2)"] --> STRUCT["Structural FAVAR\n(this guide)"]
     SVAR["SVAR Theory"] --> STRUCT

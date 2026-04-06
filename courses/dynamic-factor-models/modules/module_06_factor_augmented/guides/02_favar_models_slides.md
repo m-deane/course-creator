@@ -21,6 +21,7 @@ math: mathjax
 > Traditional VARs use 5-10 variables. FAVAR uses information from 100+ variables while remaining tractable.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Information Set (X_t, N=127)"
         IP["Industrial Prod."]
@@ -45,6 +46,12 @@ flowchart LR
     FFR --> VAR
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
@@ -66,6 +73,7 @@ where $X_t$ ($N \times 1$) informational variables, $F_t$ ($K \times 1$) factors
 $$\begin{bmatrix} F_t \\ Y_t \end{bmatrix} = \Phi(L) \begin{bmatrix} F_{t-1} \\ Y_{t-1} \end{bmatrix} + v_t$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Compact: G_t = [F_t, Y_t]'"
         OBS["Observation:\nX_t = Lambda * G_t + e_t"]
@@ -74,6 +82,12 @@ flowchart TD
     OBS --> |"Loadings link\nX to factors + observables"| STATE
     STATE --> |"VAR dynamics\npropagate shocks"| OBS
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -121,6 +135,7 @@ flowchart TD
 # Bernanke-Boivin-Eliasz (2005) Procedure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     X["Panel X_t\n(N variables)"] --> SPLIT["Split into\nslow + fast variables"]
     SPLIT --> SLOW["X_t^slow\n(exclude policy variable)"]
@@ -131,6 +146,12 @@ flowchart TD
     G --> VAR["Estimate VAR(p)\nG_t = Phi_1*G_{t-1} + ... + v_t"]
     VAR --> DONE["Estimated FAVAR\nPhi, Sigma_v, Lambda"]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 **Step 1:** $\tilde{F}_t = \text{First } K \text{ PCs of } X_t^{slow}$, normalized $\tilde{F}_t'\tilde{F}_t/T = I_K$
 
@@ -148,6 +169,7 @@ flowchart TD
 **M-step:** Update $(\Lambda, \Phi, R, Q)$ via maximum likelihood
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize\n(PCA + OLS)"] --> E["E-Step: Kalman\nE[G_t | X_{1:T}]"]
     E --> M["M-Step: Update\nLambda, Phi, R, Q"]
@@ -155,6 +177,12 @@ flowchart TD
     CHECK -->|"No"| E
     CHECK -->|"Yes"| DONE["Joint ML\nEstimates"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 **Advantage:** Jointly estimates factors and dynamics, handles missing data.
 
@@ -179,6 +207,7 @@ Compute recursively: $\Psi_0 = I, \quad \Psi_s = \sum_{j=1}^{\min(s,p)} \Phi_j \
 **Structural IRF:** $\text{SIR}(s) = \Psi_s B$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     SHOCK["Structural Shock\nepsilon_t"] --> B["Impact Matrix\nB"]
     B --> V["Reduced-Form\nv_t = B*epsilon_t"]
@@ -227,6 +256,12 @@ class FAVAR:
 
 # FAVAR Class (Core) (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">impulse_response.py</span>
+</div>
+
 ```python
         # Step 2: VAR on [F_t, Y_t]
         G = np.column_stack([self.factors_, self.observables_])
@@ -240,10 +275,18 @@ class FAVAR:
         return irf
 ```
 
+</div>
+
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
 
 # Forecasting and Decomposition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forecast.py</span>
+</div>
 
 ```python
 def forecast(self, X_history, h=1):
@@ -256,10 +299,18 @@ def forecast(self, X_history, h=1):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
 # Forecasting and Decomposition (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">factor_contributions.py</span>
+</div>
 
 ```python
 def factor_contributions(self, X):
@@ -271,6 +322,8 @@ def factor_contributions(self, X):
     return {'factors': X_common, 'idiosyncratic': X_idio,
             'explained_variance': self.pca.explained_variance_ratio_}
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -292,6 +345,7 @@ def factor_contributions(self, X):
 | Unjustified Cholesky ordering | Order-dependent results | Economic justification or sign restrictions |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FAVAR["FAVAR Model"] --> Q1{"How many\nobservables?"}
     Q1 -->|"1-3 (good)"| OK1["Key policy variables\nonly"]
@@ -327,6 +381,7 @@ flowchart TD
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DI["Diffusion Index\n(Guide 1)"] --> FAVAR["FAVAR\n(this guide)"]
     VAR["VAR Models"] --> FAVAR

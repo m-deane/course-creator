@@ -1,12 +1,29 @@
 # Factor-Augmented Vector Autoregression (FAVAR)
 
+> **Reading time:** ~14 min | **Module:** Module 6: Factor Augmented | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Factor-Augmented VAR (FAVAR) models extend standard VARs by augmenting a small set of observed variables with latent factors extracted from a large information set. This framework captures richer dynamics than pure diffusion index forecasting while remaining computationally tractable, making it i...
+
+</div>
+
 ## In Brief
 
 Factor-Augmented VAR (FAVAR) models extend standard VARs by augmenting a small set of observed variables with latent factors extracted from a large information set. This framework captures richer dynamics than pure diffusion index forecasting while remaining computationally tractable, making it ideal for policy analysis and structural identification.
 
-> 💡 **Key Insight:** Traditional VARs use 5-10 variables due to degrees-of-freedom constraints, forcing researchers to choose which information to include. FAVAR solves this by extracting factors from hundreds of variables and modeling joint dynamics of factors plus key observables. This combines VAR's structural modeling with factor models' information aggregation.
+<div class="callout-insight">
 
+**Insight:** Traditional VARs use 5-10 variables due to degrees-of-freedom constraints, forcing researchers to choose which information to include. FAVAR solves this by extracting factors from hundreds of variables and modeling joint dynamics of factors plus key observables. This combines VAR's structural modeling with factor models' information aggregation.
+
+</div>
 ---
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## 1. Model Specification
 
@@ -94,6 +111,17 @@ Information Set (X_t):                    State Vector (G_t):
 ```
 
 ### Example Flow
+
+<div class="flow">
+<div class="flow-step mint">1. Observation:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Extraction:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Dynamics:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Analysis:</div>
+</div>
+
 
 1. **Observation:** 127 macroeconomic series $X_t$
 2. **Extraction:** Compute 5 factors + include Fed funds rate explicitly
@@ -200,6 +228,12 @@ $$\text{IR}_{IP}(s) = \lambda_{IP}^f \cdot \text{SIR}_F(s) + \lambda_{IP}^y \cdo
 ## 5. Code Implementation
 
 ### FAVAR Class
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">favar.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -542,7 +576,15 @@ class FAVAR:
         return forecast
 ```
 
+</div>
+
 ### Example: Monetary Policy Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -622,6 +664,8 @@ print("FAVAR Estimation Complete")
 print(f"Total variance explained: {var_exp.sum():.3f}")
 print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 ```
+
+</div>
 
 ---
 
@@ -721,6 +765,12 @@ print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 
 ---
 
+<div class="callout-insight">
+
+**Insight:** Understanding factor-augmented vector autoregression (favar) is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## 9. Further Reading
 
 ### Foundational Papers
@@ -751,3 +801,42 @@ print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 
 - **Stock, J.H. & Watson, M.W. (2016).** "Dynamic Factor Models, Factor-Augmented Vector Autoregressions, and Structural Vector Autoregressions in Macroeconomics." *Handbook of Macroeconomics*, Vol 2A, Chapter 8.
   - Comprehensive survey of FAVAR methods and applications
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the FAVAR model structure. How does it combine factor models with VARs?
+
+2. What identification assumption does the FAVAR impose that a standard VAR does not?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_favar_models_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_diffusion_index_forecasting.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_diffusion_index_forecasting.md">
+  <div class="link-card-title">01 Diffusion Index Forecasting</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_structural_identification.md">
+  <div class="link-card-title">03 Structural Identification</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

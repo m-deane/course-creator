@@ -25,6 +25,7 @@ math: mathjax
 - In factor models, these directions approximate the **latent factors** driving co-movement
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["High-dimensional\nData X (T x N)"] --> B["PCA"]
     B --> C["PC 1: Most variance"]
@@ -34,6 +35,12 @@ flowchart LR
     D --> F
     E --> F
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -82,6 +89,7 @@ $$\max_{w_k: \|w_k\|=1, \; w_k \perp w_1,\ldots,w_{k-1}} w_k' \Sigma w_k$$
 **Solution:** Eigenvector corresponding to the $k$-th largest eigenvalue.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S["Covariance Matrix Sigma"] --> E["Eigendecomposition\nSigma = V Lambda V'"]
     E --> W1["w_1: eigvec of lambda_1\n(largest eigenvalue)"]
@@ -91,6 +99,12 @@ flowchart TD
     W2 --> PC
     WR --> PC
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Use this diagram to illustrate the overall flow. Trace through each step with the audience. -->
 ---
@@ -166,6 +180,12 @@ def pca_via_covariance(X, n_components=None):
     eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the first part of this code implementation. The code continues on the next slide. -->
 ---
 
@@ -185,6 +205,12 @@ def pca_via_covariance(X, n_components=None):
     scores = X_centered @ eigenvectors
     return scores, eigenvectors, eigenvalues
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -244,6 +270,7 @@ def pca_sklearn(X, n_components=None):
 # PCA Method Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     X["Centered Data X (T x N)"] --> Q{"N size?"}
     Q -->|"N small"| COV["Covariance Eigendecomp\nX'X/T = V Lambda V'"]
@@ -398,6 +425,12 @@ def varimax_rotation(loadings, max_iter=100, tol=1e-6):
 
 # Rotation for Interpretability (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
     for _ in range(max_iter):
@@ -412,6 +445,8 @@ def varimax_rotation(loadings, max_iter=100, tol=1e-6):
                 rotated[:,[i,j]] = rotated[:,[i,j]] @ np.array([[c,s],[-s,c]])
     return rotated
 ```
+
+</div>
 
 <!-- Speaker notes: Continue walking through the implementation. Highlight the key output and how to verify correctness. -->
 ---
@@ -442,6 +477,12 @@ For large $N$ with strong factors, PCA estimates converge to true factor loading
 
 > 🔑 This is the basis for the **Stock-Watson approach** covered in Module 3.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.decomposition import PCA, FactorAnalysis
 
@@ -454,10 +495,18 @@ e = np.random.randn(T, N) * 0.5
 X = F_true @ Lambda_true.T + e
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
 
 # Code: PCA vs Factor Analysis Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # PCA
@@ -473,6 +522,8 @@ loadings_fa = fa.components_.T
 print(f"PCA variance explained: {pca.explained_variance_ratio_.sum():.3f}")
 print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through this code step by step. Highlight the key lines and explain the output. -->
 ---
@@ -514,6 +565,7 @@ print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 # Connections & Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Linear Algebra\nEigendecomp, SVD"] --> B["PCA\nVariance Maximization"]
     B --> C["Static Factor Models\n(Module 1)"]

@@ -1,8 +1,16 @@
 # Production Patterns: Bayesian Prompting at Scale
 
+> **Reading time:** ~12 min | **Module:** 7 — Production Patterns | **Prerequisites:** Modules 1-6
+
+
 ## In Brief
 
 A prompt that works once is a result. A prompt that works reliably across thousands of queries, multiple users, and changing context is a system. This guide covers the infrastructure layer that separates experimental prompting from production prompting.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> A prompt that works once is a result.
+</div>
 
 ---
 
@@ -28,6 +36,10 @@ The fix is not discipline or process — it is infrastructure. Condition stacks 
 ---
 
 ## Pattern 1: Parameterized Condition Stack Templates
+<div class="callout-warning">
+<strong>Warning:</strong> A static prompt is a fully-written condition stack stored as a string. It works, but it does not scale:
+</div>
+
 
 ### The Problem with Static Prompts
 
@@ -40,6 +52,13 @@ A static prompt is a fully-written condition stack stored as a string. It works,
 ### The Template Solution
 
 A parameterized template separates **structure** from **values**. The structure is the 6-layer condition stack. The values are injected at call time.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 template = ConditionStack(
@@ -63,6 +82,9 @@ prompt = template.fill(
 )
 ```
 
+</div>
+</div>
+
 The template enforces that all six layers are always present. A missing layer raises an error at fill time, not at response time. This is the difference between a compile-time error and a runtime error.
 
 ### Template Design Principles
@@ -78,6 +100,10 @@ The template enforces that all six layers are always present. A missing layer ra
 ## Pattern 2: Dynamic Condition Injection
 
 ### Static Templates Are Not Enough
+<div class="callout-key">
+<strong>Key Point:</strong> A parameterized template still requires someone to fill the parameters. At scale, that "someone" is a system — a database, a user profile service, an API response, or a real-time data feed.
+</div>
+
 
 A parameterized template still requires someone to fill the parameters. At scale, that "someone" is a system — a database, a user profile service, an API response, or a real-time data feed.
 
@@ -115,6 +141,13 @@ Dynamic condition injection means the system automatically pulls conditions from
 
 ### A Concrete Injector
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ConditionInjector:
     """
@@ -149,6 +182,9 @@ class ConditionInjector:
         return base
 ```
 
+</div>
+</div>
+
 This pattern removes the human from the loop for Layer 1, 2, and 4 conditions. The user still provides Layer 5 (facts). The system handles the rest.
 
 ### Why This Matters for Posterior Quality
@@ -162,6 +198,10 @@ With injection, Layer 1–4 conditions are provided reliably regardless of what 
 ## Pattern 3: A/B Testing Condition Stacks
 
 ### What A/B Testing Means Here
+<div class="callout-insight">
+<strong>Insight:</strong> In prompt engineering, A/B testing does not mean changing random words. It means **systematically varying one condition at a time** and measuring whether the output changes in the predicted direction.
+</div>
+
 
 In prompt engineering, A/B testing does not mean changing random words. It means **systematically varying one condition at a time** and measuring whether the output changes in the predicted direction.
 
@@ -208,6 +248,10 @@ It tests: does one condition stack produce a more constrained, consistent poster
 ## Pattern 4: Measuring Prompt Quality
 
 ### Why You Need a Metric
+<div class="callout-warning">
+<strong>Warning:</strong> Without a metric, prompt improvement is subjective. "This feels better" is not actionable at scale. You need a number — even a rough one — to know whether a change helped.
+</div>
+
 
 Without a metric, prompt improvement is subjective. "This feels better" is not actionable at scale. You need a number — even a rough one — to know whether a change helped.
 
@@ -374,3 +418,15 @@ Layer 5 (facts) should come from the user. Injecting pre-defined facts overrides
 2. Run the same prompt 5 times on the same input. Count the number of distinct recommendations across runs. If the count is greater than 2, the posterior is underspecified.
 
 3. Design a library structure for a team of 10 people using AI tools for a single domain (your choice). What are the three primary indexing axes you would use?
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving production patterns: bayesian prompting at scale, what would be your first three steps to apply the techniques from this guide?
+</div>

@@ -37,6 +37,9 @@ If no → skip it.
 
 <!-- Speaker notes: This is the reference slide. Students should have it open while working through the examples. The diagnostic question is the key practice tool. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Example 1: Tax Filing
@@ -54,6 +57,9 @@ A general comparison of partnership vs. S-Corp taxation. Accurate. Not actionabl
 
 <!-- Speaker notes: The raw prompt is not bad — it's just insufficient. It will get a 600-word article on S-Corp taxation in general. What the couple actually needs: whether S-Corp is worth it at their income level, in their state, given their specific facts, and whether the election deadline has passed. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Example 1: Filling Layer 1
@@ -74,6 +80,9 @@ A general comparison of partnership vs. S-Corp taxation. Accurate. Not actionabl
 
 <!-- Speaker notes: Notice that specifying Texas immediately simplifies the analysis. States like California have an $800/year franchise tax on S-Corps plus an additional 1.5% tax on S-Corp net income. In Texas, there's no state income tax. This changes the S-Corp calculus significantly. Without specifying the state, the model has to cover all scenarios. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Example 1: Filling Layers 2 and 3
@@ -93,6 +102,9 @@ A general comparison of partnership vs. S-Corp taxation. Accurate. Not actionabl
 
 <!-- Speaker notes: Layer 2 is particularly important here because the S-Corp election is time-sensitive. The model needs to know that December means the 2024 window is closed but 2025 is still open with a March 15 deadline. Layer 3 gives the model a numeric threshold to evaluate against — "is this worth it?" now has a testable answer. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Example 1: Filling Layers 4 and 5

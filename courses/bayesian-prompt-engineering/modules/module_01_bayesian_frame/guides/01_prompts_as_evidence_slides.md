@@ -26,6 +26,9 @@ Adding words doesn't help if those words don't **shift the posterior**.
 
 <!-- Speaker notes: Start with the frustration learners already have. They've written long prompts and gotten useless answers. Name the mechanism before giving it a name. This creates the question the rest of the deck answers. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Model Is Not a Search Engine
@@ -43,6 +46,9 @@ $$P(A \mid C)$$
 
 <!-- Speaker notes: This is the key reframe. Spend time here. Ask: when you type into Google vs. when you type into Claude, what's the difference in how it works? Google looks things up. Claude generates from a probability distribution conditioned on your input. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Bayes' Theorem — Applied to Prompting
@@ -69,6 +75,9 @@ Strong conditions → posterior collapses onto the right answer
 
 <!-- Speaker notes: Walk through the formula slowly. Emphasize that the proportionality sign means the normalizing constant doesn't matter — what matters is the RATIO. Strong conditions shift the numerator for the right answer and shrink it for everything else. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## The Prior: What the Model Assumes by Default
@@ -88,26 +97,25 @@ Every deviation from this "default world" requires you to **provide evidence tha
 
 <!-- Speaker notes: The prior is the statistical center of training data. Ask learners: what's the default world for a medical question? (US, adult, no prior conditions, common diagnosis.) For a coding question? (Python 3, standard library, Linux, working code environment.) -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Prior Is Invisible Until It Dominates
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     C["Weak Prompt\n(vague conditions)"] --> P["Prior P(A)\ndominates"]
     P --> G["Generic Answer\n(correct on average,\nwrong for you)"]
-    style C fill:#e74c3c,color:#fff
-    style G fill:#e74c3c,color:#fff
-    style P fill:#95a5a6,color:#fff
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     C2["Strong Prompt\n(discriminating conditions)"] --> Post["Posterior P(A|C)\nnarrows"]
     Post --> S["Specific Answer\n(correct for your case)"]
-    style C2 fill:#27ae60,color:#fff
-    style S fill:#27ae60,color:#fff
-    style Post fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use these two flows to make the contrast concrete. The top flow is what happens with most prompts — the generic answer that feels slightly off. The bottom is what you're building toward. The mechanism is the same in both cases; what differs is the quality of the evidence. -->
@@ -322,12 +330,12 @@ This is not a trick. This is the mechanism. You are not manipulating the model �
 ## Module 1 Roadmap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     G1["Guide 01\nPrompts as Evidence\n← You are here"] --> G2["Guide 02\nEvidence vs. Information"]
     G2 --> N1["Notebook 01\nPosterior Shift Simulator"]
     N1 --> N2["Notebook 02\nEvidence Strength Comparison"]
     N2 --> E1["Exercise 01\nRewrite Bad Prompts"]
-    style G1 fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Orient learners in the module. They've completed the first guide. Next is the critical distinction between evidence and information — the most common failure mode. Notebooks give them hands-on verification with real API calls. -->

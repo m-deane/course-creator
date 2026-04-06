@@ -32,11 +32,15 @@ Then check whether those assumed conditions match your actual conditions.
 
 <!-- Speaker notes: This reframe -- reading the answer backwards to infer assumed conditions -- is the single most powerful diagnostic technique. The model's answer implicitly encodes what it thought your situation was. Mismatch between that and your actual situation points directly to what's missing. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Diagnostic Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Bad answer received"] --> B{"Is the answer\ngeneric?"}
     B -->|Yes| C{"Added lots of\ntext — still generic?"}
@@ -53,6 +57,9 @@ flowchart TD
 
 <!-- Speaker notes: Walk through the flowchart from top to bottom. Each diamond is a yes/no question you can answer by reading the bad response carefully. The terminal boxes give you the specific mistake and the fix. In practice, you'll often find two mistakes operating at once -- apply both fixes. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Diagnosis Question 1: Generic?
@@ -82,6 +89,9 @@ If yes — the answer is generic.
 
 <!-- Speaker notes: The generic test is the first filter because it catches the two most common mistakes -- detail that isn't evidence, and keyword prompts. Generic answers are usually Mistake 1 or Mistake 3. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Diagnosis Questions 2 & 3: Wrong for You? Inconsistent?
@@ -102,6 +112,9 @@ If yes: The phrasing variation is landing you on different branches of a hidden 
 
 <!-- Speaker notes: Inconsistency is actually useful data. If small changes to your prompt flip the answer, that's the model showing you which variable is doing the most work. That variable belongs in your prompt as an explicit condition. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Diagnosis Question 4: Vague or Hedgy?
@@ -133,6 +146,7 @@ Make those assumptions and give me a specific answer.
 **The test:** Read the advice and ask — is this correct for 6 months from now? Is this steady-state advice being applied to an early phase?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 timeline
     title When the advice applies vs. when you are
     section Bad answer
@@ -173,6 +187,7 @@ These are discriminating conditions. They change the answer. They don't show up 
 ## The Meta-Diagnostic: Read It Backwards
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Bad answer"] -->|"Reverse-engineer"| B["Infer assumed conditions"]
     B -->|"Compare to"| C["Your actual conditions"]

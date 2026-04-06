@@ -30,6 +30,9 @@ The answer gets slightly longer. Still generic.
 
 <!-- Speaker notes: Start with the frustration. Ask the room: who has had this experience? Most hands go up. Then: what did you try to fix it? More detail. Did it work? Usually not. That's the paradox this deck resolves. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Information vs. Evidence
@@ -66,6 +69,9 @@ The distinction: does this fact **exclude** possible answer worlds?
 
 <!-- Speaker notes: Put both columns on the board. Ask learners to look at their last prompt and sort each sentence into left or right column. This usually produces a moment of recognition — most sentences are on the left. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Marginal Evidence Test
@@ -84,6 +90,9 @@ Before adding any sentence to a prompt, ask:
 
 <!-- Speaker notes: Have learners run the test on their own prompts. The cut rate is usually high. Ask: if you cut all the sentences that fail the test, is your prompt shorter and better? Usually yes. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Numbers Are Not Automatically Evidence
@@ -101,6 +110,9 @@ These numbers don't shift the posterior because:
 
 <!-- Speaker notes: This is a common failure mode — people think adding specific numbers makes a prompt more evidence-rich. Numbers help only when they cross a threshold that changes the answer (e.g., "over $10M revenue" triggers different tax rules than "under $10M"). Ask: what number would actually matter here? -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Same Domain — Evidence-Strong Version
@@ -124,6 +136,7 @@ No revenue figures needed. The structure and the gap are the evidence.
 ## The Four Categories of Discriminating Evidence
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 mindmap
   root((Evidence))
     Constraints

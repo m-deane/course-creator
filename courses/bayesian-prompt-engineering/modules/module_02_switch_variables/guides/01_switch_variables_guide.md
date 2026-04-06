@@ -1,5 +1,8 @@
 # Switch Variables: The Conditions That Actually Matter
 
+> **Reading time:** ~11 min | **Module:** 2 — Switch Variables | **Prerequisites:** Module 1 Bayesian Frame
+
+
 ## In Brief
 
 A **switch variable** is a condition whose value routes reasoning to a categorically different solution branch. It is not a detail that sharpens an answer — it is the fork that determines *which* answer is correct.
@@ -7,6 +10,11 @@ A **switch variable** is a condition whose value routes reasoning to a categoric
 > **Core Insight:** The model holds a vast distribution of possible answers. Switch variables are not refinements of a single answer — they are the selection mechanism between *fundamentally different answers*. Add the wrong detail and you get a sharper wrong answer. Add a switch variable and you get the right answer entirely.
 
 The skill is asking: *"What are the top 5 conditions that, if different, would make the correct answer completely different?"*
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> A **switch variable** is a condition whose value routes reasoning to a categorically different solution branch.
+</div>
 
 ---
 
@@ -53,6 +61,10 @@ A high switch size means the variable routes reasoning to an entirely different 
 ## The Five Categories of Switch Variables
 
 Every switch variable in any domain falls into one of five categories:
+<div class="callout-warning">
+<strong>Warning:</strong> Every switch variable in any domain falls into one of five categories:
+</div>
+
 
 ### 1. Jurisdiction / Scope
 
@@ -129,6 +141,10 @@ What the answer is optimizing *for* — the metric that defines "correct."
 | Goal | Win, settle, delay, establish precedent | Optimal moves differ |
 | Entity type | Individual, LLC, corporation, trust | Tax and liability rules differ |
 | Timeline | Before SOL, after SOL, pending deadline | Some options vanish entirely |
+<div class="callout-key">
+<strong>Key Point:</strong> **Diagnostic question:** "Would a lawyer in [different jurisdiction/posture/goal] give the opposite advice?"
+</div>
+
 
 **Diagnostic question:** "Would a lawyer in [different jurisdiction/posture/goal] give the opposite advice?"
 
@@ -191,6 +207,10 @@ What the answer is optimizing *for* — the metric that defines "correct."
 ## How to Identify Switch Variables for Any Question
 
 Apply this three-step procedure before writing any prompt:
+<div class="callout-insight">
+<strong>Insight:</strong> Apply this three-step procedure before writing any prompt:
+</div>
+
 
 **Step 1 — List the five conditions that would change your answer.**
 
@@ -231,6 +251,10 @@ This question reframes prompt engineering from "give more detail" to "identify t
 ## Common Mistakes
 
 **Mistake 1 — Adding volume instead of switches.**
+<div class="callout-key">
+<strong>Key Point:</strong> **Mistake 1 — Adding volume instead of switches.**
+</div>
+
 
 Telling the model your company has 47 employees, was founded in 2019, and operates in 6 cities adds almost zero information to a legal question. These are not switch variables. The governing state, entity type, and transaction goal are.
 
@@ -248,6 +272,19 @@ The objective is the most commonly missed switch variable because it feels impli
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Visual Explanation" and why it matters in practice.
+
+2. Given a real-world scenario involving switch variables: the conditions that actually matter, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 Switch variables are the few conditions that route reasoning to categorically different solution branches. There are five categories: jurisdiction, timing, status, constraints, and objective function. Every professional domain has a predictable catalog of them.
@@ -257,3 +294,12 @@ The diagnostic question — "What are the top 5 conditions that would make the c
 In the next guide, we examine how to rank switch variables using information gain: not all of them reduce uncertainty equally, and knowing which ones to add first is the core prompt engineering skill.
 
 **Next:** Guide 2 — Information Gain: Why "More Detail" Is Not "Better Conditions"
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_switch_variable_identifier.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

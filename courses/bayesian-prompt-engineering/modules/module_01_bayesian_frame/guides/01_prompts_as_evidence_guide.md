@@ -1,8 +1,16 @@
 # Prompts as Evidence: The P(A|C) Frame
 
+> **Reading time:** ~8 min | **Module:** 1 — Bayesian Frame | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 
 A language model does not retrieve answers. It samples from a conditional distribution over possible answers, where your prompt defines the conditioning event. Understand this and you understand why most prompts fail — and exactly how to fix them.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> A language model does not retrieve answers.
+</div>
 
 ---
 
@@ -17,6 +25,10 @@ A language model does not retrieve answers. It samples from a conditional distri
 ### The Conditional Distribution
 
 Language models assign probability to every possible continuation of a sequence. When you provide a prompt $C$ (conditions), the model generates answers from:
+<div class="callout-insight">
+<strong>Insight:</strong> Language models assign probability to every possible continuation of a sequence. When you provide a prompt $C$ (conditions), the model generates answers from:
+</div>
+
 
 $$P(A \mid C)$$
 
@@ -49,6 +61,10 @@ This means:
 ---
 
 ## The Prior: What the Model Assumes When You Say Nothing
+<div class="callout-warning">
+<strong>Warning:</strong> The model's training prior is the aggregate distribution of all text it processed. For any question type, there is a statistical center — the most common framing, the most common jurisdiction, the most common timeframe, the most common objective.
+</div>
+
 
 The model's training prior is the aggregate distribution of all text it processed. For any question type, there is a statistical center — the most common framing, the most common jurisdiction, the most common timeframe, the most common objective.
 
@@ -69,6 +85,10 @@ This is why weak prompts produce generic answers that *feel* correct. The prior 
 ---
 
 ## The Accountant Example: Watching a Posterior Shift
+<div class="callout-key">
+<strong>Key Point:</strong> Consider this question: *"What happens if I miss the filing deadline?"*
+</div>
+
 
 Consider this question: *"What happens if I miss the filing deadline?"*
 
@@ -131,6 +151,10 @@ One sentence did not "add detail." It provided evidence that eliminated most of 
 ## Why Most Prompts Fail: The Evidence Gap
 
 The most common failure mode is not that prompts are short. It is that they are long with information that does not discriminate between worlds.
+<div class="callout-insight">
+<strong>Insight:</strong> The most common failure mode is not that prompts are short. It is that they are long with information that does not discriminate between worlds.
+</div>
+
 
 ### Non-Discriminating Information
 
@@ -193,7 +217,29 @@ Asking "what should I do?" before establishing the constraints, timeline, and ob
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving prompts as evidence: the p(a|c) frame, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Griffiths, T. L. & Tenenbaum, J. B. (2006). "Optimal predictions in everyday cognition." *Psychological Science* — Bayesian inference as a model of human reasoning
 - Brown et al. (2020). "Language Models are Few-Shot Learners." *NeurIPS* — The in-context learning framing that underlies the evidence interpretation
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_posterior_shift_simulator.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

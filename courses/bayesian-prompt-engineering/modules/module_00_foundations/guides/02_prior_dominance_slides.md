@@ -20,6 +20,7 @@ Why LLMs produce coherent but wrong answers — and what to do about it
 ## Roadmap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[What a prior is] --> B[The most typical world]
     B --> C[The accountant example]
@@ -30,6 +31,9 @@ flowchart LR
 
 <!-- Speaker notes: Walk through the roadmap. Emphasise that we start with the mechanism, then spend most of the deck on practical diagnosis and fixing. By the end, learners should be able to look at any prompt and identify what the model will assume by default. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Every LLM Response Answers a Hidden Question
@@ -55,6 +59,9 @@ The gap between those two questions is prior dominance.
 
 <!-- Speaker notes: This slide crystallises the problem. The model did not ignore your question — it answered a specific, fully-specified version of your question, where all the blanks were filled in from training data. The problem is that the model did not tell you which question it answered. It gave you the answer to a question you may not have been asking. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## What Is a Prior?
@@ -74,6 +81,9 @@ For a language model:
 
 <!-- Speaker notes: The Bayesian framing is not decorative — it is the exact mechanism. The model has a prior shaped by its training corpus. Your prompt is evidence. An underspecified prompt is weak evidence that barely updates the prior. The model then generates from a distribution close to its prior, which reflects the statistical patterns of its training data, not your specific situation. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## The Most Typical World
@@ -92,6 +102,9 @@ These defaults are correct for the average case. They are wrong for most specifi
 
 <!-- Speaker notes: Go through the table row by row. For each, ask the audience: when would this assumption be wrong? The goal is to build the habit of asking "what world does this prompt assume?" before submitting any prompt. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Accountant Example — Before
@@ -128,6 +141,7 @@ These defaults are correct for the average case. They are wrong for most specifi
 ## Why It Sounds Confident Either Way
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Underspecified prompt] --> B[Model fills gaps from prior]
     C[Fully specified prompt] --> D[Model conditions on your context]
@@ -135,9 +149,6 @@ graph TD
     D --> F["Fluent, confident output"]
     E --> G["Wrong for your situation"]
     F --> H["Correct for your situation"]
-
-    style E fill:#f96,stroke:#333
-    style F fill:#6f9,stroke:#333
 ```
 
 > Fluency and confidence are properties of the **generation process**, not signals that the answer is correct for your situation.

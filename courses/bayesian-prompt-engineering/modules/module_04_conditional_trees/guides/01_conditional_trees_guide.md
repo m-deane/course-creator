@@ -1,8 +1,16 @@
 # Conditional Trees: When One Answer Is Wrong
 
+> **Reading time:** ~10 min | **Module:** 4 — Conditional Trees | **Prerequisites:** Module 3 Condition Stack
+
+
 ## In Brief
 
 Many questions that look like they have a single correct answer secretly contain a decision tree. Forcing a flat answer collapses the tree into the most common branch — which is rarely the right branch for your specific situation. The fix is to prompt the model to surface the tree instead of hiding it.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Many questions that look like they have a single correct answer secretly contain a decision tree.
+</div>
 
 ---
 
@@ -43,6 +51,10 @@ The model is not failing. It is doing exactly what the math predicts: it's givin
 ## Recognizing Hidden Decision Trees
 
 A question contains hidden conditional structure when:
+<div class="callout-warning">
+<strong>Warning:</strong> A question contains hidden conditional structure when:
+</div>
+
 
 **1. The domain has jurisdiction or context variation**
 Questions involving law, tax, regulation, or geography always have branches by jurisdiction. "Is this legal?" has different answers in Delaware vs. the UK.
@@ -86,6 +98,10 @@ The model gave you the training prior. You needed your branch.
 ## The Conditional Tree Response
 
 Compare the flat answer to a conditional tree response for the same question:
+<div class="callout-insight">
+<strong>Insight:</strong> Compare the flat answer to a conditional tree response for the same question:
+</div>
+
 
 **The answer as a decision tree:**
 
@@ -118,6 +134,10 @@ This answer is longer. It is also actually useful.
 ## Prompting for the Tree
 
 There are three techniques for getting conditional tree responses.
+<div class="callout-warning">
+<strong>Warning:</strong> There are three techniques for getting conditional tree responses.
+</div>
+
 
 ### Technique 1: Explicit Branch Request
 
@@ -258,8 +278,30 @@ After the model produces a tree, go back and tell it which branch you're on. The
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Hidden Structure Problem" and why it matters in practice.
+
+2. Given a real-world scenario involving conditional trees: when one answer is wrong, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Kahneman, *Thinking Fast and Slow*, Chapter 14: "Tom W's Specialty" — on base rate neglect and the failure to update on specific evidence
 - Pearl, *The Book of Why*, Chapter 1: Introduction to causal reasoning and conditional structure
 - Klein, *Sources of Power*, Chapter 1: How experts use recognition-primed decision making rather than single verdicts
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_decision_tree_prompts.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

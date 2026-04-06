@@ -1,5 +1,8 @@
 # Information Gain: Why "More Detail" Is Not "Better Conditions"
 
+> **Reading time:** ~9 min | **Module:** 2 — Switch Variables | **Prerequisites:** Module 1 Bayesian Frame
+
+
 ## In Brief
 
 Adding more words to a prompt does not automatically improve the answer. What matters is the *information content* of what you add — specifically, how much each new condition reduces the uncertainty in the answer distribution.
@@ -7,6 +10,11 @@ Adding more words to a prompt does not automatically improve the answer. What ma
 > **Core Insight:** Information gain measures how much a condition collapses the answer space. A single high-gain condition (jurisdiction, timing, objective) can reduce a 40-way distribution to a 2-way distribution. A dozen low-gain conditions (company background, formatting preferences, narrative context) can leave the answer distribution almost unchanged.
 
 The skill of prompt engineering, viewed through information theory, is **maximizing entropy reduction per condition added**.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Adding more words to a prompt does not automatically improve the answer.
+</div>
 
 ---
 
@@ -16,6 +24,10 @@ The skill of prompt engineering, viewed through information theory, is **maximiz
 
 ```
 Answer distribution for "How should I handle this situation?" (no context):
+<div class="callout-key">
+<strong>Key Point:</strong> Answer distribution for "How should I handle this situation?" (no context):
+</div>
+
 
  Possible answers (representative):
  |
@@ -93,6 +105,10 @@ The goal is not zero entropy — that would require completely specifying every 
 ## Why Numbers Are Usually Low Information Gain
 
 Numbers are seductive because they feel precise. "47 employees," "$2.3M ARR," "3 years in operation." They feel like data.
+<div class="callout-key">
+<strong>Key Point:</strong> Numbers are seductive because they feel precise. "47 employees," "$2.3M ARR," "3 years in operation." They feel like data.
+</div>
+
 
 But for most questions, these numbers do not route to different answer branches. The legal advice for a company with 47 employees is nearly identical to the advice for a company with 53 employees. The number adds no information about which legal world applies.
 
@@ -111,6 +127,10 @@ When a number crosses a threshold that changes the applicable rule set, it becom
 ## Condition Ranking in Practice
 
 ### Example: "How do I structure my equity compensation plan?"
+<div class="callout-insight">
+<strong>Insight:</strong> **Add in this order:** C-Corp or LLC? US employees? What's the primary goal? Pre or post-Series A? Employee vs. contractor? Then stop — you've captured the high-gain conditions.
+</div>
+
 
 | Condition | Type | Information Gain |
 |-----------|------|-----------------|
@@ -130,6 +150,10 @@ When a number crosses a threshold that changes the applicable rule set, it becom
 ## The Diminishing Returns Curve
 
 Information gain from conditions follows a concave curve:
+<div class="callout-warning">
+<strong>Warning:</strong> Information gain from conditions follows a concave curve:
+</div>
+
 
 ```
 Information Gain vs. Number of Conditions Added
@@ -241,6 +265,19 @@ The skip list is not "wrong" information — it's just not worth the budget. You
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Visual Explanation" and why it matters in practice.
+
+2. Given a real-world scenario involving information gain: why "more detail" is not "better conditions", what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Summary
 
 Information gain measures how much a condition collapses the answer space. Switch variables have high information gain — they route reasoning to categorically different solution branches. Descriptive details have low information gain — they refine presentation without changing the underlying answer.
@@ -256,3 +293,12 @@ Information gain measures how much a condition collapses the answer space. Switc
 **The practice skill:** Before any prompt, ask which conditions are high-gain (change the answer category) and which are low-gain (change the phrasing). Add the high-gain ones first, in order.
 
 **Next:** Notebook 1 — Build a Claude-powered tool that identifies and ranks switch variables automatically.
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_switch_variable_identifier.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

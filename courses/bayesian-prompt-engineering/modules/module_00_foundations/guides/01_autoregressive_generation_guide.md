@@ -1,8 +1,16 @@
 # Autoregressive Generation: LLMs as Conditional Probability Machines
 
+> **Reading time:** ~7 min | **Module:** 0 — Foundations | **Prerequisites:** Basic probability concepts
+
+
 ## In Brief
 
 Language models generate text one token at a time, where each token is sampled from a conditional probability distribution over the entire vocabulary, conditioned on every token that came before it. Understanding this mechanism is the foundation of principled prompt engineering.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Language models generate text one token at a time, where each token is sampled from a conditional probability distribution over the entire vocabulary, conditioned on every token that came before it.
+</div>
 
 ---
 
@@ -36,6 +44,10 @@ Tokens are not words. They are chunks of text determined by a compression algori
 ## 2. Conditional Probability Over Vocabulary
 
 At every step $n$, the model computes a score (logit) for every token in its vocabulary — typically 50,000–130,000 tokens. Those scores are converted to probabilities via softmax:
+<div class="callout-warning">
+<strong>Warning:</strong> At every step $n$, the model computes a score (logit) for every token in its vocabulary — typically 50,000–130,000 tokens. Those scores are converted to probabilities via softmax:
+</div>
+
 
 $$P(t_n = v \mid t_1, \ldots, t_{n-1}) = \frac{e^{z_v}}{\sum_{v'} e^{z_{v'}}}$$
 
@@ -100,6 +112,10 @@ Each pass through the transformer conditions on the entire prior context via the
 ## 5. Why Your Prompt Is a Prior Condition
 
 The chain rule form of the generation probability makes the role of your prompt explicit:
+<div class="callout-warning">
+<strong>Warning:</strong> The chain rule form of the generation probability makes the role of your prompt explicit:
+</div>
+
 
 $$P(t_{k+1}, \ldots, t_N \mid \underbrace{t_1, \ldots, t_k}_{\text{your prompt}})$$
 
@@ -135,6 +151,10 @@ A neural language model parameterises each conditional factor $P(t_n \mid t_1, \
 
 **Pitfall 1: Treating the model as a search engine**
 The model does not retrieve facts; it generates the most probable continuation of your token sequence. This is why confident-sounding hallucinations exist: the generated text can be syntactically and stylistically indistinguishable from correct text.
+<div class="callout-insight">
+<strong>Insight:</strong> **Pitfall 1: Treating the model as a search engine**
+</div>
+
 
 **Pitfall 2: Assuming longer prompts are always better**
 Length only helps if the additional tokens shift the probability distribution toward your desired output. Padding and repetition can actually dilute the signal of the conditions you care about.
@@ -165,7 +185,29 @@ Setting temperature to 0 does not make the model correct — it makes it determi
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving autoregressive generation: llms as conditional probability machines, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Radford et al. (2019) "Language Models are Unsupervised Multitask Learners" — original GPT-2 paper that demonstrated the power of autoregressive pretraining
 - Holtzman et al. (2020) "The Curious Case of Neural Text Degeneration" — explains why argmax decoding produces degenerate text and motivates nucleus sampling
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_token_probability.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

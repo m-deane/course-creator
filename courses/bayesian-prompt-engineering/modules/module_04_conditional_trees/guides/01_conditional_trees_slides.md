@@ -30,6 +30,9 @@ It is a decision tree wearing the costume of a simple question.
 
 <!-- Speaker notes: This is the central insight. Before we talk about prompting technique, we need to see the structural problem. The question looks simple. It has branches. Every serious decision question has branches. The model's job, when asked a flat question, is to pick the most common branch. That is almost certainly not your branch. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## What the Model Does
@@ -46,11 +49,15 @@ You are not the average case.
 
 <!-- Speaker notes: This is the Bayesian framing connecting back to Module 1. When you don't specify conditions, the posterior defaults to the prior. The prior is the average answer. The average answer is probably not your answer. This isn't a model failure — it's the math working correctly given what you provided. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Tree That Was Hidden
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Should I incorporate in<br/>Canada or U.S.?"] --> B{Where are<br/>your customers?}
     B -->|Primarily U.S.| C{Planning to raise<br/>U.S. venture capital?}
@@ -63,6 +70,9 @@ graph TD
 
 <!-- Speaker notes: This is the actual structure of the question. Every node is a condition. Every path is an answer. When you asked for a single verdict, the model picked one path. It didn't ask you which node you were at. Walk through the tree and ask the audience: which node are you at? Most of them don't know until they see the tree. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Recognizing Hidden Decision Trees
@@ -81,6 +91,9 @@ A question has hidden conditional structure when:
 
 <!-- Speaker notes: Give the audience a moment to apply this diagnostic mentally to a question they've asked AI recently. Most questions about decisions, recommendations, and strategy have conditional structure. Most questions about facts don't. The goal is to develop a reflexive awareness: before I ask this, does it have branches? -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Failure Mode: Verdicts Without Trees
@@ -224,6 +237,7 @@ A model that lists what it needs is more useful than one that gives a confident 
 ## Domain Pattern: Compliance Questions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Does GDPR apply<br/>to my startup?"] --> B{Do you process data<br/>of EU residents?}
     B -->|Yes, directly| C["Full GDPR applicability<br/>— you are a Controller"]

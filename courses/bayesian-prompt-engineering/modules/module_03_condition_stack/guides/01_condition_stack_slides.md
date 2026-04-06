@@ -33,6 +33,9 @@ Your case is not the average case.
 
 <!-- Speaker notes: Start with the concrete example. Students should immediately recognize this pattern — they have written prompts like this. The point is not that the prompt lacks detail. It has plenty of detail. It is missing the conditions that make that detail interpretable. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Root Cause: Starting at Layer 5
@@ -56,6 +59,9 @@ In high-stakes domains, that prior is built on **the median case**.
 
 <!-- Speaker notes: This diagram is the key visual of the module. Emphasize the contrast: most prompt advice focuses on Layer 6 (formatting, structure). The actual leverage is in Layers 1-4. Facts alone give the model data without interpretation context. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Stack as a Probability Machine
@@ -72,6 +78,9 @@ This is not metaphor. This is the mechanism by which the model generates tokens 
 
 <!-- Speaker notes: Connect back to Module 1. The P(A|C) frame is already established. Now we are giving the C a structure. The stack is just a systematic way to fill in C with the conditions that have the most leverage. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Layer 1: Jurisdiction + Rule Set
@@ -95,6 +104,9 @@ Every jurisdiction condition eliminates branches that **cannot apply** to your s
 
 <!-- Speaker notes: The multiplicative nature of constraint is important here. Jurisdiction doesn't add 1 unit of precision — it multiplies the constraint by a large factor. In legal and medical domains especially, the jurisdiction can completely change which options even exist. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Layer 1: Jurisdiction Across Domains

@@ -1,8 +1,16 @@
 # Uncertainty Prompting: Getting the Model to Say What It Doesn't Know
 
+> **Reading time:** ~11 min | **Module:** 4 — Conditional Trees | **Prerequisites:** Module 3 Condition Stack
+
+
 ## In Brief
 
 Language models are trained to produce confident, complete responses. This training pressure causes them to hide uncertainty inside answers that look more definitive than they should be. Uncertainty prompting is the set of techniques that reverse this pressure — getting the model to surface what it doesn't know, what conditions it needs, and where your specific situation might deviate from the general case.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Language models are trained to produce confident, complete responses.
+</div>
 
 ---
 
@@ -25,6 +33,10 @@ The model knows what would change this answer. It knows that pre-revenue B2B ent
 ## What Uncertainty Actually Looks Like
 
 There are three types of uncertainty in a model's response:
+<div class="callout-insight">
+<strong>Insight:</strong> There are three types of uncertainty in a model's response:
+</div>
+
 
 ### Type 1: Epistemic Uncertainty (Knowledge Limits)
 The model genuinely doesn't know. This happens with:
@@ -48,6 +60,10 @@ Uncertainty prompting targets all three types, but the techniques differ.
 ## The Meta-Prompt Technique
 
 The meta-prompt is a prefix instruction that changes how the model approaches any question:
+<div class="callout-warning">
+<strong>Warning:</strong> The meta-prompt is a prefix instruction that changes how the model approaches any question:
+</div>
+
 
 ```
 Before answering, identify:
@@ -131,6 +147,10 @@ This format forces the model to separate assumptions from conclusions — a dist
 ## Getting the Model to Ask Questions First
 
 In high-stakes domains, the most useful model behavior is to ask you for information before answering.
+<div class="callout-insight">
+<strong>Insight:</strong> In high-stakes domains, the most useful model behavior is to ask you for information before answering.
+</div>
+
 
 Default behavior: answer immediately, incorporate uncertainty into hedging language.
 
@@ -189,6 +209,10 @@ This format is particularly useful for:
 ## The Assumption-Surfacing Prompt
 
 Models make assumptions constantly. Most of them are invisible. One technique for surfacing them:
+<div class="callout-key">
+<strong>Key Point:</strong> Models make assumptions constantly. Most of them are invisible. One technique for surfacing them:
+</div>
+
 
 ```
 Answer this question. After answering, list every assumption
@@ -272,6 +296,10 @@ This two-phase pattern consistently produces better answers than single-shot pro
 ## When Uncertainty Prompting Backfires
 
 Uncertainty prompting can produce unhelpful results in these situations:
+<div class="callout-insight">
+<strong>Insight:</strong> Uncertainty prompting can produce unhelpful results in these situations:
+</div>
+
 
 **When you need a quick directional answer:** If you're looking for a rough starting point and can tolerate uncertainty, the conditional tree approach adds friction. Use it for high-stakes questions, not every question.
 
@@ -287,6 +315,10 @@ Uncertainty prompting can produce unhelpful results in these situations:
 
 **Pitfall 1: Confusing "I need more information" with failure**
 A model that says "I need to know X before I can answer specifically" is providing more useful output than one that gives a confident wrong answer. Reframe uncertainty as a feature.
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1: Confusing "I need more information" with failure**
+</div>
+
 
 **Pitfall 2: Asking for uncertainty without specifying format**
 "What don't you know?" produces rambling hedges. "List the 3 conditions that would most change your answer, in order of decision leverage" produces an actionable list.
@@ -318,8 +350,30 @@ Sometimes the right fix is to reframe the question, not ask for uncertainty. If 
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Confidence Illusion" and why it matters in practice.
+
+2. Given a real-world scenario involving uncertainty prompting: getting the model to say what it doesn't know, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Tetlock & Gardner, *Superforecasting*, Chapters 1-3: How calibrated uncertainty outperforms confident prediction
 - Gigerenzen, *Calculated Risks*: On the value of explicit uncertainty over false precision
 - Kahneman, *Thinking Fast and Slow*, Chapter 19: "The Illusion of Understanding" — on why confident explanations feel compelling even when wrong
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_decision_tree_prompts.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

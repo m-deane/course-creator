@@ -1,14 +1,26 @@
 # Guide 1: The Condition Stack Framework
 
+> **Reading time:** ~14 min | **Module:** 3 — Condition Stack | **Prerequisites:** Module 2 Switch Variables
+
+
 ## In Brief
 
 The Condition Stack is a 6-layer protocol for writing prompts. It specifies conditions in descending order of leverage — from the constraints that eliminate the most branches of the model's prior (jurisdiction, time, objective) down to the facts most people start with. Starting at Layer 5 (facts) is the most common prompting mistake. The layers above it do more work per word than any amount of factual detail.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The Condition Stack is a 6-layer protocol for writing prompts.
+</div>
 
 ---
 
 ## The Central Problem: Why Most Prompts Fail
 
 Here is a prompt a professional wrote after thinking carefully about it:
+<div class="callout-key">
+<strong>Key Point:</strong> Here is a prompt a professional wrote after thinking carefully about it:
+</div>
+
 
 > "My client is a self-employed consultant who made $180,000 last year. She has a home office, pays for her own health insurance, and contributed to a SEP-IRA. What deductions should she take?"
 
@@ -28,6 +40,10 @@ The Condition Stack fixes this by making the high-leverage conditions explicit �
 ## The 6 Layers
 
 ### Layer 1: Jurisdiction + Rule Set
+<div class="callout-insight">
+<strong>Insight:</strong> **What it is:** Which country, state/province, and regulatory regime governs this situation? Which specific ruleset applies?
+</div>
+
 
 **What it is:** Which country, state/province, and regulatory regime governs this situation? Which specific ruleset applies?
 
@@ -121,6 +137,10 @@ With Layers 1–4 set, facts become maximally informative. The model knows exact
 ## Why People Start at Layer 5
 
 The instinct to lead with facts is rational. Facts are what you know. They are concrete. They feel like the "substance" of the question. The framing conditions (jurisdiction, objective, constraints) feel like preamble — like housekeeping you should be able to skip.
+<div class="callout-warning">
+<strong>Warning:</strong> The instinct to lead with facts is rational. Facts are what you know. They are concrete. They feel like the "substance" of the question. The framing conditions (jurisdiction, objective, constraints) feel like preamble — like housekeeping you should be able to skip.
+</div>
+
 
 But from the model's perspective, the framing conditions are the substance. The facts are data. Without the frame, the model cannot interpret the data.
 
@@ -136,6 +156,10 @@ The fact (positive test) has no meaning without the context. The same is true of
 ## The Plug-and-Play Prompt Template
 
 Copy this template. Fill in each layer. Remove the bracketed instructions before sending.
+<div class="callout-key">
+<strong>Key Point:</strong> Copy this template. Fill in each layer. Remove the bracketed instructions before sending.
+</div>
+
 
 ```
 [LAYER 1 — JURISDICTION + RULE SET]
@@ -171,6 +195,10 @@ Length: [approximate target length or "be concise"]
 ---
 
 ## Before and After: The Same Question with and without the Stack
+<div class="callout-insight">
+<strong>Insight:</strong> **Without the Condition Stack (Layer 5 only):**
+</div>
+
 
 **Without the Condition Stack (Layer 5 only):**
 
@@ -228,6 +256,10 @@ The output from the stacked version is actionable, California-specific, calibrat
 
 **Pitfall 1: Writing the jurisdiction in the question instead of the stack**
 "What are the California tax rules for home office deductions?" — this puts the jurisdiction in the question but not in a structured way the model can use to constrain the entire response. Put it in Layer 1 so it governs everything.
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1: Writing the jurisdiction in the question instead of the stack**
+</div>
+
 
 **Pitfall 2: Conflating objective with constraints**
 "I want to minimize tax but I don't want to be too aggressive" — this mixes an objective (minimize tax) with a constraint (not aggressive). Separate them: Layer 3 = minimize tax; Layer 4 = risk tolerance is low, no aggressive positions.
@@ -250,6 +282,19 @@ The template is a thinking tool, not a form. Some layers have one sentence; some
 - **Related to:** Module 7 (Production Patterns — dynamic injection of condition stack layers into API calls at runtime)
 
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Central Problem: Why Most Prompts Fail" and why it matters in practice.
+
+2. Given a real-world scenario involving guide 1: the condition stack framework, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Further Reading
 

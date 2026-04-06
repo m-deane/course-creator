@@ -20,6 +20,7 @@ How language models generate text as conditional probability
 ## What We Cover
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[What is a token?] --> B[One-step generation]
     B --> C[The chain rule]
@@ -30,6 +31,9 @@ flowchart LR
 
 <!-- Speaker notes: Walk through the roadmap so learners see where we are going. Emphasise that each section builds directly on the previous one. The payoff is the last box: understanding your prompt as a prior condition is the conceptual unlock for the whole course. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Wrong Mental Model
@@ -69,6 +73,9 @@ A probability distribution over 50,000+ vocabulary items, sampled once.
 
 <!-- Speaker notes: This contrast is the most important slide in the deck. Let it land. The implications are enormous: the model is not retrieving a fact — it is generating the most probable continuation of the token sequence you gave it. That means your prompt is not a query; it is a set of conditioning variables. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## What Is a Token?
@@ -89,6 +96,9 @@ Vocabulary size: typically **50,000–130,000 tokens**
 
 <!-- Speaker notes: Most people think models work on words. Correcting this misconception early matters because it explains why unusual proper nouns, numbers, and compound words can behave unexpectedly. The key point: the model predicts the next token, not the next word, and the token boundaries affect which probabilities are computed. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## One Step of Generation
@@ -116,6 +126,9 @@ Context:  "The capital of France is"
 
 <!-- Speaker notes: Walk through this step by step. The transformer takes the entire context and produces one logit per vocabulary item. Softmax converts logits to probabilities. We sample from that distribution. The sampled token is appended, and the whole process repeats. This is autoregressive generation. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Chain Rule of Generation
@@ -158,6 +171,7 @@ P("Paris")
 $$P(t_n = v) = \frac{e^{z_v / T}}{\sum_{v'} e^{z_{v'} / T}}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["T → 0 (cold)"] --> B["Peak probability → 1.0<br/>Deterministic output"]
     C["T = 1.0 (neutral)"] --> D["Unmodified distribution"]
@@ -173,6 +187,7 @@ graph LR
 ## Attention: Why Context Matters Across Distance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     P1[Token 1: 'You'] --> ATT[Attention mechanism]
     P2[Token 2: 'are'] --> ATT
@@ -181,9 +196,6 @@ flowchart TD
     P5["... (50 more tokens) ..."] --> ATT
     P6[Token 55: 'dosage'] --> ATT
     ATT --> OUT["P(next token)"]
-
-    style P4 fill:#f96,stroke:#333
-    style OUT fill:#6f9,stroke:#333
 ```
 
 The attention mechanism allows token 4 ("pharmacist") to **directly influence** the probability distribution at token 55, regardless of distance.

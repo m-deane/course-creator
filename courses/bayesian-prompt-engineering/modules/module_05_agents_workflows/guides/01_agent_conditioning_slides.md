@@ -36,19 +36,21 @@ The model computes its posterior over all 6 layers at once.
 
 <!-- Speaker notes: This slide reviews the condition stack from Module 3. In a single-turn prompt, all six layers are in the same context window and the model computes P(answer | all conditions) directly. The multi-agent problem breaks this because conditions are now distributed across multiple calls. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## What Changes in a Multi-Agent System
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     U["User + Full Conditions\n[C1,C2,C3,C4,C5,C6]"] --> A1
     A1["Agent 1\nOutput text only"] --> A2
     A2["Agent 2\nReceives: output text"] --> A3
     A3["Agent 3\nReceives: less context"] --> A4
     A4["Agent 4\nReasoning from prior"] --> R["Wrong Answer"]
-    style R fill:#f66,color:#fff
-    style U fill:#6af,color:#fff
 ```
 
 Each step passes **output**, not **conditions**.
@@ -57,6 +59,9 @@ Each step passes **output**, not **conditions**.
 
 <!-- Speaker notes: This is the condition decay problem in a single diagram. Each arrow represents an API call. What flows across each arrow is the output text, not the conditions that shaped that output. Each downstream agent must fill missing conditions from its prior. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Condition Decay: Three Mechanisms
@@ -88,6 +93,9 @@ This is a conditioning error. The model only conditions on what is in its curren
 
 <!-- Speaker notes: Walk through all three mechanisms. The most common is mechanism 3 — developers write prompts for Agent 3 as if the agent has been listening to the whole conversation. It hasn't. Each API call is stateless. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## A Concrete Example: Contract Review Pipeline
@@ -112,6 +120,9 @@ Agent 3 fills all missing conditions from its prior.
 
 <!-- Speaker notes: This example makes condition decay concrete. Walk through what each agent receives. The key question to ask students: "What does Agent 3 NOT have?" That list is the condition decay. The recommendation Agent 3 produces is conditioned on the average client profile, not this specific client. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Decay Visualization: Step by Step
@@ -292,6 +303,7 @@ Over-stuffing contexts degrades attention on relevant conditions. Pass what each
 ## Architecture: What Full Condition Passing Looks Like
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["User Query + Conditions"]
     CS["Condition Stack\nJSON Object"]
@@ -314,9 +326,6 @@ flowchart TD
         A3I["Input: A2 result + condition_stack"]
         A3O["Output: Final recommendation"]
     end
-
-    style CS fill:#6af,color:#fff
-    style A3O fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This architecture diagram shows the full solution. The condition_stack JSON object travels alongside every agent's output. Each agent receives both the result and the condition_stack from its predecessor. Each agent injects the condition_stack into its own system prompt. The conditions never decay because they are always explicitly present. -->
@@ -344,6 +353,7 @@ That narrowing is the entire value of the condition stack framework applied to a
 ## Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Problem["Condition Decay\n(conditions drop at each step)"] --> D1["Mechanism 1: Output summarization"]
     Problem --> D2["Mechanism 2: Context window growth"]
@@ -354,10 +364,6 @@ flowchart TD
     Solutions --> S3["Switch variables only\n(minimum viable, low tokens)"]
 
     Diagnostic["Decay Diagnostic\n(find where condition was dropped)"]
-
-    style Problem fill:#f66,color:#fff
-    style Solutions fill:#6af,color:#fff
-    style Diagnostic fill:#ff9,color:#000
 ```
 
 <!-- Speaker notes: This summary diagram captures the entire deck. Condition decay has three mechanisms. Three solutions address it at different cost/fidelity trade-offs. The diagnostic helps you find and fix decay in existing pipelines. All three concepts work together. -->

@@ -42,6 +42,9 @@ $$P(\text{wrong answer}) = P(\text{right answer} \mid \text{wrong evidence})$$
 
 <!-- Speaker notes: This reframe is important. The model isn't malfunctioning. It's doing exactly what its training tells it to do. The fault in a bad answer almost always lives in the prompt, and almost always in one of six predictable patterns. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -51,6 +54,9 @@ $$P(\text{wrong answer}) = P(\text{right answer} \mid \text{wrong evidence})$$
 
 <!-- Speaker notes: The first and most common mistake. People get a generic answer, add more text, and get a slightly longer generic answer. They conclude the model is bad. But there's a critical distinction between information and evidence. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Detail vs. Evidence
@@ -75,6 +81,9 @@ $$P(\text{answer} \mid \text{evidence}) \neq P(\text{answer} \mid \text{informat
 
 <!-- Speaker notes: Evidence is the conditions that change which answer is correct. Information is everything else. Ask yourself: does this sentence change which answer is right? If not, it's information, not evidence. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Mistake 1 — The Fix
@@ -97,6 +106,9 @@ After:
 
 <!-- Speaker notes: This is about density of evidence, not volume of text. A prompt with 50 words of precise conditions will outperform a prompt with 500 words of narrative context every time. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -111,6 +123,7 @@ After:
 ## The Hidden Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Q["Should I build mobile or web?"] --> C1{Primary users?}
     C1 -->|Desk workers| W["Web app"]
@@ -279,14 +292,11 @@ A clean format: "Optimize for [X]. Acceptable to sacrifice [Y]. Hard constraints
 ## Time Changes the Answer
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T1["Early Stage<br/>Pre-PMF"] -->|correct action| A1["Stay scrappy,<br/>no process"]
     T2["Growth Stage<br/>Post-PMF"] -->|correct action| A2["Add process,<br/>hire specialists"]
     T3["Scale Stage"] -->|correct action| A3["Systematize,<br/>reduce variance"]
-
-    style T1 fill:#ffd700
-    style T2 fill:#90EE90
-    style T3 fill:#87CEEB
 ```
 
 "Should I hire a head of sales?" has different answers at each stage.

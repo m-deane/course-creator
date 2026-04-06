@@ -37,11 +37,15 @@ The model knows this. It didn't tell you.
 
 <!-- Speaker notes: The model's answer is technically defensible — it says "it depends" in sophisticated language. But it doesn't tell you what it depends on in a way you can act on. This is the confidence illusion: the answer sounds like it addresses your situation when it's actually addressing all situations simultaneously, which means it addresses none of them precisely. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Three Types of Uncertainty
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Uncertainty] --> B[Epistemic<br/>Model doesn't know]
     A --> C[Conditional<br/>Model knows all branches,<br/>not which one you're on]
@@ -56,6 +60,9 @@ Most uncertainty in AI responses is **Conditional** — the model knows the answ
 
 <!-- Speaker notes: This taxonomy matters because the fix depends on the type. Epistemic uncertainty — the model genuinely doesn't know — is rare and usually involves post-cutoff information. Structural uncertainty is when you need to step back and question whether you're asking the right thing. But conditional uncertainty is by far the most common and the most fixable. That's what the rest of this guide addresses. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Meta-Prompt
@@ -77,6 +84,9 @@ Add this before any high-stakes question.
 
 <!-- Speaker notes: This is the most powerful single technique in this guide. The meta-prompt doesn't change the question — it changes the framing around how the model approaches the question. It instructs the model to externalize its internal structure before compressing it into a verdict. Demonstrate this with a question from the audience if time allows. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Meta-Prompt in Action
@@ -116,6 +126,9 @@ Add this before any high-stakes question.
 
 <!-- Speaker notes: The right column is longer. It's also honest. The microservices answer might be right for a company at scale with large engineering teams. It's probably wrong for a startup. The meta-prompt forces the model to surface the conditions under which each answer is correct — which lets you check whether the conditions match your situation. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Prompting for Explicit Condition Lists

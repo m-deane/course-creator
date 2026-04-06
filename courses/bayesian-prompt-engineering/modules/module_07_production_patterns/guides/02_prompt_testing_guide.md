@@ -1,8 +1,16 @@
 # How to Test and Measure Prompt Quality
 
+> **Reading time:** ~12 min | **Module:** 7 — Production Patterns | **Prerequisites:** Modules 1-6
+
+
 ## In Brief
 
 Most prompts are never tested. They are written, tried once, and declared "good enough." This works for one-off queries. It fails for production systems where a prompt runs thousands of times against diverse inputs. This guide provides a complete measurement framework: what to measure, how to measure it, and what the numbers mean.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Most prompts are never tested.
+</div>
 
 ---
 
@@ -31,6 +39,10 @@ You do not need to evaluate whether the outputs are "correct." You only need to 
 ### Definition
 
 Output stability is the average pairwise similarity between outputs from N runs of the same prompt on the same input.
+<div class="callout-warning">
+<strong>Warning:</strong> Output stability is the average pairwise similarity between outputs from N runs of the same prompt on the same input.
+</div>
+
 
 $$\text{Stability} = \frac{2}{N(N-1)} \sum_{i < j} \text{sim}(o_i, o_j)$$
 
@@ -53,6 +65,13 @@ Stability captures the **reproducibility** of the prompt. A prompt with stabilit
 ### The Vocabulary Overlap Computation
 
 The most interpretable stability metric for prose outputs:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def jaccard_similarity(text_a: str, text_b: str) -> float:
@@ -87,6 +106,9 @@ def stability_score(outputs: list[str]) -> float:
     return total / count
 ```
 
+</div>
+</div>
+
 ### Choosing N
 
 | N | Pairs | Use Case |
@@ -105,12 +127,23 @@ For production baselines, N=10 is the minimum. For A/B comparisons where you nee
 ### Definition
 
 Length variance measures the standard deviation of output token counts across N runs. High variance means the model is uncertain about the depth of response the prompt warrants.
+<div class="callout-key">
+<strong>Key Point:</strong> Length variance measures the standard deviation of output token counts across N runs. High variance means the model is uncertain about the depth of response the prompt warrants.
+</div>
+
 
 ### Interpretation
 
 A prompt with consistent length variance (say, 120±15 tokens) is producing structured, bounded responses. A prompt with high length variance (120±80 tokens) is producing responses that vary in depth — some runs produce brief summaries, others produce extended analyses. This indicates the model is uncertain about Layer 3 (objective) or Layer 6 (output format).
 
 Length variance is a fast, cheap diagnostic to run before committing to a full stability test.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import statistics
@@ -128,6 +161,9 @@ def length_variance(outputs: list[str]) -> dict:
     return {"mean": mean, "std": std, "cv": cv}
 ```
 
+</div>
+</div>
+
 A coefficient of variation (CV) above 0.3 is a signal to inspect Layer 6 (output format specification).
 
 ---
@@ -137,6 +173,10 @@ A coefficient of variation (CV) above 0.3 is a signal to inspect Layer 6 (output
 ### Definition
 
 Key entity consistency measures what fraction of important terms appear across all N runs. If the prompt is about a specific regulation (SEC Rule 10b-5) or a specific procedure (Form 8-K filing), those terms should appear in every run.
+<div class="callout-insight">
+<strong>Insight:</strong> Key entity consistency measures what fraction of important terms appear across all N runs. If the prompt is about a specific regulation (SEC Rule 10b-5) or a specific procedure (Form 8-K filing), those terms should appear in every run.
+</div>
+
 
 ### When to Use It
 
@@ -144,6 +184,13 @@ This metric requires you to specify the key entities in advance — which terms 
 - The output domain has well-defined technical vocabulary
 - You know the specific procedures, regulations, or facts the output must reference
 - Generic vocabulary overlap is insufficient (two outputs can use the same common words but reference different specific procedures)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def entity_consistency(outputs: list[str], key_entities: list[str]) -> float:
@@ -162,6 +209,9 @@ def entity_consistency(outputs: list[str], key_entities: list[str]) -> float:
     return consistently_present / len(key_entities)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Metric 4: Structure Consistency
@@ -169,12 +219,23 @@ def entity_consistency(outputs: list[str], key_entities: list[str]) -> float:
 ### Definition
 
 Structure consistency measures whether outputs share the same format: heading count, presence of lists, paragraph count, and section labels.
+<div class="callout-warning">
+<strong>Warning:</strong> Structure consistency measures whether outputs share the same format: heading count, presence of lists, paragraph count, and section labels.
+</div>
+
 
 ### Why It Matters
 
 A prompt asking for "a numbered action list with deadlines" should produce numbered lists with deadlines in every run. If some runs produce numbered lists and others produce prose paragraphs, Layer 6 (output format) is underspecified.
 
 Structure consistency is the fastest metric to compute and the most diagnostic for Layer 6 problems.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import re
@@ -208,6 +269,9 @@ def structure_consistency(outputs: list[str]) -> dict:
     return results
 ```
 
+</div>
+</div>
+
 ---
 
 ## Metric 5: Condition Sensitivity
@@ -215,6 +279,10 @@ def structure_consistency(outputs: list[str]) -> dict:
 ### Definition
 
 Condition sensitivity measures how much the output stability changes when you remove or alter one condition at a time. It answers: which conditions are actually doing work?
+<div class="callout-key">
+<strong>Key Point:</strong> Condition sensitivity measures how much the output stability changes when you remove or alter one condition at a time. It answers: which conditions are actually doing work?
+</div>
+
 
 ### The Procedure
 
@@ -333,6 +401,10 @@ This protocol takes approximately 30 minutes for a single prompt, including API 
 
 **Pitfall 1: Running N=1 and declaring the prompt stable.**
 One run tells you nothing about stability. The minimum for any meaningful stability test is N=3; the standard is N=5.
+<div class="callout-insight">
+<strong>Insight:</strong> **Pitfall 1: Running N=1 and declaring the prompt stable.**
+</div>
+
 
 **Pitfall 2: Measuring stability on different inputs.**
 Stability must be computed on the same input across N runs. Measuring different inputs conflates input variation with prompt variation.
@@ -363,3 +435,15 @@ With fewer than 20 inputs, input variance dominates the comparison. You are meas
 2. Design an A/B test for a prompt you use regularly. State: (a) which condition you are testing, (b) the scoring criterion, (c) the minimum N for your test, and (d) what result would constitute a meaningful difference.
 
 3. For a domain you know well, write a list of 5 key entities that should appear in any good output. Use this as an entity consistency check on your current prompts.
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving how to test and measure prompt quality, what would be your first three steps to apply the techniques from this guide?
+</div>

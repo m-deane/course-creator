@@ -49,6 +49,9 @@ The first prompt is longer. The second prompt is *better*.
 
 <!-- Speaker notes: The contrast here is the core lesson. Most prompts fail not because of quantity of information, but because they supply the wrong kind. Volume does not equal information. This slide sets up the entire module. Point to both columns and ask: which one narrows the model's reasoning more? -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## What Is a Switch Variable?
@@ -63,11 +66,15 @@ $$P(\text{answer} \mid Q, V{=}v_1) \neq P(\text{answer} \mid Q, V{=}v_2)$$
 
 <!-- Speaker notes: Make the mathematical definition concrete. The equation says: the correct answer given value v1 is different from the correct answer given value v2. This is not a marginal difference — it's categorical. Example: "Is this filing valid?" with v1=before deadline is yes. With v2=after deadline the answer isn't "less valid" — it simply doesn't exist. The deadline is a switch variable. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Anatomy of a Switch
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["Question: What's the tax treatment of this gain?"]
     Q --> V1{"Holding period?"}
@@ -85,6 +92,9 @@ Each switch variable doubles the branching. Miss one, the model picks a branch f
 
 <!-- Speaker notes: Walk through the tree step by step. The holding period is the first switch — under 12 months versus over 12 months routes to completely different tax regimes. The jurisdiction is the second switch. Without specifying these two variables, the model is forced to guess which branch you're in. And it will often guess wrong, confidently. This is not a model failure — it's a missing condition failure. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## The Five Categories
@@ -101,11 +111,15 @@ Every switch variable in every domain belongs to one of these five categories.
 
 <!-- Speaker notes: These five categories are exhaustive across all domains. When a student is stuck identifying switch variables for a new domain, they should run through this list as a checklist. Jurisdiction first: which rules apply? Timing: when in the process? Status: who is involved? Constraints: what eliminates solutions? Objective: what are we optimizing for? The objective function is the most commonly omitted — and often the highest-leverage. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Domain: Law
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Q["Same legal question"]
     Q --> J{"Jurisdiction"}
@@ -128,6 +142,7 @@ The same question needs five switch variables answered before any real analysis 
 ## Domain: Medicine
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S["Patient presents with chest pain"]
     S --> A{"Age cohort"}
@@ -148,6 +163,7 @@ The diagnostic tree for a 22-year-old and a 55-year-old with identical symptoms 
 ## Domain: Software Engineering
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Q["How should I structure this service?"]
     Q --> D{"Deployment target"}

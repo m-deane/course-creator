@@ -40,6 +40,9 @@ The transition requires infrastructure, not just better prompts.
 
 <!-- Speaker notes: The distinction is not about intelligence or effort. A brilliant individual prompt does not survive organizational scale without tooling. Frame this as an engineering problem, not a skills problem. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## What Happens Without Infrastructure
@@ -58,11 +61,15 @@ This is **prompt entropy**: the gradual erosion of condition precision across a 
 
 <!-- Speaker notes: Prompt entropy is the most common reason organizations report AI quality degrading over time. The model has not changed. The prompts have. Make this concrete with the timeline diagram. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Four Production Patterns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     P1["Pattern 1\nParameterized Templates\nStructure separate from values"]
     P2["Pattern 2\nDynamic Injection\nContext from data sources"]
@@ -78,6 +85,9 @@ Each pattern builds on the previous. Templates enable injection. Injection enabl
 
 <!-- Speaker notes: Walk through the dependency graph. You cannot inject conditions into a template that does not exist. You cannot A/B test what you cannot parameterize. And you cannot maintain a library without A/B results to record. The sequence is architectural. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Pattern 1: Parameterized Templates
@@ -106,6 +116,9 @@ Missing parameters raise errors **before** the API call, not after.
 
 <!-- Speaker notes: The key insight is error-time. A static prompt with a missing condition silently produces a bad answer. A parameterized template with a missing condition fails loudly at fill time. That is the software engineering principle of failing fast applied to prompts. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Template Design: Name by Use Case
@@ -129,6 +142,7 @@ A template named by date or version number cannot.
 ## Pattern 2: Dynamic Condition Injection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     UDB["User Profile DB\nentity_type\nregulatory_regime\nconstraints"]
     CAL["System Context\nquery_date\nprocess_stage"]
@@ -194,6 +208,7 @@ You are testing: does this condition produce a more constrained posterior?
 ## The A/B Protocol
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Define test variable\nwhich layer, which condition"]
     B["Write Stack A and B\ndiffering only on that variable"]
@@ -315,6 +330,7 @@ Major changes trigger re-testing before deployment.
 ## The Full Production Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DEV["Developer creates ConditionStack template"]
     REG["Register in PromptLibrary\nv1.0.0"]

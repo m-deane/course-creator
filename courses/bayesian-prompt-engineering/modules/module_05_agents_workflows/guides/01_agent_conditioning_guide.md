@@ -1,5 +1,8 @@
 # Agent Conditioning: How Bayesian Conditions Flow Through Multi-Step Workflows
 
+> **Reading time:** ~9 min | **Module:** 5 — Agents & Workflows | **Prerequisites:** Module 4 Conditional Trees
+
+
 ## In Brief
 
 An AI agent workflow is a sequence of conditional probability computations. Each step receives some context, generates output conditioned on that context, and passes (some subset of) that output forward. The conditions that shaped step 1's reasoning are present in step 5's reasoning only if they were explicitly included in every handoff payload. Conditions that are not explicitly passed decay — they are replaced by the model's training prior.
@@ -13,6 +16,11 @@ By the end of this guide you will be able to:
 3. Design structured handoff payloads that preserve the full condition stack
 4. Implement context summaries as a token-efficient alternative to full condition passing
 5. Distinguish between conditions that must persist vs. conditions that can be regenerated
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> An AI agent workflow is a sequence of conditional probability computations.
+</div>
 
 ---
 
@@ -42,6 +50,10 @@ In a single-turn setting, all six layers are simultaneously present in the model
 ## The Multi-Agent Problem
 
 When work is distributed across multiple agents, each agent receives only what was passed to it. Consider a three-agent pipeline for contract analysis:
+<div class="callout-warning">
+<strong>Warning:</strong> When work is distributed across multiple agents, each agent receives only what was passed to it. Consider a three-agent pipeline for contract analysis:
+</div>
+
 
 ```
 Agent 1 (Classifier): "What type of contract is this?"
@@ -143,8 +155,19 @@ User Question + Conditions
 ## The Structured Handoff Solution
 
 The fix is to treat the condition stack as a first-class data object — not as implicit context embedded in natural language outputs.
+<div class="callout-warning">
+<strong>Warning:</strong> The fix is to treat the condition stack as a first-class data object — not as implicit context embedded in natural language outputs.
+</div>
+
 
 ### Step 1: Define a condition payload schema
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 condition_payload = {
@@ -161,9 +184,19 @@ condition_payload = {
 }
 ```
 
+</div>
+</div>
+
 ### Step 2: Require each agent to pass conditions forward
 
 Every agent's output schema includes the condition payload:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 agent_output = {
@@ -173,7 +206,17 @@ agent_output = {
 }
 ```
 
+</div>
+</div>
+
 ### Step 3: Inject conditions into every downstream system prompt
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def build_agent_prompt(task: str, condition_stack: dict) -> str:
@@ -189,9 +232,16 @@ Task: {task}
 Do not deviate from the objective and constraints above. If the task conflicts with these conditions, flag the conflict explicitly rather than resolving it silently."""
 ```
 
+</div>
+</div>
+
 ---
 
 ## Context Summaries: Token-Efficient Condition Passing
+<div class="callout-key">
+<strong>Key Point:</strong> In long pipelines, passing the full condition payload at every step costs tokens. The alternative is a **condition summary** — a compressed representation that preserves the high-leverage conditions.
+</div>
+
 
 In long pipelines, passing the full condition payload at every step costs tokens. The alternative is a **condition summary** — a compressed representation that preserves the high-leverage conditions.
 
@@ -201,6 +251,13 @@ Include only conditions that:
 1. Are not recoverable from the task description alone
 2. Would change the reasoning if assumed differently
 3. Constrain the solution space (not just describe it)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 CONDITION_SUMMARY_PROMPT = """
@@ -214,6 +271,9 @@ Condition stack:
 Condition summary:
 """
 ```
+
+</div>
+</div>
 
 ### Trade-off table
 
@@ -232,6 +292,13 @@ From Module 2: switch variables are the conditions that flip the solution branch
 
 Identify them before designing the pipeline:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # For a contract review pipeline:
 switch_variables = {
@@ -241,6 +308,9 @@ switch_variables = {
     "client_type": "individual vs. corporation (affects liability)")
 }
 ```
+
+</div>
+</div>
 
 Pass these at minimum. They are the conditions whose absence causes the largest posterior shift.
 
@@ -296,8 +366,30 @@ Not every condition is relevant at every step. Over-stuffing contexts degrades a
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Learning Objectives" and why it matters in practice.
+
+2. Given a real-world scenario involving agent conditioning: how bayesian conditions flow through multi-step workflows, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Anthropic: "Building effective agents" (contexts and memory patterns)
 - LangChain documentation: Conversation memory types — illustrates condition persistence patterns
 - Lilian Weng: "LLM-powered Autonomous Agents" — covers context management challenges
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_condition_aware_agent.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

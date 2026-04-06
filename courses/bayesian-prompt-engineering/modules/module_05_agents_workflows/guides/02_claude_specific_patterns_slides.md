@@ -37,6 +37,9 @@ Most developers use only Lever 2.
 
 <!-- Speaker notes: The framing here is direct: five levers exist, most people use one. Each lever maps to a specific part of the condition stack. The parallel to Module 3 is explicit — using only user messages is exactly as weak as using only Layer 5 in a single-turn prompt. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Lever 1: System Prompt as Layer 0
@@ -59,6 +62,9 @@ The system prompt is not Layer 1. It is **Layer 0** — a prior that:
 
 <!-- Speaker notes: The key insight is that "Layer 0" is a new concept introduced here. In Module 3, we covered Layers 1-6. The system prompt sits below all of them — it is the prior that the layers further constrain. In agentic loops, the system prompt is re-injected at every API call, which makes it uniquely persistent. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## System Prompt: What Goes Where
@@ -96,6 +102,9 @@ These conditions change with each query.
 
 <!-- Speaker notes: This split is the practical design rule. The system prompt holds what is always true for this agent. User messages hold what is true for this specific task. When conditions that should be stable end up in user messages, they decay as conversations grow because the user message scrolls further back in the context window. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Lever 3: Prefilling
@@ -124,6 +133,9 @@ messages=[
 
 <!-- Speaker notes: Prefilling is underused. Developers write long output format instructions when a one-character prefill achieves the same result with zero failure rate. The mechanism is clear: once you've started the JSON, the model's posterior over the next token heavily favors valid JSON continuation. It's not an instruction — it's a direct constraint on the output distribution. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Prefill Patterns for Multi-Agent Pipelines
@@ -241,6 +253,7 @@ Without `tool_choice: forced`, the model may respond in natural language and bre
 ## Multi-Agent Pattern: Two-Claude Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["User Question"]
 
@@ -259,9 +272,6 @@ flowchart TD
     Q --> A1I
     A1O -->|"switch_variables\npassed as JSON"| A2I
     A2O --> R["Conditioned Answer"]
-
-    style A1O fill:#6af,color:#fff
-    style R fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This diagram shows the two-agent pattern from Guide 02. Agent 1's output is structured JSON containing switch variables. That JSON is passed directly to Agent 2 as part of the user message. Agent 2's system prompt establishes its role and standing conditions. The conditions ride in the JSON, not in natural language. -->
@@ -378,6 +388,7 @@ messages=[{"role": "user",
 ## Summary: Five Levers, Five Layers
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Levers["Claude API Levers"]
         L0["system parameter"]
@@ -398,11 +409,6 @@ flowchart LR
     L3 --> C6a
     L4 --> C4
     L5 --> C6b
-
-    style C0 fill:#f96,color:#fff
-    style C4 fill:#6af,color:#fff
-    style C6a fill:#6f6,color:#000
-    style C6b fill:#6f6,color:#000
 ```
 
 <!-- Speaker notes: This summary diagram is the reference map for the entire deck. Five API levers, five condition layer targets. Print this or screenshot it. When designing an agent system, use this map to decide which lever to use for each condition you need to specify. -->

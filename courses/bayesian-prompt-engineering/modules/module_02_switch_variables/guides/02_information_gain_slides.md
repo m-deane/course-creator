@@ -42,6 +42,9 @@ Prompt A is 37 words. Prompt B is 19 words. Prompt B gets a significantly better
 
 <!-- Speaker notes: Read both prompts aloud before revealing the explanation. Ask students which one they think will get a better answer — most will correctly guess Prompt B but won't be able to articulate why. The reason is information gain: Prompt B specifies three high-gain switch variables (C-Corp entity type, employee classification, objective function) while Prompt A provides 37 words of decorative context that doesn't route to any specific answer branch. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## What Is Information Gain?
@@ -63,6 +66,9 @@ Where $H$ is entropy — the spread of probability mass across possible answers.
 
 <!-- Speaker notes: Don't get bogged down in the math — the intuition is what matters. Entropy measures how spread out the model's uncertainty is across possible answers. Information gain measures how much a specific condition reduces that spread. High-gain conditions dramatically narrow the answer space. Low-gain conditions barely move it. The practical implication is: rank your conditions by gain before adding them. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Entropy: Visual Intuition
@@ -95,6 +101,9 @@ Two conditions reduced entropy by ~87%. Those were switch variables.
 
 <!-- Speaker notes: Walk through the bar charts carefully. The before state shows near-uniform distribution — the model holds significant probability mass across many legal domains. After adding just two switch variables (jurisdiction and entity type), almost all the mass collapses to the correct domain. This is what high information gain looks like. The two conditions were worth more than a 500-word description of the company would have been. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Why Numbers Are Usually Low Gain
@@ -120,6 +129,9 @@ If the number doesn't cross a threshold — it's decoration.
 
 <!-- Speaker notes: This is counterintuitive for analytical professionals. They're trained that more precise data is better data. In the context of information gain, precision without category change is noise. A number that doesn't route to a different answer branch adds nothing. Once students understand the threshold principle, they can evaluate any number they're tempted to add: does this number cross a threshold that changes which rules apply? If yes, it's a switch variable. If no, leave it out. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Diminishing Returns Curve

@@ -1,8 +1,16 @@
 # Evidence vs. Information: Why "More Detail" Often Fails
 
+> **Reading time:** ~11 min | **Module:** 1 — Bayesian Frame | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 
 Information and evidence are not the same thing. Information is any fact you include in a prompt. Evidence is a fact that changes the posterior — that shifts the model's reasoning away from its training prior toward your specific situation. Most "detailed" prompts are full of information and empty of evidence.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Information and evidence are not the same thing.
+</div>
 
 ---
 
@@ -15,6 +23,10 @@ Information and evidence are not the same thing. Information is any fact you inc
 ## The Information-Evidence Distinction
 
 ### Information
+<div class="callout-insight">
+<strong>Insight:</strong> A statement is **information** if it is true and relevant to the topic.
+</div>
+
 
 A statement is **information** if it is true and relevant to the topic.
 
@@ -47,6 +59,10 @@ Each of these eliminates categories of possible answers and directs the model to
 ## Why Numbers Are Not Automatically Evidence
 
 A common mistake: adding numbers to a prompt as if they are inherently more specific.
+<div class="callout-warning">
+<strong>Warning:</strong> A common mistake: adding numbers to a prompt as if they are inherently more specific.
+</div>
+
 
 **Example with numbers (not evidence):**
 
@@ -70,6 +86,10 @@ The phrase "structured as an S-corp" immediately narrows to S-corp-specific stra
 ## The Four Categories of Discriminating Evidence
 
 Research on what actually changes model responses points to four categories of conditions that consistently shift posteriors:
+<div class="callout-key">
+<strong>Key Point:</strong> Research on what actually changes model responses points to four categories of conditions that consistently shift posteriors:
+</div>
+
 
 ### 1. Constraints
 
@@ -169,6 +189,10 @@ Why this works: The specific metrics (8% conversion = 2-4x above average, 3% chu
 ## The Marginal Evidence Test
 
 Before adding any sentence to a prompt, apply this test:
+<div class="callout-warning">
+<strong>Warning:</strong> Before adding any sentence to a prompt, apply this test:
+</div>
+
 
 > If the model didn't have this sentence, would it produce a meaningfully different response?
 
@@ -222,7 +246,29 @@ This test is rigorous. Most sentences in most prompts fail it.
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving evidence vs. information: why "more detail" often fails, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Shannon, C. E. (1948). "A Mathematical Theory of Communication." — The formal definition of information content that underlies the evidence distinction
 - Grice, H. P. (1975). "Logic and Conversation." — The maxim of quantity: say exactly as much as needed, no more; a precursor to the evidence framing
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_posterior_shift_simulator.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

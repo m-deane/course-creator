@@ -1,5 +1,8 @@
 # Diagnostic Framework: When AI Gives Bad Answers
 
+> **Reading time:** ~10 min | **Module:** 6 — Probability Mistakes | **Prerequisites:** Module 1 Bayesian Frame
+
+
 ## In Brief
 
 When AI gives a bad answer, the cause is almost always structural — a missing condition, a misspecified objective, a temporal context the model couldn't infer. This guide provides a systematic diagnostic flowchart for identifying which of the six mistake types caused the problem, and applying the precise fix.
@@ -7,6 +10,11 @@ When AI gives a bad answer, the cause is almost always structural — a missing 
 ## Key Insight
 
 Treat every bad AI answer as a diagnostic signal, not a failure. The answer tells you exactly what evidence the model thought it had. Work backwards from the answer to find the missing condition.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> When AI gives a bad answer, the cause is almost always structural — a missing condition, a misspecified objective, a temporal context the model couldn't infer.
+</div>
 
 ---
 
@@ -90,6 +98,10 @@ START: You received a bad answer
 ## Question-by-Question Diagnosis
 
 The flowchart above is the fast path. Below is the deeper diagnostic question set for each branch.
+<div class="callout-key">
+<strong>Key Point:</strong> The flowchart above is the fast path. Below is the deeper diagnostic question set for each branch.
+</div>
+
 
 ### Branch 1: Is the Answer Generic?
 
@@ -221,6 +233,10 @@ CORRECT BUT GENERIC TO MY SITUATION?
 ## Example Diagnosis
 
 **Situation:** You ask Claude "How should I approach hiring my first 5 engineers?" You get a thorough response covering culture fit, technical assessment, diversity goals, and employer brand.
+<div class="callout-key">
+<strong>Key Point:</strong> **Situation:** You ask Claude "How should I approach hiring my first 5 engineers?" You get a thorough response covering culture fit, technical assessment, diversity goals, and employer brand.
+</div>
+
 
 **Diagnosis walkthrough:**
 
@@ -250,3 +266,15 @@ not the best long-term hiring process?
 - **Builds on:** Guide 1 (the six mistakes), Module 2 (switch variables), Module 3 (condition stack)
 - **Applied in:** `notebooks/01_bad_prompt_clinic.ipynb` — live diagnosis of 6 real broken prompts
 - **Leads to:** Module 7 (production patterns — automating condition injection so these mistakes can't happen in pipelines)
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving diagnostic framework: when ai gives bad answers, what would be your first three steps to apply the techniques from this guide?
+</div>

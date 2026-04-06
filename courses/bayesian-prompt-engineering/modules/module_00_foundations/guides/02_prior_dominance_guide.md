@@ -1,8 +1,16 @@
 # Prior Dominance: Why LLMs Produce Coherent but Wrong Answers
 
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** Basic probability concepts
+
+
 ## In Brief
 
 When a language model generates an answer that is confident, fluent, and wrong for your situation, the cause is almost always the same: the model has defaulted to the most common context in its training data rather than the specific context you are in. This is the prior dominance problem, and it has a precise solution.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> When a language model generates an answer that is confident, fluent, and wrong for your situation, the cause is almost always the same: the model has defaulted to the most common context in its training data rather than the specific context you are in.
+</div>
 
 ---
 
@@ -31,6 +39,10 @@ This distribution reflects what followed that token sequence in training data �
 ## 2. The Most Typical World Problem
 
 Consider the prompt: `"What are the tax implications of filing late?"`
+<div class="callout-warning">
+<strong>Warning:</strong> Consider the prompt: `"What are the tax implications of filing late?"`
+</div>
+
 
 In the training corpus, this question was probably asked most often by:
 - US taxpayers
@@ -54,6 +66,10 @@ Every one of those conditions shifts the correct answer dramatically. None of th
 ## 3. The Accountant Example
 
 This example illustrates prior dominance at its most concrete.
+<div class="callout-key">
+<strong>Key Point:</strong> This example illustrates prior dominance at its most concrete.
+</div>
+
 
 ### Prompt A (underspecified)
 
@@ -91,6 +107,10 @@ The conditions you added were not context-setting niceties. They were the eviden
 ## 4. Prior Dominance Is Not a Bug
 
 It is tempting to frame prior dominance as a flaw that should be fixed. It is not. It is the correct behaviour of a probabilistic model operating with incomplete information.
+<div class="callout-insight">
+<strong>Insight:</strong> It is tempting to frame prior dominance as a flaw that should be fixed. It is not. It is the correct behaviour of a probabilistic model operating with incomplete information.
+</div>
+
 
 If you ask a doctor "what is the recommended treatment?" without saying what condition, age, comorbidities, or contraindications apply, a good doctor will give you the most typical treatment for the most common presentation. That is the right response to incomplete information.
 
@@ -108,6 +128,10 @@ This third point is the dangerous one. Unlike a doctor, a language model does no
 ## 5. The Condition Specification Technique
 
 The fix for prior dominance is precise: supply the conditions that distinguish your situation from the most typical situation.
+<div class="callout-warning">
+<strong>Warning:</strong> The fix for prior dominance is precise: supply the conditions that distinguish your situation from the most typical situation.
+</div>
+
 
 ### Step 1: Identify the prior assumption
 
@@ -149,6 +173,10 @@ The relationship between conditions and probability shifts is not linear. Some c
 ## 7. Prior Dominance in Different Domains
 
 **Medical:** The model's prior assumes an adult patient with no unusual comorbidities in a high-income country. Age, weight, kidney function, concurrent medications, and country of practice are all conditions that can reverse a recommendation.
+<div class="callout-insight">
+<strong>Insight:</strong> **Medical:** The model's prior assumes an adult patient with no unusual comorbidities in a high-income country. Age, weight, kidney function, concurrent medications, and country of practice are all conditions that can reverse a recommendation.
+</div>
+
 
 **Legal:** The model's prior defaults to US law. Jurisdiction, date of the incident, and specific statute matter enormously and are often unspecified.
 
@@ -166,6 +194,10 @@ In each case, the fix is the same: supply the conditions that distinguish your s
 
 **Pitfall 1: Mistaking fluency for accuracy**
 A prior-dominated answer is often perfectly fluent and well-structured. Fluency is a property of the generation process, not a signal that the answer is correct for your situation. Always check whether the model's assumed context matches yours.
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1: Mistaking fluency for accuracy**
+</div>
+
 
 **Pitfall 2: Adding context but missing the critical condition**
 You can add five sentences of context and still miss the one condition that most shifts the distribution. Focus on conditions where your situation differs from the typical case, not on conditions where you match it.
@@ -196,7 +228,29 @@ Adding many conditions that are obvious or that match the default wastes prompt 
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving prior dominance: why llms produce coherent but wrong answers, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Min et al. (2022) "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?" — examines how context shifts model behaviour, with evidence that even incorrect labels matter less than format and distribution
 - Zhao et al. (2021) "Calibrate Before Use: Improving Few-Shot Performance of Language Models" — demonstrates how surface-level prompt features produce systematic biases from prior distributions
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_token_probability.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

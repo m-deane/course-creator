@@ -33,6 +33,9 @@ What this misses:
 
 <!-- Speaker notes: The analogy to software testing is exact. A function that works once in a demo is not production-ready. Neither is a prompt. The difference is that software engineers have 40 years of testing culture; prompt engineers are starting from scratch. -->
 
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Measurement Principle
@@ -51,6 +54,9 @@ into "does this prompt converge?" (requires only N outputs).
 
 <!-- Speaker notes: The key insight is that consistency is a property of the prompt, independent of correctness. A prompt can be consistently wrong (stable, but wrong) or inconsistently right (unstable but lucky). Both are measurable separately. In practice, well-specified prompts tend to be both stable AND correct — because the conditions that constrain the posterior also steer it toward the right region. -->
 
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Five Metrics Overview
@@ -68,6 +74,9 @@ None require knowing the "correct" answer.
 
 <!-- Speaker notes: Walk through the table column by column. The "No ground truth" column is the key differentiator from traditional NLP evaluation. These metrics are intrinsic to the outputs — they measure the distribution, not the correctness of individual samples. -->
 
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Metric 1: Stability Score
@@ -94,6 +103,9 @@ Average Jaccard across all 10 pairs = Stability score
 
 <!-- Speaker notes: Jaccard similarity is word-set overlap: |intersection| / |union|. It ignores word order, which is intentional — two outputs can say the same thing in different sentence structures and both be correct. For structured outputs (JSON, lists), you might use a stricter similarity measure. -->
 
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Stability: A Visual
@@ -189,6 +201,7 @@ A score below 0.80 on any structural feature means Layer 6 is ambiguous.
 Which conditions are actually doing work?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Full stack\nS_baseline = 0.84"]
     B["Remove Layer 1\nS = 0.61  → Sensitivity = 0.23 (critical)"]

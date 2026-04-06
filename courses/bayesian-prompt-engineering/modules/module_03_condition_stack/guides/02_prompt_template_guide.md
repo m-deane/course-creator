@@ -1,8 +1,16 @@
 # Guide 2: The Plug-and-Play Prompt Template — Worked Examples
 
+> **Reading time:** ~16 min | **Module:** 3 — Condition Stack | **Prerequisites:** Module 2 Switch Variables
+
+
 ## In Brief
 
 The Condition Stack template becomes a skill through use, not through reading. This guide walks through three complete, worked examples — tax filing, code architecture decision, and medical triage — showing how to fill in each layer with real specificity. By the end, you will have a mental model for applying the template to any domain you work in.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The Condition Stack template becomes a skill through use, not through reading.
+</div>
 
 ---
 
@@ -46,6 +54,10 @@ Length: [approximate target or "be concise"]
 ### Scenario
 
 A married couple in their late 40s runs a small business selling handmade ceramics online and at craft fairs. They want to understand whether to file as a partnership or have the LLC treated as an S-Corporation for 2024 taxes.
+<div class="callout-insight">
+<strong>Insight:</strong> A married couple in their late 40s runs a small business selling handmade ceramics online and at craft fairs. They want to understand whether to file as a partnership or have the LLC treated as an S-Corporation for 2024 taxes.
+</div>
+
 
 ### Raw Prompt (Before the Stack)
 
@@ -123,6 +135,10 @@ The unstacked prompt produces a 600-word article explaining how S-Corps save on 
 ## Worked Example 2: Code Architecture Decision
 
 ### Scenario
+<div class="callout-warning">
+<strong>Warning:</strong> A senior engineer needs to decide whether to build a new internal data pipeline using Apache Kafka or AWS SQS + Lambda. The company processes about 50,000 events per day with occasional spikes to 500,000. Multiple downstream teams consume the data.
+</div>
+
 
 A senior engineer needs to decide whether to build a new internal data pipeline using Apache Kafka or AWS SQS + Lambda. The company processes about 50,000 events per day with occasional spikes to 500,000. Multiple downstream teams consume the data.
 
@@ -213,6 +229,10 @@ The unstacked prompt produces a feature comparison table of Kafka vs. SQS that i
 ### Scenario
 
 A nurse practitioner is seeing a 58-year-old patient in a primary care setting who presents with a 3-week history of fatigue and mild shortness of breath on exertion. She needs to build a differential and decide which workup to order.
+<div class="callout-key">
+<strong>Key Point:</strong> A nurse practitioner is seeing a 58-year-old patient in a primary care setting who presents with a 3-week history of fatigue and mild shortness of breath on exertion. She needs to build a differential and decide which workup to order.
+</div>
+
 
 ### Raw Prompt (Before the Stack)
 
@@ -295,6 +315,10 @@ The unstacked prompt produces a differential that includes anemia, hypothyroidis
 ## How to Customize the Template for Your Domain
 
 The template is domain-agnostic by design. The layer names are abstractions. Here is how to translate them for four common professional contexts:
+<div class="callout-insight">
+<strong>Insight:</strong> The template is domain-agnostic by design. The layer names are abstractions. Here is how to translate them for four common professional contexts:
+</div>
+
 
 ### Legal / Regulatory
 
@@ -364,3 +388,15 @@ Three responses:
 - **Leads to:** Notebook 01 (build the Condition Stack builder using the Claude API)
 - **Related to:** Module 4 (Conditional Trees — when Layer 1 or Layer 3 cannot be specified in advance)
 - **Related to:** Module 7 (Production Patterns — automated condition stack injection at runtime)
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Template (Reference)" and why it matters in practice.
+
+2. Given a real-world scenario involving guide 2: the plug-and-play prompt template — worked examples, what would be your first three steps to apply the techniques from this guide?
+</div>

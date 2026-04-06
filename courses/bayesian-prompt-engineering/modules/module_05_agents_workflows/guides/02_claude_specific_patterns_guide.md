@@ -1,5 +1,8 @@
 # Claude-Specific Conditioning Patterns
 
+> **Reading time:** ~11 min | **Module:** 5 — Agents & Workflows | **Prerequisites:** Module 4 Conditional Trees
+
+
 ## In Brief
 
 The abstract condition stack has a direct mapping to Claude API features. System prompts are not just "instructions" — they are persistent Layer 0 priors. Prefilling constrains the posterior over output formats before generation begins. Tool descriptions are constraint injection points. Structured outputs carry switch variables between agents without loss.
@@ -16,11 +19,23 @@ By the end of this guide you will be able to:
 4. Design structured output schemas that carry the condition stack across agent boundaries
 5. Build a multi-agent system where Claude agents pass switch variables via JSON
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The abstract condition stack has a direct mapping to Claude API features.
+</div>
+
 ---
 
 ## The Claude API as a Conditioning Architecture
 
 Every Claude API call has this structure:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 client.messages.create(
@@ -34,6 +49,9 @@ client.messages.create(
 )
 ```
 
+</div>
+</div>
+
 Each parameter is a different conditioning lever. Most developers use only `messages[user]` — which is Layer 5 (facts) in the condition stack. That is starting at the wrong layer.
 
 ---
@@ -41,6 +59,10 @@ Each parameter is a different conditioning lever. Most developers use only `mess
 ## Layer 0: The System Prompt as a Persistent Prior
 
 The system prompt is not Layer 1 of the condition stack. It is **Layer 0** — a prior that persists across every turn of a conversation and has higher effective attention weight than user messages.
+<div class="callout-warning">
+<strong>Warning:</strong> The system prompt is not Layer 1 of the condition stack. It is **Layer 0** — a prior that persists across every turn of a conversation and has higher effective attention weight than user messages.
+</div>
+
 
 This matters for agents because:
 
@@ -49,6 +71,13 @@ This matters for agents because:
 3. They are the right place for conditions that should never decay: jurisdiction, role, objective function, standing constraints
 
 ### What belongs in the system prompt
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 SYSTEM_PROMPT = """You are a legal contract analyst operating under these persistent conditions:
@@ -64,6 +93,9 @@ STANDING CONSTRAINTS:
 These conditions apply to every response in this session. They cannot be overridden by user messages."""
 ```
 
+</div>
+</div>
+
 ### What does NOT belong in the system prompt
 
 - Task-specific facts (these change per query — put them in user messages)
@@ -75,10 +107,21 @@ The system prompt should contain conditions that are stable across all queries t
 ---
 
 ## Prefilling: Constraining the Posterior Before Generation
+<div class="callout-key">
+<strong>Key Point:</strong> Prefilling means providing the beginning of the assistant's response. Claude completes from where you left off.
+</div>
+
 
 Prefilling means providing the beginning of the assistant's response. Claude completes from where you left off.
 
 This is a direct manipulation of the posterior over outputs. Instead of asking Claude to format its response a certain way (Layer 6 instruction), you start it in that format and it continues.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 response = client.messages.create(
@@ -93,6 +136,9 @@ response = client.messages.create(
 # Result: valid JSON output, no instruction required
 ```
 
+</div>
+</div>
+
 ### Why prefilling outperforms output format instructions
 
 | Approach | Failure mode |
@@ -103,6 +149,13 @@ response = client.messages.create(
 Prefilling is especially powerful in multi-agent systems where output format must be machine-parseable for the next agent to consume.
 
 ### Practical prefill patterns
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Constrain to JSON
@@ -118,17 +171,31 @@ Prefilling is especially powerful in multi-agent systems where output format mus
 {"role": "assistant", "content": "## Condition Analysis\n\n**Present conditions:**"}
 ```
 
+</div>
+</div>
+
 ---
 
 ## Tool Descriptions as Constraint Injection
 
 When you give Claude tools, the tool descriptions are read before any response is generated. They function as **constraint injection** — they narrow the posterior over what the model considers a valid action.
+<div class="callout-insight">
+<strong>Insight:</strong> When you give Claude tools, the tool descriptions are read before any response is generated. They function as **constraint injection** — they narrow the posterior over what the model considers a valid action.
+</div>
+
 
 Think of tool descriptions as Layer 4 (Constraints) of the condition stack, but applied to actions rather than reasoning.
 
 ### Writing tool descriptions that condition behavior
 
 Weak tool description (facts only):
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "search_legal_database",
@@ -142,7 +209,17 @@ Weak tool description (facts only):
 }
 ```
 
+</div>
+</div>
+
 Strong tool description (constraints embedded):
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "search_legal_database",
@@ -166,17 +243,31 @@ Strong tool description (constraints embedded):
 }
 ```
 
+</div>
+</div>
+
 The constraints in the description condition which queries the model constructs — preventing cross-jurisdiction inference errors before they happen.
 
 ---
 
 ## Structured Outputs: The Condition Passing Mechanism
+<div class="callout-warning">
+<strong>Warning:</strong> For multi-agent systems, structured outputs are the mechanism for passing switch variables between agents without loss.
+</div>
+
 
 For multi-agent systems, structured outputs are the mechanism for passing switch variables between agents without loss.
 
 The pattern: require every agent to return a JSON object that includes both its result and the condition payload it received.
 
 ### Designing the condition-carrying output schema
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 AGENT_OUTPUT_SCHEMA = {
@@ -213,7 +304,17 @@ AGENT_OUTPUT_SCHEMA = {
 }
 ```
 
+</div>
+</div>
+
 ### Using the schema with Claude's tool_use feature
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -260,13 +361,27 @@ ACTIVE CONDITIONS (apply to all reasoning):
     raise ValueError("Agent did not return structured output")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Multi-Agent Pattern: Switch Variable Passing
 
 The complete pattern for passing switch variables between two Claude agents.
+<div class="callout-key">
+<strong>Key Point:</strong> The complete pattern for passing switch variables between two Claude agents.
+</div>
+
 
 ### Agent 1: Condition Extractor
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 EXTRACTOR_SYSTEM = """You are a condition extraction specialist.
@@ -325,7 +440,17 @@ def extract_conditions(question: str, client: anthropic.Anthropic) -> dict:
     raise ValueError("Extractor did not return structured output")
 ```
 
+</div>
+</div>
+
 ### Agent 2: Conditional Answerer
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 ANSWERER_SYSTEM = """You are a conditional reasoning specialist.
@@ -397,6 +522,9 @@ Answer the question with full awareness of these conditions. If a variable has m
     raise ValueError("Answerer did not return structured output")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Putting It Together: The Full Layer Map
@@ -420,6 +548,10 @@ Answer the question with full awareness of these conditions. If a variable has m
 
 **Pitfall 1: Putting everything in user messages**
 The `system` parameter exists because some conditions should have persistent high-weight presence. A jurisdiction condition buried in a long user message gets less attention than one in the system prompt. Use the right layer.
+<div class="callout-warning">
+<strong>Warning:</strong> **Pitfall 1: Putting everything in user messages**
+</div>
+
 
 **Pitfall 2: Not using `tool_choice: forced`**
 When you need structured output for a pipeline, use `tool_choice: {"type": "tool", "name": "your_tool"}` to force the model to use the schema. Without forcing, the model may respond in natural language and break the downstream parser.
@@ -451,8 +583,30 @@ If you pass switch variables as prose ("keep in mind the user is a corporation")
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Learning Objectives" and why it matters in practice.
+
+2. Given a real-world scenario involving claude-specific conditioning patterns, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - Anthropic: Tool use documentation — `tool_choice` parameter and `input_schema` design
 - Anthropic: System prompts and context window — attention weight and layer ordering
 - Anthropic: "Building effective agents" — orchestrator/subagent pattern
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_condition_aware_agent.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

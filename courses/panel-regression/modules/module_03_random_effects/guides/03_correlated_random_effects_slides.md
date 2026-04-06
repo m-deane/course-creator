@@ -22,6 +22,13 @@ Correlated Random Effects (CRE) **relaxes the RE assumption** while retaining it
 > CRE is the best of both worlds: consistent like FE, flexible like RE.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Key Insight
@@ -37,40 +44,58 @@ Substituting into the RE model:
 $$y_{it} = \alpha + X_{it}\beta + \gamma \bar{X}_i + \omega_i + \epsilon_{it}$$
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # Why CRE Works
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PROBLEM["Problem: uᵢ correlates with Xᵢₜ"]
     PROBLEM --> FE["FE Solution:<br/>Remove uᵢ entirely<br/>✓ Consistent<br/>✗ Loses time-invariant vars"]
     PROBLEM --> RE["RE Solution:<br/>Assume no correlation<br/>✗ Inconsistent if wrong<br/>✓ Keeps time-invariant vars"]
     PROBLEM --> CRE["CRE Solution:<br/>Model the correlation via x̄ᵢ<br/>✓ Consistent<br/>✓ Keeps time-invariant vars"]
-
-    style CRE fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # How CRE Partitions Variation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     TOTAL["Total variation<br/>in Xᵢₜ"] --> BETWEEN["Between variation<br/>x̄ᵢ (entity means)<br/>→ γ captures this"]
     TOTAL --> WITHIN["Within variation<br/>Xᵢₜ - x̄ᵢ<br/>→ β captures this"]
 
     BETWEEN --> CONFOUNDED["Potentially confounded<br/>by entity effects"]
     WITHIN --> CLEAN["Clean of entity<br/>effects (same as FE)"]
-
-    style CLEAN fill:#9f9
-    style CONFOUNDED fill:#f99
 ```
 
 Including $\bar{X}_i$ absorbs the confounded between variation, leaving $\beta$ identified from within variation only.
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -86,6 +111,12 @@ Including $\bar{X}_i$ absorbs the confounded between variation, leaving $\beta$ 
 <div>
 
 **1. OLS with Group Means**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 df['x_bar'] = df.groupby('entity')['x'] \
                .transform('mean')
@@ -96,6 +127,8 @@ ols = smf.ols('y ~ x + x_bar + z',
     cov_kwds={'groups': df['entity']}
 )
 ```
+
+</div>
 
 </div>
 <div>
@@ -119,6 +152,12 @@ Both give consistent estimates of $\beta$.
 
 # CRE Recovers FE Estimates
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Generate data with endogeneity (X correlated with u_i)
 
@@ -130,6 +169,8 @@ print("True β = 1.5")
 # 4. CRE/Mundlak:    β = 1.49 (consistent!)
 #    Effect of z:     γ = 0.81 (estimable!)
 ```
+
+</div>
 
 > CRE matches FE on time-varying variables AND estimates time-invariant effects that FE cannot.
 
@@ -151,14 +192,12 @@ $$H_0: \gamma = 0 \quad \text{(no correlation, RE is appropriate)}$$
 $$H_1: \gamma \neq 0 \quad \text{(correlation exists, use FE)}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CRE["Estimate CRE<br/>y = Xβ + x̄γ + Zδ + error"]
     CRE --> TEST{"Is γ significant?"}
     TEST -->|"Yes (p < 0.05)"| ENDO["Endogeneity exists<br/>Standard RE is biased<br/>Use FE or CRE"]
     TEST -->|"No (p ≥ 0.05)"| EXOG["No endogeneity detected<br/>Standard RE is OK<br/>(but CRE works too)"]
-
-    style ENDO fill:#f99
-    style EXOG fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
@@ -236,6 +275,7 @@ CRE = FE consistency + RE flexibility
 # When to Use CRE
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Need panel regression"] --> Q1{"Time-invariant<br/>variables important?"}
     Q1 -->|"No"| FE["Use Fixed Effects<br/>(simplest consistent)"]
@@ -243,9 +283,6 @@ flowchart TD
     Q2 -->|"No"| RE["Use Random Effects<br/>(most efficient)"]
     Q2 -->|"Yes"| CRE["Use CRE<br/>(consistent + time-invariant)"]
     Q2 -->|"Unsure"| CRE2["Use CRE<br/>(test via Mundlak)"]
-
-    style CRE fill:#9f9
-    style CRE2 fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the decision tree step by step. Ask students to apply it to a concrete example. -->

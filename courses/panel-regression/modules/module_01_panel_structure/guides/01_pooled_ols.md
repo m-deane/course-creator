@@ -1,12 +1,28 @@
 # Pooled OLS and Its Limitations
 
+> **Reading time:** ~12 min | **Module:** 01 — Panel Structure | **Prerequisites:** Module 0 Foundations
+
+
 ## The Pooled OLS Approach
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Pooled OLS ignores the panel structure entirely, treating all observations as independent:
+
+</div>
 
 Pooled OLS ignores the panel structure entirely, treating all observations as independent:
 
 $$y_{it} = \beta_0 + x_{it}'\beta + \epsilon_{it}$$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -47,6 +63,8 @@ print(f"\nPooled OLS (linearmodels):")
 print(pooled_lm.summary.tables[1])
 ```
 
+</div>
+
 ### What Pooled OLS Assumes
 
 For consistency, pooled OLS requires:
@@ -70,6 +88,13 @@ The error $u_{it}$ contains:
 
 If $\text{Cov}(x_{it}, \alpha_i) \neq 0$:
 
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
+
 $$\hat{\beta}_{pooled} \xrightarrow{p} \beta + \underbrace{\frac{\text{Cov}(x_{it}, \alpha_i)}{\text{Var}(x_{it})}}_{\text{Omitted Variable Bias}}$$
 
 **Example: Returns to Education**
@@ -83,6 +108,13 @@ $$\hat{\beta}_{pooled} \xrightarrow{p} \beta + \underbrace{\frac{\text{Cov}(x_{i
 Ability correlates with both education and wages → Pooled OLS overestimates returns to education.
 
 ## Serial Correlation in Errors
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 Even if $\text{Cov}(x_{it}, \alpha_i) = 0$, the composite error has structure:
 
@@ -99,6 +131,12 @@ $$\text{Cov}(u_{it}, u_{js}) = 0 \text{ for } i \neq j$$
 $$\rho = \frac{\sigma_\alpha^2}{\sigma_\alpha^2 + \sigma_\epsilon^2}$$
 
 This measures the proportion of variance due to entity effects.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def estimate_intraclass_correlation(data, y_col, entity_col):
@@ -120,6 +158,8 @@ rho = estimate_intraclass_correlation(data_flat, 'y', 'entity')
 print(f"Intraclass correlation: {rho:.3f}")
 ```
 
+</div>
+
 ### Impact on Standard Errors
 
 Pooled OLS standard errors assume independent observations. With serial correlation:
@@ -136,6 +176,12 @@ This leads to:
 ### The Solution for Inference
 
 Cluster standard errors at the entity level to account for within-entity correlation:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Pooled OLS with clustered standard errors
@@ -154,6 +200,8 @@ print(pooled_clustered.summary.tables[1])
 print(f"\nHomoskedastic SE: {pooled_lm.std_errors['x']:.4f}")
 print(f"Clustered SE: {pooled_clustered.std_errors['x']:.4f}")
 ```
+
+</div>
 
 ### The Sandwich Estimator
 
@@ -216,6 +264,13 @@ if result['p_value'] < 0.05:
 
 ## Summary: Pooled OLS Limitations
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 | Issue | Consequence | Solution |
 |-------|-------------|----------|
 | Omitted entity effects | Biased coefficients | Fixed Effects |
@@ -234,3 +289,49 @@ if result['p_value'] < 0.05:
 4. **Clustered standard errors** fix inference but not bias
 
 5. **Testing is essential**: Use LM tests to detect entity effects before choosing a model
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why does pooled OLS produce biased estimates when there is unobserved heterogeneity correlated with the regressors?
+
+**Practice Question 2:** Under what conditions is pooled OLS actually the correct estimator for panel data?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_between_within_decomposition.md">
+  <div class="link-card-title">03 Between Within Decomposition</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_between_within_decomposition.md">
+  <div class="link-card-title">03 Between Within Decomposition — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

@@ -22,6 +22,13 @@ Panel data violates the i.i.d. assumption through within-entity correlation and 
 > Forgetting to cluster is the most common mistake in applied panel econometrics.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Why Standard SE Fail
@@ -33,15 +40,20 @@ With clustering, the "sandwich" estimator:
 $$\text{Var}(\hat{\beta}) = (X'X)^{-1} \left(\sum_{g} X_g' \hat{u}_g \hat{u}_g' X_g\right) (X'X)^{-1}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     STANDARD["Standard SE:<br/>Assumes independence<br/>across ALL observations"] -->|"Too small!"| INFLATE["Inflated t-stats<br/>False significance"]
     CLUSTERED["Clustered SE:<br/>Allows correlation<br/>WITHIN entities"] -->|"Correct size"| VALID["Valid inference"]
-
-    style INFLATE fill:#f99
-    style VALID fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # The Impact Is Dramatic
@@ -60,6 +72,13 @@ Entity-Clustered     0.1134      13.23     0.4453
 > Clustered SE can be **8x larger** than standard SE. That changes conclusions.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -72,6 +91,7 @@ Entity-Clustered     0.1134      13.23     0.4453
 # Three Clustering Approaches
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CLUSTER["Clustering Approaches"]
     CLUSTER --> ENTITY["1. Entity Clustering<br/>(most common)"]
@@ -84,11 +104,24 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # 1. Entity Clustering
 
 The default for panel data. Handles within-entity serial correlation.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # linearmodels
@@ -104,6 +137,8 @@ ols = smf.ols('y ~ x', data=df).fit(
 )
 ```
 
+</div>
+
 **Use when:** Treatment varies at entity level, errors persist within entities.
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
@@ -113,12 +148,20 @@ ols = smf.ols('y ~ x', data=df).fit(
 
 For cross-sectional correlation -- when common shocks affect all entities.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 fe = PanelOLS(y, X, entity_effects=True).fit(
     cov_type='clustered',
     cluster_time=True
 )
 ```
+
+</div>
 
 **Use when:** Market-wide events affect all firms simultaneously.
 
@@ -154,6 +197,7 @@ fe = PanelOLS(y, X, entity_effects=True).fit(
 # Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Panel with entity FE"]
     START --> Q1{"Within-entity<br/>serial correlation?"}
@@ -185,12 +229,10 @@ Clustered SE:  94.8%  ← Correct
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     STD["Standard SE<br/>Coverage: 72%"] -->|"Reject H0 too often"| TYPE1["High Type I error<br/>False discoveries"]
     CLUST["Clustered SE<br/>Coverage: 95%"] -->|"Correct rejection rate"| VALID["Valid inference"]
-
-    style TYPE1 fill:#f99
-    style VALID fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
@@ -267,13 +309,12 @@ def cluster_bootstrap(df, y_col, x_cols,
 # Common Mistakes
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M1["Mistake 1:<br/>Forgetting to cluster"] -->|"Most common error!"| FIX1["Always cluster by entity<br/>in panel data"]
     M2["Mistake 2:<br/>Clustering too fine"] -->|"e.g., observation level"| FIX2["Cluster at entity level<br/>not observation level"]
     M3["Mistake 3:<br/>Clustering too coarse"] -->|"e.g., industry with 5 groups"| FIX3["Need ≥ 30 clusters<br/>for reliable inference"]
     M4["Mistake 4:<br/>Comparing p-values across<br/>different clustering specs"] -->|"Invalid comparison"| FIX4["Choose clustering level<br/>before looking at results"]
-
-    style M1 fill:#f99
 ```
 
 <!-- Speaker notes: Emphasize that these are mistakes seen in practice, not just theory. Ask if anyone has encountered common mistakes. -->

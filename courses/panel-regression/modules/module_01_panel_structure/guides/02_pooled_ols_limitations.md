@@ -1,6 +1,16 @@
 # Limitations of Pooled OLS: When Simple Models Fail
 
+> **Reading time:** ~20 min | **Module:** 01 — Panel Structure | **Prerequisites:** Module 0 Foundations
+
+
 ## Overview
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Pooled OLS treats panel data as a single cross-section, ignoring the panel structure. This guide explores when and why this approach fails.
+
+</div>
 
 Pooled OLS treats panel data as a single cross-section, ignoring the panel structure. This guide explores when and why this approach fails.
 
@@ -10,6 +20,13 @@ Pooled OLS assumes:
 
 $$y_{it} = \alpha + X_{it}\beta + \epsilon_{it}$$
 
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
+
 where $\epsilon_{it}$ is i.i.d. across all observations.
 
 This ignores:
@@ -18,7 +35,20 @@ This ignores:
 
 ## Demonstrating Bias
 
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
+
 ### Simulation: Omitted Entity Effects
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -70,6 +100,8 @@ print(f"Fixed Effects: {fe.params['x']:.4f}")
 print(f"\nPooled OLS Bias: {pooled.params['x'] - true_beta:.4f}")
 ```
 
+</div>
+
 ### Why Does Bias Occur?
 
 The bias arises from the correlation between X and the error term:
@@ -77,6 +109,12 @@ The bias arises from the correlation between X and the error term:
 $$E[\hat{\beta}_{OLS}] = \beta + \frac{Cov(X_{it}, \alpha_i)}{Var(X_{it})}$$
 
 When $Cov(X_{it}, \alpha_i) \neq 0$, the estimate is biased.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Visualize the endogeneity
@@ -112,9 +150,17 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Serial Correlation Problem
 
 Even without endogeneity, pooled OLS ignores within-entity correlation:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def demonstrate_serial_correlation(df, entity_col, time_col, y_col, x_cols):
@@ -158,6 +204,8 @@ def demonstrate_serial_correlation(df, entity_col, time_col, y_col, x_cols):
 
 demonstrate_serial_correlation(df, 'entity', 'time', 'y', ['x'])
 ```
+
+</div>
 
 ## Consequences for Inference
 
@@ -318,6 +366,13 @@ test_endogeneity_hausman(df, 'y', ['x'], 'entity', 'time')
 
 ## Diagnostic Checklist
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 Before using pooled OLS on panel data:
 
 | Check | Method | Action if Failed |
@@ -376,3 +431,49 @@ pooled_ols_diagnostic(df, 'y', ['x'], 'entity', 'time')
 4. **Always test** for entity effects and endogeneity before accepting pooled OLS
 
 5. **At minimum**, use clustered standard errors when working with panel data
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why does pooled OLS produce biased estimates when there is unobserved heterogeneity correlated with the regressors?
+
+**Practice Question 2:** Under what conditions is pooled OLS actually the correct estimator for panel data?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_between_within_decomposition.md">
+  <div class="link-card-title">03 Between Within Decomposition</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_between_within_decomposition.md">
+  <div class="link-card-title">03 Between Within Decomposition — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

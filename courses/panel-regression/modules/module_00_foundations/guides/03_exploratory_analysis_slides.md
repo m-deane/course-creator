@@ -25,11 +25,19 @@ Before running panel regressions, thorough exploratory analysis helps you:
 > Always visualize before you model.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # EDA Pipeline for Panel Data
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Load panel data"] --> B["Visualize entity trajectories"]
     B --> C["Decompose within vs between variation"]
@@ -42,6 +50,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -52,6 +67,12 @@ flowchart TD
 ---
 
 # Individual Time Series Plots
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
@@ -64,10 +85,25 @@ for entity in df['entity'].unique():
 axes[0,0].set_title('Y Trajectories by Entity')
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Scatter Plots: Pooled vs By Entity
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Scatter: pooled (ignores entity structure)
@@ -80,7 +116,16 @@ scatter = axes[1,1].scatter(
 axes[1,1].set_title('Scatter by Entity')
 ```
 
+</div>
+
 <!-- Speaker notes: Highlight the key differences. Ask students when they would choose one approach over the other. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # What to Look For in Trajectories
@@ -99,6 +144,7 @@ axes[1,1].set_title('Scatter by Entity')
 # Within vs Between Variation Plot
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Total Variation"
         RAW["Raw scatter<br/>(x vs y)"]
@@ -230,6 +276,7 @@ p_value = 1 - stats.f.cdf(f_stat, df_between, df_within)
 # Entity Effects Decision
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     F["F-test for entity effects"] --> SIG{"p < 0.05?"}
     SIG -->|"Yes"| ENT["Significant entity effects<br/>Consider FE or RE"]
@@ -305,6 +352,7 @@ def within_correlation(df, entity_col, var1, var2):
 # Correlation Decomposition
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CORR["Correlation(X, Y)"] --> TOT["Total Correlation<br/>Raw Corr(xᵢₜ, yᵢₜ)"]
     CORR --> BET["Between Correlation<br/>Corr(x̄ᵢ, ȳᵢ)<br/>Entity-level relationship"]
@@ -371,6 +419,7 @@ def test_heteroskedasticity(df, entity_col, resid_col):
 # Diagnostic Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Panel EDA Complete"] --> E{"Entity effects<br/>significant?"}
     E -->|"Yes"| T{"Time effects<br/>significant?"}

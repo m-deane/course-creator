@@ -1,6 +1,16 @@
 # Panel Data Structures in Python
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## Overview
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers how to structure, manipulate, and prepare panel data in Python using pandas and specialized libraries. Proper data structure is essential before any panel regression analysis.
+
+</div>
 
 This guide covers how to structure, manipulate, and prepare panel data in Python using pandas and specialized libraries. Proper data structure is essential before any panel regression analysis.
 
@@ -9,6 +19,12 @@ This guide covers how to structure, manipulate, and prepare panel data in Python
 ### Long Format (Stacked)
 
 The most common format for panel data analysis. Each row represents one observation of one entity at one time period.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -26,6 +42,8 @@ long_data = pd.DataFrame({
 print("Long format:")
 print(long_data)
 ```
+
+</div>
 
 Output:
 ```
@@ -45,6 +63,19 @@ Output:
 
 Variables spread across columns by time period. Common in downloaded datasets but needs conversion for analysis.
 
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Example: Wide format
 wide_data = pd.DataFrame({
@@ -60,6 +91,8 @@ wide_data = pd.DataFrame({
 print("Wide format:")
 print(wide_data)
 ```
+
+</div>
 
 ### Converting Between Formats
 
@@ -118,7 +151,20 @@ print(long_converted)
 
 ## Setting Up Panel Structure with MultiIndex
 
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
+
 ### Creating a Proper Panel Index
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Set MultiIndex for panel structure
@@ -130,6 +176,8 @@ print(panel_data)
 print(f"\nIndex names: {panel_data.index.names}")
 print(f"Index levels: {panel_data.index.nlevels}")
 ```
+
+</div>
 
 ### Accessing Data in Panel Structure
 
@@ -391,6 +439,13 @@ print("As DataFrame:\n", panel.dataframe.head())
 
 ## Practical Example: Financial Panel Data
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ```python
 # Simulate realistic financial panel data
 np.random.seed(42)
@@ -448,3 +503,49 @@ print(financial_panel.describe())
 4. **Variation decomposition** (within vs. between) is fundamental to understanding what panel methods estimate
 
 5. **linearmodels.PanelData** provides specialized functionality for panel analysis
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What problem does this approach solve that simpler methods cannot?
+
+**Practice Question 2:** What are the key assumptions, and how would you test them in practice?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

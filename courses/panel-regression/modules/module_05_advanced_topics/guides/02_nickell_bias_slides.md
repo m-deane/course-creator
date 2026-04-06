@@ -22,6 +22,13 @@ When a lagged dependent variable appears in a fixed effects model, the FE estima
 > Nickell bias is the reason we need GMM for dynamic panels with small T.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Problem
@@ -33,16 +40,22 @@ After within-transformation:
 $$\tilde{y}_{it} = \rho \tilde{y}_{i,t-1} + \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["ȳᵢ contains yᵢₜ"] --> B["yᵢₜ depends on εᵢₜ"]
     B --> C["ỹᵢ,ₜ₋₁ = yᵢ,ₜ₋₁ - ȳᵢ<br/>depends on εᵢₜ through ȳᵢ"]
     C --> D["Cor(ỹᵢ,ₜ₋₁, ε̃ᵢₜ) ≠ 0"]
     D --> E["FE estimator of ρ<br/>is INCONSISTENT"]
-
-    style E fill:#f99
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # The Bias Formula
@@ -64,6 +77,13 @@ T = 100: Bias ≈ -0.015  → FE estimate ≈ 0.485
 ```
 
 <!-- Speaker notes: Take this slowly. Focus on intuition behind each step rather than memorizing the algebra. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Bias as a Function of T and $\rho$
@@ -81,17 +101,21 @@ T     │  ρ=0.3   ρ=0.5   ρ=0.7   ρ=0.9
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     SMALL_T["Small T<br/>(T < 10)"] -->|"Severe bias"| PROBLEM["Use GMM<br/>methods"]
     MED_T["Medium T<br/>(10-30)"] -->|"Moderate bias"| CONSIDER["Consider bias<br/>correction"]
     LARGE_T["Large T<br/>(T > 30)"] -->|"Minimal bias"| OK["Standard FE<br/>acceptable"]
-
-    style PROBLEM fill:#f99
-    style CONSIDER fill:#ff9
-    style OK fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # When Is Bias "Acceptable"?
@@ -120,6 +144,7 @@ Rule of thumb: bias < 10% of true parameter value.
 # Three Approaches
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BIAS["Nickell Bias Problem"]
     BIAS --> AH["1. Anderson-Hsiao<br/>IV with y_{t-2}"]
@@ -129,10 +154,6 @@ flowchart TD
     AH --> CONSIST["Consistent<br/>Less efficient"]
     AB --> EFFIC["Consistent<br/>More efficient"]
     BC --> APPROX["Approximately unbiased<br/>Simple to implement"]
-
-    style AH fill:#ff9
-    style AB fill:#9f9
-    style BC fill:#9df
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
@@ -147,6 +168,12 @@ $$\Delta y_{it} = \rho \Delta y_{i,t-1} + \Delta\epsilon_{it}$$
 
 **Instrument:** $y_{i,t-2}$ for $\Delta y_{i,t-1}$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # First stage: Δy_{t-1} on y_{t-2}
 first_stage = smf.ols('y_lag_diff ~ y_lag2', data=df).fit()
@@ -159,12 +186,20 @@ print(f"First stage F-stat: {first_stage.fvalue:.2f}")
 print(f"Estimated ρ: {second_stage.params['y_lag_diff_hat']:.4f}")
 ```
 
+</div>
+
 <!-- Speaker notes: This slide connects the math to implementation. Walk through how the formula maps to code. -->
 ---
 
 # Solution 2: Arellano-Bond GMM
 
 Uses ALL available lags as instruments (more efficient):
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Create instruments: y_{t-2}, y_{t-3}, ...
@@ -180,6 +215,8 @@ first_stage = smf.ols(
 # More instruments → more efficient
 # But too many → overfitting risk
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -224,12 +261,11 @@ Anderson-Hsiao      0.597       -0.003      0.118
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     FE["FE: biased<br/>but low variance"] --> TRADEOFF["Bias-Variance<br/>Tradeoff"]
     AH["AH: unbiased<br/>but higher variance"] --> TRADEOFF
     BC["Corrected FE:<br/>approximately unbiased<br/>low variance"] --> TRADEOFF
-
-    style BC fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->

@@ -1,6 +1,16 @@
 # Nickell Bias in Dynamic Panels
 
+> **Reading time:** ~19 min | **Module:** 05 — Advanced Topics | **Prerequisites:** Module 4
+
+
 ## The Problem
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** When you include a lagged dependent variable in a fixed effects model:
+
+</div>
 
 When you include a lagged dependent variable in a fixed effects model:
 
@@ -26,6 +36,12 @@ The problem: $\tilde{y}_{i,t-1}$ is correlated with $\tilde{\epsilon}_{it}$ beca
 - $\bar{y}_i$ contains $y_{it}$
 - $y_{it}$ depends on $\epsilon_{it}$
 - Therefore $\tilde{y}_{i,t-1}$ depends on $\epsilon_{it}$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -61,6 +77,13 @@ def demonstrate_nickell_bias(true_rho=0.5, n_simulations=100):
                         'y': y, 'y_lag': y_prev
                     })
                     y_prev = y
+
+<div class="callout-insight">
+
+**Insight:** The Nickell bias is small when T is large relative to N, which is the opposite of the typical panel setting. In short panels (T < 10), the bias can be severe enough to reverse the sign of the lagged dependent variable coefficient.
+
+</div>
+
 
             df = pd.DataFrame(data)
             df_panel = df.set_index(['entity', 'time'])
@@ -119,7 +142,16 @@ def demonstrate_nickell_bias(true_rho=0.5, n_simulations=100):
 demonstrate_nickell_bias(true_rho=0.5)
 ```
 
+</div>
+
 ## Magnitude of Bias
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 The Nickell bias formula (first-order approximation):
 
@@ -129,6 +161,12 @@ Key insights:
 - Bias is **always negative** (downward)
 - Bias decreases as T increases
 - Bias is larger when true ρ is larger
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_bias_magnitude():
@@ -186,11 +224,19 @@ def plot_bias_magnitude():
 plot_bias_magnitude()
 ```
 
+</div>
+
 ## Solutions to Nickell Bias
 
 ### 1. Anderson-Hsiao Estimator
 
 Use deeper lags as instruments for the differenced equation.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -266,6 +312,8 @@ print(f"FE estimate: {fe.params['y_lag']:.4f} (biased)")
 
 ah_est, ah_model = anderson_hsiao(df_dyn, 'entity', 'time', 'y')
 ```
+
+</div>
 
 ### 2. Arellano-Bond GMM Estimator
 
@@ -450,6 +498,13 @@ compare_dynamic_panel_methods(true_rho=0.6, N=100, T=10)
 
 ## When to Worry About Nickell Bias
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 | Scenario | Concern Level | Action |
 |----------|--------------|--------|
 | T < 10 | High | Use IV/GMM methods |
@@ -470,3 +525,39 @@ compare_dynamic_panel_methods(true_rho=0.6, N=100, T=10)
 5. **Bias correction** works for moderate T
 
 6. **Rule of thumb**: If T > 20-30, Nickell bias is usually acceptable
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why does including a lagged dependent variable in a fixed effects model create bias, and in which direction?
+
+**Practice Question 2:** How does the Arellano-Bond GMM estimator address the Nickell bias problem?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_dynamic_panels.md">
+  <div class="link-card-title">01 Dynamic Panels</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_dynamic_panels.md">
+  <div class="link-card-title">01 Dynamic Panels — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_clustered_standard_errors.md">
+  <div class="link-card-title">03 Clustered Standard Errors</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_clustered_standard_errors.md">
+  <div class="link-card-title">03 Clustered Standard Errors — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

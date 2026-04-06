@@ -24,6 +24,12 @@ Module 00 covered long vs wide formats. This deck focuses on **how format choice
 
 <!-- Speaker notes: Frame this as the practical "next step" from Module 00. Students who skipped Module 00 may need to go back for the basics. -->
 
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Estimator Format Requirements
@@ -38,11 +44,18 @@ Module 00 covered long vs wide formats. This deck focuses on **how format choice
 
 <!-- Speaker notes: The key insight is that linearmodels always requires a properly set MultiIndex. statsmodels is more flexible but you lose panel-specific functionality. -->
 
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # Format Requirements Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RAW["Raw Data"] --> CHECK{"What format?"}
     CHECK -->|"Wide"| CONVERT["Convert to Long<br/>(Module 00 methods)"]
@@ -56,6 +69,12 @@ flowchart TD
 
 <!-- Speaker notes: This pipeline applies to every analysis in the course. The validate step checks for duplicates, sorts, and confirms the entity-time key is unique. -->
 
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -67,6 +86,12 @@ flowchart TD
 ---
 
 # linearmodels: Strict Requirements
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS, RandomEffects
@@ -84,11 +109,25 @@ re_model = RandomEffects(df['y'], df[['x1', 'x2']])
 re_result = re_model.fit()
 ```
 
+</div>
+
 <!-- Speaker notes: The entity must be the first level and time the second. Reversing them produces wrong entity effects. This is a common mistake. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
 
 ---
 
 # statsmodels: More Flexible
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.api as sm
@@ -101,6 +140,8 @@ ols_model = sm.OLS(df['y'], X).fit(
     cov_kwds={'groups': df['entity_id']}
 )
 ```
+
+</div>
 
 <!-- Speaker notes: statsmodels treats panel data like any other regression. You gain flexibility but lose panel-specific diagnostics. Use linearmodels for panel work whenever possible. -->
 
@@ -217,6 +258,7 @@ df = df.sort_index()  # Always sort MultiIndex
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     M00["Module 00<br/>Data Structures<br/>(Long/Wide basics)"] --> THIS["This Guide<br/>Format for Estimation"]
     THIS --> FE["Module 02<br/>Fixed Effects<br/>(within transformation)"]

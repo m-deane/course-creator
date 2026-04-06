@@ -1,6 +1,26 @@
 # The Hausman Test: FE vs RE Selection
 
+> **Reading time:** ~14 min | **Module:** 04 — Model Selection | **Prerequisites:** Module 3
+
+
 ## The Fundamental Question
+
+<div class="flow">
+<div class="flow-step mint">1. Estimate FE Model</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate RE Model</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Compute Test Statistic</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Interpret Result</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** The answer depends on whether entity effects correlate with regressors:
+
+</div>
 
 **Should we use Fixed Effects or Random Effects?**
 
@@ -9,6 +29,21 @@ The answer depends on whether entity effects correlate with regressors:
 - If $\text{Cov}(\alpha_i, x_{it}) \neq 0$: RE is inconsistent, FE is required
 
 ## The Hausman Test Logic
+
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">Fixed Effects</div>
+    <div class="body">
+      Consistent even if entity effects correlate with regressors. Less efficient. Cannot estimate time-invariant effects.
+    </div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Random Effects</div>
+    <div class="body">
+      More efficient when assumptions hold. Can estimate time-invariant effects. Biased if entity effects correlate with regressors.
+    </div>
+  </div>
+</div>
 
 ### Key Insight
 
@@ -24,6 +59,13 @@ Under H1 (RE assumptions violated):
 
 If H0 is true, FE and RE should give similar estimates:
 
+<div class="callout-insight">
+
+**Insight:** The Hausman test is necessary but not sufficient. A non-rejection does not prove RE is correct -- it could mean you lack power. Always complement with economic reasoning about whether unobserved effects are likely correlated with regressors.
+
+</div>
+
+
 $$H = (\hat{\beta}_{FE} - \hat{\beta}_{RE})'[\text{Var}(\hat{\beta}_{FE}) - \text{Var}(\hat{\beta}_{RE})]^{-1}(\hat{\beta}_{FE} - \hat{\beta}_{RE})$$
 
 Under H0: $H \sim \chi^2(K)$ where $K$ is the number of time-varying regressors.
@@ -37,7 +79,20 @@ Under H0: $H \sim \chi^2(K)$ where $K$ is the number of time-varying regressors.
 
 ## Implementation
 
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
+
 ### Using linearmodels
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -129,6 +184,8 @@ print(f"  P-value: {result['p_value']:.4f}")
 print(f"  Conclusion: {result['conclusion']}")
 ```
 
+</div>
+
 ## Limitations of the Hausman Test
 
 ### 1. Power Issues
@@ -137,6 +194,12 @@ Low power when:
 - Small samples
 - Little within variation
 - True difference is small
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def hausman_power_simulation(N, T, correlation, n_sims=500):
@@ -177,6 +240,8 @@ for corr in [0.0, 0.3, 0.5, 0.7]:
     print(f"  Correlation = {corr}: Power = {power:.1%}")
 ```
 
+</div>
+
 ### 2. Variance Matrix Issues
 
 The difference $\text{Var}(\hat{\beta}_{FE}) - \text{Var}(\hat{\beta}_{RE})$ may not be positive definite.
@@ -197,6 +262,12 @@ Instead of choosing between FE and RE, use Mundlak's approach:
 $$y_{it} = x_{it}'\beta + \bar{x}_i'\gamma + \alpha_i + \epsilon_{it}$$
 
 Test: $H_0: \gamma = 0$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Mundlak test
@@ -219,6 +290,8 @@ if re_mundlak.pvalues['x_mean'] < 0.05:
 else:
     print("  Conclusion: No evidence of correlation. RE acceptable.")
 ```
+
+</div>
 
 ## Practical Decision Framework
 
@@ -246,6 +319,13 @@ else:
 ```
 
 ## Beyond the Hausman Test
+
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
 
 ### Information Criteria
 
@@ -285,3 +365,39 @@ A unified approach that nests FE and RE:
 5. **Mundlak approach** provides a robust alternative that combines benefits of both
 
 6. **Practical rule**: When in doubt, FE is safer—it's always consistent
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** The Hausman test compares FE and RE estimates. If they are very similar, what does that tell you about the correlation between unobserved effects and regressors?
+
+**Practice Question 2:** What are the limitations of relying solely on the Hausman test for model selection?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_specification_tests.md">
+  <div class="link-card-title">02 Specification Tests</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_specification_tests.md">
+  <div class="link-card-title">02 Specification Tests — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_practical_model_choice.md">
+  <div class="link-card-title">03 Practical Model Choice</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_practical_model_choice.md">
+  <div class="link-card-title">03 Practical Model Choice — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

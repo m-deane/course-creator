@@ -1,6 +1,26 @@
 # LSDV vs Within Transformation: Two Approaches to Fixed Effects
 
+> **Reading time:** ~20 min | **Module:** 02 — Fixed Effects | **Prerequisites:** Module 1
+
+
 ## Overview
+
+<div class="flow">
+<div class="flow-step mint">1. Compute Entity Means</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Demean Variables</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Run OLS on Demeaned</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Adjust Standard Errors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Both give identical coefficient estimates, but differ in computation and what they reveal.
+
+</div>
 
 Fixed effects can be estimated two ways:
 1. **LSDV (Least Squares Dummy Variables)**: Include entity dummies explicitly
@@ -9,6 +29,21 @@ Fixed effects can be estimated two ways:
 Both give identical coefficient estimates, but differ in computation and what they reveal.
 
 ## The LSDV Approach
+
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">LSDV (Dummy Variable)</div>
+    <div class="body">
+      Include N-1 entity dummies explicitly. Estimates entity intercepts directly. Fails with large N (many parameters).
+    </div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Within Estimator</div>
+    <div class="body">
+      Demean by entity. Numerically identical slopes to LSDV. Efficient for large N. Does not estimate entity intercepts.
+    </div>
+  </div>
+</div>
 
 ### Concept
 
@@ -19,6 +54,12 @@ $$y_{it} = \alpha + \sum_{j=2}^{N} \delta_j D_{ij} + X_{it}\beta + \epsilon_{it}
 where $D_{ij} = 1$ if $i = j$, else 0.
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -43,6 +84,13 @@ for i in range(n_entities):
 
 df = pd.DataFrame(data)
 
+<div class="callout-insight">
+
+**Insight:** Fixed effects are not a method -- they are a way of thinking about unobserved heterogeneity. The within-transformation eliminates time-invariant confounders, which is the single most important advantage of panel data.
+
+</div>
+
+
 # LSDV: Include entity dummies explicitly
 lsdv_model = smf.ols('y ~ x + C(entity)', data=df).fit()
 
@@ -53,7 +101,15 @@ print(f"  R-squared: {lsdv_model.rsquared:.4f}")
 print(f"  Number of parameters: {len(lsdv_model.params)}")
 ```
 
+</div>
+
 ### Extracting Entity Effects
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Extract entity fixed effects from LSDV
@@ -69,7 +125,16 @@ for i, effect in enumerate(entity_effects_estimated[:5]):
     print(f"  Entity {i+1}: {effect:.4f}")
 ```
 
+</div>
+
 ## The Within Transformation
+
+<div class="callout-warning">
+
+**Warning:** Fixed effects estimates identify only from within-entity variation. If your variable of interest has little within-entity variation (e.g., industry sector), fixed effects will produce large standard errors or fail entirely.
+
+</div>
+
 
 ### Concept
 
@@ -81,6 +146,12 @@ $$\tilde{X}_{it} = X_{it} - \bar{X}_i$$
 Then estimate: $\tilde{y}_{it} = \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Manual within transformation
@@ -97,6 +168,8 @@ print("\nWithin Transformation (Manual):")
 print(f"  x coefficient: {within_manual.params['x_demean']:.4f}")
 print(f"  x std error (unadjusted): {within_manual.bse['x_demean']:.4f}")
 ```
+
+</div>
 
 ### Using linearmodels
 
@@ -257,6 +330,13 @@ print(entity_effects_recovered.head())
 
 ## Practical Recommendations
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 1. **For most panel analysis**: Use `linearmodels.PanelOLS` with `entity_effects=True`
    - Handles DF correction automatically
    - Efficient computation
@@ -291,3 +371,39 @@ print(final_model.summary.tables[1])
 4. **Entity effects can be recovered** after within estimation if needed
 
 5. **Always cluster standard errors** regardless of method
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why can fixed effects not estimate the impact of time-invariant variables like gender or geographic region?
+
+**Practice Question 2:** When would entity fixed effects alone be insufficient, requiring two-way (entity + time) fixed effects?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_fixed_effects_intuition.md">
+  <div class="link-card-title">01 Fixed Effects Intuition</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_fixed_effects_intuition.md">
+  <div class="link-card-title">01 Fixed Effects Intuition — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_two_way_fixed_effects.md">
+  <div class="link-card-title">03 Two Way Fixed Effects</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_two_way_fixed_effects.md">
+  <div class="link-card-title">03 Two Way Fixed Effects — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

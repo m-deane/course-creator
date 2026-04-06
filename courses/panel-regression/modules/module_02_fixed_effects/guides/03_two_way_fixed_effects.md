@@ -1,6 +1,26 @@
 # Two-Way Fixed Effects: Entity and Time
 
+> **Reading time:** ~20 min | **Module:** 02 — Fixed Effects | **Prerequisites:** Module 1
+
+
 ## Introduction
+
+<div class="flow">
+<div class="flow-step mint">1. Compute Entity Means</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Demean Variables</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Run OLS on Demeaned</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Adjust Standard Errors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Without time FE, these confound the X-Y relationship.
+
+</div>
 
 Two-way fixed effects (TWFE) controls for both:
 - **Entity effects** ($\alpha_i$): Time-invariant entity characteristics
@@ -22,6 +42,12 @@ Without time FE, these confound the X-Y relationship.
 
 ### Example: Investment and Growth
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 import numpy as np
@@ -35,6 +61,13 @@ n_years = 15
 
 # Macroeconomic shocks (affect all firms)
 time_shocks = np.random.normal(0, 2, n_years)  # e.g., recessions, booms
+
+<div class="callout-insight">
+
+**Insight:** Fixed effects are not a method -- they are a way of thinking about unobserved heterogeneity. The within-transformation eliminates time-invariant confounders, which is the single most important advantage of panel data.
+
+</div>
+
 
 data = []
 for i in range(n_firms):
@@ -74,7 +107,16 @@ print(f"  Investment coefficient: {fe_twoway.params['investment']:.4f}")
 print(f"  (True effect ≈ 0.80)")
 ```
 
+</div>
+
 ## The Two-Way Transformation
+
+<div class="callout-warning">
+
+**Warning:** Fixed effects estimates identify only from within-entity variation. If your variable of interest has little within-entity variation (e.g., industry sector), fixed effects will produce large standard errors or fail entirely.
+
+</div>
+
 
 ### Mathematical Form
 
@@ -88,6 +130,12 @@ where:
 - $\bar{\bar{y}}$ = grand mean
 
 ### Manual Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def double_demean(df, entity_col, time_col, variables):
@@ -122,7 +170,15 @@ print(f"\nManual two-way transformation:")
 print(f"  Investment coefficient: {manual_twfe.params['investment_dd']:.4f}")
 ```
 
+</div>
+
 ## Visualizing Time Effects
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_time_effects(model_results, year_range):
@@ -164,6 +220,8 @@ def plot_time_effects(model_results, year_range):
 
 plot_time_effects(fe_twoway, range(2010, 2025))
 ```
+
+</div>
 
 ## When to Use Two-Way FE
 
@@ -317,6 +375,13 @@ illustrate_twfe_problem()
 
 ## Practical Implementation
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ### Recommended Specification
 
 ```python
@@ -364,3 +429,39 @@ print(comparison)
 5. **Be cautious with staggered treatment** - TWFE may be biased
 
 6. **Always cluster standard errors** by entity (or two-way cluster)
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why can fixed effects not estimate the impact of time-invariant variables like gender or geographic region?
+
+**Practice Question 2:** When would entity fixed effects alone be insufficient, requiring two-way (entity + time) fixed effects?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_fixed_effects_intuition.md">
+  <div class="link-card-title">01 Fixed Effects Intuition</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_fixed_effects_intuition.md">
+  <div class="link-card-title">01 Fixed Effects Intuition — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_lsdv_vs_within.md">
+  <div class="link-card-title">02 Lsdv Vs Within</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_lsdv_vs_within.md">
+  <div class="link-card-title">02 Lsdv Vs Within — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

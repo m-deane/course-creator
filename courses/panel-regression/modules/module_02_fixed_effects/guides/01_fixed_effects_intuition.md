@@ -1,6 +1,26 @@
 # Fixed Effects Intuition: Why and When to Use FE
 
+> **Reading time:** ~20 min | **Module:** 02 — Fixed Effects | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Compute Entity Means</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Demean Variables</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Run OLS on Demeaned</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Adjust Standard Errors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Fixed effects regression controls for all time-invariant differences between entities—whether observed or not. It answers: "Within an entity, how does Y change when X changes?" This eliminates omitted
+
+</div>
 
 Fixed effects regression controls for all time-invariant differences between entities—whether observed or not. It answers: "Within an entity, how does Y change when X changes?" This eliminates omitted variable bias from time-invariant confounders.
 
@@ -20,6 +40,13 @@ Problem: Ability is correlated with both education and wages but unobserved:
 
 $$wage_i = \alpha + \beta \cdot education_i + \gamma \cdot ability_i + \epsilon_i$$
 
+<div class="callout-insight">
+
+**Insight:** Fixed effects are not a method -- they are a way of thinking about unobserved heterogeneity. The within-transformation eliminates time-invariant confounders, which is the single most important advantage of panel data.
+
+</div>
+
+
 If $Cov(education, ability) > 0$, OLS overestimates $\beta$.
 
 ### The Panel Data Solution
@@ -33,6 +60,13 @@ The fixed effect $\alpha_i$ captures all stable characteristics of worker $i$—
 ---
 
 ## The Within Transformation
+
+<div class="callout-warning">
+
+**Warning:** Fixed effects estimates identify only from within-entity variation. If your variable of interest has little within-entity variation (e.g., industry sector), fixed effects will produce large standard errors or fail entirely.
+
+</div>
+
 
 ### Mathematical Intuition
 
@@ -124,6 +158,12 @@ Then averaged across entities
 
 ## Implementation in Python
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 from linearmodels.panel import PanelOLS
@@ -152,7 +192,15 @@ results_twfe = model_twfe.fit(cov_type='clustered', cluster_entity=True)
 print(results_twfe)
 ```
 
+</div>
+
 ### Equivalent Using Dummies
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -167,6 +215,8 @@ results_lsdv = model_lsdv.fit()
 # Entity effects are estimated (not shown by default)
 print(results_lsdv.summary())
 ```
+
+</div>
 
 ---
 
@@ -220,9 +270,22 @@ The FE coefficient $\beta$ represents:
 
 ## Common Mistakes
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ### 1. Forgetting Clustering
 
 Standard errors should be clustered by entity:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Correct
@@ -231,6 +294,8 @@ results = model.fit(cov_type='clustered', cluster_entity=True)
 # Incorrect (SEs too small)
 results = model.fit()
 ```
+
+</div>
 
 ### 2. Misinterpreting R²
 
@@ -279,3 +344,39 @@ print(hausman_test)
 ---
 
 *Fixed effects turns confounders into allies—by demeaning, we eliminate what we cannot measure but know exists.*
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why can fixed effects not estimate the impact of time-invariant variables like gender or geographic region?
+
+**Practice Question 2:** When would entity fixed effects alone be insufficient, requiring two-way (entity + time) fixed effects?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_lsdv_vs_within.md">
+  <div class="link-card-title">02 Lsdv Vs Within</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_lsdv_vs_within.md">
+  <div class="link-card-title">02 Lsdv Vs Within — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_two_way_fixed_effects.md">
+  <div class="link-card-title">03 Two Way Fixed Effects</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_two_way_fixed_effects.md">
+  <div class="link-card-title">03 Two Way Fixed Effects — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

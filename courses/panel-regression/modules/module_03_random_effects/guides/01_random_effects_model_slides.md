@@ -22,6 +22,13 @@ Random Effects treats entity effects as **random draws from a distribution**, en
 > RE is a weighted average of between and within estimators -- it uses ALL available variation.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The RE Model
@@ -40,6 +47,13 @@ $$E[\alpha_i | x_{i1}, x_{i2}, ..., x_{iT}] = 0$$
 Entity effects must be **uncorrelated with all regressors**.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # FE vs RE at a Glance
@@ -53,23 +67,34 @@ Entity effects must be **uncorrelated with all regressors**.
 | Degrees of freedom | Loses $N-1$ df | Doesn't lose df |
 
 <!-- Speaker notes: Highlight the key differences. Ask students when they would choose one approach over the other. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # RE as a Spectrum Between Pooled OLS and FE
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     POOLED["Pooled OLS<br/>θ = 0<br/>No demeaning"] --> RE["Random Effects<br/>0 < θ < 1<br/>Partial demeaning"]
     RE --> FE["Fixed Effects<br/>θ = 1<br/>Full demeaning"]
-
-    style POOLED fill:#f99
-    style RE fill:#ff9
-    style FE fill:#9f9
 ```
 
 The quasi-demeaning parameter $\theta$ controls how much entity variation is removed.
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -111,15 +136,12 @@ $$\theta = 1 - \sqrt{\frac{\sigma_\epsilon^2}{\sigma_\epsilon^2 + T\sigma_\alpha
 # What Theta Controls
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     THETA{"θ value"}
     THETA -->|"θ → 0"| LOW["σ²_α ≈ 0<br/>Little entity variation<br/>→ Pooled OLS"]
     THETA -->|"0 < θ < 1"| MID["Both sources matter<br/>Partial demeaning<br/>→ Random Effects"]
     THETA -->|"θ → 1"| HIGH["σ²_α >> σ²_ε or T → ∞<br/>Dominated by entity variation<br/>→ Fixed Effects"]
-
-    style LOW fill:#f99
-    style MID fill:#ff9
-    style HIGH fill:#9f9
 ```
 
 As $\sigma_\alpha^2 \to \infty$ or $T \to \infty$, RE converges to FE.
@@ -179,6 +201,12 @@ Total Error Variance: σ²_α + σ²_ε
 
 # Python: linearmodels
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from linearmodels.panel import RandomEffects, PanelOLS
 import statsmodels.api as sm
@@ -198,10 +226,18 @@ fe_model = PanelOLS(df['y'], sm.add_constant(df[['x1', 'x2']]),
 fe_results = fe_model.fit()
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
 
 # Time-Invariant Variables: RE Advantage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # FE CANNOT estimate gender effect (it's time-invariant)
@@ -215,6 +251,8 @@ re_with_invariant = RandomEffects(
 print("RE with time-invariant variable:")
 print(re_with_invariant.summary.tables[1])
 ```
+
+</div>
 
 > This is the primary practical advantage of RE over FE.
 
@@ -235,11 +273,10 @@ Add entity means to control for correlation:
 $$y_{it} = \beta_0 + x_{it}'\beta + \bar{x}_i'\gamma + \alpha_i + \epsilon_{it}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RE["Standard RE<br/>Assumes α ⊥ X"] --> MUNDLAK["Mundlak RE<br/>Includes x̄ᵢ"]
     MUNDLAK --> RESULT["β matches FE estimate<br/>+ can estimate time-invariant effects"]
-
-    style MUNDLAK fill:#9f9
 ```
 
 If $\gamma \neq 0$, there IS correlation -- standard RE would be biased.
@@ -302,6 +339,7 @@ print(f"FE beta (x):         {fe_results.params['x']:.4f}")
 # RE Decision Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Are entities a<br/>random sample?"}
     Q1 -->|"Yes"| Q2{"Is E[αᵢ|Xᵢₜ] = 0?<br/>(Hausman test)"}

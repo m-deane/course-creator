@@ -25,11 +25,19 @@ Fixed effects can be estimated two ways:
 > Both give **identical** coefficient estimates but differ in computation.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Method Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "LSDV"
         L1["Include N-1 entity<br/>dummy variables"] --> L2["Run OLS on<br/>y ~ X + dummies"]
@@ -44,6 +52,13 @@ flowchart LR
 ```
 
 <!-- Speaker notes: Highlight the key differences. Ask students when they would choose one approach over the other. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -62,9 +77,22 @@ $$y_{it} = \alpha + \sum_{j=2}^{N} \delta_j D_{ij} + X_{it}\beta + \epsilon_{it}
 where $D_{ij} = 1$ if $i = j$, else 0.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # LSDV: Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -77,10 +105,25 @@ print(f"Number of parameters: {len(lsdv_model.params)}")
 # For N=50 entities: 51 parameters (1 intercept + 49 dummies + 1 x)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Extracting Entity Effects
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Entity effects from LSDV
@@ -90,6 +133,8 @@ entity_effects = lsdv_model.params[entity_dummies]
 # Reference category effect = intercept
 reference_effect = lsdv_model.params['Intercept']
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -193,6 +238,7 @@ $$SE_{\text{adjusted}} = SE_{\text{unadjusted}} \times \sqrt{\frac{NT - K}{NT - 
 # Demeaning Step-by-Step
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Raw data: yᵢₜ, xᵢₜ"] --> B["Compute entity means<br/>ȳᵢ = (1/T)Σₜ yᵢₜ"]
     B --> C["Demean all variables<br/>ỹᵢₜ = yᵢₜ - ȳᵢ"]
@@ -238,6 +284,7 @@ flowchart TD
 # Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q{"How many<br/>entities (N)?"}
     Q -->|"N < 100"| LSDV["Use LSDV<br/>Entity effects visible"]

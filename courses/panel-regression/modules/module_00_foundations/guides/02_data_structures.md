@@ -1,6 +1,16 @@
 # Panel Data Structures
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Panel data combines cross-sectional and time-series dimensions, tracking multiple entities over time. Proper organization—whether "long" or "wide" format—is critical for analysis and determines whi...
+
+</div>
 
 Panel data combines cross-sectional and time-series dimensions, tracking multiple entities over time. Proper organization—whether "long" or "wide" format—is critical for analysis and determines which estimation methods are accessible.
 
@@ -17,6 +27,13 @@ $$\{(y_{it}, X_{it}) : i = 1, ..., N; \; t = 1, ..., T\}$$
 - Each row contains: `[entity_id, time_id, y, X1, X2, ...]`
 - Standard format for regression analysis
 
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
+
 **Wide Format (Unstacked):**
 - Total rows: $N$ (one per entity)
 - Each row contains: `[entity_id, y_t1, y_t2, ..., y_tT, X1_t1, X1_t2, ..., X1_tT, ...]`
@@ -27,6 +44,13 @@ $$\{(y_{it}, X_{it}) : i = 1, ..., N; \; t = 1, ..., T\}$$
 **Unbalanced Panel:** Entities observed for different numbers of periods ($T_i$ varies)
 
 ## Intuitive Explanation
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 Think of panel data as a "cube" with three dimensions:
 - **Rows (N):** Different entities (firms, countries, individuals)
@@ -45,6 +69,12 @@ Long format "slices" this cube horizontally (by time) and stacks the slices on t
 - Wide format is like a gradebook where each row is a student and each column is an assignment date
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -268,6 +298,8 @@ if __name__ == "__main__":
     print(df_indexed.loc[(2, 3)])
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Confusing Long and Wide Format**
@@ -296,12 +328,20 @@ if __name__ == "__main__":
 - **Issue:** Time stored as strings ('2020-Q1'), dates, or integers inconsistently.
 - **Consequence:** Sorting fails; time operations produce errors.
 - **Solution:** Standardize time format before analysis:
-  ```python
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
   # For dates
   df['time'] = pd.to_datetime(df['time'])
   # For integers
   df['time'] = df['time'].astype(int)
   ```
+
+</div>
 
 **5. Missing Entity or Time Identifiers**
 - **Issue:** Forgetting to include entity_id or time columns in dataset.
@@ -316,12 +356,20 @@ if __name__ == "__main__":
 **6. Implicit vs Explicit Panel Structure**
 - **Issue:** Assuming data is panel when it's actually repeated cross-sections (different entities each period).
 - **Detection:** Check if same entities appear in multiple periods:
-  ```python
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
   entities_per_period = df.groupby('time')['entity_id'].nunique()
   total_unique_entities = df['entity_id'].nunique()
   is_panel = (entities_per_period > 1).all() and \
              (df.groupby('entity_id')['time'].nunique() > 1).any()
   ```
+
+</div>
 
 ## Connections
 
@@ -341,6 +389,13 @@ if __name__ == "__main__":
 - **Cross-sectional data:** Each time period is a cross-section
 
 ## Practice Problems
+
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
 
 ### 1. Conceptual: Balanced vs Unbalanced Panels
 
@@ -520,3 +575,39 @@ print(df_with_lags[['entity_id', 'time', 'y', 'y_lag1', 'y_lag2']].head(15))
 - **VanderPlas, J.** (2016). *Python Data Science Handbook*, Chapter 3: Data Manipulation with Pandas. *Excellent practical guide to pandas operations for data reshaping.*
 
 - **Stata Documentation:** "reshape — Convert data from wide to long form and vice versa." *Clear examples and edge cases, applicable beyond Stata.*
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures_python.md">
+  <div class="link-card-title">02 Data Structures Python</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures_python.md">
+  <div class="link-card-title">02 Data Structures Python — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

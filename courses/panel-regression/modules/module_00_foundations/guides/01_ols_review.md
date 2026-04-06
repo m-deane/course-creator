@@ -1,6 +1,16 @@
 # OLS Review: Matrix Form
 
+> **Reading time:** ~12 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Ordinary Least Squares (OLS) in matrix notation provides the foundation for understanding panel data estimators. The matrix formulation reveals the geometric interpretation of regression and enable...
+
+</div>
 
 Ordinary Least Squares (OLS) in matrix notation provides the foundation for understanding panel data estimators. The matrix formulation reveals the geometric interpretation of regression and enables efficient computation for large datasets.
 
@@ -13,6 +23,13 @@ Ordinary Least Squares (OLS) in matrix notation provides the foundation for unde
 $$\hat{\beta} = \arg\min_{\beta} (y - X\beta)'(y - X\beta)$$
 
 The solution is:
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
 $$\hat{\beta} = (X'X)^{-1}X'y$$
 
@@ -29,6 +46,13 @@ $$\hat{\epsilon} = y - \hat{y} = (I - P)y = My$$
 where $M = I - P$ is the residual maker matrix.
 
 ## Intuitive Explanation
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 Think of OLS as finding the "best fitting" hyperplane through a cloud of data points in multi-dimensional space. The matrix $(X'X)^{-1}X'$ acts as a "pseudo-inverse" that solves for the coefficients that minimize vertical distances (residuals) from points to the fitted plane.
 
@@ -94,6 +118,12 @@ $$\hat{\sigma}^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n - k} = \frac{(y - X\ha
 - Projects onto orthogonal complement of column space of $X$
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -198,6 +228,8 @@ if __name__ == "__main__":
     print(f"Residual std: {np.sqrt(results['sigma2']):.4f}")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Multicollinearity**
@@ -245,6 +277,13 @@ if __name__ == "__main__":
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ### 1. Conceptual: Geometric Interpretation
 **Question:** Explain why the residual vector $\hat{\epsilon}$ is orthogonal to every column of $X$. What does this imply about the correlation between residuals and predictors?
 
@@ -263,6 +302,12 @@ Implication: $\text{Cov}(X_j, \hat{\epsilon}) = 0$ for all predictors $X_j$. Thi
 
 <details>
 <summary>Solution</summary>
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -290,6 +335,8 @@ print("M is idempotent:", np.allclose(M @ M, M))
 # Verify orthogonality: P @ M = 0
 print("P and M are orthogonal:", np.allclose(P @ M, np.zeros((n, n))))
 ```
+
+</div>
 </details>
 
 ### 3. Extension: Partitioned Regression
@@ -335,3 +382,39 @@ This is exactly the within transformation!
 
 **Historical:**
 - **Stigler, S. M.** (1981). "Gauss and the Invention of Least Squares." *The Annals of Statistics*, 9(3), 465-474. *Fascinating history of how OLS was developed and its philosophical foundations.*
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures_python.md">
+  <div class="link-card-title">02 Data Structures Python</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures_python.md">
+  <div class="link-card-title">02 Data Structures Python — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

@@ -22,11 +22,19 @@ Panel data quality issues -- missing observations, unbalanced panels, and outlie
 > Fixed effects is robust to MCAR missingness but biased under MNAR. Outliers have "leverage across time" -- one bad observation affects all time periods for that entity.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Three Quality Dimensions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DQ["Data Quality Issues"] --> MISS["Missing Data"]
     DQ --> UNBAL["Unbalanced Panels"]
@@ -39,6 +47,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -61,6 +76,13 @@ Entity 3: [obs, obs, obs, MISS, obs]
 **Impact:** FE consistent. Lose efficiency, not bias.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # MAR: Missing at Random
@@ -75,6 +97,13 @@ Entity 2 (Low income):  [obs, MISS, MISS, obs, obs] → Less reporting
 **Impact:** If income is controlled for, no bias.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # MNAR: Missing Not at Random
@@ -94,6 +123,7 @@ Entity 2 (Bad performance):  [obs, obs, MISS, MISS, MISS] → Hides bad years
 # Missing Data Decision Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M["Missing data detected"] --> Q1{"Related to<br/>outcome y?"}
     Q1 -->|"No"| MCAR["MCAR<br/>Safe to proceed"]
@@ -103,7 +133,6 @@ flowchart TD
     MCAR --> OK["Standard FE/RE OK"]
     MAR --> OK
     MNAR --> FIX["Heckman correction<br/>or bounds analysis"]
-    style MNAR fill:#f99
 ```
 
 <!-- Speaker notes: Walk through the decision tree step by step. Ask students to apply it to a concrete example. -->
@@ -139,6 +168,7 @@ One outlier year distorts **all** demeaned values for that entity.
 # Three Types of Panel Outliers
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Cross-Sectional"
         CS["One entity, one time<br/>CEO salary in worker data<br/>Minor influence"]
@@ -156,6 +186,12 @@ flowchart LR
 
 # Outlier Detection: Three Z-Scores
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def detect_panel_outliers(data, value_col,
                           entity_col, threshold=3):
@@ -171,10 +207,18 @@ def detect_panel_outliers(data, value_col,
                   if len(x.dropna()) > 2 else 0)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
 
 # Outlier Detection: Temporal and Flag
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     # 3. Temporal Z-score (across entities at each time)
@@ -190,6 +234,8 @@ def detect_panel_outliers(data, value_col,
         (abs(data['z_temporal']) > threshold))
     return data
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -309,6 +355,7 @@ def test_missing_bias(data_full, data_missing):
 # Data Quality Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RAW["Raw panel data"] --> CHECK["Check balance"]
     CHECK --> MISS["Analyze missing patterns"]

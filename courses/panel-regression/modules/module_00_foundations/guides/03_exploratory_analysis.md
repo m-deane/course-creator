@@ -1,12 +1,28 @@
 # Exploratory Panel Data Analysis
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## Introduction
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Before running panel regressions, thorough exploratory analysis helps you understand your data's structure, identify potential issues, and choose appropriate methods. This guide covers essential di...
+
+</div>
 
 Before running panel regressions, thorough exploratory analysis helps you understand your data's structure, identify potential issues, and choose appropriate methods. This guide covers essential diagnostic techniques.
 
 ## Visualizing Panel Data
 
 ### Individual Time Series Plots
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -70,7 +86,15 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ### Within vs Between Variation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_within_between(df, entity_col, x_col, y_col):
@@ -78,6 +102,13 @@ def plot_within_between(df, entity_col, x_col, y_col):
     Visualize within and between entity relationships.
     """
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
     # 1. Raw scatter (total variation)
     ax1 = axes[0]
@@ -146,9 +177,24 @@ for name, value in slopes.items():
     print(f"  {name}: {value:.4f}")
 ```
 
+</div>
+
 ## Testing for Entity Effects
 
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
+
 ### Visual Test: Entity Mean Differences
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_entity_effects(df, entity_col, y_col):
@@ -213,6 +259,8 @@ def plot_entity_effects(df, entity_col, y_col):
 # Run test
 f_stat, p_value = plot_entity_effects(df, 'entity', 'y')
 ```
+
+</div>
 
 ### Testing for Time Effects
 
@@ -457,6 +505,13 @@ analyze_missing_patterns(df, 'entity', 'time', ['x', 'y'])
 
 ## Summary Statistics Report
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ```python
 def panel_eda_report(df, entity_col, time_col, outcome_var, predictors):
     """
@@ -516,3 +571,49 @@ panel_eda_report(df, 'entity', 'time', 'y', ['x', 'z'])
 4. **Check for violations** - Serial correlation and heteroskedasticity require robust standard errors
 
 5. **Document missing patterns** - Missingness can bias estimates if not random
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What problem does this approach solve that simpler methods cannot?
+
+**Practice Question 2:** What are the key assumptions, and how would you test them in practice?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

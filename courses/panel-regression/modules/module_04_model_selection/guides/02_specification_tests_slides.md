@@ -22,11 +22,19 @@ Beyond the Hausman test, a battery of specification tests validates your panel m
 > One test is never enough. Comprehensive diagnostics build credible results.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Five Essential Tests
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BATTERY["Specification Test Battery"]
     BATTERY --> F["1. F-Test<br/>Entity effects exist?"]
@@ -43,6 +51,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -60,6 +75,12 @@ $$H_0: \alpha_1 = \alpha_2 = ... = \alpha_N$$
 
 $$F = \frac{(RSS_{pooled} - RSS_{FE}) / (N-1)}{RSS_{FE} / (nT - N - K)} \sim F(N-1, nT-N-K)$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Restricted: Pooled OLS
 pooled = PooledOLS(y, X).fit()
@@ -71,24 +92,38 @@ fe = PanelOLS(y, X, entity_effects=True).fit()
 f_stat = ((rss_pooled - rss_fe) / (N-1)) / (rss_fe / (nT-N-K))
 ```
 
+</div>
+
 <!-- Speaker notes: This slide connects the math to implementation. Walk through how the formula maps to code. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # F-Test Decision
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     FTEST["F-Test for<br/>Entity Effects"]
     FTEST -->|"Reject H0<br/>(p < 0.05)"| EFFECTS["Entity effects significant<br/>→ Use FE or RE<br/>(not pooled OLS)"]
     FTEST -->|"Fail to reject"| POOLED["No entity effects<br/>→ Pooled OLS may<br/>be appropriate"]
-
-    style EFFECTS fill:#ff9
-    style POOLED fill:#9f9
 ```
 
 > Almost always rejected in practice. If not, you may not need panel methods.
 
 <!-- Speaker notes: Walk through the decision tree step by step. Ask students to apply it to a concrete example. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -139,6 +174,12 @@ $$y_{it} = X_{it}\beta + \bar{X}_i\gamma + u_i + \epsilon_{it}$$
 
 Test: $H_0: \gamma = 0$ (all entity-mean coefficients are zero)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Augmented RE with entity means
 for x in x_cols:
@@ -151,6 +192,8 @@ aug_model = smf.mixedlm(
 
 # Test significance of x_bar terms
 ```
+
+</div>
 
 <!-- Speaker notes: This slide connects the math to implementation. Walk through how the formula maps to code. -->
 ---
@@ -167,14 +210,13 @@ aug_model = smf.mixedlm(
 Tests for first-order serial correlation in panel residuals.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FD["First-difference<br/>the data"] --> RESID["Get residuals from<br/>ΔY on ΔX regression"]
     RESID --> LAG["Regress residuals<br/>on lagged residuals"]
     LAG --> TEST{"Coefficient = -0.5<br/>under H0?"}
     TEST -->|"Yes (p ≥ 0.05)"| OK["No serial correlation<br/>Standard SE OK"]
     TEST -->|"No (p < 0.05)"| FIX["Serial correlation!<br/>Cluster SE by entity"]
-
-    style FIX fill:#f99
 ```
 
 > Serial correlation inflates t-statistics. Ignoring it leads to false confidence.
@@ -252,6 +294,7 @@ TEST 5: Modified Wald Heteroskedasticity
 # From Tests to Recommendations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T1["F-test / BP-LM"] --> Q1{"Entity effects<br/>present?"}
     Q1 -->|"No"| POOLED["→ Pooled OLS"]

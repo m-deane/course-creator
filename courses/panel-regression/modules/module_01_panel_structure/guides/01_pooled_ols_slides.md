@@ -25,9 +25,22 @@ Treats all $N \times T$ observations as independent draws.
 > Simple but potentially misleading when entity heterogeneity exists.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PooledOLS
@@ -44,7 +57,16 @@ print(f"x coefficient: {pooled_sm.params['x']:.4f}")
 print(f"True value: 1.5")
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # What Pooled OLS Assumes
@@ -56,6 +78,13 @@ $$E[\epsilon_{it} | x_{i1}, x_{i2}, ..., x_{iT}] = 0$$
 All regressors uncorrelated with all errors -- past, present, and future.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -77,6 +106,13 @@ $$y_{it} = \beta_0 + x_{it}'\beta + \underbrace{\alpha_i + \epsilon_{it}}_{u_{it
 | $\epsilon_{it}$ | Idiosyncratic, random | No problem |
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Correlation Creates Bias
@@ -91,12 +127,12 @@ $$\hat{\beta}_{pooled} \xrightarrow{p} \beta + \underbrace{\frac{\text{Cov}(x_{i
 # Bias Mechanism
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Entity effect αᵢ<br/>(e.g., innate ability)"] -->|"Affects"| Y["Outcome yᵢₜ<br/>(e.g., wages)"]
     A -->|"Correlated with"| X["Regressor xᵢₜ<br/>(e.g., education)"]
     X -->|"β (true effect)"| Y
     X -.->|"β + bias (pooled OLS)"| Y
-    style A fill:#f99
 ```
 
 > Pooled OLS attributes some of the effect of $\alpha_i$ to $x_{it}$, inflating the coefficient.
@@ -145,12 +181,20 @@ $$\rho = \frac{\sigma_\alpha^2}{\sigma_\alpha^2 + \sigma_\epsilon^2}$$
 
 Measures the proportion of variance due to entity effects.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def estimate_icc(data, y_col, entity_col):
     between_var = data.groupby(entity_col)[y_col].mean().var()
     within_var = data.groupby(entity_col)[y_col].var().mean()
     return between_var / (between_var + within_var)
 ```
+
+</div>
 
 <!-- Speaker notes: This slide connects the math to implementation. Walk through how the formula maps to code. -->
 ---
@@ -172,6 +216,7 @@ This leads to:
 # Standard Error Comparison Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SE["Standard Errors"] --> DEF["Default (i.i.d.)"]
     SE --> CLUST["Clustered by entity"]
@@ -243,6 +288,7 @@ p_value = 1 - stats.chi2.cdf(LM, 1)
 # Decision Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Panel Data"] --> LM{"Breusch-Pagan<br/>LM test"}
     LM -->|"p > 0.05<br/>No entity effects"| POOL["Pooled OLS<br/>may be acceptable"]

@@ -22,11 +22,19 @@ Model selection involves **balancing statistical criteria with practical conside
 > Don't be mechanical. The best model depends on what you're trying to learn.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Do entity effects exist?<br/>(F-test / BP-LM)"]
     START -->|"No (p ≥ 0.05)"| POOLED["Pooled OLS"]
@@ -41,9 +49,22 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the decision tree step by step. Ask students to apply it to a concrete example. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # The Automated Selection Process
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class PanelModelSelector:
@@ -64,7 +85,16 @@ class PanelModelSelector:
         self._additional_diagnostics()
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -77,6 +107,7 @@ class PanelModelSelector:
 # Different Questions Need Different Models
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RQ["Research Question"]
     RQ --> WITHIN["Within-entity effect?<br/>'How does X affect Y<br/>for the same entity?'<br/>→ Fixed Effects"]
@@ -86,6 +117,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Matching Question to Model
@@ -149,21 +187,25 @@ gender       0.0%       Time-invariant -- FE impossible
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     VAR["Check within<br/>variation %"]
     VAR -->|"> 30%"| OK["FE works well"]
     VAR -->|"10-30%"| CAUTION["FE imprecise<br/>Consider RE"]
     VAR -->|"< 10%"| PROBLEM["FE unreliable<br/>Need RE or CRE"]
     VAR -->|"0%"| IMPOSSIBLE["Time-invariant<br/>FE cannot estimate"]
-
-    style PROBLEM fill:#f99
-    style IMPOSSIBLE fill:#f66
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
 ---
 
 # Balance and Attrition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Check panel structure
@@ -173,6 +215,8 @@ balance_ratio = T_values.min() / T_values.max()
 # Balanced:   min/max ≈ 1.0 (no concerns)
 # Unbalanced: min/max < 0.5 (check for attrition bias)
 ```
+
+</div>
 
 **Sample selection issues:**
 - Fixed sample (all firms in industry) → FE appropriate
@@ -214,6 +258,7 @@ Key observations:
 # Reporting Strategy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     REPORT["Report Multiple Specifications"]
     REPORT --> MAIN["Main Model<br/>(your recommended spec)"]
@@ -228,8 +273,6 @@ flowchart TD
 
     ROBUST -->|"Yes"| CREDIBLE["Strong, credible findings"]
     ROBUST -->|"No"| INVESTIGATE["Investigate sensitivity<br/>Report honestly"]
-
-    style CREDIBLE fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->

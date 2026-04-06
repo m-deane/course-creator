@@ -25,6 +25,13 @@ Panel data contains:
 > Understanding this decomposition is fundamental to choosing the right estimator.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Mathematical Decomposition
@@ -38,11 +45,19 @@ $$X_{it} = \underbrace{\bar{X}}_{\text{grand mean}} + \underbrace{(\bar{X}_i - \
 $$\text{Var}(X) = \text{Var}_{\text{between}}(\bar{X}_i) + \text{Var}_{\text{within}}(X_{it} - \bar{X}_i)$$
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # Visual: The Decomposition
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TOTAL["Total Variation<br/>Var(Xᵢₜ)"] --> BETWEEN["Between Variation<br/>Var(X̄ᵢ)<br/>How entities differ from each other"]
     TOTAL --> WITHIN["Within Variation<br/>Var(Xᵢₜ - X̄ᵢ)<br/>How entities change over time"]
@@ -53,6 +68,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Spaghetti Plot: Raw Data
@@ -72,9 +94,22 @@ flowchart TD
 Each line shows **within** variation; the **gap** between lines shows **between** variation.
 
 <!-- Speaker notes: Explain the key concepts on this slide. Check for questions before moving on. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Code: Variance Decomposition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def variance_decomposition(df, entity_col, variable):
@@ -94,6 +129,8 @@ def variance_decomposition(df, entity_col, variable):
             'between_pct': var_between / var_total * 100,
             'within_pct': var_within / var_total * 100}
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -122,6 +159,12 @@ FE uses **only** within-entity changes over time.
 
 # FE = Within Estimator
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # These produce identical coefficients:
 
@@ -138,12 +181,15 @@ means = df.groupby('entity')[['y', 'x']].mean()
 between = smf.ols('y ~ x', data=means).fit()
 ```
 
+</div>
+
 <!-- Speaker notes: Take this slowly. Focus on intuition behind each step rather than memorizing the algebra. -->
 ---
 
 # When Between and Within Differ
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DIFF["Between ≠ Within"] --> C1["Unobserved confounders<br/>correlated with X"]
     DIFF --> C2["Measurement error<br/>(attenuates within)"]
@@ -208,6 +254,7 @@ def recommend_estimator(df, entity_col, y_col, x_cols):
 # Estimator Selection Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     WV{"Within variation<br/>sufficient?"}
     WV -->|"< 10%"| LOW["Low within variation"]
@@ -273,6 +320,7 @@ Within variation is **more susceptible** to measurement error attenuation:
 # Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DATA["Panel Data<br/>yᵢₜ"] --> BET["Between<br/>ȳᵢ - ȳ"]
     DATA --> WIT["Within<br/>yᵢₜ - ȳᵢ"]

@@ -21,6 +21,13 @@ Proper environment setup ensures reproducible panel data analysis with the right
 > Panel data econometrics requires specialized libraries beyond standard data science tools.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Key Libraries
@@ -34,11 +41,19 @@ Proper environment setup ensures reproducible panel data analysis with the right
 | **lmtest** | Diagnostic testing | R |
 
 <!-- Speaker notes: Review the table row by row. Highlight the most important distinctions. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # Setup Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Create virtual<br/>environment"] --> B["Install core<br/>packages"]
     B --> C["Verify<br/>installation"]
@@ -48,6 +63,13 @@ flowchart LR
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -89,6 +111,13 @@ conda activate panel_env
 </div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Step 2: Install Core Packages
@@ -118,6 +147,12 @@ pip install pytest black isort mypy
 
 # Step 3: Verify Imports
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def test_imports():
     """Test that all packages can be imported."""
@@ -130,10 +165,18 @@ def test_imports():
     print("All imports successful!")
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
 
 # Step 3b: Test Basic Functionality
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def test_basic_functionality():
@@ -150,6 +193,8 @@ def test_basic_functionality():
     result = model.fit()
     print(f"R-squared: {result.rsquared:.4f}")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -184,6 +229,7 @@ print(f"Linearmodels version: {linearmodels.__version__}")
 # Package Dependency Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     NP["numpy"] --> PD["pandas"]
     NP --> SC["scipy"]
@@ -423,6 +469,7 @@ conda env create -f environment.yml
 # Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     ENV["Virtual Environment"] --> PY["Python packages<br/>linearmodels, statsmodels, pandas"]
     ENV --> R["R packages (optional)<br/>plm, lmtest, sandwich"]

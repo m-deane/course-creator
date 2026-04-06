@@ -1,6 +1,26 @@
 # Random Effects Assumptions and GLS Estimation
 
+> **Reading time:** ~19 min | **Module:** 03 — Random Effects | **Prerequisites:** Module 2
+
+
 ## The Random Effects Model
+
+<div class="flow">
+<div class="flow-step mint">1. Estimate Variance Components</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Compute GLS Weights</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Quasi-Demean</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Run GLS</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Random Effects (RE) treats entity-specific effects as random draws from a distribution:
+
+</div>
 
 Random Effects (RE) treats entity-specific effects as random draws from a distribution:
 
@@ -20,6 +40,12 @@ The critical assumption:
 $$E[u_i | X_{it}] = 0 \quad \forall t$$
 
 This means the entity effect is uncorrelated with all regressors across all time periods.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -83,6 +109,13 @@ def demonstrate_re_assumption_violation():
     df['y_good'] = 3 + 1.5 * df['x_good'] + df['u_i'] + np.random.normal(0, 0.5, len(df))
     df_panel = df.set_index(['entity', 'time'])
 
+<div class="callout-insight">
+
+**Insight:** Random effects assumes the unobserved entity effect is uncorrelated with regressors. When this holds, RE is more efficient than FE because it uses both within- and between-entity variation.
+
+</div>
+
+
     print("\n--- Case 2: X uncorrelated with entity effect (VALID) ---")
     print(f"Correlation(X, u_i): {df.groupby('entity')[['x_good', 'u_i']].mean().corr().iloc[0,1]:.3f}")
 
@@ -98,6 +131,8 @@ def demonstrate_re_assumption_violation():
 df = demonstrate_re_assumption_violation()
 ```
 
+</div>
+
 ### 2. Composite Error Structure
 
 The total error $v_{it} = u_i + \epsilon_{it}$ has a specific covariance structure:
@@ -107,6 +142,12 @@ $$Var(v_{it}) = \sigma_u^2 + \sigma_\epsilon^2$$
 $$Cov(v_{it}, v_{is}) = \sigma_u^2 \quad (t \neq s)$$
 
 $$Cov(v_{it}, v_{jt}) = 0 \quad (i \neq j)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def visualize_error_structure():
@@ -165,11 +206,26 @@ def visualize_error_structure():
 visualize_error_structure()
 ```
 
+</div>
+
 ## GLS Estimation
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 ### Why OLS Is Inefficient
 
 OLS ignores the error correlation structure, leading to inefficient (though still consistent, if RE assumption holds) estimates.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def compare_ols_gls_efficiency():
@@ -227,6 +283,8 @@ def compare_ols_gls_efficiency():
 
 compare_ols_gls_efficiency()
 ```
+
+</div>
 
 ### The GLS Transformation
 
@@ -437,6 +495,13 @@ breusch_pagan_lm_test(df_example, 'entity', 'y', ['x'])
 
 ## When to Use Random Effects
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 | Condition | Use RE? |
 |-----------|---------|
 | Entity effect uncorrelated with X | ✓ Yes |
@@ -457,3 +522,39 @@ breusch_pagan_lm_test(df_example, 'entity', 'y', ['x'])
 4. **Variance components** decompose total variance into entity and idiosyncratic parts
 
 5. **Test assumptions** before using RE - Hausman test is crucial
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the key assumption that distinguishes random effects from fixed effects, and when is it likely to be violated?
+
+**Practice Question 2:** Why does random effects estimation produce more efficient estimates than fixed effects when its assumptions hold?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_random_effects_model.md">
+  <div class="link-card-title">01 Random Effects Model</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_random_effects_model.md">
+  <div class="link-card-title">01 Random Effects Model — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_correlated_random_effects.md">
+  <div class="link-card-title">03 Correlated Random Effects</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_correlated_random_effects.md">
+  <div class="link-card-title">03 Correlated Random Effects — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

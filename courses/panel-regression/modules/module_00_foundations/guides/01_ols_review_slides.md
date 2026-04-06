@@ -21,6 +21,13 @@ Ordinary Least Squares (OLS) in matrix notation provides the foundation for unde
 > The matrix formulation reveals the geometric interpretation of regression and enables efficient computation for large datasets.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Key Insight
@@ -32,6 +39,13 @@ $$\hat{\beta} = (X'X)^{-1}X'y$$
 This represents the **projection** of $y$ onto the column space of $X$.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -54,6 +68,13 @@ $$\hat{\beta} = (X'X)^{-1}X'y$$
 provided $(X'X)$ is invertible (full column rank).
 
 <!-- Speaker notes: Take this slowly. Focus on intuition behind each step rather than memorizing the algebra. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Fitted Values and Residuals
@@ -71,11 +92,19 @@ $$\hat{\epsilon} = y - \hat{y} = (I - P)y = My$$
 where $M = I - P$ is the **residual maker matrix**.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # OLS Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Data: y, X"] --> B["Form X'X and X'y"]
     B --> C["Solve normal equations<br/>X'X β = X'y"]
@@ -155,6 +184,7 @@ $$\hat{\beta} = (X'X)^{-1}X'y$$
 # Derivation Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Objective: min (y - Xβ)'(y - Xβ)"] --> B["Expand: y'y - 2β'X'y + β'X'Xβ"]
     B --> C["Differentiate: ∂S/∂β = -2X'y + 2X'Xβ"]
@@ -213,6 +243,7 @@ $$\hat{\sigma}^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n - k} = \frac{(y - X\ha
 # Projection Geometry
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     subgraph "n-dimensional Space"
         Y["y (observed)"]
@@ -240,6 +271,12 @@ graph TD
 
 # OLS Estimator in Python (Part 1)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from scipy import stats
@@ -260,10 +297,18 @@ def ols_estimator(y, X, add_constant=True):
     beta_hat = np.linalg.solve(XtX, Xty)  # More stable than inverse
 ```
 
+</div>
+
 <!-- Speaker notes: Take this slowly. Focus on intuition behind each step rather than memorizing the algebra. -->
 ---
 
 # OLS Estimator in Python (Part 2: Residuals)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     # Fitted values and residuals
@@ -278,6 +323,8 @@ def ols_estimator(y, X, add_constant=True):
     var_beta = sigma2 * XtX_inv
     se_beta = np.sqrt(np.diag(var_beta))
 ```
+
+</div>
 
 <!-- Speaker notes: Take this slowly. Focus on intuition behind each step rather than memorizing the algebra. -->
 ---
@@ -404,6 +451,7 @@ Uses LU decomposition. Faster and more stable.
 # How OLS Connects to Panel Methods
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OLS["OLS: β̂ = (X'X)⁻¹X'y"] --> POOLED["Pooled OLS<br/>Apply directly to panel data"]
     OLS --> FE["Fixed Effects<br/>OLS on demeaned data"]

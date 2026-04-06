@@ -23,6 +23,12 @@ Panel data combines cross-sectional and time-series dimensions. Proper organizat
 
 <!-- Speaker notes: Emphasize that getting the data structure right is a prerequisite for everything that follows. Students who skip this step waste hours debugging later. -->
 
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Key Insight
@@ -35,6 +41,12 @@ The same panel dataset can be represented in multiple formats:
 Understanding how to transform between them is essential.
 
 <!-- Speaker notes: Ask the class: "Who has received data in wide format from a colleague or data provider?" Most hands should go up. That's why conversion is so important. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
 
 ---
 
@@ -50,11 +62,18 @@ $$\{(y_{it}, X_{it}) : i = 1, ..., N; \; t = 1, ..., T\}$$
 
 <!-- Speaker notes: The formal notation i for entity and t for time will be used throughout the entire course. Make sure students are comfortable with subscript notation before proceeding. -->
 
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # The Panel Data Cube
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "3D Data Cube"
         direction TB
@@ -75,6 +94,12 @@ graph LR
 ```
 
 <!-- Speaker notes: The 3D cube metaphor helps students visualize why there are two natural ways to flatten the data. Long stacks along the time axis; wide spreads along it. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
 
 ---
 
@@ -117,6 +142,12 @@ graph LR
 
 # Long Format Example
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 long_data = pd.DataFrame({
     'firm_id':    [1, 1, 1, 2, 2, 2, 3, 3, 3],
@@ -127,6 +158,8 @@ long_data = pd.DataFrame({
     'employees':  [10, 12, 11, 25, 28, 27, 15, 16, 18]
 })
 ```
+
+</div>
 
 One row = one entity at one time period.
 
@@ -151,6 +184,7 @@ One row per entity, time spread across columns.
 # Format Conversion Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     WIDE["Wide Format<br/>(N rows)"] -->|"pd.wide_to_long()<br/>pd.melt()"| LONG["Long Format<br/>(N×T rows)"]
     LONG -->|"pd.pivot()<br/>pd.pivot_table()"| WIDE
@@ -166,6 +200,12 @@ flowchart LR
 
 # Converting: Wide to Long
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 long_converted = pd.wide_to_long(
     wide_data,
@@ -175,6 +215,8 @@ long_converted = pd.wide_to_long(
     sep='_'
 ).reset_index()
 ```
+
+</div>
 
 | firm_id | year | revenue | employees |
 |:-:|:-:|:-:|:-:|
@@ -226,6 +268,7 @@ print(panel_data.index.nlevels)  # 2
 # Access Patterns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PI["Panel MultiIndex<br/>[entity, time]"] --> E["panel.loc[entity_id]<br/>All periods for one entity"]
     PI --> T["panel.xs(t, level='year')<br/>All entities at one time"]
@@ -312,6 +355,7 @@ def check_panel_balance(df, entity_col, time_col):
 # Detecting Unbalancedness
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Load panel data"] --> B{"N_obs == N × T?"}
     B -->|"Yes"| BAL["Balanced panel<br/>Proceed normally"]
@@ -331,6 +375,7 @@ flowchart TD
 # Balancing Methods
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     UB["Unbalanced Panel"] --> M1["Method: dropna<br/>Keep only complete entities"]
     UB --> M2["Method: fillna<br/>Fill missing with NaN"]
@@ -512,6 +557,7 @@ df = df.sort_values(['entity_id', 'time']) \
 # Workflow Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Load raw data"] --> B{"Format?"}
     B -->|"Wide"| C["Convert to long<br/>pd.wide_to_long()"]

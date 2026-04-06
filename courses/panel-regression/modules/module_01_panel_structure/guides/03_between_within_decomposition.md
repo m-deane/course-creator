@@ -1,6 +1,16 @@
 # Between and Within Variation: The Heart of Panel Data
 
+> **Reading time:** ~18 min | **Module:** 01 — Panel Structure | **Prerequisites:** Module 0 Foundations
+
+
 ## Introduction
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Understanding this decomposition is fundamental to choosing the right estimator.
+
+</div>
 
 Panel data contains two sources of variation:
 - **Between variation**: Differences across entities (cross-sectional)
@@ -22,6 +32,12 @@ Where:
 ### Variance Decomposition
 
 $$Var(X) = Var_{between}(\bar{X}_i) + Var_{within}(X_{it} - \bar{X}_i)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -48,6 +64,13 @@ def variance_decomposition(df, entity_col, variable):
     var_total = df[variable].var()
     var_between = between.var()
     var_within = within.var()
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
     return {
         'total': var_total,
@@ -91,7 +114,22 @@ for var in ['size', 'profitability']:
     print(f"  Within Variance:  {decomp['within']:.4f} ({decomp['within_pct']:.1f}%)")
 ```
 
+</div>
+
 ## Visualizing the Decomposition
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_variance_decomposition(df, entity_col, variable, n_sample=10):
@@ -159,6 +197,8 @@ plot_variance_decomposition(df, 'firm', 'size')
 plot_variance_decomposition(df, 'firm', 'profitability')
 ```
 
+</div>
+
 ## Implications for Estimation
 
 ### Fixed Effects Uses Only Within Variation
@@ -166,6 +206,12 @@ plot_variance_decomposition(df, 'firm', 'profitability')
 $$\tilde{y}_{it} = y_{it} - \bar{y}_i$$
 
 FE uses only within-entity changes over time.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -204,6 +250,8 @@ df['profit_adj'] = 0.02 + 0.001 * df['size'] + np.random.normal(0, 0.02, len(df)
 
 fe_coef, between_coef = illustrate_fe_within(df, 'profit_adj', 'size', 'firm', 'year')
 ```
+
+</div>
 
 ### When Between and Within Effects Differ
 
@@ -384,6 +432,13 @@ simulate_measurement_error()
 
 ## Summary Table
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 | Aspect | Between Variation | Within Variation |
 |--------|------------------|------------------|
 | Source | Cross-sectional differences | Longitudinal changes |
@@ -404,3 +459,49 @@ simulate_measurement_error()
 4. **Low within variation** is a red flag for FE - may need alternative approaches
 
 5. **Visualize the decomposition** to understand your data structure before estimation
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What problem does this approach solve that simpler methods cannot?
+
+**Practice Question 2:** What are the key assumptions, and how would you test them in practice?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

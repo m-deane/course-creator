@@ -23,6 +23,13 @@ $$y_{it} \text{ where } i = 1, ..., N \text{ (entities) and } t = 1, ..., T \tex
 The same entities are observed **repeatedly** over time.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Three Dimensions of Variation
@@ -45,11 +52,19 @@ Entity      i=2    │y₂₁ │y₂₂ │y₂₃ │...│y₂ₜ │  Variat
 > **Total Variation** = **Between Variation** + **Within Variation**
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # Variation Decomposition
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TV["Total Variation<br/>Var(yᵢₜ)"] --> BV["Between Variation<br/>Var(ȳᵢ)<br/>Differences across entities"]
     TV --> WV["Within Variation<br/>Var(yᵢₜ - ȳᵢ)<br/>Changes over time within entity"]
@@ -60,6 +75,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Panel Data vs Other Data Structures
@@ -72,6 +94,13 @@ flowchart TD
 | **Panel data** | **Yes** | **Yes (same units)** | **Same firms over 10 years** |
 
 <!-- Speaker notes: Highlight the key differences. Ask students when they would choose one approach over the other. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -101,18 +130,17 @@ The entity-specific $\alpha_i$ is **differenced out**.
 # How Fixed Effects Remove Bias
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Cross-Section Problem"
         X1["x"] --> Y1["y"]
         A1["αᵢ (unobserved)"] --> Y1
         A1 -.->|"Corr ≠ 0"| X1
-        style A1 fill:#f99
-    end
+            end
     subgraph "Panel Solution"
         X2["xᵢₜ - x̄ᵢ"] --> Y2["yᵢₜ - ȳᵢ"]
         A2["αᵢ differenced out"] -.->|"removed"| Y2
-        style A2 fill:#9f9
-    end
+            end
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
@@ -153,6 +181,12 @@ Panel data enables analysis of:
 
 Every entity observed in every period:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 balanced = pd.DataFrame({
     'entity': ['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', 'C'],
@@ -167,12 +201,20 @@ print(balanced.groupby('entity').size())
 # C    3
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
 
 # Unbalanced Panel
 
 Some entity-period combinations missing:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Firm C missing 2021
@@ -182,6 +224,8 @@ unbalanced = pd.DataFrame({
     'y':      [10,   12,   14,   20,   22,   21,   15,   19]
 })
 ```
+
+</div>
 
 **Missing data mechanisms matter:**
 - MCAR: Missing completely at random
@@ -194,6 +238,7 @@ unbalanced = pd.DataFrame({
 # Missing Data Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M["Missing data detected"] --> Q1{"Is missingness<br/>related to outcome?"}
     Q1 -->|"No"| MCAR["MCAR<br/>Safe to ignore"]
@@ -340,6 +385,7 @@ def panel_variation(panel_df, var, entity_col='entity'):
 # Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PD["Panel Data<br/>yᵢₜ"] --> BET["Between<br/>ȳᵢ"]
     PD --> WIT["Within<br/>yᵢₜ - ȳᵢ"]

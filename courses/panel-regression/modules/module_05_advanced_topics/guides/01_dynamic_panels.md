@@ -1,14 +1,38 @@
 # Dynamic Panel Models
 
+> **Reading time:** ~14 min | **Module:** 05 — Advanced Topics | **Prerequisites:** Module 4
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Dynamic panels add lagged dependent variables to the standard panel model, capturing state dependence — the idea that today's outcome depends on yesterday's. This creates a critical problem: fixed ...
+
+</div>
 
 Dynamic panels add lagged dependent variables to the standard panel model, capturing state dependence — the idea that today's outcome depends on yesterday's. This creates a critical problem: fixed effects estimation produces severely biased coefficients (Nickell bias) that grows worse as the time dimension shrinks. The solution is instrumental variable estimation via the Arellano-Bond or Blundell-Bond GMM estimators.
 
 ## Key Insight
 
+<div class="callout-insight">
+
+**Insight:** The Nickell bias is small when T is large relative to N, which is the opposite of the typical panel setting. In short panels (T < 10), the bias can be severe enough to reverse the sign of the lagged dependent variable coefficient.
+
+</div>
+
+
 > 💡 **Never apply standard fixed effects to a dynamic panel.** The bias from Nickell (1981) is not a rounding error — it can be as large as the true coefficient itself when $T$ is small. Use GMM estimators designed for this setting.
 
 ## The Dynamic Panel Framework
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 Dynamic panels include lagged dependent variables:
 
@@ -44,6 +68,12 @@ For $\rho = 0.5$ and $T = 5$:
 $$\text{Bias} \approx -\frac{1.5}{4} = -0.375$$
 
 > ⚠️ **Warning:** This is severe negative bias — applying FE to a dynamic panel with $T=5$ can bias $\hat{\rho}$ by as much as -0.375, nearly as large as the true coefficient itself. Never apply standard FE to a dynamic panel without checking for Nickell bias first.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -110,6 +140,8 @@ print(f"  Actual bias: {result['bias']:.3f}")
 print(f"  Theoretical bias: {result['theoretical_bias']:.3f}")
 ```
 
+</div>
+
 ## The Anderson-Hsiao Estimator
 
 ### First Differencing
@@ -125,6 +157,12 @@ $$\Delta y_{it} = \rho \Delta y_{i,t-1} + \Delta x_{it}'\beta + \Delta\epsilon_{
 Use $y_{i,t-2}$ as an instrument for $\Delta y_{i,t-1}$:
 - **Relevant**: $y_{i,t-2}$ correlates with $\Delta y_{i,t-1}$
 - **Valid**: $y_{i,t-2}$ is uncorrelated with $\Delta\epsilon_{it}$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -182,6 +220,8 @@ print(f"  rho estimate: {ah_result.params['y_lag_diff']:.4f}")
 print(f"  True rho: {rho_true}")
 ```
 
+</div>
+
 ## The Arellano-Bond Estimator (GMM)
 
 ### More Instruments = More Efficiency
@@ -194,6 +234,12 @@ Moment conditions:
 $$E[y_{i,s} \cdot \Delta\epsilon_{it}] = 0 \quad \text{for } s \leq t-2$$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -239,6 +285,8 @@ print("\nArellano-Bond GMM Results:")
 print(f"  rho estimate: {ab_result.params['y_lag_diff']:.4f}")
 print(f"  True rho: {rho_true}")
 ```
+
+</div>
 
 ## System GMM (Blundell-Bond)
 
@@ -308,6 +356,13 @@ Rejection suggests some instruments are invalid.
 
 ## Practical Guidelines
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ### Choosing the Estimator
 
 | Situation | Recommended Estimator |
@@ -336,3 +391,39 @@ Rejection suggests some instruments are invalid.
 5. **System GMM** adds level equations for persistent series
 
 6. **Specification tests**: AR(2) and Hansen tests are essential
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why does including a lagged dependent variable in a fixed effects model create bias, and in which direction?
+
+**Practice Question 2:** How does the Arellano-Bond GMM estimator address the Nickell bias problem?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_nickell_bias.md">
+  <div class="link-card-title">02 Nickell Bias</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_nickell_bias.md">
+  <div class="link-card-title">02 Nickell Bias — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_clustered_standard_errors.md">
+  <div class="link-card-title">03 Clustered Standard Errors</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_clustered_standard_errors.md">
+  <div class="link-card-title">03 Clustered Standard Errors — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

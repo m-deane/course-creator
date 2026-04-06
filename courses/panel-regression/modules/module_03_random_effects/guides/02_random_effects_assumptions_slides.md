@@ -22,11 +22,19 @@ RE requires entity effects to be **uncorrelated with regressors**. Violating thi
 > The RE assumption is testable -- the Hausman test compares FE and RE to detect violations.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Four Key Assumptions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RE["Random Effects Model"] --> A1["1. Zero Correlation<br/>E[αᵢ | Xᵢₜ] = 0"]
     RE --> A2["2. Composite Error Structure<br/>vᵢₜ = αᵢ + εᵢₜ"]
@@ -35,12 +43,16 @@ flowchart TD
 
     A1 --> CRITICAL["CRITICAL: If violated,<br/>RE is inconsistent"]
     A2 --> EFFICIENCY["Needed for GLS<br/>efficiency"]
-
-    style A1 fill:#f99
-    style CRITICAL fill:#f66
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -74,11 +86,19 @@ Entity effects must be uncorrelated with **all regressors across all time period
 </div>
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # What Violation Looks Like
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "RE Assumption Holds"
         U1["Entity Effect αᵢ"] -.->|"uncorrelated"| X1["Regressor Xᵢₜ"]
@@ -90,16 +110,28 @@ flowchart LR
         U2["Entity Effect αᵢ"] -->|"CORRELATED"| X2["Regressor Xᵢₜ"]
         X2 -->|"β + bias"| Y2["Outcome Yᵢₜ"]
         U2 -->|"leaks into β"| Y2
-        style U2 fill:#f99
-    end
+            end
 ```
 
 When $\alpha_i$ correlates with $X$, the entity effect "leaks" into the coefficient estimate.
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Simulation: Violation vs Valid
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Case 1: X correlated with alpha_i (VIOLATION)
@@ -112,6 +144,8 @@ x_uncorrelated = 5 + noise  # alpha_i independent of X
 # RE estimate: UNBIASED and more EFFICIENT
 # FE estimate: UNBIASED but less efficient
 ```
+
+</div>
 
 > FE is always consistent. RE is only consistent when the assumption holds.
 
@@ -151,6 +185,7 @@ Within-entity correlation = $\rho = \sigma_\alpha^2 / (\sigma_\alpha^2 + \sigma_
 # Why OLS Is Inefficient
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OLS["Pooled OLS"] --> IGNORE["Ignores error<br/>correlation structure"]
     IGNORE --> CONSIST["Still consistent<br/>(if RE assumption holds)"]
@@ -159,9 +194,6 @@ flowchart TD
     GLS["GLS / RE"] --> EXPLOIT["Exploits known<br/>covariance structure"]
     EXPLOIT --> CONSIST2["Consistent<br/>(same condition)"]
     EXPLOIT --> EFFIC["MORE EFFICIENT<br/>(tighter confidence intervals)"]
-
-    style INEFFIC fill:#f99
-    style EFFIC fill:#9f9
 ```
 
 GLS accounts for the correlation structure, producing **smaller standard errors**.
@@ -171,12 +203,20 @@ GLS accounts for the correlation structure, producing **smaller standard errors*
 
 # Efficiency Gain
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Monte Carlo: 500 simulations
 # OLS standard error:  0.0832
 # GLS standard error:  0.0614
 # Efficiency gain:     35.5%
 ```
+
+</div>
 
 > GLS/RE gives ~35% smaller standard errors in this example -- that's meaningful statistical power.
 
@@ -259,6 +299,7 @@ lm_stat = (nT / (2*(T-1))) * ((T * sum_sq_group / total_ss) - 1)**2
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     BP["Breusch-Pagan<br/>LM Test"] -->|"Reject H0"| EFFECTS["Entity effects exist<br/>→ Panel model needed"]
     BP -->|"Fail to reject"| POOLED["σ²_α ≈ 0<br/>→ Pooled OLS OK"]

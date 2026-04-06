@@ -22,6 +22,13 @@ Dynamic panels include **lagged dependent variables** as regressors. Standard FE
 > When the past determines the present, standard panel methods break down.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Dynamic Panel Framework
@@ -37,6 +44,13 @@ where $|\rho| < 1$ ensures stationarity.
 - Trade relationships are sticky
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # The Nickell Bias Problem
@@ -44,6 +58,7 @@ where $|\rho| < 1$ ensures stationarity.
 Applying FE to dynamic panels creates a **mechanical correlation**:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FE["Within transformation:<br/>ỹᵢₜ = ρỹᵢ,ₜ₋₁ + ε̃ᵢₜ"]
     FE --> PROBLEM["Problem: ỹᵢ,ₜ₋₁ contains ȳᵢ"]
@@ -51,11 +66,16 @@ flowchart TD
     CONTAINS --> DEPENDS["yᵢₜ depends on εᵢₜ"]
     DEPENDS --> CORR["Therefore ỹᵢ,ₜ₋₁<br/>correlates with ε̃ᵢₜ"]
     CORR --> BIAS["FE estimator is BIASED"]
-
-    style BIAS fill:#f99
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Bias Formula
@@ -74,6 +94,13 @@ FE estimate ≈ 0.125  ← Severely downward biased!
 > FE underestimates persistence. The shorter the panel, the worse the bias.
 
 <!-- Speaker notes: Take this slowly. Focus on intuition behind each step rather than memorizing the algebra. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Bias Across Panel Lengths
@@ -108,19 +135,24 @@ $$\Delta y_{it} = \rho \Delta y_{i,t-1} + \Delta x_{it}'\beta + \Delta\epsilon_{
 **Step 3:** Use $y_{i,t-2}$ as instrument for $\Delta y_{i,t-1}$:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     IV["Instrument: yᵢ,ₜ₋₂"]
     IV -->|"Relevant: correlated<br/>with Δyᵢ,ₜ₋₁"| ENDOG["Endogenous:<br/>Δyᵢ,ₜ₋₁"]
     IV -.->|"Valid: uncorrelated<br/>with Δεᵢₜ"| ERROR["Error:<br/>Δεᵢₜ"]
     ENDOG -->|"β estimated<br/>via 2SLS"| Y["ΔYᵢₜ"]
-
-    style IV fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
 ---
 
 # Anderson-Hsiao Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -136,6 +168,8 @@ result = IV2SLS.from_formula(formula, df.dropna()).fit()
 
 print(f"Anderson-Hsiao ρ: {result.params['y_lag_diff']:.4f}")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -169,6 +203,12 @@ $$E[y_{i,s} \cdot \Delta\epsilon_{it}] = 0 \quad \text{for } s \leq t-2$$
 
 # Arellano-Bond: Prepare Differences and Instruments
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def arellano_bond_simple(data, y_col, max_lags=None):
     df = data.copy().sort_values(['entity', 'time'])
@@ -181,6 +221,8 @@ def arellano_bond_simple(data, y_col, max_lags=None):
         df[f'y_lag{lag}'] = df.groupby('entity')[y_col] \
             .shift(lag)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -212,6 +254,7 @@ def arellano_bond_simple(data, y_col, max_lags=None):
 # Adding Level Equations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph "Difference GMM (Arellano-Bond)"
         DIFF["Δyᵢₜ = ρΔyᵢ,ₜ₋₁ + Δεᵢₜ"]
@@ -227,8 +270,6 @@ flowchart TD
 
     DIFF --> SYSTEM["System GMM<br/>Both equations jointly"]
     LEVEL --> SYSTEM
-
-    style SYSTEM fill:#9f9
 ```
 
 **When System GMM helps:**
@@ -270,6 +311,7 @@ Rejection → some instruments invalid
 # Choosing the Estimator
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Panel dimensions?"}
     Q1 -->|"Large T, small N"| FE["FE<br/>(bias diminishes with T)"]

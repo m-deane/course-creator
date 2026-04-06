@@ -1,6 +1,16 @@
 # Clustered Standard Errors in Panel Data
 
+> **Reading time:** ~20 min | **Module:** 05 — Advanced Topics | **Prerequisites:** Module 4
+
+
 ## Why Cluster Standard Errors?
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Panel data violates the i.i.d. assumption in two ways:
+
+</div>
 
 Panel data violates the i.i.d. assumption in two ways:
 1. **Within-entity correlation**: Observations from the same entity are correlated over time
@@ -17,6 +27,12 @@ With clustering, we use the "sandwich" estimator:
 $$Var(\hat{\beta}) = (X'X)^{-1} \left(\sum_{g} X_g' \hat{u}_g \hat{u}_g' X_g\right) (X'X)^{-1}$$
 
 where $g$ indexes clusters (entities).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -44,6 +60,13 @@ def demonstrate_clustering_importance():
         # AR(1) errors within entity
         error_prev = 0
         rho_error = 0.7  # Serial correlation
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
         for t in range(T):
             x = np.random.normal(5, 1)
@@ -88,11 +111,26 @@ def demonstrate_clustering_importance():
 df = demonstrate_clustering_importance()
 ```
 
+</div>
+
 ## Types of Clustering
+
+<div class="callout-warning">
+
+**Warning:** Clustering at too fine a level understates standard errors; clustering at too coarse a level reduces power. The correct level is the level at which the treatment varies or at which observations are correlated.
+
+</div>
+
 
 ### 1. Entity (One-Way) Clustering
 
 The most common approach for panel data.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def entity_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -114,9 +152,17 @@ def entity_clustering(df, y_col, x_cols, entity_col, time_col):
 fe_model = entity_clustering(df, 'y', ['x'], 'entity', 'time')
 ```
 
+</div>
+
 ### 2. Time (One-Way) Clustering
 
 For cross-sectional correlation across entities.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def time_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -135,6 +181,8 @@ def time_clustering(df, y_col, x_cols, entity_col, time_col):
 
     return fe
 ```
+
+</div>
 
 ### 3. Two-Way Clustering
 
@@ -422,6 +470,13 @@ boot_se, boot_ests = cluster_bootstrap(df, 'y', ['x'], 'entity')
 
 ## Practical Recommendations
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ```python
 def clustering_recommendations():
     """
@@ -482,3 +537,39 @@ clustering_recommendations()
 5. **Bootstrap** helps with few clusters or unbalanced panels
 
 6. **Report clustering** - it affects inference significantly
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why do conventional standard errors understate uncertainty in panel data with within-entity correlation?
+
+**Practice Question 2:** At what level should you cluster standard errors -- entity level, time level, or both?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_dynamic_panels.md">
+  <div class="link-card-title">01 Dynamic Panels</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_dynamic_panels.md">
+  <div class="link-card-title">01 Dynamic Panels — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_nickell_bias.md">
+  <div class="link-card-title">02 Nickell Bias</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_nickell_bias.md">
+  <div class="link-card-title">02 Nickell Bias — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

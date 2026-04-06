@@ -1,6 +1,16 @@
 # Panel Data Quality: Missing Data, Unbalanced Panels, and Outliers
 
+> **Reading time:** ~20 min | **Module:** 01 — Panel Structure | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Panel data quality issues—missing observations, unbalanced panels, and outliers—directly affect estimation consistency and inference validity. Missing data creates unbalanced panels where entities ...
+
+</div>
 
 Panel data quality issues—missing observations, unbalanced panels, and outliers—directly affect estimation consistency and inference validity. Missing data creates unbalanced panels where entities have different numbers of observations, requiring careful handling to avoid selection bias. Outliers distort fixed effects estimates more severely than cross-sectional data because they affect multiple time periods for the same entity.
 
@@ -37,6 +47,13 @@ Every entity observed in every period. Dimensions: $N \times T$
 **Unbalanced Panel:**
 $$\{(y_{it}, x_{it}) : i=1,...,N; \, t \in T_i\}$$
 where $T_i \subseteq \{1,...,T\}$ varies by entity.
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
 **Strongly Balanced:** All entities have same time periods
 **Weakly Unbalanced:** Some missing, but entities overlap in time
@@ -75,6 +92,13 @@ P_{1-\alpha} & \text{if } y_{it} > P_{1-\alpha}
 Common: $\alpha = 0.01$ (winsorize at 1st and 99th percentiles)
 
 ## Intuitive Explanation
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 ### Missing Data Patterns
 
@@ -137,6 +161,12 @@ One bad year affects all years for that entity.
 ## Code Implementation
 
 ### Detecting Missing Patterns
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -217,7 +247,15 @@ plt.savefig('missing_patterns.png', dpi=150, bbox_inches='tight')
 print("\nMissing patterns visualization saved to missing_patterns.png")
 ```
 
+</div>
+
 ### Testing for Missing Data Bias
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -271,7 +309,15 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
     print(f"  SE (missing): {result['se_missing']:.4f}")
 ```
 
+</div>
+
 ### Handling Unbalanced Panels
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Create strongly unbalanced panel
@@ -325,6 +371,8 @@ print(f"  Coefficient: {model_unbalanced.params['x']:.4f}")
 print(f"  SE: {model_unbalanced.std_errors['x']:.4f}")
 print(f"  True value: 1.500")
 ```
+
+</div>
 
 ### Outlier Detection and Treatment
 
@@ -471,6 +519,13 @@ print(f"  SE: {model_wins.std_errors['x']:.4f}")
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 1. **Missing Pattern Diagnosis**
    Panel: 50 firms, 10 years. Missing observations cluster in recession years (2008-2009).
    Is this MCAR, MAR, or MNAR? How to test? Implications for FE estimation?
@@ -525,3 +580,39 @@ print(f"  SE: {model_wins.std_errors['x']:.4f}")
 ---
 
 *"Clean data is not the data you have, it's the data you prepare."*
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_formats.md">
+  <div class="link-card-title">02 Data Formats — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

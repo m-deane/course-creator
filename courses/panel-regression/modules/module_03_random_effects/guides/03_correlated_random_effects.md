@@ -1,6 +1,26 @@
 # Correlated Random Effects: Bridging FE and RE
 
+> **Reading time:** ~19 min | **Module:** 03 — Random Effects | **Prerequisites:** Module 2
+
+
 ## The CRE Approach
+
+<div class="flow">
+<div class="flow-step mint">1. Estimate Variance Components</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Compute GLS Weights</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Quasi-Demean</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Run GLS</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Correlated Random Effects (CRE), also known as the Mundlak approach, relaxes the RE assumption while retaining its advantages.
+
+</div>
 
 Correlated Random Effects (CRE), also known as the Mundlak approach, relaxes the RE assumption while retaining its advantages.
 
@@ -21,6 +41,12 @@ This:
 - Recovers the FE estimate of $\beta$
 - Allows estimation of time-invariant effects
 - Provides a natural Hausman test
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -54,6 +80,13 @@ def demonstrate_cre():
 
             # Y depends on X, u_i, and z_i
             y = 3 + true_beta * x + 0.8 * z_i + u_i + np.random.normal(0, 0.5)
+
+<div class="callout-insight">
+
+**Insight:** Random effects assumes the unobserved entity effect is uncorrelated with regressors. When this holds, RE is more efficient than FE because it uses both within- and between-entity variation.
+
+</div>
+
 
             data.append({
                 'entity': i, 'time': t,
@@ -97,7 +130,16 @@ def demonstrate_cre():
 df, cre_model = demonstrate_cre()
 ```
 
+</div>
+
 ## Why CRE Works
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 ### Mathematical Intuition
 
@@ -106,6 +148,12 @@ Including $\bar{X}_i$ in the model:
 1. **Absorbs the correlation** between $X_{it}$ and $u_i$
 2. **The within-variation** in $X_{it}$ identifies $\beta$ (same as FE)
 3. **Time-invariant variables** remain estimable (unlike FE)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def visualize_cre_mechanics(df):
@@ -176,9 +224,17 @@ def visualize_cre_mechanics(df):
 visualize_cre_mechanics(df)
 ```
 
+</div>
+
 ## Implementation Options
 
 ### 1. OLS with Group Means
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def cre_ols(df, y_col, x_cols, z_cols, entity_col):
@@ -211,6 +267,8 @@ cre_ols_model = cre_ols(df, 'y', ['x'], ['z'], 'entity')
 print("\nCRE via OLS:")
 print(cre_ols_model.summary().tables[1])
 ```
+
+</div>
 
 ### 2. Mixed Effects (Random Intercepts)
 
@@ -378,6 +436,13 @@ df_full, cre_full = full_cre_example()
 
 ## Comparison: FE vs RE vs CRE
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 | Feature | FE | RE | CRE |
 |---------|----|----|-----|
 | Consistent with endogeneity | ✓ | ✗ | ✓ |
@@ -397,3 +462,39 @@ df_full, cre_full = full_cre_example()
 4. **Coefficient on $\bar{X}_i$** provides a natural Hausman-type test
 
 5. **CRE is more flexible** - can be extended to nonlinear models, multilevel structures
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the key assumption that distinguishes random effects from fixed effects, and when is it likely to be violated?
+
+**Practice Question 2:** Why does random effects estimation produce more efficient estimates than fixed effects when its assumptions hold?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_random_effects_model.md">
+  <div class="link-card-title">01 Random Effects Model</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_random_effects_model.md">
+  <div class="link-card-title">01 Random Effects Model — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_random_effects_assumptions.md">
+  <div class="link-card-title">02 Random Effects Assumptions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_random_effects_assumptions.md">
+  <div class="link-card-title">02 Random Effects Assumptions — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

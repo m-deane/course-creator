@@ -1,6 +1,16 @@
 # Panel Data Formats: Long vs Wide and Multi-Index
 
+> **Reading time:** ~20 min | **Module:** 01 — Panel Structure | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Panel data can be stored in two formats: **long format** (stacked, one row per observation) or **wide format** (matrix, one row per entity). Long format is preferred for regression analysis and modern
+
+</div>
 
 Panel data can be stored in two formats: **long format** (stacked, one row per observation) or **wide format** (matrix, one row per entity). Long format is preferred for regression analysis and modern panel libraries, while wide format suits time series operations and visualization. Efficient panel analysis requires mastery of format conversion, multi-index DataFrames, and reshaping operations.
 
@@ -31,6 +41,13 @@ entity | time | y    | x1   | x2
 Each entity is a row, time periods are columns:
 
 $$\text{Wide: } Y \in \mathbb{R}^{N \times T}, \quad X_k \in \mathbb{R}^{N \times T}$$
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
 **Structure for variable $y$:**
 ```
@@ -68,6 +85,13 @@ $$\text{melt}(\text{df}_{\text{wide}}, \text{id\_vars}=i, \text{var\_name}=t, \t
 
 ## Intuitive Explanation
 
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
+
 ### When to Use Each Format
 
 **Long Format Best For:**
@@ -87,6 +111,12 @@ $$\text{melt}(\text{df}_{\text{wide}}, \text{id\_vars}=i, \text{var\_name}=t, \t
 ### Real-World Example: Wage Data
 
 **Long Format (Analysis-Ready):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 person_id | year | wage | education | experience
 ----------|------|------|-----------|------------
@@ -96,13 +126,23 @@ person_id | year | wage | education | experience
 102       | 2019 | 52000| 18        | 8
 ```
 
+</div>
+
 **Wide Format (Time Series View):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 person_id | wage_2019 | wage_2020 | wage_2021
 ----------|-----------|-----------|----------
 101       | 45000     | 48000     | 51000
 102       | 52000     | 55000     | 58000
 ```
+
+</div>
 
 ### Memory Considerations
 
@@ -119,6 +159,12 @@ person_id | wage_2019 | wage_2020 | wage_2021
 ## Code Implementation
 
 ### Format Conversion
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -177,6 +223,8 @@ print(data_long_restored.head(10))
 # Verify equivalence
 print(f"\nData preserved: {data_long_restored.shape == (N*T, 3)}")
 ```
+
+</div>
 
 ### Multi-Index DataFrames
 
@@ -450,6 +498,13 @@ print(f"\nSpeedup (wide vs long for lags): {time_long_lag/time_wide_lag:.1f}x")
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 1. **Format Detection**
    You receive a dataset with shape (500, 25).
    Could this be long or wide format?
@@ -501,3 +556,39 @@ print(f"\nSpeedup (wide vs long for lags): {time_long_lag/time_wide_lag:.1f}x")
 ---
 
 *"Store long, reshape temporarily. Long format is the source of truth."*
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_pooled_ols.md">
+  <div class="link-card-title">01 Pooled Ols — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_pooled_ols_limitations.md">
+  <div class="link-card-title">02 Pooled Ols Limitations — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_between_within_decomposition.md">
+  <div class="link-card-title">03 Between Within Decomposition</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_between_within_decomposition.md">
+  <div class="link-card-title">03 Between Within Decomposition — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

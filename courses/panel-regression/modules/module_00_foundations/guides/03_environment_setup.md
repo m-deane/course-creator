@@ -1,12 +1,29 @@
 # Environment Setup for Panel Data Analysis
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Proper environment setup ensures reproducible panel data analysis with the right tools and versions. This guide covers installation of Python packages (linearmodels, statsmodels) and R packages (pl...
+
+</div>
 
 Proper environment setup ensures reproducible panel data analysis with the right tools and versions. This guide covers installation of Python packages (linearmodels, statsmodels) and R packages (plm, lmtest) needed for panel regression.
 
 > 💡 **Key Insight:** Panel data econometrics requires specialized libraries beyond standard data science tools. While pandas handles data manipulation, you need **linearmodels** (Python) or **plm** (R) for proper panel regression estimation. Setting up a dedicated virtual environment prevents version conflicts and ensures reproducibility.
 
 ## Prerequisites
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
 - **Python:** Version 3.8 or higher
 - **R:** Version 4.0 or higher (if using R)
@@ -15,6 +32,13 @@ Proper environment setup ensures reproducible panel data analysis with the right
 - **Basic knowledge:** Command line operations, virtual environments
 
 ## Python Setup
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 ### Step 1: Create Virtual Environment
 
@@ -69,6 +93,12 @@ pip install pytest black isort mypy
 ### Step 3: Verify Installation
 
 Create a test script `test_installation.py`:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">test_installation.py</span>
+</div>
 
 ```python
 """Test that all required packages are installed and working."""
@@ -152,6 +182,8 @@ if __name__ == "__main__":
         print("\n⚠️  Some tests failed. Please check error messages above.")
 ```
 
+</div>
+
 Run the test:
 
 ```bash
@@ -198,6 +230,12 @@ In Jupyter, verify the kernel:
 - Select kernel: "Python (Panel Data)"
 - Run test cell:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import sys
 print(f"Python path: {sys.executable}")
@@ -205,6 +243,8 @@ print(f"Python path: {sys.executable}")
 import linearmodels
 print(f"Linearmodels version: {linearmodels.__version__}")
 ```
+
+</div>
 
 ## R Setup
 
@@ -523,6 +563,13 @@ Before starting the course, verify:
 
 ## Quick Reference Commands
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 **Activate environment:**
 ```bash
 # venv
@@ -579,3 +626,49 @@ conda env create -f environment.yml
 **Best Practices:**
 - [Reproducible Research in Computational Science](https://doi.org/10.1126/science.1213847)
 - [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What problem does this approach solve that simpler methods cannot?
+
+**Practice Question 2:** What are the key assumptions, and how would you test them in practice?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_panel_data_concepts.md">
+  <div class="link-card-title">01 Panel Data Concepts — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

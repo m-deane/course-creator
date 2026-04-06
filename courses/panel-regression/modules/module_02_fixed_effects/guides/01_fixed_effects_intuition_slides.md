@@ -22,6 +22,13 @@ Fixed effects regression controls for **all time-invariant differences** between
 > FE uses each entity as its own control. By comparing an entity to itself over time, we eliminate all stable differences.
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Omitted Variable Problem
@@ -39,11 +46,19 @@ $$wage_{it} = \alpha_i + \beta \cdot education_{it} + \epsilon_{it}$$
 The fixed effect $\alpha_i$ captures all stable characteristics -- including ability.
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # FE Eliminates Confounders
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Cross-Section (biased)"
         A1["Ability αᵢ"] -->|"unobserved"| Y1["Wages"]
@@ -53,11 +68,17 @@ flowchart LR
     subgraph "Fixed Effects (unbiased)"
         A2["αᵢ absorbed<br/>by FE"] -.->|"removed"| Y2["Δ Wages"]
         X2["Δ Education"] -->|"β (causal)"| Y2
-        style A2 fill:#9f9
-    end
+            end
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -79,18 +100,25 @@ $$(y_{it} - \bar{y}_i) = (X_{it} - \bar{X}_i)\beta + (\epsilon_{it} - \bar{\epsi
 $$\tilde{y}_{it} = \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$$
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # What the Within Transformation Does
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RAW["Raw: yᵢₜ = αᵢ + Xᵢₜβ + εᵢₜ"] --> MEAN["Entity mean: ȳᵢ = αᵢ + X̄ᵢβ + ε̄ᵢ"]
     RAW --> SUB["Subtract"]
     MEAN --> SUB
     SUB --> DEMEAN["Demeaned: ỹᵢₜ = X̃ᵢₜβ + ε̃ᵢₜ"]
     DEMEAN --> NOTE["αᵢ eliminated!<br/>Only within-entity variation remains"]
-    style NOTE fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
@@ -166,6 +194,7 @@ flowchart TD
 # FE Decision Flowchart
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Unobserved entity<br/>confounders exist?"}
     Q1 -->|"Yes"| Q2{"X varies<br/>within entities?"}
@@ -187,6 +216,12 @@ flowchart TD
 
 # Python: linearmodels
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 from linearmodels.panel import PanelOLS
@@ -205,6 +240,8 @@ model_twfe = PanelOLS.from_formula(
 )
 results_twfe = model_twfe.fit(cov_type='clustered', cluster_entity=True)
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -258,6 +295,12 @@ The FE coefficient $\beta$ means:
 
 # Mistake 1: Forgetting to Cluster SE
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # CORRECT
 results = model.fit(cov_type='clustered', cluster_entity=True)
@@ -265,6 +308,8 @@ results = model.fit(cov_type='clustered', cluster_entity=True)
 # WRONG (SE too small)
 results = model.fit()
 ```
+
+</div>
 
 <!-- Speaker notes: Emphasize that these are mistakes seen in practice, not just theory. Ask if anyone has encountered mistake 1: forgetting to cluster se. -->
 ---

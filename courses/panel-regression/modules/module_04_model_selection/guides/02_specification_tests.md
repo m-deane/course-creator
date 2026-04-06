@@ -1,6 +1,16 @@
 # Specification Tests for Panel Models
 
+> **Reading time:** ~20 min | **Module:** 04 — Model Selection | **Prerequisites:** Module 3
+
+
 ## Overview
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Beyond the Hausman test, several specification tests help validate panel model assumptions:
+
+</div>
 
 Beyond the Hausman test, several specification tests help validate panel model assumptions:
 
@@ -15,6 +25,12 @@ Beyond the Hausman test, several specification tests help validate panel model a
 Tests whether entity fixed effects are jointly significant.
 
 $$H_0: \alpha_1 = \alpha_2 = ... = \alpha_N$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -47,6 +63,13 @@ def f_test_fixed_effects(df, y_col, x_cols, entity_col, time_col):
     # Degrees of freedom
     df_num = N - 1  # Number of restrictions
     df_denom = n - N - K
+
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
 
     # F-statistic
     f_stat = ((rss_restricted - rss_unrestricted) / df_num) / (rss_unrestricted / df_denom)
@@ -90,11 +113,26 @@ df = pd.DataFrame(data)
 f_test_fixed_effects(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
+</div>
+
 ## Breusch-Pagan LM Test
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 Tests for random effects vs pooled OLS.
 
 $$H_0: \sigma_u^2 = 0$$ (No random effects)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def breusch_pagan_lm(df, y_col, x_cols, entity_col, time_col):
@@ -154,9 +192,17 @@ def breusch_pagan_lm(df, y_col, x_cols, entity_col, time_col):
 breusch_pagan_lm(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
+</div>
+
 ## Robust Hausman Test
 
 The standard Hausman test can have size distortions with heteroskedasticity. A robust version:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import RandomEffects
@@ -209,6 +255,8 @@ def robust_hausman_test(df, y_col, x_cols, entity_col, time_col):
 
 robust_hausman_test(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
+
+</div>
 
 ## Serial Correlation Tests
 
@@ -332,6 +380,13 @@ modified_wald_test(df, 'y', ['x1', 'x2'], 'entity', 'time')
 
 ## Comprehensive Specification Testing
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 ```python
 def run_all_specification_tests(df, y_col, x_cols, entity_col, time_col):
     """
@@ -430,3 +485,39 @@ all_results = run_all_specification_tests(df, 'y', ['x1', 'x2'], 'entity', 'time
 4. **Heteroskedasticity** requires robust standard errors
 
 5. **Run multiple tests** for comprehensive model validation
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What problem does this approach solve that simpler methods cannot?
+
+**Practice Question 2:** What are the key assumptions, and how would you test them in practice?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_hausman_test.md">
+  <div class="link-card-title">01 Hausman Test</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_hausman_test.md">
+  <div class="link-card-title">01 Hausman Test — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_practical_model_choice.md">
+  <div class="link-card-title">03 Practical Model Choice</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_practical_model_choice.md">
+  <div class="link-card-title">03 Practical Model Choice — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

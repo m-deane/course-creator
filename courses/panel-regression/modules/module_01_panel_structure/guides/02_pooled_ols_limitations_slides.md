@@ -26,11 +26,19 @@ This ignores:
 - **Time dependence:** Correlation within entities over time
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # What Goes Wrong
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     POOL["Pooled OLS"] --> A1["Assumes i.i.d. errors"]
     A1 --> P1["Entity effects in error term"]
@@ -42,6 +50,13 @@ flowchart TD
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -52,6 +67,12 @@ flowchart TD
 ---
 
 # Simulation Setup
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 np.random.seed(42)
@@ -68,10 +89,25 @@ for i in range(n_entities):
         y = 2 + true_beta * x + entity_effects[i] + np.random.normal(0, 0.5)
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Bias Results
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 print(f"True beta:        {true_beta:.4f}")
@@ -80,6 +116,8 @@ print(f"Fixed Effects:    {fe.params['x']:.4f}")
 print(f"Pooled OLS Bias:  {pooled.params['x'] - true_beta:.4f}")
 ```
 
+</div>
+
 | Method | Estimate | Bias |
 |--------|:--------:|:----:|
 | True value | 1.5000 | -- |
@@ -87,6 +125,13 @@ print(f"Pooled OLS Bias:  {pooled.params['x'] - true_beta:.4f}")
 | Fixed Effects | ~1.50 | ~0.00 |
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 # Why Bias Occurs
@@ -94,6 +139,7 @@ print(f"Pooled OLS Bias:  {pooled.params['x'] - true_beta:.4f}")
 $$E[\hat{\beta}_{OLS}] = \beta + \frac{\text{Cov}(X_{it}, \alpha_i)}{\text{Var}(X_{it})}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Data Generating Process"
         ALPHA["αᵢ<br/>(entity effect)"] -->|"causes"| Y["yᵢₜ"]
@@ -154,6 +200,7 @@ Default SE **underestimates** uncertainty by a factor of 5-10x.
 # Type I Error Inflation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "True β = 0 (no effect)"
         SIM["500 simulations"]
@@ -164,9 +211,6 @@ flowchart LR
     P1 --> R1["Rejection rate: ~40%<br/>8x nominal!"]
     P2 --> R2["Rejection rate: ~5%<br/>Correct"]
     P3 --> R3["Rejection rate: ~5%<br/>Correct"]
-    style R1 fill:#f99
-    style R2 fill:#9f9
-    style R3 fill:#9f9
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
@@ -202,6 +246,7 @@ def test_for_entity_effects(df, y_col, x_cols, entity_col):
 # Complete Diagnostic Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Panel Data"] --> T1["1. F-test for<br/>entity effects"]
     T1 -->|"Reject"| T2["2. Hausman test<br/>FE vs RE"]

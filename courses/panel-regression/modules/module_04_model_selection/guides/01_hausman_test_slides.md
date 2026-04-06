@@ -22,6 +22,13 @@ The Hausman test determines whether entity effects **correlate with regressors**
 > The Hausman test answers the single most important question in panel econometrics: Fixed Effects or Random Effects?
 
 <!-- Speaker notes: Read the highlighted quote aloud. This captures the key insight of the slide. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # The Fundamental Question
@@ -36,11 +43,19 @@ The Hausman test determines whether entity effects **correlate with regressors**
 > FE is always safe but wasteful. RE is efficient but risky.
 
 <!-- Speaker notes: Review the table row by row. Highlight the most important distinctions. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # Hausman Test Logic
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     H0["Under H0 (RE valid):<br/>Both FE and RE consistent<br/>RE is more efficient"]
     H1["Under H1 (RE invalid):<br/>Only FE is consistent<br/>RE is biased"]
@@ -51,12 +66,16 @@ flowchart TD
     COMPARE --> SIMILAR{"Similar<br/>estimates?"}
     SIMILAR -->|"Yes"| ACCEPT["Fail to reject H0<br/>→ Use RE (efficiency)"]
     SIMILAR -->|"No"| REJECT["Reject H0<br/>→ Use FE (consistency)"]
-
-    style ACCEPT fill:#9f9
-    style REJECT fill:#f99
 ```
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # The Test Statistic
@@ -73,6 +92,13 @@ where $K$ = number of time-varying regressors.
 | Reject $H_0$ | Effects correlated with X | FE required |
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -83,6 +109,12 @@ where $K$ = number of time-varying regressors.
 ---
 
 # Manual Hausman Test
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -101,10 +133,18 @@ else:
     print("Cannot reject H0 → RE acceptable")
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
 
 # Using linearmodels
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS, RandomEffects, compare
@@ -123,6 +163,8 @@ print(comparison)
 #   Conclusion: Use FE
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
 
@@ -136,6 +178,7 @@ print(comparison)
 # Three Key Limitations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     LIMITS["Hausman Test Limitations"]
     LIMITS --> POWER["1. Low Power<br/>Small samples, little<br/>within variation"]
@@ -199,6 +242,7 @@ print(f"P-value: {re_mundlak.pvalues['x_mean']:.4f}")
 # Practical Decision Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Start"] --> Q1{"Is N 'the population'<br/>or a random sample?"}
     Q1 -->|"Population<br/>(all US states)"| FE["Use FE"]

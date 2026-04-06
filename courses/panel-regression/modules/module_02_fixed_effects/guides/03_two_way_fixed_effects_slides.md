@@ -27,6 +27,13 @@ $$y_{it} = \alpha_i + \lambda_t + X_{it}\beta + \epsilon_{it}$$
 | $\lambda_t$ | Entity-invariant time shocks | Recessions, policy changes |
 
 <!-- Speaker notes: Focus on the intuition behind the formula. Explain what each term represents in plain language. -->
+
+<div class="callout-key">
+
+Panel data controls for unobserved time-invariant heterogeneity -- the key advantage over cross-sectional data.
+
+</div>
+
 ---
 
 # Why Add Time Fixed Effects?
@@ -41,26 +48,45 @@ Common shocks affect all entities simultaneously:
 Without time FE, these **confound** the X-Y relationship.
 
 <!-- Speaker notes: Explain the key concepts on this slide. Check for questions before moving on. -->
+
+<div class="callout-insight">
+
+**Insight:** The within-transformation eliminates time-invariant confounders, which is the most powerful tool in the panel econometrician's toolkit.
+
+</div>
+
 ---
 
 # The Confounding Problem
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MACRO["Macro shock λₜ<br/>(e.g., recession)"] -->|"Reduces"| INV["Investment xᵢₜ"]
     MACRO -->|"Reduces"| GROWTH["Growth yᵢₜ"]
     INV -->|"β (true effect)"| GROWTH
     INV -.->|"β + bias<br/>(entity FE only)"| GROWTH
-
-    style MACRO fill:#f99
 ```
 
 > Without time FE, the investment coefficient captures both the true effect and the spurious correlation through macro shocks.
 
 <!-- Speaker notes: Walk through the diagram from top to bottom. Explain each node and decision point. -->
+
+<div class="callout-warning">
+
+**Warning:** Standard errors from pooled OLS ignore within-entity correlation and are almost always too small. Use clustered standard errors.
+
+</div>
+
 ---
 
 # Simulation: The Bias
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Entity FE only (biased by common shocks)
@@ -75,7 +101,16 @@ print(f"Entity FE: {fe_entity.params['investment']:.4f}  (biased)")
 print(f"Two-way FE: {fe_twoway.params['investment']:.4f}  (true ≈ 0.80)")
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
+
+<div class="callout-info">
+
+**Info:** With N entities and T periods, panel data gives N*T observations, dramatically increasing statistical power over pure cross-sections.
+
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -102,6 +137,7 @@ $$\tilde{y}_{it} = y_{it} - \bar{y}_i - \bar{y}_t + \bar{\bar{y}}$$
 # Double Demeaning Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Y["yᵢₜ (original)"] --> E["Subtract entity mean ȳᵢ"]
     E --> T["Subtract time mean ȳₜ"]
@@ -114,6 +150,12 @@ flowchart TD
 ---
 
 # Manual Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def double_demean(df, entity_col, time_col, variables):
@@ -129,6 +171,8 @@ def double_demean(df, entity_col, time_col, variables):
 df_dd = double_demean(df, 'firm', 'year', ['growth', 'investment'])
 manual_twfe = smf.ols('growth_dd ~ investment_dd - 1', data=df_dd).fit()
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->
 ---
@@ -161,6 +205,7 @@ manual_twfe = smf.ols('growth_dd ~ investment_dd - 1', data=df_dd).fit()
 # TWFE Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Common time<br/>shocks plausible?"}
     Q1 -->|"Yes"| Q2{"X correlated with<br/>time shocks?"}
@@ -265,6 +310,7 @@ fe_entity_trend = smf.ols(
 TWFE has **known problems** when treatment is adopted at different times:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     STAG["Staggered Treatment"] --> P1["Treatment effects<br/>vary across units"]
     STAG --> P2["Effects change<br/>over time since treatment"]

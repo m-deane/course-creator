@@ -1,6 +1,26 @@
 # Panel Data Concepts and Structure
 
+> **Reading time:** ~16 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## Why Panel Data Lets You See What Cross-Sections Cannot
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Panel Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Set Multi-Index</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Check Balance</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Exploratory Analysis</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Panel data (also called longitudinal or cross-sectional time series data) combines cross-sectional and time series dimensions:
+
+</div>
 
 Panel data (also called longitudinal or cross-sectional time series data) combines cross-sectional and time series dimensions:
 
@@ -27,6 +47,13 @@ Entity      i=2    │y₂₁ │y₂₂ │y₂₃ │...│y₂ₜ │  Variat
 
 ## Panel Data vs. Other Data Structures
 
+<div class="callout-insight">
+
+**Insight:** Panel data lets you control for unobservable differences between entities that are constant over time. This is the single most important reason to prefer panel data over repeated cross-sections.
+
+</div>
+
+
 | Structure | Cross-Sectional | Time Series | Example |
 |-----------|-----------------|-------------|---------|
 | Cross-sectional | Yes | No | Survey of firms at one point |
@@ -35,6 +62,13 @@ Entity      i=2    │y₂₁ │y₂₂ │y₂₃ │...│y₂ₜ │  Variat
 | **Panel data** | Yes | Yes (same units) | Same firms over 10 years |
 
 ## Why Panel Data Matters
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 ### 1. Control for Unobserved Heterogeneity
 
@@ -69,6 +103,12 @@ Panel data enables analysis of:
 ### Balanced Panel
 Every entity observed in every period:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 
@@ -86,8 +126,16 @@ print(balanced.groupby('entity').size())
 # C    3
 ```
 
+</div>
+
 ### Unbalanced Panel
 Some entity-period combinations missing:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Unbalanced panel (firm C missing 2021)
@@ -102,6 +150,8 @@ unbalanced = pd.DataFrame({
 # - Related to observables (MAR)?
 # - Related to unobservables (MNAR)? ← Selection bias!
 ```
+
+</div>
 
 ## Panel Data Notation
 
@@ -129,6 +179,12 @@ $$u_{it} = \alpha_i + \lambda_t + \epsilon_{it}$$
 
 ### Using pandas MultiIndex
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 import numpy as np
@@ -155,6 +211,8 @@ print(panel.loc[0])  # All periods for entity 0
 print(panel.xs(5, level='time').head())  # Period 5 for all entities
 ```
 
+</div>
+
 ### Using linearmodels PanelData
 
 ```python
@@ -170,6 +228,13 @@ print(f"Balanced: {panel_data.balanced}")
 ```
 
 ## Computing Panel Variation
+
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
 
 ```python
 def panel_variation(panel_df, var, entity_col='entity', time_col='time'):
@@ -210,3 +275,49 @@ print(f"Within share: {variation['within_share']:.1%}")
 4. **Balance matters**: Unbalanced panels require attention to selection and missing data mechanisms
 
 5. **Proper data structure** (MultiIndex in pandas, PanelData in linearmodels) is essential for analysis
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What problem does this approach solve that simpler methods cannot?
+
+**Practice Question 2:** What are the key assumptions, and how would you test them in practice?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_ols_review.md">
+  <div class="link-card-title">01 Ols Review — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures.md">
+  <div class="link-card-title">02 Data Structures — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures_python.md">
+  <div class="link-card-title">02 Data Structures Python</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_data_structures_python.md">
+  <div class="link-card-title">02 Data Structures Python — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

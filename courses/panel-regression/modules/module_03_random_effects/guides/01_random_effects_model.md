@@ -1,6 +1,26 @@
 # Random Effects Model
 
+> **Reading time:** ~12 min | **Module:** 03 — Random Effects | **Prerequisites:** Module 2
+
+
 ## The Random Effects Framework
+
+<div class="flow">
+<div class="flow-step mint">1. Estimate Variance Components</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Compute GLS Weights</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Quasi-Demean</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Run GLS</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Random Effects (RE) model treats entity effects as random draws from a distribution:
+
+</div>
 
 The Random Effects (RE) model treats entity effects as random draws from a distribution:
 
@@ -20,6 +40,13 @@ The entity effects must be **uncorrelated with all regressors**.
 
 ## Comparing FE and RE
 
+<div class="callout-insight">
+
+**Insight:** Random effects assumes the unobserved entity effect is uncorrelated with regressors. When this holds, RE is more efficient than FE because it uses both within- and between-entity variation.
+
+</div>
+
+
 | Aspect | Fixed Effects | Random Effects |
 |--------|--------------|----------------|
 | Entity effects | Parameters to estimate | Random variables |
@@ -29,6 +56,13 @@ The entity effects must be **uncorrelated with all regressors**.
 | Degrees of freedom | Loses $N-1$ df | Doesn't lose df |
 
 ## The GLS Transformation
+
+<div class="callout-warning">
+
+**Warning:** Reporting results without appropriate standard errors is a common mistake. In panel data, conventional OLS standard errors are almost always wrong -- use clustered or heteroskedasticity-robust standard errors.
+
+</div>
+
 
 ### Error Structure
 
@@ -56,6 +90,12 @@ $$\theta = 1 - \sqrt{\frac{\sigma_\epsilon^2}{\sigma_\epsilon^2 + T\sigma_\alpha
 As $\sigma_\alpha^2 \to \infty$ or $T \to \infty$, $\theta \to 1$ (RE approaches FE).
 
 ## Implementation in Python
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -96,9 +136,17 @@ print(fe_results.summary.tables[1])
 print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 ```
 
+</div>
+
 ## Estimating Variance Components
 
 ### Method of Moments
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def estimate_variance_components(data, y_col, x_cols, entity_col, time_col):
@@ -158,9 +206,17 @@ for k, v in var_components.items():
     print(f"  {k}: {v:.4f}")
 ```
 
+</div>
+
 ## Time-Invariant Variables
 
 A key advantage of RE: estimating effects of time-invariant variables.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Add time-invariant variable
@@ -179,6 +235,8 @@ re_with_invariant = RandomEffects(
 print("RE with Time-Invariant Variable:")
 print(re_with_invariant.summary.tables[1])
 ```
+
+</div>
 
 ## The Mundlak Approach
 
@@ -225,6 +283,13 @@ print(f"FE beta (x): {fe_results.params['x']:.4f}")
 
 ## Advantages of Random Effects
 
+<div class="callout-danger">
+
+**Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
+
+</div>
+
+
 | Advantage | Explanation |
 |-----------|-------------|
 | Efficiency | Uses both within and between variation |
@@ -244,3 +309,39 @@ Key points:
 - RE requires **strict exogeneity** plus **orthogonality** of effects
 - Use **Mundlak correction** if correlation is suspected
 - **Hausman test** compares FE and RE to detect violations
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the key assumption that distinguishes random effects from fixed effects, and when is it likely to be violated?
+
+**Practice Question 2:** Why does random effects estimation produce more efficient estimates than fixed effects when its assumptions hold?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_random_effects_assumptions.md">
+  <div class="link-card-title">02 Random Effects Assumptions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_random_effects_assumptions.md">
+  <div class="link-card-title">02 Random Effects Assumptions — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_correlated_random_effects.md">
+  <div class="link-card-title">03 Correlated Random Effects</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_correlated_random_effects.md">
+  <div class="link-card-title">03 Correlated Random Effects — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

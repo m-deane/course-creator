@@ -1,8 +1,14 @@
 # Directed Acyclic Graphs (DAGs) for Causal Inference
 
+> **Reading time:** ~9 min | **Module:** 0 — Foundations | **Prerequisites:** Basic statistics, regression, probability
+
 ## In Brief
 
 Directed Acyclic Graphs (DAGs) are visual representations of causal assumptions. Each node is a variable; each directed edge (arrow) represents a direct causal effect. DAGs make your causal assumptions explicit, allow identification of confounders, colliders, and mediators, and determine which variables must (and must not) be conditioned upon.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Directed Acyclic Graphs (DAGs) are visual representations of causal assumptions. Each node is a variable; each directed edge (arrow) represents a direct causal effect.
+</div>
 
 ## Key Insight
 
@@ -207,6 +213,12 @@ For a given DAG, there may be multiple valid adjustment sets. The **minimal adju
 
 **Software tools:** The `dagitty` Python package (or the web tool at dagitty.net) can compute minimal adjustment sets, test conditional independencies, and suggest testable implications of your DAG.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Using dagitty to check adjustment sets
 # Install: pip install dagitty-python
@@ -223,6 +235,8 @@ dag {
 # dagitty computes what to adjust for
 # adjustment_sets = get_adjustment_sets(dag, "Treatment", "Outcome")
 ```
+
+</div>
 
 ---
 
@@ -262,6 +276,12 @@ A step-by-step process:
 ---
 
 ## Code Example: Drawing DAGs
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import networkx as nx
@@ -345,13 +365,28 @@ draw_dag(
 )
 ```
 
+</div>
+
 ---
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Causal vs predictive thinking (Guide 1), Potential outcomes (Guide 2)
 - **Leads to:** ITS model specification (Module 01), Bayesian model building (Module 02)
 - **Related to:** Structural equation models, graphical models, do-calculus
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Directed Acyclic Graphs (DAGs) for Causal Inference and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
@@ -359,3 +394,11 @@ draw_dag(
 - Hernan, M.A. & Robins, J.M. (2020). *Causal Inference: What If* — Chapter 6-9 on DAGs
 - Cinelli, C., Forney, A., & Pearl, J. (2022). "A Crash Course in Good and Bad Controls." — essential paper on collider bias
 - dagitty.net — browser-based DAG tool with automatic adjustment set computation
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

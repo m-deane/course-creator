@@ -1,8 +1,14 @@
 # CausalPy ITS API Walkthrough
 
+> **Reading time:** ~9 min | **Module:** 1 — Its Fundamentals | **Prerequisites:** Module 0 — Causal Foundations
+
 ## In Brief
 
 CausalPy's `InterruptedTimeSeries` class provides a high-level interface to Bayesian ITS models built on PyMC. It handles design matrix construction, model building, sampling, and visualization, while exposing enough flexibility to customize priors, formulas, and sampling parameters.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> CausalPy's `InterruptedTimeSeries` class provides a high-level interface to Bayesian ITS models built on PyMC. It handles design matrix construction, model building, sampling, and visualization, while exposing enough flexibility to customize priors, formulas, and sampling parameters.
+</div>
 
 ## Key Insight
 
@@ -11,6 +17,12 @@ CausalPy is a wrapper around PyMC that adds causal inference semantics: it knows
 ---
 
 ## Installation and Import
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Install (if not already done in Module 00)
@@ -24,13 +36,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 ```
 
+</div>
+
 ### Package Version Check
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 print(f"CausalPy: {cp.__version__}")
 print(f"PyMC: {pm.__version__}")
 print(f"ArviZ: {az.__version__}")
 ```
+
+</div>
 
 ---
 
@@ -45,6 +67,12 @@ print(f"ArviZ: {az.__version__}")
 The function `treatment_time` accepts an integer index (row number in the DataFrame at which the intervention occurs).
 
 ### Canonical Data Preparation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -100,11 +128,19 @@ def prepare_its_dataframe(
     return df
 ```
 
+</div>
+
 ---
 
 ## The `InterruptedTimeSeries` Class
 
 ### Constructor Arguments
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 cp.InterruptedTimeSeries(
@@ -115,9 +151,17 @@ cp.InterruptedTimeSeries(
 )
 ```
 
+</div>
+
 ### Formula Specification
 
 The formula follows the standard Python formula language (Wilkinson notation, via `formulaic`):
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Full ITS model: level change + slope change
@@ -139,6 +183,8 @@ formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 formula = "y ~ 1 + t + treated + t_post + covariate_name"
 ```
 
+</div>
+
 **Important:** Every variable named in the formula must exist as a column in `data`.
 
 ---
@@ -150,6 +196,12 @@ CausalPy provides several built-in model objects. For ITS, you will primarily us
 ### `cp.pymc_models.LinearRegression`
 
 Standard Gaussian linear regression with weakly informative default priors.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 model = cp.pymc_models.LinearRegression(
@@ -164,6 +216,8 @@ model = cp.pymc_models.LinearRegression(
 )
 ```
 
+</div>
+
 ### Sampling Parameter Guidelines
 
 | Parameter | Recommended | Notes |
@@ -177,6 +231,12 @@ model = cp.pymc_models.LinearRegression(
 ---
 
 ## Fitting the Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -202,6 +262,8 @@ result = cp.InterruptedTimeSeries(
 )
 ```
 
+</div>
+
 CausalPy will:
 1. Build the design matrix from the formula
 2. Construct the PyMC model with default priors
@@ -213,6 +275,12 @@ CausalPy will:
 ## Accessing Results
 
 ### Summary Table
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Human-readable summary of posterior estimates
@@ -228,7 +296,15 @@ summary = az.summary(
 print(summary)
 ```
 
+</div>
+
 ### Raw Posterior Samples
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # All posterior samples (4 chains × 1000 draws × n_variables)
@@ -244,7 +320,15 @@ print(f"P(level change > 0): {(beta_treated_samples > 0).mean():.2%}")
 beta_slope_samples = posterior["t_post"].values.flatten()
 ```
 
+</div>
+
 ### Counterfactual Prediction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # The InferenceData contains posterior predictive samples
@@ -255,11 +339,19 @@ if "mu_cf" in result.idata.posterior:
     counterfactual_mean = result.idata.posterior["mu_cf"].mean(("chain", "draw"))
 ```
 
+</div>
+
 ---
 
 ## Visualization
 
 ### Built-in Plot
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # CausalPy's standard ITS plot (two panels)
@@ -274,11 +366,19 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 The two-panel plot shows:
 - **Top panel:** Observed data + fitted posterior mean + 94% posterior band + counterfactual
 - **Bottom panel:** Estimated causal impact at each post-intervention time point
 
 ### Posterior Distribution Plots (ArviZ)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Posterior distributions of all parameters
@@ -310,11 +410,19 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## Convergence Diagnostics
 
 Always check convergence before interpreting results.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # R-hat (should be < 1.01 for all parameters)
@@ -338,9 +446,17 @@ if n_divergences > 10:
     print("WARNING: High divergences. Consider increasing target_accept or reparameterizing.")
 ```
 
+</div>
+
 ---
 
 ## Computing the Cumulative Causal Impact
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_cumulative_impact(
@@ -393,6 +509,8 @@ def compute_cumulative_impact(
     }
 ```
 
+</div>
+
 ---
 
 ## Custom PyMC Models
@@ -403,6 +521,12 @@ For advanced use cases, you can pass custom PyMC models to CausalPy. This allows
 - Use non-Gaussian likelihoods (e.g., Poisson for count outcomes)
 
 ### Example: Informative Priors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -433,9 +557,17 @@ class InformativeITSModel(cp.pymc_models.LinearRegression):
             y_hat = pm.Normal("y_hat", mu=mu, sigma=sigma, observed=y_, dims=["obs"])
 ```
 
+</div>
+
 ---
 
 ## Complete Workflow Example
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -480,6 +612,8 @@ print(f"\nLevel change: {level_change.mean():.2f} (94% HDI: {az.hdi(level_change
 print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 ```
 
+</div>
+
 ---
 
 ## Common Errors and Solutions
@@ -495,7 +629,20 @@ print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 
 ---
 
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of CausalPy ITS API Walkthrough and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
+
 ## Connections
+
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
 
 - **Builds on:** ITS Introduction (Guide 1), Segmented Regression (Guide 2)
 - **Leads to:** Notebooks 1–3 in this module, Bayesian ITS internals (Module 02)
@@ -510,3 +657,11 @@ print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 | `result.summary()` | DataFrame | Posterior mean, HDI, R-hat for all parameters |
 | `result.model` | `pm.Model` | The underlying PyMC model object |
 | `result.formula` | str | The formula used to fit the model |
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_its_smoking_ban.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

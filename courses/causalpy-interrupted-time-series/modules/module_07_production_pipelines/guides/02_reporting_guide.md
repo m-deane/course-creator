@@ -1,5 +1,7 @@
 # Reporting Causal Estimates: Effect Sizes, Intervals, and Sensitivity
 
+> **Reading time:** ~6 min | **Module:** 7 — Production Pipelines | **Prerequisites:** Modules 1-6
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -34,6 +36,12 @@ Example:
 
 ### Frequentist Reporting
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import statsmodels.formula.api as smf
 import numpy as np
@@ -50,9 +58,17 @@ print(f"95% CI:           [{ci[0]:.3f}, {ci[1]:.3f}]")
 print(f"p-value:          {p_val:.4f}")
 ```
 
+</div>
+
 The 95% CI means: "If we repeated this experiment many times, 95% of the CIs constructed this way would contain the true parameter." It does NOT mean "there is a 95% probability the true effect is in this range."
 
 ### Bayesian Reporting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -73,6 +89,8 @@ print(f"94% HDI:          [{hdi_94[0]:.3f}, {hdi_94[1]:.3f}]")
 print(f"P(τ > 0):         {p_positive:.3f}")
 ```
 
+</div>
+
 The 94% HDI means: "There is 94% posterior probability the true effect is in this range." This is the direct interpretation practitioners usually want.
 
 ---
@@ -82,6 +100,12 @@ The 94% HDI means: "There is 94% posterior probability the true effect is in thi
 ### Standardised Effect Size (Cohen's d)
 
 Useful when the outcome is not on an interpretable scale:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Cohen's d: treatment effect in standard deviations of the outcome
@@ -95,9 +119,17 @@ print(f"  d = 0.5: medium")
 print(f"  d = 0.8: large")
 ```
 
+</div>
+
 ### Percentage Change
 
 For outcomes on a ratio scale:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 baseline_mean = df[df['post']==0]['outcome'].mean()
@@ -106,9 +138,17 @@ pct_change = 100 * tau / baseline_mean
 print(f"Effect as % of baseline: {pct_change:.1f}%")
 ```
 
+</div>
+
 ### Number Needed to Treat (NNT)
 
 For binary outcomes and policy evaluation:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # If outcome is probability of employment (0-1)
@@ -117,6 +157,8 @@ nnt = 1 / tau_prob
 print(f"NNT: {nnt:.0f} individuals treated for 1 additional employment outcome")
 ```
 
+</div>
+
 ---
 
 ## 4. Reporting Robustness Checks
@@ -124,6 +166,12 @@ print(f"NNT: {nnt:.0f} individuals treated for 1 additional employment outcome")
 Robustness checks should be concise and structured. Present them in a table rather than prose.
 
 ### Template Robustness Table
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -155,6 +203,8 @@ print("-" * 70)
 print("All specifications show positive, significant effects.")
 ```
 
+</div>
+
 ---
 
 ## 5. Visualising Results for Communication
@@ -162,6 +212,12 @@ print("All specifications show positive, significant effects.")
 ### The "Main Results" Figure
 
 For technical presentations, a forest plot showing the primary estimate with robustness checks is effective:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -197,9 +253,17 @@ def forest_plot(results_list, title='Treatment Effect Estimates', ax=None):
     return ax
 ```
 
+</div>
+
 ### Bayesian Posterior Plot
 
 For Bayesian results, show the full posterior distribution:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def posterior_summary_plot(samples, true_value=None, title='Posterior Distribution'):
@@ -236,6 +300,8 @@ def posterior_summary_plot(samples, true_value=None, title='Posterior Distributi
     return fig, ax
 ```
 
+</div>
+
 ---
 
 ## 6. Sensitivity Analysis Reporting
@@ -245,6 +311,12 @@ Sensitivity analysis answers: "What would have to be true for my conclusion to b
 ### For DiD: Roth Sensitivity
 
 How large a pre-trend violation would overturn the result?
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Conceptual: bound effect under pre-trend violations
@@ -260,7 +332,15 @@ def roth_sensitivity_table(estimate, se, pre_trend_range):
         print(f"{violation:>12.3f} {adjusted:>18.3f} {sig:>14}")
 ```
 
+</div>
+
 ### For RDD: Bandwidth Sensitivity Table
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def bandwidth_sensitivity_table(rdd_results_by_bandwidth):
@@ -272,6 +352,8 @@ def bandwidth_sensitivity_table(rdd_results_by_bandwidth):
         marker = " ← Primary" if h == primary_bandwidth else ""
         print(f"  h={h:.2f}: τ = {est:+.3f} [{lo:+.3f}, {hi:+.3f}]{marker}")
 ```
+
+</div>
 
 ---
 
@@ -293,3 +375,17 @@ Before finalising a causal analysis report:
 
 **Previous:** [01 — Model Selection](01_model_selection_guide.md)
 **Next:** [03 — Deployment Guide](03_deployment_guide.md)
+
+<div class="callout-key">
+<strong>Key Concept:</strong> **Previous:** [01 — Model Selection](01_model_selection_guide.md)
+**Next:** [03 — Deployment Guide](03_deployment_guide.md)
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_model_selection_workflow.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

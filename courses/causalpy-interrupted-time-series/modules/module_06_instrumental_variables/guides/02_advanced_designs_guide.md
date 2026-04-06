@@ -1,5 +1,7 @@
 # Advanced IV Designs and Combining Causal Methods
 
+> **Reading time:** ~7 min | **Module:** 6 — Instrumental Variables | **Prerequisites:** Module 0 — Causal Foundations, Module 5 — RDD
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -25,6 +27,12 @@ The conventional threshold is **F > 10** for a single instrument (Stock, Wright 
 
 For multiple instruments, use the **Angrist-Pischke** (AP) F-statistic for each instrument individually, and the **effective F-statistic** (Olea & Pflueger, 2013) for the joint first stage.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import statsmodels.formula.api as smf
 from linearmodels.iv import IV2SLS
@@ -44,6 +52,8 @@ for var in ['college_nearby', 'mother_educ']:
     print(f"  {var}: t = {t:.2f}, F (approx) = {t**2:.2f}")
 ```
 
+</div>
+
 ### Handling Weak Instruments
 
 | Approach | When to Use |
@@ -52,6 +62,12 @@ for var in ['college_nearby', 'mother_educ']:
 | LIML (Limited Information Maximum Likelihood) | Less biased than 2SLS with weak instruments |
 | Fuller's modified LIML | Reduces bias further |
 | Find a stronger instrument | Best solution if available |
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Anderson-Rubin confidence intervals (weak-instrument robust)
@@ -67,11 +83,19 @@ ar_ci = KClass(k=1).fit_regularized(
 )
 ```
 
+</div>
+
 ---
 
 ## 2. Multiple Instruments: 2SLS in Practice
 
 ### Setup with Two Instruments
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -118,9 +142,17 @@ print(model_iv.summary)
 print(f"\nFirst stage F-statistic: {model_iv.first_stage.diagnostics['f.stat']:.2f}")
 ```
 
+</div>
+
 ### Overidentification Test
 
 With two instruments and one endogenous variable (overidentified), test whether the instruments give consistent estimates:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Sargan-Hansen J-test
@@ -132,6 +164,8 @@ if j_pval > 0.05:
 else:
     print("Reject: at least one instrument may violate exclusion restriction")
 ```
+
+</div>
 
 ---
 
@@ -153,6 +187,12 @@ where $f(t)$ allows different pre-period trends for the treated group.
 - DiD without time series: parallel trends may be implausible
 - Combined: control group removes common shocks; time series provides rich pre-period
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import statsmodels.formula.api as smf
 
@@ -170,6 +210,8 @@ tau = model_its_did.params['post_treated']
 print(f"ITS+DiD treatment effect: {tau:.3f}")
 ```
 
+</div>
+
 ---
 
 ## 4. Fuzzy RDD as IV
@@ -183,6 +225,12 @@ A fuzzy RDD is exactly a local IV problem. The cutoff serves as an instrument:
 The fuzzy RDD estimator is:
 
 $$\tau_{fuzzy} = \frac{\lim_{x\downarrow c} E[Y \mid X=x] - \lim_{x\uparrow c} E[Y \mid X=x]}{\lim_{x\downarrow c} E[D \mid X=x] - \lim_{x\uparrow c} E[D \mid X=x]}$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Fuzzy RDD as local IV
@@ -207,6 +255,8 @@ print(f"  Reduced form jump: {jump_reduced_form:.3f}")
 print(f"  First stage jump: {jump_first_stage:.3f}")
 ```
 
+</div>
+
 ---
 
 ## 5. Combining RDD and DiD (RD-DiD)
@@ -225,6 +275,12 @@ The parameter $\tau$ captures:
 - The change in the gap between above-cutoff and below-cutoff units after treatment
 - After removing pre-existing differences and common time trends
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # RD-DiD: panel with pre and post periods
 df['above_cutoff'] = (df['running_var'] >= cutoff).astype(int)
@@ -241,6 +297,8 @@ model_rddid = smf.ols(
 tau_rddid = model_rddid.params['above_cutoff:post']
 print(f"RD-DiD estimate: {tau_rddid:.3f}")
 ```
+
+</div>
 
 ---
 
@@ -279,6 +337,15 @@ graph TD
 
 ---
 
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Advanced IV Designs and Combining Causal Methods and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
+
 ## Further Reading
 
 - Angrist & Pischke (2009), *Mostly Harmless Econometrics*, Chapters 4-5
@@ -291,3 +358,17 @@ graph TD
 
 **Previous:** [01 — IV Fundamentals](01_iv_fundamentals_guide.md)
 **Next:** [Module 06 Notebooks](../notebooks/)
+
+<div class="callout-key">
+<strong>Key Concept:</strong> **Previous:** [01 — IV Fundamentals](01_iv_fundamentals_guide.md)
+**Next:** [Module 06 Notebooks](../notebooks/)
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_iv_estimation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

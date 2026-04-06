@@ -1,5 +1,7 @@
 # CausalPy's DifferenceInDifferences API
 
+> **Reading time:** ~8 min | **Module:** 4 — Difference In Differences | **Prerequisites:** Module 1 — ITS Fundamentals
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -39,6 +41,12 @@ CausalPy's `DifferenceInDifferences` expects a `pandas.DataFrame` with:
 
 ### Preparing Your Data
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 import numpy as np
@@ -68,11 +76,19 @@ print(f"\nShape: {nj_data.shape}")
 print(f"\nGroup counts:\n{nj_data.groupby(['state', 'period']).size()}")
 ```
 
+</div>
+
 ---
 
 ## 3. Fitting the DiD Model
 
 ### Basic Syntax
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -88,6 +104,8 @@ result = cp.DifferenceInDifferences(
 )
 ```
 
+</div>
+
 ### Formula Structure
 
 The formula must include:
@@ -97,6 +115,12 @@ The formula must include:
 - `post:treated`: **the interaction — this is the DiD treatment effect**
 
 You can add covariates to control for observed differences:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # With covariates
@@ -109,7 +133,15 @@ result = cp.DifferenceInDifferences(
 )
 ```
 
+</div>
+
 ### Using the Frequentist Backend
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import LinearRegression as SKLinReg
@@ -122,6 +154,8 @@ result_freq = cp.DifferenceInDifferences(
     model=cp.skl_models.LinearRegression()
 )
 ```
+
+</div>
 
 ---
 
@@ -147,6 +181,12 @@ For the Bayesian backend, you get:
 
 ### Accessing the Posterior
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Get the posterior samples for the treatment effect
 treatment_effect_samples = result.idata.posterior["post:treated"].values.flatten()
@@ -156,6 +196,8 @@ print(f"Posterior std: {treatment_effect_samples.std():.3f}")
 print(f"94% HDI: {np.percentile(treatment_effect_samples, [3, 97])}")
 print(f"P(effect > 0): {(treatment_effect_samples > 0).mean():.3f}")
 ```
+
+</div>
 
 The full posterior lets you compute any summary statistic and answer questions like "What is the probability the effect exceeds 1 FTE employee?"
 
@@ -175,6 +217,12 @@ CausalPy's DiD plot shows:
 - The counterfactual — what the treated group would have looked like without treatment
 
 ### Customising the Plot
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -201,7 +249,15 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ### Trace Plots for Diagnostics
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import arviz as az
@@ -216,6 +272,8 @@ plt.show()
 az.summary(result.idata, var_names=["post:treated"])
 ```
 
+</div>
+
 ---
 
 ## 6. Prior Specification
@@ -229,6 +287,12 @@ By default, CausalPy uses weakly informative priors:
 - Outcome noise: $\text{HalfNormal}(1)$
 
 ### Specifying Custom Priors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Suppose we believe the treatment effect is small and positive
@@ -250,7 +314,15 @@ result_informative = cp.DifferenceInDifferences(
 )
 ```
 
+</div>
+
 ### Prior Sensitivity Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Compare three prior specifications
@@ -288,11 +360,19 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 7. Model Checks and Diagnostics
 
 ### Posterior Predictive Check
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Does the model generate data that looks like the observed data?
@@ -303,6 +383,8 @@ az.plot_ppc(ppc, observed_ys="fte_employment")
 plt.title("Posterior Predictive Check")
 plt.show()
 ```
+
+</div>
 
 ### Convergence Diagnostics
 
@@ -320,6 +402,12 @@ If $\hat{R} > 1.01$:
 ---
 
 ## 8. Complete Worked Example
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -376,6 +464,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 9. API Reference Summary
@@ -416,3 +506,17 @@ The key to correct usage is:
 
 **Previous:** [02 — Staggered DiD](02_staggered_did_guide.md)
 **Next:** [Module 05 — Regression Discontinuity](../../module_05_regression_discontinuity/guides/01_rdd_fundamentals_guide.md)
+
+<div class="callout-key">
+<strong>Key Concept:</strong> **Previous:** [02 — Staggered DiD](02_staggered_did_guide.md)
+**Next:** [Module 05 — Regression Discontinuity](../../module_05_regression_discontinuity/guides/01_rdd_fundamentals_guide.md)
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_did_labour_economics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

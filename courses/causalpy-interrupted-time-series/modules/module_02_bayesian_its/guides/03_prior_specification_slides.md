@@ -22,6 +22,7 @@ math: mathjax
 A **prior** $P(\theta)$ represents your beliefs about parameter values **before** seeing the data.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Prior\nP(θ)\nbefore data"] --> B["Likelihood\nP(data | θ)\ndata updates beliefs"]
     B --> C["Posterior\nP(θ | data)\nafter seeing data"]
@@ -33,6 +34,10 @@ In large samples, the likelihood dominates and the prior has minimal influence.
 In small samples, the prior is crucial — it regularizes the estimates.
 
 <!-- Speaker notes: Bayes' theorem is simple: posterior ∝ prior × likelihood. When the data are abundant, the likelihood is very peaked and the posterior closely tracks it regardless of the prior. When data are scarce, the prior pulls the posterior toward the prior mean. This is regularization from a Bayesian perspective. The key question for applied Bayesian ITS is: do you have enough post-intervention data that the prior doesn't matter much? With 6 post-intervention observations, the answer is almost certainly no. With 30+, the answer is probably yes for the level change (but maybe not for the slope change, which accumulates slowly). -->
+
+<div class="callout-info">
+Info:  $P(\theta)$ represents your beliefs about parameter values 
+</div>
 
 ---
 
@@ -55,6 +60,12 @@ Allows absurd effects. Causes sampling problems. **Avoid.**
 </div>
 
 <!-- Speaker notes: The weakly informative prior is the Goldilocks prior: not too tight, not too diffuse. Centered at zero means no prior assumption about direction. Scale proportional to sigma_Y means the prior says "the effect is probably within one standard deviation of the outcome." This is almost always correct — effects rarely exceed the full variation of the outcome. The informative prior formally incorporates external evidence. The too-diffuse prior is effectively flat and causes problems: the posterior can be pulled to extreme values by numerical noise in the likelihood. -->
+
+<div class="callout-key">
+Key Point: 
+$$\beta_2 \sim \mathcal{N}(0, \sigma_Y)$$
+Centered at zero, scale proportional to data variation. 
+</div>
 
 ---
 
@@ -81,6 +92,10 @@ with pm.Model() as prior_model:
 **Ask: Do these trajectories look like plausible AMI data?**
 
 <!-- Speaker notes: The prior predictive check is the Bayesian equivalent of sanity-checking your model before fitting. You sample from the prior, compute the implied outcomes at every time point, and plot them. If the trajectories include negative AMI rates, your intercept prior is too diffuse. If the trajectories all cluster within ±2 units of 85 regardless of the intervention, your beta_2 prior is too tight. The prior predictive check is cheap (no actual sampling needed) and catches prior misspecification before you invest computation in sampling the posterior. Encourage students to always run this check. -->
+
+<div class="callout-insight">
+Insight: Before fitting the model, sample from the prior and look at the implied outcomes.
+</div>
 
 ---
 
@@ -135,6 +150,11 @@ az.plot_forest(
 **Fragile result:** Posteriors change substantially — data are not informative enough.
 
 <!-- Speaker notes: Prior sensitivity analysis is a standard requirement in rigorous Bayesian reporting. If the conclusion changes depending on whether you used a tight or diffuse prior, the data alone cannot support a strong causal claim. This does not necessarily mean the analysis is wrong — it might mean you need more data. But it is important to report this sensitivity rather than hiding it. A forest plot showing all three posteriors overlaid is the most efficient visualization of prior sensitivity. -->
+
+<div class="callout-warning">
+Warning:  All three priors give similar posteriors.
+
+</div>
 
 ---
 
@@ -209,6 +229,7 @@ This gives 95% of the prior mass below $2 \times \sigma_Y$ — the noise cannot 
 # Summary: Prior Specification Protocol
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["1. Compute pre-intervention\nmean and std dev"] --> B["2. Set weakly informative\npriors proportional to data scale"]
     B --> C["3. Run prior predictive check\n(200 samples)"]

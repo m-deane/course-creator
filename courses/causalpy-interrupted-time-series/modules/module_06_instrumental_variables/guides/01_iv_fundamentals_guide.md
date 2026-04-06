@@ -1,5 +1,7 @@
 # Instrumental Variables: Fundamentals
 
+> **Reading time:** ~8 min | **Module:** 6 — Instrumental Variables | **Prerequisites:** Module 0 — Causal Foundations, Module 5 — RDD
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -116,6 +118,12 @@ $$Y_i = \alpha + \beta \hat{X}_i + \delta W_i + \epsilon_i$$
 
 The coefficient $\hat{\beta}$ from Stage 2 is the 2SLS estimate of the causal effect.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -134,6 +142,8 @@ print(result.summary)
 print(f"IV estimate: {result.params['education']:.4f}")
 print(f"First stage F-stat: {result.first_stage.diagnostics['f.stat']:.2f}")
 ```
+
+</div>
 
 ### Why Not Just Run 2SLS Manually?
 
@@ -194,6 +204,12 @@ Each instrument works because it shifts the endogenous variable (education, fami
 
 The first stage F-statistic tests whether the instruments are jointly significant in predicting the endogenous variable. A conventional rule of thumb: F > 10 for a single instrument. More formally, use the effective F-statistic from Olea & Pflueger (2013).
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Check first stage F-statistic
 first_stage = smf.ols('education ~ college_nearby + experience + female', data=df).fit()
@@ -202,11 +218,19 @@ print(f"Coefficient on instrument: {first_stage.params['college_nearby']:.3f}")
 print(f"Standard error: {first_stage.bse['college_nearby']:.3f}")
 ```
 
+</div>
+
 ### Testing Exclusion: Overidentification Test
 
 If you have more instruments than endogenous variables (overidentified), you can test whether the extra instruments are valid using the Sargan-Hansen J-test. This tests the null that all instruments satisfy the exclusion restriction.
 
 **Caveat:** The test requires assuming at least one instrument is valid to identify the causal effect of the others. You cannot test all instruments simultaneously.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Sargan-Hansen J-test (overidentification)
@@ -218,6 +242,8 @@ j_pval = result.wooldridge_overid_pvalue
 print(f"J-statistic: {j_stat:.3f}, p-value: {j_pval:.3f}")
 # p > 0.05: instruments are jointly valid (under assumption that at least one is)
 ```
+
+</div>
 
 ---
 
@@ -250,6 +276,15 @@ The exclusion restriction cannot be tested — it requires theoretical justifica
 
 ---
 
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Instrumental Variables: Fundamentals and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
+
 ## Further Reading
 
 - Angrist & Pischke (2009), *Mostly Harmless Econometrics*, Chapters 4
@@ -257,6 +292,14 @@ The exclusion restriction cannot be tested — it requires theoretical justifica
 - Card (1995), "Using Geographic Variation in College Proximity to Estimate the Return to Schooling"
 - Imbens & Rosenbaum (2005), "Robust, Accurate Confidence Intervals with a Weak Instrument"
 - Murray (2006), "Avoiding Invalid Instruments and Coping With Weak Instruments"
+<div class="callout-key">
+<strong>Key Concept:</strong> - Angrist & Pischke (2009), *Mostly Harmless Econometrics*, Chapters 4
+- Angrist, Imbens & Rubin (1996), "Identification of Causal Effects Using Instrumental Variables"
+- Card (1995), "Using Geographic Variation in College Proximity to Estimate the Return to Schooling"
+- Imbens & Rosenbaum (2005)...
+</div>
+
+
 
 ---
 

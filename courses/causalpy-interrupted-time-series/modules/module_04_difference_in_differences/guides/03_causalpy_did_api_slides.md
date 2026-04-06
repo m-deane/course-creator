@@ -169,6 +169,11 @@ The plot shows:
 
 <!-- Speaker notes: CausalPy's DiD plot is designed for communication. The counterfactual line — what would have happened absent treatment — is explicitly shown, which makes the causal reasoning transparent. The shaded region around the treatment effect quantifies uncertainty visually. This plot can go directly into a presentation or paper with minimal modification. -->
 
+<div class="callout-insight">
+Insight:  observed group means (pre and post)
+- 
+</div>
+
 ---
 
 ## Customising Plots
@@ -221,6 +226,10 @@ az.summary(result.idata)[["mean", "sd", "r_hat", "ess_bulk"]]
 Also check trace plots: `az.plot_trace(result.idata)`
 
 <!-- Speaker notes: MCMC diagnostics are non-negotiable before interpreting results. R-hat measures whether multiple chains are exploring the same part of the parameter space — it should be very close to 1.0. ESS (effective sample size) tells you how many independent samples you effectively have after accounting for autocorrelation. Low ESS means your credible intervals might be too narrow. If either diagnostic fails, don't report results — fix the sampling first. -->
+
+<div class="callout-warning">
+Warning: Always check before interpreting:
+</div>
 
 ---
 
@@ -356,6 +365,10 @@ run_prior_sensitivity(df)
 
 <!-- Speaker notes: This is the production workflow. Notice there are six steps and interpretation comes fifth — after diagnostics. This order matters. Too many analysts jump straight to the point estimate without checking convergence or model fit. Following this workflow ensures that what you report is reliable. Also notice that the workflow ends with sensitivity analysis — you should always check if your conclusion holds under different modelling choices. -->
 
+<div class="callout-key">
+Key Point: Always plot the pre-treatment trends for treated and control groups before running DiD -- visual inspection catches violations that statistical tests miss.
+</div>
+
 ---
 
 ## Summary
@@ -370,6 +383,10 @@ run_prior_sensitivity(df)
 | Plotting | `result.plot()` shows counterfactual and effect |
 
 <!-- Speaker notes: These are the six things to remember for CausalPy DiD. Data format matters — wrong encoding gives wrong results. Formula structure is non-negotiable — the interaction is the treatment effect. Bayesian output is richer but requires convergence checking. Priors are a feature, not a bug — use them. And always plot — the visual makes the causal reasoning transparent. -->
+
+<div class="callout-info">
+Info: CausalPy's DiD implementation supports both frequentist and Bayesian estimation. Start with frequentist for speed, switch to Bayesian for richer uncertainty quantification.
+</div>
 
 ---
 

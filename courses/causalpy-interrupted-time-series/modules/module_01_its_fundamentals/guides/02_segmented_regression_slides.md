@@ -132,6 +132,10 @@ Model autocorrelation explicitly in the error structure.
 
 <!-- Speaker notes: In practice for this course, we use the Bayesian approach (Option 3) because it handles autocorrelation naturally through the PyMC model specification, and the posterior over rho gives us an explicit estimate of how much autocorrelation is present. Newey-West (Option 1) is the simplest fix and appropriate for quick analyses in a frequentist framework. Prais-Winsten (Option 2) is the gold standard for frequentist ITS but requires more implementation effort. -->
 
+<div class="callout-insight">
+Insight: Option 1: Newey-West Standard Errors
+</div>
+
 ---
 
 # Visual Autocorrelation Diagnostics
@@ -198,6 +202,10 @@ formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 - Can work with less data
 
 <!-- Speaker notes: The choice between month dummies and Fourier terms depends on data length and the shape of the seasonal pattern. Month dummies need at least 12 pre-intervention months (one complete cycle) to estimate. With less data, Fourier terms with 1-2 harmonics work better. Month dummies allow non-smooth seasonal patterns (e.g., a sharp holiday spike), while Fourier terms force a smooth sinusoidal pattern. In most practical cases, either approach gives similar results when the seasonal pattern is smooth and the pre-period is at least 24 months. -->
+
+<div class="callout-warning">
+Warning: Approach 1: Month Dummy Variables
+</div>
 
 ---
 
@@ -272,6 +280,10 @@ If the posterior predictive distribution does not cover the observed data well, 
 
 <!-- Speaker notes: The posterior predictive check (PPC) is the Bayesian equivalent of checking residual plots in frequentist regression. Generate many datasets from the posterior predictive distribution and overlay them on the observed data. If the model is well-specified, the observed data should look like a typical draw from the posterior predictive. Systematic misfits (e.g., the model consistently under-predicts in summer) indicate model misspecification that should be addressed before interpreting the causal estimates. -->
 
+<div class="callout-key">
+Key Point: Always test for autocorrelation in ITS residuals -- standard errors from OLS are invalid if the time series has serial correlation.
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -300,3 +312,7 @@ If the posterior predictive distribution does not cover the observed data well, 
 - Interpreting and communicating results
 
 <!-- Speaker notes: Guide 3 is the practical API guide — students will learn exactly what arguments to pass to InterruptedTimeSeries, how to read the output, and how to customize the PyMC model if needed. After Guide 3, they have everything they need for Notebook 1, which is a full end-to-end ITS analysis on a real policy dataset. The smoking ban example is a classic in the ITS literature, with a clear mechanism (reduced secondhand smoke exposure → reduced cardiac events) and enough data to demonstrate the full diagnostic workflow. -->
+
+<div class="callout-insight">
+Insight: The two key parameters in segmented regression are the level change (immediate jump) and the slope change (trend shift). Both can be present, or only one.
+</div>

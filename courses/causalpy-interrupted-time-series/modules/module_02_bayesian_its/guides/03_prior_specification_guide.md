@@ -1,8 +1,14 @@
 # Prior Specification for Bayesian ITS
 
+> **Reading time:** ~7 min | **Module:** 2 — Bayesian Its | **Prerequisites:** Module 1 — ITS Fundamentals, basic Bayesian concepts
+
 ## In Brief
 
 Choosing priors is the most subjective step in Bayesian modeling, and therefore the most important to get right. A prior encodes your beliefs about parameter values before seeing the post-intervention data. The goal is to be honest: neither too restrictive (overriding the data) nor too vague (allowing physically impossible values).
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Choosing priors is the most subjective step in Bayesian modeling, and therefore the most important to get right. A prior encodes your beliefs about parameter values before seeing the post-intervention data.
+</div>
 
 ## Key Insight
 
@@ -39,6 +45,12 @@ $\beta_2$ (level change) and $\beta_3$ (slope change) are the causal parameters 
 
 Compute the standard deviation and range of the pre-intervention outcome:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 pre_std = df.loc[df["treated"] == 0, "outcome"].std()
 pre_mean = df.loc[df["treated"] == 0, "outcome"].mean()
@@ -48,6 +60,8 @@ print(f"Pre-intervention mean: {pre_mean:.1f}")
 print(f"Pre-intervention std: {pre_std:.1f}")
 print(f"Pre-intervention range: {pre_range:.1f}")
 ```
+
+</div>
 
 ### Step 2: Define Plausible Effect Bounds
 
@@ -61,6 +75,12 @@ For a smoking ban on AMI rates:
 ### Step 3: Run a Prior Predictive Check
 
 Before fitting, sample from the prior and generate hypothetical outcomes. Ask: "Do these look like plausible data from my system?"
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -118,6 +138,8 @@ def prior_predictive_check(
     print(f"Prior predictive mean: {y_prior_samples.mean():.1f}")
     print("Ask: Do these trajectories span plausible outcome values?")
 ```
+
+</div>
 
 ### Step 4: Refine and Iterate
 
@@ -193,6 +215,12 @@ If all three give similar posteriors, the result is prior-robust. If they differ
 - The data are not informative enough to overcome the prior
 - The prior is genuinely strong (informative)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import causalpy as cp
 import pymc as pm
@@ -242,6 +270,8 @@ def its_with_custom_beta2_prior(df, t_star, beta2_sigma, y_pre_std):
     )
 ```
 
+</div>
+
 ---
 
 ## Reporting Prior Sensitivity Results
@@ -260,12 +290,33 @@ In this example, all three priors give essentially the same conclusion. The data
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Bayesian ITS (Guide 1), CausalPy internals (Guide 2)
 - **Leads to:** Notebook 2 (prior sensitivity analysis)
 - **Related to:** Gelman's prior recommendations, Stan prior choice wiki
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Prior Specification for Bayesian ITS and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
 - Gelman, A. et al. (2017). "Prior distributions for variance parameters in hierarchical models." *Bayesian Analysis* — the definitive reference on variance priors
 - Simpson, D. et al. (2017). "Penalising Model Component Complexity: A Principled, Practical Approach to Constructing Priors." *Statistical Science*
 - Stan Development Team. "Prior Choice Recommendations." https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_its_from_scratch_pymc.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

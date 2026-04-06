@@ -49,6 +49,10 @@ Individual treatment effects $\tau_i$ are unidentifiable.
 
 <!-- Speaker notes: The "?" in the table is the fundamental problem made visible. No statistical technique, regardless of how sophisticated, can recover the missing entries for individual units without making strong assumptions. The best we can do is estimate averages — and even that requires assumptions. Emphasize that this is not a data collection problem: you could gather unlimited data and still never observe both potential outcomes for the same unit at the same time. -->
 
+<div class="callout-key">
+Key Point: We never observe both $Y_i(0)$ and $Y_i(1)$ for the same unit.
+</div>
+
 ---
 
 # Treatment Effect Estimands
@@ -65,6 +69,10 @@ $$\text{ATT} = E[\tau_i \mid W_i = 1] = E[Y_i(1) - Y_i(0) \mid W_i = 1]$$
 **ITS estimates the ATT** — the effect on units that were actually treated.
 
 <!-- Speaker notes: Walk through each estimand carefully. The ITE is fundamentally unidentifiable. The ATE asks about the average effect for a randomly selected unit from the population. The ATT asks about the average effect for units that were actually treated — a different question! For policy evaluation, ATT is almost always more relevant because we want to know: "Did this policy help the people it was applied to?" ITS answers this question. -->
+
+<div class="callout-insight">
+Insight: Individual Treatment Effect (ITE):
+</div>
 
 ---
 
@@ -135,12 +143,11 @@ The counterfactual $Y_t(0)$ for $t \geq t^*$ is **never observed** — it must b
 # The ITS Counterfactual
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Pre-period\nt < t*\nY_t(0) observed"] --> B["Intervention\nat t*"]
     B --> C["Post-period\nt >= t*\nY_t(1) observed"]
     B --> D["Counterfactual\nt >= t*\nY_t(0) = ???"]
-    style D fill:#fef9e7,stroke:#f39c12
-    style C fill:#e8f8e8,stroke:#27ae60
 ```
 
 **Core ITS assumption:** The pre-intervention trend $Y_t(0)$ would have continued at the same rate absent the intervention.
@@ -263,6 +270,10 @@ The counterfactual trajectory is the model's prediction under the `treated=0` co
 
 <!-- Speaker notes: Use this table as a reference. The key message is that every method in this course is a strategy for making the unconfoundedness assumption (or something equivalent) plausible through design rather than just claiming it holds. ITS uses pre-period timing; synthetic control uses donor unit matching; DiD uses parallel trends; RD uses continuity at a threshold. The assumption is always there — the design determines how credible it is. -->
 
+<div class="callout-key">
+Key Point: SUTVA (Stable Unit Treatment Value Assumption) requires that one unit's treatment does not affect another's outcome -- violated when there are network effects or spillovers.
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -289,3 +300,7 @@ The counterfactual trajectory is the model's prediction under the `treated=0` co
 - Verify the full stack works end-to-end
 
 <!-- Speaker notes: DAGs (Guide 3) provide the visual language for reasoning about which variables to include in an analysis. They make the unconfoundedness assumption concrete: you can draw the assumed causal structure and read off which variables are confounders, colliders, and mediators. This is essential for correct model specification in CausalPy and for communicating your causal assumptions to others. -->
+
+<div class="callout-insight">
+Insight: The fundamental problem of causal inference is that we can never observe both potential outcomes for the same unit -- every causal method is a strategy for working around this limitation.
+</div>

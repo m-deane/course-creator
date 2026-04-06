@@ -1,5 +1,7 @@
 # Causal Model Selection: Which Design for Which Question
 
+> **Reading time:** ~6 min | **Module:** 7 — Production Pipelines | **Prerequisites:** Modules 1-6
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -24,6 +26,16 @@ There is no universal best design — each is appropriate for specific contexts.
 ---
 
 ## 2. The Decision Framework
+
+<div class="flow">
+<div class="flow-step blue">1. Identify Variation Source</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Check Data Requirements</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step mint">3. Assess Key Assumption</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Run Diagnostics</div>
+</div>
 
 ### Primary Dimension: Source of Variation
 
@@ -69,6 +81,14 @@ Do you have suitable donor units and pre-treatment period?
 ├── YES → Synthetic Control
 └── NO → Cannot make causal claims from observational data
 ```
+
+<div class="callout-key">
+<strong>Key Point:</strong> The decision tree above is not about picking the "fanciest" method. It is about identifying which design has the most credible source of exogenous variation in your specific setting. A well-executed ITS beats a poorly-justified DiD every time.
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> If you cannot articulate where your exogenous variation comes from in one sentence, your causal design is not ready. Go back to the question formulation stage.
+</div>
 
 ---
 
@@ -209,6 +229,15 @@ Before finalising your design choice:
 | IV | Endogenous treatment | Exclusion | First stage F + J-test |
 | ITS | Time series intervention | No confounders | Placebo time points |
 | Synthetic Control | Aggregate treated unit | Pre-period fit | Jackknife falsifications |
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Causal Model Selection: Which Design for Which Question and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ---
 

@@ -1,5 +1,7 @@
 # RDD Bandwidth Selection and Sensitivity Analysis
 
+> **Reading time:** ~7 min | **Module:** 5 — Regression Discontinuity | **Prerequisites:** Module 0 — Causal Foundations
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -51,6 +53,12 @@ This scales as $n^{-1/5}$ — bandwidth shrinks as sample size grows.
 
 ### Practical Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -79,6 +87,8 @@ print(f"Treatment effect estimate: {rdd_result.coef[0]:.3f}")
 print(f"95% CI: [{rdd_result.ci[0]:.3f}, {rdd_result.ci[1]:.3f}]")
 ```
 
+</div>
+
 ### Alternative Bandwidth Selectors
 
 | Method | Description | Use When |
@@ -95,6 +105,12 @@ print(f"95% CI: [{rdd_result.ci[0]:.3f}, {rdd_result.ci[1]:.3f}]")
 The goal of sensitivity analysis is to show that your treatment effect estimate does not depend critically on the specific bandwidth chosen.
 
 ### Generating the Sensitivity Plot
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -142,6 +158,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ### Interpreting the Sensitivity Plot
 
 A **stable** sensitivity plot shows:
@@ -168,6 +186,12 @@ Use **local linear** (order 1) or at most **local quadratic** (order 2). Higher-
 2. They produce erratic behaviour near the boundaries (Runge's phenomenon)
 3. The fit near the cutoff is dominated by distant points
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Compare polynomial orders
 for order in [1, 2, 3, 4]:
@@ -176,6 +200,8 @@ for order in [1, 2, 3, 4]:
           f"SE = {result.se[0]:.3f}, "
           f"95% CI = [{result.ci[0]:.3f}, {result.ci[1]:.3f}]")
 ```
+
+</div>
 
 ### The Standard Approach
 
@@ -197,12 +223,20 @@ Kernel weights down-weight observations further from the cutoff. Common choices:
 
 The triangular kernel is optimal for the boundary regression problem in RDD — it down-weights observations far from the cutoff, which is exactly what you want.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Compare kernels
 for kernel in ['triangular', 'uniform', 'epanechnikov']:
     result = rdrobust(y=df['y'], x=df['x'], c=0, h=h_ik, kernel=kernel)
     print(f"{kernel:<15}: τ = {result.coef[0]:.3f}, SE = {result.se[0]:.3f}")
 ```
+
+</div>
 
 In practice, kernel choice rarely matters as much as bandwidth choice.
 
@@ -236,6 +270,12 @@ Ignoring clustering in clustered data leads to over-rejection of the null (false
 
 The "donut" removes observations very close to the cutoff, testing whether results are driven by local manipulation:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def donut_rdd(df, outcome, running_var, cutoff, bandwidth, donut_width):
     """
@@ -258,11 +298,19 @@ for donut in [0.01, 0.02, 0.05, 0.10]:
     print(f"Donut width = {donut:.2f}: τ = {tau:.3f}, p = {pval:.3f}")
 ```
 
+</div>
+
 If estimates are stable across donut widths, manipulation of the running variable is unlikely to be driving results.
 
 ---
 
 ## 8. CausalPy Bandwidth Sensitivity
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -308,6 +356,8 @@ ax.legend()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 9. Summary: Best Practices
@@ -324,6 +374,15 @@ plt.show()
 
 ---
 
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of RDD Bandwidth Selection and Sensitivity Analysis and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
+
 ## Further Reading
 
 - Imbens & Kalyanaraman (2012), "Optimal Bandwidth Choice for the Regression Discontinuity Estimator"
@@ -335,3 +394,17 @@ plt.show()
 
 **Previous:** [01 — RDD Fundamentals](01_rdd_fundamentals_guide.md)
 **Next:** [Module 05 Notebooks](../notebooks/)
+
+<div class="callout-key">
+<strong>Key Concept:</strong> **Previous:** [01 — RDD Fundamentals](01_rdd_fundamentals_guide.md)
+**Next:** [Module 05 Notebooks](../notebooks/)
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_sharp_rdd.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

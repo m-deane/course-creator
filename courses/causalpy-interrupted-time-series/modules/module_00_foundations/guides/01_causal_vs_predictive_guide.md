@@ -1,8 +1,14 @@
 # Causal vs Predictive Thinking
 
+> **Reading time:** ~8 min | **Module:** 0 — Foundations | **Prerequisites:** Basic statistics, regression, probability
+
 ## In Brief
 
 Causal inference asks "what would happen if we intervened?" while predictive modeling asks "given what we observe, what will happen next?" Both use data, but they answer fundamentally different questions and require different methodologies.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Causal inference asks "what would happen if we intervened?" while predictive modeling asks "given what we observe, what will happen next?" Both use data, but they answer fundamentally different questions and require different methodologies.
+</div>
 
 ## Key Insight
 
@@ -80,6 +86,41 @@ Treatment B looks better overall, but treatment A is better for every patient su
 
 ---
 
+## Prediction vs. Causation: Decision Framework
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Prediction (Association)</div>
+<div class="body">
+
+- Learns $P(Y | X)$
+- Optimizes forecast accuracy
+- Ignores mechanism/intervention
+- Fails under distribution shift
+- **Use when:** observing, not acting
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Causal Inference (Intervention)</div>
+<div class="body">
+
+- Estimates $P(Y | do(X))$
+- Identifies treatment effects
+- Requires explicit assumptions
+- Robust to policy changes
+- **Use when:** deciding what to do
+
+</div>
+</div>
+</div>
+
+<div class="callout-warning">
+<strong>Warning:</strong> Using a predictive model to select actions is the most common and most costly mistake in applied data science. If the word "if we do X" appears in the question, you need causal methods.
+</div>
+
+---
+
 ## When Prediction Is Enough
 
 Prediction suffices when:
@@ -106,6 +147,14 @@ The classic failure mode is using a predictive model to select actions. If a ban
 ---
 
 ## The Ladder of Causation (Pearl)
+
+<div class="flow">
+<div class="flow-step blue">1. Association (Seeing)</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Intervention (Doing)</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">3. Counterfactual (Imagining)</div>
+</div>
 
 Judea Pearl's hierarchy of causal reasoning has three rungs:
 
@@ -152,6 +201,10 @@ Each method makes explicit assumptions about the data-generating process. These 
 
 ## Common Pitfalls in Causal Thinking
 
+<div class="callout-danger">
+<strong>Danger:</strong> Each of these pitfalls can lead to completely wrong policy recommendations. Real-world consequences include wasted budgets, harmful interventions, and flawed regulatory decisions.
+</div>
+
 ### Pitfall 1: Confusing statistical significance with causation
 A regression coefficient can be statistically significant and causally meaningless. Statistical significance measures only how precisely an association is estimated, not whether that association is causal.
 
@@ -167,6 +220,12 @@ We can never simultaneously observe both potential outcomes for the same unit. T
 ---
 
 ## Code Example: Prediction vs. Causal Inference
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -208,15 +267,30 @@ print(f"Adjusted estimate of exercise effect: {model_adjusted.coef_[0]:.2f}")
 print(f"True causal effect: 2.0")
 ```
 
+</div>
+
 The naive model overstates the benefit of exercise because healthier people exercise more. The adjusted model recovers the true effect by controlling for baseline health — but only because we know from domain knowledge that baseline health is a confounder, not a mediator or collider.
 
 ---
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Basic statistics, regression, probability
 - **Leads to:** Potential outcomes framework (next guide), DAGs (third guide), all ITS methods
 - **Related to:** Randomized controlled trials, econometrics, epidemiology
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Causal vs Predictive Thinking and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
@@ -224,3 +298,11 @@ The naive model overstates the benefit of exercise because healthier people exer
 - Hernán, M. & Robins, J. (2020). *Causal Inference: What If* — free online, excellent epidemiology focus
 - Peters, J., Janzing, D., & Schölkopf, B. (2017). *Elements of Causal Inference* — mathematical foundations
 - Cunningham, S. (2021). *Causal Inference: The Mixtape* — free online, econometrics perspective
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

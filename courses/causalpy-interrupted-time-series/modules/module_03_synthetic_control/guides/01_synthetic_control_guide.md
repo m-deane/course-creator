@@ -1,11 +1,19 @@
 # Synthetic Control: Building a Counterfactual from Donor Units
 
+> **Reading time:** ~8 min | **Module:** 3 — Synthetic Control | **Prerequisites:** Module 1 — ITS Fundamentals
+
 ## In Brief
 
 Synthetic control (SC) constructs a counterfactual for a treated unit by forming a weighted
 combination of untreated "donor" units. The weights are chosen so the weighted donor average
 closely matches the treated unit's pre-intervention trajectory. After the intervention, any
 divergence between the treated unit and its synthetic counterpart is the estimated causal effect.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Synthetic control (SC) constructs a counterfactual for a treated unit by forming a weighted
+combination of untreated "donor" units. The weights are chosen so the weighted donor average
+closely matches the treated unit's pre-intervention trajectory.
+</div>
 
 ## The Core Problem That SC Solves
 
@@ -97,6 +105,12 @@ Several problems with regression:
 The synthetic control estimate is credible only if the pre-intervention fit is good.
 
 **Assessing pre-intervention fit:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -129,6 +143,8 @@ def pre_period_fit(y_treated_pre, y_synthetic_pre):
     return {"MSPE": mspe, "RMSPE": rmspe, "R_squared": r_squared}
 ```
 
+</div>
+
 **Rule of thumb:** RMSPE in the pre-period should be below 10–20% of the treated unit's
 pre-intervention standard deviation. If pre-period fit is poor, the counterfactual extrapolation
 is unreliable.
@@ -146,6 +162,12 @@ Not all available units should be included in the donor pool. Exclude units that
    unit cannot contribute positively to the pre-period fit and may hurt it
 
 **Practical donor pool construction:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Example: selecting donor states for a California tobacco analysis
 all_states = ["AL", "AK", "AZ", ..., "WY"]  # 50 states
@@ -157,12 +179,20 @@ donor_pool = [s for s in all_states if s not in ["CA"] + states_with_tobacco_pro
 print(f"Donor pool size: {len(donor_pool)}")
 ```
 
+</div>
+
 ---
 
 ## CausalPy Implementation
 
 CausalPy's `SyntheticControl` class uses a Bayesian approach to weight estimation, placing
 a Dirichlet prior on the weights and estimating the posterior distribution of the counterfactual.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -187,6 +217,8 @@ sc_model.plot_weights()
 sc_model.plot()
 ```
 
+</div>
+
 The Bayesian approach gives a full posterior distribution over the counterfactual trajectory,
 enabling principled uncertainty quantification for the causal effect at each post-intervention
 period.
@@ -200,6 +232,12 @@ The causal effect estimate at time $t$ is:
 $$\hat{\alpha}_t = Y_{1t} - \sum_j w_j^* Y_{jt}$$
 
 For a pointwise effect estimate with uncertainty bounds:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import arviz as az
@@ -223,6 +261,8 @@ gap_hdi = az.hdi(gap_samples, hdi_prob=0.94)
 print(f"Immediate post-intervention gap: {gap_mean[0]:.1f} "
       f"[{gap_hdi[0, 0]:.1f}, {gap_hdi[0, 1]:.1f}]")
 ```
+
+</div>
 
 ---
 
@@ -286,9 +326,22 @@ distinguish the treated unit from its donors.
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Module 00 (potential outcomes, SUTVA), Module 01 (ITS fundamentals)
 - **Extension of:** Difference-in-differences (SC is a generalization with unit-specific weights)
 - **Leads to:** Notebook 01 (synthetic control basics), Notebook 03 (CausalPy SC API)
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Synthetic Control: Building a Counterfactual from Donor Units and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
@@ -299,3 +352,11 @@ distinguish the treated unit from its donors.
   Aspects." *Journal of Economic Literature*, 59(2), 391–425.
 - Doudchenko, N., and Imbens, G. W. (2017). "Balancing, Regression, Difference-In-Differences
   and Synthetic Control Methods: A Synthesis." NBER Working Paper 22791.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_synthetic_control_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

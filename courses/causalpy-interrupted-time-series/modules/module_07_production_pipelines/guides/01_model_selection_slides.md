@@ -36,11 +36,16 @@ This determines the design.
 
 <!-- Speaker notes: This is the key question that separates credible from non-credible causal inference. If you can't answer where the exogenous variation comes from, you can't make a causal claim. Every design corresponds to a specific source of exogenous variation: randomisation, a threshold, a time break, a natural experiment, or the synthetic weighting of donors. -->
 
+<div class="callout-info">
+Info: Where does the exogenous variation in treatment come from?
+</div>
+
 ---
 
 ## The Design Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Research Question] --> B{Random assignment?}
     B -->|Yes| C[RCT ✓]
@@ -75,6 +80,10 @@ graph TD
 **Before choosing a design:** inventory your data
 
 <!-- Speaker notes: Data availability constrains the design choice. You can't run an RDD without a continuous running variable and a known cutoff. You can't run DiD without a comparison group. You can't run synthetic control without suitable donors. Inventory your data first, then consider which designs are feasible. The best design is the most credible one that your data actually supports. -->
+
+<div class="callout-key">
+Key Point: Before choosing a design:
+</div>
 
 ---
 
@@ -118,6 +127,10 @@ Implementation quality matters more than design class.
 4. Acknowledge main threats and their likely direction of bias
 
 <!-- Speaker notes: The best causal inference papers are transparent about assumptions. They state the assumption in plain language, provide the best available evidence that it holds, and honestly discuss what would happen if it were violated. Reviewers and readers appreciate this transparency — it shows you understand your own analysis. The worst papers sweep assumptions under the rug and let readers find the problems later. -->
+
+<div class="callout-insight">
+Insight: Every design has one key assumption:
+</div>
 
 ---
 
@@ -169,6 +182,10 @@ Section 5: Limitations
 </div>
 
 <!-- Speaker notes: These four mistakes show up constantly in applied work. OLS with controls is not causal unless you can credibly argue that all confounders are observed and correctly modelled — almost never true. DiD without pre-trend testing is incomplete. High-order polynomials in RDD give erratic estimates near the boundary. And TWFE with staggered adoption has been shown to be biased in most real-world settings. Knowing these mistakes is as important as knowing the correct methods. -->
+
+<div class="callout-warning">
+Warning: Mistake 1: Defaulting to OLS
+</div>
 
 ---
 

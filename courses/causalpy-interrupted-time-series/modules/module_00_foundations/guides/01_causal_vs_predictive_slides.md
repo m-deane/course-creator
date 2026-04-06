@@ -38,13 +38,10 @@ Both use data. Both use math. But they answer **fundamentally different** questi
 # The Ladder of Causation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Rung 1: Association\n'Seeing'\nP(Y | X)"] --> B["Rung 2: Intervention\n'Doing'\nP(Y | do(X))"]
     B --> C["Rung 3: Counterfactual\n'Imagining'\nP(Y_x | X=x', Y=y')"]
-
-    style A fill:#e8f4fd
-    style B fill:#fef9e7
-    style C fill:#fdf2f8
 ```
 
 All machine learning lives on **Rung 1**. Causal inference aims for **Rung 2 and 3**.
@@ -62,6 +59,7 @@ Data shows: more firefighters at a fire → more property damage.
 **Causal reality:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S["Fire Severity"] --> F["More Firefighters"]
     S --> D["More Damage"]
@@ -71,6 +69,10 @@ The association is real. The causal arrow is backwards.
 
 <!-- Speaker notes: This is a classic confounding example. The fire severity causes both the number of firefighters dispatched and the amount of damage. There is no direct causal link from firefighters to damage (in fact, firefighters reduce damage for a given severity level). A predictive model correctly captures the correlation but gives catastrophically wrong policy advice. -->
 
+<div class="callout-insight">
+Insight: Predictive model conclusion:
+</div>
+
 ---
 
 # Ice Cream and Drownings
@@ -78,6 +80,7 @@ The association is real. The causal arrow is backwards.
 Monthly correlation between ice cream sales and drowning deaths: **r = 0.87**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T["Temperature / Summer"] --> I["Ice Cream Sales"]
     T --> S["Swimming Activity"]
@@ -105,6 +108,12 @@ Treatment A is better for **every subgroup** but looks worse overall.
 Why? Severe patients preferentially receive treatment B.
 
 <!-- Speaker notes: Simpson's Paradox illustrates how aggregation hides causal structure. The key question is: which analysis is causally correct? The subgroup analysis, because disease severity is a confounder that affects both treatment assignment and outcome. A predictive model trained on the overall data would recommend treatment B — harming every patient. This motivates the need for explicit causal reasoning, not just good statistics. -->
+
+<div class="callout-warning">
+Warning:  |
+
+Treatment A is better for 
+</div>
 
 ---
 
@@ -177,6 +186,7 @@ ITS, DiD, SC, RD, IV — each exploits a different source of quasi-random variat
 A **confounder** is a variable that affects both treatment assignment and the outcome.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     C["Confounder"] --> T["Treatment"]
     C --> Y["Outcome"]
@@ -275,6 +285,7 @@ $$P(Y | X = x) \neq P(Y | do(X = x))$$
 # Module 00 Roadmap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Guide 1\nCausal vs Predictive"] --> B["Guide 2\nPotential Outcomes"]
     B --> C["Guide 3\nDAGs"]
@@ -285,6 +296,10 @@ flowchart LR
 **You are here:** Guide 1
 
 <!-- Speaker notes: Orient students within the module. Guide 1 (this deck) establishes the motivation and conceptual vocabulary. Guide 2 formalizes the potential outcomes framework. Guide 3 introduces DAGs as a tool for reasoning about confounding structure. The two notebooks then give hands-on experience — first with setup, then with a complete ITS analysis to see the payoff of all this theory. -->
+
+<div class="callout-key">
+Key Point: Pearl's Ladder of Causation shows that no amount of observational data can answer causal questions without additional assumptions about the data-generating process.
+</div>
 
 ---
 
@@ -315,3 +330,7 @@ flowchart LR
 - Verify your installation is working
 
 <!-- Speaker notes: The potential outcomes framework (Guide 2) provides the formal machinery for everything that follows. Students who are familiar with RCT design will recognize the notation; students coming from ML backgrounds may find it unfamiliar. The key new concept is the indexing of outcomes by treatment status — Y(1) and Y(0) — which makes the counterfactual problem explicit. -->
+
+<div class="callout-danger">
+Danger: Using a predictive model to select interventions is the single most common source of failed A/B tests and wasted marketing budgets.
+</div>

@@ -20,6 +20,7 @@ math: mathjax
 # CausalPy Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["InterruptedTimeSeries(data, formula, model)"] --> B["formulaic\nDesign Matrix X"]
     A --> C["PyMC Model Object\n(LinearRegression)"]
@@ -191,6 +192,10 @@ The variable names come from the design matrix column names.
 
 <!-- Speaker notes: The variable naming convention is important to know upfront. The intercept is always named 'Intercept'. Other variables are named exactly as they appear in the formula. Interaction terms (e.g., treated:t_post) appear as 'treated:t_post'. Polynomial terms (I(t**2)) appear as 'I(t ** 2)'. For categorical variables created with C(), each level appears separately. Knowing the names saves debugging time when accessing the posterior. -->
 
+<div class="callout-insight">
+Insight: Understanding how CausalPy constructs the PyMC model lets you extend it with custom likelihood functions, hierarchical structure, or time-varying effects.
+</div>
+
 ---
 
 # Extending: Custom PyMC Models
@@ -223,6 +228,10 @@ result = cp.InterruptedTimeSeries(
 
 <!-- Speaker notes: The customization pattern is clean: subclass LinearRegression and override build_model. The build_model method receives X (the design matrix), y (the outcome), and coords (a dict of coordinate labels for xarray). By following the same structural pattern (pm.Data objects, dims for array dimensions, a "y_hat" observed variable), the resulting model works seamlessly with all of CausalPy's plot and summary methods. This extensibility is a key advantage of CausalPy's architecture. -->
 
+<div class="callout-warning">
+Warning: Default priors in CausalPy are intentionally vague. For production analyses, always specify domain-informed priors.
+</div>
+
 ---
 
 # Model Diagnostics: Sample Stats
@@ -247,6 +256,10 @@ if int(tree_depth.max()) >= 10:
 ```
 
 <!-- Speaker notes: The sample_stats group contains rich NUTS diagnostic information. In addition to divergences (the most important), tree depth tells you how efficiently the sampler is exploring. A consistently low tree depth (1-3) means the sampler is taking many small steps — possibly because the mass matrix is poorly adapted (run more tuning iterations). A tree depth consistently hitting the maximum (10 by default) means the sampler needs longer trajectories — increase max_treedepth in sample_kwargs. -->
+
+<div class="callout-key">
+Key Point: The PyMC model graph is your most powerful diagnostic tool -- always inspect it with `pm.model_to_graphviz()` before running inference.
+</div>
 
 ---
 
@@ -277,3 +290,7 @@ if int(tree_depth.max()) >= 10:
 - Add AR(1) error structure
 
 <!-- Speaker notes: Guide 3 makes the prior specification practical — how do you choose priors for the intercept, trend slope, level change, and noise? The prior predictive check is the key tool: sample from the prior before seeing the data and check that the implied outcomes span a plausible range. Notebook 1 is the capstone of this module: students write the ITS model in raw PyMC, verify it matches CausalPy, then extend it with AR(1) errors that CausalPy does not support by default. -->
+
+<div class="callout-info">
+Info: CausalPy wraps PyMC models behind a clean API. Understanding the internals lets you customize priors, likelihoods, and model structure for your domain.
+</div>

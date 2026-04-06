@@ -98,11 +98,19 @@ Any observed jump is attributed entirely to the treatment.
 
 <!-- Speaker notes: Continuity is the only identifying assumption in a sharp RDD — it's doing a lot of work. It says that the relationship between the running variable and the potential outcomes is smooth at the cutoff. There's no other factor that jumps at exactly the same point. If you think about the scholarship example: student motivation, family income, test preparation — all of these might correlate with test scores, but they should change smoothly around score = 50, not jump discontinuously at that exact threshold. -->
 
+<div class="callout-info">
+Info: 
+
+$$E[Y_i(0) \mid X_i = x] \text{ and } E[Y_i(1) \mid X_i = x] \text{ are continuous at } x = c$$
+
+</div>
+
 ---
 
 ## What Can Violate Continuity?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Continuity Violated] --> B[Manipulation]
     A --> C[Compound Discontinuity]
@@ -142,6 +150,10 @@ print(test.summary())  # p > 0.05 = no manipulation
 
 <!-- Speaker notes: The McCrary density test is the first thing reviewers look for in an RDD paper. Plot a histogram of the running variable with fine bins. If you see a spike just above the cutoff and a dip just below, that's manipulation. Formally, the test checks whether the density function has a discontinuity at the cutoff — if it does, units are sorting to either side strategically, violating the continuity assumption. -->
 
+<div class="callout-key">
+Key Point: bunching just above the cutoff
+</div>
+
 ---
 
 ## Covariate Balance Check
@@ -162,6 +174,10 @@ for cov in covariates:
 Pre-determined covariates should be balanced — they can't be affected by a future treatment assignment.
 
 <!-- Speaker notes: This is analogous to a balance table in a randomised experiment. If the treatment is as-good-as-random near the cutoff, then variables determined before the treatment assignment should be balanced — they shouldn't jump at the cutoff. If you see a covariate jumping, something is wrong: either there's manipulation, or there's a compound discontinuity with another variable that affects the covariate. -->
+
+<div class="callout-insight">
+Insight: Covariates should NOT jump at the cutoff
+</div>
 
 ---
 
@@ -216,6 +232,10 @@ h_opt = bw.bws['h']
 ```
 
 <!-- Speaker notes: Bandwidth selection is where most practitioners agonize. Too narrow: you have almost no data to fit the line, and your standard errors are huge. Too wide: you're extrapolating the linear fit far from the cutoff, and the true regression function is probably nonlinear at that scale. The Imbens-Kalyanaraman optimal bandwidth minimises the asymptotic mean squared error — it balances these two concerns automatically using properties of the data. Always report results for multiple bandwidths as a robustness check. -->
+
+<div class="callout-warning">
+Warning: IK/MSE-optimal bandwidth:
+</div>
 
 ---
 

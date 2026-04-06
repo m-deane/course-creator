@@ -24,6 +24,7 @@ math: mathjax
 - **Acyclic:** No cycles — a variable cannot cause itself
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Education"] --> B["Income"]
     C["Family Background"] --> A
@@ -35,6 +36,11 @@ flowchart LR
 This DAG asserts: family background and innate ability both cause education AND income directly.
 
 <!-- Speaker notes: Every arrow in a DAG is a substantive causal claim that must be justified on domain grounds. The absence of an arrow is equally a claim: you are saying there is no direct causal effect. The "acyclic" requirement rules out feedback loops — income cannot cause education in this DAG (but it could in a more complex dynamic DAG with time indices). For ITS analysis, the acyclic assumption is satisfied because time flows forward and we do not model feedback explicitly. -->
+
+<div class="callout-info">
+Info:  Variables (treatment, outcome, covariates)
+- 
+</div>
 
 ---
 
@@ -64,11 +70,21 @@ $M$ is caused by both $X$ and $Y$
 
 <!-- Speaker notes: These three patterns are the building blocks of all DAGs. Every DAG is a combination of chains, forks, and colliders. Understanding the rules for each — what gets blocked, what gets opened — is the entire operational knowledge needed to use DAGs for analysis. The most counterintuitive is the collider: conditioning on a collider OPENS a path rather than closing it, creating spurious correlation where none existed. -->
 
+<div class="callout-key">
+Key Point: 
+```
+X → M → Y
+```
+$M$ mediates $X$'s effect on $Y$
+
+</div>
+
 ---
 
 # Chains: Don't Block the Mediator
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P["Job Training\nProgram"] --> S["Skill\nAcquisition"]
     S --> E["Employment\nRate"]
@@ -84,11 +100,16 @@ If you control for skill acquisition ($S$):
 
 <!-- Speaker notes: This is one of the most common mistakes in applied regression analysis. Researchers add controls to "adjust for confounding" but inadvertently include mediators — variables that are part of the causal mechanism. If you want the total effect of a job training program on employment, you should not control for skill acquisition, because skills are HOW the program works. Controlling for it gives you the "direct effect" of the program not operating through skills, which may be zero even if the total effect is large. -->
 
+<div class="callout-insight">
+Insight: Total effect of program on employment:
+</div>
+
 ---
 
 # Forks: Confounding
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     C["Confounder C"] --> T["Treatment T"]
     C --> Y["Outcome Y"]
@@ -110,6 +131,7 @@ This path creates a spurious correlation between $T$ and $Y$ even without any ca
 # Colliders: The Hidden Trap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T["Talent"] --> A["Selected\nfor Program"]
     M["Motivation"] --> A
@@ -124,6 +146,12 @@ But **among program participants** (conditioning on A):
 This is **collider bias** — conditioning creates a spurious association.
 
 <!-- Speaker notes: Collider bias is the most counter-intuitive causal concept for newcomers. The classic demonstration: in a selective school, high-aptitude students are admitted even with low effort, and high-effort students are admitted even with moderate aptitude. So within the school (conditioned on admission), aptitude and effort are negatively correlated — even though in the general population they are independent or positively correlated. This shows up in data as "controlling for more variables makes my estimate worse." -->
+
+<div class="callout-warning">
+Warning:  in the general population.
+
+But 
+</div>
 
 ---
 
@@ -169,6 +197,7 @@ When in doubt: draw the DAG first, then decide.
 # DAG for a Clean ITS Design
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     T["Time"] --> Y["Outcome"]
     T --> I["Intervention\n(t >= t*)"]
@@ -190,12 +219,12 @@ This DAG says:
 # Threat to ITS Validity: Concurrent Events
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     T["Time"] --> Y["Outcome"]
     T --> I["Intervention"]
     I --> Y
     E["Concurrent Event\n(same timing as t*)"] --> Y
-    style E fill:#fef9e7,stroke:#e67e22
 ```
 
 A concurrent event $E$ that happens at exactly $t^*$ is **indistinguishable** from the intervention effect.
@@ -211,6 +240,7 @@ The DAG makes this threat explicit. Your validity argument must address why $E$ 
 # Threat: Anticipation Effects
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Policy\nAnnouncement"] --> B["Pre-intervention\nBehavior Change"]
     A --> I["Policy\nImplementation\nat t*"]

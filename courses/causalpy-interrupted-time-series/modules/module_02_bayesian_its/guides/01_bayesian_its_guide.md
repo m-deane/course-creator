@@ -1,8 +1,14 @@
 # Bayesian ITS: Why Bayes for Causal Inference
 
+> **Reading time:** ~8 min | **Module:** 2 — Bayesian Its | **Prerequisites:** Module 1 — ITS Fundamentals, basic Bayesian concepts
+
 ## In Brief
 
 The Bayesian approach to ITS models uncertainty at every level: over parameters, over the counterfactual trajectory, and over the causal effect. Instead of a point estimate with a standard error, you get a full probability distribution over the quantity of interest. This transforms causal inference from "reject the null" to "quantify the evidence."
+
+<div class="callout-key">
+<strong>Key Concept:</strong> The Bayesian approach to ITS models uncertainty at every level: over parameters, over the counterfactual trajectory, and over the causal effect. Instead of a point estimate with a standard error, you get a full probability distribution over the quantity of interest.
+</div>
 
 ## Key Insight
 
@@ -101,6 +107,12 @@ A 94% HDI says: "Given the data and our priors, we assign 94% probability to the
 
 This is a direct probability statement about the parameter. The HDI contains the most probable values — unlike a confidence interval, it is the narrowest interval containing the specified probability.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import arviz as az
 import numpy as np
@@ -116,6 +128,8 @@ print(f"94% HDI: [{hdi[0]:.2f}, {hdi[1]:.2f}]")
 p_negative = (beta_samples < 0).mean()
 print(f"P(effect < 0) = {p_negative:.1%}")
 ```
+
+</div>
 
 ---
 
@@ -141,6 +155,12 @@ where $Y_t^{obs}$ is the observed outcome and $Y_t(0)$ is the counterfactual.
 ## Prior Predictive Checks
 
 Before fitting the model to data, check that the prior is reasonable by sampling from it and examining the implied distribution of outcomes.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -197,6 +217,8 @@ def prior_predictive_check_its(y_scale, n_obs):
     print("tighten the priors.")
 ```
 
+</div>
+
 ---
 
 ## When to Use Informative vs Weakly Informative Priors
@@ -247,9 +269,22 @@ CausalPy uses PyMC, which uses the **No-U-Turn Sampler (NUTS)** by default. NUTS
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Potential outcomes (Module 00), ITS fundamentals (Module 01)
 - **Leads to:** PyMC internals (Guide 2), Prior specification (Guide 3)
 - **Related to:** Bayesian statistics, MCMC, ArviZ
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Bayesian ITS: Why Bayes for Causal Inference and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
@@ -257,3 +292,11 @@ CausalPy uses PyMC, which uses the **No-U-Turn Sampler (NUTS)** by default. NUTS
 - McElreath, R. (2020). *Statistical Rethinking* (2nd ed.) — accessible Bayesian modeling
 - Vehtari, A. et al. (2021). "Rank-normalization, folding, and localization: An improved R-hat for assessing convergence." *Bayesian Analysis*
 - Betancourt, M. (2017). "A Conceptual Introduction to Hamiltonian Monte Carlo." ArXiv
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_its_from_scratch_pymc.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

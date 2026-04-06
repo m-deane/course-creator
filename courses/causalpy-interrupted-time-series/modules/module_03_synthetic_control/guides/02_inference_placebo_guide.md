@@ -1,5 +1,7 @@
 # Inference for Synthetic Control: Placebo Tests and Permutation Methods
 
+> **Reading time:** ~9 min | **Module:** 3 — Synthetic Control | **Prerequisites:** Module 1 — ITS Fundamentals
+
 ## In Brief
 
 Classical frequentist inference assumes a large number of independent observations. Synthetic
@@ -8,6 +10,12 @@ errors are not valid. The solution is **permutation inference**: reassign the tr
 donor unit in turn, compute the same causal estimate, and compare the treated unit's estimate to
 the distribution of placebo estimates. If the treated unit's effect is larger than nearly all
 placebo effects, the result is statistically significant by permutation.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Classical frequentist inference assumes a large number of independent observations. Synthetic
+control has one treated unit and a small number of post-intervention periods — classical standard
+errors are not valid.
+</div>
 
 ## The Fundamental Inference Problem
 
@@ -32,6 +40,12 @@ of donors from their own synthetic counterparts.
    b. Construct a synthetic counterpart using the remaining donors (excluding unit $j$)
    c. Compute the post-intervention gap for unit $j$
 2. Compare the treated unit's gap to the distribution of donor gaps
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -123,6 +137,8 @@ def run_placebo_tests(Y_all, n_pre, treated_idx=0):
     return gaps, rmspe_pre
 ```
 
+</div>
+
 ---
 
 ## The Permutation P-Value
@@ -138,6 +154,12 @@ The ratio RMSPE_post / RMSPE_pre is used rather than the raw post-period gap bec
 poor pre-period fit (high RMSPE_pre) will naturally have larger post-period gaps from noise alone.
 Normalizing by RMSPE_pre focuses attention on post-period gaps that are large *relative to
 pre-period fit quality*.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def placebo_p_value(gaps, rmspe_pre, n_pre, treated_idx=0):
@@ -190,12 +212,20 @@ def filtered_p_value(gaps, rmspe_pre, treated_idx=0, rmspe_multiplier=2.0):
     return placebo_p_value(gaps_filtered, rmspe_pre_filtered, None, new_treated_idx)
 ```
 
+</div>
+
 ---
 
 ## Visualizing Placebo Tests: The Spaghetti Plot
 
 The canonical synthetic control inference plot shows all placebo gaps alongside the treated
 unit's gap. The treated unit should stand out — its gap should be clearly larger in the post-period.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -242,6 +272,8 @@ def plot_placebo_gaps(gaps, rmspe_pre, time_post, treated_idx=0,
     return ax
 ```
 
+</div>
+
 ---
 
 ## In-Time Placebo Tests
@@ -253,6 +285,12 @@ within the pre-intervention period.
 treatment), the synthetic control should show no divergence at that placebo date. If the SC shows
 a large gap at a placebo date, either the pre-period fit is poor or the donor pool is poorly
 chosen.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
@@ -290,6 +328,8 @@ def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
     return gap, rmspe_pre
 ```
 
+</div>
+
 **Interpretation:**
 - A large placebo gap in the pre-period is a red flag — the synthetic control is unreliable
 - A small placebo gap (near zero) supports the validity of the approach
@@ -320,6 +360,12 @@ The permutation distribution can be inverted to construct confidence sets for th
 For a null hypothesis $H_0: \alpha = \alpha_0$ (effect is exactly $\alpha_0$), subtract $\alpha_0$
 from the treated unit's post-intervention outcomes and rerun the placebo test. The confidence set
 at level $1 - \alpha$ is the set of $\alpha_0$ values for which the null is not rejected.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def confidence_set_sc(Y_all, n_pre, treated_idx=0, alpha=0.1, alpha0_grid=None):
@@ -352,6 +398,8 @@ def confidence_set_sc(Y_all, n_pre, treated_idx=0, alpha=0.1, alpha0_grid=None):
 
     return in_set
 ```
+
+</div>
 
 ---
 
@@ -391,9 +439,22 @@ A complete synthetic control report includes:
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Guide 01 (synthetic control basics), Module 00 (potential outcomes)
 - **Leads to:** Notebook 02 (placebo tests in code), Notebook 03 (CausalPy SC API)
 - **Related to:** Difference-in-differences (SC is a generalization), randomization inference
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Inference for Synthetic Control: Placebo Tests and Permutation Methods and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
@@ -403,3 +464,11 @@ A complete synthetic control report includes:
   and Confidence Sets." *Journal of Causal Inference*, 6(2).
 - Cattaneo, M. D., Feng, Y., and Titiunik, R. (2021). "Prediction Intervals for Synthetic Control
   Methods." *Journal of the American Statistical Association*, 116(536), 1865–1880.
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_synthetic_control_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -32,6 +32,11 @@ OLS gives biased $\hat{\beta}$ if $X$ is **endogenous**: $\text{Cov}(X_i, u_i) \
 
 <!-- Speaker notes: Endogeneity is the central obstacle to causal inference in observational data. If we're trying to estimate the effect of education on wages, the problem is that education is correlated with unobserved ability — more able people get more education AND earn more wages independently. So the OLS coefficient mixes the causal effect of education with this ability correlation. We need a way to isolate the causal part. -->
 
+<div class="callout-info">
+Info: : $\text{Cov}(X_i, u_i) \neq 0$
+
+</div>
+
 ---
 
 ## The IV Intuition
@@ -39,14 +44,12 @@ OLS gives biased $\hat{\beta}$ if $X$ is **endogenous**: $\text{Cov}(X_i, u_i) \
 **Find a variable Z that:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Z["Z (Instrument)"] -->|"Relevance: Z predicts X"| X["X (Treatment)"]
     X -->|"Causal effect β"| Y["Y (Outcome)"]
     U["U (Confounder)"] --> X
     U --> Y
-
-    style Z fill:#90EE90
-    style U fill:#FFB6C1
 ```
 
 - Shifts $X$ (relevance)
@@ -201,17 +204,20 @@ print(f"Instrument coef: {first_stage.params['college_nearby']:.3f}")
 
 <!-- Speaker notes: Testing relevance is straightforward: first stage F-statistic. The conventional threshold of F > 10 comes from Stock, Wright & Yogo (2002), who showed that with F < 10, the IV estimator has substantial bias relative to the OLS estimator, and confidence intervals may be very misleading. With multiple instruments, use the Olea-Pflueger effective F-statistic, which accounts for weak instrument bias more carefully. Exclusion cannot be tested directly — you're arguing for it. The closest you can get is the Sargan overidentification test when you have multiple instruments. -->
 
+<div class="callout-insight">
+Insight: IV estimates the Local Average Treatment Effect (LATE) for compliers only, not the Average Treatment Effect for the full population.
+</div>
+
 ---
 
 ## The Exclusion Restriction: Common Violations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Z["College Proximity"] --> X["Education"]
     X --> Y["Wages"]
     Z --> Y
-
-    style Z fill:#FFB6C1
 ```
 
 **Potential direct effects of college proximity on wages:**
@@ -222,6 +228,10 @@ graph TD
 Each is a **direct path** from Z to Y → exclusion violation
 
 <!-- Speaker notes: The exclusion restriction is where IV papers get attacked. For college proximity, critics argue: colleges create local job markets, so proximity to college directly raises wages through the local economy, not through education. Or: families who value education move near colleges — these are different families with different characteristics that directly affect children's wages. These are direct paths from Z to Y that bypass X. Card addresses these by controlling for local labor market conditions and arguing the proximity effect on wages is too large to be explained by these channels alone. The debate continues. -->
+
+<div class="callout-key">
+Key Point: The exclusion restriction -- that the instrument affects the outcome ONLY through the treatment -- is untestable and must be argued from domain knowledge.
+</div>
 
 ---
 
@@ -238,6 +248,10 @@ Each is a **direct path** from Z to Y → exclusion violation
 | Monotonicity | No defiers — required for LATE interpretation |
 
 <!-- Speaker notes: Summary: IV is powerful when you have a credible instrument. The key discipline is taking the exclusion restriction seriously. Many published IV papers have weak exclusion arguments. Before running IV, ask: is there any way my instrument could directly affect the outcome? Be honest about that. If your instrument is weak, IV can be worse than OLS — biased and with badly miscalibrated confidence intervals. The next guide covers weak instruments and more advanced IV settings. -->
+
+<div class="callout-warning">
+Warning: A weak instrument (F-statistic < 10 in first stage) produces biased IV estimates that can be worse than naive OLS. Always check instrument strength.
+</div>
 
 ---
 

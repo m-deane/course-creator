@@ -39,6 +39,7 @@ $$p\text{-value} = \frac{\text{number of units with gap} \geq \text{treated unit
 **Procedure:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["For each donor unit j"] --> B["Treat j as 'treated'\nothers as donors"]
     B --> C["Optimize weights\nfor synthetic j"]
@@ -74,6 +75,11 @@ p_value = (ratio >= treated_ratio).mean()
 
 <!-- Speaker notes: The RMSPE ratio is the key innovation of the Abadie et al. inference approach. If you compare raw post-period gaps, units with poor pre-period fit (high pre-period RMSPE) will tend to have large post-period gaps just from noise — not from any treatment effect. The ratio normalizes: a high ratio means the post-period gap is large relative to what you'd expect from the pre-period fit quality. A treated unit with a high ratio is genuinely unusual, not just a poorly-matched unit. This normalization is essential for valid inference when donors vary in pre-period fit quality. -->
 
+<div class="callout-key">
+Key Point:  2, axis=0))
+rmspe_pre  = np.sqrt(np.mean(residuals_pre 
+</div>
+
 ---
 
 # The Spaghetti Plot
@@ -103,6 +109,10 @@ ax.legend()
 
 <!-- Speaker notes: The spaghetti plot is the most important visualization in synthetic control analysis. The gray lines represent the null distribution — how much donor units diverge from their own synthetic counterparts due to random noise and imperfect pre-period fit. The blue line (treated unit) should stand out from the gray bundle in the post-intervention period. If the blue line is buried in the gray lines, there is no identifiable treatment effect. If it stands clearly above or below all gray lines, the effect is statistically significant and visually compelling. -->
 
+<div class="callout-insight">
+Insight: The treated unit should stand out clearly
+</div>
+
 ---
 
 # Reading the Spaghetti Plot
@@ -126,6 +136,10 @@ Gap (packs/year)
 - Post-1988: California clearly below all donor lines
 
 <!-- Speaker notes: Walk students through reading this stylized plot. In the pre-period (1970-1988), all lines should cluster near zero — if California were a placebo donor, the synthetic counterpart would track it closely. The zero gap confirms this. After Prop 99 in 1988, California diverges downward (lower cigarette consumption than synthetic) while donors remain near zero. The fact that California is below ALL donors gives a permutation p-value of 1/39 = 0.026 — statistically significant at the 5% level. -->
+
+<div class="callout-warning">
+Warning: What makes a convincing result:
+</div>
 
 ---
 
@@ -258,6 +272,7 @@ print(f"90% Confidence set: [{min(in_set):.1f}, {max(in_set):.1f}]")
 **Recommended workflow:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Fit CausalPy SyntheticControl\n(Bayesian weights, uncertainty)"] --> B["Check pre-period RMSPE\n(fit quality)"]
     B --> C["Run in-space placebo tests\n(permutation p-value)"]
@@ -315,3 +330,7 @@ flowchart TD
 - Combining CausalPy output with placebo inference
 
 <!-- Speaker notes: The next two notebooks translate everything from these two guides into working code. Notebook 02 implements placebo tests from scratch — this is important because students should understand the algorithm before using the CausalPy wrapper. Notebook 03 then uses CausalPy's SyntheticControl for the full Bayesian analysis, which adds weight uncertainty and counterfactual HDI on top of the classical SC estimate. -->
+
+<div class="callout-key">
+Key Point: Placebo tests are the primary tool for assessing synthetic control validity -- if placebo effects are as large as the real effect, the result is not credible.
+</div>

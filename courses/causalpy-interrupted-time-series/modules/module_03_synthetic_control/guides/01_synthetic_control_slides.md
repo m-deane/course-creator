@@ -20,6 +20,7 @@ math: mathjax
 # When ITS Fails: Concurrent Events
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 timeline
     title ITS: Smoking Ban & Recession (Same Month)
     2007 : Pre-intervention trend
@@ -35,6 +36,10 @@ ITS cannot distinguish these. Synthetic control uses **untreated comparison regi
 
 <!-- Speaker notes: The concurrent event threat is the most common reason ITS fails in practice. A policy change that happens during a major recession, epidemic, or other macroeconomic event cannot be cleanly identified using only the treated unit's own pre-trend as a counterfactual. The synthetic control solves this by requiring the donors to experience the same macro events, so the macro effects cancel in the gap between treated and synthetic. The key identifying assumption shifts from "parallel trends" (same trend, no concurrent events) to "all concurrent events affect treated and donors similarly." -->
 
+<div class="callout-info">
+Info: untreated comparison regions
+</div>
+
 ---
 
 # The Core Idea
@@ -44,6 +49,7 @@ ITS cannot distinguish these. Synthetic control uses **untreated comparison regi
 **Synthetic control:** Build a weighted average of untreated units that *tracks* the treated unit in the pre-period
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["California\n(Treated)"] --> C["Synthetic California"]
     B1["Colorado (40%)"] --> C
@@ -55,6 +61,11 @@ graph LR
 **After the intervention:** The gap between California and Synthetic California = causal effect
 
 <!-- Speaker notes: The synthetic California is literally a portfolio of real states. You can fly to Colorado and observe it. This transparency is a major advantage over statistical extrapolation. The weights tell a concrete story: "California's cigarette consumption before 1988 was most similar to a combination of Colorado (40%), Utah (35%), and Montana (25%)." This is verifiable and interpretable. The causal estimate is the gap that opens up after 1988 — the actual California diverges from this weighted combination of real states that did not implement the tax. -->
+
+<div class="callout-key">
+Key Point:  Extrapolating the treated unit's pre-trend as a counterfactual
+
+</div>
 
 ---
 
@@ -224,6 +235,7 @@ print(f"Cumulative effect 1989–2000: {cumulative_effect:.1f} packs per capita"
 # ITS vs Synthetic Control: Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Do you have panel data?\n(multiple untreated units)"] --> |No| B["Use ITS\n(single treated unit)"]
     A --> |Yes| C["Is there a concurrent event\nthreat that ITS cannot handle?"]
@@ -322,6 +334,10 @@ print(panel_df.head())
 
 <!-- Speaker notes: The notebooks make the abstract concrete. Notebook 01 builds a synthetic control from scratch using scipy.optimize to solve the constrained quadratic program — this gives students a deep understanding of what the weights actually optimize. Notebook 02 covers placebo tests, which are the main inferential tool for synthetic control. Unlike parametric tests, placebo tests make no distributional assumptions and are valid even when the number of post-intervention periods is small. -->
 
+<div class="callout-warning">
+Warning: If no convex combination of donors can reproduce the pre-treatment trajectory, synthetic control is not appropriate for your setting.
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -353,3 +369,7 @@ The matrix $V$ assigns importance to each predictor. The outer optimization choo
 - Posterior predictive gives uncertainty on the counterfactual
 
 <!-- Speaker notes: The original Abadie et al. nested optimization is computationally expensive and can converge to local minima. CausalPy's Bayesian approach replaces the outer optimization (for V) with MCMC sampling from the posterior over weights, given the pre-period data. The Dirichlet prior enforces the simplex constraints automatically — any draw from a Dirichlet distribution is non-negative and sums to 1. This gives full uncertainty quantification for the causal effect without the computationally intensive nested optimization. -->
+
+<div class="callout-insight">
+Insight: Synthetic control constructs a data-driven counterfactual by weighting untreated units to match the treated unit's pre-treatment trajectory.
+</div>

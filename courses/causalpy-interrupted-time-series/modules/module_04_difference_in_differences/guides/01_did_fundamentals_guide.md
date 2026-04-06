@@ -1,5 +1,7 @@
 # Difference-in-Differences: Fundamentals
 
+> **Reading time:** ~8 min | **Module:** 4 — Difference In Differences | **Prerequisites:** Module 1 — ITS Fundamentals
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -10,6 +12,10 @@ By the end of this guide, you will be able to:
 5. Implement the canonical two-period DiD in CausalPy
 
 ---
+
+<div class="callout-key">
+<strong>Key Concept:</strong> DiD compares how treated and control groups change over time, rather than comparing their levels. By "differencing out" the time trend, DiD isolates the treatment effect even when groups have different baseline levels.
+</div>
 
 ## 1. Motivation: The Counterfactual Problem Revisited
 
@@ -59,6 +65,10 @@ where:
 The interaction term $\text{Post}_t \times \text{Treated}_i$ is 1 only for treated units in the post-period.
 
 ---
+
+<div class="callout-danger">
+<strong>Danger:</strong> The DiD estimator is biased if parallel trends is violated. No amount of additional data or fancier estimation will fix this -- it is a design assumption, not a statistical assumption.
+</div>
 
 ## 3. The Parallel Trends Assumption
 
@@ -150,6 +160,12 @@ By convention, $\beta_{-1} = 0$ (the period immediately before treatment is the 
 
 ### Practical Guidance for Pre-Trend Assessment
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import causalpy as cp
 import pandas as pd
@@ -177,6 +193,8 @@ ax.set_title("Pre-Treatment Parallel Trends Check")
 ax.legend()
 plt.show()
 ```
+
+</div>
 
 ---
 
@@ -216,6 +234,12 @@ Before running a DiD analysis, verify:
 
 ## 8. A Minimal CausalPy DiD Example
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import causalpy as cp
 import pandas as pd
@@ -251,6 +275,8 @@ result = cp.DifferenceInDifferences(
 print(result.summary())
 ```
 
+</div>
+
 The key coefficient is the interaction `period:treated`, which estimates the DiD treatment effect.
 
 ---
@@ -267,6 +293,15 @@ The key coefficient is the interaction `period:treated`, which estimates the DiD
 | Threats | Anticipation, spillovers, compositional change, simultaneous policies |
 
 ---
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Difference-in-Differences: Fundamentals and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 

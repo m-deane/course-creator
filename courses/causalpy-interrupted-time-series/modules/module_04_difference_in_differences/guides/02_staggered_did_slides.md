@@ -22,6 +22,7 @@ Module 04.2 | Causal Inference with CausalPy
 Most policies don't hit everyone at once
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Treatment Adoption Timeline
     dateFormat  YYYY
@@ -56,6 +57,10 @@ Problems:
 
 <!-- Speaker notes: This seems counterintuitive but it's mathematically provable. Goodman-Bacon (2021) decomposed the TWFE estimator and showed it's a weighted average of all possible 2x2 DiD comparisons — including ones where early-treated units serve as controls for late-treated. If treatment effects grow over time (which is common — programs take time to work), those comparisons get negative weights. The TWFE estimate can be negative even when the true effect is always positive. -->
 
+<div class="callout-info">
+Info: already-treated units as controls
+</div>
+
 ---
 
 ## The Goodman-Bacon Decomposition
@@ -76,6 +81,10 @@ When effects are heterogeneous across time
 
 <!-- Speaker notes: The Goodman-Bacon paper is required reading for anyone doing staggered DiD. The decomposition is illuminating: TWFE is a weighted average of all possible two-cohort, two-period DiD comparisons. The first two types are fine. The third type — using early-treated units as controls — is the problem. If early-treated units have already responded to treatment, their "change" includes a treatment effect, not just a time trend. -->
 
+<div class="callout-key">
+Key Point: Three types of 2×2 comparisons:
+</div>
+
 ---
 
 ## Cohort-Based Solution: Callaway & Sant'Anna
@@ -92,6 +101,10 @@ where $G = g$ means "first treated in period $g$"
 2. Aggregate across cohorts for overall ATT, event study, or calendar-time effects
 
 <!-- Speaker notes: Callaway and Sant'Anna's contribution is conceptually clean. Instead of one regression, compute a separate 2x2 DiD for each cohort at each time period, always using clean controls. Then aggregate. This avoids the contaminated control group problem entirely. The result is a set of group-time ATTs that you can aggregate however you want. -->
+
+<div class="callout-insight">
+Insight:  Compare each cohort only to 
+</div>
 
 ---
 
@@ -220,6 +233,7 @@ A pre-trend test has **low power** if:
 ## Choosing an Estimator
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Staggered Adoption DiD] --> B{Effect heterogeneity?}
     B -->|Homogeneous| C[TWFE safe — use it]
@@ -301,6 +315,10 @@ Best when pre-treatment fit matters and you have a large donor pool.
 **For new analyses:** default to Callaway-Sant'Anna or Sun-Abraham
 
 <!-- Speaker notes: To summarise the landscape: standard TWFE is still widely used but you now need to justify its use by arguing homogeneous effects, or just run the robust estimators as a robustness check. For any new analysis, I'd recommend starting with Callaway-Sant'Anna — it's the most flexible, has good software, and is the most cited. Run TWFE as a comparison. If they agree, great. If they diverge, investigate why. -->
+
+<div class="callout-danger">
+Danger: TWFE with staggered treatment can produce negative weights on some treatment effects, making the overall estimate uninterpretable.
+</div>
 
 ---
 

@@ -37,6 +37,7 @@ Assumptions either hold or don't.
 ## Production Pipeline Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Raw Data] --> B[Data Validation]
     B -->|Fail| C[Alert + Stop]
@@ -170,6 +171,10 @@ Retraining is mechanical; redesign requires judgment.
 
 <!-- Speaker notes: This distinction matters for automation. You can automate retraining — just add new data and re-estimate. But redesign requires a human decision about whether the identifying assumptions still hold. Never automate redesign. If you detect that the design context has changed fundamentally — say, a new policy created a confounding event — you need a human to assess whether the old design is still valid and what the new design should be. -->
 
+<div class="callout-info">
+Info: Retraining (more data, same design):
+</div>
+
 ---
 
 ## Retraining Triggers
@@ -186,6 +191,10 @@ Retraining is mechanical; redesign requires judgment.
 **Default rule:** Automate routine updates; require human sign-off on assumption failures.
 
 <!-- Speaker notes: This table gives you a decision matrix. Not every change requires human intervention. Monthly data updates can be automated if the assumption checks pass. But if the pre-trend test fails or the running variable density develops a spike at the cutoff, you need a human to assess what happened and whether to act on the estimate. Build these escalation rules into your pipeline from the start. -->
+
+<div class="callout-info">
+Info: Version control your causal model specifications alongside your code. The model specification IS the analysis -- changing it changes the result.
+</div>
 
 ---
 
@@ -214,6 +223,10 @@ Without reproducibility, causal claims are anecdotes.
 
 <!-- Speaker notes: Every production causal analysis should generate a manifest that records: the hash of the input data, all configuration parameters, the full results including assumption checks, and the code version. If someone questions your result six months later, you should be able to reproduce it exactly from the run ID. This is table stakes for any serious deployment. Use git tags to version your analysis code and store results in a structured results directory with the run ID as the filename. -->
 
+<div class="callout-warning">
+Warning: A causal estimate that was valid at deployment can become invalid if the data-generating process changes. Build monitoring for assumption violations.
+</div>
+
 ---
 
 ## Summary: Production Causal Pipelines
@@ -228,6 +241,10 @@ Without reproducibility, causal claims are anecdotes.
 | Reproducibility | Hash inputs, version code, save manifest |
 
 <!-- Speaker notes: These six stages are your production causal pipeline framework. Validation and assumption checks protect you from silently wrong estimates. Monitoring catches drift before it causes decisions. Retraining distinguishes routine updates from redesign. And reproducibility is non-negotiable. Build all six stages before deploying any causal pipeline to production. -->
+
+<div class="callout-key">
+Key Point: Production causal inference pipelines should automatically flag when new data violates the assumptions underlying the original analysis.
+</div>
 
 ---
 

@@ -38,6 +38,10 @@ The **optimal bandwidth** minimises $\text{Bias}^2 + \text{Variance}$
 
 <!-- Speaker notes: This is a classic statistical tradeoff, but in RDD it's particularly acute because the entire identification rests on observations near the cutoff. If you go too narrow, you don't have enough data to estimate the jump precisely. If you go too wide, your "local" regression isn't really local anymore — you're using observations that might have very different counterfactuals from those at the cutoff. -->
 
+<div class="callout-info">
+Info: Narrow bandwidth (small h):
+</div>
+
 ---
 
 ## The MSE-Optimal Bandwidth
@@ -109,6 +113,10 @@ plt.ylabel('Treatment Effect')
 
 <!-- Speaker notes: The sensitivity plot is what reviewers really want to see. If the estimate is stable across a range of bandwidths — say, from 0.2 to 0.5 — that's strong evidence the result isn't an artefact of choosing a particular window. If the estimate jumps around wildly, you have a problem. Present this plot in your paper or presentation. The IK bandwidth should be in the middle of the stable region, not at an extreme. -->
 
+<div class="callout-key">
+Key Point: do results hold across bandwidths?
+</div>
+
 ---
 
 ## Interpreting the Sensitivity Plot
@@ -135,6 +143,11 @@ Treatment Effect
 
 <!-- Speaker notes: Reading the sensitivity plot is a skill. The top example shows what you want: a relatively flat line with overlapping confidence intervals across a range of bandwidths. The bottom example shows what should concern you: the effect only appears for a specific narrow bandwidth range and then disappears. That pattern suggests you're fitting noise, not detecting a real effect. Always present the sensitivity plot. Never cherry-pick a bandwidth that produces the result you want. -->
 
+<div class="callout-insight">
+Insight:  Consistent estimate across a range → result is robust
+
+</div>
+
 ---
 
 ## Polynomial Order: Gelman & Imbens (2019)
@@ -157,6 +170,10 @@ Treatment Effect
 </div>
 
 <!-- Speaker notes: Gelman and Imbens wrote a paper specifically about this, and it changed practice. Before their paper, it was common to see RDD papers using global 4th or 5th degree polynomials. These look like they're fitting the data well globally, but near the boundary where the treatment effect is identified, they're driven by observations far away. The cure is to use local linear regression: fit a line in a bandwidth, not a polynomial across the full range. The result is more honest about what you're actually estimating. -->
+
+<div class="callout-warning">
+Warning: Do not use high-order global polynomials
+</div>
 
 ---
 

@@ -37,6 +37,10 @@ Every causal question needs a counterfactual
 
 <!-- Speaker notes: We keep returning to the same fundamental problem. What makes DiD different is that it explicitly uses other units — not just other time periods — to construct the counterfactual. This is powerful when you have a natural comparison group that wasn't treated. -->
 
+<div class="callout-info">
+Info: had they not been treated?
+</div>
+
 ---
 
 ## The Two-Period Setup
@@ -61,6 +65,13 @@ Every causal question needs a counterfactual
 $$\hat{\tau}_{DiD} = \Delta_1 - \Delta_0$$
 
 <!-- Speaker notes: This is the simplest possible setup. Two groups, two periods. The DiD estimator is just the difference in the before-after changes. Why does this work? Because the control group's change over time tells us what would have happened to the treated group absent treatment — IF the parallel trends assumption holds. That's the big IF we'll explore throughout this module. -->
+
+<div class="callout-key">
+Key Point: 
+- Treated: $D_i = 1$
+- Control: $D_i = 0$
+
+</div>
 
 ---
 
@@ -116,6 +127,10 @@ This is about **counterfactual trends** — not observed levels.
 
 <!-- Speaker notes: Parallel trends is the assumption that makes or breaks a DiD analysis. Note what it does NOT say: it doesn't say the two groups had the same outcome levels. It says that, absent treatment, they would have moved together. This is fundamentally untestable because we never observe the counterfactual trajectory for the treated group. We can only assess its plausibility. -->
 
+<div class="callout-warning">
+Warning: The central identifying assumption:
+</div>
+
 ---
 
 ## What Parallel Trends Requires
@@ -141,6 +156,7 @@ This is about **counterfactual trends** — not observed levels.
 ## Threats to Identification
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[DiD Analysis] --> B{Parallel Trends Valid?}
     B -->|No| C[Biased Estimate]
@@ -321,6 +337,10 @@ Before running DiD, verify:
 | Event study | Shows effect dynamics and tests pre-trends visually |
 
 <!-- Speaker notes: These six concepts are the foundation for everything in this module. The DiD estimator is simple arithmetic. Parallel trends is the assumption that justifies it causally. The ATT is what you're actually estimating. TWFE is the practical estimator. And pre-trend tests and event studies are your key diagnostics. -->
+
+<div class="callout-danger">
+Danger: Parallel trends cannot be tested -- it is an assumption about counterfactuals. Pre-treatment trend similarity is necessary but not sufficient evidence.
+</div>
 
 ---
 

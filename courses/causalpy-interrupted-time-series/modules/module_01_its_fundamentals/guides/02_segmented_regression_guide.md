@@ -1,8 +1,14 @@
 # Segmented Regression for ITS
 
+> **Reading time:** ~10 min | **Module:** 1 — Its Fundamentals | **Prerequisites:** Module 0 — Causal Foundations
+
 ## In Brief
 
 Segmented regression (also called piecewise linear regression) is the statistical engine of ITS. It fits two separate regression lines to the pre- and post-intervention periods, with constraints ensuring continuity. The difference between the two fitted lines gives the level and slope change estimates.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Segmented regression (also called piecewise linear regression) is the statistical engine of ITS. It fits two separate regression lines to the pre- and post-intervention periods, with constraints ensuring continuity.
+</div>
 
 ## Key Insight
 
@@ -46,6 +52,12 @@ The formula `y ~ 1 + t + treated + t_post` in CausalPy maps to:
 
 Note: at $t = t^*$, the `t_post` variable is 0 (the level change applies but no slope accumulation yet). This is the standard convention.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -78,6 +90,8 @@ print(dm)
 #           row 5: treated=1, t_post=0 (intervention point)
 #           rows 6-9: treated=1, t_post increasing
 ```
+
+</div>
 
 ---
 
@@ -143,6 +157,12 @@ $$DW = \frac{\sum_{t=2}^T (\hat{\varepsilon}_t - \hat{\varepsilon}_{t-1})^2}{\su
 
 where $\hat{\rho}$ is the estimated first-order autocorrelation. Values close to 2 indicate no autocorrelation.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from statsmodels.stats.stattools import durbin_watson
 import statsmodels.formula.api as smf
@@ -177,9 +197,17 @@ def check_autocorrelation(df: pd.DataFrame, formula: str) -> dict:
     }
 ```
 
+</div>
+
 ### Solution 1: Newey-West Standard Errors
 
 The Newey-West (HAC) estimator produces consistent standard errors under autocorrelation without changing the point estimates.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -192,6 +220,8 @@ model = smf.ols("y ~ 1 + t + treated + t_post", data=df).fit(
 print(model.summary())
 ```
 
+</div>
+
 ### Solution 2: Prais-Winsten / Cochrane-Orcutt (AR(1) Model)
 
 Explicitly model the autocorrelation by including an AR(1) error:
@@ -203,6 +233,12 @@ This transforms the original model to remove autocorrelation. Implemented in sta
 ### Solution 3: Bayesian AR(1) in CausalPy / PyMC
 
 The cleanest approach: include an AR(1) process in the PyMC model definition. The posterior for $\rho$ captures the autocorrelation, and all other parameters are estimated conditionally on it.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -238,6 +274,8 @@ def build_its_ar1_model(y, X):
     return model
 ```
 
+</div>
+
 ---
 
 ## Detecting Non-Linear Pre-Trends
@@ -262,6 +300,12 @@ If $\gamma$ is significantly different from zero, a linear pre-trend may be inad
 
 For flexible non-linear pre-trends, natural cubic splines provide a smooth non-parametric fit:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from patsy import dmatrix
 import pandas as pd
@@ -281,6 +325,8 @@ spline_basis = dmatrix(
 # Use to check adequacy of linear trend assumption
 ```
 
+</div>
+
 ---
 
 ## Model Selection
@@ -297,6 +343,12 @@ Lower AIC = better fit penalized for complexity. BIC penalizes complexity more s
 ### In Bayesian ITS (CausalPy)
 
 Use **Leave-One-Out Cross-Validation (LOO)** via ArviZ:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import arviz as az
@@ -322,6 +374,8 @@ comparison = az.compare({"full": full_model_result.idata, "level_only": level_on
 print(comparison)
 ```
 
+</div>
+
 The model with higher LOO ELPD (expected log pointwise predictive density) is preferred.
 
 ---
@@ -334,6 +388,12 @@ Many policy-relevant outcomes have seasonal patterns (hospital admissions, crime
 
 Add indicator variables for each calendar month (or quarter, depending on data frequency):
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Add month indicators to the dataframe
 df["month"] = df["date"].dt.month
@@ -341,6 +401,8 @@ df["month"] = df["date"].dt.month
 # Formula with monthly fixed effects
 formula = "y ~ 1 + t + treated + t_post + C(month)"
 ```
+
+</div>
 
 This controls for monthly seasonal patterns without assuming a functional form.
 
@@ -351,6 +413,12 @@ Use sine/cosine pairs to model smooth seasonal patterns:
 $$\text{Seasonal}(t) = \sum_{k=1}^K \left[ a_k \sin\left(\frac{2\pi k t}{P}\right) + b_k \cos\left(\frac{2\pi k t}{P}\right) \right]$$
 
 where $P$ is the seasonal period (12 for monthly data, 52 for weekly data).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def add_fourier_terms(df: pd.DataFrame, period: int, n_terms: int = 2) -> pd.DataFrame:
@@ -377,16 +445,39 @@ df_seasonal = add_fourier_terms(df, period=12, n_terms=2)
 formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 ```
 
+</div>
+
 ---
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** ITS Introduction (Guide 1)
 - **Leads to:** CausalPy ITS API (Guide 3), Bayesian ITS (Module 02)
 - **Related to:** Time series regression, structural break tests, HAC standard errors
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Segmented Regression for ITS and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
 - Chatfield, C. (2003). *The Analysis of Time Series: An Introduction with R* (6th ed.) — comprehensive time series reference
 - Newey, W.K. & West, K.D. (1987). "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix." *Econometrica*
 - Wagner, A.K. et al. (2002). "Segmented regression analysis of interrupted time series studies in medication use research." *Journal of Clinical Pharmacy and Therapeutics*
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_its_smoking_ban.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

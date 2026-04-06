@@ -1,5 +1,7 @@
 # Regression Discontinuity Designs: Fundamentals
 
+> **Reading time:** ~9 min | **Module:** 5 — Regression Discontinuity | **Prerequisites:** Module 0 — Causal Foundations
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -136,6 +138,12 @@ This is the **local linear regression** estimator. It:
 - Allows different slopes on each side
 - Reduces boundary bias compared to global polynomials
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -158,6 +166,8 @@ def sharp_rdd_local_linear(df, outcome, running_var, cutoff, bandwidth):
     return model.params['treated'], model.bse['treated'], model
 ```
 
+</div>
+
 ---
 
 ## 6. Bandwidth Selection
@@ -177,6 +187,12 @@ The IK bandwidth minimises the asymptotic mean squared error of the local linear
 - The density of the running variable at the cutoff
 - The outcome variance
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Using rdrobust package
 from rdrobust import rdrobust, rdbwselect
@@ -190,6 +206,8 @@ bw = rdbwselect(y=df['outcome'], x=df['running_var'], c=0)
 print(f"Optimal bandwidth: {bw.bws['h']:.3f}")
 ```
 
+</div>
+
 ---
 
 ## 7. Threats to Validity
@@ -200,6 +218,12 @@ If units can precisely control their running variable value and prefer to be tre
 
 **Detection:** Histogram density test (McCrary test)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from rdrobust import rddensity
 
@@ -207,6 +231,8 @@ density_test = rddensity(df['running_var'], c=0)
 print(density_test.summary())
 # p > 0.05: no significant discontinuity in density (good)
 ```
+
+</div>
 
 A spike in the running variable's density just above the cutoff is a red flag.
 
@@ -216,12 +242,20 @@ If another variable also jumps discontinuously at the cutoff, you cannot separat
 
 **Detection:** Run the RDD on **baseline covariates** — they should show no jump at the cutoff.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 for covariate in ['age', 'income', 'prior_score']:
     rdd_covariate = rdrobust(y=df[covariate], x=df['running_var'], c=0)
     print(f"{covariate}: τ = {rdd_covariate.coef[0]:.3f}, p = {rdd_covariate.pv[0]:.3f}")
 # All should have p >> 0.05 (no jump in covariates)
 ```
+
+</div>
 
 ### Sorting Near the Cutoff
 
@@ -255,6 +289,12 @@ This local nature is both a strength (high internal validity) and a weakness (li
 
 ## 10. CausalPy RDD: Quick Look
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import causalpy as cp
 
@@ -270,6 +310,8 @@ result = cp.RegressionDiscontinuity(
 result.plot()
 print(result.summary())
 ```
+
+</div>
 
 The `epsilon` parameter defines the neighbourhood of the cutoff used for the treatment effect estimate. The plot shows both sides of the regression and the estimated jump.
 
@@ -290,12 +332,29 @@ The `epsilon` parameter defines the neighbourhood of the cutoff used for the tre
 
 ---
 
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Regression Discontinuity Designs: Fundamentals and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
+
 ## Further Reading
 
 - Imbens & Lemieux (2008), "Regression Discontinuity Designs: A Guide to Practice"
 - Lee & Lemieux (2010), "Regression Discontinuity Designs in Economics"
 - Cattaneo, Idrobo & Titiunik (2019-2020), *A Practical Introduction to Regression Discontinuity Designs* (Cambridge Elements)
 - Gelman & Imbens (2019), "Why High-Order Polynomials Should Not Be Used in Regression Discontinuity Designs"
+<div class="callout-key">
+<strong>Key Concept:</strong> - Imbens & Lemieux (2008), "Regression Discontinuity Designs: A Guide to Practice"
+- Lee & Lemieux (2010), "Regression Discontinuity Designs in Economics"
+- Cattaneo, Idrobo & Titiunik (2019-2020), *A Practical Introduction to Regression Discontinuity Designs* (Cambridge Elements)
+- Gelman & Imbe...
+</div>
+
+
 
 ---
 

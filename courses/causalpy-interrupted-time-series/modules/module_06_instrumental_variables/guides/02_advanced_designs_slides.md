@@ -85,6 +85,10 @@ AR CIs are often much wider than standard 2SLS CIs — that's honesty, not a bug
 
 <!-- Speaker notes: The Anderson-Rubin confidence interval is constructed by inverting a test that is valid regardless of instrument strength. It comes at a cost: the CI is often wider than the 2SLS CI, especially when the instrument is weak. But that's the honest answer — when you have a weak instrument, you should have wide confidence intervals reflecting genuine uncertainty. A narrow CI with a weak instrument is false precision. Many journals now require AR CIs alongside standard 2SLS results. -->
 
+<div class="callout-info">
+Info: inference robust to weak instruments
+</div>
+
 ---
 
 ## Multiple Instruments: 2SLS
@@ -215,6 +219,7 @@ tau_fuzzy = jump_rf / jump_fs
 ## Which Design for Which Question?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Question] --> B{Random assignment?}
     B -->|Yes| C[RCT]
@@ -232,6 +237,10 @@ graph TD
 
 <!-- Speaker notes: This decision tree is the capstone of the course. Learn it. When you encounter a new causal question, work through it systematically. Start with the gold standard — do you have randomisation? No? Then look for natural experiments. Threshold rules give you RDD. Panel data with comparison groups gives you DiD. If you have exogenous variation in treatment, use IV. If you have a time series with a clear break and no comparison group, use ITS. And if none of these apply, be honest: you cannot make causal claims from observational data without strong, defensible assumptions. -->
 
+<div class="callout-warning">
+Warning: More complex designs are not necessarily more credible. Simpler designs with stronger assumptions are often preferable if those assumptions are plausible.
+</div>
+
 ---
 
 ## Design Assumptions Compared
@@ -247,6 +256,10 @@ graph TD
 
 <!-- Speaker notes: All designs rest on untestable assumptions — that's what makes causal inference hard. What varies is how much of the assumption is testable. Pre-trend tests for DiD, density tests for RDD, first stage for IV — these are the diagnostics that build credibility. None of them prove the key assumption, but they demonstrate it's plausible. The goal is to present your design transparently, run all available diagnostics, and let readers judge credibility. -->
 
+<div class="callout-key">
+Key Point: Combining designs (e.g., IV within DiD) can strengthen identification but requires all assumptions of both designs to hold simultaneously.
+</div>
+
 ---
 
 ## Summary
@@ -260,6 +273,10 @@ graph TD
 | Design choice | Follow the decision tree: randomisation → threshold → panel → IV → ITS |
 
 <!-- Speaker notes: These five points summarise what separates competent from excellent causal inference. Weak instruments are common and often ignored — don't. Multiple instruments add power but require the J-test. ITS+DiD is underused and very powerful. Fuzzy RDD is nothing but a local IV. And the design choice flowchart should be second nature. -->
+
+<div class="callout-info">
+Info: Fuzzy RDD is a special case of IV where the running variable creates a discontinuity in the probability of treatment, not in treatment itself.
+</div>
 
 ---
 

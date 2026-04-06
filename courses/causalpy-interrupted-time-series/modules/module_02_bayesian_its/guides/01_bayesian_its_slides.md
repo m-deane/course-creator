@@ -39,11 +39,16 @@ Both use the same data. Bayesian gives a **direct probability statement**.
 
 <!-- Speaker notes: The comparison highlights the practical advantage. The frequentist p-value is a statement about the sampling procedure ("if this study were repeated infinitely under the null, 0.2% of results would be this extreme"). Most practitioners misinterpret this as "0.2% probability that the null is true." The Bayesian 99.2% credibility is exactly the statement practitioners want and actually understand correctly. The two approaches give numerically similar answers for well-behaved problems, but the Bayesian interpretation is cleaner and more useful for decision-making. -->
 
+<div class="callout-info">
+Info: direct probability statement
+</div>
+
 ---
 
 # Three Advantages of Bayesian ITS
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Bayesian ITS Advantages"] --> B["1. Full posterior\nover causal effect"]
     A --> C["2. Prior = domain\nknowledge incorporated"]
@@ -71,6 +76,10 @@ $$\sigma \sim \text{HalfNormal}(\sigma_Y)$$
 **Posterior:** Proportional to likelihood × prior (computed via NUTS MCMC)
 
 <!-- Speaker notes: Walk through the model structure. The likelihood is a standard Gaussian regression. The priors encode: we expect the outcome to be near its mean (intercept prior), we expect small trends and slope changes relative to the outcome scale, and we expect positive noise. These are "weakly informative" because they center on plausible values but are broad enough to be overridden by data. The magic of MCMC is that we do not need to compute the posterior analytically — NUTS generates samples from it. -->
+
+<div class="callout-key">
+Key Point: Priors (weakly informative):
+</div>
 
 ---
 
@@ -145,6 +154,7 @@ beta_level = pm.Normal(
 # Prior Types: A Spectrum
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Flat Prior\nUniform over all values\n(nearly never used)"] --> B["Weakly Informative\nN(0, 10σ_Y)\n(CausalPy default)"]
     B --> C["Regularizing\nN(0, σ_Y)\n(prevents extreme values)"]
@@ -227,6 +237,7 @@ Corrects sample count for autocorrelation within chains.
 # Module 02 Road Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     G1["Guide 1\nBayesian ITS: Why Bayes"] --> G2["Guide 2\nCausalPy-PyMC Internals"]
     G2 --> G3["Guide 3\nPrior Specification"]
@@ -238,6 +249,10 @@ flowchart LR
 **You are here:** Guide 1
 
 <!-- Speaker notes: Guide 1 (this deck) explains the philosophical and statistical advantages of the Bayesian approach. Guide 2 goes inside CausalPy to show how it constructs the PyMC model. Guide 3 is practical guidance on choosing priors. The notebooks move from building a model from scratch (Notebook 1) to sensitivity analysis (Notebook 2) to posterior predictive checks (Notebook 3). After this module, students understand not just how to run CausalPy but what it is doing under the hood. -->
+
+<div class="callout-warning">
+Warning: Bayesian results are sensitive to prior specification. Always run prior predictive checks before examining posterior results.
+</div>
 
 ---
 
@@ -267,3 +282,7 @@ flowchart LR
 - Then replicate with CausalPy and verify they match
 
 <!-- Speaker notes: Guide 2 opens the hood of CausalPy. Understanding how CausalPy constructs the PyMC model is important for two reasons: it helps you debug when things go wrong, and it shows you how to extend the model for cases not handled by the default API (e.g., Poisson likelihood for count outcomes, AR(1) errors, hierarchical models across multiple treated units). Notebook 1 builds the ITS model from scratch — this is the most educational exercise in the module. -->
+
+<div class="callout-insight">
+Insight: Bayesian ITS provides full posterior distributions over treatment effects, naturally quantifying uncertainty without relying on asymptotic approximations.
+</div>

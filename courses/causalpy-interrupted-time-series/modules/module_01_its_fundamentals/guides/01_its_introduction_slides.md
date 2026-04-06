@@ -22,13 +22,12 @@ math: mathjax
 **Interrupted Time Series** uses the pre-intervention trend as the counterfactual.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Pre-period\nEstimate trend"] --> B["Intervention\nat t*"]
     B --> C["Post-period\nObserve outcome"]
     B --> D["Counterfactual\nExtrapolate pre-trend"]
     C --> E["Causal Effect\n= Observed - Counterfactual"]
-    style D fill:#fef9e7,stroke:#e67e22
-    style E fill:#e8f8e8,stroke:#27ae60
 ```
 
 **Key assumption:** The pre-trend would have continued unchanged absent the intervention.
@@ -76,11 +75,19 @@ $$\hat{\tau}_t = Y_t^{obs} - \hat{Y}_t(0)$$
 
 <!-- Speaker notes: Walk through each parameter carefully. Alpha and beta_1 describe the pre-intervention trajectory. Beta_2 is the "jump" at the intervention point — the immediate level change. Beta_3 is the change in the growth rate — positive means the series started rising faster after the intervention, negative means it slowed. The counterfactual is just the regression line if you set beta_2 and beta_3 to zero. The causal effect at any post-intervention time t is beta_2 plus beta_3 times the time since intervention. -->
 
+<div class="callout-key">
+Key Point: 
+- $\alpha$: baseline level
+- $\beta_1$: pre-intervention slope
+- $\beta_2$: 
+</div>
+
 ---
 
 # Four Model Shapes
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Level + Slope Change\nβ₂ ≠ 0, β₃ ≠ 0\n(Default model)"]
     B["Level Only\nβ₂ ≠ 0, β₃ = 0\n(One-time shock)"]
@@ -91,6 +98,10 @@ flowchart TD
 **Start with the full model.** The posterior will tell you which components are active.
 
 <!-- Speaker notes: These four patterns correspond to different causal mechanisms. A one-time subsidy payment might produce a pure level change (B): money paid out immediately, no lasting trajectory change. A public awareness campaign might produce a pure slope change (C): behavior changes gradually as information diffuses. A major policy reform often produces both (A): immediate adjustment plus changed trajectory. The Bayesian posterior naturally expresses uncertainty about which model is appropriate — if beta_3's credible interval includes zero, the slope change is not well-supported. -->
+
+<div class="callout-insight">
+Insight: Start with the full model.
+</div>
 
 ---
 
@@ -124,6 +135,10 @@ flowchart TD
 - Regression Discontinuity (if assignment is threshold-based)
 
 <!-- Speaker notes: Endogenous timing is the most dangerous failure mode. If a factory installed a pollution scrubber because regulators were responding to a spike in pollution readings, then the ITS comparison is invalid — the pre-period trend was already on an upward spike that would have reversed. This is regression to the mean masquerading as a treatment effect. Always ask: "Why was the intervention implemented at this specific time? Was the outcome level a factor in the timing decision?" -->
+
+<div class="callout-warning">
+Warning: Alternatives to consider:
+</div>
 
 ---
 
@@ -205,13 +220,13 @@ Standard regression assumes errors are uncorrelated. Time series data almost nev
 **Controlled ITS** adds a comparison series that did NOT receive the intervention.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Pre-period\n(both series)"] --> B["t*"]
     B --> C["Post-period\nTreated series\n(observed)"]
     B --> D["Post-period\nControl series\n(comparison)"]
     C --> E["Diff-in-ITS\n= treated change − control change"]
     D --> E
-    style E fill:#e8f8e8,stroke:#27ae60
 ```
 
 If both series show a change at $t^*$, it is a concurrent event. If only the treated series shows a change, the evidence for a causal effect is much stronger.
@@ -223,6 +238,7 @@ If both series show a change at $t^*$, it is a concurrent event. If only the tre
 # ITS in the Quasi-Experimental Landscape
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["Do you have treated AND control units?"] --> Y1["YES"]
     Q --> N1["NO"]
@@ -232,7 +248,6 @@ flowchart TD
     N1 --> Q3["Do you have\nmany donor units?"]
     Q3 --> Y3["YES → Synthetic Control"]
     Q3 --> N3["NO → Interrupted Time Series\n(single-unit design)"]
-    style N3 fill:#fef9e7,stroke:#e67e22
 ```
 
 <!-- Speaker notes: This decision tree helps students choose the right design for their data. ITS is the right choice when you have a single treated unit and a clear intervention date, but no natural control group. If you do have control units, DiD is generally preferred because it controls for time-varying confounders common to both treated and control groups. Synthetic control is appropriate when you have many potential control units and want a data-driven method for constructing a weighted comparison. RD is appropriate when assignment is based on a measurable threshold. -->
@@ -265,6 +280,7 @@ result.idata          # Full InferenceData for ArviZ diagnostics
 # Module 01 Roadmap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     G1["Guide 1\nITS Introduction"] --> G2["Guide 2\nSegmented Regression"]
     G2 --> G3["Guide 3\nCausalPy ITS API"]
@@ -306,3 +322,7 @@ flowchart LR
 - Full CausalPy workflow end-to-end
 
 <!-- Speaker notes: Guide 2 goes into the technical mechanics of segmented regression, which Guide 1 only introduced at a high level. The main additions are: formal autocorrelation diagnosis and correction, seasonal adjustment, and model selection between level-only, slope-only, and combined models. The first notebook applies everything to a real dataset — the smoking ban example is a classic ITS application with a clear causal mechanism and sufficient data to demonstrate the full diagnostic workflow. -->
+
+<div class="callout-danger">
+Danger: If the intervention was triggered BY the outcome level (e.g., a policy enacted because crime was rising), the pre-trend is not a valid counterfactual.
+</div>

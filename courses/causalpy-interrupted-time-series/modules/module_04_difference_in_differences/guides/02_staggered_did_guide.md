@@ -1,5 +1,7 @@
 # Staggered Difference-in-Differences and Event Studies
 
+> **Reading time:** ~8 min | **Module:** 4 — Difference In Differences | **Prerequisites:** Module 1 — ITS Fundamentals
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -77,6 +79,12 @@ These are the fundamental building blocks. Any aggregate estimand (overall ATT, 
 - *Never-treated:* only units that never receive treatment. Cleaner, but may be a small or unrepresentative group.
 - *Not-yet-treated:* units that haven't been treated *yet* at time $t$. Larger sample, but assumes no anticipation.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Using the csdid package (Python port)
 from csdid import ATTgt
@@ -93,6 +101,8 @@ att_gt.fit()
 att_gt.aggregate("event")  # event study aggregation
 att_gt.plot()
 ```
+
+</div>
 
 ### Sun & Abraham (2021)
 
@@ -156,6 +166,12 @@ An event study plot displays treatment effects over time relative to treatment a
 
 Test $H_0: \beta_{-5} = \beta_{-4} = \ldots = \beta_{-2} = 0$ (excluding $\beta_{-1}$ which is normalised):
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.stats import chi2
 
@@ -168,6 +184,8 @@ W = pre_coefs @ np.linalg.inv(pre_cov) @ pre_coefs
 p_value = 1 - chi2.cdf(W, df=len(pre_indices))
 print(f"Pre-trend test: W = {W:.2f}, p = {p_value:.3f}")
 ```
+
+</div>
 
 #### Roth (2022) Sensitivity Analysis
 
@@ -215,6 +233,12 @@ $$\theta^{cal}(t) = \sum_{g \leq t} w_g \cdot ATT(g, t)$$
 ---
 
 ## 7. Worked Example: Staggered Adoption in Python
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -289,6 +313,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 8. Choosing Between Estimators
@@ -318,6 +344,15 @@ plt.show()
 
 ---
 
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Staggered Difference-in-Differences and Event Studies and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
+
 ## Further Reading
 
 - Callaway & Sant'Anna (2021), "Difference-in-Differences with Multiple Time Periods"
@@ -330,3 +365,17 @@ plt.show()
 
 **Previous:** [01 — DiD Fundamentals](01_did_fundamentals_guide.md)
 **Next:** [03 — CausalPy DiD API](03_causalpy_did_api_guide.md)
+
+<div class="callout-key">
+<strong>Key Concept:</strong> **Previous:** [01 — DiD Fundamentals](01_did_fundamentals_guide.md)
+**Next:** [03 — CausalPy DiD API](03_causalpy_did_api_guide.md)
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_did_labour_economics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

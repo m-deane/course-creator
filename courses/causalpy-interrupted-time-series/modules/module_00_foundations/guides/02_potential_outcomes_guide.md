@@ -1,8 +1,14 @@
 # Potential Outcomes Framework (Rubin Causal Model)
 
+> **Reading time:** ~9 min | **Module:** 0 — Foundations | **Prerequisites:** Basic statistics, regression, probability
+
 ## In Brief
 
 The potential outcomes framework, developed by Donald Rubin building on earlier work by Jerzy Neyman, provides a formal mathematical language for causal questions. It defines causal effects in terms of counterfactual outcomes — what would have happened under a treatment condition that was not actually received.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> The potential outcomes framework, developed by Donald Rubin building on earlier work by Jerzy Neyman, provides a formal mathematical language for causal questions. It defines causal effects in terms of counterfactual outcomes — what would have happened under a treatment condition that was not act...
+</div>
 
 ## Key Insight
 
@@ -201,6 +207,12 @@ $$P(\tau_t > 0 | \text{data}) = P(Y_t(1) > Y_t(0) | \text{data})$$
 
 — the probability that the treatment had a positive effect. This is a natural causal statement that is awkward in frequentist frameworks but natural in Bayesian ones.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -238,6 +250,8 @@ plt.title('Posterior Distribution of Cumulative Treatment Effect')
 plt.legend()
 plt.show()
 ```
+
+</div>
 
 ---
 
@@ -285,9 +299,22 @@ For policy evaluation, the ATT is often more relevant. If we implemented a job t
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Causal vs predictive thinking (Guide 1)
 - **Leads to:** DAGs for reasoning about confounding (Guide 3), ITS specification (Module 01)
 - **Related to:** Randomized controlled trials, propensity scores, matching
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Potential Outcomes Framework (Rubin Causal Model) and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
@@ -295,3 +322,11 @@ For policy evaluation, the ATT is often more relevant. If we implemented a job t
 - Holland, P.W. (1986). "Statistics and Causal Inference." *Journal of the American Statistical Association*
 - Imbens, G. & Rubin, D. (2015). *Causal Inference for Statistics, Social, and Biomedical Sciences* — comprehensive treatment
 - Morgan, S. & Winship, C. (2015). *Counterfactuals and Causal Inference* — accessible introduction
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

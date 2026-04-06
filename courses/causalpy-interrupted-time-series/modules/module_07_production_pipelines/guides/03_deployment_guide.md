@@ -1,5 +1,7 @@
 # Deploying Causal Models in Production
 
+> **Reading time:** ~7 min | **Module:** 7 — Production Pipelines | **Prerequisites:** Modules 1-6
+
 ## Learning Objectives
 
 By the end of this guide, you will be able to:
@@ -67,6 +69,12 @@ Stage 6: Output and Logging
 ---
 
 ## 3. Production Pipeline Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 """
@@ -263,6 +271,8 @@ class DiDPipeline:
         return result
 ```
 
+</div>
+
 ---
 
 ## 4. Monitoring and Drift Detection
@@ -275,6 +285,12 @@ Once a causal model is deployed and producing regular estimates, monitor:
 2. **Assumption stability:** Are pre-trends still approximately parallel? Is the density test still passing?
 3. **Estimate stability:** Is the treatment effect changing over time? (Effect modification vs. true change)
 4. **Sample composition:** Are there changes in the types of units entering the sample?
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class CausalMonitor:
@@ -305,6 +321,8 @@ class CausalMonitor:
         }
 ```
 
+</div>
+
 ---
 
 ## 5. Retraining Triggers
@@ -323,6 +341,12 @@ Unlike predictive models, causal models don't "degrade" in accuracy — they can
 | Published critique of your design | Respond with robustness checks |
 
 ### Automated Re-estimation Workflow
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def run_monthly_causal_update(data_path: Path, results_dir: Path):
@@ -358,11 +382,19 @@ def run_monthly_causal_update(data_path: Path, results_dir: Path):
     return result
 ```
 
+</div>
+
 ---
 
 ## 6. Reproducibility and Versioning
 
 Every causal analysis run should be reproducible. Best practices:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import hashlib
@@ -387,6 +419,8 @@ def create_run_manifest(df: pd.DataFrame, config: Dict, result: CausalPipelineRe
     return manifest
 ```
 
+</div>
+
 ---
 
 ## 7. Summary: Production Checklist
@@ -406,3 +440,17 @@ Before deploying a causal pipeline:
 
 **Previous:** [02 — Reporting Guide](02_reporting_guide.md)
 **Next:** [Module 07 Notebooks](../notebooks/)
+
+<div class="callout-key">
+<strong>Key Concept:</strong> **Previous:** [02 — Reporting Guide](02_reporting_guide.md)
+**Next:** [Module 07 Notebooks](../notebooks/)
+</div>
+
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_model_selection_workflow.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

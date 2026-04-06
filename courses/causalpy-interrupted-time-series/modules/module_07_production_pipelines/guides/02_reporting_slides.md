@@ -31,6 +31,11 @@ Every causal estimate should report:
 
 <!-- Speaker notes: A single number — "the effect is 0.25" — is scientifically incomplete. We need to know how uncertain that estimate is, what it means in substantive terms, and for whom it applies. The complete results sentence template encodes all of this. Practice writing it. The goal is one sentence that a non-statistician can understand and a statistician can verify. -->
 
+<div class="callout-info">
+Info:  — CI, HDI, SE, or posterior SD
+3. 
+</div>
+
 ---
 
 ## Bayesian vs Frequentist Uncertainty
@@ -152,6 +157,10 @@ ax.invert_yaxis()
 
 <!-- Speaker notes: The forest plot is the visual equivalent of the robustness table. It's compact, informative, and immediately shows whether estimates are consistent across specifications. All dots and error bars should be on the same side of zero for a robust result. If some specifications flip sign or lose significance, they deserve investigation — and honest reporting of why. -->
 
+<div class="callout-insight">
+Insight: The most impactful causal reports lead with the decision implication, not the statistical result. Decision-makers need to know what to do, not just what was found.
+</div>
+
 ---
 
 ## Sensitivity Analysis: What Would Overturn This?
@@ -175,6 +184,10 @@ Report: "Our conclusion holds as long as the parallel trends violation is less t
 
 <!-- Speaker notes: Sensitivity analysis turns a binary "significant/not significant" into a continuous question: how wrong would the assumption have to be for our conclusion to change? For DiD, you can ask: how large a pre-trend violation would flip the sign or make the CI include zero? For RDD: how much manipulation would have to occur? For IV: how strong a direct effect of the instrument would overturn the result? This is more informative than just reporting that you "tested assumptions" and they "passed." -->
 
+<div class="callout-warning">
+Warning: Reporting only point estimates without uncertainty ranges or robustness checks undermines the credibility of any causal analysis.
+</div>
+
 ---
 
 ## The Complete Reporting Checklist
@@ -190,6 +203,10 @@ Report: "Our conclusion holds as long as the parallel trends violation is less t
 - [ ] Reproduced from documented code
 
 <!-- Speaker notes: This is your reporting checklist. If you can tick every box, you've produced a complete and honest causal analysis. The ones most often skipped are: the estimand (people forget to say ATT vs ATE), the robustness table (only one specification reported), and the limitation (people are reluctant to document threats). All three are necessary. -->
+
+<div class="callout-key">
+Key Point: A causal analysis report must explicitly state: the estimand, the identifying assumption, the evidence supporting that assumption, and the sensitivity to violations.
+</div>
 
 ---
 

@@ -1,8 +1,14 @@
 # Interrupted Time Series: Introduction
 
+> **Reading time:** ~9 min | **Module:** 1 — Its Fundamentals | **Prerequisites:** Module 0 — Causal Foundations
+
 ## In Brief
 
 Interrupted Time Series (ITS) is a quasi-experimental design that estimates the causal effect of an intervention using longitudinal data from a single unit (or a few units). It uses the pre-intervention trend as the counterfactual for what would have happened absent the intervention.
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Interrupted Time Series (ITS) is a quasi-experimental design that estimates the causal effect of an intervention using longitudinal data from a single unit (or a few units). It uses the pre-intervention trend as the counterfactual for what would have happened absent the intervention.
+</div>
 
 ## Key Insight
 
@@ -32,6 +38,41 @@ ITS is appropriate when:
 | Finance | Circuit breaker rules | Market volatility |
 | Environmental | Emissions regulations | Air quality indices |
 | Crime | Policing interventions | Crime rates by type |
+
+<div class="callout-insight">
+<strong>Insight:</strong> ITS is the "minimum viable causal design" -- it requires only a single treated unit with a long time series. When you lack a control group, ITS is often your strongest option for credible causal inference.
+</div>
+
+---
+
+## ITS vs. Other Causal Designs
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">ITS (Single Unit)</div>
+<div class="body">
+
+- Needs only one treated unit
+- Requires long pre-period (12+ obs)
+- Counterfactual = extrapolated trend
+- Vulnerable to concurrent events
+- **Best for:** policy changes with clear timing
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">DiD / Synthetic Control</div>
+<div class="body">
+
+- Needs a control group
+- Shorter pre-period acceptable
+- Counterfactual = control group trajectory
+- Controls for time-varying confounders
+- **Best for:** when untreated comparisons exist
+
+</div>
+</div>
+</div>
 
 ---
 
@@ -222,6 +263,12 @@ A **controlled ITS** (also called ITS with a comparison group) adds a comparison
 
 ## Code Example: Basic ITS Specification
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -286,16 +333,39 @@ def fit_its_model(df, outcome, formula=None):
     return model
 ```
 
+</div>
+
 ---
 
 ## Connections
 
+<div class="callout-info">
+<strong>How this connects to the rest of the course:</strong>
+</div>
+
 - **Builds on:** Potential outcomes (Module 00), DAGs and confounding (Module 00)
 - **Leads to:** Segmented regression details (Guide 2), CausalPy API (Guide 3)
 - **Related to:** Difference-in-Differences (Module 04), Regression Discontinuity (Module 05)
+
+
+## Practice Questions
+
+### Question 1: Conceptual Check
+**Question:** In your own words, explain the core concept of Interrupted Time Series: Introduction and why it matters for practical applications. What problem does it solve that simpler approaches cannot?
+
+### Question 2: Application
+**Question:** Describe a real-world scenario where you would apply the techniques from this guide. What assumptions would you need to verify before proceeding?
 
 ## Further Reading
 
 - Bernal, J.L., Cummins, S., & Gasparrini, A. (2017). "Interrupted time series regression for the evaluation of public health interventions: a tutorial." *International Journal of Epidemiology*
 - Shadish, W.R., Cook, T.D., & Campbell, D.T. (2002). *Experimental and Quasi-Experimental Designs for Generalized Causal Inference* — the definitive reference on quasi-experiments
 - Kontopantelis, E. et al. (2015). "Regression based quasi-experimental approach when randomisation is not an option: interrupted time series analysis." *BMJ*
+
+
+## Resources
+
+<a class="link-card" href="../notebooks/01_its_smoking_ban.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises for this topic.</div>
+</a>

@@ -20,6 +20,7 @@ math: mathjax
 # CausalPy Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Your data\n(pandas DataFrame)"] --> B["InterruptedTimeSeries\nclass"]
     B --> C["Formula string\n'y ~ 1 + t + treated + t_post'"]
@@ -61,6 +62,11 @@ df.iloc[24:27]
 ```
 
 <!-- Speaker notes: Point out the key detail: at the intervention point (row 24 here), treated=1 but t_post=0. The level change (beta_2) applies immediately at t*, but the slope change (beta_3) needs time to accumulate. Students sometimes expect t_post=1 at the intervention point, which would be wrong. The formula y ~ 1 + t + treated + t_post with this data structure correctly estimates the segmented regression model. -->
+
+<div class="callout-info">
+Info:  — what you are measuring
+2. 
+</div>
 
 ---
 
@@ -116,6 +122,10 @@ CausalPy prints sampling progress and then stores all results in `result`.
 Every variable in the formula must be a column in `data`.
 
 <!-- Speaker notes: The formula syntax follows the standard Wilkinson formula notation used by R's lm() and Python's statsmodels/formulaic. C(month) creates dummy variables for each unique value of month. You can also use interactions (t:treated), polynomial terms (I(t**2)), and transformations (np.log(t)). The formula is the key interface between causal theory and statistical implementation — every term should correspond to something in your DAG. -->
+
+<div class="callout-key">
+Key Point: Formula → Model parameters
+</div>
 
 ---
 
@@ -295,6 +305,10 @@ The posterior samples support any derived quantity.
 
 <!-- Speaker notes: This table is the practical reference for formula building. Students can bookmark this slide. The key decisions are: (1) should I include t_post (slope change) or just treated (level only)? — start with both, let the posterior tell you. (2) Do I need seasonal controls? — check residual ACF for seasonal patterns. (3) Are there important pre-intervention covariates? — add them if they confound the time trend. The formula directly encodes your causal assumptions about what drives the outcome. -->
 
+<div class="callout-key">
+Key Point: The `treatment_time` parameter in CausalPy must exactly match your intervention date. Off-by-one errors silently bias the treatment effect estimate.
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -324,3 +338,7 @@ The posterior samples support any derived quantity.
 - Placebo tests
 
 <!-- Speaker notes: The notebooks immediately apply the API knowledge from this guide. Notebook 1 is the core ITS workflow on a realistic dataset — students should be able to complete it independently using what they learned in Guides 1-3. Notebook 2 goes deeper into diagnostics, which is where many applied analyses fall short. A model that passes all diagnostic checks is much more defensible than one that ignores them. -->
+
+<div class="callout-info">
+Info: CausalPy's ITS API fits both frequentist and Bayesian models with the same data preparation -- switching is one parameter change.
+</div>

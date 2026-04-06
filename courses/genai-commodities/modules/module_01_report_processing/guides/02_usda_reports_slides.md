@@ -30,6 +30,7 @@ USDA reports drive agricultural commodity markets but are published as PDFs with
 ## Key USDA Reports
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[USDA Reports] --> B[WASDE<br/>Monthly, 12th<br/>12:00 PM ET]
     A --> C[Crop Progress<br/>Weekly, Monday<br/>4:00 PM ET]
@@ -48,6 +49,12 @@ flowchart TD
     D --> D2[Outstanding Commitments]
     D --> D3[Top Destinations]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -133,9 +140,17 @@ with open("wasde_jan_2024.pdf", "wb") as f:
     f.write(pdf_content)
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about USDA Quick Stats API. Emphasize practical implications and connect to previous material. -->
 
 ## USDA Quick Stats API
 
@@ -158,6 +173,12 @@ def query_quick_stats(commodity: str, year: int):
     }
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 ---
 
 ```python
@@ -173,6 +194,12 @@ def query_quick_stats(commodity: str, year: int):
 data = query_quick_stats('CORN', 2024)
 
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -212,6 +239,8 @@ def extract_text_from_pdf(pdf_path: str) -> str:
 
 ---
 
+<!-- Speaker notes: Cover the key points about WASDE Table Parsing with LLM. Emphasize practical implications and connect to previous material. -->
+
 ## WASDE Table Parsing with LLM
 
 ```python
@@ -250,6 +279,8 @@ Return JSON with this exact structure:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about WASDE Table Parsing (continued). Emphasize practical implications and connect to previous material. -->
 
 ## WASDE Table Parsing (continued)
 
@@ -294,6 +325,7 @@ Table text:
 ## WASDE Supply/Demand Balance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     subgraph Supply
         A[Beginning Stocks] --> E[Total Supply]
@@ -310,8 +342,6 @@ graph TD
     E --> J[Ending Stocks<br/>= Total Supply - Total Demand]
     I --> J
     J --> K[Stocks-to-Use Ratio<br/>Key Price Driver]
-
-    style K fill:#f96,stroke:#333,stroke-width:2px
 ```
 
 > The stocks-to-use ratio is the single most important metric for agricultural commodity pricing.
@@ -319,6 +349,8 @@ graph TD
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Narrative Summary Extraction. Emphasize practical implications and connect to previous material. -->
 
 ## Narrative Summary Extraction
 
@@ -381,6 +413,8 @@ Weekly condition ratings and weather impacts
 
 ---
 
+<!-- Speaker notes: Cover the key points about Condition Ratings Extraction. Emphasize practical implications and connect to previous material. -->
+
 ## Condition Ratings Extraction
 
 ```python
@@ -435,6 +469,8 @@ Report:
 
 ---
 
+<!-- Speaker notes: Cover the key points about Weather Impact Extraction. Emphasize practical implications and connect to previous material. -->
+
 ## Weather Impact Extraction
 
 ```python
@@ -483,6 +519,7 @@ Report:
 ## Crop Progress Analysis Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Weekly Crop Report] --> B[Condition Ratings]
     A --> C[Weather Commentary]
@@ -515,6 +552,8 @@ Weekly trade flow data
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Export Sales Extraction. Emphasize practical implications and connect to previous material. -->
 
 ## Export Sales Extraction
 
@@ -602,6 +641,8 @@ class WASDEData:
 
 ---
 
+<!-- Speaker notes: Cover the key points about WASDEProcessor Class. Emphasize practical implications and connect to previous material. -->
+
 ## WASDEProcessor Class
 
 ```python
@@ -649,6 +690,7 @@ class WASDEProcessor:
 ## WASDE Processing Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[WASDE PDF] --> B[Extract Text<br/>PyPDF2]
     B --> C[Split by<br/>Commodity]
@@ -674,6 +716,8 @@ Cross-referencing and consensus approaches
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Cross-Reference with Prior Reports. Emphasize practical implications and connect to previous material. -->
 
 ## Cross-Reference with Prior Reports
 
@@ -767,6 +811,12 @@ def robust_table_extract(pdf_path):
 ### Unit Confusion
 WASDE uses different units per commodity
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 UNIT_CONVERSIONS = {
     'corn': {'bushel_to_mt': 0.0254},
@@ -776,10 +826,18 @@ UNIT_CONVERSIONS = {
 ```
 
 </div>
+
+</div>
 <div>
 
 ### Marketing Year Confusion
 Different commodities, different calendars
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 MARKETING_YEARS = {
@@ -789,8 +847,16 @@ MARKETING_YEARS = {
 }
 ```
 
+</div>
+
 ### Revision Handling
 USDA frequently revises prior estimates
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
 
 ```python
 @dataclass
@@ -801,6 +867,8 @@ class WASDERevision:
     revision_magnitude: float
     revision_direction: str
 ```
+
+</div>
 
 </div>
 </div>
@@ -851,6 +919,7 @@ class WASDERevision:
 ## Key Takeaways
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[USDA Reports] --> B[LLM Parsing]
     B --> C[Flexible table handling]

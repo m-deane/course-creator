@@ -35,6 +35,7 @@ Both are semantically identical but lead to **opposite trading conclusions**.
 ## Bad Librarian vs. Good Librarian
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Query: What's the crude<br/>oil inventory situation?] --> B{Semantic Search<br/>Only?}
     B -->|Bad Librarian| C[Mix of 2019 + 2024 data<br/>US + OPEC data<br/>Crude + gasoline results]
@@ -43,10 +44,13 @@ flowchart TD
     C --> E[Wrong conclusions<br/>Hallucinated analysis]
     D --> F[Recent US crude only<br/>Properly dated & contextualized]
     F --> G[Accurate, actionable insights]
-
-    style E fill:#f44,stroke:#333
-    style G fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -82,6 +86,8 @@ Parsing queries into structured retrieval strategies
 
 ---
 
+<!-- Speaker notes: Cover the key points about Query Types. Emphasize practical implications and connect to previous material. -->
+
 ## Query Types
 
 ```python
@@ -97,6 +103,12 @@ class QueryType(Enum):
     CROSS_COMMODITY = "cross_commodity"
     # "How does X affect Y?"
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 ---
 
@@ -114,9 +126,17 @@ class QueryIntent:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLM-Powered Intent Parsing. Emphasize practical implications and connect to previous material. -->
 
 ## LLM-Powered Intent Parsing
 
@@ -139,6 +159,12 @@ Return JSON:
 }}
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 ---
 
 ```python
@@ -159,6 +185,7 @@ Examples:
 ## Query Type to Strategy Mapping
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[User Query] --> B[LLM Intent<br/>Parsing]
     B --> C{Query Type?}
@@ -187,6 +214,8 @@ Detailed implementation for each query type
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Current State Retrieval. Emphasize practical implications and connect to previous material. -->
 
 ## Current State Retrieval
 
@@ -232,6 +261,8 @@ def _retrieve_current_state(self, context):
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Historical Comparison Retrieval. Emphasize practical implications and connect to previous material. -->
 
 ## Historical Comparison Retrieval
 
@@ -283,6 +314,8 @@ def _retrieve_historical_comparison(self, context):
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Trend Analysis Retrieval. Emphasize practical implications and connect to previous material. -->
 
 ## Trend Analysis Retrieval
 
@@ -337,6 +370,7 @@ def _retrieve_trend_analysis(self, context):
 ## Trend Retrieval Sampling
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Trend Analysis: 12-Week Sampling
     dateFormat  YYYY-MM-DD
@@ -360,6 +394,8 @@ gantt
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Cross-Commodity Retrieval. Emphasize practical implications and connect to previous material. -->
 
 ## Cross-Commodity Retrieval
 
@@ -421,6 +457,8 @@ Improving result quality beyond semantic similarity
 
 ---
 
+<!-- Speaker notes: Cover the key points about Re-Ranking for Current State. Emphasize practical implications and connect to previous material. -->
+
 ## Re-Ranking for Current State
 
 ```python
@@ -442,6 +480,12 @@ def _rerank_for_current_state(self, results, intent):
 ```
 
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -465,6 +509,8 @@ def _rerank_for_current_state(self, results, intent):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -472,6 +518,7 @@ def _rerank_for_current_state(self, results, intent):
 ## Hybrid Retrieval Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[User Query] --> B[Semantic Search<br/>Embedding similarity]
     A --> C[Keyword Search<br/>BM25 / exact match]
@@ -484,15 +531,21 @@ flowchart TD
 
     F --> G[LLM Re-Rank<br/>Relevance scoring]
     G --> H[Final top_k Results<br/>Best of both methods]
-
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
 
+<!-- Speaker notes: Cover the key points about LLM-Based Re-Ranking. Emphasize practical implications and connect to previous material. -->
+
 ## LLM-Based Re-Ranking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hybridretrieval.py</span>
+</div>
 
 ```python
 class HybridRetrieval:
@@ -512,7 +565,15 @@ Chunks:
 {chr(10).join(chunk_texts)}
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -534,6 +595,8 @@ of relevance (most relevant first):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -541,6 +604,7 @@ of relevance (most relevant first):
 ## Common Pitfalls
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Pitfalls
         A[Ignoring Time<br/>in Retrieval]
@@ -588,6 +652,7 @@ flowchart LR
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Knowledge Base<br/>Design] --> B[Retrieval<br/>Strategies<br/>This Guide]
     C[Document<br/>Processing] --> B

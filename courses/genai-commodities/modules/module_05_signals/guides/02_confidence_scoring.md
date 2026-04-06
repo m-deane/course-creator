@@ -1,10 +1,29 @@
 # LLM Confidence Calibration and Uncertainty Quantification
 
+> **Reading time:** ~12 min | **Module:** Module 5: Signals | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Confidence scoring quantifies the reliability of LLM-generated signals by measuring how well stated confidence levels match actual prediction accuracy. Well-calibrated confidence enables optimal position sizing, risk management, and systematic evaluation of when to trust LLM outputs versus defaul...
+
+</div>
+
 ## In Brief
 
 Confidence scoring quantifies the reliability of LLM-generated signals by measuring how well stated confidence levels match actual prediction accuracy. Well-calibrated confidence enables optimal position sizing, risk management, and systematic evaluation of when to trust LLM outputs versus defaulting to safer alternatives.
 
-> 💡 **Key Insight:** LLMs are notoriously overconfident—claiming 90% certainty on predictions that are correct only 60% of the time. Calibration transforms subjective LLM confidence into objective probability estimates through empirical validation. A calibrated confidence score of 0.75 means "historically, signals with this confidence were correct 75% of the time," enabling quantitative risk assessment and Kelly-optimal position sizing.
+<div class="callout-insight">
+
+**Insight:** LLMs are notoriously overconfident—claiming 90% certainty on predictions that are correct only 60% of the time. Calibration transforms subjective LLM confidence into objective probability estimates through empirical validation. A calibrated confidence score of 0.75 means "historically, signals with this confidence were correct 75% of the time," enabling quantitative risk assessment and Kelly-optimal position sizing.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -59,8 +78,6 @@ Single temperature parameter T learned on validation set.
 **Total Uncertainty:**
 $$\sigma^2_{\text{total}} = \sigma^2_{\text{epistemic}} + \sigma^2_{\text{aleatoric}}$$
 
-## Intuitive Explanation
-
 ### The Overconfidence Problem
 
 **Uncalibrated LLM:**
@@ -98,6 +115,12 @@ Generate 5 signals for the same context:
 ## Code Implementation
 
 ### Confidence Calibration Framework
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">confidencecalibrator.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -477,7 +500,15 @@ else:
     print("  LOW AGREEMENT - Conflicting signals, consider staying flat")
 ```
 
+</div>
+
 ### Position Sizing with Calibrated Confidence
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">calibratedpositionsizer.py</span>
+</div>
 
 ```python
 class CalibratedPositionSizer:
@@ -581,6 +612,8 @@ for scenario in scenarios:
     print(f"  Size Reduction: {(1 - cal_pos['position_pct']/uncal_pos['position_pct'])*100:.1f}%")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Insufficient Calibration Data**
@@ -660,9 +693,26 @@ for scenario in scenarios:
    Why might long-term be better calibrated?
    Should you use separate calibrators for each horizon?
 
+<div class="callout-insight">
+
+**Insight:** Understanding llm confidence calibration and uncertainty quantification is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Confidence Calibration:**
+<div class="flow">
+<div class="flow-step mint">1. "On Calibration of M...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. "Beyond temperature ...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. "Verified Uncertaint...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. "Dropout as a Bayesi...</div>
+</div>
+
+
 1. **"On Calibration of Modern Neural Networks"** by Guo et al. (2017) - Temperature scaling, ECE
 2. **"Beyond temperature scaling: Obtaining well-calibrated multiclass probabilities with Dirichlet calibration"** - Advanced methods
 3. **"Verified Uncertainty Calibration"** by Kumar et al. - Theoretical guarantees
@@ -685,3 +735,42 @@ for scenario in scenarios:
 ---
 
 *"Confidence without calibration is noise. Calibrated confidence is signal."*
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_confidence_scoring_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_signal_generation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_signal_frameworks.md">
+  <div class="link-card-title">01 Signal Frameworks</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_signal_generation.md">
+  <div class="link-card-title">01 Signal Generation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

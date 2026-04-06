@@ -1,65 +1,27 @@
 # Signal Generation Frameworks with LLMs
 
+> **Reading time:** ~11 min | **Module:** Module 5: Signals | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Signal generation frameworks systematically transform LLM outputs (sentiment, events, fundamental analysis) into actionable trading signals with quantified conviction levels. These frameworks combine narrative intelligence with quantitative rigor, converting qualitative insights into systematic p...
+
+</div>
+
 ## In Brief
 
 Signal generation frameworks systematically transform LLM outputs (sentiment, events, fundamental analysis) into actionable trading signals with quantified conviction levels. These frameworks combine narrative intelligence with quantitative rigor, converting qualitative insights into systematic position sizing, risk management, and portfolio decisions.
 
-> 💡 **Key Insight:** LLMs excel at understanding context but don't naturally output tradeable signals. A signal framework bridges this gap by: (1) structuring LLM outputs into standardized formats, (2) mapping narrative conviction to position sizes, (3) combining multiple signals with conflict resolution, (4) tracking signal performance for continuous improvement. The goal: transform "OPEC cuts seem bullish" into "Long 100 contracts WTI with 2% stop loss."
+<div class="callout-insight">
 
-## Formal Definition
+**Insight:** LLMs excel at understanding context but don't naturally output tradeable signals. A signal framework bridges this gap by: (1) structuring LLM outputs into standardized formats, (2) mapping narrative conviction to position sizes, (3) combining multiple signals with conflict resolution, (4) tracking signal performance for continuous improvement. The goal: transform "OPEC cuts seem bullish" into "Long 100 contracts WTI with 2% stop loss."
 
-### Signal Structure
+</div>
+<div class="callout-warning">
 
-**A trading signal is a tuple:**
-$$\text{Signal} = (A, D, S, C, H, R)$$
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
 
-Where:
-- $A$: Action ∈ {Long, Short, Flat}
-- $D$: Direction ∈ {Bullish, Bearish, Neutral}
-- $S$: Strength ∈ [0, 1] (conviction level)
-- $C$: Catalyst (event or condition triggering signal)
-- $H$: Time horizon ∈ {Intraday, Short-term, Medium-term, Long-term}
-- $R$: Risk parameters {stop_loss, take_profit, max_position}
-
-### Signal Generation Pipeline
-
-```
-Raw Information → LLM Analysis → Structured Output → Signal Transformation → Position Sizing
-```
-
-**Step 1: LLM Analysis**
-Input: News, fundamental data, technical levels
-Output: Narrative assessment with conviction
-
-**Step 2: Signal Extraction**
-```python
-{
-  "direction": "bullish",
-  "conviction": 0.75,
-  "catalyst": "OPEC production cut",
-  "horizon": "medium-term",
-  "reasoning": "Supply reduction with stable demand"
-}
-```
-
-**Step 3: Position Sizing**
-$$\text{Position Size} = \text{Base Size} \times S \times \min(1, \text{Kelly Fraction})$$
-
-**Step 4: Risk Management**
-- Stop loss: $\text{SL} = \text{Entry} \times (1 - \alpha \cdot S)$ for long
-- Take profit: $\text{TP} = \text{Entry} \times (1 + \beta \cdot S)$ for long
-
-### Multi-Signal Aggregation
-
-Given N signals $\{(A_i, D_i, S_i)\}_{i=1}^N$:
-
-**Weighted average direction:**
-$$D_{\text{agg}} = \frac{\sum_{i=1}^N S_i \cdot \text{sign}(D_i)}{\sum_{i=1}^N S_i}$$
-
-Where sign(Bullish) = +1, sign(Bearish) = -1
-
-**Conflict detection:**
-If $|D_{\text{agg}}| < \theta$ (threshold), signals conflict → reduce position or stay flat
+</div>
 
 ## Intuitive Explanation
 
@@ -95,9 +57,78 @@ For LLM signals:
 - Action: Small long position (conflicting signals)
 - Stop: Tight (protect against LLM 2 being correct)
 
+## Formal Definition
+
+### Signal Structure
+
+**A trading signal is a tuple:**
+$$\text{Signal} = (A, D, S, C, H, R)$$
+
+Where:
+- $A$: Action ∈ {Long, Short, Flat}
+- $D$: Direction ∈ {Bullish, Bearish, Neutral}
+- $S$: Strength ∈ [0, 1] (conviction level)
+- $C$: Catalyst (event or condition triggering signal)
+- $H$: Time horizon ∈ {Intraday, Short-term, Medium-term, Long-term}
+- $R$: Risk parameters {stop_loss, take_profit, max_position}
+
+### Signal Generation Pipeline
+
+```
+Raw Information → LLM Analysis → Structured Output → Signal Transformation → Position Sizing
+```
+
+**Step 1: LLM Analysis**
+Input: News, fundamental data, technical levels
+Output: Narrative assessment with conviction
+
+**Step 2: Signal Extraction**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+```python
+{
+  "direction": "bullish",
+  "conviction": 0.75,
+  "catalyst": "OPEC production cut",
+  "horizon": "medium-term",
+  "reasoning": "Supply reduction with stable demand"
+}
+```
+
+</div>
+
+**Step 3: Position Sizing**
+$$\text{Position Size} = \text{Base Size} \times S \times \min(1, \text{Kelly Fraction})$$
+
+**Step 4: Risk Management**
+- Stop loss: $\text{SL} = \text{Entry} \times (1 - \alpha \cdot S)$ for long
+- Take profit: $\text{TP} = \text{Entry} \times (1 + \beta \cdot S)$ for long
+
+### Multi-Signal Aggregation
+
+Given N signals $\{(A_i, D_i, S_i)\}_{i=1}^N$:
+
+**Weighted average direction:**
+$$D_{\text{agg}} = \frac{\sum_{i=1}^N S_i \cdot \text{sign}(D_i)}{\sum_{i=1}^N S_i}$$
+
+Where sign(Bullish) = +1, sign(Bearish) = -1
+
+**Conflict detection:**
+If $|D_{\text{agg}}| < \theta$ (threshold), signals conflict → reduce position or stay flat
+
 ## Code Implementation
 
 ### Core Signal Framework
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -429,7 +460,15 @@ print(f"Catalyst: {aggregate.catalyst}")
 print(f"\nReasoning:\n{aggregate.reasoning}")
 ```
 
+</div>
+
 ### Position Sizing from Signals
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">positionsizer.py</span>
+</div>
 
 ```python
 class PositionSizer:
@@ -515,6 +554,8 @@ print(f"  Contracts: {position2['contracts']}")
 print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Over-Trusting LLM Conviction**
@@ -599,6 +640,12 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
    - Multiple scenarios (base/bull/bear cases)
    - Time-conditional triggers ("if inventory drops below X, increase conviction")
 
+<div class="callout-insight">
+
+**Insight:** Understanding signal generation frameworks with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Signal Generation:**
@@ -624,3 +671,42 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 ---
 
 *"Signals are where narrative meets numbers. A framework ensures LLM insights become systematic, risk-managed trades."*
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_signal_frameworks_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_signal_generation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_signal_generation.md">
+  <div class="link-card-title">01 Signal Generation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_confidence_scoring.md">
+  <div class="link-card-title">02 Confidence Scoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

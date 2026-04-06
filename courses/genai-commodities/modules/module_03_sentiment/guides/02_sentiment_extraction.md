@@ -1,10 +1,49 @@
 # Extracting Sentiment from Commodity Text
 
+> **Reading time:** ~12 min | **Module:** Module 3: Sentiment | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Sentiment extraction for commodities uses LLMs to classify market direction (bullish/bearish/neutral) from news and reports while accounting for commodity-specific language, implicit sentiment, multi-commodity relationships, and the distinction between price sentiment and fundamental sentiment.
+
+</div>
+
 ## In Brief
 
 Sentiment extraction for commodities uses LLMs to classify market direction (bullish/bearish/neutral) from news and reports while accounting for commodity-specific language, implicit sentiment, multi-commodity relationships, and the distinction between price sentiment and fundamental sentiment.
 
-> 💡 **Key Insight:** Standard financial sentiment models fail for commodities because "increased production" is bearish for prices (more supply) but bullish for producer stocks, and context matters enormously—"low inventory" is bearish in agriculture (crop shortage) but can be bullish in energy (strong demand). LLMs excel at this contextual reasoning that simpler models miss.
+<div class="callout-insight">
+
+**Insight:** Standard financial sentiment models fail for commodities because "increased production" is bearish for prices (more supply) but bullish for producer stocks, and context matters enormously—"low inventory" is bearish in agriculture (crop shortage) but can be bullish in energy (strong demand). LLMs excel at this contextual reasoning that simpler models miss.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of commodity sentiment extraction like translating news into trading signals:
+
+**Simple sentiment (wrong):**
+- Article says "Production is up 10%"
+- Simple model: "Up" sounds positive → bullish
+- **But actually**: More production = more supply = bearish for prices
+
+**Commodity-aware sentiment (correct):**
+- Article says "Production is up 10%"
+- Context: We're analyzing crude oil prices
+- Reasoning: Increased production → increased supply → downward price pressure
+- **Correct sentiment**: Bearish for crude oil prices
+
+**Additional complexity:**
+- "OPEC announces surprise production cut" → Bullish (restricted supply)
+- "Refinery utilization hits 95%, highest in 3 years" → Bullish for products (gasoline, diesel)
+- "Corn planting ahead of schedule with favorable weather" → Bearish for corn prices (good crop expected)
+
+The LLM must understand supply/demand dynamics, seasonal factors, and multi-commodity relationships.
 
 ## Formal Definition
 
@@ -37,31 +76,15 @@ Sentiment = {
 - **Inventory decrease** → context-dependent (could be strong demand or supply disruption)
 - **Production cuts** → bullish price sentiment (restricted supply)
 
-## Intuitive Explanation
-
-Think of commodity sentiment extraction like translating news into trading signals:
-
-**Simple sentiment (wrong):**
-- Article says "Production is up 10%"
-- Simple model: "Up" sounds positive → bullish
-- **But actually**: More production = more supply = bearish for prices
-
-**Commodity-aware sentiment (correct):**
-- Article says "Production is up 10%"
-- Context: We're analyzing crude oil prices
-- Reasoning: Increased production → increased supply → downward price pressure
-- **Correct sentiment**: Bearish for crude oil prices
-
-**Additional complexity:**
-- "OPEC announces surprise production cut" → Bullish (restricted supply)
-- "Refinery utilization hits 95%, highest in 3 years" → Bullish for products (gasoline, diesel)
-- "Corn planting ahead of schedule with favorable weather" → Bearish for corn prices (good crop expected)
-
-The LLM must understand supply/demand dynamics, seasonal factors, and multi-commodity relationships.
-
 ## Code Implementation
 
 ### LLM-Based Sentiment Extraction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -283,7 +306,15 @@ Examples:
         return sentiments
 ```
 
+</div>
+
 ### Aspect-Based Sentiment Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">aspectsentimentextractor.py</span>
+</div>
 
 ```python
 class AspectSentimentExtractor:
@@ -358,7 +389,15 @@ For each aspect:
         return aspect_sentiments
 ```
 
+</div>
+
 ### Sentiment Aggregation Across Sources
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sentimentaggregator.py</span>
+</div>
 
 ```python
 from collections import defaultdict
@@ -477,7 +516,15 @@ class SentimentAggregator:
         }
 ```
 
+</div>
+
 ### Example Usage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Initialize extractor
@@ -538,6 +585,8 @@ print(f"\n24-Hour Consensus: {aggregate['consensus']}")
 print(f"Confidence: {aggregate['confidence']:.2f}")
 print(f"Trend: {aggregate['trend']}")
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -625,6 +674,12 @@ print(f"Trend: {aggregate['trend']}")
      - Product demand
    - Combine into overall market sentiment
 
+<div class="callout-insight">
+
+**Insight:** Understanding extracting sentiment from commodity text is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Sentiment Analysis Fundamentals:**
@@ -646,3 +701,37 @@ print(f"Trend: {aggregate['trend']}")
 **Production Systems:**
 - "Real-Time Sentiment Analysis at Scale" - Infrastructure considerations
 - "Handling Noisy Social Media Data for Sentiment" - Data quality challenges
+
+---
+
+## Conceptual Practice Questions
+
+1. How do you aggregate article-level sentiments into a tradeable market signal?
+
+2. What decay function would you use for time-weighting sentiment scores and why?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_news_sentiment.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_news_processing.md">
+  <div class="link-card-title">01 News Processing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_news_sentiment.md">
+  <div class="link-card-title">01 News Sentiment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

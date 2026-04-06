@@ -1,10 +1,45 @@
 # Processing Commodity News for Sentiment Analysis
 
+> **Reading time:** ~11 min | **Module:** Module 3: Sentiment | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Commodity news processing involves acquiring real-time news from multiple sources (RSS feeds, Twitter, Bloomberg terminals), filtering for relevance, extracting key information (commodities mentioned, price movements, supply/demand indicators), and preparing text for sentiment analysis while hand...
+
+</div>
+
 ## In Brief
 
 Commodity news processing involves acquiring real-time news from multiple sources (RSS feeds, Twitter, Bloomberg terminals), filtering for relevance, extracting key information (commodities mentioned, price movements, supply/demand indicators), and preparing text for sentiment analysis while handling market-specific language and time-critical information flow.
 
-> 💡 **Key Insight:** Commodity news is fundamentally different from general financial news—a single word change ("higher" vs "lower" production forecast) can move markets billions of dollars. Processing must be low-latency (sub-minute for algorithmic trading), handle domain-specific jargon ("contango", "crack spread"), and distinguish between analysis and reporting of facts.
+<div class="callout-insight">
+
+**Insight:** Commodity news is fundamentally different from general financial news—a single word change ("higher" vs "lower" production forecast) can move markets billions of dollars. Processing must be low-latency (sub-minute for algorithmic trading), handle domain-specific jargon ("contango", "crack spread"), and distinguish between analysis and reporting of facts.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of processing commodity news like being a trader's research assistant who reads thousands of articles per day:
+
+**Your job:**
+- Monitor dozens of news sources constantly
+- Immediately flag anything about your commodities (crude oil, corn, etc.)
+- Ignore duplicate stories (same Reuters story on 10 different sites)
+- Extract the key facts: "Saudi Arabia cuts production by 500k bpd"
+- Determine if it's bullish (positive for prices) or bearish (negative)
+- Rank by importance: OPEC production cuts > local refinery maintenance
+
+**Challenges:**
+- Speed matters: News moves markets in seconds
+- Context matters: "Increased production" is bearish for prices but might be bullish for producer stocks
+- Jargon: "Contango steepens" has specific meaning in commodities
+- Conflicting reports: Different sources give different numbers
 
 ## Formal Definition
 
@@ -32,6 +67,17 @@ Event = {
 ```
 
 **Pipeline stages:**
+<div class="flow">
+<div class="flow-step mint">1. Acquisition</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Deduplication</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Relevance filtering</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Entity extraction</div>
+</div>
+
+
 1. **Acquisition**: Pull from sources at frequency (1min - 1hr)
 2. **Deduplication**: Detect same story from multiple sources
 3. **Relevance filtering**: Keep only commodity-relevant news
@@ -40,27 +86,15 @@ Event = {
 6. **Sentiment tagging**: Classify market sentiment
 7. **Prioritization**: Score by likely market impact
 
-## Intuitive Explanation
-
-Think of processing commodity news like being a trader's research assistant who reads thousands of articles per day:
-
-**Your job:**
-- Monitor dozens of news sources constantly
-- Immediately flag anything about your commodities (crude oil, corn, etc.)
-- Ignore duplicate stories (same Reuters story on 10 different sites)
-- Extract the key facts: "Saudi Arabia cuts production by 500k bpd"
-- Determine if it's bullish (positive for prices) or bearish (negative)
-- Rank by importance: OPEC production cuts > local refinery maintenance
-
-**Challenges:**
-- Speed matters: News moves markets in seconds
-- Context matters: "Increased production" is bearish for prices but might be bullish for producer stocks
-- Jargon: "Contango steepens" has specific meaning in commodities
-- Conflicting reports: Different sources give different numbers
-
 ## Code Implementation
 
 ### Multi-Source News Acquisition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 import feedparser
@@ -295,7 +329,15 @@ class CommodityNewsAcquisition:
             del self.hash_timestamps[h]
 ```
 
+</div>
+
 ### Commodity Relevance Filtering
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">relevancefilter.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -380,7 +422,15 @@ Consider NOT relevant if:
         return relevant_items
 ```
 
+</div>
+
 ### Entity and Fact Extraction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
 
 ```python
 @dataclass
@@ -467,7 +517,15 @@ Extract specific numbers where mentioned. Use standard units:
         )
 ```
 
+</div>
+
 ### Complete News Processing Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
 
 ```python
 @dataclass
@@ -616,6 +674,8 @@ class CommodityNewsProcessor:
         return min(1.0, score)
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Missing Time-Critical News**
@@ -703,6 +763,12 @@ class CommodityNewsProcessor:
      - Blogs and social media
    - Design a 0-1 scoring formula
 
+<div class="callout-insight">
+
+**Insight:** Understanding processing commodity news for sentiment analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **News APIs and Data Sources:**
@@ -727,3 +793,37 @@ class CommodityNewsProcessor:
 **Information Retrieval:**
 - "Introduction to Information Retrieval" (Manning) - Relevance ranking fundamentals
 - "Modern Information Retrieval" - Advanced filtering techniques
+
+---
+
+## Conceptual Practice Questions
+
+1. Why is financial news sentiment analysis harder than general sentiment analysis?
+
+2. What domain-specific challenges arise when applying LLMs to commodity news?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_news_sentiment.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_news_sentiment.md">
+  <div class="link-card-title">01 News Sentiment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_sentiment_aggregation.md">
+  <div class="link-card-title">02 Sentiment Aggregation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

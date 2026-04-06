@@ -33,6 +33,7 @@ Setting up the development environment requires:
 ## Three-Layer Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Layer 3: Analytics
         A1[Signal Generation]
@@ -62,6 +63,12 @@ flowchart TD
     B3 --> A1
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
@@ -83,6 +90,12 @@ Connecting to language model providers
 # Set environment variable
 export ANTHROPIC_API_KEY="sk-ant-api..."
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 ## Alternative: OpenAI GPT
 
@@ -127,6 +140,12 @@ Connecting to government and market data sources
 export EIA_API_KEY="your_eia_key"
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 **Key datasets:**
 - Weekly Petroleum Status Report (WPSR)
 - Natural Gas Weekly Update
@@ -146,6 +165,12 @@ export EIA_API_KEY="your_eia_key"
 # - Export Sales Reports
 # Direct download URLs available
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ## NOAA Weather Data (Optional)
 
@@ -193,6 +218,7 @@ export QUANDL_API_KEY="your_key"
 ## Data Source Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[What data do you need?] --> B{Energy?}
     A --> C{Agricultural?}
@@ -370,6 +396,8 @@ print(response.content[0].text)
 
 ---
 
+<!-- Speaker notes: Cover the key points about Test EIA API Access. Emphasize practical implications and connect to previous material. -->
+
 ## Test EIA API Access
 
 ```python
@@ -436,6 +464,7 @@ print(results)
 ## Verification Checklist
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Start Verification] --> B[Test LLM API]
     B -->|Pass| C[Test EIA API]
@@ -451,8 +480,6 @@ flowchart TD
     C1 --> C
     D1 --> D
     E1 --> E
-
-    style F fill:#2d5,stroke:#333,stroke-width:2px
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -538,12 +565,20 @@ load_dotenv()  # Must be called before os.getenv()
 
 **Issue:** Vector database data lost between sessions
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import chromadb
 
 # Use persistent client instead of in-memory
 client = chromadb.PersistentClient(path="./chroma_db")
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -553,6 +588,12 @@ client = chromadb.PersistentClient(path="./chroma_db")
 
 **Issue:** LLM responses cut off mid-sentence
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 response = client.messages.create(
     model="claude-sonnet-4-20250514",
@@ -561,9 +602,17 @@ response = client.messages.create(
 )
 ```
 
+</div>
+
 ## Pitfall 5: JSON Parsing Failures
 
 **Issue:** LLM returns malformed JSON
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">safe_json_parse.py</span>
+</div>
 
 ```python
 def safe_json_parse(text):
@@ -573,7 +622,9 @@ def safe_json_parse(text):
     except json.JSONDecodeError:
         import re
         json_match = re.search(
-            r'```json\n(.*?)\n```', text, re.DOTALL
+            r'```
+
+</div>json\n(.*?)\n```', text, re.DOTALL
         )
         if json_match:
             return json.loads(json_match.group(1))
@@ -624,6 +675,7 @@ def safe_json_parse(text):
 ## Key Takeaways
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Environment Setup] --> B[Three Layers]
     B --> C[Data Access<br/>EIA, USDA, yfinance]

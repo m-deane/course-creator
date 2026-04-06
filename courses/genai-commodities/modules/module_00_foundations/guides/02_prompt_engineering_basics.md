@@ -1,8 +1,22 @@
 # Prompt Engineering for Commodity Analysis
 
+> **Reading time:** ~5 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Effective prompt engineering is crucial for extracting accurate, actionable insights from LLMs when analyzing commodity markets. This guide covers foundational techniques tailored to financial applications.
+
+</div>
+
 ## Introduction
 
 Effective prompt engineering is crucial for extracting accurate, actionable insights from LLMs when analyzing commodity markets. This guide covers foundational techniques tailored to financial applications.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## The Anatomy of a Good Prompt
 
@@ -170,6 +184,12 @@ def analyze_with_cot(report_text, llm_client):
 
 ### JSON Mode
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">extract_eia_data.py</span>
+</div>
+
 ```python
 json_extraction_prompt = """
 Extract the following information from this EIA petroleum report in JSON format.
@@ -222,9 +242,17 @@ def extract_eia_data(report_excerpt, llm_client):
         return {"error": "Failed to parse JSON", "raw": response}
 ```
 
+</div>
+
 ## Commodity-Specific Prompts
 
 ### Oil Market Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 oil_analysis_prompt = """
@@ -271,9 +299,17 @@ Analyze:
 """
 ```
 
+</div>
+
 ## Handling Model Limitations
 
 ### Uncertainty Acknowledgment
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 uncertainty_aware_prompt = """
@@ -305,7 +341,15 @@ DATA GAPS:
 """
 ```
 
+</div>
+
 ### Hallucination Prevention
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_grounded_prompt.py</span>
+</div>
 
 ```python
 def create_grounded_prompt(data, question):
@@ -325,7 +369,15 @@ ANSWER (cite specific data points):
 """
 ```
 
+</div>
+
 ## Evaluation and Testing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evaluate_prompt_quality.py</span>
+</div>
 
 ```python
 def evaluate_prompt_quality(prompt, test_cases, llm_client):
@@ -374,6 +426,14 @@ test_cases = [
 ]
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding prompt engineering for commodity analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Structure prompts clearly** with context, task, constraints, and output format
@@ -387,3 +447,42 @@ test_cases = [
 5. **Ground responses in data** to prevent hallucinations
 
 6. **Test systematically** across representative cases
+
+---
+
+## Conceptual Practice Questions
+
+1. Why does prompt design matter for extraction accuracy in commodity reports?
+
+2. Design a prompt template that extracts supply-demand balance data from an EIA report.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_prompt_engineering_basics_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_market_data_access.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_llm_fundamentals.md">
+  <div class="link-card-title">01 Llm Fundamentals</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_environment_setup.md">
+  <div class="link-card-title">03 Environment Setup</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

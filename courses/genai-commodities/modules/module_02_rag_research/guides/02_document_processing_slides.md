@@ -36,6 +36,7 @@ $P: D_{raw} \to D_{structured}$ where:
 **Output:** $D_{structured}$ = (text, data\_tables, metadata, validation\_status)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Acquisition<br/>Fetch from source] --> B[Parsing<br/>Extract text/tables]
     B --> C[Cleaning<br/>Normalize, fix encoding]
@@ -43,6 +44,12 @@ flowchart LR
     D --> E[Validation<br/>Unit check, range check]
     E --> F[Enrichment<br/>Seasonality, cross-refs]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -74,6 +81,8 @@ Fetching from EIA, USDA, news, and more
 
 ---
 
+<!-- Speaker notes: Cover the key points about Source Types and Data Structures. Emphasize practical implications and connect to previous material. -->
+
 ## Source Types and Data Structures
 
 ```python
@@ -90,6 +99,12 @@ class DocumentSource(Enum):
     NEWS_RSS = "news_rss"
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 ---
 
 ```python
@@ -105,9 +120,17 @@ class RawDocument:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Fetching EIA Reports. Emphasize practical implications and connect to previous material. -->
 
 ## Fetching EIA Reports
 
@@ -125,6 +148,12 @@ class DocumentAcquisition:
                    "supply/weekly/pdf/wpsrall.pdf")
             response = requests.get(url)
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -147,6 +176,8 @@ class DocumentAcquisition:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Fetching EIA API Time-Series. Emphasize practical implications and connect to previous material. -->
 
 ## Fetching EIA API Time-Series
 
@@ -191,6 +222,8 @@ class DocumentAcquisition:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Fetching USDA and News. Emphasize practical implications and connect to previous material. -->
 
 ## Fetching USDA and News
 
@@ -263,6 +296,7 @@ class DocumentAcquisition:
 ## Document Source Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[What data?] --> B{Structured<br/>time-series?}
     B -->|Yes| C[EIA API / USDA API<br/>Direct JSON access]
@@ -292,6 +326,8 @@ Handling the most challenging commodity document format
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about PDFProcessor Class. Emphasize practical implications and connect to previous material. -->
 
 ## PDFProcessor Class
 
@@ -339,6 +375,8 @@ class PDFProcessor:
 
 ---
 
+<!-- Speaker notes: Cover the key points about Table Cleaning. Emphasize practical implications and connect to previous material. -->
+
 ## Table Cleaning
 
 ```python
@@ -373,6 +411,8 @@ class PDFProcessor:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLM-Assisted Table Parsing. Emphasize practical implications and connect to previous material. -->
 
 ## LLM-Assisted Table Parsing
 
@@ -430,6 +470,8 @@ Ensuring extraction accuracy and consistency
 
 ---
 
+<!-- Speaker notes: Cover the key points about DataValidator Class. Emphasize practical implications and connect to previous material. -->
+
 ## DataValidator Class
 
 ```python
@@ -474,6 +516,7 @@ class DataValidator:
 ## Validation Checks
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Extracted Value] --> B{Within<br/>valid range?}
     B -->|Yes| C{Weekly change<br/>reasonable?}
@@ -490,14 +533,13 @@ flowchart TD
 
     H --> G
     F --> K[Re-extract<br/>with corrected prompt]
-
-    style I fill:#2d5,stroke:#333
-    style D fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Cross-Reference Validation. Emphasize practical implications and connect to previous material. -->
 
 ## Cross-Reference Validation
 
@@ -568,7 +610,15 @@ class ProcessedDocument:
 
 ---
 
+<!-- Speaker notes: Cover the key points about CommodityDocumentProcessor. Emphasize practical implications and connect to previous material. -->
+
 ## CommodityDocumentProcessor
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">commoditydocumentprocessor.py</span>
+</div>
 
 ```python
 class CommodityDocumentProcessor:
@@ -587,7 +637,15 @@ class CommodityDocumentProcessor:
             "wpsr", report_date)
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
         # Step 2: Extract
@@ -608,6 +666,8 @@ class CommodityDocumentProcessor:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -615,6 +675,7 @@ class CommodityDocumentProcessor:
 ## Full Pipeline Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[EIA WPSR Release] --> B[Fetch PDF]
     B --> C[Extract Text<br/>pdfplumber]
@@ -629,8 +690,6 @@ flowchart TD
     H --> J[Narrative Text<br/>For RAG chunking]
     H --> K[Structured Tables<br/>For database storage]
     H --> L[Metadata<br/>Date, source, units]
-
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -670,6 +729,12 @@ Mixing UTC with local times
 
 **Solution:** Store all timestamps in UTC with timezone metadata
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # EIA releases at 10:30 AM ET
 # USDA times vary by report
@@ -677,6 +742,8 @@ Mixing UTC with local times
 from pytz import timezone
 eastern = timezone('US/Eastern')
 ```
+
+</div>
 
 </div>
 </div>
@@ -704,6 +771,7 @@ eastern = timezone('US/Eastern')
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[PDF Parsing<br/>pdfplumber, PyPDF2] --> B[Document Processing<br/>This Guide]
     C[Web Scraping<br/>requests, BS4] --> B

@@ -23,16 +23,20 @@ Extracting forward-looking commodity signals from corporate communications
 **Earnings Calls:** Forward-looking guidance from primary sources
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Earnings Calls] --> B[Forward-Looking<br/>Guidance]
     C[Government<br/>Reports] --> D[Historical<br/>Data]
 
     B --> E[Information Edge<br/>Weeks/months ahead]
     D --> F[Confirmation<br/>After the fact]
-
-    style B fill:#2d5,stroke:#333
-    style E fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 > Companies discuss supply/demand factors weeks or months before they appear in official statistics.
 
@@ -57,6 +61,7 @@ flowchart LR
 ## Key Sections to Analyze
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Earnings Call Transcript] --> B[Prepared Remarks<br/>Management's scripted<br/>commentary]
     A --> C[Guidance<br/>Production/cost/price<br/>forecasts]
@@ -67,10 +72,13 @@ flowchart TD
     C --> G[Most quantitative data]
     D --> H[Most revealing insights]
     E --> I[Broader market context]
-
-    style D fill:#f96,stroke:#333
-    style H fill:#f96,stroke:#333
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -96,6 +104,12 @@ def get_sec_8k_filings(ticker):
     )
     dl.get("8-K", ticker, limit=10)
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 </div>
 <div>
@@ -123,6 +137,8 @@ From commodity mention detection to full analysis
 
 ---
 
+<!-- Speaker notes: Cover the key points about Step 1: Commodity Mention Detection. Emphasize practical implications and connect to previous material. -->
+
 ## Step 1: Commodity Mention Detection
 
 ```python
@@ -142,6 +158,12 @@ Return JSON:
   "key_sections": [{
     "section": "prepared_remarks|qa",
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -167,6 +189,8 @@ Transcript excerpt (first 2000 words):
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Step 2: Production Guidance Extraction. Emphasize practical implications and connect to previous material. -->
 
 ## Step 2: Production Guidance Extraction
 
@@ -216,6 +240,8 @@ Transcript:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Step 3: Demand Signal Extraction. Emphasize practical implications and connect to previous material. -->
 
 ## Step 3: Demand Signal Extraction
 
@@ -269,6 +295,7 @@ Return JSON:
 ## Transcript Processing Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Raw Transcript] --> B[Detect Commodity<br/>Mentions]
     B -->|Relevant| C{Company Type?}
@@ -284,13 +311,13 @@ flowchart TD
 
     G --> H[Generate Trading<br/>Summary]
     H --> I[TranscriptInsight<br/>Structured Output]
-
-    style I fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Step 4: Sentiment and Tone Analysis. Emphasize practical implications and connect to previous material. -->
 
 ## Step 4: Sentiment and Tone Analysis
 
@@ -427,6 +454,7 @@ Transcript:
 ## Sector Signal Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Producers
         A1[Oil Majors] -->|Production guidance| B[Supply Signals]
@@ -484,6 +512,8 @@ class TranscriptInsight:
 
 ---
 
+<!-- Speaker notes: Cover the key points about TranscriptProcessor. Emphasize practical implications and connect to previous material. -->
+
 ## TranscriptProcessor
 
 ```python
@@ -531,6 +561,8 @@ class TranscriptProcessor:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Batch Processing. Emphasize practical implications and connect to previous material. -->
 
 ## Batch Processing
 
@@ -596,6 +628,12 @@ def chunk_transcript(transcript):
 ### Industry Jargon
 LLMs may misinterpret terms
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 INDUSTRY_GLOSSARY = """
 - bpd: barrels per day
@@ -606,10 +644,18 @@ INDUSTRY_GLOSSARY = """
 ```
 
 </div>
+
+</div>
 <div>
 
 ### Temporal Confusion
 Mixing past results with guidance
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 prompt = """
@@ -622,8 +668,16 @@ Tag each data point with timeframe.
 """
 ```
 
+</div>
+
 ### Inconsistent Formatting
 Companies express guidance differently
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">normalize_guidance.py</span>
+</div>
 
 ```python
 def normalize_guidance(raw_value):
@@ -637,6 +691,8 @@ def normalize_guidance(raw_value):
 ```
 
 </div>
+
+</div>
 </div>
 
 <!-- Speaker notes: Walk through each pitfall with a real-world example. Ask learners if they have encountered any of these in their own work. -->
@@ -646,6 +702,7 @@ def normalize_guidance(raw_value):
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 0<br/>LLM Fundamentals] --> B[Earnings<br/>Transcripts<br/>This Guide]
     C[EIA Reports] --> B

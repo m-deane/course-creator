@@ -1,40 +1,27 @@
 # Building Trading Signals from Commodity Sentiment
 
+> **Reading time:** ~13 min | **Module:** Module 3: Sentiment | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Signal construction transforms sentiment analysis into actionable trading recommendations by combining sentiment strength, confidence levels, historical validation, and risk management rules to produce position sizing, entry/exit timing, and stop-loss levels for commodity trades.
+
+</div>
+
 ## In Brief
 
 Signal construction transforms sentiment analysis into actionable trading recommendations by combining sentiment strength, confidence levels, historical validation, and risk management rules to produce position sizing, entry/exit timing, and stop-loss levels for commodity trades.
 
-> 💡 **Key Insight:** Sentiment is not a signal—it's a signal ingredient. "Bullish sentiment" alone doesn't tell you whether to buy now, how much to buy, or when to exit. Effective signal construction requires combining sentiment with price action confirmation, position sizing based on confidence, and historical backtesting to validate that sentiment actually predicts price moves.
+<div class="callout-insight">
 
-## Formal Definition
+**Insight:** Sentiment is not a signal—it's a signal ingredient. "Bullish sentiment" alone doesn't tell you whether to buy now, how much to buy, or when to exit. Effective signal construction requires combining sentiment with price action confirmation, position sizing based on confidence, and historical backtesting to validate that sentiment actually predicts price moves.
 
-A trading signal is a function **SIG: (Sent, Price, Risk) → Action** where:
+</div>
+<div class="callout-warning">
 
-**Inputs:**
-- **Sent** = sentiment analysis {direction, confidence, key_factors}
-- **Price** = market data {current_price, recent_trend, volatility}
-- **Risk** = risk parameters {max_position_size, stop_loss_pct, target_profit}
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
 
-**Output:** Action = trading recommendation:
-```
-Action = {
-  signal_type: {long | short | flat | reduce},
-  strength: [0, 1],  # Position sizing factor
-  entry_price: target_entry,
-  stop_loss: price level to exit if wrong,
-  take_profit: price level to exit if right,
-  time_horizon: expected holding period,
-  confidence: [0, 1],
-  rationale: explanation of signal
-}
-```
-
-**Signal Construction Rules:**
-1. **Sentiment Threshold**: Only act on high-confidence sentiment (>0.7)
-2. **Confirmation**: Require price action confirmation (don't fight strong trends)
-3. **Position Sizing**: Scale position by sentiment strength × confidence
-4. **Risk Management**: Stop-loss based on recent volatility (e.g., 2× ATR)
-5. **Time Decay**: Sentiment signals decay over time (hourly for intraday, daily for swing trades)
+</div>
 
 ## Intuitive Explanation
 
@@ -63,9 +50,56 @@ Think of building trading signals like a pilot's pre-flight checklist:
 
 The signal combines multiple factors into a go/no-go decision with specific parameters.
 
+## Formal Definition
+
+A trading signal is a function **SIG: (Sent, Price, Risk) → Action** where:
+
+**Inputs:**
+- **Sent** = sentiment analysis {direction, confidence, key_factors}
+- **Price** = market data {current_price, recent_trend, volatility}
+- **Risk** = risk parameters {max_position_size, stop_loss_pct, target_profit}
+
+**Output:** Action = trading recommendation:
+```
+Action = {
+  signal_type: {long | short | flat | reduce},
+  strength: [0, 1],  # Position sizing factor
+  entry_price: target_entry,
+  stop_loss: price level to exit if wrong,
+  take_profit: price level to exit if right,
+  time_horizon: expected holding period,
+  confidence: [0, 1],
+  rationale: explanation of signal
+}
+```
+
+**Signal Construction Rules:**
+<div class="flow">
+<div class="flow-step mint">1. Sentiment Threshold</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Confirmation</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Position Sizing</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Risk Management</div>
+</div>
+
+
+1. **Sentiment Threshold**: Only act on high-confidence sentiment (>0.7)
+2. **Confirmation**: Require price action confirmation (don't fight strong trends)
+3. **Position Sizing**: Scale position by sentiment strength × confidence
+4. **Risk Management**: Stop-loss based on recent volatility (e.g., 2× ATR)
+5. **Time Decay**: Sentiment signals decay over time (hourly for intraday, daily for swing trades)
+
 ## Code Implementation
 
 ### Signal Generator from Sentiment
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -395,7 +429,15 @@ class SignalConstructor:
             return TimeHorizon.POSITION
 ```
 
+</div>
+
 ### Signal Validation and Backtesting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">signalvalidator.py</span>
+</div>
 
 ```python
 class SignalValidator:
@@ -517,7 +559,15 @@ class SignalValidator:
             return (signal.entry_price - worst_price) / signal.entry_price
 ```
 
+</div>
+
 ### Signal Portfolio Management
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">signalportfolio.py</span>
+</div>
 
 ```python
 class SignalPortfolio:
@@ -604,6 +654,8 @@ class SignalPortfolio:
         }
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Acting on Low-Confidence Sentiment**
@@ -683,6 +735,12 @@ class SignalPortfolio:
    - Total capital: $100k
    - Is this acceptable diversification? Why or why not?
 
+<div class="callout-insight">
+
+**Insight:** Understanding building trading signals from commodity sentiment is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Trading Signal Design:**
@@ -704,3 +762,42 @@ class SignalPortfolio:
 **Production Systems:**
 - "Building Winning Algorithmic Trading Systems" (Kevin Davey) - Systematic trading
 - "Algorithmic Trading and DMA" (Barry Johnson) - Execution strategies
+
+---
+
+## Conceptual Practice Questions
+
+1. How do you aggregate article-level sentiments into a tradeable market signal?
+
+2. What decay function would you use for time-weighting sentiment scores and why?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_signal_construction_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_news_sentiment.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_news_processing.md">
+  <div class="link-card-title">01 News Processing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_news_sentiment.md">
+  <div class="link-card-title">01 News Sentiment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

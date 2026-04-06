@@ -1,10 +1,29 @@
 # Production LLM Monitoring and Drift Detection
 
+> **Reading time:** ~12 min | **Module:** Module 6: Production | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Production monitoring tracks LLM performance in real-time to detect when model behavior degrades, prompts become stale, or market conditions invalidate historical calibrations. Drift detection identifies when the statistical properties of inputs or outputs change, triggering model retraining, pro...
+
+</div>
+
 ## In Brief
 
 Production monitoring tracks LLM performance in real-time to detect when model behavior degrades, prompts become stale, or market conditions invalidate historical calibrations. Drift detection identifies when the statistical properties of inputs or outputs change, triggering model retraining, prompt updates, or manual intervention before financial losses accumulate.
 
-> 💡 **Key Insight:** LLMs fail silently—they always return plausible-sounding text even when wrong. Unlike traditional ML where accuracy metrics drop visibly, LLM degradation manifests as subtle shifts: slightly lower conviction, different reasoning patterns, or increased uncertainty. Production monitoring must measure semantic drift (meaning changes), performance drift (accuracy decline), and input drift (market regime changes) across multiple timescales to catch failures early.
+<div class="callout-insight">
+
+**Insight:** LLMs fail silently—they always return plausible-sounding text even when wrong. Unlike traditional ML where accuracy metrics drop visibly, LLM degradation manifests as subtle shifts: slightly lower conviction, different reasoning patterns, or increased uncertainty. Production monitoring must measure semantic drift (meaning changes), performance drift (accuracy decline), and input drift (market regime changes) across multiple timescales to catch failures early.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -76,8 +95,6 @@ $$\text{drift} = ||\text{avg}(\text{embed}_{\text{recent}}) - \text{avg}(\text{e
 3. Correlation with benchmark
 4. Feature importance shifts
 
-## Intuitive Explanation
-
 ### Why LLMs Drift
 
 **Scenario 1: Market Regime Change**
@@ -125,6 +142,12 @@ $$\text{drift} = ||\text{avg}(\text{embed}_{\text{recent}}) - \text{avg}(\text{e
 ## Code Implementation
 
 ### Drift Detection System
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -625,6 +648,8 @@ if final_status['drift']:
         print(f"  {status_icon} {name}: PSI = {metrics['psi']:.3f}")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Monitoring Lag**
@@ -704,9 +729,26 @@ if final_status['drift']:
 
    Which model to promote? Consider drift vs performance.
 
+<div class="callout-insight">
+
+**Insight:** Understanding production llm monitoring and drift detection is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Drift Detection:**
+<div class="flow">
+<div class="flow-step mint">1. "A Survey on Concept...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. "Learning under Conc...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. "Detecting and Corre...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. "Monitoring Machine ...</div>
+</div>
+
+
 1. **"A Survey on Concept Drift Adaptation"** by Gama et al. - Comprehensive drift survey
 2. **"Learning under Concept Drift: A Review"** by Lu et al. - Drift detection methods
 3. **"Detecting and Correcting for Label Shift with Black Box Predictors"** - Label shift
@@ -731,3 +773,42 @@ if final_status['drift']:
 ---
 
 *"Monitor early, monitor often. Silent failures are the most expensive."*
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_monitoring_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_pipeline_build.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_commodity_agents.md">
+  <div class="link-card-title">01 Commodity Agents</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_production_deployment.md">
+  <div class="link-card-title">01 Production Deployment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

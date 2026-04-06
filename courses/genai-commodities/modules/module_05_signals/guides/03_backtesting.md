@@ -1,10 +1,29 @@
 # Backtesting LLM-Generated Signals
 
+> **Reading time:** ~12 min | **Module:** Module 5: Signals | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Backtesting validates whether LLM-generated trading signals would have been profitable historically, accounting for transaction costs, slippage, and realistic execution constraints. Unlike traditional backtesting, LLM backtests require special handling of information leakage, prompt stability, an...
+
+</div>
+
 ## In Brief
 
 Backtesting validates whether LLM-generated trading signals would have been profitable historically, accounting for transaction costs, slippage, and realistic execution constraints. Unlike traditional backtesting, LLM backtests require special handling of information leakage, prompt stability, and computational cost since LLM calls cannot be cheaply replicated millions of times.
 
-> 💡 **Key Insight:** LLM backtesting faces unique challenges: (1) LLM outputs are non-deterministic even with the same prompt, (2) computational cost limits exhaustive testing, (3) the LLM's training data may include information from your backtest period (data leakage), (4) prompts must remain stable across years despite changing market conditions. The solution: cache LLM responses, use walk-forward validation, detect temporal data leakage, and measure prompt robustness.
+<div class="callout-insight">
+
+**Insight:** LLM backtesting faces unique challenges: (1) LLM outputs are non-deterministic even with the same prompt, (2) computational cost limits exhaustive testing, (3) the LLM's training data may include information from your backtest period (data leakage), (4) prompts must remain stable across years despite changing market conditions. The solution: cache LLM responses, use walk-forward validation, detect temporal data leakage, and measure prompt robustness.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -45,6 +64,17 @@ Where:
 
 To prevent overfitting:
 
+<div class="flow">
+<div class="flow-step mint">1. Training Window:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Validation Window:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Test Window:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Roll Forward:</div>
+</div>
+
+
 1. **Training Window:** Fit calibration, tune prompt (t - N to t - M)
 2. **Validation Window:** Select best prompt variant (t - M to t - K)
 3. **Test Window:** Generate signals, measure performance (t - K to t)
@@ -67,11 +97,15 @@ For 1000 signals, $0.01 per call, 10 variants → $100/backtest
 - Reuse cached responses across backtest iterations
 - Reduces cost by 95% for parameter sweeps
 
-## Intuitive Explanation
-
 ### Traditional vs LLM Backtesting
 
 **Traditional (Fast):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Compute indicator once
 indicator = compute_RSI(prices)
@@ -80,9 +114,17 @@ for threshold in range(20, 80):
     signals = indicator > threshold
     pnl = backtest(signals, prices)
 ```
+
+</div>
 Time: Seconds for thousands of tests
 
 **LLM-Based (Expensive):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Must call LLM for each signal generation
 for date in dates:
@@ -90,9 +132,17 @@ for date in dates:
     signal = LLM(context)  # $$$
     pnl = execute(signal, prices)
 ```
+
+</div>
 Time: Hours for single test
 
 **Hybrid Approach:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Cache LLM responses
 cache = {}
@@ -106,6 +156,8 @@ for date in dates:
     signal = cache[key]
     pnl = execute(signal, prices)
 ```
+
+</div>
 Time: Minutes, reusable across parameter tests
 
 ### Walk-Forward Prevents Overfitting
@@ -128,6 +180,12 @@ Report: Average of out-of-sample test periods
 ## Code Implementation
 
 ### Backtest Engine with Caching
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -591,6 +649,8 @@ print(f"Average Win Rate: {np.mean([r.win_rate for r in wf_results])*100:.1f}%")
 print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Temporal Data Leakage**
@@ -662,6 +722,12 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
    When is cached response invalid?
    Design cache key to handle this?
 
+<div class="callout-insight">
+
+**Insight:** Understanding backtesting llm-generated signals is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Backtesting Fundamentals:**
@@ -689,3 +755,42 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 ---
 
 *"Backtest like you'll trade. Trade like you backtested."*
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_backtesting_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_signal_generation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_signal_frameworks.md">
+  <div class="link-card-title">01 Signal Frameworks</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_signal_generation.md">
+  <div class="link-card-title">01 Signal Generation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

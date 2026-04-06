@@ -22,16 +22,20 @@ Quantifying reliability of LLM-generated trading signals
 LLMs are notoriously overconfident -- claiming 90% certainty on predictions correct only 60% of the time.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[LLM Says:<br/>95% Confident<br/>Bullish] --> B{Actual<br/>Accuracy?}
     B --> C[63% of the time<br/>signal was correct]
 
     C --> D[Without Calibration:<br/>Oversized position<br/>based on false confidence]
     C --> E[With Calibration:<br/>Adjusted to 67%<br/>appropriate position]
-
-    style D fill:#f44,stroke:#333
-    style E fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -113,6 +117,7 @@ Bin predictions, replace confidence with bin accuracy.
 ## Calibration Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Historical LLM<br/>Predictions<br/>500+ samples] --> B[Split:<br/>70% Train<br/>30% Test]
 
@@ -130,9 +135,13 @@ flowchart TD
 
     I --> D
     D --> J[Compute: ECE,<br/>Brier Score, MCE]
-
-    style I fill:#2d5,stroke:#333
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -147,6 +156,8 @@ Platt scaling, isotonic, and histogram methods
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about ConfidenceCalibrator Class. Emphasize practical implications and connect to previous material. -->
 
 ## ConfidenceCalibrator Class
 
@@ -166,6 +177,12 @@ class ConfidenceCalibrator:
             self.calibrator.fit(confidences, outcomes)
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 ---
 
 ```python
@@ -179,9 +196,17 @@ class ConfidenceCalibrator:
 
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Evaluation Metrics. Emphasize practical implications and connect to previous material. -->
 
 ## Evaluation Metrics
 
@@ -221,6 +246,7 @@ def evaluate(self, confidences, outcomes) -> Dict:
 ## Uncertainty Decomposition
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Total<br/>Uncertainty] --> B[Epistemic<br/>Model Uncertainty]
     A --> C[Aleatoric<br/>Data Uncertainty]
@@ -235,8 +261,6 @@ flowchart TD
     E --> H
     F --> H
     G --> H
-
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -252,6 +276,8 @@ Using disagreement as an uncertainty measure
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Ensemble Approach. Emphasize practical implications and connect to previous material. -->
 
 ## Ensemble Approach
 
@@ -276,6 +302,12 @@ class EnsembleConfidence:
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_confidence.py</span>
+</div>
+
 ```python
 
     def compute_confidence(self, predictions):
@@ -286,6 +318,8 @@ class EnsembleConfidence:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -293,6 +327,7 @@ class EnsembleConfidence:
 ## Ensemble Interpretation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Same Context<br/>5 LLM Calls] --> B[Prediction 1: Bullish]
     A --> C[Prediction 2: Bullish]
@@ -311,10 +346,6 @@ flowchart TD
     H -->|No| J{Agreement > 50%?}
     J -->|Yes| K[MODERATE<br/>Reduce position]
     J -->|No| L[LOW<br/>Stay flat]
-
-    style I fill:#2d5,stroke:#333
-    style K fill:#f96,stroke:#333
-    style L fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -331,7 +362,15 @@ Kelly criterion with calibrated confidence
 
 ---
 
+<!-- Speaker notes: Cover the key points about CalibratedPositionSizer. Emphasize practical implications and connect to previous material. -->
+
 ## CalibratedPositionSizer
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">calibratedpositionsizer.py</span>
+</div>
 
 ```python
 class CalibratedPositionSizer:
@@ -348,7 +387,15 @@ class CalibratedPositionSizer:
 
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">size_from_confidence.py</span>
+</div>
 
 ```python
     def size_from_confidence(self, calibrated_confidence,
@@ -366,6 +413,8 @@ class CalibratedPositionSizer:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -373,6 +422,7 @@ class CalibratedPositionSizer:
 ## Calibration Impact on Position Sizing
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Before["Before Calibration"]
         A1["Raw: 0.95"] --> B1["Large Position<br/>Over-leveraged"]
@@ -381,9 +431,6 @@ flowchart LR
     subgraph After["After Calibration"]
         A2["Raw: 0.95<br/>Calibrated: 0.67"] --> B2["Appropriate Position<br/>Risk-managed"]
     end
-
-    style B1 fill:#f44,stroke:#333
-    style B2 fill:#2d5,stroke:#333
 ```
 
 **Position Sizing Comparison ($1M account):**
@@ -456,6 +503,7 @@ Well-calibrated model can still have poor accuracy
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Signal<br/>Frameworks] --> B[Confidence<br/>Scoring<br/>This Guide]
     C[Probability<br/>Theory] --> B

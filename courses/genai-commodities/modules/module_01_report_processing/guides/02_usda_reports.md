@@ -1,10 +1,49 @@
 # Parsing USDA Agricultural Reports
 
+> **Reading time:** ~10 min | **Module:** Module 1: Report Processing | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** The US Department of Agriculture publishes critical supply/demand data for agricultural commodities. This guide covers automated extraction from WASDE reports, crop progress updates, and export sales using LLMs to convert complex tables and narrative text into tradeable data.
+
+</div>
+
 ## In Brief
 
 The US Department of Agriculture publishes critical supply/demand data for agricultural commodities. This guide covers automated extraction from WASDE reports, crop progress updates, and export sales using LLMs to convert complex tables and narrative text into tradeable data.
 
-> 💡 **Key Insight:** USDA reports drive agricultural commodity markets but are published as PDFs with inconsistent table formats. LLMs excel at flexible table parsing and context extraction where traditional parsers fail, enabling automated processing of monthly WASDE updates and weekly crop reports.
+<div class="callout-insight">
+
+**Insight:** USDA reports drive agricultural commodity markets but are published as PDFs with inconsistent table formats. LLMs excel at flexible table parsing and context extraction where traditional parsers fail, enabling automated processing of monthly WASDE updates and weekly crop reports.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of USDA reports as market scorecards updated monthly (WASDE) or weekly (Crop Progress). The LLM acts as an experienced analyst who can:
+
+<div class="flow">
+<div class="flow-step mint">1. Read complex tables</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Understand context</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Compare to expectati...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Synthesize narrative...</div>
+</div>
+
+
+1. **Read complex tables** - extracting numbers even when formats change
+2. **Understand context** - identifying what's important vs. routine
+3. **Compare to expectations** - noting surprises that move markets
+4. **Synthesize narratives** - combining numbers with explanations
+
+This automation allows traders to react within seconds of report release rather than minutes or hours.
 
 ## Formal Definition
 
@@ -476,6 +515,12 @@ def validate_wasde_changes(current: WASDEData, previous: WASDEData) -> dict:
 
 ### Multi-Model Consensus
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">consensus_parsing.py</span>
+</div>
+
 ```python
 def consensus_parsing(table_text: str, commodity: str, n_runs: int = 3) -> dict:
     """
@@ -502,11 +547,19 @@ def all_agree(results: List[dict], tolerance: float = 0.01) -> bool:
     pass
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. PDF Table Extraction Errors**
 - **Issue:** PyPDF2 mangles complex tables with merged cells
 - **Solution:** Use multiple PDF libraries (pdfplumber, tabula-py) and combine results
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">robust_table_extract.py</span>
+</div>
+
 ```python
 import pdfplumber
 
@@ -521,9 +574,17 @@ def robust_table_extract(pdf_path: str) -> str:
     return tables
 ```
 
+</div>
+
 **2. Unit Confusion**
 - **Issue:** WASDE uses different units (bushels, metric tons, pounds)
 - **Solution:** Always extract and validate units
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 UNIT_CONVERSIONS = {
     'corn': {'bushel_to_mt': 0.0254},  # 1 bushel corn = 25.4 kg
@@ -532,9 +593,17 @@ UNIT_CONVERSIONS = {
 }
 ```
 
+</div>
+
 **3. Marketing Year Confusion**
 - **Issue:** Different commodities have different marketing year calendars
 - **Solution:** Track marketing year definitions
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 MARKETING_YEARS = {
     'corn': {'start_month': 9, 'start_day': 1},  # Sept 1 - Aug 31
@@ -543,9 +612,17 @@ MARKETING_YEARS = {
 }
 ```
 
+</div>
+
 **4. Revision Handling**
 - **Issue:** USDA frequently revises prior estimates
 - **Solution:** Track revisions explicitly
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
+
 ```python
 @dataclass
 class WASDERevision:
@@ -556,16 +633,7 @@ class WASDERevision:
     revision_direction: str  # 'upward' or 'downward'
 ```
 
-## Intuitive Explanation
-
-Think of USDA reports as market scorecards updated monthly (WASDE) or weekly (Crop Progress). The LLM acts as an experienced analyst who can:
-
-1. **Read complex tables** - extracting numbers even when formats change
-2. **Understand context** - identifying what's important vs. routine
-3. **Compare to expectations** - noting surprises that move markets
-4. **Synthesize narratives** - combining numbers with explanations
-
-This automation allows traders to react within seconds of report release rather than minutes or hours.
+</div>
 
 ## Connections
 
@@ -598,6 +666,12 @@ This automation allows traders to react within seconds of report release rather 
 4. **Validation System:**
    Create a validation function that checks extracted values against reasonable ranges (e.g., US corn production should be between 10-15 billion bushels typically).
 
+<div class="callout-insight">
+
+**Insight:** Understanding parsing usda agricultural reports is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - **USDA WASDE Archives:** https://www.usda.gov/oce/commodity/wasde/
@@ -619,3 +693,42 @@ This automation allows traders to react within seconds of report release rather 
 - **Prompt Engineering for Tabular Data:**
   - https://www.anthropic.com/research
   - Techniques for improving table extraction accuracy
+
+---
+
+## Conceptual Practice Questions
+
+1. What structural differences between USDA and EIA reports affect prompt design?
+
+2. Design an extraction schema for USDA crop progress reports.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_usda_reports_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_eia_extraction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_eia_reports.md">
+  <div class="link-card-title">01 Eia Reports</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_earnings_transcripts.md">
+  <div class="link-card-title">03 Earnings Transcripts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

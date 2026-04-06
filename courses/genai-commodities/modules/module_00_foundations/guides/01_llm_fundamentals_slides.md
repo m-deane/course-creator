@@ -62,6 +62,7 @@ Commodity markets generate vast amounts of text:
 ## LLM Commodity Data Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Unstructured Text] --> B[LLM Processing]
     B --> C[Structured Data]
@@ -81,6 +82,12 @@ flowchart LR
         B4[Q&A] --> B
     end
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -112,9 +119,17 @@ inventories are about 3% below the five year average for this time of year.
 """
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Information Extraction (continued). Emphasize practical implications and connect to previous material. -->
 
 ## Information Extraction (continued)
 
@@ -128,6 +143,12 @@ response = client.messages.create(
 
 {eia_text}
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 ---
 
@@ -147,9 +168,17 @@ print(response.content[0].text)
 
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Capability 2: Summarization. Emphasize practical implications and connect to previous material. -->
 
 ## Capability 2: Summarization
 
@@ -204,6 +233,8 @@ summary = summarize_report(
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Capability 3: Classification and Sentiment. Emphasize practical implications and connect to previous material. -->
 
 ## Capability 3: Classification and Sentiment
 
@@ -299,6 +330,7 @@ Question: {question}"""
 ## Four Capabilities Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Raw Commodity Text] --> E[LLM Engine]
     E --> B[Extraction<br/>Text → JSON]
@@ -441,6 +473,7 @@ Provide your analysis followed by a conclusion with:
 ## Prompt Strategy Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[New Commodity Analysis Task] --> B{Simple extraction?}
     B -->|Yes| C[Zero-Shot Prompt<br/>Direct instruction + schema]
@@ -530,6 +563,12 @@ Ensuring reliable outputs
 
 ## Schema Validation with Pydantic
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">inventoryreport.py</span>
+</div>
+
 ```python
 from pydantic import BaseModel, validator
 from typing import Optional, List
@@ -551,11 +590,19 @@ class InventoryReport(BaseModel):
         return v
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
 ## Extract with Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">extract_with_validation.py</span>
+</div>
 
 ```python
 def extract_with_validation(text):
@@ -570,6 +617,8 @@ def extract_with_validation(text):
         # Retry or fallback logic
         return None
 ```
+
+</div>
 
 > Always validate LLM outputs before feeding them into downstream systems.
 
@@ -586,6 +635,12 @@ LLMs may fabricate data. Mitigate with:
 3. **Confidence scores** -- "Rate your confidence 0-1 for each extraction"
 4. **Cross-validation** -- Compare multiple model outputs
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 ANTI_HALLUCINATION_PROMPT = """
 Extract data from this report. Follow these rules strictly:
@@ -598,6 +653,8 @@ Text: {text}
 """
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -605,6 +662,7 @@ Text: {text}
 ## Validation Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Raw LLM<br/>Response] --> B[JSON Parse]
     B -->|Success| C[Schema<br/>Validation]
@@ -644,6 +702,7 @@ flowchart LR
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[LLM Fundamentals<br/>This Guide] --> B[Report Processing<br/>Module 1]
     A --> C[RAG Research<br/>Module 2]

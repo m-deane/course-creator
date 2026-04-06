@@ -70,6 +70,7 @@ $$\text{Ending Stocks} = \text{Beginning Stocks} + \text{Production} + \text{Imp
 ## Energy vs. Agricultural Balances
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Energy["Energy (Oil)"]
         A1[OPEC Production] --> B1[Total Supply]
@@ -91,9 +92,17 @@ flowchart TD
     end
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: Two different balance sheet structures. Energy uses flow rates (million barrels per day). Agriculture uses stocks (million bushels). The key metric differs too: oil uses implied balance (surplus/deficit), grains use stocks-to-use ratio. Below 10% stocks-to-use is considered tight for grains. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about OilBalance Data Structure. Emphasize practical implications and connect to previous material. -->
 
 ## OilBalance Data Structure
 
@@ -114,6 +123,12 @@ class OilBalance:
     total_demand: float
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 ---
 
 ```python
@@ -129,9 +144,17 @@ class OilBalance:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: This dataclass represents one row in a quarterly oil balance table. The is_in_deficit property is the most important signal: when supply is less than demand, inventories fall and prices tend to rise. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about GrainBalance Data Structure. Emphasize practical implications and connect to previous material. -->
 
 ## GrainBalance Data Structure
 
@@ -149,6 +172,12 @@ class GrainBalance:
     total_supply: float
 
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -183,6 +212,8 @@ From reports to structured data
 <!-- Speaker notes: Now we move from data structures to actually using LLMs to extract balance data from government reports. This is where the practical value really kicks in. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Extracting Oil Balance from IEA/EIA. Emphasize practical implications and connect to previous material. -->
 
 ## Extracting Oil Balance from IEA/EIA
 
@@ -232,6 +263,7 @@ Report:
 ## Extraction Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Raw Report<br/>IEA / EIA / WASDE] --> B[LLM Extraction<br/>Structured JSON]
     B --> C{Validate<br/>Numbers?}
@@ -242,13 +274,13 @@ flowchart TD
     D --> F[Calculate<br/>Revisions]
     F --> G[Surprise<br/>Analysis]
     G --> H[Price Impact<br/>Assessment]
-
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Validation is important because LLMs can hallucinate numbers. Cross-check extracted values against known ranges (e.g., global oil production should be 95-105 mb/d in 2024). Flag anything outside 2 standard deviations for manual review. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Surprise Analysis. Emphasize practical implications and connect to previous material. -->
 
 ## Surprise Analysis
 
@@ -270,6 +302,12 @@ Analyze:
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
 Return JSON:
@@ -290,6 +328,8 @@ Return JSON:
 
 ```
 
+</div>
+
 > Surprises move markets -- actual vs. expected matters more than absolute levels.
 
 <!-- Speaker notes: This is the most actionable analysis in the deck. When EIA reports a 5 million barrel draw vs. an expected 2 million barrel draw, the 3 million barrel surprise is what moves prices. The absolute level of inventories matters less than the delta from expectations. -->
@@ -299,6 +339,7 @@ Return JSON:
 ## Cross-Source Reconciliation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[IEA Balance<br/>Paris] --> D[LLM<br/>Reconciliation]
     B[EIA Balance<br/>Washington] --> D
@@ -312,9 +353,6 @@ flowchart TD
     F --> I[Trading<br/>Signal]
     G --> I
     H --> J[More Research<br/>Needed]
-
-    style F fill:#2d5,stroke:#333
-    style H fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: IEA, EIA, and OPEC publish separate oil balance estimates that often disagree by 0.5-1.0 mb/d. The LLM identifies where they disagree (typically non-OECD demand and OPEC supply) and generates a reconciled best estimate. When all three agree, confidence is high. -->
@@ -331,7 +369,15 @@ Natural gas and agricultural seasonality
 
 ---
 
+<!-- Speaker notes: Cover the key points about Natural Gas Seasonal Factors. Emphasize practical implications and connect to previous material. -->
+
 ## Natural Gas Seasonal Factors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">naturalgassdanalyzer.py</span>
+</div>
 
 ```python
 class NaturalGasSDAnalyzer:
@@ -350,7 +396,15 @@ class NaturalGasSDAnalyzer:
             seasonal_demand_factor = 0.9
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -365,6 +419,8 @@ class NaturalGasSDAnalyzer:
 
 ```
 
+</div>
+
 <!-- Speaker notes: The seasonal demand factors are approximate starting points. Winter demand is 30% higher due to heating. Summer demand spikes 15% due to power generation for air conditioning. Shoulder months (spring/fall) are the lowest demand periods. -->
 
 ---
@@ -372,6 +428,7 @@ class NaturalGasSDAnalyzer:
 ## Seasonal Storage Interpretation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Current Storage<br/>Level] --> B{Season?}
     B -->|Winter| C[High Demand<br/>Factor 1.3x]
@@ -388,9 +445,6 @@ flowchart TD
     G -->|Cold| I[VERY BULLISH<br/>Low storage + cold]
     G -->|Normal| J[BULLISH<br/>Below average]
     G -->|Warm| K[NEUTRAL<br/>Offset by warmth]
-
-    style I fill:#f44,stroke:#333
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: The combination of low storage + winter + cold weather forecast is the most bullish scenario in natural gas. Conversely, high storage + warm winter forecast is very bearish. This decision tree is how experienced gas traders think about the market. -->
@@ -463,6 +517,7 @@ Using only one agency's numbers
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Report Processing<br/>Module 1] --> B[Balance<br/>Modeling<br/>This Guide]
     C[RAG Research<br/>Module 2] --> B

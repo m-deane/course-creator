@@ -1,8 +1,22 @@
 # Building Commodity Trading Agents
 
+> **Reading time:** ~6 min | **Module:** Module 6: Production | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Commodity trading agents autonomously gather data, analyze markets, and generate recommendations. This guide covers building agents that handle the full research-to-signal pipeline.
+
+</div>
+
 ## Introduction
 
 Commodity trading agents autonomously gather data, analyze markets, and generate recommendations. This guide covers building agents that handle the full research-to-signal pipeline.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Agent Architecture
 
@@ -39,6 +53,12 @@ Commodity trading agents autonomously gather data, analyze markets, and generate
 ## Building a Report Monitor Agent
 
 ### Core Agent Class
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -174,7 +194,15 @@ Return JSON:
         return final_response
 ```
 
+</div>
+
 ### EIA Report Agent
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_eia_agent.py</span>
+</div>
 
 ```python
 import requests
@@ -246,9 +274,17 @@ Focus on surprises vs expectations and their price implications."""
     )
 ```
 
+</div>
+
 ## Multi-Agent Systems
 
 ### Agent Orchestration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agentorchestrator.py</span>
+</div>
 
 ```python
 class AgentOrchestrator:
@@ -309,7 +345,15 @@ Provide:
         return response.content[0].text
 ```
 
+</div>
+
 ### Example Multi-Agent Setup
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_commodity_analysis_system.py</span>
+</div>
 
 ```python
 def create_commodity_analysis_system():
@@ -334,9 +378,17 @@ synthesis = system.synthesize_results(results)
 print(synthesis)
 ```
 
+</div>
+
 ## Scheduled Agent Execution
 
 ### Event-Driven Triggers
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agentscheduler.py</span>
+</div>
 
 ```python
 from datetime import datetime, time
@@ -390,6 +442,14 @@ class AgentScheduler:
             time.sleep(60)
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding building commodity trading agents is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Agents automate research** - tools + LLM reasoning = autonomous analysis
@@ -401,3 +461,42 @@ class AgentScheduler:
 4. **Event-driven** - schedule agents around market-moving releases
 
 5. **Memory matters** - maintain context for coherent ongoing analysis
+
+---
+
+## Conceptual Practice Questions
+
+1. What tasks in commodity research are well-suited for agentic AI workflows?
+
+2. How does a multi-agent architecture improve upon single-prompt commodity analysis?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_commodity_agents_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_pipeline_build.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_production_deployment.md">
+  <div class="link-card-title">01 Production Deployment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_monitoring.md">
+  <div class="link-card-title">02 Monitoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

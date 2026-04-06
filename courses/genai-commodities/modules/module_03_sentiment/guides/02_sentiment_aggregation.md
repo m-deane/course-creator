@@ -1,8 +1,22 @@
 # Aggregating Sentiment Signals for Commodities
 
+> **Reading time:** ~6 min | **Module:** Module 3: Sentiment | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Individual news sentiment scores must be aggregated into actionable market signals. This guide covers techniques for combining multiple sentiment sources into coherent market views.
+
+</div>
+
 ## Introduction
 
 Individual news sentiment scores must be aggregated into actionable market signals. This guide covers techniques for combining multiple sentiment sources into coherent market views.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Sentiment Score Normalization
 
@@ -80,6 +94,12 @@ for source, stats in normalizer.source_stats.items():
 
 Recent sentiment matters more:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">timeweightedsentiment.py</span>
+</div>
+
 ```python
 class TimeWeightedSentiment:
     """Aggregate sentiment with time decay."""
@@ -122,9 +142,17 @@ print(f"Time-weighted sentiment: {result['weighted_sentiment']:.4f}")
 print(f"Unweighted sentiment: {result['unweighted_sentiment']:.4f}")
 ```
 
+</div>
+
 ## Source Quality Weighting
 
 ### Reliability-Based Aggregation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sourceweightedsentiment.py</span>
+</div>
 
 ```python
 class SourceWeightedSentiment:
@@ -170,9 +198,17 @@ result = source_aggregator.aggregate(sentiment_data)
 print(f"Source-weighted sentiment: {result['weighted_sentiment']:.4f}")
 ```
 
+</div>
+
 ## Multi-Commodity Sentiment Index
 
 ### Creating a Composite Index
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">commoditysentimentindex.py</span>
+</div>
 
 ```python
 class CommoditySentimentIndex:
@@ -254,9 +290,17 @@ for commodity in commodities:
 print(f"\nComposite Index: {index_results['composite_index']:.4f}")
 ```
 
+</div>
+
 ## Sentiment Regime Detection
 
 ### Identifying Market Sentiment Regimes
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sentimentregimedetector.py</span>
+</div>
 
 ```python
 class SentimentRegimeDetector:
@@ -327,7 +371,15 @@ print("Regime Distribution:")
 print(regimes.value_counts())
 ```
 
+</div>
+
 ## Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_sentiment_dashboard.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -384,6 +436,14 @@ def plot_sentiment_dashboard(sentiment_df, commodity, lookback=30):
 plot_sentiment_dashboard(multi_df, 'oil')
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding aggregating sentiment signals for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Normalize scores** across sources before aggregating
@@ -397,3 +457,42 @@ plot_sentiment_dashboard(multi_df, 'oil')
 5. **Visualize** sentiment dynamics for interpretation
 
 6. **Validate** aggregated signals against price movements
+
+---
+
+## Conceptual Practice Questions
+
+1. How do you aggregate article-level sentiments into a tradeable market signal?
+
+2. What decay function would you use for time-weighting sentiment scores and why?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_sentiment_aggregation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_news_sentiment.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_news_processing.md">
+  <div class="link-card-title">01 News Processing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_news_sentiment.md">
+  <div class="link-card-title">01 News Sentiment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

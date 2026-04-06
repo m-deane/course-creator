@@ -1,5 +1,13 @@
 # Supply/Demand Balance Modeling with LLMs
 
+> **Reading time:** ~5 min | **Module:** Module 4: Fundamentals | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Commodity prices are driven by the supply/demand balance:
+
+</div>
+
 ## The Balance Framework
 
 Commodity prices are driven by the supply/demand balance:
@@ -11,6 +19,12 @@ LLMs help by:
 1. Extracting balance components from reports
 2. Identifying revisions and surprises
 3. Generating balance sheet projections
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Balance Sheet Structure
 
@@ -147,6 +161,12 @@ Report:
 
 ### From USDA WASDE
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">extract_wasde_balance.py</span>
+</div>
+
 ```python
 def extract_wasde_balance(wasde_text: str, commodity: str) -> dict:
     """
@@ -200,9 +220,17 @@ Report:
     return response.content[0].text
 ```
 
+</div>
+
 ## Building Balance Models
 
 ### Time Series of Balances
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">balancetracker.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -245,7 +273,15 @@ class BalanceTracker:
         })
 ```
 
+</div>
+
 ### Surprise Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_balance_surprise.py</span>
+</div>
 
 ```python
 def analyze_balance_surprise(
@@ -297,9 +333,17 @@ Return JSON:
     return response.content[0].text
 ```
 
+</div>
+
 ## Forecasting with LLMs
 
 ### Generating Balance Projections
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">generate_balance_forecast.py</span>
+</div>
 
 ```python
 def generate_balance_forecast(
@@ -366,9 +410,17 @@ Return JSON:
     return response.content[0].text
 ```
 
+</div>
+
 ## Integrating Multiple Sources
 
 ### Cross-Source Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">reconcile_balance_sources.py</span>
+</div>
 
 ```python
 def reconcile_balance_sources(
@@ -426,6 +478,14 @@ Return JSON:
     return response.content[0].text
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding supply/demand balance modeling with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Balance = Price** - supply/demand balances are the fundamental driver
@@ -437,3 +497,42 @@ Return JSON:
 4. **Surprises move markets** - actual vs. expected matters most
 
 5. **Multiple sources** - reconcile IEA, EIA, OPEC for best estimates
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_balance_modeling_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_crude_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_supply_demand.md">
+  <div class="link-card-title">01 Supply Demand</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_storage_analysis.md">
+  <div class="link-card-title">02 Storage Analysis</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

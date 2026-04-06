@@ -1,10 +1,37 @@
 # Knowledge Base Design for Commodity Research
 
+> **Reading time:** ~9 min | **Module:** Module 2: Rag Research | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** Knowledge base design for commodity markets involves structuring unstructured commodity data (EIA reports, weather forecasts, corporate filings) into retrievable chunks optimized for LLM context windows while preserving temporal, geographical, and commodity-specific relationships.
+
+</div>
+
 ## In Brief
 
 Knowledge base design for commodity markets involves structuring unstructured commodity data (EIA reports, weather forecasts, corporate filings) into retrievable chunks optimized for LLM context windows while preserving temporal, geographical, and commodity-specific relationships.
 
-> 💡 **Key Insight:** Commodity data requires time-aware chunking strategies because the same concept (e.g., "crude oil inventory") has drastically different interpretations based on date, location, and market context. A knowledge base that loses temporal ordering produces hallucinated or outdated analysis.
+<div class="callout-insight">
+
+**Insight:** Commodity data requires time-aware chunking strategies because the same concept (e.g., "crude oil inventory") has drastically different interpretations based on date, location, and market context. A knowledge base that loses temporal ordering produces hallucinated or outdated analysis.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of a commodity knowledge base like a specialized library where:
+- Books are organized not just by topic, but by publication date (critical for commodities)
+- Each book has tags for geography (U.S. vs. OPEC), commodity type (crude vs. products), and season
+- When you ask "What's the storage situation?", the librarian retrieves only recent books for your specific commodity and region
+- Old books are kept but clearly marked to prevent confusion
+
+The challenge is that commodity reports mix narrative analysis with data tables, have strong temporal dependencies (winter vs. summer natural gas), and contain nested concepts (crude oil affects gasoline affects consumer spending).
 
 ## Formal Definition
 
@@ -18,19 +45,15 @@ A commodity knowledge base is a tuple **KB = (D, C, E, M)** where:
 
 **Quality metric**: Retrieved chunks must be temporally coherent (no mixing Q1 2023 and Q3 2024 data in same context) and commodity-specific (crude oil chunks shouldn't retrieve natural gas unless explicitly querying correlations).
 
-## Intuitive Explanation
-
-Think of a commodity knowledge base like a specialized library where:
-- Books are organized not just by topic, but by publication date (critical for commodities)
-- Each book has tags for geography (U.S. vs. OPEC), commodity type (crude vs. products), and season
-- When you ask "What's the storage situation?", the librarian retrieves only recent books for your specific commodity and region
-- Old books are kept but clearly marked to prevent confusion
-
-The challenge is that commodity reports mix narrative analysis with data tables, have strong temporal dependencies (winter vs. summer natural gas), and contain nested concepts (crude oil affects gasoline affects consumer spending).
-
 ## Code Implementation
 
 ### Basic Knowledge Base Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -346,7 +369,15 @@ Text: {text[:300]}..."""
         return chunks
 ```
 
+</div>
+
 ### Example Usage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from datetime import datetime, timedelta
@@ -391,6 +422,8 @@ for chunk in results:
     print(f"Text: {chunk.text[:200]}...")
     print("---")
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -476,6 +509,12 @@ for chunk in results:
      - Maintains retrieval performance during updates
    - How would you handle versioning? What about rollback if data is revised?
 
+<div class="callout-insight">
+
+**Insight:** Understanding knowledge base design for commodity research is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Vector Databases for Time-Series Data:**
@@ -497,3 +536,42 @@ for chunk in results:
 **Commodity Market Data APIs:**
 - EIA API v2 Documentation - Understanding available data series
 - USDA Quick Stats API - Agricultural data access patterns
+
+---
+
+## Conceptual Practice Questions
+
+1. What is the difference between a keyword search and a vector similarity search for commodity research?
+
+2. How should you chunk commodity reports for optimal retrieval performance?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_knowledge_base_design_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_eia_knowledge_base.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_document_processing.md">
+  <div class="link-card-title">02 Document Processing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_retrieval_strategies.md">
+  <div class="link-card-title">03 Retrieval Strategies</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

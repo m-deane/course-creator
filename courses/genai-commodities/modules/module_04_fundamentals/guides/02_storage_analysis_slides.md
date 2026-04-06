@@ -22,6 +22,7 @@ Context-dependent interpretation of inventory data
 > 3,500 Bcf of natural gas storage is comfortable in October but dangerously low in February.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Storage Level:<br/>3,500 Bcf] --> B{What Month?}
     B -->|October| C[Injection Season<br/>Ending]
@@ -32,10 +33,13 @@ flowchart TD
 
     E --> G[Neutral to<br/>Bearish]
     F --> H[Very<br/>Bullish]
-
-    style G fill:#2d5,stroke:#333
-    style H fill:#f44,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -99,6 +103,8 @@ Metrics and assessments
 
 ---
 
+<!-- Speaker notes: Cover the key points about StorageMetrics and StorageAssessment. Emphasize practical implications and connect to previous material. -->
+
 ## StorageMetrics and StorageAssessment
 
 ```python
@@ -117,6 +123,12 @@ class StorageMetrics:
     percentile_rank: float  # 0-100
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 ---
 
 ```python
@@ -134,9 +146,17 @@ class StorageAssessment:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about StorageAnalyzer: Crude Oil. Emphasize practical implications and connect to previous material. -->
 
 ## StorageAnalyzer: Crude Oil
 
@@ -156,6 +176,12 @@ class StorageAnalyzer:
         days_of_supply = current_storage / daily_demand
 
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -196,6 +222,7 @@ def _get_crude_seasonal_context(self, month):
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Crude Oil Seasonal Calendar
     dateFormat  MM
@@ -210,6 +237,8 @@ gantt
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLM Storage Interpretation Prompt. Emphasize practical implications and connect to previous material. -->
 
 ## LLM Storage Interpretation Prompt
 
@@ -258,6 +287,8 @@ Weather-dependent and highly seasonal
 
 ---
 
+<!-- Speaker notes: Cover the key points about Natural Gas Seasonal Analysis. Emphasize practical implications and connect to previous material. -->
+
 ## Natural Gas Seasonal Analysis
 
 ```python
@@ -278,6 +309,12 @@ def analyze_natural_gas_storage(
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
         season = "injection_season"
         typical_weekly_change = 80
@@ -294,6 +331,8 @@ def analyze_natural_gas_storage(
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -301,6 +340,7 @@ def analyze_natural_gas_storage(
 ## Natural Gas Storage Decision Matrix
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Gas Storage<br/>Level] --> B{Season?}
 
@@ -316,11 +356,6 @@ flowchart TD
     G -->|Cold| I[VERY BULLISH<br/>Risk of shortage]
     G -->|Normal| J[BULLISH<br/>Below average]
     G -->|Warm| K[NEUTRAL<br/>Warm offsets low storage]
-
-    style I fill:#f44,stroke:#333
-    style E fill:#f96,stroke:#333
-    style F fill:#2d5,stroke:#333
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -337,7 +372,15 @@ Finding analogous periods
 
 ---
 
+<!-- Speaker notes: Cover the key points about StoragePatternAnalyzer. Emphasize practical implications and connect to previous material. -->
+
 ## StoragePatternAnalyzer
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">storagepatternanalyzer.py</span>
+</div>
 
 ```python
 class StoragePatternAnalyzer:
@@ -358,7 +401,15 @@ class StoragePatternAnalyzer:
 
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">_find_similar_periods.py</span>
+</div>
 
 ```python
     def _find_similar_periods(
@@ -380,6 +431,8 @@ class StoragePatternAnalyzer:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -387,6 +440,7 @@ class StoragePatternAnalyzer:
 ## Pattern Analysis Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Current Storage<br/>440 MMB, Week 25] --> B[Find Same Week<br/>in Past 10 Years]
     B --> C[Filter Similar<br/>Levels: +/- 5%]
@@ -401,8 +455,6 @@ flowchart TD
     G --> H
 
     H --> I[Forecast:<br/>Storage Likely to Draw<br/>Bullish for Prices]
-
-    style I fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -468,6 +520,7 @@ High crude storage during maintenance season
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Data Acquisition<br/>Module 1-2] --> B[Storage<br/>Analysis<br/>This Guide]
     C[Supply/Demand<br/>Modeling] --> B

@@ -20,6 +20,7 @@ The triple constraint: cost, latency, and quality
 ## The 80/15/5 Rule
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[All LLM Queries] --> B{Query Type?}
 
@@ -30,11 +31,13 @@ flowchart TD
     C --> F[Effective Cost:<br/>$0.005/signal avg]
     D --> F
     E --> F
-
-    style C fill:#2d5,stroke:#333
-    style D fill:#f96,stroke:#333
-    style E fill:#f44,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 > 80% of queries are repetitive (cacheable), 15% can use smaller models, and only 5% require the full frontier model.
 
@@ -94,6 +97,12 @@ for news in news_feed:
     # 1000 calls/day → $100/day
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 </div>
 <div>
 
@@ -124,6 +133,7 @@ for news in news_feed:
 ## Parallel Processing for Latency
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Sequential["Sequential: 4.1 seconds"]
         A1[News<br/>100ms] --> A2[Entities<br/>500ms]
@@ -144,9 +154,13 @@ flowchart TD
     subgraph Cached["With Cache: 110ms"]
         C1[News<br/>100ms] --> C2[CACHE HIT<br/>10ms]
     end
-
-    style Cached fill:#2d5,stroke:#333
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -162,6 +176,8 @@ Intelligent caching with TTL and statistics
 
 ---
 
+<!-- Speaker notes: Cover the key points about SemanticCache. Emphasize practical implications and connect to previous material. -->
+
 ## SemanticCache
 
 ```python
@@ -174,6 +190,12 @@ class SemanticCache:
         self.saves_usd = 0
 
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -203,6 +225,7 @@ class SemanticCache:
 $$C_{\text{effective}} = C_{\text{total}} \times (1 - r_{\text{cache}})$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[1000 signals/day<br/>$0.05 each] --> B{Cache Hit?}
     B -->|60% HIT| C[$0.00<br/>600 signals free]
@@ -212,8 +235,6 @@ flowchart LR
     D --> E
 
     E --> F[Monthly Savings:<br/>$900]
-
-    style F fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -229,6 +250,8 @@ Automatic model selection based on query complexity
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about ModelRouter. Emphasize practical implications and connect to previous material. -->
 
 ## ModelRouter
 
@@ -248,6 +271,12 @@ class ModelRouter:
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_model.py</span>
+</div>
+
 ```python
         # Multi-asset analysis
         if context.get('multi_asset'):
@@ -261,6 +290,8 @@ class ModelRouter:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -268,6 +299,7 @@ class ModelRouter:
 ## Model Routing Decision
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Incoming Query] --> B[Estimate<br/>Complexity Score]
 
@@ -280,10 +312,6 @@ flowchart TD
     D --> H[Return Signal]
     F --> H
     G --> H
-
-    style D fill:#2d5,stroke:#333
-    style F fill:#f96,stroke:#333
-    style G fill:#f44,stroke:#333
 ```
 
 **Quality-Aware Routing:**
@@ -297,7 +325,15 @@ $$\text{Model} = \begin{cases}
 
 ---
 
+<!-- Speaker notes: Cover the key points about Prompt Compression. Emphasize practical implications and connect to previous material. -->
+
 ## Prompt Compression
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">promptcompressor.py</span>
+</div>
 
 ```python
 class PromptCompressor:
@@ -315,7 +351,15 @@ class PromptCompressor:
             scored_lines.append((score, line))
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -331,6 +375,8 @@ class PromptCompressor:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -338,6 +384,7 @@ class PromptCompressor:
 ## Full Optimization Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Raw Context<br/>5000 tokens] --> B[Compress<br/>to 1000 tokens]
     B --> C{In Cache?}
@@ -356,9 +403,6 @@ flowchart TD
     I --> J
 
     J --> K[Return Signal<br/>Track Metrics]
-
-    style D fill:#2d5,stroke:#333
-    style K fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -440,6 +484,7 @@ Optimizing average but ignoring p99
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Production<br/>Deployment] --> B[Optimization<br/>This Guide]
     C[Monitoring &<br/>Drift Detection] --> B

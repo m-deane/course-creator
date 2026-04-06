@@ -52,6 +52,7 @@ Automated extraction from the most important energy market data source
 ## EIA Report Processing Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Data Sources
         A1[EIA API v2<br/>Structured data]
@@ -79,6 +80,12 @@ flowchart LR
     C1 --> C2
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
@@ -104,6 +111,12 @@ def eia_request(endpoint, params=None):
     response.raise_for_status()
     return response.json()
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -148,6 +161,12 @@ print(f"Latest crude stocks: "
       f"{crude_stocks[0]['value']} thousand barrels")
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -162,6 +181,8 @@ Extracting structured data from narrative text
 
 ---
 
+<!-- Speaker notes: Cover the key points about Parsing WPSR Narrative Text. Emphasize practical implications and connect to previous material. -->
+
 ## Parsing WPSR Narrative Text
 
 ```python
@@ -174,6 +195,12 @@ def parse_wpsr_narrative(report_text):
     prompt = """Extract petroleum inventory data from this
 EIA report text.
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -199,6 +226,8 @@ Return JSON with this structure:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Parsing WPSR Narrative (continued). Emphasize practical implications and connect to previous material. -->
 
 ## Parsing WPSR Narrative (continued)
 
@@ -238,6 +267,8 @@ Report text:
 
 ---
 
+<!-- Speaker notes: Cover the key points about Example: Parsing Real WPSR Text. Emphasize practical implications and connect to previous material. -->
+
 ## Example: Parsing Real WPSR Text
 
 ```python
@@ -274,6 +305,8 @@ result = parse_wpsr_narrative(sample_text)
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Parsing EIA Tables. Emphasize practical implications and connect to previous material. -->
 
 ## Parsing EIA Tables
 
@@ -359,6 +392,8 @@ class WPSRData:
 
 ---
 
+<!-- Speaker notes: Cover the key points about WPSRProcessor: Fetch and Parse. Emphasize practical implications and connect to previous material. -->
+
 ## WPSRProcessor: Fetch and Parse
 
 ```python
@@ -399,6 +434,8 @@ class WPSRProcessor:
 
 ---
 
+<!-- Speaker notes: Cover the key points about WPSRProcessor: Combine and Summarize. Emphasize practical implications and connect to previous material. -->
+
 ## WPSRProcessor: Combine and Summarize
 
 ```python
@@ -435,6 +472,8 @@ class WPSRProcessor:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about WPSRProcessor: Trading Summary. Emphasize practical implications and connect to previous material. -->
 
 ## WPSRProcessor: Trading Summary
 
@@ -479,6 +518,7 @@ Keep it concise (3-4 sentences total)."""
 ## Pipeline Data Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[WPSR Release<br/>Wednesday 10:30 ET] --> B[EIA API<br/>Fetch numerical data]
     A --> C[Report Text<br/>Fetch narrative]
@@ -493,9 +533,6 @@ flowchart TD
     G --> H[Generate Summary<br/>Trading implications]
     G --> I[Store in DB<br/>Historical tracking]
     H --> J[Alert System<br/>Significant changes]
-
-    style A fill:#f96,stroke:#333
-    style G fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -512,7 +549,15 @@ Ensuring extraction accuracy
 
 ---
 
+<!-- Speaker notes: Cover the key points about Cross-Checking Extractions. Emphasize practical implications and connect to previous material. -->
+
 ## Cross-Checking Extractions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">validate_wpsr_extraction.py</span>
+</div>
 
 ```python
 def validate_wpsr_extraction(extracted, api_data):
@@ -525,7 +570,15 @@ def validate_wpsr_extraction(extracted, api_data):
             api_data['crude_stocks']['current']) / 1000)
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -547,11 +600,19 @@ def validate_wpsr_extraction(extracted, api_data):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
 ## Historical Reasonableness Check
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_reasonable_change.py</span>
+</div>
 
 ```python
 def check_reasonable_change(
@@ -569,6 +630,8 @@ def check_reasonable_change(
     return abs(change) <= max_changes.get(commodity, 10)
 ```
 
+</div>
+
 > Flag any extraction where weekly changes exceed historical bounds -- these likely indicate parsing errors.
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
@@ -578,6 +641,7 @@ def check_reasonable_change(
 ## Validation Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[LLM Extraction] --> B{Compare to<br/>API data}
     B -->|Within 1%| C[Accept]
@@ -617,6 +681,7 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 0<br/>LLM Fundamentals] --> B[EIA Reports<br/>This Guide]
     B --> C[USDA Reports<br/>Same techniques]

@@ -1,10 +1,38 @@
 # Processing Commodity Documents for RAG Systems
 
+> **Reading time:** ~11 min | **Module:** Module 2: Rag Research | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** Commodity document processing transforms heterogeneous reports (PDFs, HTML tables, time-series data) into LLM-ready formats while preserving critical metadata (timestamps, units, geographies) and handling commodity-specific challenges like seasonal adjustments and data revisions.
+
+</div>
+
 ## In Brief
 
 Commodity document processing transforms heterogeneous reports (PDFs, HTML tables, time-series data) into LLM-ready formats while preserving critical metadata (timestamps, units, geographies) and handling commodity-specific challenges like seasonal adjustments and data revisions.
 
-> 💡 **Key Insight:** The value of commodity documents isn't just in the text—it's in the structured data they contain. A crude oil inventory number without its date, unit, and geography is meaningless. Processing pipelines must extract, validate, and enrich data while maintaining traceability to source documents.
+<div class="callout-insight">
+
+**Insight:** The value of commodity documents isn't just in the text—it's in the structured data they contain. A crude oil inventory number without its date, unit, and geography is meaningless. Processing pipelines must extract, validate, and enrich data while maintaining traceability to source documents.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of processing commodity documents like preparing ingredients for cooking:
+- Raw ingredients (PDFs, HTML) arrive in different packaging
+- You need to unpack them (parsing), wash them (cleaning), and prep them (structuring)
+- Some ingredients are liquids (narrative text), others are solids (data tables)—handle differently
+- Check for spoilage (validation)—bad data can ruin the whole dish
+- Label everything (metadata)—you need to know what it is and when you got it
+
+The challenge is that commodity reports are like IKEA instructions written in multiple languages with some pages missing and tables that span multiple pages. You need robust error handling and validation at every step.
 
 ## Formal Definition
 
@@ -19,6 +47,17 @@ A commodity document processing pipeline is a function **P: D_raw → D_structur
 - **validation_status**: quality checks passed/failed
 
 **Processing stages:**
+<div class="flow">
+<div class="flow-step mint">1. Acquisition</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Parsing</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Cleaning</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Structuring</div>
+</div>
+
+
 1. **Acquisition**: Fetch from source (API, web scraping, file upload)
 2. **Parsing**: Extract text and tables from format-specific structure
 3. **Cleaning**: Remove artifacts, normalize whitespace, fix encoding
@@ -26,20 +65,15 @@ A commodity document processing pipeline is a function **P: D_raw → D_structur
 5. **Validation**: Unit checking, range validation, historical consistency
 6. **Enrichment**: Add derived fields, seasonality tags, cross-references
 
-## Intuitive Explanation
-
-Think of processing commodity documents like preparing ingredients for cooking:
-- Raw ingredients (PDFs, HTML) arrive in different packaging
-- You need to unpack them (parsing), wash them (cleaning), and prep them (structuring)
-- Some ingredients are liquids (narrative text), others are solids (data tables)—handle differently
-- Check for spoilage (validation)—bad data can ruin the whole dish
-- Label everything (metadata)—you need to know what it is and when you got it
-
-The challenge is that commodity reports are like IKEA instructions written in multiple languages with some pages missing and tables that span multiple pages. You need robust error handling and validation at every step.
-
 ## Code Implementation
 
 ### Document Acquisition Layer
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 import requests
@@ -258,7 +292,15 @@ class DocumentAcquisition:
         return last_wednesday.replace(hour=10, minute=30, second=0)
 ```
 
+</div>
+
 ### PDF Processing with Table Extraction
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">pdfprocessor.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -364,7 +406,15 @@ Return JSON:
         return structured_df
 ```
 
+</div>
+
 ### Data Validation Layer
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">datavalidator.py</span>
+</div>
 
 ```python
 from typing import List, Tuple
@@ -476,7 +526,15 @@ class DataValidator:
         return True, ""
 ```
 
+</div>
+
 ### Complete Processing Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">class.py</span>
+</div>
 
 ```python
 import io
@@ -596,6 +654,8 @@ class CommodityDocumentProcessor:
         return documents
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Ignoring PDF Extraction Errors**
@@ -672,6 +732,12 @@ class CommodityDocumentProcessor:
    - Quantify impact of revisions on your analysis
    - Trigger re-analysis if revisions are significant
 
+<div class="callout-insight">
+
+**Insight:** Understanding processing commodity documents for rag systems is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **PDF Processing:**
@@ -695,3 +761,42 @@ class CommodityDocumentProcessor:
 **LLM-Augmented Processing:**
 - "Using LLMs for Data Extraction" (LangChain) - Structured output patterns
 - "Claude for Document Intelligence" (Anthropic) - Best practices for table/text extraction
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the core idea of processing commodity documents for rag systems in your own words to a colleague who has not studied it.
+
+2. What is the most common mistake practitioners make when applying processing commodity documents for rag systems, and how would you avoid it?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_document_processing_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_eia_knowledge_base.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_knowledge_base_design.md">
+  <div class="link-card-title">01 Knowledge Base Design</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_retrieval_strategies.md">
+  <div class="link-card-title">03 Retrieval Strategies</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

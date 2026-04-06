@@ -45,6 +45,7 @@ A commodity knowledge base is a tuple $KB = (D, C, E, M)$ where:
 ## The Commodity Library Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Commodity Knowledge Base] --> B[Organized by Date<br/>Critical for commodities]
     A --> C[Tagged by Geography<br/>US vs OPEC vs Global]
@@ -57,9 +58,13 @@ flowchart TD
     G --> J[Your region]
     G --> K[Current season]
     H & I & J & K --> L[Relevant Results]
-
-    style L fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -86,6 +91,8 @@ Enums, documents, and chunks
 
 ---
 
+<!-- Speaker notes: Cover the key points about Type Definitions. Emphasize practical implications and connect to previous material. -->
+
 ## Type Definitions
 
 ```python
@@ -106,6 +113,12 @@ class CommodityType(Enum):
     COPPER = "copper"
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 ---
 
 ```python
@@ -119,6 +132,12 @@ class ReportType(Enum):
     NEWS_ARTICLE = "news_article"
 
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -141,6 +160,12 @@ class CommodityDocument:
     geography: str
     source_url: Optional[str]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 </div>
 <div>
@@ -178,6 +203,8 @@ Initialization, chunking, and retrieval
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Initialization. Emphasize practical implications and connect to previous material. -->
 
 ## Initialization
 
@@ -225,6 +252,7 @@ class CommodityKnowledgeBase:
 ## Chunking Strategy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Input Document] --> B{Contains<br/>data tables?}
     B -->|Yes| C[Separate Narrative<br/>from Tables]
@@ -272,6 +300,8 @@ flowchart TD
 
 ---
 
+<!-- Speaker notes: Cover the key points about Table Detection and Separation. Emphasize practical implications and connect to previous material. -->
+
 ## Table Detection and Separation
 
 <div class="columns">
@@ -289,6 +319,8 @@ Text:
 ```
 
 ---
+
+<!-- Speaker notes: Cover the key points about this slide. Emphasize practical implications and connect to previous material. -->
 
 ```python
 
@@ -355,6 +387,8 @@ Report:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Section Classification and Seasonality. Emphasize practical implications and connect to previous material. -->
 
 ## Section Classification and Seasonality
 
@@ -437,6 +471,8 @@ Querying the knowledge base
 
 ---
 
+<!-- Speaker notes: Cover the key points about Filtered Retrieval. Emphasize practical implications and connect to previous material. -->
+
 ## Filtered Retrieval
 
 ```python
@@ -458,6 +494,12 @@ Querying the knowledge base
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
         if date_range:
             where["report_date"] = {
@@ -475,11 +517,21 @@ Querying the knowledge base
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
+<!-- Speaker notes: Cover the key points about Example Usage. Emphasize practical implications and connect to previous material. -->
+
 ## Example Usage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from datetime import datetime, timedelta
@@ -499,7 +551,15 @@ wpsr_doc = CommodityDocument(
 kb.add_document(wpsr_doc)
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -514,6 +574,8 @@ results = kb.retrieve(
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -521,6 +583,7 @@ results = kb.retrieve(
 ## Common Pitfalls
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Pitfall 1<br/>Ignoring Temporal Context] --> A1[Mixing data from<br/>different time periods]
     A1 --> A2[Solution: Always use<br/>date_range filters]
@@ -561,6 +624,7 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 0-1<br/>LLM Fundamentals<br/>+ Report Parsing] --> B[Knowledge Base<br/>Design<br/>This Guide]
     B --> C[Document<br/>Processing]

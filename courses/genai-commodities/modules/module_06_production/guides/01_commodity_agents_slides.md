@@ -20,6 +20,7 @@ Autonomous research-to-signal pipelines with reliability, cost control, and moni
 ## Agent Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Agent["Commodity Agent"]
         A[Memory<br/>Context, History, State] --> D[LLM Brain<br/>Reasoning Engine]
@@ -33,9 +34,13 @@ flowchart TD
 
     F --> H[Observation:<br/>Tool Result]
     H --> D
-
-    style D fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 > Agents combine LLM reasoning with tool execution in a think-act-observe loop.
 
@@ -58,6 +63,8 @@ Each agent is specialized -- combining them creates a comprehensive analysis sys
 
 ---
 
+<!-- Speaker notes: Cover the key points about AgentMemory and CommodityAgent. Emphasize practical implications and connect to previous material. -->
+
 ## AgentMemory and CommodityAgent
 
 ```python
@@ -77,6 +84,12 @@ class AgentMemory:
                 + self.context[-(self.max_context-1):])
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 ---
 
 ```python
@@ -91,6 +104,12 @@ class CommodityAgent:
         self.tools = tools  # Dict[str, Callable]
 
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: The sliding window memory management is critical. Without it, the context window fills up and the agent stops working. The strategy keeps the system prompt (index 0) and the most recent N-1 entries. -->
 
@@ -120,6 +139,12 @@ def run(self, task, max_steps=5) -> str:
     return final_response
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: The max_steps parameter prevents infinite loops. Most tasks complete in 2-3 steps. If the agent hasn't converged after 5 steps, something is wrong and we return whatever partial result we have. -->
 
 ---
@@ -127,6 +152,7 @@ def run(self, task, max_steps=5) -> str:
 ## Agent Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Task:<br/>Analyze EIA Report] --> B[THINK:<br/>LLM Decides Action]
 
@@ -142,8 +168,6 @@ flowchart TD
     H --> B
 
     G --> I[Return<br/>Trading-Relevant Summary]
-
-    style I fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through a concrete example: the EIA report comes out. Step 1: agent fetches the data. Step 2: agent parses key metrics. Step 3: agent compares to consensus. Step 4: agent generates analysis. Each step builds on the previous observation. -->
@@ -159,6 +183,8 @@ Coordinating specialized agents
 <!-- Speaker notes: Transition from single agent to multi-agent systems. This is where the real power comes in -- parallel, specialized analysis. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about AgentOrchestrator. Emphasize practical implications and connect to previous material. -->
 
 ## AgentOrchestrator
 
@@ -201,6 +227,7 @@ class AgentOrchestrator:
 ## Multi-Agent Orchestration Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Market Event:<br/>EIA Report Released] --> B[Orchestrator]
 
@@ -217,8 +244,6 @@ flowchart TD
     H --> I
 
     I --> J[Unified Assessment:<br/>Bullish, High Confidence]
-
-    style J fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: This example shows a bullish confluence: surprise draw + bullish sentiment + tightening balance. When all three agents agree, confidence is highest. When they disagree, the synthesis step flags the conflict. -->
@@ -228,6 +253,7 @@ flowchart TD
 ## Event-Driven Agent Calendar
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Commodity Agent Schedule
     dateFormat HH:mm
@@ -262,6 +288,8 @@ Reliability, cost control, and monitoring
 
 ---
 
+<!-- Speaker notes: Cover the key points about Reliability: Retry with Backoff. Emphasize practical implications and connect to previous material. -->
+
 ## Reliability: Retry with Backoff
 
 ```python
@@ -281,6 +309,12 @@ def retry_with_backoff(
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">call_llm_api.py</span>
+</div>
+
 ```python
                         raise
                     delay = min(
@@ -297,6 +331,8 @@ def call_llm_api(prompt): ...
 
 ```
 
+</div>
+
 <!-- Speaker notes: Exponential backoff prevents hammering a struggling API. Jitter (random factor) prevents correlated retries from multiple workers hitting the API simultaneously. This is standard practice for any production API integration. -->
 
 ---
@@ -304,6 +340,7 @@ def call_llm_api(prompt): ...
 ## Circuit Breaker Pattern
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> CLOSED
     CLOSED --> OPEN: Failures >= Threshold
@@ -322,6 +359,7 @@ stateDiagram-v2
 ## Cost Control Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Incoming<br/>Request] --> B{Token Budget<br/>Available?}
     B -->|No| C[REJECT<br/>Budget Exceeded]
@@ -336,17 +374,21 @@ flowchart TD
     H --> I[Record Token<br/>Usage]
     I --> J[Cache Response]
     J --> K[Return Result]
-
-    style C fill:#f44,stroke:#333
-    style E fill:#2d5,stroke:#333
-    style K fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: This diagram shows the full request lifecycle. Three layers of cost protection: token budget prevents runaway spending, cache avoids redundant calls, and circuit breaker prevents wasting tokens on a broken API. Caching alone typically reduces costs by 60-80%. -->
 
 ---
 
+<!-- Speaker notes: Cover the key points about Monitoring and Alerting. Emphasize practical implications and connect to previous material. -->
+
 ## Monitoring and Alerting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">metricscollector.py</span>
+</div>
 
 ```python
 class MetricsCollector:
@@ -364,7 +406,15 @@ class MetricsCollector:
         }
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -380,6 +430,8 @@ alert_manager.add_rule(AlertRule(
     message="Approaching daily token limit"))
 
 ```
+
+</div>
 
 <!-- Speaker notes: Monitor four key metrics: success rate, cache hit rate, latency, and cost. Alert on success rate below 95% (critical), latency above 5 seconds (warning), and token budget above 80% (warning). These thresholds should be tuned based on your specific usage patterns. -->
 
@@ -451,6 +503,7 @@ Can't diagnose production issues
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 1-2<br/>Data Processing] --> B[Commodity Agents<br/>& Production<br/>This Guide]
     C[Module 3-4<br/>Sentiment &<br/>Fundamentals] --> B

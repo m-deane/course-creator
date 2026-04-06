@@ -22,14 +22,17 @@ Systematic transformation of LLM outputs into actionable trading signals
 LLMs understand context but don't naturally output tradeable signals.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["OPEC cuts<br/>seem bullish"] --> B[Signal<br/>Framework]
     B --> C["Long 100 contracts<br/>WTI, 2% stop loss"]
-
-    style A fill:#f96,stroke:#333
-    style B fill:#2d5,stroke:#333
-    style C fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 **A signal framework bridges the gap by:**
 1. Structuring LLM outputs into standardized formats
@@ -115,6 +118,8 @@ Inventory surprises and production forecasts
 
 ---
 
+<!-- Speaker notes: Cover the key points about Inventory Surprise Signal. Emphasize practical implications and connect to previous material. -->
+
 ## Inventory Surprise Signal
 
 ```python
@@ -130,6 +135,12 @@ class InventorySignal:
     confidence: float
 
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 ---
 
@@ -153,6 +164,12 @@ def generate_inventory_signal(
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: The z-score approach is key. It compares the current surprise to the distribution of past surprises. A z-score of 2.0 means the surprise is 2 standard deviations from the norm -- significant enough to trade on. Build = bearish (more supply), Draw = bullish (less supply). -->
 
 ---
@@ -160,6 +177,7 @@ def generate_inventory_signal(
 ## Inventory Signal Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Inventory Report<br/>Actual vs Expected] --> B[Calculate<br/>Surprise]
     B --> C[Compute Z-Score<br/>vs 52-Week History]
@@ -173,15 +191,19 @@ flowchart TD
 
     E --> I[Confidence =<br/>min zscore/3, 1.0]
     G --> I
-
-    style E fill:#f44,stroke:#333
-    style G fill:#2d5,stroke:#333
-    style H fill:#999,stroke:#333
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: The 1.5 z-score threshold filters out normal variation. Only truly surprising reports generate signals. This prevents overtrading on noise. The confidence scales linearly with z-score magnitude up to a cap. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Sentiment-Based Signal. Emphasize practical implications and connect to previous material. -->
 
 ## Sentiment-Based Signal
 
@@ -231,6 +253,7 @@ $$D_{\text{agg}} = \frac{\sum_{i=1}^N S_i \cdot \text{sign}(D_i)}{\sum_{i=1}^N S
 **Conflict detection:** If $|D_{\text{agg}}| < \theta$ -> signals conflict -> reduce position
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["LLM 1 (News)<br/>Bullish, 0.80"] --> D[Weighted<br/>Aggregation]
     B["LLM 2 (Fundamental)<br/>Bearish, 0.65"] --> D
@@ -241,14 +264,13 @@ flowchart TD
     E --> F{"|Net| > 0.3?"}
     F -->|No| G[CONFLICTING<br/>Small Position<br/>Tight Stop]
     F -->|Yes| H[CLEAR SIGNAL<br/>Full Position]
-
-    style G fill:#f96,stroke:#333
-    style H fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the math with the example. 0.8 x 1 + 0.65 x (-1) + 0.5 x 0 = 0.15. Since |0.15| < 0.3, signals conflict. The framework correctly identifies this as uncertain and reduces position size. This is much better than either ignoring the conflict or not trading at all. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about SignalAggregator Implementation. Emphasize practical implications and connect to previous material. -->
 
 ## SignalAggregator Implementation
 
@@ -265,6 +287,12 @@ class SignalAggregator:
 ```
 
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -283,6 +311,8 @@ class SignalAggregator:
 
 ```
 
+</div>
+
 <!-- Speaker notes: The 0.7 conflict penalty reduces position size by 30% when signals disagree. This is a conservative approach -- some traders would stay completely flat on conflicts. The key insight is that conflicts should always reduce, never increase, position sizing. -->
 
 ---
@@ -290,6 +320,7 @@ class SignalAggregator:
 ## Conflict Resolution Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Multiple<br/>TradingSignals] --> B[Conviction-Weighted<br/>Average Direction]
     B --> C{"|Weighted Dir|<br/>< 0.3?"}
@@ -305,10 +336,6 @@ flowchart TD
     G --> H
 
     H --> I[Aggregate<br/>TradingSignal]
-
-    style D fill:#f96,stroke:#333
-    style F fill:#2d5,stroke:#333
-    style G fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: The conservative risk management is important: when conflicts exist, use the tightest stop loss from any individual signal. This ensures that the most cautious risk view prevails during uncertain periods. -->
@@ -325,10 +352,18 @@ Converting signals to risk-managed positions
 
 ---
 
+<!-- Speaker notes: Cover the key points about Position Sizing from Signals. Emphasize practical implications and connect to previous material. -->
+
 ## Position Sizing from Signals
 
 **Position Size:**
 $$\text{Position} = \text{Base Size} \times S \times \min(1, \text{Kelly Fraction})$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">positionsizer.py</span>
+</div>
 
 ```python
 class PositionSizer:
@@ -343,7 +378,15 @@ class PositionSizer:
         max_contracts = max_risk / risk_per_unit
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -360,6 +403,8 @@ class PositionSizer:
 
 ```
 
+</div>
+
 <!-- Speaker notes: The 2% rule is the safety net: never risk more than 2% of account value on a single trade, regardless of signal strength. This prevents a single wrong signal from causing catastrophic losses. The Kelly fraction provides a theoretical optimal, but in practice you should use half-Kelly or less. -->
 
 ---
@@ -367,6 +412,7 @@ class PositionSizer:
 ## Position Sizing Guards
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Signal<br/>Strength + Direction] --> B[Base Position<br/>10% of Account]
     B --> C[Scale by<br/>Signal Strength]
@@ -378,9 +424,6 @@ flowchart TD
 
     G --> F
     F --> H[Final: Contracts,<br/>Dollar Size, Risk %]
-
-    style F fill:#2d5,stroke:#333
-    style G fill:#f96,stroke:#333
 ```
 
 **Adjustments stack multiplicatively:**
@@ -456,6 +499,7 @@ Relying on just one signal type
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 4<br/>Fundamentals] --> B[Signal<br/>Frameworks<br/>This Guide]
     C[Module 3<br/>Sentiment] --> B

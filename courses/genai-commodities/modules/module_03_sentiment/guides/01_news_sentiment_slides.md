@@ -36,6 +36,7 @@ Generic sentiment models miss commodity nuance:
 ## Supply vs. Demand Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[News Headline] --> B{What type<br/>of news?}
     B -->|Supply increase| C[More product<br/>available]
@@ -47,10 +48,13 @@ flowchart TD
     D --> H[BULLISH<br/>Higher prices]
     E --> H
     F --> G
-
-    style G fill:#f44,stroke:#333
-    style H fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: This is the fundamental mental model for the entire module. Every subsequent analysis maps back to this framework. Have learners classify 3-4 headlines using this decision tree before moving on. -->
 
@@ -69,6 +73,7 @@ RSS feeds, APIs, and social media pipelines
 ## News Pipeline Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Acquisition<br/>Pull from sources] --> B[Deduplication<br/>Detect same story]
     B --> C[Relevance Filter<br/>Commodity-specific]
@@ -77,6 +82,12 @@ flowchart LR
     E --> F[Prioritization<br/>Market impact score]
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: Walk through each stage. Emphasize that without deduplication and filtering, you drown in noise -- the same Reuters story appears on 50 different sites. -->
 
 ---
@@ -84,6 +95,7 @@ flowchart LR
 ## Source Selection Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[What data<br/>do you need?] --> B{Real-time<br/>breaking news?}
     B -->|Yes| C{Budget for<br/>paid feeds?}
@@ -99,9 +111,13 @@ flowchart TD
     E --> J[Sub-second<br/>Latency]
     F --> K[Minutes<br/>Latency]
     I --> L[5-15min<br/>Latency]
-
-    style J fill:#2d5,stroke:#333
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Help learners choose their data sources based on budget and latency needs. Most course participants will use RSS + NewsAPI (free tier). Bloomberg Terminal is for institutional users. -->
 
@@ -124,11 +140,19 @@ class CommodityNewsProcessor:
         return unique
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 > LLM-based relevance filtering avoids false positives from keyword matching (e.g., "Gas prices at pump" tagged as natural gas).
 
 <!-- Speaker notes: Deduplication alone typically reduces news volume by 40-60%. Relevance filtering removes another 50%. Combined, you go from 100+ raw items to ~25 relevant articles per cycle. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Core Data Structures. Emphasize practical implications and connect to previous material. -->
 
 ## Core Data Structures
 
@@ -168,6 +192,8 @@ class CommoditySentiment:
 <!-- Speaker notes: These data structures will be used throughout the rest of the module. Note the driver field -- knowing WHY something is bullish/bearish is as important as the direction itself. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLM-Based Sentiment Analysis. Emphasize practical implications and connect to previous material. -->
 
 ## LLM-Based Sentiment Analysis
 
@@ -240,6 +266,8 @@ async def process_news_batch(
 
 ---
 
+<!-- Speaker notes: Cover the key points about Aggregating Sentiment Over Time. Emphasize practical implications and connect to previous material. -->
+
 ## Aggregating Sentiment Over Time
 
 ```python
@@ -279,6 +307,7 @@ def aggregate_sentiment(
 ## Sentiment Aggregation Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[News Feed] --> B[Process Each<br/>Article with LLM]
     B --> C[Filter by<br/>Target Commodity]
@@ -291,9 +320,6 @@ flowchart TD
     G -->|> +0.3| H[BULLISH Signal]
     G -->|-0.3 to +0.3| I[NEUTRAL]
     G -->|< -0.3| J[BEARISH Signal]
-
-    style H fill:#2d5,stroke:#333
-    style J fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: The +/-0.3 threshold is a starting point. In backtesting, you may find that tighter thresholds (0.4+) produce fewer but higher-quality signals. -->
@@ -311,6 +337,12 @@ From sentiment scores to actionable signals
 ---
 
 ## Creating and Confirming Signals
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_sentiment_signal.py</span>
+</div>
 
 ```python
 def create_sentiment_signal(
@@ -333,6 +365,8 @@ def combine_with_price_momentum(
     return confirmed
 ```
 
+</div>
+
 > Sentiment works best as confirmation -- combine with price momentum to filter noise.
 
 <!-- Speaker notes: The rolling mean smooths out single-article noise. The momentum confirmation step is key: it filters out situations where sentiment diverges from price action, which often indicates the sentiment signal is premature. -->
@@ -342,6 +376,7 @@ def combine_with_price_momentum(
 ## Signal Confirmation Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Sentiment<br/>Signal] --> D{Agree?}
     B[Price<br/>Momentum] --> D
@@ -353,16 +388,21 @@ flowchart LR
     G --> H[Execute<br/>Trade]
 
     F --> I[Wait for<br/>Alignment]
-
-    style E fill:#2d5,stroke:#333
-    style F fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: This confirmation pattern reduces false signals by roughly 40% in backtesting. The tradeoff is slower entry -- you miss the first part of some moves. -->
 
 ---
 
+<!-- Speaker notes: Cover the key points about Confidence and Source Weighting. Emphasize practical implications and connect to previous material. -->
+
 ## Confidence and Source Weighting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 SOURCE_QUALITY = {
@@ -376,7 +416,15 @@ SOURCE_QUALITY = {
 
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">source_weighted_sentiment.py</span>
+</div>
 
 ```python
 def source_weighted_sentiment(
@@ -398,6 +446,8 @@ def source_weighted_sentiment(
 
 ```
 
+</div>
+
 <!-- Speaker notes: Source weighting is critical. A single Reuters article should carry more weight than 10 Reddit posts. Commodity-specific sources like Platts and Argus get the highest weight because they employ domain experts. -->
 
 ---
@@ -405,6 +455,7 @@ def source_weighted_sentiment(
 ## Noise Reduction Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Raw Sentiment<br/>Scores] --> B[Source Quality<br/>Weighting]
     B --> C[Confidence<br/>Weighting]
@@ -417,8 +468,6 @@ flowchart TD
 
     G --> I[Price Momentum<br/>Confirmation]
     I --> J[Final Signal]
-
-    style J fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Each layer in this pipeline removes noise. Source weighting handles quality. Confidence weighting handles LLM uncertainty. Time decay handles staleness. Moving average handles volatility. The result is a cleaner signal. -->
@@ -484,6 +533,7 @@ Same Reuters story on 50 different sites
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 0-1<br/>LLM Fundamentals<br/>+ Report Parsing] --> B[News Sentiment<br/>Analysis<br/>This Guide]
     C[Government<br/>Reports] --> B

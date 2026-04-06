@@ -1,10 +1,50 @@
 # Supply/Demand Modeling with LLMs
 
+> **Reading time:** ~10 min | **Module:** Module 4: Fundamentals | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Supply/demand modeling with LLMs combines traditional fundamental analysis (production data, inventory levels, consumption patterns) with LLM-powered synthesis of unstructured information (geopolitical events, weather impacts, policy changes) to build comprehensive supply/demand balances that inf...
+
+</div>
+
 ## In Brief
 
 Supply/demand modeling with LLMs combines traditional fundamental analysis (production data, inventory levels, consumption patterns) with LLM-powered synthesis of unstructured information (geopolitical events, weather impacts, policy changes) to build comprehensive supply/demand balances that inform commodity price forecasts.
 
-> 💡 **Key Insight:** Traditional supply/demand models rely on structured data (EIA inventories, USDA production estimates) but miss critical context from unstructured sources—a surprise OPEC announcement, drought in the Midwest, or refinery outage. LLMs excel at extracting and reasoning over this unstructured information, allowing quantitative models to incorporate qualitative factors that actually move markets.
+<div class="callout-insight">
+
+**Insight:** Traditional supply/demand models rely on structured data (EIA inventories, USDA production estimates) but miss critical context from unstructured sources—a surprise OPEC announcement, drought in the Midwest, or refinery outage. LLMs excel at extracting and reasoning over this unstructured information, allowing quantitative models to incorporate qualitative factors that actually move markets.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of supply/demand modeling like forecasting your home heating costs:
+
+**Traditional approach:**
+- Look at last year's gas usage
+- Apply inflation adjustment
+- Done
+
+**Problems:**
+- Misses that you added insulation (less demand)
+- Misses polar vortex forecast (more demand)
+- Misses pipeline construction (more supply)
+
+**LLM-augmented approach:**
+- Get historical usage data (structured)
+- LLM reads news: "New pipeline increases regional supply 15%"
+- LLM processes weather forecast: "Colder than normal winter expected"
+- LLM notes: "Home insulation project completed last month"
+- Combines all factors: Higher demand (cold) + Lower home usage (insulation) + More supply (pipeline) = Net balanced, prices stable
+
+The LLM bridges the gap between numbers and narrative, creating a complete picture.
 
 ## Formal Definition
 
@@ -54,32 +94,15 @@ Demand = Consumption + Exports + Inventory_Build
 - Scenario analysis
 - Natural language explanation
 
-## Intuitive Explanation
-
-Think of supply/demand modeling like forecasting your home heating costs:
-
-**Traditional approach:**
-- Look at last year's gas usage
-- Apply inflation adjustment
-- Done
-
-**Problems:**
-- Misses that you added insulation (less demand)
-- Misses polar vortex forecast (more demand)
-- Misses pipeline construction (more supply)
-
-**LLM-augmented approach:**
-- Get historical usage data (structured)
-- LLM reads news: "New pipeline increases regional supply 15%"
-- LLM processes weather forecast: "Colder than normal winter expected"
-- LLM notes: "Home insulation project completed last month"
-- Combines all factors: Higher demand (cold) + Lower home usage (insulation) + More supply (pipeline) = Net balanced, prices stable
-
-The LLM bridges the gap between numbers and narrative, creating a complete picture.
-
 ## Code Implementation
 
 ### Supply/Demand Data Aggregation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -418,7 +441,15 @@ Consider:
         }
 ```
 
+</div>
+
 ### Natural Gas Supply/Demand (Seasonal Model)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">naturalgassdanalyzer.py</span>
+</div>
 
 ```python
 class NaturalGasSDAnalyzer:
@@ -522,6 +553,8 @@ But magnitude depends on season."""
         return json.loads(response.content[0].text)
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Ignoring Quality of Data Sources**
@@ -603,6 +636,12 @@ But magnitude depends on season."""
    - How would you use an LLM to assess supply/demand impact?
    - What prompt would you design?
 
+<div class="callout-insight">
+
+**Insight:** Understanding supply/demand modeling with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Commodity Fundamentals:**
@@ -624,3 +663,37 @@ But magnitude depends on season."""
 **Production Systems:**
 - "Building Fundamental Analysis Dashboards"
 - "Real-Time Supply/Demand Monitoring Systems"
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_crude_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_balance_modeling.md">
+  <div class="link-card-title">01 Balance Modeling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_storage_analysis.md">
+  <div class="link-card-title">02 Storage Analysis</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

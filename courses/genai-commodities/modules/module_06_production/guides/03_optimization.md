@@ -1,10 +1,29 @@
 # LLM Cost Optimization, Latency Reduction, and Caching
 
+> **Reading time:** ~11 min | **Module:** Module 6: Production | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Production LLM systems face the triple constraint of cost, latency, and quality. Cost optimization reduces API expenses through prompt compression, smaller models, and intelligent caching. Latency reduction ensures signals arrive before market moves through parallel processing, streaming, and pre...
+
+</div>
+
 ## In Brief
 
 Production LLM systems face the triple constraint of cost, latency, and quality. Cost optimization reduces API expenses through prompt compression, smaller models, and intelligent caching. Latency reduction ensures signals arrive before market moves through parallel processing, streaming, and precomputation. The goal: maintain signal quality while reducing cost per signal from $0.05 to $0.005 and latency from 3s to 300ms.
 
-> 💡 **Key Insight:** LLM costs follow a power law: 80% of queries are repetitive (cacheable), 15% can use smaller/faster models, and only 5% require the full frontier model. Latency has three components—network (100-200ms), inference (1-2s), and processing (0.5s)—each optimizable independently. The optimization strategy: cache aggressively, route intelligently, compress ruthlessly, and parallelize everything.
+<div class="callout-insight">
+
+**Insight:** LLM costs follow a power law: 80% of queries are repetitive (cacheable), 15% can use smaller/faster models, and only 5% require the full frontier model. Latency has three components—network (100-200ms), inference (1-2s), and processing (0.5s)—each optimizable independently. The optimization strategy: cache aggressively, route intelligently, compress ruthlessly, and parallelize everything.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -72,11 +91,15 @@ $$\text{Model} = \begin{cases}
 Cost-quality tradeoff:
 $$\text{Maximize: } Q(\text{Model}) - \lambda \times C(\text{Model})$$
 
-## Intuitive Explanation
-
 ### The Cost Problem
 
 **Naive Implementation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Every signal: full context, large model
 for news in news_feed:
@@ -85,7 +108,15 @@ for news in news_feed:
     # 1000 calls/day → $100/day → $3000/month
 ```
 
+</div>
+
 **Optimized Implementation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Smart routing and caching
 for news in news_feed:
@@ -105,6 +136,8 @@ for news in news_feed:
         cache[news] = signal
     # Effective cost: $0.01/signal → $10/day → $300/month
 ```
+
+</div>
 
 **Savings: 90% cost reduction**
 
@@ -133,6 +166,12 @@ Total: 110ms (acceptable for trading)
 ## Code Implementation
 
 ### Intelligent Caching System
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 import hashlib
@@ -583,6 +622,8 @@ for model, count in model_counts.items():
     print(f"  {model}: {count} calls ({pct:.1f}%)")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Over-Aggressive Caching**
@@ -671,9 +712,26 @@ for model, count in model_counts.items():
    What's new total latency?
    What if sentiment needed for signal generation?
 
+<div class="callout-insight">
+
+**Insight:** Understanding llm cost optimization, latency reduction, and caching is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Cost Optimization:**
+<div class="flow">
+<div class="flow-step mint">1. "LLM Economics" by A...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. "Optimizing Large La...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. "Prompt Engineering ...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. "Semantic Caching fo...</div>
+</div>
+
+
 1. **"LLM Economics" by Anthropic** - Cost structure and optimization
 2. **"Optimizing Large Language Model Inference"** - Inference optimization techniques
 3. **"Prompt Engineering for Cost Reduction"** - Shorter prompts, same quality
@@ -696,3 +754,42 @@ for model, count in model_counts.items():
 ---
 
 *"Optimize for cost, latency, and quality—in that order—until constraints are met."*
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_optimization_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_pipeline_build.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_commodity_agents.md">
+  <div class="link-card-title">01 Commodity Agents</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_production_deployment.md">
+  <div class="link-card-title">01 Production Deployment</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

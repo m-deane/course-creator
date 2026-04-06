@@ -1,8 +1,22 @@
 # Production Deployment for Commodity Gen AI
 
+> **Reading time:** ~7 min | **Module:** Module 6: Production | **Prerequisites:** Modules 0-5
+
+<div class="callout-key">
+
+**Key Concept Summary:** Moving from prototype to production requires addressing reliability, cost, latency, and monitoring. This guide covers production deployment patterns for commodity trading Gen AI systems.
+
+</div>
+
 ## Overview
 
 Moving from prototype to production requires addressing reliability, cost, latency, and monitoring. This guide covers production deployment patterns for commodity trading Gen AI systems.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Architecture Patterns
 
@@ -122,6 +136,12 @@ def call_llm_api(prompt: str) -> str:
 
 ### Circuit Breaker
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
+
 ```python
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -206,9 +226,17 @@ def call_llm_with_circuit_breaker(prompt: str) -> str:
         raise
 ```
 
+</div>
+
 ## Cost Management
 
 ### Token Budgeting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -288,7 +316,15 @@ def budgeted_llm_call(prompt: str, estimated_tokens: int) -> str:
     return result
 ```
 
+</div>
+
 ### Caching Strategy
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">llmcache.py</span>
+</div>
 
 ```python
 import hashlib
@@ -362,9 +398,17 @@ def cached_llm_call(prompt: str, model: str = "claude-sonnet-4-20250514") -> str
     return response
 ```
 
+</div>
+
 ## Monitoring and Observability
 
 ### Metrics Collection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -434,7 +478,15 @@ class MetricsCollector:
         return "\n".join(lines)
 ```
 
+</div>
+
 ### Alerting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -504,6 +556,14 @@ alert_manager.add_rule(AlertRule(
 ))
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding production deployment for commodity gen ai is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Reliability first** - retries, circuit breakers, and graceful degradation
@@ -515,3 +575,37 @@ alert_manager.add_rule(AlertRule(
 4. **Async processing** - use queues for non-blocking report processing
 
 5. **Gradual rollout** - test thoroughly before market-impacting deployment
+
+---
+
+## Conceptual Practice Questions
+
+1. What are the key considerations when deploying LLM-based commodity systems to production?
+
+2. How do you handle LLM API latency in real-time trading applications?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_pipeline_build.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_commodity_agents.md">
+  <div class="link-card-title">01 Commodity Agents</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_monitoring.md">
+  <div class="link-card-title">02 Monitoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

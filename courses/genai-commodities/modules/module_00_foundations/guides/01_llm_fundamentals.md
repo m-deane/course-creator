@@ -1,13 +1,30 @@
 # LLM Fundamentals for Commodities
 
+> **Reading time:** ~6 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Large Language Models are neural networks trained to predict text that can be repurposed as general-purpose document understanding engines. For commodity trading, this means a single model can read EIA inventory reports, parse earnings call transcripts, and extract price signals from news — tasks...
+
+</div>
+
 ## In Brief
 
 Large Language Models are neural networks trained to predict text that can be repurposed as general-purpose document understanding engines. For commodity trading, this means a single model can read EIA inventory reports, parse earnings call transcripts, and extract price signals from news — tasks that previously required separate, hand-built parsers for each document type.
 
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
 ## Key Insight
 
-> 💡 **LLMs are document understanding engines, not chatbots.** In commodity markets, the value is in extracting structured signals from unstructured text at scale — not in conversation. Every EIA report, USDA crop condition update, and analyst note is a structured signal waiting to be unlocked.
+<div class="callout-info">
 
+**Info:** In commodity markets, the value is in extracting structured signals from unstructured text at scale — not in conversation. Every EIA report, USDA crop condition update, and analyst note is a structured signal waiting to be unlocked.
+
+</div>
 ## Introduction
 
 Large Language Models (LLMs) transform how we process unstructured commodity market data. By the end of this guide, you will extract structured commodity intelligence from unstructured market reports using an LLM API.
@@ -204,6 +221,12 @@ Text: {text}
 
 Provide examples for complex extractions:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 FEW_SHOT_PROMPT = """
 Extract price forecasts from analyst commentary.
@@ -232,9 +255,17 @@ Now extract from:
 """
 ```
 
+</div>
+
 ### Chain of Thought
 
 For complex reasoning:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 REASONING_PROMPT = """
@@ -257,6 +288,8 @@ Provide your analysis followed by a conclusion with:
 """
 ```
 
+</div>
+
 ## Token Efficiency
 
 ### Cost Considerations
@@ -270,10 +303,27 @@ API costs accumulate quickly with long documents:
 
 ### Optimization Strategies
 
+<div class="flow">
+<div class="flow-step mint">1. Pre-filter content</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Chunk long documents</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Use smaller models</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Cache responses</div>
+</div>
+
+
 1. **Pre-filter content**: Remove boilerplate before sending
 2. **Chunk long documents**: Process in sections
 3. **Use smaller models**: For simple tasks
 4. **Cache responses**: Avoid duplicate processing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">get_cache_key.py</span>
+</div>
 
 ```python
 import hashlib
@@ -292,11 +342,19 @@ def cached_extraction(cache_key, text, prompt_template):
     pass
 ```
 
+</div>
+
 ## Validation and Error Handling
 
 ### Schema Validation
 
 Always validate LLM outputs:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">inventoryreport.py</span>
+</div>
 
 ```python
 from pydantic import BaseModel, validator
@@ -329,6 +387,8 @@ def extract_with_validation(text):
         return None
 ```
 
+</div>
+
 ### Handling Hallucinations
 
 LLMs may fabricate data. Mitigate with:
@@ -337,6 +397,12 @@ LLMs may fabricate data. Mitigate with:
 2. **Source attribution**: "Quote the exact text supporting each value"
 3. **Confidence scores**: "Rate your confidence 0-1 for each extraction"
 4. **Cross-validation**: Compare multiple model outputs
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 ANTI_HALLUCINATION_PROMPT = """
@@ -350,6 +416,14 @@ Text: {text}
 """
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding llm fundamentals for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **LLMs excel at unstructured data** - converting text to tradeable signals
@@ -361,3 +435,42 @@ Text: {text}
 4. **Manage costs** - cache results, chunk documents, use appropriate model sizes
 
 5. **Commodity domain knowledge** - incorporate commodity-specific context into prompts
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_llm_fundamentals_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_market_data_access.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_prompt_engineering_basics.md">
+  <div class="link-card-title">02 Prompt Engineering Basics</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_environment_setup.md">
+  <div class="link-card-title">03 Environment Setup</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

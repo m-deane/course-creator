@@ -1,10 +1,37 @@
 # Processing Earnings Call Transcripts for Commodity Mentions
 
+> **Reading time:** ~10 min | **Module:** Module 1: Report Processing | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** Corporate earnings calls contain valuable forward-looking commodity information from producers, refiners, and industrial consumers. LLMs can extract commodity-specific mentions, production guidance, and demand indicators from lengthy transcripts, providing unique insight unavailable in public rep...
+
+</div>
+
 ## In Brief
 
 Corporate earnings calls contain valuable forward-looking commodity information from producers, refiners, and industrial consumers. LLMs can extract commodity-specific mentions, production guidance, and demand indicators from lengthy transcripts, providing unique insight unavailable in public reports.
 
-> 💡 **Key Insight:** Companies directly involved in commodity production or consumption often discuss supply/demand factors weeks or months before they appear in official statistics. An oil major's capex guidance signals future production; a chemical company's margin commentary reveals refining economics. LLMs can extract these signals from unstructured transcripts at scale.
+<div class="callout-insight">
+
+**Insight:** Companies directly involved in commodity production or consumption often discuss supply/demand factors weeks or months before they appear in official statistics. An oil major's capex guidance signals future production; a chemical company's margin commentary reveals refining economics. LLMs can extract these signals from unstructured transcripts at scale.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Imagine earnings calls as real-time market research interviews. The CEO and CFO are revealing:
+- **What they're planning** (production guidance)
+- **What they're seeing** (demand trends)
+- **How they feel** (sentiment)
+- **What worries them** (risks)
+
+An LLM acts like a team of analysts listening to dozens of calls simultaneously, extracting the commodity-relevant nuggets and flagging surprises—work that would take humans hours or days per company.
 
 ## Formal Definition
 
@@ -28,6 +55,17 @@ Corporate earnings calls contain valuable forward-looking commodity information 
 | Miners (FCX, SCCO) | Production forecasts, cost curves, demand signals |
 
 ### Key Sections to Analyze
+
+<div class="flow">
+<div class="flow-step mint">1. Prepared Remarks</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Guidance</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Q&A</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Industry Commentary</div>
+</div>
+
 
 1. **Prepared Remarks** - Management's scripted commentary
 2. **Guidance** - Production/cost/price forecasts
@@ -372,6 +410,12 @@ Transcript:
 
 ## Complete Pipeline
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
+
 ```python
 from dataclasses import dataclass
 from typing import List, Optional
@@ -512,11 +556,19 @@ Format as concise bullet points.
         return insights
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Transcript Length Exceeds Context Window**
 - **Issue:** Full transcripts often exceed LLM context limits
 - **Solution:** Chunk intelligently by section (prepared remarks, Q&A)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">chunk_transcript.py</span>
+</div>
+
 ```python
 def chunk_transcript(transcript: str) -> dict:
     """Split transcript into logical sections."""
@@ -528,9 +580,17 @@ def chunk_transcript(transcript: str) -> dict:
     return sections
 ```
 
+</div>
+
 **2. Jargon and Company-Specific Terms**
 - **Issue:** LLMs may misinterpret industry terminology
 - **Solution:** Provide glossary in prompt
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 INDUSTRY_GLOSSARY = """
 Term definitions:
@@ -541,9 +601,17 @@ Term definitions:
 """
 ```
 
+</div>
+
 **3. Forward-Looking vs. Historical Confusion**
 - **Issue:** Mixing past results with future guidance
 - **Solution:** Explicit temporal extraction
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 prompt = """
 Distinguish between:
@@ -555,9 +623,17 @@ Tag each data point with timeframe.
 """
 ```
 
+</div>
+
 **4. Inconsistent Guidance Formatting**
 - **Issue:** Companies express guidance differently (ranges, points, percentages)
 - **Solution:** Normalize to standard format
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">normalize_guidance.py</span>
+</div>
+
 ```python
 def normalize_guidance(raw_value: str) -> dict:
     """Convert various guidance formats to standard structure."""
@@ -566,15 +642,7 @@ def normalize_guidance(raw_value: str) -> dict:
     pass
 ```
 
-## Intuitive Explanation
-
-Imagine earnings calls as real-time market research interviews. The CEO and CFO are revealing:
-- **What they're planning** (production guidance)
-- **What they're seeing** (demand trends)
-- **How they feel** (sentiment)
-- **What worries them** (risks)
-
-An LLM acts like a team of analysts listening to dozens of calls simultaneously, extracting the commodity-relevant nuggets and flagging surprises—work that would take humans hours or days per company.
+</div>
 
 ## Connections
 
@@ -609,6 +677,12 @@ An LLM acts like a team of analysts listening to dozens of calls simultaneously,
 5. **Automated Pipeline:**
    Build a system that processes earnings transcripts for the top 10 energy companies each quarter, storing structured output in a database.
 
+<div class="callout-insight">
+
+**Insight:** Understanding processing earnings call transcripts for commodity mentions is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - **Earnings Call Transcript Analysis in Finance:**
@@ -634,3 +708,42 @@ An LLM acts like a team of analysts listening to dozens of calls simultaneously,
 - **Industry Classification:**
   - GICS (Global Industry Classification Standard)
   - Understanding company sector categorization for analysis
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes earnings transcripts particularly challenging for automated extraction?
+
+2. How would you extract forward guidance signals from an energy company earnings call?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_earnings_transcripts_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_eia_extraction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_eia_reports.md">
+  <div class="link-card-title">01 Eia Reports</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_usda_reports.md">
+  <div class="link-card-title">02 Usda Reports</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

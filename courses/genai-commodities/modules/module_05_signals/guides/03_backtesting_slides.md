@@ -31,6 +31,12 @@ for threshold in range(20, 80):
     signals = indicator > threshold
     pnl = backtest(signals, prices)
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 **Time:** Seconds for thousands of tests
 
 </div>
@@ -93,6 +99,7 @@ Only information available at time t can be used in prompt.
 ## The Caching Solution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Date + Context] --> B[Hash Key<br/>sha256 of prompt+context+model]
     B --> C{In Cache?}
@@ -106,10 +113,13 @@ flowchart TD
     D --> G[Parse Signal<br/>Execute Trade]
 
     H[Cost: 1000 signals<br/>$0.01/call = $10] --> I[With 60% cache hit:<br/>Only $4 per sweep]
-
-    style D fill:#2d5,stroke:#333
-    style E fill:#f96,stroke:#333
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -124,6 +134,8 @@ Cache, execute, and measure
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLMSignalCache. Emphasize practical implications and connect to previous material. -->
 
 ## LLMSignalCache
 
@@ -142,6 +154,12 @@ class LLMSignalCache:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 ---
 
 ```python
@@ -159,9 +177,17 @@ class LLMSignalCache:
 
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLMBacktester Core. Emphasize practical implications and connect to previous material. -->
 
 ## LLMBacktester Core
 
@@ -204,6 +230,8 @@ class LLMBacktester:
 
 ---
 
+<!-- Speaker notes: Cover the key points about Trade Execution with Costs. Emphasize practical implications and connect to previous material. -->
+
 ## Trade Execution with Costs
 
 ```python
@@ -242,6 +270,7 @@ def execute_trade(self, signal, entry_price,
 ## Backtest Execution Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Price Data +<br/>Context Column] --> B[For Each Date]
 
@@ -257,8 +286,6 @@ flowchart TD
     G --> H{More Dates?}
     H -->|Yes| B
     H -->|No| I[Calculate Metrics<br/>Sharpe, MDD, WR, PF]
-
-    style I fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -310,6 +337,8 @@ Report: Average of out-of-sample periods
 
 ---
 
+<!-- Speaker notes: Cover the key points about Walk-Forward Implementation. Emphasize practical implications and connect to previous material. -->
+
 ## Walk-Forward Implementation
 
 ```python
@@ -329,6 +358,12 @@ def walk_forward_validation(
 
 ---
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
         # Test data (out-of-sample)
@@ -345,6 +380,8 @@ def walk_forward_validation(
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -352,6 +389,7 @@ def walk_forward_validation(
 ## Walk-Forward Visualization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Walk-Forward Validation Windows
     dateFormat YYYY
@@ -380,7 +418,15 @@ gantt
 
 ---
 
+<!-- Speaker notes: Cover the key points about Performance Metrics Calculation. Emphasize practical implications and connect to previous material. -->
+
 ## Performance Metrics Calculation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">_calculate_metrics.py</span>
+</div>
 
 ```python
 def _calculate_metrics(self, trades, equity_curve):
@@ -397,7 +443,15 @@ def _calculate_metrics(self, trades, equity_curve):
     win_rate = len([t for t in trades if t.pnl > 0]) / len(trades)
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -411,6 +465,8 @@ def _calculate_metrics(self, trades, equity_curve):
         win_rate=win_rate, profit_factor=profit_factor, ...)
 
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -492,6 +548,7 @@ $$\text{Cost} = n_{\text{signals}} \times c_{\text{LLM}} \times n_{\text{variant
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Signal<br/>Frameworks] --> B[Backtesting<br/>This Guide]
     C[Confidence<br/>Scoring] --> B

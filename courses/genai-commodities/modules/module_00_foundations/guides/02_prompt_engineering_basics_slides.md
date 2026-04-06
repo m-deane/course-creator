@@ -26,12 +26,19 @@ Techniques for extracting accurate, actionable insights from LLMs
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Context<br/>Role & background] --> B[Task<br/>What to analyze]
     B --> C[Constraints<br/>Rules & limits]
     C --> D[Output Format<br/>JSON schema]
     D --> E[Reliable<br/>LLM Output]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 > Every well-engineered prompt follows this four-part structure.
 
@@ -61,6 +68,12 @@ Constraints:
 - Rate confidence (low/medium/high)
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -85,6 +98,12 @@ Output Format:
 }
 """
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -124,9 +143,17 @@ Analysis: {
 }
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Few-Shot: Demand and Weather Examples. Emphasize practical implications and connect to previous material. -->
 
 ## Few-Shot: Demand and Weather Examples
 
@@ -203,6 +230,7 @@ prompt = create_few_shot_prompt(article, "crude oil")
 ## How Few-Shot Improves Accuracy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Zero-Shot Prompt] --> B[Variable Output Quality<br/>~60-70% accuracy]
     C[Few-Shot Prompt<br/>2-3 examples] --> D[Consistent Output<br/>~85-90% accuracy]
@@ -213,8 +241,6 @@ graph TD
     F --> G
 
     G -->|Best Balance| H[Few-Shot<br/>2-3 examples]
-
-    style H fill:#2d5,stroke:#333,stroke-width:2px
 ```
 
 > 2-3 well-chosen examples provide the best accuracy-to-cost ratio.
@@ -232,6 +258,8 @@ Guiding the model through complex analytical reasoning
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Chain-of-Thought Structure. Emphasize practical implications and connect to previous material. -->
 
 ## Chain-of-Thought Structure
 
@@ -298,6 +326,7 @@ def analyze_with_cot(report_text, llm_client):
 ## Chain-of-Thought Analysis Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Raw Report Text] --> B[Step 1: Extract Data Points]
     B --> C[Step 2: Categorize Factors]
@@ -325,6 +354,8 @@ Ensuring programmatic processing with JSON mode
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about JSON Extraction: EIA Reports. Emphasize practical implications and connect to previous material. -->
 
 ## JSON Extraction: EIA Reports
 
@@ -382,6 +413,8 @@ Return only valid JSON, no additional text.
 
 ---
 
+<!-- Speaker notes: Cover the key points about JSON Extraction Implementation. Emphasize practical implications and connect to previous material. -->
+
 ## JSON Extraction Implementation
 
 ```python
@@ -428,6 +461,8 @@ Tailored prompts for oil and agricultural markets
 
 ---
 
+<!-- Speaker notes: Cover the key points about Oil Market Analysis Prompt. Emphasize practical implications and connect to previous material. -->
+
 ## Oil Market Analysis Prompt
 
 ```python
@@ -462,6 +497,8 @@ Provide analysis covering:
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Agricultural Commodities Prompt. Emphasize practical implications and connect to previous material. -->
 
 ## Agricultural Commodities Prompt
 
@@ -502,6 +539,7 @@ Analyze:
 ## Commodity Prompt Selection Matrix
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Commodity Type] --> B{Energy?}
     A --> C{Agricultural?}
@@ -528,6 +566,8 @@ Uncertainty, hallucinations, and grounding
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Uncertainty-Aware Prompts. Emphasize practical implications and connect to previous material. -->
 
 ## Uncertainty-Aware Prompts
 
@@ -600,6 +640,7 @@ ANSWER (cite specific data points):
 ## Hallucination Mitigation Strategies
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[LLM Response] --> B{Contains<br/>numeric claims?}
     B -->|Yes| C[Check against<br/>source data]
@@ -629,7 +670,15 @@ Systematic prompt quality measurement
 
 ---
 
+<!-- Speaker notes: Cover the key points about Prompt Evaluation Framework. Emphasize practical implications and connect to previous material. -->
+
 ## Prompt Evaluation Framework
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">evaluate_prompt_quality.py</span>
+</div>
 
 ```python
 def evaluate_prompt_quality(prompt, test_cases, llm_client):
@@ -649,7 +698,15 @@ def evaluate_prompt_quality(prompt, test_cases, llm_client):
             'format_correct': check_format(
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
                 response, test['expected_format']
@@ -669,11 +726,19 @@ def evaluate_prompt_quality(prompt, test_cases, llm_client):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
 ## Test Case Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 test_cases = [
@@ -695,6 +760,8 @@ test_cases = [
     }
 ]
 ```
+
+</div>
 
 > Build a test suite of at least 10-20 cases per prompt template to ensure robustness.
 
@@ -723,6 +790,7 @@ test_cases = [
 ## Visual Summary: Prompt Engineering Toolkit
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph Techniques
         A[Zero-Shot] --> B[Few-Shot]

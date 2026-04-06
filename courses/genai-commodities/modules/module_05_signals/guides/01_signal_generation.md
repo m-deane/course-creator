@@ -1,8 +1,22 @@
 # Trading Signal Generation with LLMs
 
+> **Reading time:** ~6 min | **Module:** Module 5: Signals | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covers converting LLM-extracted insights into quantitative trading signals.
+
+</div>
+
 ## From Text to Trades
 
 This guide covers converting LLM-extracted insights into quantitative trading signals.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Signal Architecture
 
@@ -28,6 +42,12 @@ Transcripts  Classification  Timeseries     Ranking       Correlation   Slippage
 ## Building Fundamental Signals
 
 ### Inventory Surprise Signal
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -120,7 +140,15 @@ class InventorySurpriseSignal:
         )
 ```
 
+</div>
+
 ### Production Forecast Signal
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">productionforecastsignal.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -203,9 +231,17 @@ Report:
         return {'net_signal': 0}
 ```
 
+</div>
+
 ## Sentiment-Based Signals
 
 ### Aggregated News Sentiment
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">newssentimentsignal.py</span>
+</div>
 
 ```python
 class NewsSentimentSignal:
@@ -288,9 +324,17 @@ class NewsSentimentSignal:
         }
 ```
 
+</div>
+
 ## Signal Combination
 
 ### Multi-Signal Aggregation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">commoditysignalaggregator.py</span>
+</div>
 
 ```python
 class CommoditySignalAggregator:
@@ -350,9 +394,17 @@ class CommoditySignalAggregator:
         }
 ```
 
+</div>
+
 ## Position Sizing
 
 ### Signal-to-Position Conversion
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">positionsizer.py</span>
+</div>
 
 ```python
 class PositionSizer:
@@ -414,6 +466,14 @@ class PositionSizer:
         }
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding trading signal generation with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Structured signals** - convert LLM outputs to numeric signals with confidence
@@ -425,3 +485,37 @@ class PositionSizer:
 4. **Weight by confidence** - not all signals are equally reliable
 
 5. **Risk management** - size positions based on confidence and volatility
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_signal_generation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_signal_frameworks.md">
+  <div class="link-card-title">01 Signal Frameworks</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_confidence_scoring.md">
+  <div class="link-card-title">02 Confidence Scoring</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

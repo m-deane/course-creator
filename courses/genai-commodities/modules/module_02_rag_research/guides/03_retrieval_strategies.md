@@ -1,10 +1,45 @@
 # Retrieval Strategies for Commodity Analysis
 
+> **Reading time:** ~13 min | **Module:** Module 2: Rag Research | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** Retrieval strategies for commodity analysis combine semantic search with temporal, geographical, and commodity-specific filters to ensure LLMs receive contextually appropriate information—preventing the mixing of outdated data, wrong geographies, or unrelated commodities that would lead to halluc...
+
+</div>
+
 ## In Brief
 
 Retrieval strategies for commodity analysis combine semantic search with temporal, geographical, and commodity-specific filters to ensure LLMs receive contextually appropriate information—preventing the mixing of outdated data, wrong geographies, or unrelated commodities that would lead to hallucinated analysis.
 
-> 💡 **Key Insight:** Standard RAG retrieval fails for commodities because semantic similarity alone can't distinguish between "crude oil storage was high in January 2024" and "crude oil storage was high in January 2020"—both are semantically identical but lead to opposite trading conclusions. Effective commodity retrieval requires **multi-dimensional filtering** that respects time, space, and domain boundaries.
+<div class="callout-insight">
+
+**Insight:** Standard RAG retrieval fails for commodities because semantic similarity alone can't distinguish between "crude oil storage was high in January 2024" and "crude oil storage was high in January 2020"—both are semantically identical but lead to opposite trading conclusions. Effective commodity retrieval requires **multi-dimensional filtering** that respects time, space, and domain boundaries.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of retrieval like asking a specialized librarian for commodity research:
+
+**Bad librarian (semantic search only):**
+- You: "What's the crude oil inventory situation?"
+- Returns: Mix of 2019 and 2024 data, some about U.S., some about OPEC, plus unrelated gasoline info
+- Result: Confusion and wrong conclusions
+
+**Good librarian (multi-dimensional retrieval):**
+- You: "What's the crude oil inventory situation?"
+- Librarian asks: "Which geography? What time period?"
+- You: "U.S., most recent data"
+- Returns: Only recent U.S. crude inventory reports, properly dated and contextualized
+- Result: Accurate, actionable insights
+
+The challenge is that commodity questions have implicit context ("current" means this week, "storage" implies specific geography, "crude" excludes products) that must be made explicit in retrieval.
 
 ## Formal Definition
 
@@ -28,27 +63,15 @@ A commodity retrieval strategy is a function **R: (Q, KB, F) → C** where:
 - Commodity consistency: all chunks reference same commodity unless explicitly multi-commodity query
 - Geography consistency: maintain regional specificity (don't mix U.S. and China data)
 
-## Intuitive Explanation
-
-Think of retrieval like asking a specialized librarian for commodity research:
-
-**Bad librarian (semantic search only):**
-- You: "What's the crude oil inventory situation?"
-- Returns: Mix of 2019 and 2024 data, some about U.S., some about OPEC, plus unrelated gasoline info
-- Result: Confusion and wrong conclusions
-
-**Good librarian (multi-dimensional retrieval):**
-- You: "What's the crude oil inventory situation?"
-- Librarian asks: "Which geography? What time period?"
-- You: "U.S., most recent data"
-- Returns: Only recent U.S. crude inventory reports, properly dated and contextualized
-- Result: Accurate, actionable insights
-
-The challenge is that commodity questions have implicit context ("current" means this week, "storage" implies specific geography, "crude" excludes products) that must be made explicit in retrieval.
-
 ## Code Implementation
 
 ### Multi-Dimensional Retrieval System
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -559,7 +582,15 @@ Examples:
         return commodities
 ```
 
+</div>
+
 ### Hybrid Retrieval with Re-ranking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hybridretrieval.py</span>
+</div>
 
 ```python
 class HybridRetrieval:
@@ -631,6 +662,8 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
 
         return reranked
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -718,6 +751,12 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
      - Geography exactness (exact match > region match > no match)
    - Design the weighting formula
 
+<div class="callout-insight">
+
+**Insight:** Understanding retrieval strategies for commodity analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Information Retrieval:**
@@ -743,3 +782,42 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
 **Production RAG:**
 - LangChain: "Advanced Retrieval Strategies" - Practical implementation patterns
 - "Building RAG Systems at Scale" (LlamaIndex) - Performance optimization
+
+---
+
+## Conceptual Practice Questions
+
+1. Compare dense retrieval vs. hybrid retrieval for commodity research queries.
+
+2. How do you evaluate whether your retrieval strategy is returning relevant documents?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_retrieval_strategies_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_eia_knowledge_base.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_knowledge_base_design.md">
+  <div class="link-card-title">01 Knowledge Base Design</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_document_processing.md">
+  <div class="link-card-title">02 Document Processing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

@@ -22,13 +22,17 @@ Detecting when model behavior degrades before losses accumulate
 > Unlike traditional ML where accuracy drops visibly, LLM degradation manifests as subtle shifts: slightly lower conviction, different reasoning patterns, or increased uncertainty.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Traditional ML<br/>Accuracy: 95% -> 70%<br/>OBVIOUS FAILURE] --> C[Easy to<br/>Detect]
     B[LLM Drift<br/>Still returns text<br/>Subtly wrong reasoning] --> D[Hard to<br/>Detect]
-
-    style C fill:#2d5,stroke:#333
-    style D fill:#f44,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 **Production monitoring must measure:**
 - Semantic drift (meaning changes)
@@ -99,15 +103,19 @@ $$S_t = \max(0, S_{t-1} + (x_t - \mu - k))$$
 Where $k$ is allowance (half the shift size to detect)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Win Rate<br/>Observations] --> B[CUSUM<br/>Accumulator]
     B --> C{Exceeds<br/>Threshold?}
     C -->|No| D[Continue<br/>Monitoring]
     C -->|Yes| E[ALERT:<br/>Performance<br/>Degradation]
-
-    style E fill:#f44,stroke:#333
-    style D fill:#2d5,stroke:#333
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -135,6 +143,8 @@ PSI, CUSUM, and semantic monitoring
 
 ---
 
+<!-- Speaker notes: Cover the key points about PopulationStabilityIndex. Emphasize practical implications and connect to previous material. -->
+
 ## PopulationStabilityIndex
 
 ```python
@@ -150,6 +160,12 @@ class PopulationStabilityIndex:
         self.baseline_dist = np.maximum(
             baseline_counts / len(baseline_data), 1e-10)
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 ---
 
@@ -168,9 +184,17 @@ class PopulationStabilityIndex:
 
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about CUSUMDetector. Emphasize practical implications and connect to previous material. -->
 
 ## CUSUMDetector
 
@@ -237,6 +261,7 @@ class SemanticDriftDetector:
 ## Drift Detection Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Production<br/>LLM Signals] --> B[Log Signal<br/>+ Embedding]
 
@@ -253,10 +278,6 @@ flowchart TD
     G -->|0 alerts| H[HEALTHY]
     G -->|1 alert| I[WARNING]
     G -->|2+ alerts| J[CRITICAL]
-
-    style H fill:#2d5,stroke:#333
-    style I fill:#f96,stroke:#333
-    style J fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -273,7 +294,15 @@ Comprehensive monitoring system
 
 ---
 
+<!-- Speaker notes: Cover the key points about Monitor Setup and Baseline. Emphasize practical implications and connect to previous material. -->
+
 ## Monitor Setup and Baseline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">llmproductionmonitor.py</span>
+</div>
 
 ```python
 class LLMProductionMonitor:
@@ -289,7 +318,15 @@ class LLMProductionMonitor:
         self.semantic_detector = SemanticDriftDetector()
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_baseline.py</span>
+</div>
 
 ```python
 
@@ -306,11 +343,19 @@ class LLMProductionMonitor:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
 ## Health Score Computation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">get_status.py</span>
+</div>
 
 ```python
 def get_status(self) -> Dict:
@@ -329,6 +374,8 @@ def _compute_health_score(self, drift_metrics):
     elif alerts <= 1: return 'warning'
     else: return 'critical'
 ```
+
+</div>
 
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
@@ -432,6 +479,7 @@ Only tracking numeric metrics
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Module 5<br/>Confidence Scoring] --> B[Monitoring<br/>This Guide]
     C[Module 5<br/>Backtesting] --> B

@@ -1,8 +1,22 @@
 # News Sentiment Analysis for Commodities
 
+> **Reading time:** ~6 min | **Module:** Module 3: Sentiment | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** News sentiment analysis extracts directional signals from commodity market news. Unlike general sentiment analysis, commodity sentiment requires domain expertise to interpret supply/demand implications.
+
+</div>
+
 ## Introduction
 
 News sentiment analysis extracts directional signals from commodity market news. Unlike general sentiment analysis, commodity sentiment requires domain expertise to interpret supply/demand implications.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Commodity-Specific Sentiment
 
@@ -229,6 +243,12 @@ Return JSON:
 
 ### Government Reports
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_government_report_surprise.py</span>
+</div>
+
 ```python
 def analyze_government_report_surprise(
     report_text: str,
@@ -276,9 +296,17 @@ Return JSON:
     return response.content[0].text
 ```
 
+</div>
+
 ## Building Sentiment Signals
 
 ### Creating Trading Signals
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_sentiment_signal.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -329,7 +357,15 @@ def combine_with_price_momentum(
     return confirmed_signal
 ```
 
+</div>
+
 ### Backtesting Framework
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backtest_sentiment_strategy.py</span>
+</div>
 
 ```python
 def backtest_sentiment_strategy(
@@ -366,9 +402,17 @@ def backtest_sentiment_strategy(
     }
 ```
 
+</div>
+
 ## Handling Noise and False Signals
 
 ### Confidence-Weighted Averaging
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">confidence_weighted_sentiment.py</span>
+</div>
 
 ```python
 def confidence_weighted_sentiment(
@@ -391,7 +435,15 @@ def confidence_weighted_sentiment(
     return weighted_sum / total_weight if total_weight > 0 else 0.0
 ```
 
+</div>
+
 ### Source Quality Weighting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">source_weighted_sentiment.py</span>
+</div>
 
 ```python
 SOURCE_QUALITY = {
@@ -432,6 +484,14 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
     return weighted_sum / total_weight if total_weight > 0 else 0.0
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding news sentiment analysis for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Commodity sentiment differs from general sentiment** - supply increases are bearish, demand increases are bullish
@@ -443,3 +503,42 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
 4. **Combine with other signals** - sentiment works best as confirmation
 
 5. **Validate with backtests** - measure actual predictive power before trading
+
+---
+
+## Conceptual Practice Questions
+
+1. Why is financial news sentiment analysis harder than general sentiment analysis?
+
+2. What domain-specific challenges arise when applying LLMs to commodity news?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_news_sentiment_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_news_sentiment.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_news_processing.md">
+  <div class="link-card-title">01 News Processing</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_sentiment_aggregation.md">
+  <div class="link-card-title">02 Sentiment Aggregation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

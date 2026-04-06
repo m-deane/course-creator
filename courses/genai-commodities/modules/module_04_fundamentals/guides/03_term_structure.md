@@ -1,10 +1,65 @@
 # Term Structure Analysis with LLMs
 
+> **Reading time:** ~10 min | **Module:** Module 4: Fundamentals | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Term structure analysis examines the relationship between futures contracts of different maturities, revealing market expectations about future price levels, storage costs, and convenience yield. LLMs enhance this analysis by extracting narrative context from news, reports, and commentary to expl...
+
+</div>
+
 ## In Brief
 
 Term structure analysis examines the relationship between futures contracts of different maturities, revealing market expectations about future price levels, storage costs, and convenience yield. LLMs enhance this analysis by extracting narrative context from news, reports, and commentary to explain term structure shapes (contango vs backwardation) and predict structural shifts.
 
-> 💡 **Key Insight:** The futures curve shape tells a story: contango suggests plentiful supply (willing to pay storage), backwardation signals scarcity (immediate need outweighs future value). LLMs read this story in reverse—analyzing news, inventories, and market commentary to predict whether the curve will steepen, flatten, or invert. This combines quantitative curve modeling with qualitative fundamental understanding.
+<div class="callout-insight">
+
+**Insight:** The futures curve shape tells a story: contango suggests plentiful supply (willing to pay storage), backwardation signals scarcity (immediate need outweighs future value). LLMs read this story in reverse—analyzing news, inventories, and market commentary to predict whether the curve will steepen, flatten, or invert. This combines quantitative curve modeling with qualitative fundamental understanding.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of airline ticket pricing:
+
+**Contango (normal):**
+- Today's flight: $200
+- Flight in 3 months: $300
+- "Storage cost" = uncertainty, demand risk
+- Airlines charge more for future flexibility
+
+**Backwardation (unusual):**
+- Today's flight: $500 (urgent trip!)
+- Flight in 3 months: $250
+- Immediate need drives today's price up
+- Future has more capacity/flexibility
+
+For crude oil:
+
+**Contango scenario:**
+- Current supply: Comfortable
+- Inventories: Above average
+- Market: Willing to store for future
+- Curve: Front month $70, 12-month $75
+- Implication: No immediate shortage
+
+**Backwardation scenario:**
+- Current supply: Tight
+- Inventories: Below average
+- Market: Values immediate barrels highly
+- Curve: Front month $80, 12-month $75
+- Implication: Shortage now, expected relief later
+
+**LLM adds:**
+- "Why is the market in backwardation?"
+  → LLM reads: "OPEC announced surprise production cut"
+- "Will backwardation persist?"
+  → LLM analyzes: Upcoming production increases, inventory builds
 
 ## Formal Definition
 
@@ -54,47 +109,15 @@ $$\text{Roll Yield} = \frac{F(t, T_1) - F(t-\Delta t, T_1 + \Delta t)}{F(t-\Delt
 
 Positive in backwardation (near contract more expensive), negative in contango.
 
-## Intuitive Explanation
-
-Think of airline ticket pricing:
-
-**Contango (normal):**
-- Today's flight: $200
-- Flight in 3 months: $300
-- "Storage cost" = uncertainty, demand risk
-- Airlines charge more for future flexibility
-
-**Backwardation (unusual):**
-- Today's flight: $500 (urgent trip!)
-- Flight in 3 months: $250
-- Immediate need drives today's price up
-- Future has more capacity/flexibility
-
-For crude oil:
-
-**Contango scenario:**
-- Current supply: Comfortable
-- Inventories: Above average
-- Market: Willing to store for future
-- Curve: Front month $70, 12-month $75
-- Implication: No immediate shortage
-
-**Backwardation scenario:**
-- Current supply: Tight
-- Inventories: Below average
-- Market: Values immediate barrels highly
-- Curve: Front month $80, 12-month $75
-- Implication: Shortage now, expected relief later
-
-**LLM adds:**
-- "Why is the market in backwardation?"
-  → LLM reads: "OPEC announced surprise production cut"
-- "Will backwardation persist?"
-  → LLM analyzes: Upcoming production increases, inventory builds
-
 ## Code Implementation
 
 ### Term Structure Extraction and Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">termstructureanalyzer.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -382,7 +405,15 @@ print(json.dumps(interpretation, indent=2))
 plt.show()
 ```
 
+</div>
+
 ### Curve Evolution Analysis
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_curve_evolution.py</span>
+</div>
 
 ```python
 def analyze_curve_evolution(futures_data, dates):
@@ -448,6 +479,8 @@ def analyze_curve_evolution(futures_data, dates):
     plt.tight_layout()
     return df, fig
 ```
+
+</div>
 
 ## Common Pitfalls
 
@@ -535,9 +568,26 @@ def analyze_curve_evolution(futures_data, dates):
 
    What position should you take? (Long M1-M2 or short M1-M2?)
 
+<div class="callout-insight">
+
+**Insight:** Understanding term structure analysis with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Term Structure Theory:**
+<div class="flow">
+<div class="flow-step mint">1. Fama & French (1987)</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Gorton et al. (2013)</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Pindyck (2001)</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Szymanowska et al. (...</div>
+</div>
+
+
 1. **Fama & French (1987)** - "Commodity Futures Prices" - Theory of storage
 2. **Gorton et al. (2013)** - "The Fundamentals of Commodity Futures Returns" - Roll yield analysis
 3. **Pindyck (2001)** - "The Dynamics of Commodity Spot and Futures Markets" - Curve dynamics
@@ -560,3 +610,42 @@ def analyze_curve_evolution(futures_data, dates):
 ---
 
 *"The futures curve is a market's expectation written in prices. LLMs read the news to explain why the market thinks that way."*
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_term_structure_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_crude_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_balance_modeling.md">
+  <div class="link-card-title">01 Balance Modeling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_supply_demand.md">
+  <div class="link-card-title">01 Supply Demand</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

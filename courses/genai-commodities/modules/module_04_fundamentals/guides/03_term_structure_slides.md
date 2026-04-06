@@ -23,6 +23,7 @@ Interpreting futures curves to reveal market expectations
 **Backwardation** = scarcity (immediate need outweighs future value)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Contango
         A1["M1: $70"] --> A2["M6: $75"]
@@ -36,10 +37,13 @@ flowchart LR
 
     Contango --> C[Supply Comfortable<br/>Willing to Store]
     Backwardation --> D[Supply Tight<br/>Need Barrels Now]
-
-    style C fill:#2d5,stroke:#333
-    style D fill:#f44,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -132,6 +136,8 @@ Extracting, computing, and interpreting curves
 
 ---
 
+<!-- Speaker notes: Cover the key points about Curve Extraction and Metrics. Emphasize practical implications and connect to previous material. -->
+
 ## Curve Extraction and Metrics
 
 ```python
@@ -155,6 +161,12 @@ class TermStructureAnalyzer:
             else 'backwardation'
 
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 ---
 
@@ -180,6 +192,12 @@ class TermStructureAnalyzer:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -187,6 +205,7 @@ class TermStructureAnalyzer:
 ## Term Structure Metrics Visualization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Futures Curve<br/>M1 through M12] --> B[Extract<br/>Prices by Maturity]
     B --> C[Compute<br/>Metrics]
@@ -202,13 +221,19 @@ flowchart TD
     G --> H
 
     H --> I[Trading<br/>Implications]
-
-    style I fill:#2d5,stroke:#333
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about LLM Curve Interpretation. Emphasize practical implications and connect to previous material. -->
 
 ## LLM Curve Interpretation
 
@@ -231,6 +256,14 @@ NEWS CONTEXT:
 
 ---
 
+<!-- Speaker notes: Cover the key points about this slide. Emphasize practical implications and connect to previous material. -->
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 
 Return JSON:
@@ -245,7 +278,15 @@ Return JSON:
   ],
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
   "forward_outlook": {{
@@ -262,11 +303,19 @@ Return JSON:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
 ## Curve Evolution Over Time
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_curve_evolution.py</span>
+</div>
 
 ```python
 def analyze_curve_evolution(futures_data, dates):
@@ -288,6 +337,8 @@ def analyze_curve_evolution(futures_data, dates):
     # Visualize: front price, spread, slope over time
     return df
 ```
+
+</div>
 
 > Tracking curve evolution reveals structural shifts -- the transition from contango to backwardation signals fundamental change.
 
@@ -354,6 +405,7 @@ Wrong position despite correct fundamental view
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Supply/Demand<br/>Fundamentals] --> B[Term Structure<br/>Analysis<br/>This Guide]
     C[Storage<br/>Analysis] --> B

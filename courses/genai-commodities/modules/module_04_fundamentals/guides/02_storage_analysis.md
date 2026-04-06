@@ -1,10 +1,49 @@
 # Storage Analysis for Commodities with LLMs
 
+> **Reading time:** ~13 min | **Module:** Module 4: Fundamentals | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Storage analysis uses LLM-augmented interpretation of inventory data to understand market tightness, seasonal patterns, and price implications by combining quantitative storage levels with qualitative context (weather forecasts, production disruptions, demand shifts) that determines whether curre...
+
+</div>
+
 ## In Brief
 
 Storage analysis uses LLM-augmented interpretation of inventory data to understand market tightness, seasonal patterns, and price implications by combining quantitative storage levels with qualitative context (weather forecasts, production disruptions, demand shifts) that determines whether current storage is adequate or concerning.
 
-> 💡 **Key Insight:** Storage levels are meaningless without context—3,500 Bcf of natural gas storage is comfortable in October (injection season ending) but dangerously low in February (withdrawal season peak). LLMs excel at providing this contextual interpretation, understanding that "above 5-year average" can still be bullish if a polar vortex is forecasted or refineries are running at record rates.
+<div class="callout-insight">
+
+**Insight:** Storage levels are meaningless without context—3,500 Bcf of natural gas storage is comfortable in October (injection season ending) but dangerously low in February (withdrawal season peak). LLMs excel at providing this contextual interpretation, understanding that "above 5-year average" can still be bullish if a polar vortex is forecasted or refineries are running at record rates.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+Think of commodity storage like your phone battery:
+
+**Simple view (wrong):**
+- 50% battery = good
+- 20% battery = concerning
+
+**Context-dependent view (correct):**
+- 50% battery at 9 AM with charger nearby = totally fine
+- 50% battery at 9 PM with no charger, heavy usage ahead = concerning
+- 20% battery at 10 PM at home = no problem
+- 20% battery at midnight in unfamiliar city = very concerning
+
+**Commodity storage example:**
+- 400 million barrels crude storage in March = comfortable (refinery maintenance season, low demand)
+- 400 million barrels in July = tight (driving season, high demand)
+- 3,200 Bcf natural gas in November = below average but okay (injection season ended)
+- 3,200 Bcf in January = dangerously low (peak heating demand)
+
+The LLM understands these context dependencies that simple threshold rules miss.
 
 ## Formal Definition
 
@@ -52,31 +91,15 @@ Assessment = {
 - **High storage + Weak demand** = Bearish (oversupply)
 - **Seasonal pattern deviation** = Signal of market imbalance
 
-## Intuitive Explanation
-
-Think of commodity storage like your phone battery:
-
-**Simple view (wrong):**
-- 50% battery = good
-- 20% battery = concerning
-
-**Context-dependent view (correct):**
-- 50% battery at 9 AM with charger nearby = totally fine
-- 50% battery at 9 PM with no charger, heavy usage ahead = concerning
-- 20% battery at 10 PM at home = no problem
-- 20% battery at midnight in unfamiliar city = very concerning
-
-**Commodity storage example:**
-- 400 million barrels crude storage in March = comfortable (refinery maintenance season, low demand)
-- 400 million barrels in July = tight (driving season, high demand)
-- 3,200 Bcf natural gas in November = below average but okay (injection season ended)
-- 3,200 Bcf in January = dangerously low (peak heating demand)
-
-The LLM understands these context dependencies that simple threshold rules miss.
-
 ## Code Implementation
 
 ### Storage Data Analyzer
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -433,7 +456,15 @@ CRITICAL SEASONAL CONTEXT:
         return json.loads(response.content[0].text)
 ```
 
+</div>
+
 ### Historical Pattern Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">storagepatternanalyzer.py</span>
+</div>
 
 ```python
 class StoragePatternAnalyzer:
@@ -585,6 +616,8 @@ Based on these historical patterns, provide analysis as JSON:
         return json.loads(response.content[0].text)
 ```
 
+</div>
+
 ## Common Pitfalls
 
 **1. Comparing Absolute Levels Across Seasons**
@@ -662,6 +695,12 @@ Based on these historical patterns, provide analysis as JSON:
    - Must incorporate: Harvest timing, export demand, ethanol production
    - What additional context would you provide?
 
+<div class="callout-insight">
+
+**Insight:** Understanding storage analysis for commodities with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 **Crude Oil Storage:**
@@ -683,3 +722,42 @@ Based on these historical patterns, provide analysis as JSON:
 **LLM Applications:**
 - "Contextual Analysis with Language Models" - Incorporating qualitative factors
 - "Prompt Engineering for Market Analysis" - Designing effective prompts
+
+---
+
+## Conceptual Practice Questions
+
+1. What makes LLMs particularly useful for commodity market analysis compared to traditional NLP?
+
+2. Describe three types of commodity documents that LLMs can process and the structured output you would expect from each.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_storage_analysis_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_crude_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_balance_modeling.md">
+  <div class="link-card-title">01 Balance Modeling</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_supply_demand.md">
+  <div class="link-card-title">01 Supply Demand</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

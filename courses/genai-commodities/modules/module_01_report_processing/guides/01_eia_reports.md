@@ -1,8 +1,22 @@
 # Parsing EIA Petroleum Reports
 
+> **Reading time:** ~5 min | **Module:** Module 1: Report Processing | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Energy Information Administration (EIA) publishes critical petroleum market data. This guide covers automated extraction from their most important reports.
+
+</div>
+
 ## Overview
 
 The Energy Information Administration (EIA) publishes critical petroleum market data. This guide covers automated extraction from their most important reports.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Key EIA Reports
 
@@ -136,6 +150,12 @@ Report text:
 
 ### Example Extraction
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 sample_text = """
 This Week in Petroleum - November 15, 2024
@@ -161,9 +181,17 @@ result = parse_wpsr_narrative(sample_text)
 print(result)
 ```
 
+</div>
+
 ### Handling Tables
 
 EIA reports contain data tables. Extract with specific prompts:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">parse_eia_table.py</span>
+</div>
 
 ```python
 def parse_eia_table(table_text, table_type='inventory'):
@@ -204,9 +232,17 @@ Return JSON array with entries:
     return response.content[0].text
 ```
 
+</div>
+
 ## Building a Complete Pipeline
 
 ### End-to-End WPSR Processing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">from.py</span>
+</div>
 
 ```python
 import json
@@ -296,9 +332,17 @@ Keep it concise (3-4 sentences total)."""
         return response.content[0].text
 ```
 
+</div>
+
 ## Validation and Quality Control
 
 ### Cross-Checking Extractions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">validate_wpsr_extraction.py</span>
+</div>
 
 ```python
 def validate_wpsr_extraction(extracted: dict, api_data: dict) -> dict:
@@ -327,7 +371,15 @@ def validate_wpsr_extraction(extracted: dict, api_data: dict) -> dict:
     }
 ```
 
+</div>
+
 ### Historical Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">check_reasonable_change.py</span>
+</div>
 
 ```python
 def check_reasonable_change(current: float, change: float, commodity: str) -> bool:
@@ -344,6 +396,14 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
     return abs(change) <= max_changes.get(commodity, 10)
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding parsing eia petroleum reports is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **EIA API is primary source** - Use API for numerical accuracy
@@ -355,3 +415,42 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
 4. **Build pipelines** - Combine multiple sources into structured, validated outputs
 
 5. **Track release timing** - WPSR release at 10:30 ET is market-moving event
+
+---
+
+## Conceptual Practice Questions
+
+1. What key data points should be extracted from weekly EIA petroleum status reports?
+
+2. How would you validate LLM extraction accuracy against known EIA data?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_eia_reports_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_eia_extraction.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_usda_reports.md">
+  <div class="link-card-title">02 Usda Reports</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_earnings_transcripts.md">
+  <div class="link-card-title">03 Earnings Transcripts</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

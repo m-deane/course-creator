@@ -1,10 +1,27 @@
 # Environment Setup for GenAI Commodities Trading
 
+> **Reading time:** ~6 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Setting up the development environment for applying generative AI to commodity markets requires API access to both LLM providers and commodity data sources, along with Python libraries for data processing and machine learning.
+
+</div>
+
 ## In Brief
 
 Setting up the development environment for applying generative AI to commodity markets requires API access to both LLM providers and commodity data sources, along with Python libraries for data processing and machine learning.
 
-> 💡 **Key Insight:** Successful Gen AI commodities work requires three layers: (1) data access to market information, (2) LLM infrastructure for processing unstructured content, and (3) analytical tools for signal generation. Most failures stem from inadequate API setup or missing dependencies.
+<div class="callout-insight">
+
+**Insight:** Successful Gen AI commodities work requires three layers: (1) data access to market information, (2) LLM infrastructure for processing unstructured content, and (3) analytical tools for signal generation. Most failures stem from inadequate API setup or missing dependencies.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Required Components
 
@@ -221,6 +238,12 @@ else:
 ### Test Vector Database
 
 **ChromaDB (local, no API key needed):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import chromadb
 
@@ -238,6 +261,8 @@ results = collection.query(
 print(results)
 # Should return the document
 ```
+
+</div>
 
 ## Directory Structure
 
@@ -282,6 +307,12 @@ genai-commodities/
 **1. API Rate Limits**
 - **Issue:** Exceeding free tier limits or hitting rate limits
 - **Solution:** Implement caching, use exponential backoff, monitor usage
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">retry_with_backoff.py</span>
+</div>
+
 ```python
 import time
 from functools import wraps
@@ -303,6 +334,8 @@ def retry_with_backoff(max_retries=3):
     return decorator
 ```
 
+</div>
+
 **2. Environment Variables Not Loading**
 - **Issue:** API keys not found even after setting in .env
 - **Solution:** Ensure python-dotenv is installed and load_dotenv() is called before accessing variables
@@ -314,6 +347,12 @@ load_dotenv()  # Must be called before os.getenv()
 **3. ChromaDB Persistence Issues**
 - **Issue:** Vector database data lost between sessions
 - **Solution:** Use persistent client
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import chromadb
 
@@ -321,9 +360,17 @@ import chromadb
 client = chromadb.PersistentClient(path="./chroma_db")
 ```
 
+</div>
+
 **4. Large Response Truncation**
 - **Issue:** LLM responses cut off mid-sentence
 - **Solution:** Increase max_tokens parameter
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 response = client.messages.create(
     model="claude-sonnet-4-20250514",
@@ -332,9 +379,17 @@ response = client.messages.create(
 )
 ```
 
+</div>
+
 **5. JSON Parsing Failures**
 - **Issue:** LLM returns malformed JSON
 - **Solution:** Use libraries like instructor or manual validation
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">safe_json_parse.py</span>
+</div>
+
 ```python
 import json
 
@@ -346,7 +401,9 @@ def safe_json_parse(text):
     except json.JSONDecodeError:
         # Try to extract JSON from markdown code blocks
         import re
-        json_match = re.search(r'```json\n(.*?)\n```', text, re.DOTALL)
+        json_match = re.search(r'```
+
+</div>json\n(.*?)\n```', text, re.DOTALL)
         if json_match:
             return json.loads(json_match.group(1))
         raise ValueError("No valid JSON found in response")
@@ -386,6 +443,12 @@ def safe_json_parse(text):
    - Estimate monthly costs based on expected usage patterns
    - Design a caching strategy to minimize redundant API calls
 
+<div class="callout-insight">
+
+**Insight:** Understanding environment setup for genai commodities trading is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 - **Anthropic API Documentation:** https://docs.anthropic.com/
@@ -406,3 +469,42 @@ def safe_json_parse(text):
 - **API Security Best Practices:**
   - https://owasp.org/www-project-api-security/
   - Critical reading for protecting API keys and handling sensitive data
+
+---
+
+## Conceptual Practice Questions
+
+1. What API configuration decisions affect cost vs. quality tradeoffs for commodity LLM applications?
+
+2. Why is structured output (JSON mode) important for downstream pipeline integration?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_environment_setup_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_market_data_access.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_llm_fundamentals.md">
+  <div class="link-card-title">01 Llm Fundamentals</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_prompt_engineering_basics.md">
+  <div class="link-card-title">02 Prompt Engineering Basics</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

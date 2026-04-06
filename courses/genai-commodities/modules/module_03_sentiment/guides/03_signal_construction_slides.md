@@ -28,15 +28,19 @@ Transforming sentiment into actionable trading recommendations
 - Historical backtesting validation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Sentiment<br/>Ingredient] --> B[+ Price Data]
     B --> C[+ Risk Rules]
     C --> D[+ Validation]
     D --> E[Trading<br/>Signal]
-
-    style A fill:#f96,stroke:#333
-    style E fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
@@ -103,6 +107,8 @@ From sentiment to structured trading signals
 
 ---
 
+<!-- Speaker notes: Cover the key points about Core Data Structures. Emphasize practical implications and connect to previous material. -->
+
 ## Core Data Structures
 
 ```python
@@ -125,6 +131,12 @@ class MarketData:
     rsi_14: float    # 14-period RSI
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 ---
 
 ```python
@@ -145,9 +157,17 @@ class TradingSignal:
 
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about SignalConstructor Class. Emphasize practical implications and connect to previous material. -->
 
 ## SignalConstructor Class
 
@@ -167,6 +187,12 @@ class SignalConstructor:
         current_position=None
     ) -> Optional[TradingSignal]:
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 ---
 
@@ -192,6 +218,7 @@ class SignalConstructor:
 ## Signal Construction Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Sentiment Analysis] --> B{Confidence<br/>> 0.7?}
     B -->|No| C[NO SIGNAL]
@@ -212,14 +239,13 @@ flowchart TD
     I -->|Yes| J[Calculate Entry<br/>Stop / Target]
 
     J --> K[Generate<br/>Trading Signal]
-
-    style K fill:#2d5,stroke:#333
-    style C fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Price Confirmation Logic. Emphasize practical implications and connect to previous material. -->
 
 ## Price Confirmation Logic
 
@@ -260,6 +286,8 @@ def _check_price_confirmation(
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Signal Strength Calculation. Emphasize practical implications and connect to previous material. -->
 
 ## Signal Strength Calculation
 
@@ -312,6 +340,7 @@ def _calculate_signal_strength(
 ## Strength Weighting Breakdown
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Sentiment<br/>Confidence<br/>40%] --> E[Signal<br/>Strength]
     B[Key Factors<br/>Count<br/>30%] --> E
@@ -321,9 +350,6 @@ flowchart LR
     E --> F{> 0.5?}
     F -->|Yes| G[Proceed to<br/>Entry/Exit Levels]
     F -->|No| H[No Signal<br/>Insufficient Strength]
-
-    style G fill:#2d5,stroke:#333
-    style H fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -369,6 +395,8 @@ Proving signals work before trading
 <!-- Speaker notes: Section transition. Briefly preview what this section covers before diving into details. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about SignalValidator. Emphasize practical implications and connect to previous material. -->
 
 ## SignalValidator
 
@@ -451,6 +479,8 @@ Managing multiple signals across commodities
 
 ---
 
+<!-- Speaker notes: Cover the key points about SignalPortfolio Class. Emphasize practical implications and connect to previous material. -->
+
 ## SignalPortfolio Class
 
 ```python
@@ -466,6 +496,12 @@ class SignalPortfolio:
 ```
 
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -484,11 +520,21 @@ class SignalPortfolio:
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
 
+<!-- Speaker notes: Cover the key points about Position Sizing. Emphasize practical implications and connect to previous material. -->
+
 ## Position Sizing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">_calculate_position_size.py</span>
+</div>
 
 ```python
 def _calculate_position_size(self, signal):
@@ -504,7 +550,15 @@ def _calculate_position_size(self, signal):
 
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
     # Base position from risk management
@@ -521,6 +575,8 @@ def _calculate_position_size(self, signal):
 
 ```
 
+</div>
+
 <!-- Speaker notes: Walk through the code, emphasizing the key patterns. Highlight which parts learners should customize for their own use cases. -->
 
 ---
@@ -528,6 +584,7 @@ def _calculate_position_size(self, signal):
 ## Portfolio Risk Management
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[New Signal<br/>Generated] --> B{Under Max<br/>Positions?}
     B -->|No| C[REJECT<br/>Portfolio Full]
@@ -541,10 +598,6 @@ flowchart TD
     G -->|Yes| I[ADD to<br/>Portfolio]
 
     I --> J[Monitor:<br/>Stop / Target / Expiry]
-
-    style I fill:#2d5,stroke:#333
-    style C fill:#f44,stroke:#333
-    style F fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Walk through the diagram step by step. Highlight the key decision points and data flow. -->
@@ -610,6 +663,7 @@ Holding positions based on old sentiment
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Sentiment<br/>Extraction] --> B[Signal<br/>Construction<br/>This Guide]
     C[Risk Management<br/>Principles] --> B

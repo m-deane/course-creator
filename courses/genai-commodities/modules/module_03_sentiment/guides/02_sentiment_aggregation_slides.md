@@ -22,6 +22,7 @@ Multi-dimensional extraction, normalization, and aggregation into coherent marke
 Individual news sentiment scores are noisy. We need to extract rich dimensions and then aggregate them into actionable signals.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Source 1<br/>Reuters: +0.4] --> D[Aggregation<br/>Engine]
     B[Source 2<br/>Bloomberg: +0.2] --> D
@@ -29,9 +30,13 @@ flowchart LR
 
     D --> E{Weighted<br/>Consensus}
     E --> F[Net Sentiment<br/>+0.25]
-
-    style F fill:#2d5,stroke:#333
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 > Raw scores from different sources have different scales, noise levels, and reliability -- aggregation normalizes and combines them.
 
@@ -44,6 +49,7 @@ flowchart LR
 Price sentiment alone misses nuance. Extract four dimensions:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Input Text] --> B[LLM Analysis]
 
@@ -60,14 +66,19 @@ flowchart TD
     G --> H{Consistent?}
     H -->|All agree| I[High Confidence<br/>Clear Signal]
     H -->|Mixed| J[Low Confidence<br/>Mixed Signal]
-
-    style I fill:#2d5,stroke:#333
-    style J fill:#f96,stroke:#333
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: The key insight is that supply, demand, and price can point in different directions simultaneously. "Supply increasing AND demand increasing" might be neutral for prices. Multi-dimensional extraction captures this. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Data Structures for Multi-Dimensional Analysis. Emphasize practical implications and connect to previous material. -->
 
 ## Data Structures for Multi-Dimensional Analysis
 
@@ -87,6 +98,12 @@ class DimensionalSentiment:
 @dataclass
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 ---
 
 ```python
@@ -103,9 +120,17 @@ class CommoditySentiment:
 
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Note the implicit_sentiment flag -- this catches cases where the LLM detects sentiment that isn't explicitly stated (e.g., "OPEC maintains output" is implicitly bearish if cuts were expected). The caveat_phrases field catches hedging language. -->
 
 ---
+
+<!-- Speaker notes: Cover the key points about Aspect-Based Sentiment Extraction. Emphasize practical implications and connect to previous material. -->
 
 ## Aspect-Based Sentiment Extraction
 
@@ -187,6 +212,8 @@ Putting all sources on the same scale
 
 ---
 
+<!-- Speaker notes: Cover the key points about Sentiment Score Normalization. Emphasize practical implications and connect to previous material. -->
+
 ## Sentiment Score Normalization
 
 ```python
@@ -228,6 +255,7 @@ class SentimentNormalizer:
 ## Normalization Effect
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Before["Before Normalization"]
         A1[Reuters<br/>mean=0.1, std=0.3]
@@ -248,8 +276,6 @@ flowchart TD
     B1 --> C[Comparable<br/>Sentiment Scores]
     B2 --> C
     B3 --> C
-
-    style C fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: The visual makes the concept intuitive. After normalization, a score of +2 from Reuters and +2 from Twitter both mean "2 standard deviations above that source's average" -- now they are comparable. -->
@@ -286,6 +312,12 @@ class TimeWeightedSentiment:
 
 ## Source Quality Weighting
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sourceweightedsentiment.py</span>
+</div>
+
 ```python
 class SourceWeightedSentiment:
     def __init__(self, source_weights=None):
@@ -307,6 +339,8 @@ class SourceWeightedSentiment:
         }
 ```
 
+</div>
+
 <!-- Speaker notes: Note that specialized_commodity sources (Platts, Argus) get a 1.2x weight -- higher than even Reuters. These services employ commodity analysts who understand the market context that general financial media often misses. -->
 
 ---
@@ -314,6 +348,7 @@ class SourceWeightedSentiment:
 ## Aggregation Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Raw Sentiment<br/>Scores per Article] --> B[Normalize<br/>Z-Score per Source]
     B --> C[Time Weight<br/>Exponential Decay]
@@ -329,8 +364,6 @@ flowchart TD
     H --> I
 
     I --> J[Regime<br/>Detection]
-
-    style I fill:#2d5,stroke:#333
 ```
 
 <!-- Speaker notes: This diagram shows the full pipeline. Each layer adds signal quality. By the time you reach regime detection, you have a robust, multi-source, time-weighted, source-weighted composite signal. -->
@@ -347,7 +380,15 @@ Identifying market sentiment extremes
 
 ---
 
+<!-- Speaker notes: Cover the key points about SentimentRegimeDetector. Emphasize practical implications and connect to previous material. -->
+
 ## SentimentRegimeDetector
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">sentimentregimedetector.py</span>
+</div>
 
 ```python
 class SentimentRegimeDetector:
@@ -366,7 +407,15 @@ class SentimentRegimeDetector:
             self.lookback_long).std()
 ```
 
+</div>
+
 ---
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -381,6 +430,8 @@ class SentimentRegimeDetector:
 
 ```
 
+</div>
+
 <!-- Speaker notes: The z-score approach compares recent sentiment to its own history. When short-term sentiment diverges significantly from the long-term average, we are in an extreme regime. These extremes often precede reversals. -->
 
 ---
@@ -388,6 +439,7 @@ class SentimentRegimeDetector:
 ## Regime Classification
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Z-Score<br/>Calculation] --> B{Z > 1.5?}
     B -->|Yes| C[Extreme<br/>Bullish]
@@ -401,11 +453,6 @@ flowchart LR
     E --> J[Confirm with<br/>Price Action]
     G --> J
     H --> K[Contrarian: Consider<br/>Buying / Adding]
-
-    style C fill:#f96,stroke:#333
-    style H fill:#f96,stroke:#333
-    style E fill:#2d5,stroke:#333
-    style G fill:#f44,stroke:#333
 ```
 
 <!-- Speaker notes: Extreme bullish sentiment often precedes corrections (everyone is already long). Extreme bearish sentiment can signal buying opportunities. This is the contrarian use of sentiment data. -->
@@ -478,6 +525,7 @@ Yesterday's news given same weight as breaking news
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[News Sentiment<br/>Analysis] --> B[Sentiment Extraction<br/>& Aggregation<br/>This Guide]
     C[LLM Prompt<br/>Engineering] --> B

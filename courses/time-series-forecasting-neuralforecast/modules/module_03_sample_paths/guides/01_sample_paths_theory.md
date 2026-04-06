@@ -76,6 +76,7 @@ Each path is internally consistent: if Monday is high, Tuesday in that path refl
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     NOW["Current time T"] --> P1["Path 1: (y₁⁽¹⁾, ..., y_H⁽¹⁾)"]
     NOW --> P2["Path 2: (y₁⁽²⁾, ..., y_H⁽²⁾)"]

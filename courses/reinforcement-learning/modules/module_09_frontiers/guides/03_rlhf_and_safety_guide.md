@@ -42,6 +42,7 @@ RLHF became the standard approach for aligning large language models after Instr
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SFT["Step 1: Supervised Fine-Tuning\nFine-tune pretrained LM on\nhigh-quality demonstration data"] --> RM["Step 2: Reward Model Training\nCollect human preference pairs;\ntrain a reward model $r_\phi(x, y)$"]
     RM --> PPO["Step 3: RL Fine-Tuning\nOptimize LM policy $\pi_\theta$ against\nreward model using PPO\n(with KL penalty to SFT policy)"]

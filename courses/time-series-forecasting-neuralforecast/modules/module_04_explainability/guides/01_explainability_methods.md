@@ -221,6 +221,7 @@ For most time series forecasting use cases, **Integrated Gradients is the right 
 
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Need to explain a forecast?] --> B{Production latency constraint?}
     B -- Yes, < 100ms --> C[InputXGradient\nSingle forward pass\nWatch for ReLU bias]

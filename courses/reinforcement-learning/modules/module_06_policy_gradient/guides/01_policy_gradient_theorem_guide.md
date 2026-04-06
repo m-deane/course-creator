@@ -161,6 +161,7 @@ When a sampled action $a$ exceeds the current mean and led to high return, the m
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Policy Space"
         P0["Initial policy π₀"]

@@ -17,6 +17,7 @@ This project demonstrates the production pattern for enterprise AI agents: Copil
 ## Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     USER[User in Teams] --> AGENT[Copilot Agent\nCopilot Studio]
 
@@ -906,6 +907,7 @@ Export analytics data weekly for 30 days. Include a screenshot of the analytics 
 ### Successful KB resolution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as User
     participant A as IT Support Agent
@@ -927,6 +929,7 @@ sequenceDiagram
 ### Ticket creation flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as User
     participant A as IT Support Agent
@@ -956,6 +959,7 @@ sequenceDiagram
 ### Escalation flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as User
     participant A as IT Support Agent

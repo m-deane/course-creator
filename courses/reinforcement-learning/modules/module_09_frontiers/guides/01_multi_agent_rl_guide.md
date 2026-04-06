@@ -149,6 +149,7 @@ CTDE is the dominant paradigm for cooperative MARL. During training, agents have
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Training["Training (Centralized)"]
         GS["Global State $s$\n+ All observations $o^1,\ldots,o^n$\n+ All actions $a^1,\ldots,a^n$"] --> CC["Centralized Critic\n$V(s)$ or $Q(s, \mathbf{a})$"]

@@ -132,6 +132,7 @@ Power Automate exposes the full create-read-update-delete set for SharePoint lis
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     C["Create item"] --> R["Get item\nGet items"]
     R --> U["Update item"]

@@ -303,6 +303,7 @@ See detailed comparison in the table above.
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BE["Bellman Equations\n(foundation)"] --> PE["Policy Evaluation\nT^pi iterated to convergence"]
     BE --> BO["Bellman Optimality\nT* iterated to convergence"]

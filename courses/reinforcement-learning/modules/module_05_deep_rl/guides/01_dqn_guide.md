@@ -115,6 +115,7 @@ Removing either the replay buffer or the target network reintroduces one pathway
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S["State $s$ (e.g., 84×84×4 pixel stack)"]
     C1["Conv Layer 1\n32 filters, 8×8, stride 4\nReLU"]

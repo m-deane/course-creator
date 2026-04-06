@@ -84,6 +84,7 @@ Not every dataset benefits from multivariate modeling. The key question is: **do
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1["Are there other\ncorrelated series?"]
     Q1 -->|No| UV["Use univariate\n(NHITS, NBEATS)"]

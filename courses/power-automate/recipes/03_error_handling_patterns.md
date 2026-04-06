@@ -11,6 +11,7 @@ The fundamental building block for error isolation. A **Scope** action groups re
 actions; a **Configure run after** setting on a subsequent action acts as the catch block.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A([Start]) --> B[Scope: Try]
     B -->|Succeeded| C[Continue normally]
@@ -50,6 +51,7 @@ Use the built-in **Retry policy** on individual actions for transient errors
 (HTTP 429 Too Many Requests, HTTP 5xx server errors).
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Action] -->|Fail| B{Retry count < max?}
     B -->|Yes| C[Wait backoff interval]
@@ -85,6 +87,7 @@ When processing a list of items in a loop, log failures to a "dead letter" list
 rather than stopping the entire run. Operators can review and reprocess failed items.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Get items from source] --> B[Apply to each]
     B --> C[Scope: Process item]
@@ -129,6 +132,7 @@ Centralised logging makes it easy to query run history and build dashboards with
 opening the Power Automate run history interface.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A([Flow start]) --> B[Write Start log entry]
     B --> C[Main flow logic]
@@ -172,6 +176,7 @@ Send an alert email when any part of a flow fails. Use this as a lightweight
 alternative to logging when you do not have a SharePoint list for audit logs.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Scope: Main logic] -->|Failed / TimedOut| B[Send failure email]
     B --> C[Terminate: Failed]
@@ -206,6 +211,7 @@ When a non-critical action fails (e.g. posting a Teams notification), allow the 
 to continue rather than failing entirely.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Critical action] --> B[Non-critical action]
     B -->|Succeeded| C[Continue]
@@ -234,6 +240,7 @@ flowchart TD
 Detect when a flow run exceeds an expected duration and trigger an escalation.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Record start time] --> B[Main flow logic]
     B --> C[Calculate elapsed seconds]

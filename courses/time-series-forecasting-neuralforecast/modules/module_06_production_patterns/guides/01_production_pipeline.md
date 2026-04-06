@@ -120,6 +120,7 @@ Each stage is a method on `ForecastPipeline`.
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Raw Data Source] --> B[Ingest & Validate]
     B --> C[Preprocess\nnixtla format]
@@ -495,6 +496,7 @@ def retrain_expanding_window(
 **Comparison:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Sliding Window vs Expanding Window Retraining
     dateFormat  YYYY-MM-DD

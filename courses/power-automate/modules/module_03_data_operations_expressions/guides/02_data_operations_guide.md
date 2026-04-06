@@ -303,6 +303,7 @@ Inside Filter array expressions, `item()` refers to the current array element be
 A common pattern: filter first, then select to shape the result.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     raw["Raw array\n(all items)"] -->|Filter array\nStatus = Approved| filtered["Approved items\nonly"]
     filtered -->|Select\nName + Email only| shaped["Clean array\nfor email"]
@@ -444,6 +445,7 @@ If the parsed JSON contains an array, the array token appears in the panel. Use 
 ## Working with Arrays: Patterns Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     src["Source array"] --> filter["Filter array\n(subset by condition)"]
     filter --> select["Select\n(reshape each item)"]

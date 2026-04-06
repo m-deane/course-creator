@@ -168,7 +168,9 @@ The following implementation builds on the approach above:
 │  Region:      [ [Trigger Region]                    ]      │
 └─────────────────────────────────────────────────────────────┘
 ```
-</div<div class="callout-warning">
+</div>
+
+<div class="callout-warning">
 <strong>Warning:</strong> Excel tables auto-expand. Power Automate appends to the next available row — you do not need to specify a row number.
 </div>
 

@@ -260,8 +260,6 @@ def visualize_fitness_landscape():
     plt.show()
 ```
 
-</div>
-
 ### Landscape Properties
 
 | Property | Description | Impact on GA |

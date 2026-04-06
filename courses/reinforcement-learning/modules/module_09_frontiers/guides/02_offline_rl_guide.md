@@ -85,6 +85,7 @@ The $\max_{a'}$ operator queries Q-values at $(s', a')$ pairs that the behavior 
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     D["Dataset $\mathcal{D}$\n(behavior policy coverage)"] --> Train["Train Q-function\non $(s, a, r, s')$ tuples"]
     Train --> BU["Bellman backup\n$\max_{a'} Q(s', a')$"]
@@ -206,6 +207,7 @@ At inference, condition on a desired target return $\hat{R}_1 = R_{\text{target}
 The following implementation builds on the approach above:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RTG1["$\hat{R}_1$"] --> Tok1["Token 1"]
     S1["$s_1$"] --> Tok2["Token 2"]

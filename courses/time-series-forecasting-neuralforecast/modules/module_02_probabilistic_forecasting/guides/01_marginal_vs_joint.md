@@ -216,6 +216,7 @@ To see why, we need to understand the difference between **marginal** and **join
 ## Marginal vs Joint: The Core Distinction
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     subgraph Marginal["Marginal Distributions (what NHITS gives us)"]
         M1["P(Y_Mon ≤ q) = 0.80"]

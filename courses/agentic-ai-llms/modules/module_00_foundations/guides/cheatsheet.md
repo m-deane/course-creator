@@ -107,7 +107,8 @@ temperature=1.0
 ## Gotchas
 
 - **Context overflow** - Always count tokens before sending. Use `tiktoken` (OpenAI) or Anthropic's count API
-  <div class="code-window">
+
+<div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
@@ -115,38 +116,41 @@ temperature=1.0
 <div class="code-body">
 
 ```python
-  # Count tokens before sending
-  token_count = client.count_tokens(text)
-  if token_count > max_context:
-      # Truncate or summarize
-  ```
+# Count tokens before sending
+token_count = client.count_tokens(text)
+if token_count > max_context:
+    # Truncate or summarize
+```
 
 </div>
 </div>
 
 - **Output token limits** - Set `max_tokens` explicitly; models won't complete responses without it
-  ```python
-  # Bad: might truncate mid-sentence
-  max_tokens=100
 
-  # Good: allow full responses
-  max_tokens=2048
-  ```
+```python
+# Bad: might truncate mid-sentence
+max_tokens=100
+
+# Good: allow full responses
+max_tokens=2048
+```
 
 - **Rate limits** - Implement exponential backoff for production
-  ```python
-  from tenacity import retry, stop_after_attempt, wait_exponential
 
-  @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=10))
-  def call_api():
-      return client.messages.create(...)
-  ```
+```python
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=10))
+def call_api():
+    return client.messages.create(...)
+```
 
 - **API key security** - Never hardcode keys; use environment variables
-  ```python
-  import os
-  api_key = os.getenv("ANTHROPIC_API_KEY")
-  ```
+
+```python
+import os
+api_key = os.getenv("ANTHROPIC_API_KEY")
+```
 
 - **Tokenization differences** - Each model uses different tokenizers; always use the correct counter
   - Claude: Anthropic API token counter
@@ -154,8 +158,9 @@ temperature=1.0
   - Llama: Model-specific tokenizer
 
 - **Billing surprises** - Input + output tokens both count; monitor usage
-  ```python
-  usage = message.usage
-  cost = (usage.input_tokens * 0.000003) + (usage.output_tokens * 0.000015)
-  print(f"Request cost: ${cost:.4f}")
-  ```
+
+```python
+usage = message.usage
+cost = (usage.input_tokens * 0.000003) + (usage.output_tokens * 0.000015)
+print(f"Request cost: ${cost:.4f}")
+```

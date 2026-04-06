@@ -340,12 +340,6 @@ with pm.Model() as covariate_model:
 <span class="filename">example.py</span>
 </div>
 <div class="code-body">
-<div class="callout-warning">
-
-<strong>Warning:</strong> def forecast_gp(trace, model, X_obs, X_new, n_samples=500):
-
-</div>
-
 
 ```python
 # After fitting GP model

@@ -1,17 +1,40 @@
 # Project 1: Personal Knowledge Assistant
 
-**Build a chatbot that answers questions about YOUR documents.**
+> **Time:** 2-3 hours | **Difficulty:** Beginner | **Skills:** RAG, ChromaDB, CLI tools
 
-## What You'll Build
+<span class="badge mint">Beginner</span> <span class="badge amber">~2-3 hours</span> <span class="badge blue">Portfolio Project</span>
 
-A CLI tool that:
+<div class="callout-key">
+
+**Key Concept Summary:** This project puts the RAG pipeline into practice. You will build a CLI tool that indexes your own documents, answers questions about them, and cites which document each answer came from. Every component -- chunking, embedding, retrieval, and generation -- maps directly to the concepts in the RAG Pipeline visual guide.
+
+</div>
+
+## What You Will Build
+
+A command-line tool that:
 1. Indexes your documents (PDFs, markdown, text files)
-2. Answers questions about them
+2. Answers questions about them using RAG
 3. Cites which document the answer came from
 
-## Time: 2-3 hours
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
+flowchart LR
+    A[Your Documents] --> B[Chunk & Embed]
+    B --> C[ChromaDB]
+    D[Your Question] --> E[Search]
+    C --> E
+    E --> F[Claude + Context]
+    F --> G[Answer + Citations]
+```
 
 ## Demo
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">terminal</span>
+</div>
 
 ```bash
 $ python assistant.py --add ~/Documents/notes/
@@ -26,12 +49,19 @@ the original function." You included examples of @property and @staticmethod.
 Sources: python_notes.md, advanced_python.md
 ```
 
-## What You'll Learn
+</div>
 
-- RAG pipeline implementation
-- Document chunking strategies
-- Vector database usage
-- Building CLI tools
+## What You Will Learn
+
+<div class="flow">
+<div class="flow-step mint">RAG pipeline</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Document chunking</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Vector database</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">CLI tools</div>
+</div>
 
 ## Getting Started
 
@@ -40,7 +70,19 @@ Sources: python_notes.md, advanced_python.md
 3. Test with your own documents
 4. Deploy it (optional)
 
+<div class="callout-insight">
+
+**Insight:** Start with the simplest possible chunking (split by character count with overlap) and the simplest possible retrieval (top-3 results). Get the full pipeline working end-to-end first. Only then optimize chunk size, overlap, top-k, and prompting. Premature optimization of individual components wastes time when the pipeline is not yet connected.
+
+</div>
+
 ## Starter Code
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">assistant.py</span>
+</div>
 
 ```python
 """
@@ -110,16 +152,26 @@ if __name__ == "__main__":
     main()
 ```
 
+</div>
+
+<div class="callout-warning">
+
+**Warning:** The starter code uses `chromadb.PersistentClient(...)` which saves data to disk. Make sure you choose a directory that will persist between runs. If you use `chromadb.Client()` (in-memory), your index will vanish when the script exits.
+
+</div>
+
 ## Solution
 
-Once you've tried it yourself, check [solution.py](solution.py) for a reference implementation.
+Once you have tried it yourself, check [solution.py](solution.py) for a reference implementation.
 
 ## Extend It (Optional)
 
-- Add a web interface with Streamlit
-- Support PDF parsing with PyPDF2
-- Add conversation memory
-- Deploy to Hugging Face Spaces
+| Extension | Difficulty | What You Learn |
+|-----------|-----------|----------------|
+| Add a Streamlit web interface | Medium | UI development |
+| Support PDF parsing with PyPDF2 | Easy | Document processing |
+| Add conversation memory | Medium | Agent memory patterns |
+| Deploy to Hugging Face Spaces | Easy | Deployment |
 
 ## Share Your Work
 
@@ -127,3 +179,15 @@ Built something cool? Share it:
 - Add to your GitHub portfolio
 - Post on LinkedIn/Twitter
 - Submit a PR to add your extension to this repo
+
+---
+
+<a class="link-card" href="../../concepts/visual_guides/rag_pipeline.md">
+  <div class="link-card-title">RAG Pipeline Guide</div>
+  <div class="link-card-description">Review the RAG concepts before starting -- chunking, embedding, retrieval, and generation.</div>
+</a>
+
+<a class="link-card" href="../../templates/rag_template.py">
+  <div class="link-card-title">RAG Template</div>
+  <div class="link-card-description">Production-ready scaffold if you want to skip the TODOs and start from working code.</div>
+</a>

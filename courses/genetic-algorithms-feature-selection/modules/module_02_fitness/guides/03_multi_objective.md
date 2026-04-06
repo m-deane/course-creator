@@ -6,6 +6,12 @@
 
 Multi-objective feature selection explicitly optimizes multiple conflicting goals simultaneously (e.g., prediction accuracy vs. feature count vs. computational cost) rather than combining them into a single weighted objective. This produces a Pareto frontier of non-dominated solutions, giving decision-makers flexibility to choose the final tradeoff.
 
+<div class="callout-key">
+
+**Key Concept Summary:** Instead of collapsing multiple goals into a single number (weighted sum), multi-objective optimization finds the *set of all best tradeoffs* -- the Pareto front. This lets you defer the "accuracy vs. simplicity" decision until after the GA runs, when you can inspect the options and choose based on deployment constraints.
+
+</div>
+
 <div class="callout-insight">
 There is no single "best" feature subset—the optimal choice depends on which objectives you prioritize. Multi-objective optimization acknowledges this reality by finding all non-dominated solutions: subsets where improving one objective requires sacrificing another. This transforms feature selection from finding one answer to exploring tradeoff curves.
 </div>
@@ -14,41 +20,9 @@ There is no single "best" feature subset—the optimal choice depends on which o
 
 ![Fitness Landscape](./fitness_landscape.svg)
 
-## Formal Definition
-
-### Multi-Objective Optimization Problem
-
-Find feature subsets that minimize multiple objectives:
-
-$$\min_{s \in \{0,1\}^p} \mathbf{F}(s) = \begin{bmatrix} f_1(s) \\ f_2(s) \\ \vdots \\ f_m(s) \end{bmatrix}$$
-
-Common objectives for feature selection:
-- $f_1(s)$: Prediction error (MSE, MAE, etc.)
-- $f_2(s)$: Number of features $||s||_0$
-- $f_3(s)$: Computational cost
-- $f_4(s)$: Feature correlation (diversity)
-- $f_5(s)$: Acquisition cost
-
-### Pareto Dominance
-
-Solution $s_a$ **dominates** $s_b$ (written $s_a \prec s_b$) if:
-
-$$\begin{cases}
-f_i(s_a) \leq f_i(s_b) & \forall i \in \{1, \ldots, m\} \\
-f_j(s_a) < f_j(s_b) & \exists j \in \{1, \ldots, m\}
-\end{cases}$$
-
-In words: $s_a$ is at least as good on all objectives and strictly better on at least one.
-
-### Pareto Optimal Set
-
-The **Pareto optimal set** (Pareto front) is:
-
-$$\mathcal{P} = \{s \in S : \nexists s' \in S \text{ such that } s' \prec s\}$$
-
-These are all non-dominated solutions—the best possible tradeoffs.
-
 ## Intuitive Explanation
+
+Before diving into formal definitions, build intuition for what "Pareto optimality" means with a concrete analogy.
 
 Imagine shopping for a laptop. You care about:
 - **Performance** (higher is better)
@@ -81,6 +55,44 @@ In feature selection:
 - **Solution C**: 88% accuracy, 5 features (lower accuracy, very sparse)
 
 All three are valid choices depending on whether you prioritize accuracy or simplicity.
+
+Now let's formalize these ideas.
+
+## Formal Definition
+
+### Multi-Objective Optimization Problem
+
+Find feature subsets that minimize multiple objectives:
+
+$$\min_{s \in \{0,1\}^p} \mathbf{F}(s) = \begin{bmatrix} f_1(s) \\ f_2(s) \\ \vdots \\ f_m(s) \end{bmatrix}$$
+
+Common objectives for feature selection:
+- $f_1(s)$: Prediction error (MSE, MAE, etc.)
+- $f_2(s)$: Number of features $||s||_0$
+- $f_3(s)$: Computational cost
+- $f_4(s)$: Feature correlation (diversity)
+- $f_5(s)$: Acquisition cost
+
+### Pareto Dominance
+
+Returning to the laptop analogy: laptop A "dominates" laptop D if A is at least as good on every criterion and strictly better on at least one. Formally:
+
+Solution $s_a$ **dominates** $s_b$ (written $s_a \prec s_b$) if:
+
+$$\begin{cases}
+f_i(s_a) \leq f_i(s_b) & \forall i \in \{1, \ldots, m\} \\
+f_j(s_a) < f_j(s_b) & \exists j \in \{1, \ldots, m\}
+\end{cases}$$
+
+In words: $s_a$ is at least as good on all objectives and strictly better on at least one.
+
+### Pareto Optimal Set
+
+The **Pareto optimal set** (Pareto front) is:
+
+$$\mathcal{P} = \{s \in S : \nexists s' \in S \text{ such that } s' \prec s\}$$
+
+These are all non-dominated solutions—the best possible tradeoffs.
 
 ## Mathematical Formulation
 
@@ -671,7 +683,15 @@ print("Pareto front indices:", pareto)
 print("Pareto solutions:", [solutions[i] for i in pareto])
 ```
 
-### Problem 3: Knee Point Detection
+### Problem 3: Conceptual — Weighted Sum vs. True Multi-Objective
+
+**Task:** Explain why converting a multi-objective problem to a weighted sum (e.g., `0.7 * error + 0.3 * feature_count`) can miss good solutions. Draw or describe a scenario where the Pareto front is concave and the weighted sum approach cannot find solutions in the concave region. What practical consequence does this have for feature selection?
+
+### Problem 4: Conceptual — When Multi-Objective is Overkill
+
+**Task:** Describe a feature selection scenario where single-objective fitness with a parsimony penalty is sufficient and multi-objective optimization adds unnecessary complexity. What characteristics of the problem make multi-objective unnecessary?
+
+### Problem 5: Knee Point Detection
 
 **Task:** Implement the "knee point" method to find the best balanced solution:
 

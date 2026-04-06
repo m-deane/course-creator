@@ -1,6 +1,6 @@
 # Time Series Considerations for GA Feature Selection
 
-> **Reading time:** ~5 min | **Module:** 3 — Time Series | **Prerequisites:** Module 2 Fitness Functions
+> **Reading time:** ~8 min | **Module:** 3 — Time Series | **Prerequisites:** Module 2 Fitness Functions
 
 ## The Time Series Challenge
 
@@ -11,9 +11,31 @@ Time series feature selection has unique challenges:
 3. **Non-stationarity** - feature relationships may change over time
 4. **Limited data** - can't simply collect more samples
 
+<div class="callout-key">
+
+**Key Concept Summary:** Time series feature selection differs fundamentally from cross-sectional feature selection because observations are ordered in time. This ordering creates three problems that do not exist in standard ML: information can leak from future to past, autocorrelation inflates apparent predictive power, and non-stationarity means features that are useful today may be useless tomorrow.
+
+</div>
+
 <div class="callout-insight">
 
 💡 **Key Insight:** The single most important rule in time series feature selection: never let future information leak into training. Standard k-fold cross-validation violates this by design. Always use walk-forward or temporal validation strategies.
+
+</div>
+
+## Why Time Series Feature Selection is Different
+
+If you have built GA feature selection for cross-sectional data (e.g., predicting customer churn from demographics), you might assume the same approach works for time series. It does not. Here is why, and what changes.
+
+**1. Temporal ordering matters.** In cross-sectional data, shuffling rows does not change the problem. In time series, shuffling destroys the temporal structure and creates information leakage. Every component of the GA pipeline -- fitness evaluation, cross-validation, even population initialization if you use domain knowledge about recent patterns -- must respect the arrow of time. Features that appear at time $t$ cannot be used to predict targets at time $t-1$.
+
+**2. Features can leak future information.** A feature like "next month's average temperature" is obviously cheating, but subtler leaks are common. A rolling 30-day average computed over the full dataset includes future data at every point. A technical indicator computed with look-ahead bias (e.g., a centered moving average) leaks information. The GA will enthusiastically select these features because they appear highly predictive -- but they are unavailable at prediction time. Always verify that every feature in your candidate set uses only past data as of each prediction point.
+
+**3. Stationarity affects which features are useful long-term.** A feature that strongly correlates with your target during a bull market may be uncorrelated during a recession. Non-stationary features create the illusion of predictive power during the training period but fail when the regime shifts. The GA, optimizing for in-sample fitness, will select features that capture the *current* regime rather than features with persistent predictive power. Stationarity testing and transformation (covered in Guide 03) address this directly.
+
+<div class="callout-warning">
+
+**Warning:** The danger is not that time series feature selection is slightly harder -- it is that applying cross-sectional methods to time series gives confidently wrong answers. Your GA will converge, your fitness scores will look good, and your model will fail in production. The failure mode is silent and systematic.
 
 </div>
 
@@ -423,6 +445,17 @@ def ga_with_lag_features(X, y, feature_names, max_lag=5):
 
 5. **Multi-horizon testing** ensures robust feature selection
 </div>
+
+## Practice Problems
+
+### Problem 1: Conceptual — Identifying Look-Ahead Bias
+
+**Task:** Your colleague creates a feature called "30-day rolling z-score" by computing the z-score of today's price relative to the past 30 days. They compute it using `pandas.rolling(30).apply(zscore)` on the full dataset before splitting into train/test. Explain whether this feature has look-ahead bias and why. How would you fix it?
+
+### Problem 2: Conceptual — Cross-Sectional vs. Time Series
+
+**Task:** Explain why a GA that selects the best features on customer churn data (cross-sectional) using standard 5-fold CV will produce reliable results, but the identical GA applied to daily electricity demand data (time series) using 5-fold CV will produce unreliable results. What specific property of the electricity data causes the failure?
+
 ---
 
 **Next:** [Companion Slides](./01_timeseries_considerations_slides.md) | [Notebook](../notebooks/01_walk_forward_ga.ipynb)

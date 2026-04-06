@@ -1,10 +1,16 @@
 # Stationarity Requirements for GA Feature Selection
 
-> **Reading time:** ~15 min | **Module:** 3 — Time Series | **Prerequisites:** 02 Lag Features
+> **Reading time:** ~18 min | **Module:** 3 — Time Series | **Prerequisites:** 02 Lag Features
 
 ## In Brief
 
 Stationarity means that a time series' statistical properties (mean, variance, autocorrelation) do not change over time. For genetic algorithm feature selection, non-stationary data can cause selected features to perform well during training but fail on future data when the underlying relationships shift.
+
+<div class="callout-key">
+
+**Key Concept Summary:** Stationarity determines whether the patterns your GA discovers will persist into the future. A GA trained on non-stationary data selects features that describe *what has been happening recently* (spurious trends, temporary correlations). A GA trained on stationarized data selects features with *persistent predictive power* that generalizes across time periods and market regimes.
+
+</div>
 
 <div class="callout-insight">
 Feature selection on non-stationary data finds spurious relationships that are time-specific rather than persistent. Differencing, detrending, or feature engineering transforms can induce stationarity, allowing GA to discover truly robust feature combinations that generalize to future time periods.
@@ -64,6 +70,60 @@ Imagine trying to predict house prices using a dataset spanning 1970-2020. If yo
 3. **Seasonal adjustment**: Remove seasonal patterns
 4. **Log transformation**: Stabilize variance
 5. **Feature engineering**: Create ratio/growth rate features that are naturally stationary
+
+## Why Stationarity Matters for GA Feature Selection Specifically
+
+Stationarity is important for all time series modeling, but it creates a *specific and acute* problem for GA feature selection. The GA's optimization process amplifies the damage from non-stationarity in a way that a single model fit does not.
+
+**Worked example -- GA on non-stationary vs. stationarized data:**
+
+Suppose you have 50 candidate features for predicting monthly commodity returns. Five of these features have genuine, persistent predictive power (e.g., inventory-to-consumption ratios, carry signals). Ten others are non-stationary (e.g., raw price levels, cumulative volume, GDP in dollars) and happen to correlate with the target during your training period because both share an upward trend.
+
+- **GA on non-stationary data:** The GA discovers that the 10 trending features produce excellent fitness scores during training -- the shared trend makes them appear strongly predictive. The GA converges on a chromosome that selects mostly trending features and only 1-2 of the genuinely predictive ones. When deployed on new data where the trend reverses (e.g., a recession), the model's accuracy collapses.
+
+- **GA on stationarized data:** After differencing the features and the target, the shared trend is removed. The trending features now appear as what they are -- noise with no predictive content for differenced returns. The GA converges on the 5 genuinely predictive features, and the model generalizes across different market regimes.
+
+<div class="callout-insight">
+
+The GA is an optimization machine -- it will find and exploit any shortcut to high fitness, including spurious correlations from shared trends. Stationarity testing removes these shortcuts, forcing the GA to discover genuine predictive relationships.
+
+</div>
+
+**The compounding problem:** Unlike fitting a single model, the GA evaluates thousands of feature combinations across many generations. Each generation, it preferentially selects and breeds chromosomes that exploit the spurious trend correlations. By generation 50, the population has converged on feature sets dominated by non-stationary features -- the GA has efficiently optimized for the wrong thing. A single Lasso fit might also select some trending features, but the GA's iterative search amplifies the problem because it has many more opportunities to find and lock onto spurious patterns.
+
+## The Embargo/Gap: How Autocorrelation Leaks and How to Prevent It
+
+Even with walk-forward validation, a subtle form of information leakage persists when time series data has strong autocorrelation. Understanding this mechanism is essential for proper GA fitness evaluation.
+
+**How autocorrelation leaks information:** When the last training observation is at time $t$ and the first test observation is at time $t+1$, autocorrelation means these two observations are highly correlated. The model effectively "knows" the test target because the training target at time $t$ is nearly the same value (for AR(1) with coefficient 0.95, the correlation between consecutive observations is 0.95). This is not the same as future leakage -- the model does not train on future data -- but it creates unrealistically easy test predictions at the boundary.
+
+```
+Train:  ─────────────[last training obs]
+Test:                                    [first test obs]─────────
+                                    ^
+                                    |
+                        These two are highly correlated
+                        (autocorrelation = 0.95)
+```
+
+**How the gap (embargo) prevents it:** Adding a gap of $g$ observations between training and test sets means the nearest test observation is $g$ steps away from the training boundary. The autocorrelation decays with distance: for an AR(1) process, correlation at lag $g$ is $\phi^g$. With $\phi = 0.95$ and $g = 10$, the correlation drops from 0.95 to $0.95^{10} = 0.60$. With $g = 50$, it drops to $0.95^{50} = 0.08$ -- essentially independent.
+
+```
+Train:  ─────────────[last]
+Gap:                       [skip g observations]
+Test:                                            [first test]─────
+                                    ^
+                                    |
+                        Autocorrelation has decayed
+```
+
+**Rule of thumb for gap size:** Set the gap to the lag where the ACF drops below the significance threshold (typically $1.96/\sqrt{n}$). For daily financial data with autocorrelation half-life of 5 days, a gap of 5-10 trading days is standard. For monthly macroeconomic data with slow decay, gaps of 3-6 months may be needed.
+
+<div class="callout-warning">
+
+**Warning:** The gap trades information leakage for fewer test samples. A gap of 50 on a 500-sample dataset with 5 walk-forward splits wastes 250 observations. Balance the gap size against available data -- use the minimum gap that reduces autocorrelation below the significance threshold.
+
+</div>
 
 ## Code Implementation
 
@@ -988,6 +1048,14 @@ def optimal_differencing_strategy(
     """
     pass
 ```
+
+### Problem 6: Conceptual — Spurious Feature Selection
+
+**Task:** You run a GA on raw (non-stationary) commodity price data and it selects "US Dollar Index level" and "Cumulative global production" as the top features with fitness 0.92. You then difference all features and the target, re-run the GA, and it selects "change in inventory-to-use ratio" and "change in shipping rates" with fitness 0.58. Explain why the first GA found higher fitness but worse features. Which set of features would you deploy in production, and why?
+
+### Problem 7: Conceptual — Gap Size Tradeoff
+
+**Task:** Your daily financial time series has an ACF that drops below the significance threshold at lag 15. You have 750 data points and want to run walk-forward validation with 5 splits. Explain the tradeoff you face in setting the gap size. What happens if you use gap=0? What happens if you use gap=50? What gap would you recommend and why?
 
 ## Further Reading
 

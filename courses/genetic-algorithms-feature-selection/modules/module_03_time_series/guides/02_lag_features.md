@@ -1,10 +1,16 @@
 # Lag Feature Selection for Time Series
 
-> **Reading time:** ~15 min | **Module:** 3 — Time Series | **Prerequisites:** 01 Walk-Forward Validation
+> **Reading time:** ~18 min | **Module:** 3 — Time Series | **Prerequisites:** 01 Walk-Forward Validation
 
 ## In Brief
 
 Lag features capture temporal dependencies by including past values of variables as predictors. Genetic algorithms for lag feature selection must balance autocorrelation benefits against multicollinearity risks while respecting the temporal ordering constraint that predictions cannot use future information.
+
+<div class="callout-key">
+
+**Key Concept Summary:** Lag features are the bridge between raw time series and supervised learning: they encode "what happened K steps ago" as predictor variables. ACF and PACF analysis identifies which lags carry predictive information, and the GA then searches for the optimal *combination* of lags -- something statistical tests alone cannot determine because they evaluate lags independently.
+
+</div>
 
 <div class="callout-insight">
 Not all lags are equally informative. The optimal lag set depends on the autocorrelation structure (ACF/PACF), seasonal patterns, and forecast horizon. GA feature selection can automatically discover these patterns, but must penalize redundant highly-correlated lags to avoid overfitting and numerical instability.
@@ -430,6 +436,46 @@ def remove_redundant_lags(
 
     return X_reduced
 ```
+
+</div>
+
+## From ACF/PACF to GA Configuration
+
+The statistical analysis above (ACF, PACF, VIF) produces useful diagnostics, but translating those results into GA configuration requires deliberate decisions. This section bridges the gap between "I ran ACF/PACF" and "I configured my GA."
+
+### 1. PACF Significant Lags Inform `max_lag`
+
+The PACF identifies which specific lags contribute new information beyond shorter lags. If PACF is significant at lags 1, 2, 7, and 50 but insignificant beyond lag 50, set `max_lag = 50`. There is no value in letting the GA search over lags 51-200 -- the PACF tells you those lags add no direct predictive information. This reduces the chromosome length from 200 bits to 50 bits, making the GA search dramatically more efficient.
+
+<div class="callout-insight">
+
+Think of PACF as a pre-filter: it tells the GA which lags are *candidates*. The GA then determines which *combinations* of those candidates work best together -- something PACF cannot answer because it tests each lag in isolation.
+
+</div>
+
+### 2. ACF Decay Rate Informs Population Seeding
+
+The ACF decay pattern reveals the series' memory structure:
+
+- **Slow ACF decay** (significant out to lag 30+): The series has long memory. Seed the initial population with chromosomes that include a mix of short, medium, and long lags. A random initialization might miss the long lags entirely if the chromosome is sparse.
+- **Fast ACF decay** (insignificant by lag 5): The series has short memory. Most useful information is in the first few lags. You can use smaller chromosomes and standard random initialization will work fine.
+- **ACF with periodic spikes** (e.g., significant at lags 7, 14, 21): The series has seasonality. Seed some individuals with seasonal lag patterns (e.g., every 7th lag) to give the GA a head start on discovering periodic structure.
+
+### 3. Lag Groups Guide Mutation Operator Design
+
+Consecutive lags (lag-1, lag-2, lag-3) are highly correlated with each other. If the GA flips one bit at a time (standard bit-flip mutation), it frequently creates chromosomes with redundant adjacent lags -- wasting capacity without improving prediction.
+
+Design lag-group-aware mutation that operates on meaningful clusters:
+
+- **Recent lags group**: lags 1-5 (short-term dynamics)
+- **Medium-term group**: lags 6-20 (weekly/business-cycle patterns)
+- **Seasonal lag group**: lags at the seasonal period (e.g., 7, 14, 21 for daily data with weekly seasonality)
+
+The `lag_aware_mutation` function in the code below implements this idea. When it mutates, it flips an entire group on or off, maintaining coherent lag patterns rather than creating random bit noise.
+
+<div class="callout-warning">
+
+**Warning:** Do not skip ACF/PACF analysis and go straight to the GA. Without it, you are asking the GA to search blindly over potentially hundreds of lag features. ACF/PACF analysis takes 5 minutes and can reduce your search space by 10x.
 
 </div>
 
@@ -915,6 +961,14 @@ def analyze_lag_importance(
     """
     pass
 ```
+
+### Problem 6: Conceptual — Why PACF, Not ACF, for Lag Selection
+
+**Task:** Your PACF shows significant values at lags 1, 2, and 7. Your ACF shows significant values at lags 1 through 12. Explain why you should use the PACF results (not the ACF) to inform your GA's candidate lag set. What would go wrong if you included all 12 ACF-significant lags as candidates? How does this relate to multicollinearity?
+
+### Problem 7: Conceptual — Lag Groups and Domain Knowledge
+
+**Task:** You are predicting daily retail sales. You know the business has strong weekly patterns (weekday vs. weekend) and monthly patterns (payday effects). Describe how you would design lag groups for the GA mutation operator. What specific lags would go in each group, and why would group-aware mutation outperform standard bit-flip mutation for this problem?
 
 ## Further Reading
 

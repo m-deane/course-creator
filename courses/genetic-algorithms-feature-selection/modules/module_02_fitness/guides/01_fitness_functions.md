@@ -1,6 +1,6 @@
 # Fitness Function Design
 
-> **Reading time:** ~5 min | **Module:** 2 — Fitness Functions | **Prerequisites:** Module 1 GA Fundamentals
+> **Reading time:** ~8 min | **Module:** 2 — Fitness Functions | **Prerequisites:** Module 1 GA Fundamentals
 
 ## The Critical Component
 
@@ -8,6 +8,11 @@ The fitness function determines GA success. For feature selection:
 
 $$\text{fitness}(\mathbf{x}) = \text{model\_error}(\mathbf{x}) + \lambda \cdot \text{complexity}(\mathbf{x})$$
 
+<div class="callout-key">
+
+**Key Concept Summary:** The fitness function is the objective your GA optimizes -- it defines what "good" means for a feature subset. A poorly chosen fitness function will reliably find the wrong features, no matter how sophisticated your GA operators are. Designing the fitness function is the single highest-leverage decision in any GA feature selection project.
+
+</div>
 
 ![Fitness Landscape](./fitness_landscape.svg)
 
@@ -21,6 +26,45 @@ $$\text{fitness}(\mathbf{x}) = \text{model\_error}(\mathbf{x}) + \lambda \cdot \
 <div class="flow-step lavender">CV Error</div>
 <div class="flow-arrow">→</div>
 <div class="flow-step mint">Fitness</div>
+</div>
+
+## Designing Your First Fitness Function
+
+Before looking at implementations, understand the *design process*. A fitness function is not something you copy from a template -- it encodes your problem's priorities. Follow these five steps:
+
+**Step 1: List your objectives.** What does "good" mean for your specific problem? Common objectives include prediction accuracy, number of features (simplicity), computational cost at inference time, feature acquisition cost, and model interpretability. Write them down explicitly before writing any code.
+
+**Step 2: Choose an evaluation metric for each objective.** For prediction accuracy, will you use MSE, MAE, R-squared, AUC, or log-loss? The metric must align with your deployment criteria. If your production system will be evaluated on MAE, do not optimize for MSE -- the GA will find features that minimize MSE, which may not minimize MAE.
+
+**Step 3: Decide between single-objective and multi-objective.** If you have one dominant objective (e.g., accuracy) with secondary concerns (e.g., fewer features), a single-objective fitness with penalty terms works well. If you have two or more genuinely conflicting objectives where you do not know the right tradeoff in advance, use multi-objective optimization (see Guide 03) to explore the Pareto front and choose later.
+
+**Step 4: Set penalty weights via sensitivity analysis.** If using a single-objective fitness with penalties, the penalty weight lambda controls the accuracy-complexity tradeoff. Do not guess -- run the GA at several lambda values (e.g., 0.001, 0.01, 0.1) and observe how many features get selected and how accuracy changes. Pick the lambda where increasing it further causes disproportionate accuracy loss (the "knee" of the tradeoff curve).
+
+**Step 5: Validate that fitness correlates with out-of-sample performance.** The ultimate test: do chromosomes with better fitness scores actually perform better on held-out data the GA never saw? If not, your fitness function is overfitting to the cross-validation scheme. Split your data into a GA-training portion (used during evolution) and a final holdout (used only once, after the GA finishes), and verify the correlation.
+
+<div class="callout-insight">
+
+A common mistake is jumping straight to code. The five steps above take 15 minutes of thinking and save hours of debugging. A fitness function that optimizes the wrong objective will produce confidently wrong results -- the GA will converge efficiently toward features you do not actually want.
+
+</div>
+
+## Choosing Your Fitness Function
+
+The table below summarizes the six fitness function approaches in this guide. Use it to select the right one for your problem before reading the implementations.
+
+| Approach | When to Use | Computational Cost | Overfitting Risk | Best For |
+|---|---|---|---|---|
+| **CV Error** | General-purpose starting point; i.i.d. data | Medium | Medium | Cross-sectional data |
+| **Multi-Objective** | Multiple conflicting goals; unknown tradeoffs | Medium | Low | Cross-sectional or time series |
+| **Walk-Forward** | Time series data; temporal ordering matters | High | Low | Time series |
+| **Expanding Window** | Time series with stable relationships | High | Low | Time series (stationary) |
+| **Nested CV** | Risk of selection bias; small datasets | High | Low | Cross-sectional (small n) |
+| **Regularized** | High-dimensional data; want smooth fitness landscape | Low | Medium | Cross-sectional (large p) |
+
+<div class="callout-warning">
+
+**Warning:** Using standard k-fold CV fitness on time series data will produce inflated accuracy estimates. Always use walk-forward or expanding window for temporally ordered data. See Module 3 for details on the information leakage mechanism.
+
 </div>
 
 ## Basic Fitness Functions
@@ -482,6 +526,21 @@ class CachedFitnessEvaluator:
 
 5. **Cache evaluations** - same chromosome should return same fitness
 </div>
+
+## Practice Problems
+
+### Problem 1: Fitness Function Design Exercise
+
+**Task:** You are building a credit scoring model. Your objectives are: (a) maximize AUC, (b) minimize number of features (regulatory requirement for explainability), (c) minimize feature acquisition cost (some features require a paid API call). Walk through the five-step design process and decide whether to use single-objective or multi-objective fitness. Justify your choice.
+
+### Problem 2: Conceptual — Explain the Danger of Training-Set Fitness
+
+**Task:** Explain in your own words why evaluating fitness on the training set (without cross-validation) causes the GA to select all features. What mechanism drives this? How does cross-validation break this mechanism?
+
+### Problem 3: Conceptual — Lambda Sensitivity
+
+**Task:** A colleague sets `lambda = 0.5` for the parsimony penalty and finds the GA selects only 1 feature out of 100. Another colleague sets `lambda = 0.0001` and finds the GA selects 95 features. Explain what is happening in each case. What would you recommend as a process for finding a good lambda value?
+
 ---
 
 **Next:** [Companion Slides](./01_fitness_functions_slides.md) | [Notebook](../notebooks/01_fitness_functions.ipynb)

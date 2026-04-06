@@ -1,11 +1,17 @@
 # Cross-Validation Based Fitness Functions
 
-> **Reading time:** ~7 min | **Module:** 2 — Fitness Functions | **Prerequisites:** 01 Fitness Functions
+> **Reading time:** ~10 min | **Module:** 2 — Fitness Functions | **Prerequisites:** 01 Fitness Functions
 
 ## Introduction
 
 <div class="callout-key">
 <strong>Key Takeaway:</strong> The fitness function is the single most impactful component of your GA. A well-designed fitness function with proper cross-validation will find good features even with suboptimal operators. A poorly designed one will find bad features regardless of how sophisticated your GA is.
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** Cross-validation fitness evaluates feature subsets by repeatedly training and testing on different data splits, providing a robust estimate of how well the selected features will generalize to unseen data. The choice of CV strategy (standard k-fold vs. time series split) must match your data's structure -- using the wrong one silently inflates your performance estimates.
+
 </div>
 
 For feature selection, fitness must evaluate how well selected features predict the target. Cross-validation provides robust estimation of generalization performance.
@@ -171,7 +177,48 @@ for chrom in test_chromosomes:
 
 </div>
 
+### Lambda Calibration Guide
+
+The `penalty_weight` (lambda) parameter in `CVFitnessEvaluator` controls how aggressively the GA penalizes feature count. Choosing lambda correctly is critical -- too small and the GA selects nearly all features (overfitting); too large and it selects too few (underfitting).
+
+**Calibration process:**
+
+1. Run the GA with several lambda values and record the number of selected features and the raw CV score (before penalty).
+2. Look for the "knee" -- the lambda value where increasing it further causes disproportionate accuracy loss.
+3. Validate your choice on a holdout set the GA never saw during evolution.
+
+The table below shows a typical calibration run on a dataset with 50 candidate features and 500 samples, using Ridge regression with 5-fold CV:
+
+| Lambda | Avg Features Selected | CV MSE (raw) | Notes |
+|---|---|---|---|
+| 0.001 | 45 | 0.42 | Nearly all features -- minimal penalty effect |
+| 0.01 | 20 | 0.44 | Moderate parsimony -- good starting point |
+| 0.1 | 5 | 0.58 | Aggressive pruning -- accuracy starting to degrade |
+| 1.0 | 1 | 1.25 | Over-penalized -- only best single feature survives |
+
+<div class="callout-insight">
+
+Start with `lambda = 0.01` as a default. If the GA still selects more than half the features, double lambda. If it selects fewer than 5% of features, halve lambda. Two to three iterations of this process usually converge on a good value. The exact numbers depend on your dataset -- the table above illustrates the pattern, not universal constants.
+
+</div>
+
+**Why lambda matters for the GA search:** Lambda shapes the fitness landscape. A very small lambda creates a nearly flat landscape where feature count barely matters -- the GA explores randomly. A well-calibrated lambda creates a gradient that rewards removing uninformative features while preserving informative ones, guiding the GA toward sparse, high-quality solutions.
+
 ## Time Series Cross-Validation
+
+### When to Switch from Standard CV to Time Series CV
+
+The `CVFitnessEvaluator` above uses standard k-fold cross-validation, which randomly shuffles data into folds. This is correct for cross-sectional data (e.g., predicting customer churn from demographic features) where observations are independent.
+
+**Switch to `TimeSeriesFitnessEvaluator` when your data has temporal ordering** -- financial prices, sensor readings, weather data, or any sequence where the order matters. The reason is information leakage: standard k-fold randomly assigns observations to train and test folds, so a fold's training set will contain data points from *after* its test set. The model learns patterns from the future and uses them to "predict" the past, producing inflated accuracy estimates.
+
+<div class="callout-warning">
+
+**Warning:** The leakage is invisible in your metrics. Standard CV will report, say, R-squared of 0.85 on time series data. Walk-forward validation on the same data might report 0.45. The 0.85 is a fiction -- it reflects the model's ability to interpolate, not to forecast. If you deploy a model validated with standard CV on time series data, production performance will match the walk-forward number, not the k-fold number.
+
+</div>
+
+**What goes wrong concretely:** Suppose you have daily stock returns from 2020-2024. Standard 5-fold CV might put January 2024 data in the training set and July 2023 data in the test set. The model sees price movements from 2024 when trying to predict 2023 -- it effectively has a crystal ball. Features that correlate with future-to-past patterns (e.g., lagged returns, momentum indicators) will appear far more predictive than they actually are, and the GA will select them.
 
 For financial applications, use time-aware CV:
 
@@ -571,6 +618,17 @@ for k, v in stats.items():
 
 6. **Regularization** can be incorporated into fitness for smoother landscapes
 </div>
+
+## Practice Problems
+
+### Problem 1: Conceptual — Why Caching Can Fail
+
+**Task:** Explain why caching fitness values is safe when using `KFold(shuffle=False)` but dangerous when using `KFold(shuffle=True, random_state=None)`. What happens to the GA's behavior if two evaluations of the same chromosome return different fitness values?
+
+### Problem 2: Conceptual — Lambda Tradeoff
+
+**Task:** You run your GA with `penalty_weight=0.01` and it selects 30 features with CV MSE of 0.50. You increase to `penalty_weight=0.05` and it selects 12 features with CV MSE of 0.52. You increase to `penalty_weight=0.10` and it selects 4 features with CV MSE of 0.80. Which lambda value would you choose and why? What does the jump from 0.52 to 0.80 tell you about the feature set?
+
 ---
 
 **Next:** [Companion Slides](./02_cross_validation_fitness_slides.md) | [Notebook](../notebooks/01_fitness_functions.ipynb)

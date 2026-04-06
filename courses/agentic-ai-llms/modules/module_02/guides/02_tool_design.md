@@ -1,10 +1,14 @@
 # Tool Design: Principles for Effective Tool Schemas
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 2 — Tool Use & Function Calling | **Prerequisites:** Module 2 — Tool Fundamentals
 
 Well-designed tools are the difference between agents that work reliably and agents that confuse, fail, or misbehave. This guide covers principles for creating tools that LLMs can understand and use correctly.
 
-> 💡 **Key Insight:** **Your tool descriptions are prompts.** The LLM reads your tool name, description, and parameter definitions to decide when and how to use each tool. Invest the same care in tool design as you would in system prompts.
+<div class="callout-insight">
+
+**Insight:** Your tool descriptions are prompts. The LLM reads your tool name, description, and parameter definitions to decide when and how to use each tool. Invest the same care in tool design as you would in system prompts.
+
+</div>
 
 ---
 
@@ -13,6 +17,13 @@ Well-designed tools are the difference between agents that work reliably and age
 ### 1. Single Responsibility
 
 Each tool should do one thing well:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Bad: Tool does too many things
@@ -55,6 +66,9 @@ Each tool should do one thing well:
     }
 }
 ```
+
+</div>
+</div>
 
 ### 2. Clear Naming
 
@@ -201,6 +215,13 @@ Non-required parameters should have sensible defaults:
 
 Use enums and ranges to limit possible values:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "set_thermostat",
@@ -228,6 +249,9 @@ Use enums and ranges to limit possible values:
     }
 }
 ```
+
+</div>
+</div>
 
 ### Pattern 2: Nested Objects
 
@@ -350,6 +374,13 @@ Use `anyOf` or `oneOf` for mutually exclusive options:
 
 ### Group Related Tools
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Database tools
 database_tools = [
@@ -369,6 +400,9 @@ communication_tools = [
 # All tools for the agent
 all_tools = database_tools + communication_tools
 ```
+
+</div>
+</div>
 
 ### Progressive Tool Disclosure
 
@@ -405,6 +439,13 @@ More tools = more tokens + more confusion:
 ## Description Best Practices
 
 ### Template for Tool Descriptions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def create_tool_description(
@@ -451,6 +492,9 @@ search_tool = {
 }
 ```
 
+</div>
+</div>
+
 ---
 
 ## Validation and Error Prevention
@@ -458,6 +502,13 @@ search_tool = {
 ### Input Validation Patterns
 
 Build validation into your tool execution:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def execute_book_flight(origin: str, destination: str, departure_date: str, **kwargs):
@@ -491,6 +542,9 @@ def execute_book_flight(origin: str, destination: str, departure_date: str, **kw
 
     # Proceed with booking...
 ```
+
+</div>
+</div>
 
 ### Helpful Error Messages
 
@@ -537,6 +591,13 @@ def execute_tool(name: str, arguments: dict) -> dict:
 
 ### Tool Schema Validation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import jsonschema
 
@@ -570,6 +631,9 @@ def validate_tool_schema(tool: dict) -> list[str]:
 
     return issues
 ```
+
+</div>
+</div>
 
 ### Tool Behavior Testing
 
@@ -610,6 +674,34 @@ def test_tool_behavior(tool_name: str, test_cases: list[dict]) -> dict:
     }
 ```
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Tool design is UX design for AI. Your tools are the interface between natural language intent and programmatic action. Design them thoughtfully.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_tool_design_slides.md">
+  <div class="link-card-title">Tool Design Patterns — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_basic_tools.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

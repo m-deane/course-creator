@@ -1,5 +1,7 @@
 # Production Deployment Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 7 — Production Deployment | **Prerequisites:** Module 7 guides
+
 ## Key Concepts
 
 | Concept | Definition |
@@ -18,6 +20,13 @@
 ## Common Patterns
 
 ### Structured Logging
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import structlog
@@ -66,6 +75,9 @@ class ProductionAgent:
 # Logs output as JSON for easy parsing
 # {"event": "request_started", "agent_id": "agent-123", "request_id": "req-456", ...}
 ```
+
+</div>
+</div>
 
 ### Distributed Tracing with OpenTelemetry
 
@@ -458,6 +470,13 @@ def protected_endpoint(user_id, query):
 - Set retention policies (7 days for DEBUG, 30 days for INFO, 1 year for ERROR)
 - Use structured logging for efficient querying
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Log everything
 logger.debug(f"Full prompt: {prompt}")  # Expensive!
@@ -466,6 +485,9 @@ logger.debug(f"Full prompt: {prompt}")  # Expensive!
 if random.random() < 0.01 or error:  # 1% sampling
     logger.info("request_details", prompt_length=len(prompt), tokens=tokens)
 ```
+
+</div>
+</div>
 
 ### Problem: Distributed tracing adds latency
 **Symptom:** Tracing overhead slows down requests significantly

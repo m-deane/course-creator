@@ -1,16 +1,27 @@
 # Agent Communication: Message Passing and Protocols
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 5 — Multi-Agent Systems | **Prerequisites:** Module 5 — Multi-Agent Patterns
 
 Multi-agent systems require structured communication. This guide covers message formats, communication protocols, and patterns for agents to share information, delegate tasks, and coordinate actions.
 
-> 💡 **Key Insight:** **Clear protocols prevent chaos.** Without structured communication, agents talk past each other, duplicate work, or create deadlocks. Define message formats and interaction patterns explicitly.
+<div class="callout-insight">
+
+**Insight:** Clear protocols prevent chaos. Without structured communication, agents talk past each other, duplicate work, or create deadlocks. Define message formats and interaction patterns explicitly.
+
+</div>
 
 ---
 
 ## Message Structures
 
 ### Basic Message Format
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from dataclasses import dataclass, field
@@ -53,6 +64,9 @@ class AgentMessage:
         }
 ```
 
+</div>
+</div>
+
 ### Typed Message Content
 
 ```python
@@ -84,6 +98,13 @@ class QueryMessage:
 ## Communication Patterns
 
 ### Request-Response
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RequestResponseProtocol:
@@ -128,6 +149,9 @@ class RequestResponseProtocol:
             future = self.pending_requests.pop(message.in_reply_to)
             future.set_result(message.content)
 ```
+
+</div>
+</div>
 
 ### Publish-Subscribe
 
@@ -228,6 +252,13 @@ class Blackboard:
 
 Agents bid on tasks:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ContractNetManager:
     """Manager for Contract Net Protocol."""
@@ -296,6 +327,9 @@ class ContractNetManager:
         ))
 ```
 
+</div>
+</div>
+
 ### Consensus Protocol
 
 Agents reach agreement:
@@ -357,6 +391,13 @@ class ConsensusProtocol:
 
 ## Message Routing
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class MessageRouter:
     """Central message router for multi-agent system."""
@@ -391,6 +432,37 @@ class MessageRouter:
         return [m for m in self.message_log if m.conversation_id == conversation_id]
 ```
 
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Effective communication transforms independent agents into collaborative systems. Design your protocols as carefully as your individual agents.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_agent_communication_slides.md">
+  <div class="link-card-title">Agent Communication Protocols — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_orchestrator_agents.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

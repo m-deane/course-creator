@@ -25,6 +25,13 @@ Speaker notes: Key talking points for this slide
 
 Each API call is **stateless** — the model has no memory of previous calls.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Call 1
 response = client.messages.create(
@@ -37,9 +44,13 @@ response = client.messages.create(
 # "I don't know your name."
 ```
 
+</div>
+</div>
+
 **Solution:** Maintain and send message history with every call.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Turn 1"] -->|Store| M["Message History"]
     B["Turn 2"] -->|Store| M
@@ -78,6 +89,7 @@ Speaker notes: Key talking points for this slide
 | **Hybrid** | Summary + recent + retrieved | Varies | Medium | Complex agents |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Choose Memory Strategy"] --> B{"Conversation Length?"}
     B -->|Short < 20 turns| C["Buffer Memory"]
@@ -95,6 +107,13 @@ Speaker notes: Key talking points for this slide
 
 # 1. Buffer Memory (Full History)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class BufferMemory:
     def __init__(self):
@@ -110,6 +129,9 @@ class BufferMemory:
         return self.messages.copy()
 ```
 
+</div>
+</div>
+
 - ✅ Complete context, simple implementation
 - ⚠️ Unbounded growth, expensive for long conversations
 
@@ -123,6 +145,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 2. Window Memory (Recent K Messages)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class WindowMemory:
@@ -139,6 +168,9 @@ class WindowMemory:
         return self.messages.copy()
 ```
 
+</div>
+</div>
+
 - ✅ Bounded size, predictable costs
 - ⚠️ Loses early context (user's name, initial requirements, etc.)
 
@@ -152,6 +184,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 3. Summary Memory
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class SummaryMemory:
@@ -170,6 +209,9 @@ class SummaryMemory:
             messages=[{"role": "user",
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -180,6 +222,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 3. Summary Memory (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "content": f"Summarize preserving key info:\n\n"
@@ -197,6 +246,9 @@ Speaker notes: Key talking points for this slide
         return messages
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -208,6 +260,7 @@ Speaker notes: Key talking points for this slide
 # 4. Hybrid Memory
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     subgraph "Hybrid Memory System"
         A["New Message"] --> B["Buffer (Recent)"]
@@ -235,6 +288,13 @@ Speaker notes: Key talking points for this slide
 
 # Dynamic Context Allocation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class DynamicContextManager:
     def __init__(self, max_tokens: int = 100000):
@@ -250,6 +310,9 @@ class DynamicContextManager:
         remaining -= min_conv_tokens
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -260,6 +323,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Dynamic Context Allocation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Allocate to retrieved docs (up to 60%)
@@ -273,6 +343,9 @@ Speaker notes: Key talking points for this slide
         return {"system": system_prompt, "documents": selected_docs,
                 "conversation": selected_conv}
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -288,6 +361,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Persistent Memory:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class PersistentMemory(BufferMemory):
     def __init__(self, filepath: str):
@@ -307,6 +387,9 @@ class PersistentMemory(BufferMemory):
             json.dump(
                 {"messages": self.messages}, f)
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -365,6 +448,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Memory Types"
         A["Buffer"] --> B["Window"]

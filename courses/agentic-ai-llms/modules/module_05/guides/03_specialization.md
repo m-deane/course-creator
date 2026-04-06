@@ -1,10 +1,14 @@
 # Agent Specialization
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 5 — Multi-Agent Systems | **Prerequisites:** Module 5 — Multi-Agent Patterns
 
 Agent specialization is the practice of designing focused agents with well-defined roles and capabilities, rather than monolithic general-purpose agents. Specialized agents collaborate more effectively, produce higher-quality outputs, and are easier to maintain and debug.
 
-> 💡 **Key Insight:** Just as human teams succeed through role differentiation (researcher, engineer, reviewer), agent teams excel when each agent has a clear domain of expertise and responsibility. A specialized "research agent" produces better summaries than a generic "do everything" agent asked to research.
+<div class="callout-insight">
+
+**Insight:** Just as human teams succeed through role differentiation (researcher, engineer, reviewer), agent teams excel when each agent has a clear domain of expertise and responsibility. A specialized "research agent" produces better summaries than a generic "do everything" agent asked to research.
+
+</div>
 
 ## Formal Definition
 
@@ -52,6 +56,13 @@ The orchestrator routes work to the right specialist. Each specialist has:
 ## Code Implementation
 
 ### Basic Specialization Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from anthropic import Anthropic
@@ -217,6 +228,9 @@ class AgentOrchestrator:
         }
 ```
 
+</div>
+</div>
+
 ### Advanced: Dynamic Specialization
 
 ```python
@@ -292,6 +306,13 @@ legal_agent = factory.create_specialist(
 ### 1. Over-Specialization
 **Problem:** Creating too many narrow specialists creates coordination overhead.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Too many specialists
 agents = [
@@ -309,6 +330,9 @@ agents = [
     CodeAgent()
 ]
 ```
+
+</div>
+</div>
 
 ### 2. Unclear Boundaries
 **Problem:** Overlapping responsibilities cause confusion.
@@ -394,6 +418,12 @@ Implement a `SpecializationController` that:
 ### 4. Measure Specialization Benefits
 Design an experiment to measure whether specialized agents outperform general-purpose agents. What metrics would you use? How would you control for confounds?
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ## Further Reading
 
 **Foundational Papers:**
@@ -417,3 +447,17 @@ Design an experiment to measure whether specialized agents outperform general-pu
 - Software development: Design, implementation, testing, documentation specialists
 - Content creation: Research, writing, editing, fact-checking specialists
 - Financial analysis: Data gathering, analysis, reporting, compliance specialists
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_specialization_slides.md">
+  <div class="link-card-title">Agent Specialization and Roles — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_orchestrator_agents.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

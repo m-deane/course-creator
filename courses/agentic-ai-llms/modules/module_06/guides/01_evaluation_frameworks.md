@@ -1,10 +1,14 @@
 # Evaluation Frameworks: Measuring Agent Performance
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 6 — Evaluation & Safety | **Prerequisites:** Module 4 — Agentic Patterns
 
 Evaluation transforms intuition about agent quality into measurable metrics. Without rigorous evaluation, you can't know if changes improve or degrade your system. This guide covers frameworks for assessing agent performance systematically.
 
-> 💡 **Key Insight:** **What you don't measure, you can't improve.** Agents fail in subtle ways—wrong tool choices, flawed reasoning, off-topic responses. Comprehensive evaluation surfaces these issues before users do.
+<div class="callout-insight">
+
+**Insight:** What you don't measure, you can't improve. Agents fail in subtle ways—wrong tool choices, flawed reasoning, off-topic responses. Comprehensive evaluation surfaces these issues before users do.
+
+</div>
 
 ---
 
@@ -13,6 +17,13 @@ Evaluation transforms intuition about agent quality into measurable metrics. Wit
 ### 1. Accuracy
 
 Does the agent give correct answers?
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def evaluate_accuracy(
@@ -76,6 +87,9 @@ Answer YES or NO only."""
 
     return "YES" in response.content[0].text.upper()
 ```
+
+</div>
+</div>
 
 ### 2. Tool Use Correctness
 
@@ -262,6 +276,13 @@ def evaluate_safety(
 
 ### Structured Test Cases
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from dataclasses import dataclass
 from enum import Enum
@@ -365,6 +386,9 @@ class EvaluationSuite:
         return True  # No specific expectation
 ```
 
+</div>
+</div>
+
 ### Automated Regression Testing
 
 ```python
@@ -436,6 +460,13 @@ class RegressionTracker:
 
 ### Pairwise Comparison
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def compare_responses(
     question: str,
@@ -471,6 +502,9 @@ Reply with JSON:
     import json
     return json.loads(response.content[0].text)
 ```
+
+</div>
+</div>
 
 ### Rubric-Based Scoring
 
@@ -547,6 +581,34 @@ def generate_evaluation_report(results: dict) -> str:
     return report
 ```
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Evaluation is not optional—it's how you prove your agent works. Build evaluation into your development cycle and run it continuously.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_evaluation_frameworks_slides.md">
+  <div class="link-card-title">Agent Evaluation Frameworks — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_agent_benchmarks.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

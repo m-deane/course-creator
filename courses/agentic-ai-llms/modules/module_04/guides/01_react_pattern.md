@@ -1,10 +1,14 @@
 # The ReAct Pattern: Reasoning + Acting
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 4 — Agentic Patterns | **Prerequisites:** Module 2 — Tool Use, Module 1 — Chain-of-Thought
 
 ReAct (Reasoning and Acting) interleaves thinking with action-taking. Instead of generating a complete plan upfront, ReAct agents alternate between reasoning about what to do next and executing actions, adapting based on observations.
 
-> 💡 **Key Insight:** **Think before you act, observe after you act.** ReAct makes the agent's decision process explicit through "Thought" traces, enabling debugging, transparency, and better reasoning through intermediate steps.
+<div class="callout-insight">
+
+**Insight:** Think before you act, observe after you act. ReAct makes the agent's decision process explicit through "Thought" traces, enabling debugging, transparency, and better reasoning through intermediate steps.
+
+</div>
 
 ---
 
@@ -31,6 +35,13 @@ Final Answer: [Response to user]
 ```
 
 ### Basic Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -147,11 +158,21 @@ answer = run_react_agent("What is 15% of the temperature in New York right now?"
 print(answer)
 ```
 
+</div>
+</div>
+
 ---
 
 ## ReAct with Claude's Tool Use
 
 Leveraging native tool calling for cleaner implementation:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -259,11 +280,21 @@ agent = ReActAgent(TOOLS)
 result = agent.run("Calculate 15% of 847.50 and tell me if it's more than 100")
 ```
 
+</div>
+</div>
+
 ---
 
 ## ReAct Trace Visualization
 
 ### Structured Logging
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from dataclasses import dataclass, field
@@ -373,11 +404,21 @@ class TracingReActAgent(ReActAgent):
         return "Max steps reached", self.current_trace
 ```
 
+</div>
+</div>
+
 ---
 
 ## Advanced ReAct Patterns
 
 ### ReAct with Memory
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ReActWithMemory(ReActAgent):
@@ -404,6 +445,9 @@ class ReActWithMemory(ReActAgent):
 
         return result
 ```
+
+</div>
+</div>
 
 ### ReAct with Verification
 
@@ -450,6 +494,13 @@ If the answer is correct, confirm it."""
 
 ### Explicit Reasoning Instructions
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 DETAILED_REACT_SYSTEM = """You are an AI assistant that solves problems systematically.
 
@@ -466,6 +517,9 @@ Rules:
 - Break complex problems into smaller steps
 - Verify your final answer before stating it"""
 ```
+
+</div>
+</div>
 
 ### Few-Shot ReAct Examples
 
@@ -496,6 +550,13 @@ Final Answer: After 10 years, your investment would grow to approximately $1,647
 ---
 
 ## Error Handling in ReAct
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RobustReActAgent(ReActAgent):
@@ -548,6 +609,37 @@ class RobustReActAgent(ReActAgent):
         return "Max steps reached"
 ```
 
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *ReAct is the fundamental reasoning pattern for agentic AI. Master it, and you'll have the foundation for building agents that can tackle any complex task.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_react_pattern_slides.md">
+  <div class="link-card-title">The ReAct Pattern: Reasoning + Acting — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_react_agents.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

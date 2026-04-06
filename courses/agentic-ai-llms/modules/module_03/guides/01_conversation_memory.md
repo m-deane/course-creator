@@ -1,16 +1,27 @@
 # Conversation Memory: Managing History and Context
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 3 — Memory & Context | **Prerequisites:** Module 2 — Tool Use
 
 LLMs process each request independently—they don't remember previous conversations. Conversation memory systems maintain history, manage context window limits, and preserve continuity across interactions.
 
-> 💡 **Key Insight:** **Context windows are finite; conversations are not.** The art of conversation memory is deciding what to keep, what to summarize, and what to discard while maintaining coherent, contextual responses.
+<div class="callout-insight">
+
+**Insight:** Context windows are finite; conversations are not. The art of conversation memory is deciding what to keep, what to summarize, and what to discard while maintaining coherent, contextual responses.
+
+</div>
 
 ---
 
 ## The Memory Problem
 
 ### Each API Call is Stateless
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Call 1
@@ -25,6 +36,9 @@ response = client.messages.create(
 )
 # Response: "I don't know your name. You haven't told me."
 ```
+
+</div>
+</div>
 
 ### Solution: Maintain Message History
 
@@ -51,6 +65,13 @@ response = client.messages.create(messages=conversation)
 
 Keep all messages in order:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class BufferMemory:
     """Simple buffer that stores all messages."""
@@ -70,6 +91,9 @@ class BufferMemory:
     def clear(self):
         self.messages = []
 ```
+
+</div>
+</div>
 
 **Pros:** Complete context, simple
 **Cons:** Unbounded growth, expensive for long conversations
@@ -211,6 +235,13 @@ class TokenLimitedMemory:
 
 ### Combining Short and Long-term Memory
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class HybridMemory:
     """Combine buffer for recent, summary for old, vector for retrieval."""
@@ -282,11 +313,21 @@ class HybridMemory:
         return messages
 ```
 
+</div>
+</div>
+
 ---
 
 ## Context Window Management
 
 ### Estimating Token Usage
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def estimate_tokens(text: str) -> int:
@@ -302,6 +343,9 @@ def estimate_conversation_tokens(messages: list[dict]) -> int:
         total += 4  # Role tokens overhead
     return total
 ```
+
+</div>
+</div>
 
 ### Dynamic Context Allocation
 
@@ -377,6 +421,13 @@ class DynamicContextManager:
 
 ### System Prompt + History
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def build_conversation(
     system_prompt: str,
@@ -405,6 +456,9 @@ response = client.messages.create(
 )
 ```
 
+</div>
+</div>
+
 ### Injecting Context
 
 ```python
@@ -430,6 +484,13 @@ def inject_context(messages: list[dict], context: str, position: str = "start") 
 ## Persistence
 
 ### Saving and Loading Memory
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import json
@@ -464,6 +525,9 @@ class PersistentMemory(BufferMemory):
         super().add_assistant_message(content)
         self._save()
 ```
+
+</div>
+</div>
 
 ### Session-Based Memory
 
@@ -507,6 +571,34 @@ class SessionManager:
 5. **Summarize Strategically**: Use fast models for summaries
 6. **Test Memory Boundaries**: Verify behavior when context is truncated
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Conversation memory transforms stateless API calls into continuous interactions. Choose the right strategy for your use case and iterate based on real usage patterns.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_conversation_memory_slides.md">
+  <div class="link-card-title">Conversation Memory Patterns — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_memory_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

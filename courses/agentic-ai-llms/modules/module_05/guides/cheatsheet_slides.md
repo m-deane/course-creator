@@ -46,6 +46,13 @@ Speaker notes: Key talking points for this slide
 
 # Supervisor Pattern
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class Supervisor:
     def __init__(self, agents):
@@ -62,7 +69,11 @@ class Supervisor:
         return self.synthesize(user_request, results)
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     U["User"] --> S["Supervisor"]
     S --> A["Agent A"]
@@ -89,6 +100,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Peer-to-Peer:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class CollaborativeAgent:
     def process_task(self, task):
@@ -105,6 +123,9 @@ class CollaborativeAgent:
         return self.combine_perspectives(
             responses)
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -136,6 +157,13 @@ Speaker notes: Key talking points for this slide
 
 # Peer-to-Peer & Blackboard (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 self.memory[key].append({
                 "value": value,
@@ -148,6 +176,9 @@ self.memory[key].append({
             return self.memory.get(key, [])
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -157,6 +188,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Consensus Building
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def debate_consensus(agents, question, rounds=3):
@@ -178,7 +216,11 @@ def debate_consensus(agents, question, rounds=3):
     return winner["proposal"]
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Propose"] --> B["Debate (N rounds)"]
     B --> C["Vote"]
@@ -195,6 +237,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Agent Team with Specialization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class AgentTeam:
@@ -213,6 +262,9 @@ class AgentTeam:
         test_results = self.agents["tester"].run_tests(tests)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -224,6 +276,13 @@ Speaker notes: Key talking points for this slide
 
 # Agent Team with Specialization (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 if not test_results["passed"]:
             code = self.agents["coder"].fix(code, test_results)
@@ -232,6 +291,9 @@ if not test_results["passed"]:
         return {"code": code, "tests": tests, "research": research,
                 "review": review}
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -253,6 +315,13 @@ Speaker notes: Key talking points for this slide
 | Message passing overhead | Batch messages, async communication, priorities |
 | Context explosion | Summarize old messages, keep only relevant context |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Unlimited debate
 while not consensus:
@@ -266,6 +335,9 @@ for round in range(max_rounds):
         break  # Converged or stuck
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -278,6 +350,7 @@ Speaker notes: Key talking points for this slide
 # Quick Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Task Type?"] --> B{"Clear delegation?"}
     B -->|Yes| C["Supervisor"]
@@ -311,6 +384,7 @@ Speaker notes: Key talking points for this slide
 # Module 5 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Core Patterns"
         A["Supervisor: Central delegation"]

@@ -46,6 +46,7 @@ Speaker notes: Key talking points for this slide
 # ReAct Loop
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Thought"] --> B["Action"]
     B --> C["Observation"]
@@ -53,6 +54,13 @@ graph LR
     D -->|No| A
     D -->|Yes| E["Final Answer"]
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def react_loop(query, tools, max_steps=10):
@@ -72,6 +80,9 @@ def react_loop(query, tools, max_steps=10):
     return "Max steps reached"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -82,6 +93,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Goal Decomposition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def decompose_goal(goal):
@@ -102,7 +120,11 @@ def execute_plan(subtasks, tools):
     return completed
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Complex Goal"] --> B["Subtask 1"]
     A --> C["Subtask 2"]
@@ -124,6 +146,13 @@ Speaker notes: Key talking points for this slide
 
 # Self-Reflection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def reflect_and_retry(task, initial_result, max_retries=3):
     result = initial_result
@@ -141,7 +170,11 @@ def reflect_and_retry(task, initial_result, max_retries=3):
     return result
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Generate"] --> B["Critique"]
     B --> C{"Approved?"}
@@ -161,6 +194,13 @@ Speaker notes: Key talking points for this slide
 
 # Adaptive Planning
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def adaptive_plan_execute(goal, tools):
     plan = create_initial_plan(goal)
@@ -177,7 +217,11 @@ def adaptive_plan_execute(goal, tools):
     return get_final_result()
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Create Plan"] --> B["Execute Step"]
     B --> C{"Unexpected?"}
@@ -208,6 +252,13 @@ Speaker notes: Key talking points for this slide
 | Decomposition too granular/coarse | Aim for 3-7 subtasks, each achievable in 1-3 ReAct iterations |
 | Prompt injection via observations | Sanitize all observations, use XML tags to separate from instructions |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: No loop detection
 while not done:
@@ -224,6 +275,9 @@ while not done and steps < MAX_STEPS:
     seen_observations.add(observation)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -236,6 +290,7 @@ Speaker notes: Key talking points for this slide
 # Quick Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Task Type?"] --> B{"Multi-step with\nunknown steps?"}
     B -->|Yes| C["ReAct"]
@@ -266,6 +321,7 @@ Speaker notes: Key talking points for this slide
 # Module 4 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Core Patterns"
         A["ReAct: Think → Act → Observe"] --> D["Foundation for all agents"]

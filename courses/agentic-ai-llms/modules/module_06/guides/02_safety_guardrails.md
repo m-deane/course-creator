@@ -1,10 +1,14 @@
 # Safety Guardrails for AI Agents
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 6 — Evaluation & Safety | **Prerequisites:** Module 6 — Evaluation Frameworks
 
 Safety guardrails are systematic controls that prevent AI agents from producing harmful outputs or taking dangerous actions. They operate at multiple layers—input validation, output filtering, action verification, and behavior constraints—to ensure agents remain helpful, harmless, and honest.
 
-> 💡 **Key Insight:** Agents are more dangerous than static LLMs because they can act in the world. A language model might generate a harmful response; an agent might execute a harmful action. Guardrails must therefore protect not just what agents say, but what they do.
+<div class="callout-insight">
+
+**Insight:** Agents are more dangerous than static LLMs because they can act in the world. A language model might generate a harmful response; an agent might execute a harmful action. Guardrails must therefore protect not just what agents say, but what they do.
+
+</div>
 
 ## Formal Definition
 
@@ -33,6 +37,13 @@ Just as a car has multiple safety systems (seatbelts, airbags, ABS, stability co
 ## Code Implementation
 
 ### Layer 1: Input Validation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import re
@@ -99,6 +110,9 @@ class InputGuardrails:
 
         return sanitized
 ```
+
+</div>
+</div>
 
 ### Layer 2: Output Filtering
 
@@ -436,6 +450,13 @@ class SafeAgent:
 ### 1. Guardrails Too Restrictive
 **Problem:** Over-filtering blocks legitimate requests.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Block everything remotely sensitive
 if any(word in input for word in ["medical", "legal", "financial"]):
@@ -445,6 +466,9 @@ if any(word in input for word in ["medical", "legal", "financial"]):
 if is_asking_for_medical_diagnosis(input) and not user_is_doctor(user_id):
     return "Cannot provide medical diagnosis. Please consult a doctor."
 ```
+
+</div>
+</div>
 
 ### 2. Single Layer of Defense
 **Problem:** If one guardrail fails, system is compromised.
@@ -540,6 +564,12 @@ Build a test suite for output filtering:
 - Identify false positive/negative patterns
 - Iterate to improve performance
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ## Further Reading
 
 **Foundational Papers:**
@@ -563,3 +593,17 @@ Build a test suite for output filtering:
 - Guardrails AI
 - LangKit (WhyLabs)
 - Microsoft Azure AI Content Safety
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_safety_guardrails_slides.md">
+  <div class="link-card-title">Safety Guardrails for Agents — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_agent_benchmarks.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

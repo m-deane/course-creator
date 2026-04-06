@@ -48,6 +48,13 @@ Speaker notes: Key talking points for this slide
 
 # Common API Patterns: Claude
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import anthropic
 
@@ -62,7 +69,11 @@ message = client.messages.create(
 print(message.content[0].text)
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Your Code"] -->|HTTP POST| B["Anthropic API"]
     B -->|JSON Response| C["message.content"]
@@ -81,6 +92,13 @@ Speaker notes: Key talking points for this slide
 
 # Common API Patterns: OpenAI
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from openai import OpenAI
 
@@ -93,6 +111,9 @@ response = client.chat.completions.create(
 )
 print(response.choices[0].message.content)
 ```
+
+</div>
+</div>
 
 # Streaming Responses (Claude)
 
@@ -125,9 +146,14 @@ Speaker notes: Key talking points for this slide
 | GPT-4o | 128K | $2.50 | $10.00 |
 | Llama 3.1 405B | 128K | Free (self-host) | Free (self-host) |
 
-> 🔑 **Rule of Thumb:** 1 word ≈ 1.3 tokens in English
+<div class="callout-key">
+
+**Key Point:** **Rule of Thumb:** 1 word ≈ 1.3 tokens in English
+
+</div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Input Tokens"] -->|Billed| C["Total Cost"]
     B["Output Tokens"] -->|Billed at higher rate| C
@@ -148,6 +174,13 @@ Speaker notes: Key talking points for this slide
 <div class="columns">
 <div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Factual, deterministic
 # (Q&A, extraction, classification)
@@ -167,9 +200,13 @@ temperature=1.0
 ```
 
 </div>
+</div>
+
+</div>
 <div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Temperature"] --> B["0.0: Deterministic"]
     A --> C["0.3: Focused"]
@@ -181,7 +218,11 @@ graph TD
     style E fill:#FF9800
 ```
 
-> ✅ For agents and tool calls, always use temperature=0
+<div class="callout-key">
+
+**Key Point:** For agents and tool calls, always use temperature=0
+
+</div>
 
 </div>
 </div>
@@ -202,12 +243,22 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Context Overflow:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Count tokens before sending
 token_count = client.count_tokens(text)
 if token_count > max_context:
     # Truncate or summarize
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -224,7 +275,11 @@ max_tokens=2048
 </div>
 </div>
 
-> ⚠️ Always set `max_tokens` explicitly — models won't complete responses without it.
+<div class="callout-warning">
+
+**Warning:** Always set `max_tokens` explicitly — models won't complete responses without it.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -242,6 +297,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Rate Limits — Use Backoff:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from tenacity import (
     retry, stop_after_attempt,
@@ -255,6 +317,9 @@ from tenacity import (
 def call_api():
     return client.messages.create(...)
 ```
+
+</div>
+</div>
 
 **API Key Security:**
 ```python
@@ -280,7 +345,11 @@ print(f"Request cost: ${cost:.4f}")
 - GPT: `tiktoken` library
 - Llama: Model-specific tokenizer
 
-> ⚠️ Each model uses different tokenizers — always use the correct counter.
+<div class="callout-warning">
+
+**Warning:** Each model uses different tokenizers — always use the correct counter.
+
+</div>
 
 </div>
 </div>
@@ -298,6 +367,7 @@ Speaker notes: Key talking points for this slide
 # Module 0 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Foundations"
         A["Transformer Architecture"] --> B["LLM Providers"]

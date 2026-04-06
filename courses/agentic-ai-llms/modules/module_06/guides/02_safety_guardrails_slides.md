@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Defense-in-Depth Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     U["User Input"] --> L1["Layer 1: Input Validation"]
     L1 -->|Pass| A["Agent Processing"]
@@ -39,7 +40,11 @@ graph TD
     O --> M["Layer 5: Monitoring & Logging"]
 ```
 
-> 🔑 No single layer is perfect — multiple independent layers dramatically reduce risk.
+<div class="callout-key">
+
+**Key Point:** No single layer is perfect — multiple independent layers dramatically reduce risk.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -63,6 +68,13 @@ Speaker notes: Key talking points for this slide
 
 # Input Guardrails
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class InputGuardrails:
     def __init__(self):
@@ -76,6 +88,9 @@ class InputGuardrails:
         ]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -86,6 +101,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Input Guardrails (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 self.max_input_length = 10000
@@ -100,6 +122,9 @@ self.max_input_length = 10000
             return False, f"Input too long ({len(user_input)} > {self.max_input_length})"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -109,6 +134,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Input Guardrails (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 for pattern in self.injection_patterns:
@@ -127,6 +159,9 @@ for pattern in self.injection_patterns:
         sanitized = sanitized.replace("</system>", "").replace("<system>", "")
         return " ".join(sanitized.split())
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -154,6 +189,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Safety Evaluation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class OutputGuardrails:
     def is_output_safe(self, output):
@@ -169,6 +211,9 @@ Check for:
 4. Privacy violations (PII)
 5. Hallucinations as fact
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -202,6 +247,13 @@ Speaker notes: Key talking points for this slide
 
 # Output Safety Check + PII Redaction (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # SSN-like patterns
     text = re.sub(
@@ -217,6 +269,9 @@ Speaker notes: Key talking points for this slide
     return text
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -226,6 +281,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Output Safety Check + PII Redaction (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 Respond JSON:
@@ -241,6 +303,9 @@ Respond JSON:
             return False, result["issues"]
         return True, None
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -264,6 +329,13 @@ Speaker notes: Key talking points for this slide
 
 # Action Guardrails
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ActionGuardrails:
     def __init__(self):
@@ -282,6 +354,9 @@ class ActionGuardrails:
                 return False, f"Action '{action_name}' requires user approval"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -292,6 +367,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Action Guardrails (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if action_name == "execute_code":
@@ -308,6 +390,9 @@ if action_name == "execute_code":
                 return False, f"Dangerous operation: {pattern}"
         return True, None
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -331,6 +416,13 @@ Speaker notes: Key talking points for this slide
 
 # Rate Limiting and Resource Caps
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class BehaviorGuardrails:
     def __init__(self):
@@ -349,6 +441,9 @@ class BehaviorGuardrails:
             t for t in self.request_counts[user_id] if now - t < 3600]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -359,6 +454,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Rate Limiting and Resource Caps (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 recent = [t for t in self.request_counts[user_id] if now - t < 60]
@@ -377,6 +479,9 @@ recent = [t for t in self.request_counts[user_id] if now - t < 60]
         return True, None
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -386,6 +491,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Integrated SafeAgent
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class SafeAgent:
@@ -407,6 +519,9 @@ class SafeAgent:
         sanitized = self.input_guardrails.sanitize_input(user_input)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -417,6 +532,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Integrated SafeAgent (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Layer 4: Rate limiting
@@ -438,6 +560,9 @@ Speaker notes: Key talking points for this slide
         return self.output_guardrails.redact_pii(output)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -455,6 +580,13 @@ Speaker notes: Key talking points for this slide
 | **Silent failures** | Can't improve guardrails | Detailed logging + alerting |
 | **Ignoring patterns** | Misses repeated attackers | Track attack patterns, flag suspicious accounts |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Over-blocking
 if any(word in input for word in ["medical", "legal"]):
@@ -465,7 +597,14 @@ if is_asking_for_medical_diagnosis(input) and not user_is_doctor(user_id):
     return "Cannot provide diagnosis. Please consult a doctor."
 ```
 
-> ⚠️ Balance safety with helpfulness — overly cautious agents frustrate users.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Balance safety with helpfulness — overly cautious agents frustrate users.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -479,6 +618,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Defense Layers"
         A["L1: Input Validation\nInjection detection, sanitization"]

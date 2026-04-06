@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Specialization Dimensions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Specialization"] --> B["Functional"]
     A --> C["Domain"]
@@ -91,6 +92,7 @@ Speaker notes: Key talking points for this slide
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Monolith: One prompt does everything"] --> B["Jack of all trades, master of none"]
     C["Specialized: Focused prompts + tools"] --> D["Expert in its domain"]
@@ -118,6 +120,13 @@ Speaker notes: Key talking points for this slide
 
 # Base Specialization Pattern
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class SpecializedAgent:
     """Base class for specialized agents."""
@@ -137,6 +146,9 @@ class SpecializedAgent:
         return response.content[0].text
 ```
 
+</div>
+</div>
+
 Each specialist customizes:
 - **System prompt** — defines role, focus, quality criteria
 - **Tools** — only what's needed for the domain
@@ -153,6 +165,13 @@ Speaker notes: Key talking points for this slide
 
 # Research Agent
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ResearchAgent(SpecializedAgent):
     def __init__(self, client: Anthropic):
@@ -165,7 +184,14 @@ class ResearchAgent(SpecializedAgent):
         Focus on thoroughness and accuracy. Always cite your sources."""
 ```
 
-> 🔑 Research agent gets search tools, not code execution.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Research agent gets search tools, not code execution.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -177,6 +203,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Research Agent (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 tools = [
@@ -195,6 +228,9 @@ tools = [
         super().__init__(client, "Research Specialist", system_prompt, tools)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -209,6 +245,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Code Agent:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class CodeAgent(SpecializedAgent):
     def __init__(self, client):
@@ -222,6 +265,9 @@ class CodeAgent(SpecializedAgent):
         Focus on quality and clarity.
         Always include docstrings."""
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -256,6 +302,13 @@ Speaker notes: Key talking points for this slide
 
 # Code and Review Agents (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Review uses reasoning,
         # not tools
@@ -266,6 +319,9 @@ Speaker notes: Key talking points for this slide
             system_prompt, tools)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -275,6 +331,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Code and Review Agents (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 tools = [
@@ -292,6 +355,9 @@ tools = [
             system_prompt, tools)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -301,6 +367,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Orchestrator: Coordinating Specialists
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class AgentOrchestrator:
@@ -315,6 +388,9 @@ class AgentOrchestrator:
             f"Research best practices for: {feature_request}")
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -325,6 +401,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Orchestrator: Coordinating Specialists (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Step 2: Implementation phase
@@ -339,6 +422,9 @@ Speaker notes: Key talking points for this slide
         return {"research": research, "implementation": code, "review": review}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -348,6 +434,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Dynamic Agent Factory
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class DynamicAgentFactory:
@@ -366,6 +459,9 @@ class DynamicAgentFactory:
         Focus on excellence in your domain."""
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -376,6 +472,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Dynamic Agent Factory (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 tools = self._select_tools_for_domain(domain)
@@ -394,6 +497,9 @@ tools = self._select_tools_for_domain(domain)
         return tool_registry.get(domain, [])
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -408,6 +514,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Over-Specialization:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Too many narrow specialists
 agents = [
@@ -424,6 +537,9 @@ agents = [
     CodeAgent()
 ]
 ```
+
+</div>
+</div>
 
 **Unclear Boundaries:**
 ```python
@@ -471,7 +587,11 @@ ResearchAgent(tools=[
 </div>
 </div>
 
-> ⚠️ The right number of specialists is usually 3-5 per orchestrator.
+<div class="callout-warning">
+
+**Warning:** The right number of specialists is usually 3-5 per orchestrator.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -485,6 +605,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Specialization Design"
         A["Functional: Task roles"]

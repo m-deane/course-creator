@@ -1,10 +1,14 @@
 # Observability for AI Agents
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 7 — Production Deployment | **Prerequisites:** Module 7 — Production Architecture
 
 Observability is the practice of making agent systems transparent and debuggable through comprehensive logging, metrics, and tracing. While traditional software observability focuses on requests and errors, agent observability must capture reasoning traces, tool usage, and decision-making processes.
 
-> 💡 **Key Insight:** You can't fix what you can't see. Agents make complex multi-step decisions involving reasoning, tool calls, and data retrieval. Without observability, debugging agent failures is like troubleshooting a black box—you see the wrong output but have no insight into why it occurred.
+<div class="callout-insight">
+
+**Insight:** You can't fix what you can't see. Agents make complex multi-step decisions involving reasoning, tool calls, and data retrieval. Without observability, debugging agent failures is like troubleshooting a black box—you see the wrong output but have no insight into why it occurred.
+
+</div>
 
 Good observability answers:
 - **What** did the agent do?
@@ -68,6 +72,13 @@ This visibility makes debugging and optimization possible.
 ## Code Implementation
 
 ### Structured Logging
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import logging
@@ -181,6 +192,9 @@ class StructuredFormatter(logging.Formatter):
     def format(self, record):
         return record.getMessage()
 ```
+
+</div>
+</div>
 
 ### Metrics Collection
 
@@ -463,6 +477,13 @@ class OTelAgentObservability:
 ### 1. Logging Too Little
 **Problem:** Can't debug because critical information isn't logged.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Minimal logging
 logger.info("Agent executed")
@@ -479,6 +500,9 @@ logger.log_event(
     tools_used=tools
 )
 ```
+
+</div>
+</div>
 
 ### 2. Logging Too Much
 **Problem:** Logs are noisy and expensive to store.
@@ -583,6 +607,12 @@ Total: 6600ms
 
 What optimizations would you suggest? How would you measure improvement?
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ## Further Reading
 
 **Foundational Concepts:**
@@ -609,3 +639,17 @@ What optimizations would you suggest? How would you measure improvement?
 - Real-time anomaly detection
 - Cost attribution in multi-tenant systems
 - Privacy-preserving logging
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_observability_slides.md">
+  <div class="link-card-title">Agent Observability and Monitoring — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_deployment_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

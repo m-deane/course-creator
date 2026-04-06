@@ -51,6 +51,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Input Validation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class InputGuardrails:
     def validate(self, user_input):
@@ -69,6 +76,9 @@ class InputGuardrails:
                 "Unsafe content")
         return True
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -106,6 +116,13 @@ Speaker notes: Key talking points for this slide
 
 # Input & Output Guardrails (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 safety = self.safety_classifier\
             .score(text)
@@ -116,6 +133,9 @@ safety = self.safety_classifier\
         return issues
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -125,6 +145,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Evaluation Test Suite
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class AgentEvaluator:
@@ -138,6 +165,9 @@ class AgentEvaluator:
         }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -148,6 +178,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Evaluation Test Suite (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def evaluate_accuracy(self):
@@ -162,6 +199,9 @@ def evaluate_accuracy(self):
         return {"safety_rate": blocked / len(self.test_cases["adversarial"])}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -171,6 +211,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Red Teaming Test Cases
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RedTeamingTests:
@@ -187,6 +234,9 @@ class RedTeamingTests:
     def test_jailbreaking():
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -197,6 +247,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Red Teaming Test Cases (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 return [
@@ -215,6 +272,9 @@ return [
         ]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -224,6 +284,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # RAG Evaluation with RAGAS
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from ragas import evaluate
@@ -244,7 +311,11 @@ def evaluate_rag_system(rag_agent, test_dataset):
             "overall_score": np.mean(list(results.values()))}
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["RAG System"] --> B["Faithfulness: Grounded in context?"]
     A --> C["Relevancy: Addresses the question?"]
@@ -272,6 +343,13 @@ Speaker notes: Key talking points for this slide
 | Safety reduces helpfulness | Tune on false positives, tiered safety levels |
 | Benchmarks outdated | Refresh regularly, include recent real queries |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Binary blocking
 if contains_sensitive_word(input):
@@ -287,6 +365,9 @@ else:
     return process(input)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -299,6 +380,7 @@ Speaker notes: Key talking points for this slide
 # Metrics to Track
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     subgraph "Accuracy"
         A1["Task completion rate"]
@@ -333,6 +415,7 @@ Speaker notes: Key talking points for this slide
 # Module 6 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Evaluation"
         A["Accuracy + Tool Use + Reasoning + Safety"]

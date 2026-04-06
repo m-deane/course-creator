@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Reflection Patterns Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Self-Reflection Patterns"] --> B["Critique-Revise"]
     A --> C["Reflexion"]
@@ -35,7 +36,11 @@ graph TD
     E --> E1["Advocate vs Critic → Judge synthesizes"]
 ```
 
-> 🔑 Reflection catches errors, improves reasoning, and produces more reliable outputs.
+<div class="callout-key">
+
+**Key Point:** Reflection catches errors, improves reasoning, and produces more reliable outputs.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -59,6 +64,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic Critique-Revise Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def reflect_and_revise(task: str, max_iterations: int = 3) -> str:
     """Generate, critique, and revise until satisfactory."""
@@ -75,6 +87,9 @@ def reflect_and_revise(task: str, max_iterations: int = 3) -> str:
 4. Overall quality (1-10)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -86,6 +101,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic Critique-Revise Loop (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 Task: {task}
 Response: {response}
@@ -93,6 +115,9 @@ Response: {response}
 If quality >= 8 and no major issues, say "APPROVED".
 Otherwise, list specific improvements needed."""}])
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -103,6 +128,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Basic Critique-Revise Loop (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 critique_text = critique.content[0].text
@@ -122,6 +154,9 @@ Provide an improved response:"""}]).content[0].text
     return response
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -133,6 +168,7 @@ Speaker notes: Key talking points for this slide
 # Critique-Revise Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Generate initial response"] --> B["Critique: Score 1-10"]
     B --> C{"Quality >= 8?"}
@@ -151,7 +187,11 @@ graph TD
 | 2 | Critique + Revise | ~1000 tokens |
 | 3 | Critique (APPROVED) | ~500 tokens |
 
-> ⚠️ 2-3 reflection rounds usually suffice — diminishing returns after that.
+<div class="callout-warning">
+
+**Warning:** 2-3 reflection rounds usually suffice — diminishing returns after that.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -162,6 +202,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Reflexion Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ReflexionAgent:
@@ -180,6 +227,9 @@ class ReflexionAgent:
                 return response
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -190,6 +240,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Reflexion Pattern (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Reflect on failure
@@ -204,6 +261,9 @@ Speaker notes: Key talking points for this slide
         return response  # Return best attempt
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -213,6 +273,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Reflexion Pattern (continued) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def _build_context(self) -> str:
@@ -226,6 +293,9 @@ def _build_context(self) -> str:
         return context
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -237,6 +307,7 @@ Speaker notes: Key talking points for this slide
 # Reflexion: Learning from Trajectory
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Attempt 1"] --> B["Evaluate"]
     B --> C{"Success?"}
@@ -250,6 +321,13 @@ graph TD
     H -->|Yes| K["Return answer"]
     C -->|Yes| K
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def _reflect(self, task: str, response: str, evaluation: dict) -> str:
@@ -266,6 +344,9 @@ Reflection (be specific about what went wrong and how to fix it):"""
         model="claude-sonnet-4-6", max_tokens=300,
         messages=[{"role": "user", "content": prompt}]).content[0].text
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -290,6 +371,13 @@ Speaker notes: Key talking points for this slide
 
 # Self-Consistency Check
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def check_consistency(task: str, response: str, n_checks: int = 3) -> dict:
     """Verify response consistency across multiple generations."""
@@ -309,7 +397,14 @@ Response 2: {alternatives[0]}
 Response 3: {alternatives[1]}
 ```
 
-> 🔑 Inconsistency signals uncertainty — investigate disagreements before trusting the answer.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Inconsistency signals uncertainty — investigate disagreements before trusting the answer.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -321,6 +416,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Self-Consistency Check (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 Do they reach the same conclusion? (YES/NO)
@@ -337,6 +439,9 @@ If NO, what are the disagreements?"""
     }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -346,6 +451,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Factual Verification
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def verify_facts(response: str, tools: list) -> dict:
@@ -362,6 +474,9 @@ def verify_facts(response: str, tools: list) -> dict:
     claims = json.loads(extraction)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -372,6 +487,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Factual Verification (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Verify each claim
@@ -393,6 +515,9 @@ Speaker notes: Key talking points for this slide
             "all_verified": all(v["verified"] for v in verified)}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -407,6 +532,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Quality Critique:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 QUALITY_CRITIQUE = """Evaluate on:
 
@@ -423,6 +555,9 @@ Response to evaluate:
 Provide scores and specific issues
 for any dimension below 4."""
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -482,6 +617,13 @@ Speaker notes: Key talking points for this slide
 
 # Critic Agent
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class CriticAgent:
     """Specialized agent for critiquing responses."""
@@ -499,6 +641,9 @@ class CriticAgent:
         return self._parse_critique(result.content[0].text)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -510,6 +655,13 @@ Speaker notes: Key talking points for this slide
 
 # Critic Agent (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def _parse_critique(self, text: str) -> dict:
         return {
@@ -518,6 +670,9 @@ def _parse_critique(self, text: str) -> dict:
             "severity": self._assess_severity(text)
         }
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -528,6 +683,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Debate-Based Reflection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def reflect_through_debate(task: str, response: str) -> str:
@@ -548,6 +710,9 @@ def reflect_through_debate(task: str, response: str) -> str:
                        f"Task: {task}\nResponse: {response}"}]).content[0].text
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -558,6 +723,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Debate-Based Reflection (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Judge synthesizes
@@ -574,6 +746,9 @@ Synthesize the best response:"""}]).content[0].text
     return judgment
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -585,6 +760,7 @@ Speaker notes: Key talking points for this slide
 # Debate Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Original Response"] --> B["Advocate"]
     A --> C["Critic"]
@@ -602,7 +778,11 @@ graph TD
 | **Critic** | Attack the response | Find flaws, gaps, and errors |
 | **Judge** | Synthesize the best answer | Weigh both sides, produce improved result |
 
-> ✅ Debate-based reflection works especially well for subjective or nuanced tasks.
+<div class="callout-key">
+
+**Key Point:** Debate-based reflection works especially well for subjective or nuanced tasks.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -636,6 +816,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Reflection Patterns"
         A["Critique-Revise: Loop until APPROVED"]

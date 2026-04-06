@@ -1,10 +1,14 @@
 # Vector Stores: Embedding and Storing Knowledge
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 3 — Memory & Context | **Prerequisites:** Module 3 — RAG Fundamentals
 
 Vector stores are databases optimized for similarity search over embeddings. They enable RAG systems to find semantically relevant documents from millions of entries in milliseconds.
 
-> 💡 **Key Insight:** **Vector search finds meaning, not keywords.** Traditional databases match exact terms. Vector stores find documents with similar meaning—"automobile" finds "car," "vehicle," and "transportation."
+<div class="callout-insight">
+
+**Insight:** Vector search finds meaning, not keywords. Traditional databases match exact terms. Vector stores find documents with similar meaning—"automobile" finds "car," "vehicle," and "transportation."
+
+</div>
 
 ---
 
@@ -45,6 +49,13 @@ Vector stores are databases optimized for similarity search over embeddings. The
 
 Best for: Development, small-medium datasets, serverless
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
@@ -78,6 +89,9 @@ results = collection.query(
 print(results["documents"])
 print(results["distances"])
 ```
+
+</div>
+</div>
 
 ### Pinecone (Cloud)
 
@@ -206,6 +220,13 @@ results = client.search(
 
 Most common index for vector search:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # ChromaDB HNSW settings
 collection = client.create_collection(
@@ -218,6 +239,9 @@ collection = client.create_collection(
     }
 )
 ```
+
+</div>
+</div>
 
 **Trade-offs:**
 - Higher `construction_ef`: Better index quality, slower build
@@ -262,6 +286,13 @@ distances, indices = index.search(query_embedding, k=5)
 
 ### Filter Patterns
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # ChromaDB filtering
 results = collection.query(
@@ -294,6 +325,9 @@ results = client.search(
 )
 ```
 
+</div>
+</div>
+
 ### Metadata Schema Design
 
 ```python
@@ -322,6 +356,13 @@ metadata = {
 ## Ingestion Pipelines
 
 ### Document Processing Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from dataclasses import dataclass
@@ -391,6 +432,9 @@ def ingest_to_vector_store(
         print(f"Ingested {min(i + batch_size, len(chunks))}/{len(chunks)}")
 ```
 
+</div>
+</div>
+
 ### Incremental Updates
 
 ```python
@@ -454,6 +498,13 @@ class VectorStoreManager:
 
 ### Embedding Caching
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import diskcache
 
@@ -492,6 +543,9 @@ class CachedEmbedder:
 
         return results
 ```
+
+</div>
+</div>
 
 ### Query Optimization
 
@@ -545,6 +599,34 @@ def optimized_query(
 6. **Plan for updates**: Design for incremental ingestion
 7. **Test at scale**: Performance varies dramatically with dataset size
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Vector stores are the long-term memory of your agent. Design your knowledge architecture as carefully as you would design a database schema.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_vector_stores_slides.md">
+  <div class="link-card-title">Vector Stores and Embeddings — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_memory_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

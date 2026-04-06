@@ -1,5 +1,7 @@
 # Multi-Agent Systems Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 5 — Multi-Agent Systems | **Prerequisites:** Module 5 guides
+
 ## Key Concepts
 
 | Concept | Definition |
@@ -17,6 +19,13 @@
 ## Common Patterns
 
 ### Basic Supervisor Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class Supervisor:
@@ -49,6 +58,9 @@ class Supervisor:
         """
         return llm.generate(prompt)
 ```
+
+</div>
+</div>
 
 ### Peer-to-Peer Collaboration
 
@@ -229,6 +241,13 @@ class AgentTeam:
 - Implement tie-breaking mechanisms
 - Track progress metrics (new information per round)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Unlimited debate
 while not consensus:
@@ -247,6 +266,9 @@ for round in range(max_rounds):
     if not new_info:
         break  # Converged or stuck
 ```
+
+</div>
+</div>
 
 ### Problem: Race conditions in shared memory
 **Symptom:** Agents overwrite each other's updates or read stale data

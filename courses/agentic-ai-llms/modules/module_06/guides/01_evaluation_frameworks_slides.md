@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Evaluation Dimensions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Agent Evaluation"] --> B["Accuracy"]
     A --> C["Tool Use"]
@@ -52,6 +53,13 @@ Speaker notes: Key talking points for this slide
 
 # Accuracy Evaluation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def evaluate_accuracy(agent, test_cases: list[dict]) -> dict:
     results = []
@@ -71,6 +79,9 @@ def evaluate_accuracy(agent, test_cases: list[dict]) -> dict:
             "actual": response, "correct": correct})
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -81,6 +92,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Accuracy Evaluation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 accuracy = sum(r["correct"] for r in results) / len(results)
@@ -98,6 +116,9 @@ Is the actual answer essentially correct? Answer YES or NO only."""
     return "YES" in response.content[0].text.upper()
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -107,6 +128,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Tool Use Evaluation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def evaluate_tool_use(agent, test_cases: list[dict]) -> dict:
@@ -125,7 +153,14 @@ def evaluate_tool_use(agent, test_cases: list[dict]) -> dict:
         tool_selection_correct = set(expected_tools) == set(actual_tools)
 ```
 
-> 🔑 Interceptor pattern captures tool calls without modifying the agent.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Interceptor pattern captures tool calls without modifying the agent.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -137,6 +172,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Tool Use Evaluation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 params_correct = True
@@ -156,6 +198,9 @@ params_correct = True
             "param_accuracy": sum(r["params_correct"] for r in results) / len(results)}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -165,6 +210,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Reasoning Quality
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 REASONING_RUBRIC = """
@@ -185,6 +237,9 @@ def evaluate_reasoning(agent, test_cases) -> dict:
         response = agent.run(case["input"])
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -195,6 +250,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Reasoning Quality (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 judgment = client.messages.create(
@@ -214,6 +276,9 @@ judgment = client.messages.create(
     return {"average_scores": avg_scores,
             "overall": sum(avg_scores.values()) / len(avg_scores)}
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -237,6 +302,13 @@ Speaker notes: Key talking points for this slide
 
 # Structured Test Cases
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class TestCategory(Enum):
     ACCURACY = "accuracy"
@@ -256,6 +328,9 @@ class TestCase:
     difficulty: str = "medium"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -266,6 +341,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Structured Test Cases (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class EvaluationSuite:
@@ -287,6 +369,9 @@ class EvaluationSuite:
         return results
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -296,6 +381,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Regression Testing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RegressionTracker:
@@ -317,6 +409,9 @@ class RegressionTracker:
         results_b = self._load_latest(suite_name, version_b)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -327,6 +422,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Regression Testing (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 comparison = {"pass_rate_delta": results_b["results"]["pass_rate"]
@@ -343,6 +445,9 @@ comparison = {"pass_rate_delta": results_b["results"]["pass_rate"]
                     comparison["improvements"].append(detail_b["id"])
         return comparison
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -370,6 +475,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Pairwise Comparison:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def compare_responses(
     question, response_a, response_b
@@ -384,6 +496,9 @@ Which is better? Consider:
 - Completeness
 - Clarity and helpfulness
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -408,7 +523,11 @@ Rubric (score each 1-5):
 </div>
 </div>
 
-> ⚠️ LLM judges have biases — use multiple judges and position-swap for pairwise comparisons.
+<div class="callout-warning">
+
+**Warning:** LLM judges have biases — use multiple judges and position-swap for pairwise comparisons.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -420,6 +539,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pairwise Comparison and Rubric Scoring (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 Return JSON with criterion names
@@ -437,6 +563,9 @@ and "feedback" (string)."""
         response.content[0].text)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -446,6 +575,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pairwise Comparison and Rubric Scoring (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 Reply JSON:
@@ -461,6 +597,9 @@ Reply JSON:
         response.content[0].text)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -470,6 +609,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Evaluation Report Generation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def generate_evaluation_report(results: dict) -> str:
@@ -487,6 +633,9 @@ def generate_evaluation_report(results: dict) -> str:
         report += f"- **{category}:** {stats['passed']}/{stats['total']} ({rate:.1%})\n"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -498,6 +647,13 @@ Speaker notes: Key talking points for this slide
 
 # Evaluation Report Generation (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 failures = [d for d in results['details'] if not d['passed']]
     if failures:
@@ -507,6 +663,9 @@ failures = [d for d in results['details'] if not d['passed']]
             report += f"**Input:** {f['input'][:200]}...\n"
     return report
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -519,6 +678,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Evaluation Dimensions"
         A["Accuracy: Correct answers"]

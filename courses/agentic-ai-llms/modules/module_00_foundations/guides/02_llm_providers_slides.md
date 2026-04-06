@@ -31,6 +31,7 @@ Speaker notes: Key talking points for this slide
 - Open-source models at cost-efficiency and privacy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Choose a Model"] --> B{"What matters most?"}
     B -->|Reasoning| C["Claude Sonnet / Opus"]
@@ -83,6 +84,13 @@ Speaker notes: Key talking points for this slide
 </div>
 <div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import anthropic
 
@@ -98,6 +106,9 @@ response = client.messages.create(
 )
 print(response.content[0].text)
 ```
+
+</div>
+</div>
 
 </div>
 </div>
@@ -133,6 +144,13 @@ Speaker notes: Key talking points for this slide
 </div>
 <div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from openai import OpenAI
 
@@ -147,6 +165,9 @@ response = client.chat.completions.create(
 )
 print(response.choices[0].message.content)
 ```
+
+</div>
+</div>
 
 </div>
 </div>
@@ -181,6 +202,13 @@ Speaker notes: Key talking points for this slide
 </div>
 <div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Using Ollama for local inference
 import requests
@@ -195,6 +223,9 @@ response = requests.post(
 )
 print(response.json()["response"])
 ```
+
+</div>
+</div>
 
 </div>
 </div>
@@ -233,6 +264,7 @@ Speaker notes: Key talking points for this slide
 # Selection by Use Case
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["What's your use case?"] --> B["High-Stakes Reasoning"]
     A --> C["High-Volume Processing"]
@@ -273,6 +305,13 @@ Speaker notes: Key talking points for this slide
 
 # Abstraction Layer: Data Classes
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -290,6 +329,9 @@ class LLMResponse:
     output_tokens: int
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Start with simple data classes that represent the common interface
@@ -301,6 +343,13 @@ Speaker notes: Key talking points for this slide
 
 # Abstraction Layer: Base Class (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
@@ -310,6 +359,9 @@ class LLMProvider(ABC):
              max_tokens: int = 1024) -> LLMResponse:
         pass
 ```
+
+</div>
+</div>
 
 > Each provider implements `chat()` with their specific SDK.
 
@@ -324,6 +376,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Claude Provider Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ClaudeProvider(LLMProvider):
@@ -342,6 +401,9 @@ class ClaudeProvider(LLMProvider):
         return LLMResponse(content=resp.content[0].text, ...)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Claude separates system messages from chat messages -- that is the key API difference
@@ -351,6 +413,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # OpenAI Provider Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class OpenAIProvider(LLMProvider):
@@ -367,6 +436,9 @@ class OpenAIProvider(LLMProvider):
             content=resp.choices[0].message.content, ...)
 ```
 
+</div>
+</div>
+
 > Both providers implement the same `chat()` interface -- calling code never changes.
 
 <!--
@@ -379,6 +451,13 @@ Speaker notes: Key talking points for this slide
 
 # Factory Pattern: Creating Providers
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def create_provider(provider_name: str, **kwargs) -> LLMProvider:
     """Factory function to create LLM providers."""
@@ -388,6 +467,9 @@ def create_provider(provider_name: str, **kwargs) -> LLMProvider:
     }
     return providers[provider_name](**kwargs)
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -399,6 +481,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Using the Abstraction (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Usage - easily switch providers
@@ -413,7 +502,14 @@ print(f"Response: {response.content}")
 print(f"Tokens: {response.input_tokens + response.output_tokens}")
 ```
 
-> 🔑 Build abstractions that let you switch providers with a single config change.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Build abstractions that let you switch providers with a single config change.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -442,6 +538,13 @@ Speaker notes: Key talking points for this slide
 
 Use cheaper models for simple tasks, expensive models for complex ones:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def route_to_model(query: str, complexity: str = "auto") -> LLMProvider:
     """Route queries to appropriate models based on complexity."""
@@ -454,7 +557,11 @@ def route_to_model(query: str, complexity: str = "auto") -> LLMProvider:
         return create_provider("claude", model="claude-sonnet-4-6")
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Incoming Query"] --> B{"Complexity?"}
     B -->|Simple| C["Haiku: $0.80/1M tokens"]
@@ -474,6 +581,13 @@ Speaker notes: Key talking points for this slide
 
 # Response Caching
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import hashlib, json
 from functools import lru_cache
@@ -490,7 +604,14 @@ def cached_chat(provider_name: str, messages_hash: str,
     return provider.chat(messages).content
 ```
 
-> ✅ Cache identical queries to save cost. Especially effective for classification tasks.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Cache identical queries to save cost. Especially effective for classification tasks.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -515,6 +636,13 @@ ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 ```
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from dotenv import load_dotenv
 load_dotenv()
@@ -522,6 +650,9 @@ load_dotenv()
 # Keys auto-detected by clients
 client = anthropic.Anthropic()
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -545,7 +676,11 @@ key = get_api_key("prod/anthropic-api-key")
 </div>
 </div>
 
-> ⚠️ Never hardcode API keys. Never commit `.env` files.
+<div class="callout-warning">
+
+**Warning:** Never hardcode API keys. Never commit `.env` files.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -559,6 +694,13 @@ Speaker notes: Key talking points for this slide
 
 # Rate Limiting and Retries
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from tenacity import retry, stop_after_attempt, wait_exponential
 
@@ -569,6 +711,9 @@ class RateLimitedProvider(LLMProvider):
         self.min_interval = 60.0 / requests_per_minute
         self.last_request = 0
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -581,6 +726,13 @@ Speaker notes: Key talking points for this slide
 
 # Rate Limiting: Chat Method (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
     @retry(stop=stop_after_attempt(3),
            wait=wait_exponential(multiplier=1, min=4, max=60))
@@ -592,7 +744,14 @@ Speaker notes: Key talking points for this slide
         return self.provider.chat(messages, temperature, max_tokens)
 ```
 
-> 🔑 Exponential backoff prevents thundering herd problems on rate limit recovery.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Exponential backoff prevents thundering herd problems on rate limit recovery.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -630,6 +789,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Provider Strategy"
         A["Understand Trade-offs"] --> B["Build Abstractions"]

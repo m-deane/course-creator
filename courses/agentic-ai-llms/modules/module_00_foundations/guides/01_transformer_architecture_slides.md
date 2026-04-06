@@ -31,6 +31,7 @@ Speaker notes: Key talking points for this slide
 - Once generated, tokens can't be revised
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Full Prompt"] -->|Parallel Processing| B["Attention Layers"]
     B -->|Sequential Output| C["Token 1"]
@@ -78,6 +79,7 @@ Ready for attention layers
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Raw Text"] --> B["Tokenizer"]
     B --> C["Token IDs"]
@@ -142,6 +144,7 @@ Head N: Learned patterns
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Input["Input Tokens"] --> H1["Head 1: Syntax"]
     Input --> H2["Head 2: Coreference"]
@@ -178,6 +181,7 @@ Modern LLMs stack many transformer layers:
 > Each layer refines the representation, building from tokens to syntax to semantics to reasoning.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     A["Tokens"] --> B["Layer 1: Surface Patterns"]
     B --> C["Layer 2-30: Syntax"]
@@ -211,6 +215,13 @@ Speaker notes: Key talking points for this slide
 
 # The Generation Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def generate(prompt, max_tokens):
     tokens = tokenize(prompt)
@@ -223,7 +234,14 @@ def generate(prompt, max_tokens):
     return detokenize(tokens)
 ```
 
-> 🔑 Each new token becomes context for the next — this is why chain-of-thought prompting works.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Each new token becomes context for the next — this is why chain-of-thought prompting works.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -261,6 +279,13 @@ Speaker notes: Key talking points for this slide
 
 Agent actions should be reliable and predictable:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 response = client.messages.create(
     model="claude-sonnet-4-6",
@@ -269,7 +294,14 @@ response = client.messages.create(
 )
 ```
 
-> ⚠️ For tool calls and structured output, always use temperature=0. For creative tasks, use higher values.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** For tool calls and structured output, always use temperature=0. For creative tasks, use higher values.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -305,12 +337,13 @@ Attention is $O(n^2)$ in sequence length — each token attends to every other:
 | 100K tokens | 10B |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["1K tokens: Fast"] -->|10x more tokens| B["10K tokens: 100x slower"]
     B -->|10x more tokens| C["100K tokens: 10,000x slower"]
-    style A fill:#4CAF50
-    style B fill:#FFC107
-    style C fill:#F44336
+    style A fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B fill:#fff8e1,stroke:#ff9800,stroke-width:2px
+    style C fill:#fce4ec,stroke:#ef5350,stroke-width:2px
 ```
 
 <!--
@@ -343,14 +376,15 @@ Speaker notes: Key talking points for this slide
 <div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Attention Strength"
         A["Start of context: HIGH"]
         B["Middle of context: LOW"]
         C["End of context: HIGH"]
     end
-    style A fill:#4CAF50
-    style B fill:#F44336
+    style A fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B fill:#fce4ec,stroke:#ef5350,stroke-width:2px
     style C fill:#4CAF50
 ```
 
@@ -369,6 +403,13 @@ Speaker notes: Key talking points for this slide
 
 # Context Window Management
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def manage_context(messages, max_tokens=100000):
     """Keep conversation within context limits."""
@@ -382,7 +423,14 @@ def manage_context(messages, max_tokens=100000):
     return messages
 ```
 
-> ✅ Always preserve the system prompt when trimming context.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Always preserve the system prompt when trimming context.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -411,6 +459,13 @@ Speaker notes: Key talking points for this slide
 
 Put critical instructions at the **beginning** and **end** of prompts — these positions get more attention.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 system_prompt = """
 [CRITICAL INSTRUCTIONS AT START]
@@ -424,7 +479,14 @@ Remember to always...
 """
 ```
 
-> 🔑 Use the "sandwich" technique: critical info at start + end, details in the middle.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Use the "sandwich" technique: critical info at start + end, details in the middle.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -481,6 +543,7 @@ Function calling is the model generating structured JSON that matches a schema:
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["User Query"] --> B["LLM Reasoning"]
     B --> C["Structured JSON Output"]
@@ -521,6 +584,13 @@ Speaker notes: Key talking points for this slide
 
 # Code: Inspecting Tokenization
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import anthropic
 
@@ -535,6 +605,9 @@ def count_tokens(text: str) -> int:
     return response.input_tokens
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - This is a real, runnable code example using the Anthropic SDK
@@ -546,6 +619,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Code: Tokenization Examples (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 examples = [
@@ -560,7 +640,14 @@ for text in examples:
     print(f"'{text[:50]}...' -> {tokens} tokens ({ratio:.2f} words/token)")
 ```
 
-> 🔑 Code typically has a lower words-per-token ratio than natural language — budget accordingly.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Code typically has a lower words-per-token ratio than natural language — budget accordingly.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -576,6 +663,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     A["Tokenization"] --> B["Embeddings"]
     B --> C["Self-Attention"]

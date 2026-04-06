@@ -1,10 +1,14 @@
 # System Prompts: Designing Agent Personas
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 1 — Advanced Prompting | **Prerequisites:** Module 0 — Foundations
 
 The system prompt defines who your agent is, what it can do, and how it should behave. A well-crafted system prompt is the difference between a generic chatbot and a reliable, specialized agent.
 
-> 💡 **Key Insight:** **System prompts are not suggestions—they are instructions.** Treat them like code: precise, tested, and version-controlled. Vague prompts produce vague behavior.
+<div class="callout-insight">
+
+**Insight:** System prompts are not suggestions—they are instructions. Treat them like code: precise, tested, and version-controlled. Vague prompts produce vague behavior.
+
+</div>
 
 ---
 
@@ -165,6 +169,13 @@ You can:
 
 ### 1. Be Specific, Not Abstract
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Vague instruction
 "Be helpful and answer questions."
@@ -176,6 +187,9 @@ You can:
 3. Link to the full pricing page
 4. Offer to connect them with sales for custom quotes"
 ```
+
+</div>
+</div>
 
 ### 2. Anticipate Edge Cases
 
@@ -228,6 +242,13 @@ CURRENT_VERSION = "research_agent_v3"
 ## Testing System Prompts
 
 ### The Prompt Testing Framework
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def test_system_prompt(system_prompt: str, test_cases: list[dict]) -> dict:
@@ -290,11 +311,21 @@ research_agent_tests = [
 ]
 ```
 
+</div>
+</div>
+
 ---
 
 ## Common Pitfalls
 
 ### 1. Prompt Injection Vulnerability
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Vulnerable: User input can override instructions
@@ -316,6 +347,9 @@ Your role is strictly limited to:
 - Creating support tickets
 """
 ```
+
+</div>
+</div>
 
 ### 2. Over-Constraining
 
@@ -389,6 +423,34 @@ Assistant: [ideal output]
 </example>
 ```
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *The system prompt is your agent's DNA. Invest time in getting it right—everything else builds on this foundation.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_system_prompts_slides.md">
+  <div class="link-card-title">System Prompts: Designing Agent Personas — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_system_prompt_design.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

@@ -1,10 +1,14 @@
 # Tool Fundamentals: How LLM Tool Calling Works
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 2 — Tool Use & Function Calling | **Prerequisites:** Module 1 — System Prompts
 
 Tool calling (also called function calling) lets LLMs decide when to invoke external functions and with what arguments. The model generates a structured tool call, your code executes it, and the result is fed back for the model to use.
 
-> 💡 **Key Insight:** **The model doesn't execute tools—it generates instructions for you to execute.** Tool calling is a structured output format that your code interprets. This separation is crucial for security, control, and integration.
+<div class="callout-insight">
+
+**Insight:** The model doesn't execute tools—it generates instructions for you to execute. Tool calling is a structured output format that your code interprets. This separation is crucial for security, control, and integration.
+
+</div>
 
 ---
 
@@ -36,6 +40,13 @@ Tool calling (also called function calling) lets LLMs decide when to invoke exte
 ```
 
 ### Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -142,6 +153,9 @@ answer = run_agent("What's the weather like in Tokyo?")
 print(answer)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Tool Schema Structure
@@ -149,6 +163,13 @@ print(answer)
 ### JSON Schema Basics
 
 Tools use JSON Schema to define their parameters:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 tool = {
@@ -183,6 +204,9 @@ tool = {
     }
 }
 ```
+
+</div>
+</div>
 
 ### Common Schema Types
 
@@ -233,6 +257,13 @@ tool = {
 
 ### Providing Multiple Tools
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 tools = [
     {
@@ -271,6 +302,9 @@ tools = [
 ]
 ```
 
+</div>
+</div>
+
 ### Tool Selection Logic
 
 The model selects tools based on:
@@ -291,6 +325,13 @@ The model selects tools based on:
 ## Parallel Tool Calls
 
 Some models can request multiple tools at once:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def run_agent_parallel(user_message: str) -> str:
@@ -336,6 +377,9 @@ def run_agent_parallel(user_message: str) -> str:
 # Model might call get_weather twice in parallel
 ```
 
+</div>
+</div>
+
 ### Truly Parallel Execution
 
 ```python
@@ -377,6 +421,13 @@ async def execute_tools_parallel(tool_calls: list) -> list:
 
 ### Forcing Tool Use
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Force the model to use a specific tool
 response = client.messages.create(
@@ -387,6 +438,9 @@ response = client.messages.create(
     messages=[{"role": "user", "content": "Tell me about Paris"}]
 )
 ```
+
+</div>
+</div>
 
 ### Allowing Any Tool
 
@@ -416,6 +470,13 @@ response = client.messages.create(
 
 ## Understanding Stop Reasons
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 response = client.messages.create(...)
 
@@ -433,9 +494,19 @@ elif response.stop_reason == "stop_sequence":
     pass
 ```
 
+</div>
+</div>
+
 ---
 
 ## Streaming with Tools
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def stream_with_tools(user_message: str):
@@ -462,11 +533,21 @@ def stream_with_tools(user_message: str):
         pass
 ```
 
+</div>
+</div>
+
 ---
 
 ## Tool Result Formatting
 
 ### Success Results
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Return structured data
@@ -479,6 +560,9 @@ tool_results.append({
     })
 })
 ```
+
+</div>
+</div>
 
 ### Error Results
 
@@ -509,6 +593,13 @@ def truncate_result(result: str, max_length: int = 10000) -> str:
 ---
 
 ## Complete Agent Example
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ToolAgent:
@@ -584,6 +675,37 @@ agent.register_handler("calculate", lambda expression: {
 result = agent.run("What's the weather in London and what's 15% of 85?")
 ```
 
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Tool calling transforms language models from conversationalists into actors. Master this fundamental pattern—every advanced agent capability builds on it.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_tool_fundamentals_slides.md">
+  <div class="link-card-title">Tool Fundamentals: How LLM Tool Calling Works — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_basic_tools.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

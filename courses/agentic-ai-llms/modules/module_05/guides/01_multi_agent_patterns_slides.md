@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Five Orchestration Patterns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Multi-Agent Patterns"] --> B["1. Supervisor\n(Hub & Spoke)"]
     A --> C["2. Peer-to-Peer\n(Collaborative)"]
@@ -60,6 +61,7 @@ Speaker notes: Key talking points for this slide
 # Supervisor Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     U["User Task"] --> S["Supervisor Agent"]
     S -->|Delegate| R["Researcher"]
@@ -70,6 +72,13 @@ graph TD
     V -->|Results| S
     S --> F["Synthesized Response"]
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @dataclass
@@ -84,6 +93,9 @@ class SupervisorAgent:
         self.workers = {w.name: w for w in workers}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -94,6 +106,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Supervisor Architecture (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def run(self, task: str) -> str:
@@ -106,6 +125,9 @@ def run(self, task: str) -> str:
         return self._synthesize(task, results)  # Combine results
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -115,6 +137,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Supervisor: Delegation Logic
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def _decide_delegation(self, task: str) -> dict[str, str]:
@@ -135,6 +164,9 @@ Return as JSON:
 Only include workers that are needed. Be specific about each subtask."""
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -145,6 +177,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Supervisor: Delegation Logic (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 response = self.client.messages.create(
@@ -160,6 +199,9 @@ supervisor = SupervisorAgent([
 ])
 result = supervisor.run("Research Python async patterns and implement an example")
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -184,11 +226,19 @@ Speaker notes: Key talking points for this slide
 # Peer Network Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Agent A\n(ML Expert)"] <-->|Messages| B["Agent B\n(Data Expert)"]
     B <-->|Messages| C["Agent C\n(DevOps Expert)"]
     A <-->|Messages| C
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @dataclass
@@ -202,6 +252,9 @@ class PeerAgent:
         self.mailbox.append(message)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -212,6 +265,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Peer Network Architecture (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def process_messages(self) -> list[Message]:
@@ -225,6 +285,9 @@ def process_messages(self) -> list[Message]:
         return responses
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -234,6 +297,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Peer Collaboration Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class PeerNetwork:
@@ -251,7 +321,14 @@ class PeerNetwork:
         all_responses = []
 ```
 
-> ⚠️ Always set `max_rounds` — peer networks can debate endlessly.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Always set `max_rounds` — peer networks can debate endlessly.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -263,6 +340,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Peer Collaboration Loop (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 for round_num in range(max_rounds):
@@ -279,6 +363,9 @@ for round_num in range(max_rounds):
 
         return {"rounds": round_num + 1, "responses": all_responses}
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -303,6 +390,7 @@ Speaker notes: Key talking points for this slide
 # Hierarchical Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     CEO["CEO Agent"] --> CTO["CTO Agent"]
     CEO --> CMO["CMO Agent"]
@@ -310,6 +398,13 @@ graph TD
     CTO --> Dev2["Frontend Dev"]
     CMO --> Mktr["Content Creator"]
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @dataclass
@@ -332,7 +427,14 @@ class HierarchicalAgent:
                 "results": results}
 ```
 
-> 🔑 Leaf nodes execute directly; managers decompose and delegate.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Leaf nodes execute directly; managers decompose and delegate.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -358,11 +460,19 @@ Speaker notes: Key talking points for this slide
 # Pipeline (Sequential Processing)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Writer"] -->|Content| B["Editor"]
     B -->|Edited| C["Reviewer"]
     C -->|Final| D["Output"]
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class PipelineStage:
@@ -380,6 +490,9 @@ class PipelineStage:
             messages=[{"role": "user", "content": str(input_data)}])
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -390,6 +503,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pipeline (Sequential Processing) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 output = {"stage": self.name, "input": input_data,
@@ -406,6 +526,9 @@ editor = PipelineStage("Editor", "Edit based on review.", next_stage=reviewer)
 writer = PipelineStage("Writer", "Write content.", next_stage=editor)
 result = writer.process({"topic": "Introduction to AI Agents"})
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -429,6 +552,13 @@ Speaker notes: Key talking points for this slide
 
 # Debate Architecture
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class DebateAgent:
     def __init__(self, name: str, position: str):
@@ -446,6 +576,9 @@ Topic: {topic}{context}
 Make your best argument. Be specific and persuasive."""
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -456,6 +589,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Debate Architecture (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 return self.client.messages.create(
@@ -475,6 +615,9 @@ class DebateModerator:
                 "conclusion": self._synthesize(topic, arguments)}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -486,6 +629,7 @@ Speaker notes: Key talking points for this slide
 # Debate Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant M as Moderator
     participant O as Optimist
@@ -505,7 +649,11 @@ sequenceDiagram
     M->>M: Synthesize balanced conclusion
 ```
 
-> ✅ Debate works especially well for decisions with trade-offs.
+<div class="callout-key">
+
+**Key Point:** Debate works especially well for decisions with trade-offs.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -526,6 +674,7 @@ Speaker notes: Key talking points for this slide
 | Decision-making | **Debate/Consensus** | Weighted perspectives, nuanced conclusions |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Choose Pattern"] --> B{"Clear delegation?"}
     B -->|Yes| C["Supervisor"]
@@ -549,6 +698,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Patterns"
         A["Supervisor: Hub & Spoke"]

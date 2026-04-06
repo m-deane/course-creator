@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Decomposition Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Complex Goal"] --> B{"Decomposition Strategy"}
     B -->|Recursive| C["Top-Down"]
@@ -63,6 +64,13 @@ Speaker notes: Key talking points for this slide
 
 # 1. Top-Down Decomposition
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def decompose_goal(goal: str, max_depth: int = 3, current_depth: int = 0) -> dict:
     """Recursively decompose a goal into subtasks."""
@@ -84,6 +92,9 @@ Respond in JSON format:
 }}"""
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -94,6 +105,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 1. Top-Down Decomposition (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 response = client.messages.create(
@@ -111,6 +129,9 @@ response = client.messages.create(
     return result
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -120,6 +141,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Complexity Detection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def needs_decomposition(task: str) -> bool:
@@ -131,7 +159,11 @@ def needs_decomposition(task: str) -> bool:
     return any(ind in task.lower() for ind in complexity_indicators) and len(task) > 50
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Task Description"] --> B{"Contains complexity keywords?"}
     B -->|Yes| C{"Length > 50 chars?"}
@@ -144,7 +176,11 @@ graph TD
     G -->|No| A
 ```
 
-> 🔑 Right-size decomposition: not too granular (overhead), not too coarse (complexity).
+<div class="callout-key">
+
+**Key Point:** Right-size decomposition: not too granular (overhead), not too coarse (complexity).
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -159,6 +195,13 @@ Speaker notes: Key talking points for this slide
 
 <div class="columns">
 <div>
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 DECOMPOSITION_TEMPLATES = {
@@ -177,6 +220,9 @@ DECOMPOSITION_TEMPLATES = {
         "Implement business logic",
         "Add input validation",
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -215,6 +261,13 @@ Speaker notes: Key talking points for this slide
 
 # 2. Template-Based Decomposition (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 category = response.content[0]\
         .text.strip().lower()
@@ -229,6 +282,9 @@ category = response.content[0]\
             "subtasks"]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -238,6 +294,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 2. Template-Based Decomposition (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "Implement error handling",
@@ -256,6 +319,9 @@ Speaker notes: Key talking points for this slide
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -265,6 +331,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 3. Constraint-Aware Decomposition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @dataclass
@@ -277,6 +350,9 @@ class Task:
     priority: int = 1
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -287,6 +363,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 3. Constraint-Aware Decomposition (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def decompose_with_constraints(
@@ -301,6 +384,9 @@ For each task, specify: description, estimated_time, requires_tools,
 depends_on, priority (1=highest, 5=lowest)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -310,6 +396,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 3. Constraint-Aware Decomposition (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 Goal: {goal}"""
@@ -329,6 +422,9 @@ Goal: {goal}"""
 
     return [Task(**t) for t in tasks_data]
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -352,6 +448,13 @@ Speaker notes: Key talking points for this slide
 
 # Sequential Execution
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class SequentialExecutor:
     """Execute tasks in dependency order."""
@@ -370,6 +473,9 @@ class SequentialExecutor:
                     raise ValueError(f"Dependency {dep_id} not completed")
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -380,6 +486,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Sequential Execution (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 context = {dep_id: self.completed[dep_id]
@@ -393,6 +506,9 @@ context = {dep_id: self.completed[dep_id]
         return results
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -402,6 +518,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Topological Sort for Dependencies
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def _topological_sort(self, tasks: list[Task]) -> list[Task]:
@@ -416,6 +539,9 @@ def _topological_sort(self, tasks: list[Task]) -> list[Task]:
         visited.add(task_id)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -426,6 +552,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Topological Sort for Dependencies (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 task = task_map[task_id]
@@ -439,6 +572,9 @@ task = task_map[task_id]
     return ordered
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -448,6 +584,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Parallel Execution
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ParallelExecutor:
@@ -468,6 +611,9 @@ class ParallelExecutor:
                      if all(d in self.completed for d in (t.depends_on or []))]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -478,6 +624,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Parallel Execution (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if not ready:
@@ -499,6 +652,9 @@ if not ready:
 
         return results
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -522,6 +678,13 @@ Speaker notes: Key talking points for this slide
 
 # Create Plan, Then Execute
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class PlanAndExecuteAgent:
     """Agent that creates a full plan before execution."""
@@ -540,7 +703,11 @@ class PlanAndExecuteAgent:
         return self._synthesize(goal, results)  # Phase 3: Synthesize
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Goal"] --> B["Phase 1: Plan"]
     B --> C["Step 1"]
@@ -564,6 +731,13 @@ Speaker notes: Key talking points for this slide
 
 # Planning Phase
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def _create_plan(self, goal: str) -> list[str]:
     """Create a complete plan for the goal."""
@@ -586,7 +760,14 @@ Return steps as a numbered list."""
     return steps
 ```
 
-> ✅ Include validation steps in the plan to catch errors early.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Include validation steps in the plan to catch errors early.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -598,6 +779,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Adaptive Replanning
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class AdaptivePlanAgent:
@@ -614,6 +802,9 @@ class AdaptivePlanAgent:
             results.append({"step": step, "result": result})
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -624,6 +815,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Adaptive Replanning (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 evaluation = self._evaluate_progress(goal, plan, results)
@@ -639,6 +837,9 @@ evaluation = self._evaluate_progress(goal, plan, results)
         return self._synthesize(goal, results)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -648,6 +849,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Progress Evaluation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def _evaluate_progress(self, goal, plan, results) -> dict:
@@ -670,7 +878,14 @@ Respond with JSON:
     return json.loads(response.content[0].text)
 ```
 
-> ⚠️ Use a fast, cheap model (Haiku) for evaluation — it runs after every step.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Use a fast, cheap model (Haiku) for evaluation — it runs after every step.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -705,6 +920,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Decomposition Strategies"
         A["Top-Down: Recursive breakdown"]

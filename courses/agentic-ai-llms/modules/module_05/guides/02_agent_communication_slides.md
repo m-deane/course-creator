@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Communication Patterns Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Agent Communication"] --> B["Message Structures"]
     A --> C["Communication Patterns"]
@@ -60,6 +61,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic Message Format
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class MessageType(Enum):
     REQUEST = "request"
@@ -77,7 +85,14 @@ class AgentMessage:
     message_type: MessageType
 ```
 
-> 🔑 Every message needs a `conversation_id` to track multi-turn interactions.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Every message needs a `conversation_id` to track multi-turn interactions.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -89,6 +104,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Basic Message Format (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 content: Any
@@ -107,6 +129,9 @@ content: Any
         }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -121,6 +146,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Task Request:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @dataclass
 class TaskRequest:
@@ -130,6 +162,9 @@ class TaskRequest:
     context: dict = field(
         default_factory=dict)
 ```
+
+</div>
+</div>
 
 **Task Result:**
 ```python
@@ -156,6 +191,7 @@ class QueryMessage:
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["TaskRequest"] -->|Sent to worker| B["Processing"]
     B --> C["TaskResult"]
@@ -165,7 +201,11 @@ graph LR
 </div>
 </div>
 
-> ✅ Typed content prevents agents from misinterpreting messages.
+<div class="callout-key">
+
+**Key Point:** Typed content prevents agents from misinterpreting messages.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -190,6 +230,13 @@ Speaker notes: Key talking points for this slide
 
 # Request-Response
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class RequestResponseProtocol:
     def __init__(self, timeout: float = 30.0):
@@ -207,6 +254,9 @@ class RequestResponseProtocol:
         await router.send(message)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -217,6 +267,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Request-Response (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 try:
@@ -232,6 +289,9 @@ try:
             future.set_result(message.content)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -241,6 +301,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Publish-Subscribe
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class PubSubBroker:
@@ -257,6 +324,9 @@ class PubSubBroker:
             self.agent_queues[agent_id] = asyncio.Queue()
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -267,6 +337,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Publish-Subscribe (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 async def publish(self, topic: str, message: AgentMessage):
@@ -281,6 +358,9 @@ async def publish(self, topic: str, message: AgentMessage):
         return await self.agent_queues[agent_id].get()
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -290,6 +370,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Blackboard (Shared Memory)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class Blackboard:
@@ -309,6 +396,9 @@ class Blackboard:
         await self._notify_watchers(key, old_value, value)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -320,6 +410,13 @@ Speaker notes: Key talking points for this slide
 
 # Blackboard (Shared Memory) (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 async def read(self, key: str) -> Any:
         return self.data.get(key)
@@ -329,6 +426,9 @@ async def read(self, key: str) -> Any:
             self.watchers[key] = []
         self.watchers[key].append(callback)
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -353,6 +453,7 @@ Speaker notes: Key talking points for this slide
 # Contract Net Protocol
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant M as Manager
     participant A1 as Agent 1
@@ -370,6 +471,13 @@ sequenceDiagram
     M->>A1: Reject bid
     A2->>M: Task result
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ContractNetManager:
@@ -390,6 +498,9 @@ class ContractNetManager:
         return winner["agent"]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -400,6 +511,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Consensus Protocol
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ConsensusProtocol:
@@ -413,7 +531,14 @@ class ConsensusProtocol:
         votes = {"for": [], "against": []}
 ```
 
-> 🔑 Quorum = majority needed to pass. Prevents deadlocks with even agent counts.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Quorum = majority needed to pass. Prevents deadlocks with even agent counts.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -425,6 +550,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Consensus Protocol (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Send proposal to all agents
@@ -443,6 +575,9 @@ Speaker notes: Key talking points for this slide
                 "votes": votes, "quorum": self.quorum}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -452,6 +587,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Message Router
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class MessageRouter:
@@ -468,7 +610,14 @@ class MessageRouter:
         self.message_log.append(message)
 ```
 
-> ✅ Message logging enables debugging and auditing of all agent interactions.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Message logging enables debugging and auditing of all agent interactions.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -480,6 +629,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Message Router (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if message.recipient == "broadcast":
@@ -498,6 +654,9 @@ if message.recipient == "broadcast":
         return [m for m in self.message_log
                 if m.conversation_id == conversation_id]
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -518,6 +677,7 @@ Speaker notes: Key talking points for this slide
 | **Consensus** | Voting | Medium | Decision making |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Tight Coupling"
         A["Request-Response"]
@@ -543,6 +703,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Message Structures"
         A["Typed messages"]

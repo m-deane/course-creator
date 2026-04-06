@@ -1,10 +1,14 @@
 # Prompt Engineering Basics
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** None
 
 Prompt engineering is the practice of crafting inputs that reliably produce desired outputs from LLMs. Good prompts are clear, structured, and provide appropriate context. This guide covers foundational techniques you'll build upon throughout the course.
 
-> 💡 **Key Insight:** **Prompts are programming.** Unlike traditional code, prompts use natural language, but they require the same rigor: clear specifications, explicit edge case handling, and systematic testing. Treat prompt development like software development.
+<div class="callout-insight">
+
+**Insight:** Prompts are programming. Unlike traditional code, prompts use natural language, but they require the same rigor: clear specifications, explicit edge case handling, and systematic testing. Treat prompt development like software development.
+
+</div>
 
 ---
 
@@ -22,6 +26,13 @@ Prompt engineering is the practice of crafting inputs that reliably produce desi
 
 ### Minimal Example
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """You are a helpful assistant.
 
@@ -31,6 +42,9 @@ Text: {user_text}
 
 Summary:"""
 ```
+
+</div>
+</div>
 
 ### Complete Example
 
@@ -74,6 +88,13 @@ Changelog entry:"""
 
 ### 1. Be Explicit and Specific
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Vague instruction
 prompt = "Make this better."
@@ -87,6 +108,9 @@ prompt = """Improve this product description by:
 
 Product description: {description}"""
 ```
+
+</div>
+</div>
 
 ### 2. Use Delimiters
 
@@ -154,6 +178,13 @@ A systematic approach to prompt construction:
 **A**ction: State the task clearly
 **R**esult: Specify desired output format
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def build_prompt(context, limits, examples, action, result, input_data):
     """Build a prompt using the CLEAR framework."""
@@ -193,6 +224,9 @@ Output:
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## Prompt Patterns
@@ -200,6 +234,13 @@ Output:
 ### Pattern 1: Role Prompting
 
 Assign a specific persona to shape responses:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 roles = {
@@ -214,6 +255,9 @@ prompt = f"""{roles['expert'].format(domain='cybersecurity')}
 Analyze the security of this authentication flow:
 {auth_flow}"""
 ```
+
+</div>
+</div>
 
 ### Pattern 2: Step-by-Step Decomposition
 
@@ -274,6 +318,13 @@ Do:
 
 ### Ambiguous Input
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """Process the user request below.
 
@@ -284,6 +335,9 @@ If the request is:
 
 User request: {request}"""
 ```
+
+</div>
+</div>
 
 ### Missing Information
 
@@ -326,6 +380,13 @@ Input:
 
 ### 1. Prompt Injection Vulnerability
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Vulnerable
 prompt = f"Translate this to French: {user_input}"
@@ -341,6 +402,9 @@ Only output the translation, nothing else.
 
 French translation:"""
 ```
+
+</div>
+</div>
 
 ### 2. Instruction Overload
 
@@ -383,6 +447,13 @@ prompt = """Write a product description that:
 ## Testing Prompts
 
 ### The Test Case Approach
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def test_prompt(prompt_template: str, test_cases: list[dict]) -> dict:
@@ -429,6 +500,9 @@ test_cases = [
 ]
 ```
 
+</div>
+</div>
+
 ---
 
 ## Quick Reference
@@ -442,6 +516,34 @@ test_cases = [
 | Negative Prompting | Avoid common mistakes | "Do NOT include..." |
 | Examples | Complex or ambiguous tasks | "Example: Input → Output" |
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Prompting is a skill that improves with practice. Start simple, test systematically, and iterate based on failures. The best prompts emerge from understanding how the model interprets your instructions.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_prompt_basics_slides.md">
+  <div class="link-card-title">Prompt Engineering Basics — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_api_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

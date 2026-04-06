@@ -1,5 +1,7 @@
 # Module 0: Foundations Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 0 — Foundations | **Prerequisites:** Module 0 guides
+
 ## Key Concepts
 
 | Concept | Definition |
@@ -16,6 +18,13 @@
 ## Common API Patterns
 
 ### Basic Claude API Call
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import anthropic
 
@@ -29,6 +38,9 @@ message = client.messages.create(
 )
 print(message.content[0].text)
 ```
+
+</div>
+</div>
 
 ### OpenAI API Call
 ```python
@@ -68,6 +80,13 @@ with client.messages.stream(
 
 ## Temperature Guide
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Factual, deterministic (Q&A, extraction, classification)
 temperature=0.0
@@ -82,15 +101,28 @@ temperature=0.7
 temperature=1.0
 ```
 
+</div>
+</div>
+
 ## Gotchas
 
 - **Context overflow** - Always count tokens before sending. Use `tiktoken` (OpenAI) or Anthropic's count API
-  ```python
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
+```python
   # Count tokens before sending
   token_count = client.count_tokens(text)
   if token_count > max_context:
       # Truncate or summarize
   ```
+
+</div>
+</div>
 
 - **Output token limits** - Set `max_tokens` explicitly; models won't complete responses without it
   ```python

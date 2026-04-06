@@ -45,6 +45,13 @@ Speaker notes: Key talking points for this slide
 
 # System Prompt Structure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 system_prompt = """You are a [IDENTITY/ROLE].
 
@@ -65,7 +72,11 @@ Available tools:
 """
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Identity"] --> B["Capabilities"]
     B --> C["Constraints"]
@@ -88,6 +99,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Zero-shot CoT:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """
 Question: {question}
@@ -95,6 +113,9 @@ Question: {question}
 Let's solve this step by step:
 """
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -117,6 +138,7 @@ Reasoning:
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Zero-Shot CoT"] -->|Add examples| B["Few-Shot CoT"]
     B -->|Multiple paths| C["Self-Consistency"]
@@ -134,6 +156,13 @@ Speaker notes: Key talking points for this slide
 
 # Few-Shot Pattern
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 messages = [
     {"role": "system", "content": "You extract key entities from text."},
@@ -148,7 +177,14 @@ messages = [
 ]
 ```
 
-> 🔑 Put the most important example last — it has the strongest influence.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Put the most important example last — it has the strongest influence.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -160,6 +196,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Self-Consistency Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def self_consistency(question, num_samples=5):
@@ -174,6 +217,9 @@ def self_consistency(question, num_samples=5):
         answers.append(extract_final_answer(response.content[0].text))
     return max(set(answers), key=answers.count)  # Majority vote
 ```
+
+</div>
+</div>
 
 # Prompt Templates
 
@@ -227,12 +273,22 @@ Speaker notes: Key talking points for this slide
 - Last example has highest influence
 
 **Temperature for reasoning:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Reasoning: deterministic
 temperature=0.0
 # Creative tasks only
 temperature=0.7
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -273,6 +329,7 @@ Speaker notes: Key talking points for this slide
 # Module 1 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Core Techniques"
         A["System Prompts"] --> D["Agent Persona"]

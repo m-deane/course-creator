@@ -49,6 +49,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Claude:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 tools = [{
     "name": "get_weather",
@@ -66,6 +73,9 @@ tools = [{
     }
 }]
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -97,6 +107,13 @@ Speaker notes: Key talking points for this slide
 
 # Tool Definition: Claude vs OpenAI (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 "location": {
                     "type": "string"
@@ -108,6 +125,9 @@ Speaker notes: Key talking points for this slide
 }]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -117,6 +137,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Tool Use Loop (Claude)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 messages = [{"role": "user", "content": "What's the weather in NYC?"}]
@@ -129,6 +156,9 @@ while response.stop_reason == "tool_use":
     tool_result = process_tool_call(tool_use.name, tool_use.input)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -139,6 +169,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Tool Use Loop (Claude) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 messages.append({"role": "assistant", "content": response.content})
@@ -152,6 +189,9 @@ messages.append({"role": "assistant", "content": response.content})
 
 print(response.content[0].text)
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -182,6 +222,13 @@ Speaker notes: Key talking points for this slide
 
 # Error Handling Wrapper
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=10))
 def safe_tool_execution(tool_name, tool_input):
@@ -198,6 +245,9 @@ def safe_tool_execution(tool_name, tool_input):
         return {"success": False, "error": f"Tool failed: {e}"}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -213,11 +263,21 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Input Validation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from jsonschema import validate
 validate(instance=tool_input,
          schema=tool_schema)
 ```
+
+</div>
+</div>
 
 **Parameter Sanitization:**
 ```python
@@ -292,6 +352,7 @@ Speaker notes: Key talking points for this slide
 # Module 2 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Core Skills"
         A["Tool Schemas"] --> D["Define tools LLMs can use"]

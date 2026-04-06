@@ -1,16 +1,27 @@
 # Multi-Agent Patterns: Orchestration Architectures
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 5 — Multi-Agent Systems | **Prerequisites:** Module 4 — Agentic Patterns
 
 Multi-agent systems divide complex tasks among specialized agents. Different orchestration patterns suit different problems—supervisor patterns for delegation, peer-to-peer for collaboration, hierarchical for scale.
 
-> 💡 **Key Insight:** **The right architecture matches problem structure.** Supervisor patterns work for clear delegation. Peer networks suit collaborative exploration. Choose based on your task decomposition, not technology preferences.
+<div class="callout-insight">
+
+**Insight:** The right architecture matches problem structure. Supervisor patterns work for clear delegation. Peer networks suit collaborative exploration. Choose based on your task decomposition, not technology preferences.
+
+</div>
 
 ---
 
 ## Pattern 1: Supervisor (Hub and Spoke)
 
 One orchestrator delegates to specialized workers:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -126,11 +137,21 @@ supervisor = SupervisorAgent([
 result = supervisor.run("Research Python async patterns and implement an example")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Pattern 2: Peer-to-Peer (Collaborative)
 
 Agents work together without central control:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import asyncio
@@ -245,11 +266,21 @@ class PeerNetwork:
         return len(responses) == 0
 ```
 
+</div>
+</div>
+
 ---
 
 ## Pattern 3: Hierarchical
 
 Nested management for complex organizational tasks:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @dataclass
@@ -330,11 +361,21 @@ ceo.subordinates = [cto, cmo]
 result = ceo.assign_task("Launch a new product feature")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Pattern 4: Pipeline (Sequential)
 
 Agents form a processing chain:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class PipelineStage:
@@ -395,11 +436,21 @@ writer = PipelineStage(
 result = writer.process({"topic": "Introduction to AI Agents"})
 ```
 
+</div>
+</div>
+
 ---
 
 ## Pattern 5: Debate and Consensus
 
 Agents argue positions and reach agreement:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class DebateAgent:
@@ -502,6 +553,9 @@ moderator = DebateModerator([optimist, pessimist, pragmatist])
 debate_result = moderator.run_debate("The impact of AI on employment")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Choosing the Right Pattern
@@ -515,6 +569,34 @@ debate_result = moderator.run_debate("The impact of AI on employment")
 | Decision-making | Debate/Consensus |
 | Dynamic workloads | Market-Based |
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Multi-agent systems multiply capabilities. Choose patterns that match your problem structure and let agents collaborate effectively.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_multi_agent_patterns_slides.md">
+  <div class="link-card-title">Multi-Agent Architecture Patterns — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_orchestrator_agents.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

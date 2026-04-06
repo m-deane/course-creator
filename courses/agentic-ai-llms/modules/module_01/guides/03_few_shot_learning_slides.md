@@ -26,11 +26,12 @@ Speaker notes: Key talking points for this slide
 **Examples demonstrate format, tone, edge case handling, and implicit rules that are hard to describe but easy to recognize.**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Instructions Only"] -->|Often ambiguous| B["Inconsistent Output"]
     C["Instructions + Examples"] -->|Clear pattern| D["Consistent Output"]
     style A fill:#F44336
-    style B fill:#F44336
+    style B fill:#fce4ec,stroke:#ef5350,stroke-width:2px
     style C fill:#4CAF50
     style D fill:#4CAF50
 ```
@@ -53,6 +54,7 @@ Speaker notes: Key talking points for this slide
 | **Many-Shot** | 10-100+ | Complex tasks, consider fine-tuning |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Zero-Shot"] --> B["One-Shot"]
     B --> C["Few-Shot (3-8)"]
@@ -103,7 +105,11 @@ Classify:
 "This product exceeded my expectations!"
 ```
 
-> 🔑 More examples = more consistent format adherence.
+<div class="callout-key">
+
+**Key Point:** More examples = more consistent format adherence.
+
+</div>
 
 </div>
 </div>
@@ -136,6 +142,13 @@ Include examples that cover the range of expected inputs:
 <div>
 
 **Bad: All similar**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 examples = [
     ("I love it!", "Positive"),
@@ -143,6 +156,9 @@ examples = [
     ("Amazing product!", "Positive"),
 ]
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -174,6 +190,13 @@ Speaker notes: Key talking points for this slide
 
 Include easy and hard examples:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 examples = [
     # Easy (clear sentiment)
@@ -186,6 +209,9 @@ examples = [
     ("Love the idea, hate the execution.", "Mixed"),
 ]
 ```
+
+</div>
+</div>
 
 # Principle 3: Edge Cases
 
@@ -210,6 +236,7 @@ Speaker notes: Key talking points for this slide
 # Example Selection Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Select Examples"] --> B{"Task Type?"}
     B -->|Classification| C["Cover all classes"]
@@ -244,6 +271,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic Structure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def create_few_shot_prompt(examples: list[tuple], task: str) -> str:
     """Create a few-shot prompt from examples."""
@@ -253,6 +287,9 @@ def create_few_shot_prompt(examples: list[tuple], task: str) -> str:
     prompt += f"Input: {task}\nOutput:"
     return prompt
 ```
+
+</div>
+</div>
 
 # Structured with Instructions
 
@@ -276,6 +313,13 @@ Speaker notes: Key talking points for this slide
 
 # Few-Shot with Reasoning (CoT)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 examples_with_reasoning = [
     {
@@ -291,7 +335,14 @@ examples_with_reasoning = [
 ]
 ```
 
-> 🔑 Combining few-shot with chain-of-thought teaches both format AND reasoning style.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Combining few-shot with chain-of-thought teaches both format AND reasoning style.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -304,6 +355,13 @@ Speaker notes: Key talking points for this slide
 
 # Few-Shot with Reasoning (CoT) (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def few_shot_cot(examples: list[dict], question: str) -> str:
     prompt = "Solve these problems, showing your reasoning:\n\n"
@@ -314,6 +372,9 @@ def few_shot_cot(examples: list[dict], question: str) -> str:
     prompt += f"Question: {question}\nReasoning:"
     return prompt
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -339,6 +400,13 @@ Speaker notes: Key talking points for this slide
 
 Choose examples most similar to the input:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from sentence_transformers import SentenceTransformer
 import numpy as np
@@ -357,7 +425,11 @@ class DynamicFewShot:
         return [self.examples[i] for i in top_indices]
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Q["Query"] --> E["Embed Query"]
     E --> S["Compute Similarity"]
@@ -379,6 +451,13 @@ Speaker notes: Key talking points for this slide
 
 Ensure examples cover different categories:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def select_diverse_examples(examples, query, k=4):
     """Select examples ensuring category diversity."""
@@ -388,7 +467,14 @@ def select_diverse_examples(examples, query, k=4):
         by_category.setdefault(cat, []).append(ex)
 ```
 
-> ✅ Dynamic selection ensures the most relevant examples are always used.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Dynamic selection ensures the most relevant examples are always used.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -400,6 +486,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Category-Based Selection (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Round-robin from each category
@@ -414,6 +507,9 @@ Speaker notes: Key talking points for this slide
     return selected
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -423,6 +519,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Format Examples: JSON Output
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 prompt = """Examples of entity extraction:
@@ -438,6 +541,9 @@ Output: {
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -448,6 +554,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Format Examples: JSON Output (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 Input: "Satya Nadella became CEO in 2014"
@@ -464,6 +577,9 @@ Input: "{user_input}"
 Output:"""
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -475,6 +591,7 @@ Speaker notes: Key talking points for this slide
 # Anti-Patterns
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Few-Shot Anti-Patterns"] --> B["Inconsistent Formatting"]
     A --> C["Examples Too Easy"]
@@ -498,6 +615,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **1. Inconsistent Formatting:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad
 ("good movie", "POSITIVE"),
@@ -509,6 +633,9 @@ Speaker notes: Key talking points for this slide
 ("bad movie", "Negative"),
 ("okay movie", "Neutral"),
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -528,7 +655,11 @@ Speaker notes: Key talking points for this slide
 </div>
 </div>
 
-> ⚠️ The model mirrors your examples exactly — inconsistency in examples produces inconsistency in output.
+<div class="callout-warning">
+
+**Warning:** The model mirrors your examples exactly — inconsistency in examples produces inconsistency in output.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -569,6 +700,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Few-Shot + System Prompt:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 system = """You are a customer support
 classifier. Always respond with exactly
@@ -581,6 +719,9 @@ few_shot = """
 
 "{customer_message}" ->"""
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -612,6 +753,13 @@ Speaker notes: Key talking points for this slide
 
 # Testing Few-Shot Prompts
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def evaluate_few_shot(prompt_template, test_cases, examples):
     results = []
@@ -629,6 +777,9 @@ def evaluate_few_shot(prompt_template, test_cases, examples):
     }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -641,6 +792,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Few-Shot Techniques"
         A["Static Examples"] --> B["Dynamic Selection"]

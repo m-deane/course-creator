@@ -1,10 +1,14 @@
 # Production Architecture: Designing for Reliability
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 7 — Production Deployment | **Prerequisites:** Module 5 — Multi-Agent Systems
 
 Production agents face challenges prototypes never see: high load, network failures, malicious inputs, and cost constraints. This guide covers architectural patterns that make agents reliable, observable, and maintainable at scale.
 
-> 💡 **Key Insight:** **Production readiness is about failure handling.** Assume everything will fail—APIs timeout, models hallucinate, users send garbage. Build systems that fail gracefully and recover automatically.
+<div class="callout-insight">
+
+**Insight:** Production readiness is about failure handling. Assume everything will fail—APIs timeout, models hallucinate, users send garbage. Build systems that fail gracefully and recover automatically.
+
+</div>
 
 ---
 
@@ -49,6 +53,13 @@ Production agents face challenges prototypes never see: high load, network failu
 ### Implementation
 
 `ProductionAgent` wraps the core agent loop with input validation, caching, structured error handling, and metrics collection—solving the gap between a working prototype and a system that can handle real load, malformed inputs, and partial failures without crashing. It uses `AgentConfig` to centralise all tunable parameters so deployment settings never live inside business logic.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from dataclasses import dataclass
@@ -145,6 +156,9 @@ class ProductionAgent:
         pass
 ```
 
+</div>
+</div>
+
 ---
 
 ## Reliability Patterns
@@ -152,6 +166,13 @@ class ProductionAgent:
 ### Circuit Breaker
 
 Prevent cascading failures:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from datetime import datetime, timedelta
@@ -228,6 +249,9 @@ async def call_llm_with_protection(prompt):
     return await llm_circuit.call(client.messages.create, ...)
 ```
 
+</div>
+</div>
+
 ### Fallback Strategies
 
 ```python
@@ -286,6 +310,13 @@ class BulkheadAgent:
 
 ### Rate Limiting
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from collections import defaultdict
 import time
@@ -330,6 +361,9 @@ async def rate_limit_middleware(request: Request):
         raise HTTPException(status_code=429, detail="Too many requests")
 ```
 
+</div>
+</div>
+
 ### Request Prioritization
 
 ```python
@@ -366,6 +400,13 @@ class PriorityQueue:
 ## Deployment Patterns
 
 ### FastAPI Agent Service
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -408,6 +449,9 @@ async def query_agent(request: AgentRequest):
 async def health_check():
     return {"status": "healthy", "version": "1.0.0"}
 ```
+
+</div>
+</div>
 
 ### Docker Deployment
 
@@ -485,6 +529,13 @@ spec:
 
 ### Structured Error Responses
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from enum import Enum
 
@@ -539,6 +590,37 @@ def handle_llm_error(error: Exception) -> AgentError:
     )
 ```
 
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Production deployment is where agents prove their value. Build for failure, measure everything, and iterate based on real-world performance.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_production_architecture_slides.md">
+  <div class="link-card-title">Production Agent Architecture — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_deployment_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

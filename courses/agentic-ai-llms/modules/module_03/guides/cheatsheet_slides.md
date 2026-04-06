@@ -46,6 +46,7 @@ Speaker notes: Key talking points for this slide
 # Memory Strategies At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Memory Strategy"] --> B["Buffer: Keep all messages"]
     A --> C["Window: Keep last K turns"]
@@ -67,6 +68,13 @@ Speaker notes: Key talking points for this slide
 
 # Quick RAG Pipeline
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # 1. Setup
 collection = chromadb.Client().create_collection("kb", embedding_function=ef)
@@ -84,6 +92,9 @@ response = client.messages.create(
     messages=[{"role": "user",
         "content": f"Answer based on context:\n\n{context}\n\nQ: {question}"}])
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -103,7 +114,11 @@ Speaker notes: Key talking points for this slide
 | Code Search | 200 tokens | 20 |
 | Conversational | 600 tokens | 100 |
 
-> ⚠️ Too large = dilutes relevance. Too small = loses context. Always use overlap.
+<div class="callout-warning">
+
+**Warning:** Too large = dilutes relevance. Too small = loses context. Always use overlap.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -139,6 +154,7 @@ Speaker notes: Key talking points for this slide
 # Module 3 At a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Core Skills"
         A["Conversation Memory"] --> D["Manage state across turns"]

@@ -28,6 +28,7 @@ Speaker notes: Key talking points for this slide
 The LLM decides *when* to call a tool and *with what arguments*. Your code handles execution.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["User Query"] --> B["LLM Reasoning"]
     B --> C["Structured Tool Call JSON"]
@@ -73,6 +74,13 @@ Speaker notes: Key talking points for this slide
 
 # Step 1: Define Tools
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 tools = [
     {
@@ -87,7 +95,14 @@ tools = [
                 },
 ```
 
-> 🔑 The `description` field is a prompt — it tells the LLM when to use this tool.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** The `description` field is a prompt — it tells the LLM when to use this tool.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -99,6 +114,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Step 1: Define Tools (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "units": {
@@ -113,6 +135,9 @@ Speaker notes: Key talking points for this slide
 ]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -122,6 +147,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Step 2: Implement Execution
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def execute_tool(name: str, arguments: dict) -> str:
@@ -135,6 +167,9 @@ def execute_tool(name: str, arguments: dict) -> str:
     else:
         return json.dumps({"error": f"Unknown tool: {name}"})
 ```
+
+</div>
+</div>
 
 # Step 3: The Agent Loop
 
@@ -159,6 +194,13 @@ Speaker notes: Key talking points for this slide
 
 # Complete Agent Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def run_agent(user_message: str) -> str:
     messages = [{"role": "user", "content": user_message}]
@@ -171,6 +213,9 @@ def run_agent(user_message: str) -> str:
         messages.append({"role": "assistant", "content": response.content})
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -181,6 +226,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Complete Agent Loop (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 tool_results = []
@@ -198,6 +250,9 @@ tool_results = []
     return "".join(b.text for b in response.content if hasattr(b, "text"))
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -207,6 +262,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Tool Schema: JSON Schema Basics
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 tool = {
@@ -223,6 +285,9 @@ tool = {
             "limit": {
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -233,6 +298,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Tool Schema: JSON Schema Basics (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "type": "integer",
@@ -247,6 +319,9 @@ Speaker notes: Key talking points for this slide
     }
 }
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -329,6 +404,7 @@ Speaker notes: Key talking points for this slide
 # Providing Multiple Tools
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Q["User Query"] --> D{"LLM Decision"}
     D -->|Weather question| W["get_weather"]
@@ -352,6 +428,13 @@ Speaker notes: Key talking points for this slide
 
 # Parallel Tool Execution
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -372,7 +455,14 @@ async def execute_tools_parallel(tool_calls: list) -> list:
     ]
 ```
 
-> ✅ When the model requests multiple independent tools, execute them in parallel for speed.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** When the model requests multiple independent tools, execute them in parallel for speed.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -389,10 +479,20 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Auto (default):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 tool_choice={"type": "auto"}
 # Model decides whether to use tools
 ```
+
+</div>
+</div>
 
 **Force specific tool:**
 ```python
@@ -440,6 +540,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Success:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "type": "tool_result",
@@ -450,6 +557,9 @@ Speaker notes: Key talking points for this slide
     })
 }
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -489,6 +599,13 @@ Speaker notes: Key talking points for this slide
 
 # Complete ToolAgent Class
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ToolAgent:
     def __init__(self, tools: list, max_turns: int = 10):
@@ -501,6 +618,9 @@ class ToolAgent:
         self.tool_handlers[tool_name] = handler
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -511,6 +631,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Complete ToolAgent Class (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def run(self, user_message: str, system_prompt: str = None) -> str:
@@ -525,6 +652,9 @@ def run(self, user_message: str, system_prompt: str = None) -> str:
         return "Max turns reached"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -536,6 +666,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Tool Calling Flow"
         A["Define Tools (Schema)"] --> B["LLM Selects Tool"]

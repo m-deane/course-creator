@@ -1,10 +1,14 @@
 # Transformer Architecture for Agent Builders
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 0 — Foundations | **Prerequisites:** None
 
 Transformers are the neural network architecture behind all modern LLMs. Understanding how they process and generate text helps you write better prompts, debug agent behavior, and make informed design decisions.
 
-> 💡 **Key Insight:** Transformers process all tokens simultaneously through attention, but generate output one token at a time. This means the model "sees" your entire prompt at once but must commit to each output token sequentially—once generated, tokens can't be revised.
+<div class="callout-insight">
+
+**Insight:** Transformers process all tokens simultaneously through attention, but generate output one token at a time. This means the model "sees" your entire prompt at once but must commit to each output token sequentially—once generated, tokens can't be revised.
+
+</div>
 
 ---
 
@@ -68,6 +72,13 @@ Each layer refines the representation, building from tokens → syntax → seman
 
 ### The Generation Loop
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def generate(prompt, max_tokens):
     tokens = tokenize(prompt)
@@ -87,6 +98,9 @@ def generate(prompt, max_tokens):
 
     return detokenize(tokens)
 ```
+
+</div>
+</div>
 
 ### Sampling Strategies
 
@@ -132,6 +146,13 @@ Attention is O(n²) in sequence length—each token attends to every other:
 
 ### Context Window Management
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def manage_context(messages, max_tokens=100000):
     """Keep conversation within context limits."""
@@ -145,6 +166,9 @@ def manage_context(messages, max_tokens=100000):
     return messages
 ```
 
+</div>
+</div>
+
 ---
 
 ## Practical Implications for Agents
@@ -152,6 +176,13 @@ def manage_context(messages, max_tokens=100000):
 ### 1. Prompt Placement Matters
 
 Put critical instructions at the **beginning** and **end** of prompts—these positions get more attention.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 system_prompt = """
@@ -165,6 +196,9 @@ You are an agent that...
 Remember to always...
 """
 ```
+
+</div>
+</div>
 
 ### 2. Structured Output is Easier
 
@@ -222,6 +256,13 @@ For tool calls and structured output: yes. For creative tasks, brainstorming, or
 
 ## Code: Inspecting Tokenization
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import anthropic
 
@@ -248,7 +289,16 @@ for text in examples:
     print(f"'{text[:50]}...' -> {tokens} tokens ({ratio:.2f} words/token)")
 ```
 
+</div>
+</div>
+
 ---
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
 
 ## Further Reading
 
@@ -259,3 +309,25 @@ for text in examples:
 ---
 
 *Understanding transformers isn't about the math—it's about intuition for how tokens flow through the model and how that affects your agent designs.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./01_transformer_architecture_slides.md">
+  <div class="link-card-title">Transformer Architecture for Agent Builders — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_api_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

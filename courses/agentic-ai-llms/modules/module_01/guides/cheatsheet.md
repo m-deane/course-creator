@@ -1,5 +1,7 @@
 # Module 1: LLM Fundamentals for Agents Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 1 — Advanced Prompting | **Prerequisites:** Module 1 guides
+
 ## Key Concepts
 
 | Concept | Definition |
@@ -16,6 +18,13 @@
 ## Common Patterns
 
 ### Effective System Prompt Structure
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 system_prompt = """You are a [IDENTITY/ROLE].
 
@@ -36,6 +45,9 @@ Available tools:
 - [Tool 2]: [When to use]
 """
 ```
+
+</div>
+</div>
 
 ### Chain-of-Thought Prompting
 ```python
@@ -116,13 +128,23 @@ prompt = template.substitute(
 ## Prompt Optimization Checklist
 
 - [ ] **Be specific** - Vague prompts get vague results
-  ```python
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
+```python
   # Vague
   "Summarize this article"
 
   # Specific
   "Summarize this article in 3 bullet points focusing on financial impact"
   ```
+
+</div>
+</div>
 
 - [ ] **Provide context** - Give the model background information
   ```python
@@ -155,10 +177,20 @@ prompt = template.substitute(
 ## Gotchas
 
 - **System prompt length** - Counts against context window; keep focused and concise
-  ```python
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
+```python
   # Bad: 5000 token system prompt
   # Good: 200-500 token system prompt with clear priorities
   ```
+
+</div>
+</div>
 
 - **Few-shot example quality** - Bad examples teach bad behavior
   ```python

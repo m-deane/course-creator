@@ -72,6 +72,7 @@ Speaker notes: Key talking points for this slide
 | Translation | **Low** | Direct language transfer |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Task Complexity"] -->|High| B["Use CoT"]
     A -->|Low| C["Skip CoT"]
@@ -103,12 +104,22 @@ Speaker notes: Key talking points for this slide
 
 The simplest form — just add "Let's think step by step":
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """A bat and ball cost $1.10 in total. The bat costs $1.00 more
 than the ball. How much does the ball cost?
 
 Let's think step by step."""
 ```
+
+</div>
+</div>
 
 **Output:**
 ```
@@ -122,7 +133,11 @@ And: x = $0.05
 The ball costs $0.05 (5 cents).
 ```
 
-> 🔑 One phrase — "Let's think step by step" — dramatically improves reasoning.
+<div class="callout-key">
+
+**Key Point:** One phrase — "Let's think step by step" — dramatically improves reasoning.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -136,6 +151,13 @@ Speaker notes: Key talking points for this slide
 # 2. Few-Shot CoT
 
 Provide examples with reasoning:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 prompt = """Solve these problems by thinking step by step.
@@ -155,7 +177,14 @@ Q: {new_problem}
 A: Let's think step by step."""
 ```
 
-> ✅ Examples teach the model the expected reasoning format.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Examples teach the model the expected reasoning format.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -169,6 +198,13 @@ Speaker notes: Key talking points for this slide
 # 3. Self-Consistency
 
 Generate multiple reasoning paths, take the majority answer:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def solve_with_self_consistency(problem: str, n_samples: int = 5) -> str:
@@ -188,7 +224,11 @@ def solve_with_self_consistency(problem: str, n_samples: int = 5) -> str:
     return Counter(answers).most_common(1)[0][0]
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     P["Problem"] --> S1["Path 1: Answer A"]
     P --> S2["Path 2: Answer A"]
@@ -216,6 +256,7 @@ Speaker notes: Key talking points for this slide
 Explore multiple reasoning branches, evaluate, and prune:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     P["Problem"] --> T1["Thought 1 (0.8)"]
     P --> T2["Thought 2 (0.4)"]
@@ -248,6 +289,13 @@ Speaker notes: Key talking points for this slide
 
 # ToT Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def tree_of_thought(problem: str, breadth: int = 3, depth: int = 3) -> str:
     def generate_thoughts(context: str, n: int) -> list[str]:
@@ -267,6 +315,9 @@ def tree_of_thought(problem: str, breadth: int = 3, depth: int = 3) -> str:
         return float(response.content[0].text.strip())
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -277,6 +328,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # ToT Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 paths = [(problem, 0.5)]
@@ -290,6 +348,9 @@ paths = [(problem, 0.5)]
 
     return get_final_answer(paths[0][0])
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -309,6 +370,7 @@ Speaker notes: Key talking points for this slide
 | Tree-of-Thought | Highest | High | High | Complex planning |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Simple Task"] --> B["Zero-Shot CoT"]
     C["Domain Task"] --> D["Few-Shot CoT"]
@@ -349,6 +411,7 @@ Answer:  France has approximately 68 million people.
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T["Thought"] --> A["Action"]
     A --> O["Observation"]
@@ -356,7 +419,11 @@ graph LR
     O -->|Done| F["Final Answer"]
 ```
 
-> 🔑 ReAct combines reasoning (CoT) with tool use — covered in depth in Module 04.
+<div class="callout-key">
+
+**Key Point:** ReAct combines reasoning (CoT) with tool use — covered in depth in Module 04.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -373,6 +440,13 @@ Speaker notes: Key talking points for this slide
 
 **Step-Back Prompting:**
 Ask for principles before specifics:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """Before solving, let's step back.
 
@@ -383,6 +457,9 @@ Step 2: How do they guide the solution?
 Step 3: Now solve the specific problem.
 """
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -429,6 +506,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic CoT Wrapper
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def with_cot(prompt: str, cot_trigger: str = "Let's think step by step.") -> str:
     """Add chain-of-thought to any prompt."""
@@ -439,6 +523,9 @@ def with_cot(prompt: str, cot_trigger: str = "Let's think step by step.") -> str
     )
     return response.content[0].text
 ```
+
+</div>
+</div>
 
 # CoT with Answer Extraction
 
@@ -468,6 +555,13 @@ Speaker notes: Key talking points for this slide
 
 Have the model check its own work:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def solve_and_verify(problem: str) -> dict:
     # Step 1: Solve
@@ -486,7 +580,11 @@ def solve_and_verify(problem: str) -> dict:
     return {**solution, "verified_correct": is_correct}
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Problem"] --> B["Solve with CoT"]
     B --> C["Verify Solution"]
@@ -522,6 +620,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Adaptive CoT:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def adaptive_cot(problem, threshold=0.5):
     """Use CoT only for complex problems."""
@@ -533,7 +638,14 @@ def adaptive_cot(problem, threshold=0.5):
         return direct_answer(problem)
 ```
 
-> ⚠️ Don't over-engineer simple problems with CoT.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Don't over-engineer simple problems with CoT.
+
+</div>
 
 </div>
 </div>
@@ -550,6 +662,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "CoT Variants"
         A["Zero-Shot CoT"] --> B["Few-Shot CoT"]

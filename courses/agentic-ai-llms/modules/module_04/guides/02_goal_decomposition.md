@@ -1,10 +1,14 @@
 # Goal Decomposition: Breaking Complex Tasks into Steps
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 4 — Agentic Patterns | **Prerequisites:** Module 4 — ReAct Pattern
 
 Complex goals require breaking down into manageable subtasks. Goal decomposition transforms an ambitious objective like "build a data pipeline" into a sequence of concrete, achievable steps that an agent can execute systematically.
 
-> 💡 **Key Insight:** **Complex tasks fail when attempted atomically.** Decomposition makes the implicit explicit—surfacing dependencies, enabling parallel execution, and creating natural checkpoints for validation and course correction.
+<div class="callout-insight">
+
+**Insight:** Complex tasks fail when attempted atomically. Decomposition makes the implicit explicit—surfacing dependencies, enabling parallel execution, and creating natural checkpoints for validation and course correction.
+
+</div>
 
 ---
 
@@ -13,6 +17,13 @@ Complex goals require breaking down into manageable subtasks. Goal decomposition
 ### 1. Top-Down Decomposition
 
 Start with the goal, recursively break into subtasks:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -70,6 +81,9 @@ def needs_decomposition(task: str) -> bool:
     ]
     return any(ind in task.lower() for ind in complexity_indicators) and len(task) > 50
 ```
+
+</div>
+</div>
 
 ### 2. Template-Based Decomposition
 
@@ -241,6 +255,13 @@ Return as JSON array:
 
 ### Sequential Execution
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class SequentialExecutor:
     """Execute tasks in dependency order."""
@@ -299,6 +320,9 @@ class SequentialExecutor:
 
         return ordered
 ```
+
+</div>
+</div>
 
 ### Parallel Execution
 
@@ -367,6 +391,13 @@ class ParallelExecutor:
 ## Plan-and-Execute Pattern
 
 ### Create Plan, Then Execute
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class PlanAndExecuteAgent:
@@ -460,9 +491,19 @@ Provide a final summary of what was accomplished."""
         return response.content[0].text
 ```
 
+</div>
+</div>
+
 ---
 
 ## Adaptive Replanning
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class AdaptivePlanAgent:
@@ -552,6 +593,9 @@ What remains to be done? Express as a new goal."""
         return response.content[0].text
 ```
 
+</div>
+</div>
+
 ---
 
 ## Best Practices
@@ -564,6 +608,34 @@ What remains to be done? Express as a new goal."""
 6. **Progress Tracking**: Log execution for debugging
 7. **Adaptive Planning**: Be ready to replan when reality diverges
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Goal decomposition transforms ambitious objectives into achievable task sequences. Master this skill to build agents that can tackle any complex challenge.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_goal_decomposition_slides.md">
+  <div class="link-card-title">Goal Decomposition and Planning — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_react_agents.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

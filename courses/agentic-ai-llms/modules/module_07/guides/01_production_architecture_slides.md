@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Reference Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     U["User Request"] --> GW["API Gateway\n(Rate limiting, Auth, Load balancing)"]
     GW --> RR["Request Router\n(Model selection, Classification)"]
@@ -56,6 +57,13 @@ Speaker notes: Key talking points for this slide
 
 # Production Agent Configuration
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @dataclass
 class AgentConfig:
@@ -68,6 +76,9 @@ class AgentConfig:
     log_level: str = "INFO"
 ```
 
+</div>
+</div>
+
 ```python
 class ProductionAgent:
     def __init__(self, config: AgentConfig):
@@ -78,7 +89,11 @@ class ProductionAgent:
         self.logger = StructuredLogger(config.log_level)
 ```
 
-> 🔑 Externalize configuration — never hardcode models, timeouts, or limits.
+<div class="callout-key">
+
+**Key Point:** Externalize configuration — never hardcode models, timeouts, or limits.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -90,6 +105,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Production Request Lifecycle
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 async def run(self, request_id: str, user_input: str) -> dict:
@@ -108,6 +130,9 @@ async def run(self, request_id: str, user_input: str) -> dict:
         validated_output = self.validate_output(result)            # Layer 4
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -118,6 +143,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Production Request Lifecycle (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if self.cache:
@@ -136,6 +168,9 @@ if self.cache:
     finally:
         span.end()
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -160,6 +195,7 @@ Speaker notes: Key talking points for this slide
 # Circuit Breaker
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Request"] --> B{"Circuit State?"}
     B -->|CLOSED| C["Execute Call"]
@@ -176,7 +212,11 @@ graph TD
     E -->|Failure| I
 ```
 
-> 🔑 Circuit breakers prevent cascading failures — when a dependency is down, fail fast instead of waiting.
+<div class="callout-key">
+
+**Key Point:** Circuit breakers prevent cascading failures — when a dependency is down, fail fast instead of waiting.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -187,6 +227,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Circuit Breaker Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class CircuitBreaker:
@@ -200,6 +247,9 @@ class CircuitBreaker:
         self.failures = 0
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -210,6 +260,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Circuit Breaker Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 async def call(self, func, *args, **kwargs):
@@ -227,6 +284,9 @@ async def call(self, func, *args, **kwargs):
             raise
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -241,6 +301,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Fallback Strategies:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class FallbackAgent:
     def __init__(self):
@@ -256,6 +323,9 @@ class FallbackAgent:
         except (RateLimitError, TimeoutError):
             pass
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -279,7 +349,11 @@ class BulkheadAgent:
 </div>
 </div>
 
-> ⚠️ Without bulkheads, a slow tool can exhaust all connections and bring down LLM calls too.
+<div class="callout-warning">
+
+**Warning:** Without bulkheads, a slow tool can exhaust all connections and bring down LLM calls too.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -291,6 +365,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Fallback & Bulkhead Patterns (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 async def call_llm(self, messages):
@@ -304,6 +385,9 @@ async def call_llm(self, messages):
                 name, params)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -313,6 +397,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Fallback & Bulkhead Patterns (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Try fallback model
@@ -326,6 +417,9 @@ Speaker notes: Key talking points for this slide
         return self.emergency
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -335,6 +429,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Rate Limiting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RateLimiter:
@@ -351,6 +452,9 @@ class RateLimiter:
         self.last_update[key] = now
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -361,6 +465,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Rate Limiting (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Add tokens based on elapsed time
@@ -375,6 +486,9 @@ Speaker notes: Key talking points for this slide
         return False
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -384,6 +498,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Request Prioritization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class Priority(Enum):
@@ -397,6 +518,9 @@ class PriorityQueue:
         self.counter = 0
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -407,6 +531,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Request Prioritization (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def enqueue(self, priority: Priority, request: dict):
@@ -419,6 +550,9 @@ def enqueue(self, priority: Priority, request: dict):
             return request
         return None
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -446,6 +580,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **FastAPI Service:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 app = FastAPI()
 agent = ProductionAgent(AgentConfig())
@@ -461,6 +602,9 @@ async def query_agent(request: AgentRequest):
     result = await agent.run(
         request_id, request.query)
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -502,6 +646,13 @@ Speaker notes: Key talking points for this slide
 
 # FastAPI + Docker + Kubernetes (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 return AgentResponse(
         request_id=request_id,
@@ -515,6 +666,9 @@ async def health_check():
             "version": "1.0.0"}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -524,6 +678,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Structured Error Handling
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ErrorCode(Enum):
@@ -542,7 +703,14 @@ class AgentError:
     retry_after: Optional[int] = None
 ```
 
-> ✅ Always return structured errors with codes — clients need machine-readable error types, not just strings.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Always return structured errors with codes — clients need machine-readable error types, not just strings.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -554,6 +722,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Structured Error Handling (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def to_response(self) -> dict:
@@ -570,6 +745,9 @@ def handle_llm_error(error: Exception) -> AgentError:
     return AgentError(code=ErrorCode.INTERNAL, message="Unexpected error")
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -581,6 +759,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Reliability"
         A["Circuit Breaker: Prevent cascading failure"]

@@ -1,16 +1,27 @@
 # Self-Reflection: Agents That Learn from Mistakes
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 4 — Agentic Patterns | **Prerequisites:** Module 4 — ReAct Pattern
 
 Self-reflection enables agents to critique their own outputs, identify errors, and improve. Instead of accepting first attempts, reflective agents evaluate their work and iterate toward better solutions.
 
-> 💡 **Key Insight:** **The first answer is rarely the best.** Reflection adds a meta-cognitive layer—the agent asks "Is this good? What could be better?" This catches errors, improves reasoning, and produces more reliable outputs.
+<div class="callout-insight">
+
+**Insight:** The first answer is rarely the best. Reflection adds a meta-cognitive layer—the agent asks "Is this good? What could be better?" This catches errors, improves reasoning, and produces more reliable outputs.
+
+</div>
 
 ---
 
 ## Reflection Patterns
 
 ### Basic Critique-Revise Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def reflect_and_revise(task: str, max_iterations: int = 3) -> str:
@@ -63,6 +74,9 @@ Provide an improved response:"""
 
     return response
 ```
+
+</div>
+</div>
 
 ### Reflexion Pattern
 
@@ -137,6 +151,13 @@ Reflection (be specific about what went wrong and how to fix it):"""
 
 ### Self-Consistency Check
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def check_consistency(task: str, response: str, n_checks: int = 3) -> dict:
     """Verify response consistency across multiple generations."""
@@ -173,6 +194,9 @@ If NO, what are the disagreements?"""
         "alternatives": alternatives
     }
 ```
+
+</div>
+</div>
 
 ### Factual Verification
 
@@ -229,6 +253,13 @@ Claims:"""
 
 ### Quality Critique
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 QUALITY_CRITIQUE = """Evaluate this response on these dimensions:
 
@@ -243,6 +274,9 @@ Response to evaluate:
 
 Provide scores and specific issues for any dimension below 4."""
 ```
+
+</div>
+</div>
 
 ### Error Detection
 
@@ -284,6 +318,13 @@ Be concrete and actionable."""
 
 ### Critic Agent
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class CriticAgent:
     """Specialized agent for critiquing responses."""
@@ -313,6 +354,9 @@ class CriticAgent:
             "severity": self._assess_severity(text)
         }
 ```
+
+</div>
+</div>
 
 ### Debate-Based Reflection
 
@@ -370,6 +414,34 @@ Synthesize the best response considering both perspectives:"""
 4. **Stop when satisfied**: Don't over-refine good responses
 5. **Log reflections**: Track what errors are common for improvement
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Self-reflection transforms agents from single-shot responders to iterative improvers. The best agents question their own outputs.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_self_reflection_slides.md">
+  <div class="link-card-title">Self-Reflection and Self-Correction — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_react_agents.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

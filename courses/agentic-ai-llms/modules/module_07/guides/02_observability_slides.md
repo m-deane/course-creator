@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # Three Pillars of Observability
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     O["Agent Observability"] --> L["Logs"]
     O --> M["Metrics"]
@@ -42,7 +43,11 @@ graph TD
 | **Metrics** | Quantitative measurements | Aggregatable, time-series |
 | **Traces** | Execution flow paths | Hierarchical spans, causal ordering |
 
-> 🔑 Observability overhead should be minimal — target less than 5% performance impact.
+<div class="callout-key">
+
+**Key Point:** Observability overhead should be minimal — target less than 5% performance impact.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -91,7 +96,11 @@ Metrics:
 </div>
 </div>
 
-> ✅ Good observability answers: **What** did the agent do? **Why** each decision? **How long** each step? **What went wrong**?
+<div class="callout-key">
+
+**Key Point:** Good observability answers: **What** did the agent do? **Why** each decision? **How long** each step? **What went wrong**?
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -115,6 +124,13 @@ Speaker notes: Key talking points for this slide
 
 # AgentLogger Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class AgentLogger:
     def __init__(self, session_id: Optional[str] = None):
@@ -132,6 +148,9 @@ class AgentLogger:
         self.logger.info(json.dumps(event))
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -142,6 +161,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # AgentLogger Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def log_llm_call(self, model, input_tokens, output_tokens, latency_ms, cost):
@@ -163,6 +189,9 @@ def log_llm_call(self, model, input_tokens, output_tokens, latency_ms, cost):
             error_message=str(error), context=context, level="ERROR")
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -177,6 +206,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Too Little:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Minimal logging
 logger.info("Agent executed")
@@ -193,6 +229,9 @@ logger.log_event(
     tools_used=tools
 )
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -221,7 +260,11 @@ logger.info(f"LLM call took {latency}ms and cost ${cost}")
 logger.info(json.dumps({"event": "llm_call", "latency_ms": latency, "cost_usd": cost}))
 ```
 
-> ⚠️ Unstructured logs can't be queried or analyzed — always use JSON.
+<div class="callout-warning">
+
+**Warning:** Unstructured logs can't be queried or analyzed — always use JSON.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -246,6 +289,13 @@ Speaker notes: Key talking points for this slide
 
 # AgentMetrics
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @dataclass
 class AgentMetrics:
@@ -262,6 +312,9 @@ class AgentMetrics:
     failed_completions: int = 0
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -273,6 +326,13 @@ Speaker notes: Key talking points for this slide
 
 # AgentMetrics (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def add_llm_call(self, input_tokens, output_tokens, latency_ms, cost):
         self.llm_calls += 1
@@ -281,6 +341,9 @@ def add_llm_call(self, input_tokens, output_tokens, latency_ms, cost):
         self.llm_latency_ms.append(latency_ms)
         self.total_cost += cost
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -291,6 +354,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # AgentMetrics (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def compute_summary(self) -> Dict[str, Any]:
@@ -307,6 +377,9 @@ def compute_summary(self) -> Dict[str, Any]:
         }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -318,6 +391,7 @@ Speaker notes: Key talking points for this slide
 # Key Metrics to Track
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     subgraph "Latency"
         L1["Total duration (p50/p95/p99)"]
@@ -341,7 +415,11 @@ graph TD
     end
 ```
 
-> 🔑 Collect latency percentiles (p50, p95, p99), not just averages — averages hide tail latency.
+<div class="callout-key">
+
+**Key Point:** Collect latency percentiles (p50, p95, p99), not just averages — averages hide tail latency.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -365,6 +443,13 @@ Speaker notes: Key talking points for this slide
 
 # Span-Based Tracing
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class Span:
     def __init__(self, name: str, parent: Optional['Span'] = None):
@@ -378,6 +463,9 @@ class Span:
         self.events = []
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -388,6 +476,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Span-Based Tracing (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def set_attribute(self, key: str, value: Any):
@@ -400,6 +495,9 @@ def set_attribute(self, key: str, value: Any):
         return (self.end_time - self.start_time) * 1000 if self.end_time else 0
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -409,6 +507,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Observable Agent
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ObservableAgent:
@@ -430,6 +535,9 @@ class ObservableAgent:
                 span.set_attribute("success", True)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -440,6 +548,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Observable Agent (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 return result
@@ -458,6 +573,9 @@ return result
                 "trace": self.tracer.get_trace()}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -467,6 +585,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # OpenTelemetry Integration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from opentelemetry import trace, metrics
@@ -482,7 +607,14 @@ class OTelAgentObservability:
         self.tracer = trace.get_tracer(__name__)
 ```
 
-> ✅ OpenTelemetry provides vendor-neutral tracing — export to Jaeger, Zipkin, Datadog, or any OTLP backend.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** OpenTelemetry provides vendor-neutral tracing — export to Jaeger, Zipkin, Datadog, or any OTLP backend.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -494,6 +626,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # OpenTelemetry Integration (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 @contextmanager
@@ -509,6 +648,9 @@ Speaker notes: Key talking points for this slide
             span.set_attribute("tool.name", tool_name)
             yield span
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -527,6 +669,13 @@ Speaker notes: Key talking points for this slide
 | **No structured logging** | Can't query or analyze | Always use JSON format |
 | **Missing error context** | Can't reproduce issues | Include input, state, stack trace |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Minimal error logging
 logger.error(str(e))
@@ -541,6 +690,9 @@ logger.error({
 })
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -553,6 +705,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Three Pillars"
         A["Logs: Structured JSON events"]

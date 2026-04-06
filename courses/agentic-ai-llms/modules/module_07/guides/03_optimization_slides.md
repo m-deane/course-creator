@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # The Optimization Hierarchy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     E["1. ELIMINATE\nRemove unnecessary work"] --> R["2. REDUCE\nFewer resources, same work"]
     R --> P["3. PARALLELIZE\nDo multiple things at once"]
@@ -38,7 +39,11 @@ graph TD
 $$\text{Cost} = \sum(\text{llm\_calls} \times \text{tokens} \times \text{price\_per\_token} + \text{tool\_calls} \times \text{tool\_cost})$$
 $$\text{Latency} = \sum(\text{llm\_latency} + \text{tool\_latency} + \text{network\_latency})$$
 
-> 🔑 Always optimize in order: eliminate first, then reduce, then parallelize, then accelerate.
+<div class="callout-key">
+
+**Key Point:** Always optimize in order: eliminate first, then reduce, then parallelize, then accelerate.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -62,6 +67,13 @@ Speaker notes: Key talking points for this slide
 
 # Model Routing
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ModelRouter:
     def __init__(self, client: Anthropic):
@@ -78,6 +90,9 @@ class ModelRouter:
                 for kw in ["what is", "define", "translate", "summarize this"]):
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -88,6 +103,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Model Routing (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 return "simple"
@@ -103,6 +125,9 @@ return "simple"
         return model_map[self.estimate_complexity(task)]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -112,6 +137,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Prompt Compression
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class PromptOptimizer:
@@ -127,7 +159,14 @@ while preserving key information:\n\n{long_context}\n\nReturn only compressed ve
         return response.content[0].text
 ```
 
-> 🔑 10,000 token document compressed to 500 tokens = **95% token reduction**.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** 10,000 token document compressed to 500 tokens = **95% token reduction**.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -139,6 +178,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Prompt Compression (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def extract_relevant_context(self, query: str, full_context: str,
@@ -153,6 +199,9 @@ Extract most relevant information (max {max_context_tokens} tokens):
             messages=[{"role": "user", "content": extraction_prompt}])
         return response.content[0].text
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -176,6 +225,13 @@ Speaker notes: Key talking points for this slide
 
 # Caching
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class AgentCache:
     def __init__(self, redis_client: redis.Redis):
@@ -197,7 +253,11 @@ class AgentCache:
         return response, False    # Cache miss
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Q["Query"] --> C{"Cache\nHit?"}
     C -->|Yes| R["Return Cached\n~5ms, $0.00"]
@@ -206,7 +266,11 @@ graph LR
     S --> R2["Return Result"]
 ```
 
-> ✅ Cache hits are **50x faster** and **free** — measure your hit rate.
+<div class="callout-key">
+
+**Key Point:** Cache hits are **50x faster** and **free** — measure your hit rate.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -218,6 +282,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Parallel Execution
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class ParallelAgent:
@@ -237,6 +308,9 @@ class ParallelAgent:
         return await asyncio.gather(
             *[execute_tool(name, params) for name, params in tool_calls])
 ```
+
+</div>
+</div>
 
 <div class="columns">
 <div>
@@ -261,7 +335,11 @@ Task 3: ████████ 2s
 </div>
 </div>
 
-> ⚠️ Only parallelize **independent** operations — dependent steps must remain sequential.
+<div class="callout-warning">
+
+**Warning:** Only parallelize **independent** operations — dependent steps must remain sequential.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -273,6 +351,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Streaming
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class StreamingAgent:
@@ -287,7 +372,11 @@ class StreamingAgent:
                 # In production: yield text to frontend
 ```
 
+</div>
+</div>
+
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Non-Streaming"
         A1["Request"] --> A2["Wait 2s..."] --> A3["Full Response"]
@@ -297,7 +386,11 @@ graph LR
     end
 ```
 
-> 🔑 Streaming doesn't reduce total latency — it reduces **perceived** latency (time to first token: ~100ms).
+<div class="callout-key">
+
+**Key Point:** Streaming doesn't reduce total latency — it reduces **perceived** latency (time to first token: ~100ms).
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -310,6 +403,13 @@ Speaker notes: Key talking points for this slide
 
 # Integrated Optimization Pipeline
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class OptimizedAgent:
     def __init__(self, client, redis_client):
@@ -321,6 +421,9 @@ class OptimizedAgent:
         metrics = {"cache_hit": False, "model_used": None, "tokens_saved": 0, "cost": 0.0}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -331,6 +434,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Integrated Optimization Pipeline (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # 1. Check cache
@@ -347,6 +457,9 @@ Speaker notes: Key talking points for this slide
             metrics["tokens_saved"] = original - len(context.split())
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -356,6 +469,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Integrated Optimization Pipeline (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # 3. Optimize prompt
@@ -374,6 +494,9 @@ Speaker notes: Key talking points for this slide
         return response, metrics
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -391,6 +514,13 @@ Speaker notes: Key talking points for this slide
 | **Quality degradation** | Always cheapest model | Balance quality vs. cost per task |
 | **False parallelization** | Parallelizing dependent ops | Only parallelize independent work |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Parallelize dependent steps
 results = await asyncio.gather(
@@ -407,6 +537,9 @@ results = await asyncio.gather(
 )
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -419,6 +552,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Cost Optimization"
         A["Model Routing: Right model per task"]

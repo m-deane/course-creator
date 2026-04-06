@@ -31,6 +31,7 @@ The LLM reads your tool definitions to decide:
 - *What arguments* to provide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Tool Name"] --> D["LLM Decision"]
     B["Tool Description"] --> D
@@ -64,6 +65,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Bad: Too many things**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "manage_user",
@@ -80,6 +88,9 @@ Speaker notes: Key talking points for this slide
     }
 }
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -113,6 +124,13 @@ Speaker notes: Key talking points for this slide
 
 # 1. Single Responsibility (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "get_user",
@@ -125,6 +143,9 @@ Speaker notes: Key talking points for this slide
     }
 }
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -148,7 +169,11 @@ Use verbs that describe the action:
 | `calculate_*` | Compute a value | `calculate_tax`, `calculate_distance` |
 | `send_*` | Transmit something | `send_email`, `send_notification` |
 
-> ⚠️ Avoid vague names like "user", "data", "process" — they don't tell the LLM what the tool does.
+<div class="callout-warning">
+
+**Warning:** Avoid vague names like "user", "data", "process" — they don't tell the LLM what the tool does.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -165,12 +190,22 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Bad:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "search_web",
     "description": "Search the web"
 }
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -213,6 +248,13 @@ Speaker notes: Key talking points for this slide
 
 Every parameter should be self-documenting:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "book_flight",
@@ -229,6 +271,9 @@ Every parameter should be self-documenting:
             },
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -239,6 +284,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # 4. Explicit Parameters (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "departure_date": {
@@ -256,6 +308,9 @@ Speaker notes: Key talking points for this slide
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -267,6 +322,13 @@ Speaker notes: Key talking points for this slide
 # 5. Safe Defaults
 
 Non-required parameters should have sensible defaults:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "limit": {
@@ -286,7 +348,14 @@ Non-required parameters should have sensible defaults:
 }
 ```
 
-> ✅ Defaults should always be the safest, most expected option.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Defaults should always be the safest, most expected option.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -313,6 +382,13 @@ Speaker notes: Key talking points for this slide
 
 Use enums and ranges to limit possible values:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
     "name": "set_thermostat",
@@ -327,7 +403,14 @@ Use enums and ranges to limit possible values:
                 "type": "string",
 ```
 
-> 🔑 Constraints prevent the LLM from generating invalid values.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Constraints prevent the LLM from generating invalid values.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -339,6 +422,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pattern 1: Constrained Inputs (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "enum": ["heat", "cool", "auto", "off"]
@@ -353,6 +443,9 @@ Speaker notes: Key talking points for this slide
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -362,6 +455,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pattern 2: Nested Objects
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 {
@@ -379,6 +479,9 @@ Speaker notes: Key talking points for this slide
                 "required": ["start"]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -389,6 +492,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pattern 2: Nested Objects (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 },
@@ -406,6 +516,9 @@ Speaker notes: Key talking points for this slide
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -420,6 +533,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Arrays for multiple items:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 "recipients": {
     "type": "array",
@@ -430,6 +550,9 @@ Speaker notes: Key talking points for this slide
 "message": {
     "type": "string",
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -462,6 +585,13 @@ Speaker notes: Key talking points for this slide
 
 # Pattern 3 & 4: Arrays and Conditionals (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 {
             "type": "object",
@@ -475,6 +605,9 @@ Speaker notes: Key talking points for this slide
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -484,6 +617,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pattern 3 & 4: Arrays and Conditionals (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 "maxLength": 500
@@ -496,6 +636,9 @@ Speaker notes: Key talking points for this slide
 }
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -507,6 +650,7 @@ Speaker notes: Key talking points for this slide
 # Tool Set Organization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["All Agent Tools"] --> B["Database Tools"]
     A --> C["Communication Tools"]
@@ -538,6 +682,13 @@ Speaker notes: Key talking points for this slide
 
 # Progressive Tool Disclosure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def get_tools_for_task(task_type: str) -> list:
     """Return appropriate tools for the task type."""
@@ -553,7 +704,14 @@ def get_tools_for_task(task_type: str) -> list:
     return base_tools
 ```
 
-> 🔑 Start with fewer tools, add more as needed. Too many tools confuse the LLM.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Start with fewer tools, add more as needed. Too many tools confuse the LLM.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -566,6 +724,13 @@ Speaker notes: Key talking points for this slide
 
 # Description Best Practices Template
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def create_tool_description(purpose, when_to_use, when_not_to_use, returns, notes=None):
     desc = f"{purpose}\n\n"
@@ -577,7 +742,14 @@ def create_tool_description(purpose, when_to_use, when_not_to_use, returns, note
     return desc
 ```
 
-> ✅ Always tell the LLM both *when to use* AND *when not to use* each tool.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Always tell the LLM both *when to use* AND *when not to use* each tool.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -590,6 +762,13 @@ Speaker notes: Key talking points for this slide
 
 # Validation and Testing
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def validate_tool_schema(tool: dict) -> list[str]:
     issues = []
@@ -600,6 +779,9 @@ def validate_tool_schema(tool: dict) -> list[str]:
     if "name" in tool:
         name = tool["name"]
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -612,6 +794,13 @@ Speaker notes: Key talking points for this slide
 
 # Validation and Testing (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 if not name.islower() or " " in name:
             issues.append(f"Name should be lowercase with underscores: {name}")
@@ -622,6 +811,9 @@ if not name.islower() or " " in name:
             issues.append("Description should explain when to use the tool")
     return issues
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -634,6 +826,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Design Principles"
         A["Single Responsibility"]

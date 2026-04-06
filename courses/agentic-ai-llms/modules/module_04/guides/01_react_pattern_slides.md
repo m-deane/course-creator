@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # The ReAct Loop
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["User Input"] --> B["Thought: What do I need?"]
     B --> C["Action: Tool call"]
@@ -58,6 +59,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic ReAct Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 REACT_SYSTEM_PROMPT = """You are a helpful assistant that thinks step by step.
 
@@ -72,6 +80,9 @@ Thought: <your reasoning about what to do next>
 Action: <tool_name>(<parameters as JSON>)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -82,6 +93,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Basic ReAct Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 OR, if you have the final answer:
@@ -96,6 +114,9 @@ Available tools:
 Always think before acting. Always explain your reasoning."""
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -105,6 +126,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Parsing ReAct Responses
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def parse_react_response(response: str) -> dict:
@@ -121,6 +149,9 @@ def parse_react_response(response: str) -> dict:
     action_match = re.search(r"Action:\s*(\w+)\((.+?)\)", response)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -131,6 +162,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Parsing ReAct Responses (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if thought_match and action_match:
@@ -144,6 +182,9 @@ if thought_match and action_match:
     return {"type": "error", "raw": response}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -153,6 +194,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # The Agent Loop
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def run_react_agent(task: str, max_steps: int = 10) -> str:
@@ -171,6 +219,9 @@ def run_react_agent(task: str, max_steps: int = 10) -> str:
         parsed = parse_react_response(response_text)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -181,6 +232,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # The Agent Loop (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if parsed["type"] == "final":
@@ -193,6 +251,9 @@ if parsed["type"] == "final":
 
     return "Max steps reached without final answer"
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -216,6 +277,13 @@ Speaker notes: Key talking points for this slide
 
 # Claude's Native Tool Calling
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ReActAgent:
     """ReAct agent using Claude's native tool use."""
@@ -234,6 +302,9 @@ class ReActAgent:
                 system=REACT_SYSTEM, tools=self.tools, messages=messages)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -244,6 +315,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Claude's Native Tool Calling (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 if response.stop_reason == "end_turn":
@@ -261,6 +339,9 @@ if response.stop_reason == "end_turn":
         return "Max steps reached"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -272,6 +353,7 @@ Speaker notes: Key talking points for this slide
 # Text-Based vs Native Tool Use
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Text-Based ReAct"
         A1["Prompt with format instructions"] --> B1["Parse text output"]
@@ -316,6 +398,13 @@ Speaker notes: Key talking points for this slide
 
 # Structured Trace Logging
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @dataclass
 class ReActStep:
@@ -334,7 +423,14 @@ class ReActTrace:
     success: bool = False
 ```
 
-> 🔑 Traces are essential for debugging—they show you exactly why the agent made each decision.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Traces are essential for debugging—they show you exactly why the agent made each decision.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -346,6 +442,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Structured Trace Logging (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def to_markdown(self) -> str:
@@ -362,6 +465,9 @@ def to_markdown(self) -> str:
         return md
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -371,6 +477,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # TracingReActAgent
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class TracingReActAgent(ReActAgent):
@@ -388,6 +501,9 @@ class TracingReActAgent(ReActAgent):
                 system=REACT_SYSTEM, tools=self.tools, messages=messages)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -398,6 +514,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # TracingReActAgent (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 thought = self._extract_text(response)
@@ -410,6 +533,9 @@ thought = self._extract_text(response)
                 return thought, self.current_trace
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -419,6 +545,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # TracingReActAgent (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 messages.append({"role": "assistant", "content": response.content})
@@ -436,6 +569,9 @@ messages.append({"role": "assistant", "content": response.content})
 
         return "Max steps reached", self.current_trace
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -459,6 +595,13 @@ Speaker notes: Key talking points for this slide
 
 # ReAct with Memory
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ReActWithMemory(ReActAgent):
     """ReAct agent with working memory."""
@@ -476,6 +619,9 @@ class ReActWithMemory(ReActAgent):
             memory_context += "\n\n"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -487,6 +633,13 @@ Speaker notes: Key talking points for this slide
 
 # ReAct with Memory (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 augmented_task = f"{memory_context}Current task: {task}"
         result = super().run(augmented_task)
@@ -495,6 +648,9 @@ augmented_task = f"{memory_context}Current task: {task}"
         self.memory.append(f"Task: {task} -> Result: {result[:100]}...")
         return result
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -505,6 +661,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # ReAct with Verification
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class VerifiedReActAgent(ReActAgent):
@@ -526,7 +689,14 @@ Please verify this answer:
 3. Is the answer complete?
 ```
 
-> ✅ Verification catches errors before returning answers to users.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Verification catches errors before returning answers to users.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -538,6 +708,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # ReAct with Verification (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 If there are issues, provide the corrected answer.
@@ -554,6 +731,9 @@ If the answer is correct, confirm it."""
             return verified_text
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -568,6 +748,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Detailed reasoning instructions:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 DETAILED_REACT_SYSTEM = """You are an
 AI assistant that solves problems
@@ -581,6 +768,9 @@ For each step:
 3. OBSERVE: Analyze the result
 4. REFLECT: Did this help? What next?
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -619,6 +809,13 @@ Speaker notes: Key talking points for this slide
 
 # ReAct Prompting Strategies (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 Rules:
 - Never skip the thinking step
@@ -627,6 +824,9 @@ Rules:
 - Break complex problems into steps
 - Verify your answer before stating"""
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -637,6 +837,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Error Handling in ReAct
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RobustReActAgent(ReActAgent):
@@ -658,7 +865,14 @@ class RobustReActAgent(ReActAgent):
                     return self._extract_text(response)
 ```
 
-> ⚠️ Always cap consecutive errors — infinite retries waste tokens and time.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Always cap consecutive errors — infinite retries waste tokens and time.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -670,6 +884,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Error Handling in ReAct (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 messages.append({"role": "assistant", "content": response.content})
@@ -690,6 +911,9 @@ messages.append({"role": "assistant", "content": response.content})
                     return f"Failed after {max_errors} consecutive errors: {e}"
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -701,6 +925,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "ReAct Core"
         A["Thought"] --> B["Action"]

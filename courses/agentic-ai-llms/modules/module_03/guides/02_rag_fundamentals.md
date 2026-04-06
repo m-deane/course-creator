@@ -1,10 +1,14 @@
 # RAG Fundamentals: Retrieval-Augmented Generation
 
-## In Brief
+> **Reading time:** ~12 min | **Module:** 3 — Memory & Context | **Prerequisites:** Module 0 — Context Windows
 
 RAG grounds LLM responses in external knowledge by retrieving relevant documents before generation. This reduces hallucinations, enables access to private data, and keeps responses current beyond training cutoffs.
 
-> 💡 **Key Insight:** **RAG separates what the model knows from what it can access.** Instead of cramming all knowledge into model weights, RAG fetches relevant information at runtime—making knowledge updatable, verifiable, and scalable.
+<div class="callout-insight">
+
+**Insight:** RAG separates what the model knows from what it can access. Instead of cramming all knowledge into model weights, RAG fetches relevant information at runtime—making knowledge updatable, verifiable, and scalable.
+
+</div>
 
 ---
 
@@ -32,6 +36,13 @@ Response: "According to our policy doc..."
 ```
 
 ### Basic Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import anthropic
@@ -111,6 +122,9 @@ answer = rag.query("How long do I have to return a product?")
 print(answer)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Document Processing
@@ -118,6 +132,13 @@ print(answer)
 ### Chunking Strategies
 
 Breaking documents into retrieval-friendly pieces:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from typing import Generator
@@ -162,6 +183,9 @@ def chunk_markdown(text: str) -> list[str]:
     sections = re.split(r'\n(?=#)', text)
     return [s.strip() for s in sections if s.strip()]
 ```
+
+</div>
+</div>
 
 ### Semantic Chunking
 
@@ -262,6 +286,13 @@ def process_document(
 
 ### Using OpenAI Embeddings
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from openai import OpenAI
 
@@ -280,6 +311,9 @@ class OpenAIEmbedder:
         )
         return [item.embedding for item in response.data]
 ```
+
+</div>
+</div>
 
 ### Batch Embedding
 
@@ -305,6 +339,13 @@ def embed_in_batches(
 ## Retrieval Strategies
 
 ### Basic Semantic Search
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def semantic_search(
@@ -335,6 +376,9 @@ def semantic_search(
         )
     ]
 ```
+
+</div>
+</div>
 
 ### Hybrid Search (Keyword + Semantic)
 
@@ -439,6 +483,13 @@ Variations (one per line):"""
 
 ### Basic RAG Prompt
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 RAG_PROMPT = """Answer the question based on the provided context.
 If the context doesn't contain enough information, say so clearly.
@@ -450,6 +501,9 @@ Question: {question}
 
 Answer:"""
 ```
+
+</div>
+</div>
 
 ### Citation-Aware Prompt
 
@@ -498,6 +552,13 @@ Your response:"""
 
 ### Retrieval Quality Metrics
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def evaluate_retrieval(
     queries: list[str],
@@ -536,6 +597,9 @@ def evaluate_retrieval(
         "mrr": sum(mrrs) / len(mrrs)
     }
 ```
+
+</div>
+</div>
 
 ### End-to-End Evaluation
 
@@ -581,6 +645,34 @@ Score (just the number):"""
     }
 ```
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *RAG transforms LLMs from closed knowledge systems to open retrieval engines. Master this pattern—it's the foundation for most production agent systems.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_rag_fundamentals_slides.md">
+  <div class="link-card-title">RAG Fundamentals for Agents — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_memory_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

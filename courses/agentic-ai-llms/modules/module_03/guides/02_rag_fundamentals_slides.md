@@ -24,6 +24,7 @@ Speaker notes: Key talking points for this slide
 # The RAG Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["User Query"] --> B["1. Embed Query"]
     B --> C["2. Retrieve: Search vector DB"]
@@ -48,6 +49,13 @@ Speaker notes: Key talking points for this slide
 
 # Basic RAG Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class SimpleRAG:
     def __init__(self):
@@ -63,6 +71,9 @@ class SimpleRAG:
         self.collection.add(documents=documents, embeddings=embeddings, ids=ids)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -73,6 +84,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Basic RAG Implementation (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def query(self, question: str, n_results: int = 3) -> str:
@@ -87,6 +105,9 @@ def query(self, question: str, n_results: int = 3) -> str:
                            f"Context:\n{context}\n\nQuestion: {question}"}])
         return response.content[0].text
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -119,6 +140,7 @@ Speaker notes: Key talking points for this slide
 | **Semantic** | Split at meaning boundaries | High-quality retrieval |
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Raw Document"] --> B{"Chunking Strategy"}
     B -->|Simple| C["Fixed-size + Overlap"]
@@ -140,6 +162,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Fixed-size with overlap:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def chunk_by_size(text, chunk_size=1000,
                   overlap=200):
@@ -151,6 +180,9 @@ def chunk_by_size(text, chunk_size=1000,
         start = end - overlap
     return chunks
 ```
+
+</div>
+</div>
 
 **By sentences:**
 ```python
@@ -188,7 +220,11 @@ def chunk_markdown(text):
 </div>
 </div>
 
-> 🔑 Always use overlap (10-20%) to avoid splitting concepts across chunks.
+<div class="callout-key">
+
+**Key Point:** Always use overlap (10-20%) to avoid splitting concepts across chunks.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -203,6 +239,13 @@ Speaker notes: Key talking points for this slide
 
 Split at natural meaning boundaries using embeddings:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class SemanticChunker:
     def __init__(self, threshold: float = 0.5):
@@ -215,6 +258,9 @@ class SemanticChunker:
         embeddings = self.embedder.encode(sentences)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -225,6 +271,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Semantic Chunking (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 chunks, current_chunk = [], [sentences[0]]
@@ -239,6 +292,9 @@ chunks, current_chunk = [], [sentences[0]]
             chunks.append(' '.join(current_chunk))
         return chunks
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -257,6 +313,13 @@ Speaker notes: Key talking points for this slide
 | text-embedding-3-large | 3072 | API | Best | Production |
 | BAAI/bge-large-en | 1024 | Medium | Excellent | Open-source |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Local embeddings
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
@@ -267,6 +330,9 @@ response = openai_client.embeddings.create(
     input=["text to embed"], model="text-embedding-3-small")
 vectors = [item.embedding for item in response.data]
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -292,6 +358,7 @@ Speaker notes: Key talking points for this slide
 # Semantic vs Hybrid vs Multi-Query
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Retrieval Strategies"] --> B["Semantic Search"]
     A --> C["Hybrid Search"]
@@ -317,6 +384,13 @@ Speaker notes: Key talking points for this slide
 
 # Hybrid Search (Keyword + Semantic)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class HybridRetriever:
     def __init__(self, documents, embedder):
@@ -332,6 +406,9 @@ class HybridRetriever:
         bm25_scores = bm25_scores / (bm25_scores.max() + 1e-6)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -342,6 +419,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Hybrid Search (Keyword + Semantic) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Semantic scores
@@ -355,6 +439,9 @@ Speaker notes: Key talking points for this slide
         return [(idx, combined[idx]) for idx in top_indices]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -364,6 +451,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Multi-Query Retrieval
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class MultiQueryRetriever:
@@ -380,6 +474,9 @@ class MultiQueryRetriever:
         return [original_query] + [v.strip() for v in variations if v.strip()]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -390,6 +487,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Multi-Query Retrieval (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def retrieve(self, query, n_results=5):
@@ -402,6 +506,9 @@ def retrieve(self, query, n_results=5):
                     all_results[key] = r
         return sorted(all_results.values(), key=lambda x: x["score"], reverse=True)[:n_results]
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -417,6 +524,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Basic:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 RAG_PROMPT = """Answer based on context.
 If context insufficient, say so.
@@ -427,6 +541,9 @@ Context:
 Question: {question}
 Answer:"""
 ```
+
+</div>
+</div>
 
 **With Citations:**
 ```python
@@ -475,6 +592,13 @@ Speaker notes: Key talking points for this slide
 
 # Evaluation Metrics
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def evaluate_retrieval(queries, ground_truth, retriever, k=5):
     precisions, recalls, mrrs = [], [], []
@@ -487,6 +611,9 @@ def evaluate_retrieval(queries, ground_truth, retriever, k=5):
         recalls.append(relevant_retrieved / len(relevant_ids))  # Recall@k
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -497,6 +624,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Evaluation Metrics (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 for i, rid in enumerate(retrieved_ids):  # MRR
@@ -510,6 +644,9 @@ for i, rid in enumerate(retrieved_ids):  # MRR
             "recall@k": np.mean(recalls), "mrr": np.mean(mrrs)}
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -521,6 +658,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "RAG Pipeline"
         A["Document Processing"] --> B["Chunking"]

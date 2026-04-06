@@ -41,6 +41,7 @@ Speaker notes: Key talking points for this slide
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Documents"] -->|Embed| B["Vector Index"]
     C["Query"] -->|Embed| D["Query Vector"]
@@ -64,7 +65,11 @@ Speaker notes: Key talking points for this slide
 | **Euclidean (L2)** | $\sqrt{\sum(a-b)^2}$ | $[0, \infty)$ | Dense vectors |
 | **Dot Product** | $\sum(a \cdot b)$ | $(-\infty, \infty)$ | Pre-normalized vectors |
 
-> 🔑 For text similarity, cosine distance is almost always the right choice.
+<div class="callout-key">
+
+**Key Point:** For text similarity, cosine distance is almost always the right choice.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -90,6 +95,7 @@ Speaker notes: Key talking points for this slide
 # Vector Store Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Choose Vector Store"] --> B{"Scale?"}
     B -->|Development / Small| C["ChromaDB"]
@@ -117,6 +123,13 @@ Speaker notes: Key talking points for this slide
 
 # ChromaDB (Local/Embedded)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
@@ -132,6 +145,9 @@ collection = client.create_collection(
     metadata={"hnsw:space": "cosine"})
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -142,6 +158,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # ChromaDB (Local/Embedded) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Add documents
@@ -154,6 +177,9 @@ collection.add(
 results = collection.query(query_texts=["green energy transportation"], n_results=2)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -163,6 +189,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Pinecone (Cloud)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from pinecone import Pinecone, ServerlessSpec
@@ -185,6 +218,9 @@ query_embedding = embedding_model.encode(["green energy"]).tolist()[0]
 results = index.query(vector=query_embedding, top_k=5, include_metadata=True)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -195,6 +231,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Qdrant (High Performance)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from qdrant_client import QdrantClient
@@ -207,6 +250,9 @@ client.create_collection(
     vectors_config=VectorParams(size=384, distance=Distance.COSINE))
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -217,6 +263,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Qdrant (High Performance) (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Insert vectors
@@ -234,6 +287,9 @@ results = client.search(
     query_filter={"must": [{"key": "source", "match": {"value": "source_1"}}]})
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -250,6 +306,13 @@ Speaker notes: Key talking points for this slide
 | **IVF** | Cluster-based | Fast | Good | Medium | Very large datasets |
 | **Flat** | Brute force | Slow | Exact | Low | Small datasets |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # ChromaDB HNSW settings
 collection = client.create_collection(
@@ -261,6 +324,9 @@ collection = client.create_collection(
         "hnsw:M": 16                   # Connections per layer
     })
 ```
+
+</div>
+</div>
 
 > Higher values = better quality but slower and more memory.
 
@@ -274,6 +340,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Metadata Filtering
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # ChromaDB filtering
@@ -289,7 +362,14 @@ results = collection.query(
     })
 ```
 
-> ✅ Rich metadata enables filtering that reduces search space dramatically.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Rich metadata enables filtering that reduces search space dramatically.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -301,6 +381,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Metadata Filtering (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Good metadata design
@@ -314,6 +401,9 @@ metadata = {
     "tags": ["kubernetes", "deployment"]
 }
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -337,6 +427,13 @@ Speaker notes: Key talking points for this slide
 
 # Document Processing Pipeline
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @dataclass
 class ProcessedChunk:
@@ -353,6 +450,9 @@ def process_documents(documents, chunk_size=1000, chunk_overlap=200):
             yield ProcessedChunk(
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -363,6 +463,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Document Processing Pipeline (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 content=chunk,
@@ -379,6 +486,9 @@ def ingest_to_vector_store(chunks, collection, embedder, batch_size=100):
             metadatas=[c.metadata for c in batch], ids=[c.id for c in batch])
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -393,6 +503,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Embedding Caching:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class CachedEmbedder:
     def __init__(self, embedder, cache_dir):
@@ -409,6 +526,9 @@ class CachedEmbedder:
                 results.append(cached)
             else:
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -440,6 +560,13 @@ Speaker notes: Key talking points for this slide
 
 # Performance Optimization (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Rerank with cross-encoder
     reranker = CrossEncoder(
@@ -455,6 +582,9 @@ Speaker notes: Key talking points for this slide
     return ranked[:n_results]
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -464,6 +594,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Performance Optimization (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 to_compute.append(text)
@@ -481,6 +618,9 @@ to_compute.append(text)
         return results
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -492,6 +632,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Vector Store Architecture"
         A["Embedding Model"] --> B["Vector Index (HNSW)"]

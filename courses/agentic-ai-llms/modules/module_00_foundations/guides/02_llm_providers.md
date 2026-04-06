@@ -1,10 +1,14 @@
 # LLM Providers: Choosing the Right Model
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** None
 
 Different LLM providers offer distinct trade-offs in capability, cost, latency, and features. Understanding these differences helps you select the right model for your agent system and build provider-agnostic architectures.
 
-> 💡 **Key Insight:** **No single model is best for everything.** Claude excels at reasoning and instruction-following, GPT-4 at broad knowledge, and open-source models at cost-efficiency and privacy. Production agents often use multiple models strategically.
+<div class="callout-insight">
+
+**Insight:** No single model is best for everything. Claude excels at reasoning and instruction-following, GPT-4 at broad knowledge, and open-source models at cost-efficiency and privacy. Production agents often use multiple models strategically.
+
+</div>
 
 ---
 
@@ -28,6 +32,13 @@ Different LLM providers offer distinct trade-offs in capability, cost, latency, 
 - Newer ecosystem than OpenAI
 - Fewer fine-tuning options
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import anthropic
 
@@ -42,6 +53,9 @@ response = client.messages.create(
 )
 print(response.content[0].text)
 ```
+
+</div>
+</div>
 
 ### GPT-4 (OpenAI)
 
@@ -152,6 +166,13 @@ print(response.json()["response"])
 
 ### Abstraction Layer
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -251,6 +272,9 @@ class OpenAIProvider(LLMProvider):
         )
 ```
 
+</div>
+</div>
+
 ### Using the Abstraction
 
 ```python
@@ -283,6 +307,13 @@ print(f"Tokens used: {response.input_tokens + response.output_tokens}")
 
 Use cheaper models for simple tasks, expensive models for complex ones:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def route_to_model(query: str, complexity: str = "auto") -> LLMProvider:
     """Route queries to appropriate models based on complexity."""
@@ -296,6 +327,9 @@ def route_to_model(query: str, complexity: str = "auto") -> LLMProvider:
     else:
         return create_provider("claude", model="claude-3-5-sonnet-20241022")
 ```
+
+</div>
+</div>
 
 ### Caching
 
@@ -340,6 +374,13 @@ ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 ```
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import os
 from dotenv import load_dotenv
@@ -350,6 +391,9 @@ load_dotenv()
 anthropic_client = anthropic.Anthropic()  # Uses ANTHROPIC_API_KEY
 openai_client = OpenAI()  # Uses OPENAI_API_KEY
 ```
+
+</div>
+</div>
 
 ### Secrets Management (Production)
 
@@ -373,6 +417,13 @@ anthropic_key = get_api_key("prod/anthropic-api-key")
 ---
 
 ## Rate Limiting and Retries
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import time
@@ -406,6 +457,9 @@ class RateLimitedProvider(LLMProvider):
         return self.provider.chat(messages, temperature, max_tokens)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Provider Feature Comparison
@@ -420,6 +474,34 @@ class RateLimitedProvider(LLMProvider):
 | System Prompts | ✅ | ✅ | ✅ |
 | Batch API | ✅ | ✅ | N/A |
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Choosing the right LLM provider is about matching capabilities to requirements. Build abstractions that let you switch providers easily, and don't hesitate to use multiple models for different purposes.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_llm_providers_slides.md">
+  <div class="link-card-title">LLM Providers: Choosing the Right Model — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_api_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

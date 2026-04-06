@@ -1,5 +1,7 @@
 # Evaluation & Safety Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 6 — Evaluation & Safety | **Prerequisites:** Module 6 guides
+
 ## Key Concepts
 
 | Concept | Definition |
@@ -18,6 +20,13 @@
 ## Common Patterns
 
 ### Input Validation Guardrails
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class InputGuardrails:
@@ -54,6 +63,9 @@ try:
 except ValidationError as e:
     response = "I can't process that request."
 ```
+
+</div>
+</div>
 
 ### Output Filtering
 
@@ -348,6 +360,13 @@ def evaluate_rag_system(rag_agent, test_dataset):
 - Log blocked queries for manual review and tuning
 - Layer guardrails (warn vs block)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Binary blocking
 if contains_sensitive_word(input):
@@ -362,6 +381,9 @@ elif risk_score > 0.7:
 else:
     return process(input)
 ```
+
+</div>
+</div>
 
 ### Problem: Evaluation doesn't match production performance
 **Symptom:** Agent passes benchmarks but fails in real use

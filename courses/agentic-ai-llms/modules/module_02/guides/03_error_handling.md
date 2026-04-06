@@ -1,10 +1,14 @@
 # Error Handling: Graceful Failure and Recovery
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 2 — Tool Use & Function Calling | **Prerequisites:** Module 2 — Tool Fundamentals
 
 Tools fail. APIs timeout, data is malformed, permissions are denied. Robust agents don't crash on errors—they understand failures, communicate clearly, and either recover automatically or guide users to resolution.
 
-> 💡 **Key Insight:** **Errors are information, not just failures.** A well-structured error message helps the LLM understand what went wrong and what to try next. Turn errors into actionable context.
+<div class="callout-insight">
+
+**Insight:** Errors are information, not just failures. A well-structured error message helps the LLM understand what went wrong and what to try next. Turn errors into actionable context.
+
+</div>
 
 ---
 
@@ -13,6 +17,13 @@ Tools fail. APIs timeout, data is malformed, permissions are denied. Robust agen
 ### Transient Errors (Retry-able)
 
 Temporary failures that may succeed on retry:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 TRANSIENT_ERRORS = {
@@ -42,6 +53,9 @@ TRANSIENT_ERRORS = {
     }
 }
 ```
+
+</div>
+</div>
 
 ### Client Errors (Fix Required)
 
@@ -102,6 +116,13 @@ FATAL_ERRORS = {
 
 ### Exponential Backoff
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import time
 from functools import wraps
@@ -145,6 +166,9 @@ def call_external_api(endpoint: str, data: dict):
         raise TransientError(f"Server error: {response.status_code}")
     return response.json()
 ```
+
+</div>
+</div>
 
 ### Circuit Breaker Pattern
 
@@ -230,6 +254,13 @@ def safe_api_call(endpoint: str):
 
 ### Standard Error Format
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 from dataclasses import dataclass
 from typing import Optional
@@ -297,6 +328,9 @@ def handle_api_error(e: Exception, context: dict) -> str:
         ).to_json()
 ```
 
+</div>
+</div>
+
 ### Informative Error Messages
 
 ```python
@@ -324,6 +358,13 @@ def handle_api_error(e: Exception, context: dict) -> str:
 ## Agent-Level Error Handling
 
 ### Graceful Degradation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class RobustToolAgent:
@@ -384,6 +425,9 @@ class RobustToolAgent:
         return self.process_response(response)
 ```
 
+</div>
+</div>
+
 ### Error Recovery Strategies
 
 ```python
@@ -425,6 +469,13 @@ def execute_with_recovery(self, tool_name: str, arguments: dict) -> dict:
 
 ### System Prompt Error Handling
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 system_prompt = """You are a helpful assistant with access to tools.
 
@@ -443,6 +494,9 @@ Example bad response:
 "Error: User not found. Let me try again... Error: User not found. Let me try again..."
 """
 ```
+
+</div>
+</div>
 
 ### Error-Aware Agent Loop
 
@@ -496,6 +550,13 @@ def run_with_error_awareness(self, query: str) -> str:
 
 ### Structured Logging
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import logging
 import json
@@ -544,6 +605,9 @@ class ToolLogger:
         }))
 ```
 
+</div>
+</div>
+
 ### Metrics Collection
 
 ```python
@@ -589,6 +653,34 @@ class ToolMetrics:
         }
 ```
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Errors are inevitable—poor error handling is not. Build agents that fail gracefully, communicate clearly, and recover when possible.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_error_handling_slides.md">
+  <div class="link-card-title">Error Handling for Tool Calls — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_basic_tools.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

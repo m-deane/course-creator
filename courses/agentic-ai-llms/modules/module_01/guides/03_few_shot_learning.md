@@ -1,10 +1,14 @@
 # Few-Shot Learning: Teaching by Example
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 1 — Advanced Prompting | **Prerequisites:** Module 0 — Prompt Basics
 
 Few-shot learning provides LLMs with examples of desired input-output pairs before the actual task. This technique dramatically improves consistency, accuracy, and format adherence—especially for tasks where verbal instructions are insufficient.
 
-> 💡 **Key Insight:** **Show, don't just tell.** A single well-chosen example often conveys more than paragraphs of instructions. Examples demonstrate format, tone, edge case handling, and implicit rules that are hard to describe but easy to recognize.
+<div class="callout-insight">
+
+**Insight:** Show, don't just tell. A single well-chosen example often conveys more than paragraphs of instructions. Examples demonstrate format, tone, edge case handling, and implicit rules that are hard to describe but easy to recognize.
+
+</div>
 
 ---
 
@@ -50,6 +54,13 @@ Large number of examples (10-100+):
 
 Include examples that cover the range of expected inputs:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: All similar examples
 examples = [
@@ -66,6 +77,9 @@ examples = [
     ("Great features but poor battery.", "Mixed"),
 ]
 ```
+
+</div>
+</div>
 
 ### Principle 2: Difficulty Gradient
 
@@ -107,6 +121,13 @@ examples = [
 
 ### Basic Structure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def create_few_shot_prompt(examples: list[tuple], task: str) -> str:
     """Create a few-shot prompt from examples."""
@@ -120,6 +141,9 @@ def create_few_shot_prompt(examples: list[tuple], task: str) -> str:
 
     return prompt
 ```
+
+</div>
+</div>
 
 ### Structured with Instructions
 
@@ -205,6 +229,13 @@ Reasoning:"""
 
 Choose examples most similar to the input:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -256,6 +287,9 @@ few_shot = DynamicFewShot(example_bank)
 prompt = few_shot.create_prompt("Quarterly profits exceeded estimates")
 ```
 
+</div>
+</div>
+
 ### Category-Based Selection
 
 Ensure examples cover different categories:
@@ -294,6 +328,13 @@ def select_diverse_examples(
 
 ### JSON Output
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 json_examples = """Examples of entity extraction:
 
@@ -320,6 +361,9 @@ Output: {
 Input: "{user_input}"
 Output:"""
 ```
+
+</div>
+</div>
 
 ### Structured Text
 
@@ -375,6 +419,13 @@ Description: {function_description}
 
 ### 1. Inconsistent Formatting
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Format varies between examples
 examples = [
@@ -390,6 +441,9 @@ examples = [
     ("okay movie", "Neutral"),
 ]
 ```
+
+</div>
+</div>
 
 ### 2. Examples Too Easy
 
@@ -451,6 +505,13 @@ Research and practice suggest:
 
 ### Few-Shot + System Prompt
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 system = """You are a customer support classifier.
 Always respond with exactly one category.
@@ -470,6 +531,9 @@ Message: "{customer_message}"
 Category:"""
 ```
 
+</div>
+</div>
+
 ### Few-Shot + Chain-of-Thought
 
 ```python
@@ -485,6 +549,13 @@ Thought:"""
 ---
 
 ## Testing Few-Shot Prompts
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def evaluate_few_shot(
@@ -523,6 +594,37 @@ def evaluate_few_shot(
     }
 ```
 
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Few-shot learning is about communication through demonstration. Choose your examples as carefully as you would write production code—they directly shape your agent's behavior.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_few_shot_learning_slides.md">
+  <div class="link-card-title">Few-Shot Learning for Agents — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_system_prompt_design.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

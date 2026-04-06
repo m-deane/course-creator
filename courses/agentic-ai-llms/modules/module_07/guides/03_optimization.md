@@ -1,10 +1,14 @@
 # Cost and Latency Optimization for AI Agents
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 7 — Production Deployment | **Prerequisites:** Module 7 — Observability
 
 Optimization for AI agents means reducing cost and latency while maintaining output quality. Cost optimization minimizes token usage and API calls; latency optimization reduces response time through caching, parallelization, and model selection. Both require measurement-driven trade-offs between speed, cost, and quality.
 
-> 💡 **Key Insight:** Agent systems are fundamentally expensive and slow—LLM calls cost money, tools take time, and complex reasoning requires multiple steps. The goal isn't to make them free or instant, but to eliminate waste: unnecessary tokens, redundant calls, sequential operations that could be parallel, and expensive models for simple tasks.
+<div class="callout-insight">
+
+**Insight:** Agent systems are fundamentally expensive and slow—LLM calls cost money, tools take time, and complex reasoning requires multiple steps. The goal isn't to make them free or instant, but to eliminate waste: unnecessary tokens, redundant calls, sequential operations that could be parallel, and expensive models for simple tasks.
+
+</div>
 
 **The Optimization Hierarchy:**
 1. **Eliminate:** Remove unnecessary work entirely (caching, deduplication)
@@ -51,6 +55,13 @@ Both get you there, but optimization saves time and money.
 ## Code Implementation
 
 ### Cost Optimization: Model Routing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from anthropic import Anthropic
@@ -131,6 +142,9 @@ result, cost = router.execute(
 )
 print(f"Cost: ${cost:.4f}")  # Higher but appropriate
 ```
+
+</div>
+</div>
 
 ### Cost Optimization: Prompt Compression
 
@@ -479,6 +493,13 @@ print(f"Cost: ${metrics['cost']:.4f}, Latency: {metrics['latency_ms']:.0f}ms")
 ### 1. Premature Optimization
 **Problem:** Optimizing before measuring impact.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # DON'T: Optimize everything immediately
 optimize_every_single_call()
@@ -488,6 +509,9 @@ measure_performance()
 identify_bottlenecks()  # 90% of cost is in one place
 optimize_that_bottleneck()
 ```
+
+</div>
+</div>
 
 ### 2. Over-Caching
 **Problem:** Serving stale data when freshness matters.
@@ -598,6 +622,12 @@ For a customer service agent handling 1M requests/month:
 - Design routing strategy to maximize quality under $10K/month budget
 - What's the expected average quality score?
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ## Further Reading
 
 **Cost Optimization:**
@@ -625,3 +655,17 @@ For a customer service agent handling 1M requests/month:
 - Model distillation (compress expensive models)
 - Prompt compression techniques (LLMLingua, AutoCompressor)
 - Dynamic batching for throughput
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./03_optimization_slides.md">
+  <div class="link-card-title">Performance Optimization for Agents — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_deployment_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

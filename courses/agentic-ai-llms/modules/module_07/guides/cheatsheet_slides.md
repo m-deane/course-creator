@@ -47,6 +47,13 @@ Speaker notes: Key talking points for this slide
 
 # Structured Logging
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ProductionAgent:
     def process(self, request):
@@ -61,6 +68,9 @@ class ProductionAgent:
             latency = time.time() - start_time
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -71,6 +81,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Structured Logging (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 log.info("request_completed",
@@ -86,6 +103,9 @@ log.info("request_completed",
             raise
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -95,6 +115,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Distributed Tracing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class TracedAgent:
@@ -112,7 +139,14 @@ class TracedAgent:
                         step_span.set_attribute("step.action", step.action)
 ```
 
-> 🔑 Nested spans create a hierarchical view of every agent execution step.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Nested spans create a hierarchical view of every agent execution step.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -125,6 +159,13 @@ Speaker notes: Key talking points for this slide
 
 # Distributed Tracing (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 with tracer.start_as_current_span("llm.call") as llm_span:
                             result = llm.generate(step.prompt)
@@ -136,6 +177,9 @@ with tracer.start_as_current_span("llm.call") as llm_span:
                                 tool_result = self.call_tool(step.tool, step.input)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -145,6 +189,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Circuit Breaker Pattern
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class CircuitBreaker:
@@ -162,6 +213,9 @@ class CircuitBreaker:
                 raise Exception("Circuit OPEN")
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Circuit breaker prevents cascading failures by stopping calls to a failing service
@@ -171,6 +225,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Exponential Backoff Retry
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def retry_with_backoff(func, max_retries=3,
@@ -188,7 +249,14 @@ def retry_with_backoff(func, max_retries=3,
             time.sleep(delay)
 ```
 
-> 🔑 Combine circuit breaker + retry: retry handles transient failures, circuit breaker prevents cascading failures.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Combine circuit breaker + retry: retry handles transient failures, circuit breaker prevents cascading failures.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -200,6 +268,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Semantic Caching
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class SemanticCache:
@@ -216,7 +291,14 @@ class SemanticCache:
             if similarity >= self.threshold:
 ```
 
-> ✅ Semantic caching matches "What's the weather in NYC?" with "NYC weather today?" — exact match cache would miss this.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Semantic caching matches "What's the weather in NYC?" with "NYC weather today?" — exact match cache would miss this.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -229,6 +311,13 @@ Speaker notes: Key talking points for this slide
 
 # Semantic Caching (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 return response
         return None
@@ -238,6 +327,9 @@ return response
         embedding_hash = hashlib.md5(embedding.tobytes()).hexdigest()
         self.cache[embedding_hash] = (query, response, embedding)
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -253,6 +345,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Model Routing:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ModelRouter:
     def select_model(self, query, context):
@@ -270,6 +369,9 @@ class ModelRouter:
             "query_length": len(query)/1000,
             "requires_reasoning":
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -304,6 +406,13 @@ Speaker notes: Key talking points for this slide
 
 # Model Routing + Monitoring (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 token_counter = Counter(
     'agent_tokens_total',
@@ -320,6 +429,9 @@ active_requests = Gauge(
     'Requests in progress')
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -329,6 +441,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Model Routing + Monitoring (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 self.needs_reasoning(query),
@@ -346,6 +465,9 @@ self.needs_reasoning(query),
             features[k] * weights[k]
             for k in features), 1.0)
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -367,6 +489,13 @@ Speaker notes: Key talking points for this slide
 | Cost tracking inaccurate | Track retries + failures, include all API fees, reconcile daily |
 | Canary deploys detect late | Start at 1-5% traffic, automated quality checks, instant rollback |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Log everything
 logger.debug(f"Full prompt: {prompt}")  # Expensive!
@@ -375,6 +504,9 @@ logger.debug(f"Full prompt: {prompt}")  # Expensive!
 if random.random() < 0.01 or error:  # 1% sampling
     logger.info("request_details", prompt_length=len(prompt), tokens=tokens)
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -388,6 +520,7 @@ Speaker notes: Key talking points for this slide
 # Quick Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["What to optimize?"] --> B{"Adding\nobservability?"}
     B -->|Always| C["Structured logging + basic metrics"]
@@ -423,6 +556,7 @@ Speaker notes: Key talking points for this slide
 # Production Checklist
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Before Launch"
         A1["Structured logging"]

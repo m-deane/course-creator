@@ -1,5 +1,7 @@
 # Module 3: Memory & Context Management Cheatsheet
 
+> **Reading time:** ~5 min | **Module:** 3 — Memory & Context | **Prerequisites:** Module 3 guides
+
 ## Key Concepts
 
 | Concept | Definition |
@@ -17,6 +19,13 @@
 ## Common Patterns
 
 ### Basic Conversation Memory (Buffer)
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ConversationBuffer:
     def __init__(self, max_messages=10):
@@ -43,6 +52,9 @@ response = client.messages.create(
     messages=memory.get_messages()
 )
 ```
+
+</div>
+</div>
 
 ### Conversation Summary Memory
 ```python
@@ -268,6 +280,13 @@ def manage_context_window(messages, max_tokens=180000, model="claude-3-5-sonnet-
 ## RAG Best Practices
 
 ### Chunk Size Guidelines
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Use case based chunking
 CHUNK_SIZES = {
@@ -284,6 +303,9 @@ OVERLAP = {
     "chat": 100
 }
 ```
+
+</div>
+</div>
 
 ### Metadata for Filtering
 ```python
@@ -345,7 +367,14 @@ Question: {question}"""
 ## Gotchas
 
 - **Embedding model consistency** - Always use same embedding model for indexing and querying
-  ```python
+  <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
+```python
   # Bad: Different models
   # Index with: text-embedding-3-small
   # Query with: text-embedding-ada-002
@@ -354,6 +383,9 @@ Question: {question}"""
   EMBEDDING_MODEL = "text-embedding-3-small"
   # Use everywhere
   ```
+
+</div>
+</div>
 
 - **Chunk size too large** - Dilutes relevant information
   ```python

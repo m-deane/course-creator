@@ -28,6 +28,7 @@ Speaker notes: Key talking points for this slide
 The LLM reads error messages just like it reads tool results. Good error messages help it recover. Bad ones cause loops.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Error Occurs"] --> B{"Error Type?"}
     B -->|Transient| C["Retry with backoff"]
@@ -54,6 +55,13 @@ Speaker notes: Key talking points for this slide
 - Connection errors
 - Server errors (5xx)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 TRANSIENT_ERRORS = {
     "rate_limit": {
@@ -68,6 +76,9 @@ TRANSIENT_ERRORS = {
     }
 }
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -98,6 +109,7 @@ Speaker notes: Key talking points for this slide
 # Error Category Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     E["Error"] --> T{"Transient?"}
     T -->|Yes| R{"Retries left?"}
@@ -132,6 +144,13 @@ Speaker notes: Key talking points for this slide
 
 # Exponential Backoff
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def with_retry(max_retries=3, base_delay=1.0, max_delay=60.0):
     def decorator(func):
@@ -149,6 +168,9 @@ def with_retry(max_retries=3, base_delay=1.0, max_delay=60.0):
                         break
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -159,6 +181,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Exponential Backoff (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 delay = min(base_delay * (2 ** (retries - 1)), max_delay)
@@ -176,6 +205,9 @@ def call_external_api(endpoint, data):
     return response.json()
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -189,13 +221,14 @@ Speaker notes: Key talking points for this slide
 Prevent cascading failures when a service is down:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["CLOSED (Normal)"] -->|Failures exceed threshold| B["OPEN (Rejecting)"]
     B -->|Recovery timeout| C["HALF-OPEN (Testing)"]
     C -->|Success| A
     C -->|Failure| B
-    style A fill:#4CAF50
-    style B fill:#F44336
+    style A fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B fill:#fce4ec,stroke:#ef5350,stroke-width:2px
     style C fill:#FFC107
 ```
 
@@ -214,6 +247,13 @@ Speaker notes: Key talking points for this slide
 
 # Circuit Breaker Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class CircuitBreaker:
     def __init__(self, failure_threshold=5, recovery_timeout=30):
@@ -231,6 +271,9 @@ class CircuitBreaker:
                 raise CircuitOpenError("Circuit is open")
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -242,6 +285,13 @@ Speaker notes: Key talking points for this slide
 
 # Circuit Breaker Implementation (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 try:
             result = func(*args, **kwargs)
@@ -251,6 +301,9 @@ try:
             self._record_failure()
             raise
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -307,7 +360,11 @@ Speaker notes: Key talking points for this slide
 </div>
 </div>
 
-> 🔑 Include `suggestion` — it tells the LLM what to do next.
+<div class="callout-key">
+
+**Key Point:** Include `suggestion` — it tells the LLM what to do next.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -320,6 +377,13 @@ Speaker notes: Key talking points for this slide
 
 # ToolError Data Class
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 @dataclass
 class ToolError:
@@ -330,7 +394,14 @@ class ToolError:
     retryable: bool = False
 ```
 
-> ✅ Standardize error responses across all tools for consistent LLM behavior.
+</div>
+</div>
+
+<div class="callout-key">
+
+**Key Point:** Standardize error responses across all tools for consistent LLM behavior.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -342,6 +413,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # ToolError Data Class (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def to_json(self) -> str:
@@ -357,6 +435,9 @@ def to_json(self) -> str:
         })
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -366,6 +447,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Exception-to-Error Mapping
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def handle_api_error(e: Exception, context: dict) -> str:
@@ -379,6 +467,9 @@ def handle_api_error(e: Exception, context: dict) -> str:
     elif isinstance(e, PermissionError):
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -389,6 +480,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Exception-to-Error Mapping (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 return ToolError(
@@ -405,6 +503,9 @@ return ToolError(
             retryable=False
         ).to_json()
 ```
+
+</div>
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -429,6 +530,7 @@ Speaker notes: Key talking points for this slide
 # Error Recovery Strategies
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Tool Error"] --> B{"Error Type?"}
     B -->|Validation| C["Adjust Parameters"]
@@ -439,6 +541,13 @@ graph TD
     D -->|Success| G
     E -->|Success| G
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def execute_with_recovery(self, tool_name, arguments):
@@ -458,6 +567,9 @@ def execute_with_recovery(self, tool_name, arguments):
     return result  # No recovery possible
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code block line by line, emphasizing the key pattern
@@ -468,6 +580,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Preventing Infinite Error Loops
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def run_with_error_awareness(self, query: str) -> str:
@@ -481,6 +600,9 @@ def run_with_error_awareness(self, query: str) -> str:
             return self.extract_text(response)
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Walk through the code example, focusing on the key pattern being demonstrated
@@ -491,6 +613,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # Preventing Infinite Error Loops (continued)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 messages.append({"role": "assistant", "content": response.content})
@@ -507,6 +636,9 @@ messages.append({"role": "assistant", "content": response.content})
         messages.append({"role": "user", "content": tool_results})
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -516,6 +648,13 @@ Speaker notes: Key talking points for this slide
 ---
 
 # System Prompt for Error Handling
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
 
 ```python
 system_prompt = """You are a helpful assistant with access to tools.
@@ -536,7 +675,14 @@ Let me try again..."
 """
 ```
 
-> ⚠️ Without explicit instructions, the LLM will retry failing tools in a loop.
+</div>
+</div>
+
+<div class="callout-warning">
+
+**Warning:** Without explicit instructions, the LLM will retry failing tools in a loop.
+
+</div>
 
 <!--
 Speaker notes: Key talking points for this slide
@@ -553,6 +699,13 @@ Speaker notes: Key talking points for this slide
 <div>
 
 **Structured Logging:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 class ToolLogger:
     def log_execution(self, tool_name,
@@ -564,6 +717,9 @@ class ToolLogger:
             "event": "tool_execution",
             "tool": tool_name,
 ```
+
+</div>
+</div>
 
 </div>
 <div>
@@ -601,6 +757,13 @@ Speaker notes: Key talking points for this slide
 
 # Logging and Metrics (continued)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 "status": result.get("status"),
             "duration_ms": duration_ms
@@ -613,6 +776,9 @@ Speaker notes: Key talking points for this slide
                 json.dumps(log_entry))
 ```
 
+</div>
+</div>
+
 <!--
 Speaker notes: Key talking points for this slide
 - Continuation of the previous code block
@@ -624,6 +790,7 @@ Speaker notes: Key talking points for this slide
 # Summary & Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph "Error Handling"
         A["Categorize Errors"] --> B["Retry Transient"]

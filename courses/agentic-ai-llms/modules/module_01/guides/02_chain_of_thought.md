@@ -1,10 +1,14 @@
 # Chain-of-Thought Reasoning
 
-## In Brief
+> **Reading time:** ~10 min | **Module:** 1 — Advanced Prompting | **Prerequisites:** Module 0 — Transformer Architecture
 
 Chain-of-thought (CoT) prompting makes LLMs show their reasoning process before giving answers. This simple technique dramatically improves performance on complex tasks—reasoning, math, logic, and multi-step problems.
 
-> 💡 **Key Insight:** **When models think out loud, they think better.** Autoregressive generation means each token builds on previous tokens. By generating reasoning steps, the model creates useful context for its final answer. The reasoning isn't just explanation—it's computation.
+<div class="callout-insight">
+
+**Insight:** When models think out loud, they think better. Autoregressive generation means each token builds on previous tokens. By generating reasoning steps, the model creates useful context for its final answer. The reasoning isn't just explanation—it's computation.
+
+</div>
 
 ---
 
@@ -46,12 +50,22 @@ A: Let me calculate step by step:
 
 The simplest form—just add "Let's think step by step":
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """A bat and ball cost $1.10 in total. The bat costs $1.00 more than the ball.
 How much does the ball cost?
 
 Let's think step by step."""
 ```
+
+</div>
+</div>
 
 **Output:**
 ```
@@ -264,6 +278,13 @@ Answer: France has approximately 68 million people.
 
 Ask for abstract principles before specific solutions:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 prompt = """Before solving this problem, let's step back.
 
@@ -275,6 +296,9 @@ Step 3: Now solve the specific problem using these principles.
 
 Begin:"""
 ```
+
+</div>
+</div>
 
 ### Decomposition Prompting
 
@@ -302,6 +326,13 @@ Sub-question 1: ...
 
 ### Basic CoT Wrapper
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def with_cot(prompt: str, cot_trigger: str = "Let's think step by step.") -> str:
     """Add chain-of-thought to any prompt."""
@@ -319,6 +350,9 @@ def with_cot(prompt: str, cot_trigger: str = "Let's think step by step.") -> str
 # Usage
 answer = with_cot("What would happen if the moon suddenly disappeared?")
 ```
+
+</div>
+</div>
 
 ### CoT with Answer Extraction
 
@@ -416,6 +450,13 @@ Chain-of-thought isn't always beneficial:
 2. **Token-limited contexts**: Reasoning consumes output tokens
 3. **Overconfident reasoning**: Model may rationalize incorrect answers
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">agent.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:
     """Use CoT only for complex problems."""
@@ -447,6 +488,9 @@ def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:
         return response.content[0].text
 ```
 
+</div>
+</div>
+
 ---
 
 ## Best Practices
@@ -457,6 +501,34 @@ def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:
 4. **Verify Critical Results**: For high-stakes tasks, add verification steps
 5. **Combine Techniques**: ToT + Self-Consistency for the hardest problems
 
+<div class="callout-key">
+
+**Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
+
+</div>
+
 ---
 
 *Chain-of-thought transforms LLMs from pattern matchers to reasoners. Master these techniques—they're the foundation for every advanced agent capability.*
+
+
+
+## Practice Questions
+
+1. Explain in your own words how the concepts in this guide relate to building production agents.
+2. What are the key tradeoffs you need to consider when applying these techniques?
+3. Describe a scenario where the approach from this guide would be the wrong choice, and what you would use instead.
+
+---
+
+**Next Steps:**
+
+<a class="link-card" href="./02_chain_of_thought_slides.md">
+  <div class="link-card-title">Chain-of-Thought Reasoning — Companion Slides</div>
+  <div class="link-card-description">Visual slide deck with diagrams, speaker notes, and key takeaways.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_system_prompt_design.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with working code and guided exercises.</div>
+</a>

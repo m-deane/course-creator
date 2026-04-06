@@ -7,7 +7,9 @@
 Model-based reinforcement learning (MBRL) augments the standard agent-environment loop with a **learned model** of the environment. The agent uses this model to simulate experience, plan ahead, or optimize a policy without generating every required data point from real interaction. The primary payoff is **sample efficiency**: fewer real environment steps are needed to reach a given performance level.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Model-based reinforcement learning (MBRL) augments the standard agent-environment loop with a **learned model** of the environment. The agent uses this model to simulate experience, plan ahead, or optimize a policy without generating every required data point from real interaction.
+
 </div>
 
 
@@ -18,16 +20,19 @@ Model-free methods are powerful but wasteful — they discard the structural inf
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Model-free methods are powerful but wasteful — they discard the structural information in each transition $(S_t, A_t, R_{t+1}, S_{t+1})$ after using it once.
+
 </div>
 ## Intuitive Explanation
 
 Think of a chess grandmaster and a novice both studying to improve. The novice can only improve by playing real games (model-free). The grandmaster additionally runs games in their head — "If I move here, my opponent will likely respond there, then I could…" That internal simulation is planning. A strong mental model of how chess works makes each real game far more educational.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Think of a chess grandmaster and a novice both studying to improve.
+
 </div>
 
 
@@ -46,11 +51,13 @@ The model is not perfect, but it is good enough to improve the policy when used 
 ### The Environment Model
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### The Environment Model
 
 In a Markov Decision Process $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$, the true dynamics are:
 
 $$p(s' \mid s, a) \quad \text{and} \quad r(s, a) = \mathbb{E}[R_{t+1} \mid S...
+
 </div>
 
 
@@ -202,6 +209,7 @@ flowchart TD
     style MF fill:#f0f4ff,stroke:#4A90D9
     style MB fill:#fff4f0,stroke:#E8844A
 ```
+
 </div>
 
 ---
@@ -273,6 +281,7 @@ def train_model(model, optimizer, buffer, batch_size: int = 256, epochs: int = 5
         loss.backward()
         optimizer.step()
 ```
+
 </div>
 
 ---
@@ -280,15 +289,19 @@ def train_model(model, optimizer, buffer, batch_size: int = 256, epochs: int = 5
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Planning too far into an inaccurate model.**
 Long rollouts amplify model errors. A model that is 95% accurate per step has $0.95^{20} \approx 36\%$ accuracy after 20 steps. Restrict rollout horizon to where model accuracy is acceptable, typically $H \in [1, 10]$ for neural network models on complex tasks.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Planning too far into an inaccurate model.**
 Long rollouts amplify model errors.
+
 </div>
 
 **Pitfall 2 — Model exploitation (distributional shift).**
@@ -309,7 +322,9 @@ Practitioners often focus on transition accuracy and underweight the reward mode
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Bellman equations (Module 0), Q-learning and TD methods (Module 3), function approximation (Module 4)

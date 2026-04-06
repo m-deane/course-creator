@@ -7,7 +7,9 @@
 A desktop flow running alone on a machine is useful for manual tasks but reaches its full potential when a cloud flow orchestrates it — passing data in, receiving results out, and chaining the desktop interaction into a broader automated pipeline. This guide builds that complete integration: a cloud flow triggers a desktop flow that extracts invoice data from a legacy billing application and writes it to Excel, then the cloud flow sends the result for approval.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A desktop flow running alone on a machine is useful for manual tasks but reaches its full potential when a cloud flow orchestrates it — passing data in, receiving results out, and chaining the desktop interaction into a broader automated pipeline. This guide builds that complete integration: a cloud flow triggers a desktop flow that extracts invoice data from a legacy billing application and writes it to Excel, then the cloud flow sends the result for approval.
+
 </div>
 
 
@@ -16,9 +18,11 @@ A desktop flow running alone on a machine is useful for manual tasks but reaches
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -37,7 +41,9 @@ By the end of this guide you will be able to:
 The automation in this guide solves a real-world problem: a finance team manually opens a legacy billing application (a thick-client Windows app with no API), enters a customer ID, reads the outstanding invoice total from the screen, and enters it into an Excel tracker. This happens for dozens of customers every day.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The automation in this guide solves a real-world problem: a finance team manually opens a legacy billing application (a thick-client Windows app with no API), enters a customer ID, reads the outstandi...
+
 </div>
 
 
@@ -58,9 +64,11 @@ Cloud flow (Scheduled, 8 AM daily)
 ### Step 1 — Create a New Desktop Flow
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Step 1 — Create a New Desktop Flow
 
 > **On screen:** Open Power Automate Desktop.
+
 </div>
 
 
@@ -154,9 +162,11 @@ The value read from the UI is a Text string (e.g., `"$4,850.00"`). Convert it to
 ### Step 1 — Open the Cloud Flow Builder
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> ### Step 1 — Open the Cloud Flow Builder
 
 > **On screen:** Navigate to `make.powerautomate.com`.
+
 </div>
 
 
@@ -472,7 +482,9 @@ If the machine is not reachable:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 - **Wrong run mode** — Setting Attended but the machine has no user logged in causes the cloud flow to queue forever. Set Unattended for headless machines.
@@ -482,7 +494,9 @@ If the machine is not reachable:
 - **Application pop-ups** — Legacy apps often show unexpected dialogs (license warnings, update prompts) that block recorded steps. Add Wait for element + dismiss actions to handle known pop-ups.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> - **Wrong run mode** — Setting Attended but the machine has no user logged in causes the cloud flow to queue forever.
+
 </div>
 
 ---

@@ -7,7 +7,9 @@
 Monte Carlo control finds the optimal policy $\pi^*$ without a model by alternating between MC policy evaluation and greedy policy improvement. Because improvement requires comparing actions, we estimate $Q(s,a)$ (action-value) rather than $V(s)$ (state-value).
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Monte Carlo control finds the optimal policy $\pi^*$ without a model by alternating between MC policy evaluation and greedy policy improvement. Because improvement requires comparing actions, we estimate $Q(s,a)$ (action-value) rather than $V(s)$ (state-value).
+
 </div>
 
 
@@ -18,20 +20,23 @@ DP control used $V(s)$ but needed the model to do $\arg\max_a \sum_{s'} p(s'|s,a
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> DP control used $V(s)$ but needed the model to do $\arg\max_a \sum_{s'} p(s'|s,a)[r + \gamma V(s')]$.
+
 </div>
 ## Why $Q(s,a)$, Not $V(s)$, for Model-Free Control
 
 In Module 1, policy improvement used:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> In Module 1, policy improvement used:
 
 $$\pi'(s) = \arg\max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^\pi(s')\bigr]$$
 
 This requires the transition model $p(s', r \mid s, a)$.
+
 </div>
 
 
@@ -58,11 +63,12 @@ The expected return when taking action $a$ in state $s$, then following $\pi$ th
 MC control is an instance of Generalized Policy Iteration (GPI):
 
 <div class="callout-info">
+
 <strong>Info:</strong> MC control is an instance of Generalized Policy Iteration (GPI):
 
 
-
 Each evaluation step uses MC episodes to update $Q$.
+
 </div>
 
 
@@ -86,7 +92,9 @@ Each evaluation step uses MC episodes to update $Q$. Each improvement step updat
 For MC to estimate $Q(s,a)$ for every state-action pair, every pair must be visited. If the policy is deterministic, many $(s, a)$ pairs are never visited and $Q(s, a)$ remains unknown for unchosen actions.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> For MC to estimate $Q(s,a)$ for every state-action pair, every pair must be visited.
+
 </div>
 
 
@@ -299,6 +307,7 @@ def mc_control_epsilon_greedy(env, n_episodes=50_000, gamma=1.0,
 
     return Q, greedy_policy
 ```
+
 </div>
 
 ---
@@ -350,15 +359,19 @@ $$Q^{\pi'}(s, a) \geq Q^\pi(s, a) \quad \forall s, a$$
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Estimating $V$ instead of $Q$**
 MC control requires $Q(s,a)$, not $V(s)$. A classic mistake is attempting to improve the policy from $V(s)$ estimates without a model. Without $p(s'|s,a)$, the greedy improvement step $\arg\max_a \sum_{s'} p(s'|s,a)[r + \gamma V(s')]$ is undefined. Always collect action-value returns.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Estimating $V$ instead of $Q$**
 MC control requires $Q(s,a)$, not $V(s)$.
+
 </div>
 
 **Never exploring away from the greedy action**
@@ -379,7 +392,9 @@ After a policy improvement step, the Q-values for the old policy are no longer c
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** MC prediction (Guide 01), GPI framework (Module 1 — DP control)

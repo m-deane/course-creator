@@ -100,6 +100,7 @@ Create a test script `test_installation.py`:
 <span class="filename">test_installation.py</span>
 </div>
 
+
 ```python
 """Test that all required packages are installed and working."""
 
@@ -182,6 +183,7 @@ if __name__ == "__main__":
         print("\n⚠️  Some tests failed. Please check error messages above.")
 ```
 
+
 </div>
 
 Run the test:
@@ -236,6 +238,7 @@ In Jupyter, verify the kernel:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import sys
 print(f"Python path: {sys.executable}")
@@ -243,6 +246,7 @@ print(f"Python path: {sys.executable}")
 import linearmodels
 print(f"Linearmodels version: {linearmodels.__version__}")
 ```
+
 
 </div>
 
@@ -635,7 +639,6 @@ conda env create -f environment.yml
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

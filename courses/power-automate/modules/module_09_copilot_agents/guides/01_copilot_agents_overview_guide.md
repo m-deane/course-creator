@@ -7,11 +7,15 @@
 Copilot agents are conversational AI assistants built in Microsoft Copilot Studio. They understand natural language, maintain multi-turn conversations, and execute actions—including Power Automate flows—on behalf of users. Where a standalone flow responds to events, a Copilot agent responds to people.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> A Copilot agent is not a chatbot that talks. It is an automation layer with a conversational interface. Every topic in the agent is a structured decision tree that can call Power Automate flows, query data sources, and return formatted answers—all within a natural dialogue.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Copilot agents are conversational AI assistants built in Microsoft Copilot Studio. They understand natural language, maintain multi-turn conversations, and execute actions—including Power Automate flows—on behalf of users.
+
 </div>
 
 
@@ -22,7 +26,9 @@ Copilot agents are conversational AI assistants built in Microsoft Copilot Studi
 Standalone flows are triggered by events: a file is created, a form is submitted, a schedule fires. They are invisible to end users. Copilot agents fill the gap where users need to initiate automation themselves, but the request is unpredictable in wording and context.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Standalone flows are triggered by events: a file is created, a form is submitted, a schedule fires.
+
 </div>
 
 
@@ -40,7 +46,9 @@ Copilot Studio (formerly Power Virtual Agents) provides a low-code environment w
 Use this decision matrix to choose the right tool for a given scenario.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Use this decision matrix to choose the right tool for a given scenario.
+
 </div>
 
 
@@ -71,7 +79,9 @@ Output               ──► System action (write, notify)  ──► Both
 Copilot Studio is a standalone web application at [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com). It provides the following building blocks.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Copilot Studio is a standalone web application at [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com).
+
 </div>
 
 
@@ -336,7 +346,9 @@ Flows called from Copilot agents should operate with **least-privilege connectio
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 - **Flow trigger mismatch:** If the flow does not use the **"When a flow is run from Copilot"** trigger, it will not appear in the Copilot Studio action picker.
@@ -346,7 +358,9 @@ Flows called from Copilot agents should operate with **least-privilege connectio
 - **Topic trigger phrase overlap:** If two topics share identical or very similar trigger phrases, the agent may route to the wrong topic. Review all topics for phrase conflicts in the Topics overview.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> - **Flow trigger mismatch:** If the flow does not use the **"When a flow is run from Copilot"** trigger, it will not appear in the Copilot Studio action picker.
+
 </div>
 
 ---
@@ -355,7 +369,9 @@ Flows called from Copilot agents should operate with **least-privilege connectio
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 08 — Copilot in Power Automate (AI-assisted flow building)

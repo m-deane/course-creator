@@ -7,7 +7,9 @@
 Desktop flows are the Robotic Process Automation (RPA) engine inside Power Automate. They run on a Windows machine — not in the cloud — and automate any application that has a screen: legacy ERP systems, thick-client desktop apps, terminal emulators, web browsers, and even applications with no API whatsoever.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Desktop flows are the Robotic Process Automation (RPA) engine inside Power Automate. They run on a Windows machine — not in the cloud — and automate any application that has a screen: legacy ERP systems, thick-client desktop apps, terminal emulators, web browsers, and even applications with no API whatsoever.
+
 </div>
 
 
@@ -16,9 +18,11 @@ Desktop flows are the Robotic Process Automation (RPA) engine inside Power Autom
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -37,7 +41,9 @@ By the end of this guide you will be able to:
 Before installing anything, understand the fundamental split.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Before installing anything, understand the fundamental split.
+
 </div>
 
 
@@ -89,7 +95,9 @@ See detailed comparison in the table above.
 Power Automate Desktop is the Windows application that runs, records, and edits desktop flows. It is free to download; the license controls which execution modes are available.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Power Automate Desktop is the Windows application that runs, records, and edits desktop flows.
+
 </div>
 
 
@@ -411,7 +419,9 @@ Cloud Flow (resumed)
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 - **Forgetting to save** — The designer has no auto-save. Use Ctrl+S frequently. An unsaved flow loses changes when the machine restarts.
@@ -421,7 +431,9 @@ Cloud Flow (resumed)
 - **Machine offline** — Desktop flows cannot run if Power Automate Desktop is not open and the machine is not online. For unattended execution, ensure the service account keeps the desktop app running.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> - **Forgetting to save** — The designer has no auto-save.
+
 </div>
 
 ---

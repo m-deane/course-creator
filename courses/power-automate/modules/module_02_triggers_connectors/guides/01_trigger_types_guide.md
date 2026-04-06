@@ -7,7 +7,9 @@
 A trigger is the event that starts every flow. Power Automate organises triggers into three families: **automated** (react to an external event), **instant** (fire on demand), and **scheduled** (run on a timer). Choosing the right trigger family determines how your flow behaves, how often it can run, and what data it receives at startup.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A trigger is the event that starts every flow. Power Automate organises triggers into three families: **automated** (react to an external event), **instant** (fire on demand), and **scheduled** (run on a timer).
+
 </div>
 
 
@@ -16,9 +18,11 @@ A trigger is the event that starts every flow. Power Automate organises triggers
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -45,7 +49,9 @@ By the end of this guide you will be able to:
 ```
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Every flow has exactly one trigger card — the topmost card on the canvas.
+
 </div>
 
 
@@ -63,7 +69,9 @@ Every flow has exactly one trigger card — the topmost card on the canvas. The 
 An automated trigger listens for a specific event in a connected system and starts the flow the moment that event occurs. The flow does not run on a schedule; it wakes up only when something happens.
 
 <div class="callout-info">
+
 <strong>Info:</strong> An automated trigger listens for a specific event in a connected system and starts the flow the moment that event occurs.
+
 </div>
 
 
@@ -126,7 +134,9 @@ Dynamic content includes all list column values from the item that changed, plus
 Instant triggers do not listen passively. A user or system actively fires them.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Instant triggers do not listen passively.
+
 </div>
 
 
@@ -184,7 +194,9 @@ Use cases:
 Scheduled triggers fire automatically on a repeating clock, independent of any user action or external event.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Scheduled triggers fire automatically on a repeating clock, independent of any user action or external event.
+
 </div>
 
 
@@ -358,7 +370,9 @@ Changing the trigger family often invalidates dynamic content tokens used in dow
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 01 — Creating Your First Cloud Flow (trigger basics, canvas navigation)

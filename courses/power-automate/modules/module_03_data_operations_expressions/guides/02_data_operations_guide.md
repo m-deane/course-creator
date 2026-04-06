@@ -7,7 +7,9 @@
 Data operations are a category of built-in Power Automate actions that reshape, filter, and format structured data without calling any external service. Combined with variable actions, they let you accumulate values across loop iterations, transform arrays, and produce table outputs — all inside a single flow.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Data operations are a category of built-in Power Automate actions that reshape, filter, and format structured data without calling any external service. Combined with variable actions, they let you accumulate values across loop iterations, transform arrays, and produce table outputs — all inside a single flow.
+
 </div>
 
 
@@ -16,9 +18,11 @@ Data operations are a category of built-in Power Automate actions that reshape, 
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -37,7 +41,9 @@ By the end of this guide you will be able to:
 **Compose** is the simplest data action: it accepts a single input — any value or expression — and exposes it as an output named **Outputs**. It has no other effect.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Compose** is the simplest data action: it accepts a single input — any value or expression — and exposes it as an output named **Outputs**.
+
 </div>
 
 
@@ -67,6 +73,7 @@ With Compose:
   Email body:     "Date: " + outputs('TodayFormatted')
   File name:      concat(outputs('TodayCompact'), '_report.csv')
 ```
+
 </div>
 
 ### Adding a Compose Action
@@ -90,7 +97,9 @@ After a Compose action runs, its output is available under the **Compose** step'
 Variables hold a value that persists across the entire flow and can be updated at any point — including inside loops. This is the critical distinction from Compose: Compose produces a one-time output; a variable retains its value until you change it.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Variables hold a value that persists across the entire flow and can be updated at any point — including inside loops.
+
 </div>
 
 
@@ -139,6 +148,7 @@ Set variable
   Name:  strStatus
   Value: 'Approved'
 ```
+
 </div>
 
 ### Increment Variable
@@ -166,6 +176,7 @@ Initialize variable
     Name:   intCount
     Value:  1
 ```
+
 </div>
 
 After the loop, `intCount` contains the total number of items processed.
@@ -184,6 +195,7 @@ Example: collect email subjects into a summary string:
 <span class="filename">example.py</span>
 </div>
 
+
 ```text
 Initialize variable
   Name:  strSummary
@@ -195,6 +207,7 @@ Initialize variable
     Name:   strSummary
     Value:  concat('- ', items('Apply_to_each')?['Subject'], '\n')
 ```
+
 </div>
 
 After the loop, `strSummary` contains a bullet-pointed list of subjects.
@@ -227,7 +240,9 @@ Initialize variable
 **Select** transforms an array by projecting each element into a new shape. It is the Power Automate equivalent of the `map()` function in programming languages.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Select** transforms an array by projecting each element into a new shape.
+
 </div>
 
 
@@ -268,7 +283,9 @@ Output array: `[{"Name": "Alice", "Email": "alice@contoso.com"}, ...]`
 **Filter array** subsets an array to only the elements matching a condition. It is the Power Automate equivalent of `filter()`.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Filter array** subsets an array to only the elements matching a condition.
+
 </div>
 
 
@@ -317,7 +334,9 @@ graph LR
 **Create CSV table** converts an array of objects into a CSV-formatted string. This is the fastest path from a data array to a spreadsheet-ready attachment.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Create CSV table** converts an array of objects into a CSV-formatted string.
+
 </div>
 
 
@@ -518,7 +537,9 @@ This walkthrough produces a CSV file listing only approved purchase requests fro
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Guide 01 — Dynamic Content and Expressions (expressions used in Filter array, Select)

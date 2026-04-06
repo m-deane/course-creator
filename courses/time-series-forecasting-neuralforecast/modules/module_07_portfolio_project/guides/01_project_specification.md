@@ -7,9 +7,11 @@
 By the end of this project you will have a complete, deployable demand forecasting system that produces:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this project you will have a complete, deployable demand forecasting system that produces:
 
 1.
+
 </div>
 
 
@@ -28,7 +30,9 @@ This is a portfolio artifact, not a graded assignment. Build something you are p
 Design and implement a **demand forecasting system** that goes from raw time series data to actionable business intelligence. The system must demonstrate the full forecasting stack covered in this course:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Design and implement a **demand forecasting system** that goes from raw time series data to actionable business intelligence.
+
 </div>
 
 
@@ -51,6 +55,7 @@ flowchart LR
     DECISION --> SUMMARY["Stakeholder Summary\nwith Visualizations"]
     EXPLAIN --> SUMMARY
 ```
+
 </div>
 
 ---
@@ -60,9 +65,11 @@ flowchart LR
 ### Requirement 1: Select a Real Time Series Dataset
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Requirement 1: Select a Real Time Series Dataset
 
 You must use real data.
+
 </div>
 
 
@@ -110,6 +117,7 @@ model = NHITS(
     max_steps=1000,
 )
 ```
+
 </div>
 
 ### Requirement 3: Generate Sample Paths
@@ -134,6 +142,7 @@ paths_df = nf.models[0].simulate(
     n_paths=200,
 )
 ```
+
 </div>
 
 ### Requirement 4: Answer a Specific Business Question Using the Joint Distribution
@@ -169,10 +178,12 @@ Run `.explain()` on your trained model and report:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 explanations = nf.models[0].explain(df=df_test, level=90)
 # explanations: dict with keys 'attributions', 'feature_names'
 ```
+
 </div>
 
 ### Requirement 6: Create a Stakeholder-Facing Summary
@@ -193,7 +204,9 @@ The summary must be readable by a non-technical stakeholder — no model interna
 The project is organized into four weekly milestones. These are checkpoints for your own planning — nothing is submitted or graded.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The project is organized into four weekly milestones.
+
 </div>
 
 
@@ -255,7 +268,9 @@ The project is organized into four weekly milestones. These are checkpoints for 
 The following outline shows what a complete project looks like for the French Bakery dataset with an inventory stocking question. Use it as a structural template, not a content template — your business question and dataset should be your own choices.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The following outline shows what a complete project looks like for the French Bakery dataset with an inventory stocking question.
+
 </div>
 
 

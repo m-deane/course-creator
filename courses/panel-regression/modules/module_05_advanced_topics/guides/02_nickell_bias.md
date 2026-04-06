@@ -43,6 +43,7 @@ The problem: $\tilde{y}_{i,t-1}$ is correlated with $\tilde{\epsilon}_{it}$ beca
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -142,6 +143,7 @@ def demonstrate_nickell_bias(true_rho=0.5, n_simulations=100):
 demonstrate_nickell_bias(true_rho=0.5)
 ```
 
+
 </div>
 
 ## Magnitude of Bias
@@ -167,6 +169,7 @@ Key insights:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def plot_bias_magnitude():
@@ -224,6 +227,7 @@ def plot_bias_magnitude():
 plot_bias_magnitude()
 ```
 
+
 </div>
 
 ## Solutions to Nickell Bias
@@ -237,6 +241,7 @@ Use deeper lags as instruments for the differenced equation.
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -312,6 +317,7 @@ print(f"FE estimate: {fe.params['y_lag']:.4f} (biased)")
 
 ah_est, ah_model = anderson_hsiao(df_dyn, 'entity', 'time', 'y')
 ```
+
 
 </div>
 
@@ -534,7 +540,6 @@ compare_dynamic_panel_methods(true_rho=0.6, N=100, T=10)
 **Practice Question 1:** Why does including a lagged dependent variable in a fixed effects model create bias, and in which direction?
 
 **Practice Question 2:** How does the Arellano-Bond GMM estimator address the Nickell bias problem?
-
 
 
 ---

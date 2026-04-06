@@ -7,7 +7,9 @@
 A connector is a pre-built wrapper around an external service's API. Every action and trigger in Power Automate belongs to a connector. Choosing the right connectors — and understanding their licensing tier, authentication requirements, and rate limits — is the foundation of building reliable, production-grade flows.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A connector is a pre-built wrapper around an external service's API. Every action and trigger in Power Automate belongs to a connector.
+
 </div>
 
 
@@ -16,9 +18,11 @@ A connector is a pre-built wrapper around an external service's API. Every actio
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -35,7 +39,9 @@ By the end of this guide you will be able to:
 Power Automate connectors fall into three licensing tiers. The tier determines what plan your organization needs to run flows that use the connector.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Power Automate connectors fall into three licensing tiers.
+
 </div>
 
 
@@ -75,6 +81,7 @@ Power Automate connectors fall into three licensing tiers. The tier determines w
 ### 1. Office 365 Outlook
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Office 365 Outlook
 
 **Tier:** Standard
@@ -84,6 +91,7 @@ Power Automate connectors fall into three licensing tiers. The tier determines w
 
 | Trigger | Description |
 |---------|------...
+
 </div>
 
 
@@ -331,7 +339,9 @@ For on-premises SQL Server, also select the **On-premises data gateway** install
 Every connector requires a **connection** — a saved credential that the connector uses to call the external service. Power Automate stores connections in the environment and reuses them across flows.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Every connector requires a **connection** — a saved credential that the connector uses to call the external service.
+
 </div>
 
 
@@ -489,7 +499,9 @@ For flows that process large lists of items, use **Apply to each** with concurre
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Guide 01 — Trigger Types (triggers belong to connectors; connector tier affects trigger availability)

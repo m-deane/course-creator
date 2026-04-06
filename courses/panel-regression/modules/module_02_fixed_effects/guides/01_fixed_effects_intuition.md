@@ -164,6 +164,7 @@ Then averaged across entities
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 from linearmodels.panel import PanelOLS
@@ -192,6 +193,7 @@ results_twfe = model_twfe.fit(cov_type='clustered', cluster_entity=True)
 print(results_twfe)
 ```
 
+
 </div>
 
 ### Equivalent Using Dummies
@@ -201,6 +203,7 @@ print(results_twfe)
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 import statsmodels.formula.api as smf
@@ -215,6 +218,7 @@ results_lsdv = model_lsdv.fit()
 # Entity effects are estimated (not shown by default)
 print(results_lsdv.summary())
 ```
+
 
 </div>
 
@@ -287,6 +291,7 @@ Standard errors should be clustered by entity:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Correct
 results = model.fit(cov_type='clustered', cluster_entity=True)
@@ -294,6 +299,7 @@ results = model.fit(cov_type='clustered', cluster_entity=True)
 # Incorrect (SEs too small)
 results = model.fit()
 ```
+
 
 </div>
 
@@ -353,7 +359,6 @@ print(hausman_test)
 **Practice Question 1:** Why can fixed effects not estimate the impact of time-invariant variables like gender or geographic region?
 
 **Practice Question 2:** When would entity fixed effects alone be insufficient, requiring two-way (entity + time) fixed effects?
-
 
 
 ---

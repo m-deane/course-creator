@@ -25,10 +25,13 @@ print(f"Device count: {torch.cuda.device_count()}")
 # Expected on a GPU instance: CUDA available: True
 # Expected on CPU-only: CUDA available: False  (still works, just slower)
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> This guide covers the patterns that bridge the gap between a working notebook and a robust production system: custom losses, GPU checkpointing, multi-series batch processing, experiment logging, and graceful error handling with fallback models. Each pattern is self-contained — copy the snippet, adapt the parameters, use it.
+
 </div>
 
 
@@ -39,7 +42,9 @@ print(f"Device count: {torch.cuda.device_count()}")
 NeuralForecast ships `MQLoss` (quantile), `DistributionLoss` (full distribution), and `MAE`/`MSE` for point forecasting. For production, two customizations are common: asymmetric quantiles and scaled losses.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> NeuralForecast ships `MQLoss` (quantile), `DistributionLoss` (full distribution), and `MAE`/`MSE` for point forecasting.
+
 </div>
 
 
@@ -77,6 +82,7 @@ model = NHITS(
     max_steps=300,
 )
 ```
+
 </div>
 
 ### 1b. DistributionLoss for Full Probabilistic Output
@@ -108,6 +114,7 @@ model_nb = NHITS(
     max_steps=300,
 )
 ```
+
 </div>
 
 **Choosing between MQLoss and DistributionLoss:**
@@ -126,9 +133,11 @@ model_nb = NHITS(
 ### 2a. Selecting Device
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Selecting Device
 
 NeuralForecast uses PyTorch Lightning, which auto-detects GPU.
+
 </div>
 
 
@@ -139,6 +148,7 @@ NeuralForecast uses PyTorch Lightning, which auto-detects GPU. Override if neede
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from neuralforecast.models import NHITS
@@ -167,6 +177,7 @@ model_cpu = NHITS(
     accelerator="cpu",
 )
 ```
+
 </div>
 
 ### 2b. Checkpointing During Training
@@ -230,9 +241,11 @@ model = NHITS(
 ### 3a. The unique_id Pattern
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The unique_id Pattern
 
 NeuralForecast trains a single global model across all series identified by `unique_id`.
+
 </div>
 
 
@@ -584,7 +597,6 @@ def validate_forecast(
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

@@ -7,7 +7,9 @@
 World Models (Ha & Schmidhuber, 2018) decompose the agent into three specialized components — a visual encoder, a temporal memory, and a compact controller — enabling the controller to be trained entirely inside a learned dream environment. MuZero (Schrittwieser et al., 2020) eliminates the need for an explicit environment simulator by learning dynamics in a latent space, then applying AlphaZero-style MCTS planning within that space. Both represent the frontier of sample-efficient deep RL.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> World Models (Ha & Schmidhuber, 2018) decompose the agent into three specialized components — a visual encoder, a temporal memory, and a compact controller — enabling the controller to be trained entirely inside a learned dream environment. MuZero (Schrittwieser et al., 2020) eliminates the need for an explicit environment simulator by learning dynamics in a latent space, then applying AlphaZero-style MCTS planning within that space.
+
 </div>
 
 
@@ -18,16 +20,19 @@ The challenge in applying Dyna-Q to rich, high-dimensional environments (pixel-b
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The challenge in applying Dyna-Q to rich, high-dimensional environments (pixel-based games, robotics from cameras) is that modeling raw pixels is expensive and brittle.
+
 </div>
 ## Intuitive Explanation: World Models
 
 A film director preparing for a scene does not need to actually film every possible camera angle. They have a mental model of how lighting, actor positioning, and camera motion combine to produce an image. They can simulate in their mind which angles will look good and issue precise instructions on set — with minimal real takes.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> A film director preparing for a scene does not need to actually film every possible camera angle.
+
 </div>
 
 
@@ -43,11 +48,13 @@ The key insight is that training C inside the dream (using V and M) is much fast
 The World Models architecture (Ha & Schmidhuber, 2018) decomposes the agent into three modules that are trained separately:
 
 <div class="callout-info">
+
 <strong>Info:</strong> The World Models architecture (Ha & Schmidhuber, 2018) decomposes the agent into three modules that are trained separately:
 
 ### Module 1: Vision Model (V) — Variational Autoencoder
 
 The V model compr...
+
 </div>
 
 
@@ -203,6 +210,7 @@ flowchart LR
 
     style UNROLL fill:#fff8e8,stroke:#D4A017
 ```
+
 </div>
 
 ---
@@ -382,6 +390,7 @@ class MemoryModel(nn.Module):
 
         return pi, mu, log_sigma, hidden
 ```
+
 </div>
 
 ---
@@ -389,15 +398,19 @@ class MemoryModel(nn.Module):
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Training the three World Model components in the wrong order.**
 The V model must be trained before the M model, because M operates on encoded latents $z_t$. If you train M on raw observations or on latents from an untrained V, M learns noise. Train V first; freeze it; encode the dataset; then train M on the encoded sequences.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Training the three World Model components in the wrong order.**
 The V model must be trained before the M model, because M operates on encoded latents $z_t$.
+
 </div>
 
 **Pitfall 2 — Forgetting the temperature parameter in MDN-RNN sampling.**
@@ -421,7 +434,9 @@ The controller trained in the dream can only be as good as the dream. A V model 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Dyna-Q and MCTS (Guide 02), variational autoencoders (deep learning), LSTM/recurrent networks

@@ -7,7 +7,9 @@
 Temporal Difference (TD) prediction estimates the state-value function $V^\pi$ by combining the sampling idea of Monte Carlo with the bootstrapping idea of Dynamic Programming. The agent updates value estimates after every single step — no need to wait for an episode to end.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Temporal Difference (TD) prediction estimates the state-value function $V^\pi$ by combining the sampling idea of Monte Carlo with the bootstrapping idea of Dynamic Programming. The agent updates value estimates after every single step — no need to wait for an episode to end.
+
 </div>
 
 
@@ -16,7 +18,9 @@ Temporal Difference (TD) prediction estimates the state-value function $V^\pi$ b
 TD learning updates toward a *target that is itself an estimate*. Instead of waiting to observe the full return $G_t$, TD substitutes the immediate reward plus a discounted estimate of the next state's value:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> TD learning updates toward a *target that is itself an estimate*.
+
 </div>
 
 
@@ -31,7 +35,9 @@ The difference between this target and the current estimate is the **TD error** 
 Imagine you are driving from city A to city C, passing through city B. You want to estimate how long the full journey takes.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Imagine you are driving from city A to city C, passing through city B.
+
 </div>
 
 
@@ -49,11 +55,13 @@ The TD approach lets you *learn while you travel*, updating estimates at every w
 ### TD(0) Update Rule
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### TD(0) Update Rule
 
 For a policy $\pi$ being evaluated, after each transition $(S_t, A_t, R_{t+1}, S_{t+1})$:
 
 $$V(S_t) \leftarrow V(S_t) + \alpha \bigl[R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\bigr]$$...
+
 </div>
 
 
@@ -244,6 +252,7 @@ print("Estimated V for first 8 states:")
 print(V_hat[:8].round(4))
 env.close()
 ```
+
 </div>
 
 ---
@@ -251,15 +260,19 @@ env.close()
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Bootstrapping into a terminal state.**
 When $S_{t+1}$ is terminal, its value is 0 by definition. If you look up `V[terminal_state]` naively, you may get a non-zero stale value. Always check `terminated` and use `reward - V[state]` (i.e., set next-state value to zero) on terminal transitions.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Bootstrapping into a terminal state.**
 When $S_{t+1}$ is terminal, its value is 0 by definition.
+
 </div>
 
 **Pitfall 2 — Using a constant large step size.**
@@ -280,7 +293,9 @@ TD error $\delta_t$ is computed from a one-step transition. Monte Carlo return $
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Bellman expectation equation (Module 0), Monte Carlo prediction (Module 2), MDP framework

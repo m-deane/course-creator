@@ -109,6 +109,7 @@ Every entity observed in every period:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 
@@ -126,6 +127,7 @@ print(balanced.groupby('entity').size())
 # C    3
 ```
 
+
 </div>
 
 ### Unbalanced Panel
@@ -136,6 +138,7 @@ Some entity-period combinations missing:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # Unbalanced panel (firm C missing 2021)
@@ -150,6 +153,7 @@ unbalanced = pd.DataFrame({
 # - Related to observables (MAR)?
 # - Related to unobservables (MNAR)? ← Selection bias!
 ```
+
 
 </div>
 
@@ -185,6 +189,7 @@ $$u_{it} = \alpha_i + \lambda_t + \epsilon_{it}$$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 import numpy as np
@@ -210,6 +215,7 @@ print(panel.loc[0])  # All periods for entity 0
 # Access specific time
 print(panel.xs(5, level='time').head())  # Period 5 for all entities
 ```
+
 
 </div>
 
@@ -284,7 +290,6 @@ print(f"Within share: {variation['within_share']:.1%}")
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

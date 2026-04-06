@@ -34,6 +34,7 @@ where $g$ indexes clusters (entities).
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -111,6 +112,7 @@ def demonstrate_clustering_importance():
 df = demonstrate_clustering_importance()
 ```
 
+
 </div>
 
 ## Types of Clustering
@@ -132,6 +134,7 @@ The most common approach for panel data.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 def entity_clustering(df, y_col, x_cols, entity_col, time_col):
     """
@@ -152,6 +155,7 @@ def entity_clustering(df, y_col, x_cols, entity_col, time_col):
 fe_model = entity_clustering(df, 'y', ['x'], 'entity', 'time')
 ```
 
+
 </div>
 
 ### 2. Time (One-Way) Clustering
@@ -163,6 +167,7 @@ For cross-sectional correlation across entities.
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def time_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -181,6 +186,7 @@ def time_clustering(df, y_col, x_cols, entity_col, time_col):
 
     return fe
 ```
+
 
 </div>
 
@@ -546,7 +552,6 @@ clustering_recommendations()
 **Practice Question 1:** Why do conventional standard errors understate uncertainty in panel data with within-entity correlation?
 
 **Practice Question 2:** At what level should you cluster standard errors -- entity level, time level, or both?
-
 
 
 ---

@@ -22,13 +22,14 @@
 **Input:** $\alpha$ (step size), $\gamma$ (discount), $\epsilon$ (exploration), $n$ (planning steps)
 
 <div class="callout-insight">
-<strong>Insight:</strong> **Input:** $\alpha$ (step size), $\gamma$ (discount), $\epsilon$ (exploration), $n$ (planning steps)
 
+<strong>Insight:</strong> **Input:** $\alpha$ (step size), $\gamma$ (discount), $\epsilon$ (exploration), $n$ (planning steps)
 
 
 **Source:** Sutton & Barto (2018), Algorithm 8.1
 
 **Dyna-Q+ modification (non-stationary environ...
+
 </div>
 
 
@@ -71,8 +72,10 @@ Replace $R$ with $\tilde{r}(S, A) = R + \kappa\sqrt{\tau(S, A)}$, where $\tau(S,
 Starting from root $s_0$, traverse existing tree by selecting the child with the highest UCT score until reaching a **leaf node** (a node with at least one untried action, or a terminal state).
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Phase 1: Selection
 Starting from root $s_0$, traverse existing tree by selecting the child with the highest UCT score until reaching a **leaf node** (a node with at least one untried action, or a ...
+
 </div>
 
 
@@ -98,6 +101,7 @@ $$a^* = \arg\max_a N(s_0, a) \qquad \text{(visit count, not Q-value)}$$
 $$\text{UCB1}(a) = \bar{r}(a) + c\sqrt{\frac{\ln N}{N(a)}}$$
 
 <div class="callout-info">
+
 <strong>Info:</strong> **UCB1** (multi-armed bandits):
 $$\text{UCB1}(a) = \bar{r}(a) + c\sqrt{\frac{\ln N}{N(a)}}$$
 
@@ -105,6 +109,7 @@ $$\text{UCB1}(a) = \bar{r}(a) + c\sqrt{\frac{\ln N}{N(a)}}$$
 $$\text{UCT}(s, a) = \bar{Q}(s, a) + c\sqrt{\frac{\ln N(s)}{N(s, a)}}$$
 
 | Sym...
+
 </div>
 
 
@@ -139,8 +144,10 @@ where $p(a \mid s)$ is the policy network prior over actions.
 | **Prediction** $f$ | $p_k, v_k = f(h_k)$ | Predict policy prior and value from any hidden state |
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> $h_0 = h(o_1, \ldots, o_t)$ — encode current history
 2.
+
 </div>
 
 

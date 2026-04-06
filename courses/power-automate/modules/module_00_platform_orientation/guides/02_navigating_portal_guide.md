@@ -7,11 +7,15 @@
 The Power Automate portal at `make.powerautomate.com` is the primary interface for creating, managing, monitoring, and deploying flows. This guide walks through every major section of the portal, explains what each section is for, and describes the UI in enough detail to navigate without screenshots.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The portal UI updates frequently. Microsoft ships weekly releases. If a menu label or icon differs slightly from what is described here, check `learn.microsoft.com/power-automate` for the current UI reference. The underlying concepts and section purposes remain stable.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> The Power Automate portal at `make.powerautomate.com` is the primary interface for creating, managing, monitoring, and deploying flows. This guide walks through every major section of the portal, explains what each section is for, and describes the UI in enough detail to navigate without screenshots.
+
 </div>
 
 
@@ -22,7 +26,9 @@ The Power Automate portal at `make.powerautomate.com` is the primary interface f
 Navigate to `make.powerautomate.com` in any modern browser. Sign in with your Microsoft organizational account (work or school account). Consumer Microsoft accounts (personal @outlook.com, @hotmail.com) have limited access and cannot connect to organizational systems.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Navigate to `make.powerautomate.com` in any modern browser.
+
 </div>
 
 
@@ -37,7 +43,9 @@ After sign-in, you land on the **Home** page inside the environment your account
 Before navigating any section, locate the **environment selector** — it appears in the **top-right area** of the portal header, showing the current environment name next to a small grid/globe icon.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Before navigating any section, locate the **environment selector** — it appears in the **top-right area** of the portal header, showing the current environment name next to a small grid/globe icon.
+
 </div>
 
 
@@ -170,7 +178,9 @@ Access to the Dataverse tables in the current environment. Shows table list, rel
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 **This is one of the most important management pages in the portal.**
@@ -269,7 +279,9 @@ Process Mining analyzes event logs from business systems to visualize how proces
 Power Automate licensing directly determines which connectors you can use and how flows can run. Choosing the wrong license tier is a common source of confusion when a flow that works in one environment fails in another.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Power Automate licensing directly determines which connectors you can use and how flows can run.
+
 </div>
 
 
@@ -304,6 +316,7 @@ Licensing Tiers (simplified):
 └── Power Automate RPA (Unattended) — add-on to Per Flow
     └── Run desktop flows on dedicated machines, no user login required
 ```
+
 </div>
 
 > **On screen:** Your current license tier appears under your profile avatar > `View account`. In the Power Automate portal, attempting to add a Premium connector when you have only a Standard license shows an upgrade prompt inline in the flow designer — it does not block you from designing the flow, only from saving it in a licensed environment.

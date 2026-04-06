@@ -7,7 +7,9 @@
 Vanilla DQN (Mnih et al., 2015) has three specific, measurable weaknesses: systematic overestimation of Q-values, no architectural separation between state value and action advantage, and uniform sampling from the replay buffer that ignores which transitions are most informative. Double DQN, Dueling DQN, and Prioritized Experience Replay each address exactly one of these weaknesses. Rainbow (Hessel et al., 2018) combines all known improvements into a single agent.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Vanilla DQN (Mnih et al., 2015) has three specific, measurable weaknesses: systematic overestimation of Q-values, no architectural separation between state value and action advantage, and uniform sampling from the replay buffer that ignores which transitions are most informative. Double DQN, Dueling DQN, and Prioritized Experience Replay each address exactly one of these weaknesses.
+
 </div>
 
 
@@ -18,20 +20,23 @@ Each improvement is modular: Double DQN changes only the target computation, Due
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Each improvement is modular: Double DQN changes only the target computation, Dueling DQN changes only the network architecture, and PER changes only the replay sampling strategy.
+
 </div>
 ## Improvement 1: Double DQN
 
 ### The Problem: Overestimation Bias
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### The Problem: Overestimation Bias
 
 The vanilla DQN TD target uses the same network to **select** the best next action and **evaluate** its value:
 
 $$Y^{\text{DQN}} = r + \gamma \max_{a'} Q(s', a';\...
+
 </div>
 
 
@@ -84,6 +89,7 @@ with torch.no_grad():
 
 targets = rewards + gamma * max_next_q * (1.0 - dones)
 ```
+
 </div>
 
 ---
@@ -139,6 +145,7 @@ flowchart TD
     style S fill:#4A90D9,color:#fff
     style OUT fill:#E8844A,color:#fff
 ```
+
 </div>
 
 ### Code Implementation
@@ -195,6 +202,7 @@ class DuelingQNetwork(nn.Module):
         q = value + (advantage - advantage.mean(dim=1, keepdim=True))
         return q
 ```
+
 </div>
 
 ### Why It Helps
@@ -249,6 +257,7 @@ Naive priority updates are $O(N)$ per step. A **sum tree** data structure reduce
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 class SumTree:
     """
@@ -301,6 +310,7 @@ class SumTree:
     def total_priority(self) -> float:
         return self.tree[0]
 ```
+
 </div>
 
 ---
@@ -348,15 +358,19 @@ The ablation study in the Rainbow paper demonstrates that removing any single co
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Double DQN: confusing which network does what.**
 Action selection uses the **online** network $\theta$; action evaluation uses the **target** network $\theta^-$. Swapping them (or using the same network for both) negates the overestimation correction and produces results identical to vanilla DQN.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Double DQN: confusing which network does what.**
 Action selection uses the **online** network $\theta$; action evaluation uses the **target** network $\theta^-$.
+
 </div>
 
 **Pitfall 2 — Dueling DQN: forgetting the mean-subtraction normalization.**
@@ -377,7 +391,9 @@ Debugging a combined agent is much harder than debugging each component independ
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** DQN (Guide 01), Bellman equations (Module 00), replay buffers, target networks

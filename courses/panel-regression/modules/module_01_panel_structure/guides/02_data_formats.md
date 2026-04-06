@@ -117,6 +117,7 @@ $$\text{melt}(\text{df}_{\text{wide}}, \text{id\_vars}=i, \text{var\_name}=t, \t
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 person_id | year | wage | education | experience
 ----------|------|------|-----------|------------
@@ -125,6 +126,7 @@ person_id | year | wage | education | experience
 101       | 2021 | 51000| 16        | 7
 102       | 2019 | 52000| 18        | 8
 ```
+
 
 </div>
 
@@ -135,12 +137,14 @@ person_id | year | wage | education | experience
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 person_id | wage_2019 | wage_2020 | wage_2021
 ----------|-----------|-----------|----------
 101       | 45000     | 48000     | 51000
 102       | 52000     | 55000     | 58000
 ```
+
 
 </div>
 
@@ -165,6 +169,7 @@ person_id | wage_2019 | wage_2020 | wage_2021
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 import numpy as np
@@ -223,6 +228,7 @@ print(data_long_restored.head(10))
 # Verify equivalence
 print(f"\nData preserved: {data_long_restored.shape == (N*T, 3)}")
 ```
+
 
 </div>
 

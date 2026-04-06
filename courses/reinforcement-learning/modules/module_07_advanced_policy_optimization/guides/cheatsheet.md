@@ -7,6 +7,7 @@
 ### TRPO (Schulman et al., 2015)
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ### TRPO (Schulman et al., 2015)
 
 **Objective (maximize):**
@@ -16,6 +17,7 @@ $$L(\theta) = \mathbb{E}\!\left[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)} 
 **Constraint:**
 
 $$\mathbb{E}\!\left...
+
 </div>
 
 
@@ -120,6 +122,7 @@ $$J(\alpha) = \mathbb{E}_{a \sim \pi_\psi}\!\left[-\alpha \log \pi_\psi(a|s) - \
 ### TRPO
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### TRPO
 
 | Parameter | Typical Range | Default |
@@ -127,6 +130,7 @@ $$J(\alpha) = \mathbb{E}_{a \sim \pi_\psi}\!\left[-\alpha \log \pi_\psi(a|s) - \
 | KL constraint $\delta$ | $0.005 {-} 0.05$ | $0.01$ |
 | Discount $\gamma$ | $0.99 {-} 0.999$ | $0.99$ |
 | GAE $\lambda$ | $0.9 {-} 0.99...
+
 </div>
 
 
@@ -210,6 +214,7 @@ START
 ### PPO Diagnostics
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### PPO Diagnostics
 
 | Metric | Healthy Range | Action if Unhealthy |
@@ -217,6 +222,7 @@ START
 | Approx KL divergence | $ 0.05$ |
 | Clip fraction | $0.1 {-} 0.3$ | Reduce $\epsilon$ if $> 0.5$ |
 | Policy entropy...
+
 </div>
 
 

@@ -9,7 +9,9 @@ Copilot in Power Automate lets you describe what you want a flow to do in plain 
 This guide covers how to access Copilot, how to craft effective prompts, how to use Copilot for expressions and troubleshooting, and where its limits are so you know when to switch to manual editing.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Copilot in Power Automate lets you describe what you want a flow to do in plain English and watch it build the structure for you. Instead of searching through hundreds of connectors and manually wiring triggers to actions, you type a sentence and Copilot generates a working starting point that you then review and refine.
+
 </div>
 
 
@@ -20,7 +22,9 @@ This guide covers how to access Copilot, how to craft effective prompts, how to 
 Copilot is an AI assistant embedded directly into the Power Automate interface. It understands natural language descriptions of automation scenarios and translates them into flow structures: triggers, actions, conditions, and connector configurations.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Copilot is an AI assistant embedded directly into the Power Automate interface.
+
 </div>
 
 
@@ -41,9 +45,11 @@ Copilot is not a separate product. It is built into the standard Power Automate 
 ### From the Home Page
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### From the Home Page
 
 > **On screen:** After signing into `make.powerautomate.com`, you land on the Home page.
+
 </div>
 
 
@@ -77,9 +83,11 @@ The Copilot panel inside the designer is a chat interface. You can:
 ### Step 1: Write Your Prompt
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Step 1: Write Your Prompt
 
 Navigate to **Home** and type your automation description.
+
 </div>
 
 
@@ -134,7 +142,9 @@ After the test run, each step shows a green check (success) or red X (failure) w
 Once inside the flow designer with the Copilot panel open, you can modify the flow by describing the change in plain English.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Once inside the flow designer with the Copilot panel open, you can modify the flow by describing the change in plain English.
+
 </div>
 
 
@@ -176,7 +186,9 @@ Copilot removes the action and confirms what it changed.
 Power Automate expressions (used in the expression editor) follow a specific syntax for date formatting, string manipulation, conditionals, and data conversion. Writing them manually requires knowing the expression language. Copilot can write them for you.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Power Automate expressions (used in the expression editor) follow a specific syntax for date formatting, string manipulation, conditionals, and data conversion.
+
 </div>
 
 
@@ -335,7 +347,6 @@ The next guide covers AI Builder actions, which take Copilot-assisted flows furt
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

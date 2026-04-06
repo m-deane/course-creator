@@ -75,6 +75,7 @@ $$\text{Bias} \approx -\frac{1.5}{4} = -0.375$$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -140,6 +141,7 @@ print(f"  Actual bias: {result['bias']:.3f}")
 print(f"  Theoretical bias: {result['theoretical_bias']:.3f}")
 ```
 
+
 </div>
 
 ## The Anderson-Hsiao Estimator
@@ -163,6 +165,7 @@ Use $y_{i,t-2}$ as an instrument for $\Delta y_{i,t-1}$:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -220,6 +223,7 @@ print(f"  rho estimate: {ah_result.params['y_lag_diff']:.4f}")
 print(f"  True rho: {rho_true}")
 ```
 
+
 </div>
 
 ## The Arellano-Bond Estimator (GMM)
@@ -240,6 +244,7 @@ $$E[y_{i,s} \cdot \Delta\epsilon_{it}] = 0 \quad \text{for } s \leq t-2$$
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -285,6 +290,7 @@ print("\nArellano-Bond GMM Results:")
 print(f"  rho estimate: {ab_result.params['y_lag_diff']:.4f}")
 print(f"  True rho: {rho_true}")
 ```
+
 
 </div>
 
@@ -400,7 +406,6 @@ Rejection suggests some instruments are invalid.
 **Practice Question 1:** Why does including a lagged dependent variable in a fixed effects model create bias, and in which direction?
 
 **Practice Question 2:** How does the Arellano-Bond GMM estimator address the Nickell bias problem?
-
 
 
 ---

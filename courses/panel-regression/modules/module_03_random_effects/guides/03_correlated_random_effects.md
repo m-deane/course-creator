@@ -48,6 +48,7 @@ This:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -130,6 +131,7 @@ def demonstrate_cre():
 df, cre_model = demonstrate_cre()
 ```
 
+
 </div>
 
 ## Why CRE Works
@@ -154,6 +156,7 @@ Including $\bar{X}_i$ in the model:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def visualize_cre_mechanics(df):
@@ -224,6 +227,7 @@ def visualize_cre_mechanics(df):
 visualize_cre_mechanics(df)
 ```
 
+
 </div>
 
 ## Implementation Options
@@ -235,6 +239,7 @@ visualize_cre_mechanics(df)
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def cre_ols(df, y_col, x_cols, z_cols, entity_col):
@@ -267,6 +272,7 @@ cre_ols_model = cre_ols(df, 'y', ['x'], ['z'], 'entity')
 print("\nCRE via OLS:")
 print(cre_ols_model.summary().tables[1])
 ```
+
 
 </div>
 
@@ -471,7 +477,6 @@ df_full, cre_full = full_cre_example()
 **Practice Question 1:** What is the key assumption that distinguishes random effects from fixed effects, and when is it likely to be violated?
 
 **Practice Question 2:** Why does random effects estimation produce more efficient estimates than fixed effects when its assumptions hold?
-
 
 
 ---

@@ -24,6 +24,7 @@ Before running panel regressions, thorough exploratory analysis helps you unders
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 import numpy as np
@@ -86,6 +87,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+
 </div>
 
 ### Within vs Between Variation
@@ -95,6 +97,7 @@ plt.show()
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def plot_within_between(df, entity_col, x_col, y_col):
@@ -177,6 +180,7 @@ for name, value in slopes.items():
     print(f"  {name}: {value:.4f}")
 ```
 
+
 </div>
 
 ## Testing for Entity Effects
@@ -195,6 +199,7 @@ for name, value in slopes.items():
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def plot_entity_effects(df, entity_col, y_col):
@@ -259,6 +264,7 @@ def plot_entity_effects(df, entity_col, y_col):
 # Run test
 f_stat, p_value = plot_entity_effects(df, 'entity', 'y')
 ```
+
 
 </div>
 
@@ -580,7 +586,6 @@ panel_eda_report(df, 'entity', 'time', 'y', ['x', 'z'])
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

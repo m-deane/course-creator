@@ -57,10 +57,13 @@ eval_xlinear = evaluate(test_xlinear, metrics=[mae, mse], models=["XLinear"])
 print("NHITS  — MAE:", eval_nhits["NHITS"].iloc[0], "MSE:", eval_nhits["NHITS"].iloc[1])
 print("XLinear— MAE:", eval_xlinear["XLinear"].iloc[0], "MSE:", eval_xlinear["XLinear"].iloc[1])
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Multivariate forecasting feeds all correlated series simultaneously into a single model, letting the model learn cross-variable patterns. XLinear is purpose-built for this: its Variate-wise Gating Module (VGM) learns which series inform which targets, and the `n_series` parameter controls the entire cross-variable pathway.
+
 </div>
 
 
@@ -71,7 +74,9 @@ print("XLinear— MAE:", eval_xlinear["XLinear"].iloc[0], "MSE:", eval_xlinear["
 Not every dataset benefits from multivariate modeling. The key question is: **do other series carry information about the target that is not already in the target's own history?**
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Not every dataset benefits from multivariate modeling.
+
 </div>
 
 
@@ -94,6 +99,7 @@ flowchart TD
     Q3 -->|Yes| MV
     Q3 -->|No| UV2["Univariate often\nsufficient"]
 ```
+
 </div>
 
 **Cases where multivariate wins:**
@@ -136,7 +142,9 @@ See detailed comparison in the table above.
 `n_series` is the most important parameter for multivariate XLinear. It controls three things simultaneously:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> `n_series` is the most important parameter for multivariate XLinear.
+
 </div>
 
 
@@ -161,6 +169,7 @@ The following implementation builds on the approach above:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # n_series must match the number of unique_ids in your DataFrame
 n_unique = Y_df["unique_id"].nunique()
@@ -174,6 +183,7 @@ model = XLinear(
     ...
 )
 ```
+
 </div>
 
 **Mismatch consequences:**
@@ -189,7 +199,9 @@ When in doubt, count unique series in your DataFrame before setting `n_series`.
 The Variate-wise Gating Module learns a gate over the variable dimension. With `n_series=7` (ETTm1):
 
 <div class="callout-info">
+
 <strong>Info:</strong> The Variate-wise Gating Module learns a gate over the variable dimension.
+
 </div>
 
 
@@ -208,6 +220,7 @@ The gate values at inference time tell you which series are most informative:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # (Illustrative — requires model internals access)
 # A gate near 1.0 means "this series is highly informative"
@@ -215,6 +228,7 @@ The gate values at inference time tell you which series are most informative:
 # For ETTm1, VGM typically assigns high gates to HUFL and MUFL
 # for predicting OT (oil temperature), consistent with physics
 ```
+
 </div>
 
 The `channel_ff` parameter controls the MLP hidden size. Setting `channel_ff < n_series` creates a bottleneck — cross-variable information is compressed before gating. This can act as regularization but risks discarding informative cross-series patterns. The reference setting `channel_ff=21` is larger than `n_series=7` in the base ETTm1 setup, reflecting that the feature space includes lags and date encodings.
@@ -226,10 +240,12 @@ The `channel_ff` parameter controls the MLP hidden size. Setting `channel_ff < n
 XLinear supports three types of exogenous features, matching the NeuralForecast API:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> XLinear supports three types of exogenous features, matching the NeuralForecast API:
 
 ### Historical Exogenous (`hist_exog_list`)
 Known only up to the forecast origin — cannot be projected into the fu...
+
 </div>
 
 
@@ -295,7 +311,9 @@ model = XLinear(
 XLinear has five hyperparameters that materially affect accuracy. Tune them in this order:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> XLinear has five hyperparameters that materially affect accuracy.
+
 </div>
 
 
@@ -456,7 +474,6 @@ print(eval_df.groupby("unique_id")["XLinear"].mean())
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

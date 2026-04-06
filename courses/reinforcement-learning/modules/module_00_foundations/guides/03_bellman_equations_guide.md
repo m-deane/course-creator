@@ -7,7 +7,9 @@
 Bellman equations are recursive functional equations that define value functions — the expected cumulative reward an agent can obtain from any state or state-action pair. They are the analytical core of reinforcement learning: every RL algorithm is either an exact or approximate method for solving them.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Bellman equations are recursive functional equations that define value functions — the expected cumulative reward an agent can obtain from any state or state-action pair. They are the analytical core of reinforcement learning: every RL algorithm is either an exact or approximate method for solving them.
+
 </div>
 
 
@@ -18,20 +20,23 @@ The value of a state equals the immediate reward plus the discounted value of th
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The value of a state equals the immediate reward plus the discounted value of the states you land in next.
+
 </div>
 ## State-Value Function
 
 The **state-value function** $V^\pi(s)$ under policy $\pi$ is the expected return when starting in state $s$ and following $\pi$ thereafter:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The **state-value function** $V^\pi(s)$ under policy $\pi$ is the expected return when starting in state $s$ and following $\pi$ thereafter:
 
 $$V^\pi(s) = \mathbb{E}_\pi[G_t \mid S_t = s]$$
 
 Expanding...
+
 </div>
 
 
@@ -50,9 +55,11 @@ $$V^\pi(s) = \mathbb{E}_\pi[R_{t+1} + \gamma G_{t+1} \mid S_t = s]$$
 The **action-value function** $Q^\pi(s, a)$ under policy $\pi$ is the expected return when starting in state $s$, taking action $a$, and following $\pi$ thereafter:
 
 <div class="callout-info">
+
 <strong>Info:</strong> The **action-value function** $Q^\pi(s, a)$ under policy $\pi$ is the expected return when starting in state $s$, taking action $a$, and following $\pi$ thereafter:
 
 $$Q^\pi(s, a) = \mathbb{E}_\pi[G_t...
+
 </div>
 
 
@@ -73,6 +80,7 @@ The state-value is a policy-weighted average of action-values.
 Starting from the recursive return definition:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Starting from the recursive return definition:
 
 $$V^\pi(s) = \mathbb{E}_\pi\left[R_{t+1} + \gamma V^\pi(S_{t+1}) \mid S_t = s\right]$$
@@ -80,6 +88,7 @@ $$V^\pi(s) = \mathbb{E}_\pi\left[R_{t+1} + \gamma V^\pi(S_{t+1}) \mid S_t = s\ri
 Writing out the expectations explicitly:
 
 $$\boxed{V^\pi(s) = \s...
+
 </div>
 
 
@@ -166,6 +175,7 @@ flowchart TD
     S2 -->|"$\gamma V^\pi(s'_2)$"| V2["backed up"]
     S3 -->|"$\gamma V^\pi(s'_3)$"| V3["backed up"]
 ```
+
 </div>
 
 The diagram shows: from state $s$, the policy branches over actions; each action branches over stochastic next states. The value of $s$ is the result of averaging over all branches and adding immediate rewards.
@@ -342,6 +352,7 @@ print("\nOptimal policy:")
 for s, a in pi_star.items():
     print(f"  pi*({s}) = {a}")
 ```
+
 </div>
 
 Expected output pattern:
@@ -364,15 +375,19 @@ The **optimality equation** says the same thing but replaces "where you move acc
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Bootstrapping from terminal states.**
 Terminal states have $V(s_{\text{terminal}}) = 0$ by definition. Using the Bellman update to bootstrap from a terminal state value that was not explicitly zeroed causes incorrect value estimates to propagate backward through all preceding states.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Bootstrapping from terminal states.**
 Terminal states have $V(s_{\text{terminal}}) = 0$ by definition.
+
 </div>
 
 **Pitfall 2 — Confusing on-policy and off-policy.**
@@ -393,7 +408,9 @@ $V^*(s) = \max_a Q^*(s, a)$ holds, but $V^*$ requires knowing $p$ to extract a p
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** MDP formalism (Guide 02), return definition, policy definition

@@ -7,7 +7,9 @@
 SARSA is the simplest on-policy TD control algorithm. It extends TD(0) prediction from state values $V(s)$ to action values $Q(s,a)$, and adds a greedy policy improvement step. The name captures the entire update tuple: **S**tate, **A**ction, **R**eward, next **S**tate, next **A**ction.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> SARSA is the simplest on-policy TD control algorithm. It extends TD(0) prediction from state values $V(s)$ to action values $Q(s,a)$, and adds a greedy policy improvement step.
+
 </div>
 
 
@@ -18,20 +20,23 @@ SARSA is *on-policy*: the action $A_{t+1}$ used in the bootstrap target is chose
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> SARSA is *on-policy*: the action $A_{t+1}$ used in the bootstrap target is chosen by the same policy currently being followed.
+
 </div>
 ## Formal Definition
 
 ### SARSA Update Rule
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### SARSA Update Rule
 
 After observing the transition $(S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})$:
 
 $$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \bigl[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)\b...
+
 </div>
 
 
@@ -60,11 +65,12 @@ The update: $Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \, \delta_t$
 The algorithm is named after the five quantities it uses at each step:
 
 <div class="callout-info">
+
 <strong>Info:</strong> The algorithm is named after the five quantities it uses at each step:
 
 
-
 The critical element is $A_{t+1}$: this action is sampled from the *current behavior policy* $\pi$ (typically $\varepsilon$-gr...
+
 </div>
 
 
@@ -167,6 +173,7 @@ flowchart TD
     Terminal -->|No| Step
     Terminal -->|Yes| Loop
 ```
+
 </div>
 
 The crucial implementation detail: $A_{t+1}$ is chosen *before* the SARSA update, using the same $\varepsilon$-greedy policy. The next loop iteration uses this preselected action.
@@ -265,6 +272,7 @@ print("Greedy action for each state (0=Up, 1=Right, 2=Down, 3=Left):")
 print(greedy_policy.reshape(4, 12))
 env.close()
 ```
+
 </div>
 
 ---
@@ -272,15 +280,19 @@ env.close()
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Choosing $A_{t+1}$ after the update (wrong order).**
 The correct sequence is: observe $S_{t+1}$, choose $A_{t+1}$, *then* compute the SARSA update using $Q(S_{t+1}, A_{t+1})$, *then* execute $A_{t+1}$. If you choose $A_{t+1}$ after the update, you break the on-policy guarantee because the Q table has already changed.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Choosing $A_{t+1}$ after the update (wrong order).**
 The correct sequence is: observe $S_{t+1}$, choose $A_{t+1}$, *then* compute the SARSA update using $Q(S_{t+1}, A_{t+1})$, *then* execute $A_{t+1}$.
+
 </div>
 
 **Pitfall 2 — Using $\max_a Q(S_{t+1}, a)$ instead of $Q(S_{t+1}, A_{t+1})$.**
@@ -301,7 +313,9 @@ Optimistic initialization (e.g., $Q(s,a) = 10$) encourages exploration by making
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** TD(0) prediction (Guide 01), $\varepsilon$-greedy policy, action-value functions $Q(s,a)$

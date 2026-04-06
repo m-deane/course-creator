@@ -7,11 +7,15 @@
 Power Automate is Microsoft's cloud-based workflow automation service that lets you create automated processes — called **flows** — between applications and services without writing traditional code. It sits inside the broader **Microsoft Power Platform**, a suite of low-code tools designed to help organizations build solutions faster than conventional software development allows.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Power Automate is not a single tool — it is a runtime, a connector hub, and a process orchestrator rolled into one. Understanding where it fits in the Power Platform ecosystem determines which automations are practical and which require a different tool.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Power Automate is Microsoft's cloud-based workflow automation service that lets you create automated processes — called **flows** — between applications and services without writing traditional code. It sits inside the broader **Microsoft Power Platform**, a suite of low-code tools designed to help organizations build solutions faster than conventional software development allows.
+
 </div>
 
 
@@ -22,12 +26,14 @@ Power Automate is Microsoft's cloud-based workflow automation service that lets 
 Microsoft Power Platform has five primary products that share a common data layer:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Microsoft Power Platform has five primary products that share a common data layer:
 
 | Product | Primary Purpose |
 |---|---|
 | **Power Apps** | Build custom web and mobile applications |
 | **Power Auto...
+
 </div>
 
 
@@ -72,9 +78,11 @@ Power Automate is often the connective tissue between tools that would otherwise
 ### Flow
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Flow
 
 A **flow** is the fundamental unit in Power Automate.
+
 </div>
 
 
@@ -139,7 +147,9 @@ An **environment** is an isolated container that holds flows, apps, data, and co
 Power Automate supports five distinct flow types. Choosing the correct type is the first decision when designing any automation.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Power Automate supports five distinct flow types.
+
 </div>
 
 
@@ -202,12 +212,14 @@ A structured, stage-based workflow that guides users through a defined process v
 ### Business Process Automation
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> ### Business Process Automation
 
 Replace manual, repetitive tasks with reliable automated sequences:
 
 - Employee onboarding: auto-create Active Directory account, assign licenses, send welcome email
 -...
+
 </div>
 
 

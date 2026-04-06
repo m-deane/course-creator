@@ -31,10 +31,13 @@ print("baseline_pred shape: ", baseline_pred.shape)
 # futr_exog shape:      (1, 28, 1, 1, 84, 2)
 # baseline_pred shape:  (1, 28, 1, 1)
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Running `.explain()` returns an `explanations` dictionary with attribution tensors. Raw tensors are not interpretable until you know what each dimension means.
+
 </div>
 
 
@@ -45,9 +48,11 @@ print("baseline_pred shape: ", baseline_pred.shape)
 ### Shape Reference
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ### Shape Reference
 
 `insample` has shape `[batch, horizon, series, output, input_size, 2]`.
+
 </div>
 
 
@@ -91,6 +96,7 @@ most_important_lag = np.argmax(np.abs(lag_attributions), axis=1)
 print("Most important lag per forecast step:", most_important_lag)
 # Typical output: [0 0 0 0 1 0 ...] — lag 0 (most recent) is usually dominant
 ```
+
 </div>
 
 ### What "Lag 0" Means
@@ -106,9 +112,11 @@ Lag 0 is the most recent observation before the forecast origin. Lag 1 is one pe
 ### Shape Reference
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Shape Reference
 
 `futr_exog` has shape `[batch, horizon, series, output, input_size+horizon, n_features]`.
+
 </div>
 
 
@@ -158,6 +166,7 @@ holiday_total   = holiday_attr.sum()
 print(f"published total attribution: {published_total:.1f}")
 print(f"is_holiday total attribution: {holiday_total:.1f}")
 ```
+
 </div>
 
 ---
@@ -167,7 +176,9 @@ print(f"is_holiday total attribution: {holiday_total:.1f}")
 A heatmap with forecast steps on the y-axis and lag positions on the x-axis reveals how the model's attention to historical data changes across the horizon.
 
 <div class="callout-info">
+
 <strong>Info:</strong> A heatmap with forecast steps on the y-axis and lag positions on the x-axis reveals how the model's attention to historical data changes across the horizon.
+
 </div>
 
 
@@ -176,6 +187,7 @@ A heatmap with forecast steps on the y-axis and lag positions on the x-axis reve
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 import matplotlib.pyplot as plt
@@ -221,6 +233,7 @@ fig = plot_lag_attribution_heatmap(insample, "NHITS Lag Attribution: Blog Traffi
 plt.savefig("../resources/lag_attribution_heatmap.png", dpi=150)
 plt.show()
 ```
+
 </div>
 
 **Reading the heatmap:** dark red cells indicate lags that push the forecast up; dark blue cells push it down. A column of high-magnitude cells at lag 0 confirms the model relies heavily on recent history, which is expected and healthy for a daily series.
@@ -232,7 +245,9 @@ plt.show()
 A waterfall plot shows how each feature contribution adds or subtracts from the baseline prediction to arrive at the final forecast. SHAP's built-in waterfall is the clearest way to communicate this to stakeholders.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A waterfall plot shows how each feature contribution adds or subtracts from the baseline prediction to arrive at the final forecast.
+
 </div>
 
 
@@ -295,7 +310,9 @@ For blog traffic: if publishing an article (`published=1`) adds a large positive
 A summary bar chart aggregates attributions across all forecast steps and shows net impact per feature.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> A summary bar chart aggregates attributions across all forecast steps and shows net impact per feature.
+
 </div>
 
 
@@ -427,7 +444,6 @@ This narrative can be included in a dashboard, a model card, or a presentation t
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

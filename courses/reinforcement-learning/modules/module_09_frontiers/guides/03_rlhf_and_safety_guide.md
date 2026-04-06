@@ -7,7 +7,9 @@
 Reinforcement Learning from Human Feedback (RLHF) is the dominant technique for aligning large language models with human values and preferences. Safe RL extends the standard MDP framework with explicit cost constraints, enabling agents to maximize reward while satisfying safety requirements. Both fields address the same fundamental problem: standard RL optimizes a scalar reward, but real-world objectives are more complex, multi-dimensional, and often difficult to specify precisely.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Reinforcement Learning from Human Feedback (RLHF) is the dominant technique for aligning large language models with human values and preferences. Safe RL extends the standard MDP framework with explicit cost constraints, enabling agents to maximize reward while satisfying safety requirements.
+
 </div>
 
 
@@ -18,16 +20,19 @@ In RLHF, the reward function is not specified by the designer — it is **learne
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> In RLHF, the reward function is not specified by the designer — it is **learned** from human comparative judgments.
+
 </div>
 ## RLHF: Reinforcement Learning from Human Feedback
 
 RLHF became the standard approach for aligning large language models after InstructGPT (Ouyang et al., 2022) demonstrated that it dramatically improves model behavior on human-preferred outputs. The same three-step pipeline underpins ChatGPT, Claude, and most modern aligned LLMs.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> RLHF became the standard approach for aligning large language models after InstructGPT (Ouyang et al., 2022) demonstrated that it dramatically improves model behavior on human-preferred outputs.
+
 </div>
 
 
@@ -51,6 +56,7 @@ flowchart TD
     style RM fill:#E8844A,color:#fff
     style PPO fill:#6ab04c,color:#fff
 ```
+
 </div>
 
 ---
@@ -142,6 +148,7 @@ def reward_model_loss(reward_model, batch: dict) -> torch.Tensor:
     loss = -torch.nn.functional.logsigmoid(r_chosen - r_rejected).mean()
     return loss
 ```
+
 </div>
 
 ---
@@ -253,6 +260,7 @@ class LagrangianSafeRL:
         constraint_violation = current_cost - self.threshold
         self.lambda_multiplier = max(0.0, self.lambda_multiplier + self.lr_lambda * constraint_violation)
 ```
+
 </div>
 
 **Convergence:** Under standard regularity conditions, the primal-dual iterates converge to the optimal constrained policy.
@@ -314,15 +322,19 @@ In robotic manipulation:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Reward hacking the reward model.**
 The reward model is an imperfect proxy for human preferences. PPO will find exploits: generating very long outputs if length correlates with reward, using excessive formatting, or generating confident-sounding nonsense. The KL penalty mitigates this but does not eliminate it. Monitor reward model scores alongside human evaluation throughout training.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Reward hacking the reward model.**
 The reward model is an imperfect proxy for human preferences.
+
 </div>
 
 **Pitfall 2 — Preference data quality and annotator disagreement.**
@@ -343,7 +355,9 @@ The dual variable $\lambda$ can oscillate around the constraint boundary rather 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** PPO (Module 7), policy gradient (Module 6), offline RL (Guide 02)

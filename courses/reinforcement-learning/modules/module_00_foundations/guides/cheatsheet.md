@@ -28,11 +28,13 @@
 $$\mathcal{M} = (\mathcal{S},\ \mathcal{A},\ p,\ R,\ \gamma)$$
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> $$\mathcal{M} = (\mathcal{S},\ \mathcal{A},\ p,\ R,\ \gamma)$$
 
 | Component | Description | Constraint |
 |-----------|-------------|------------|
 | $\mathcal{S}$ | State space | Finite or continuous |...
+
 </div>
 
 
@@ -55,6 +57,7 @@ $$p(s_{t+1}, r_{t+1} \mid s_t, a_t) = p(s_{t+1}, r_{t+1} \mid s_1, a_1, \ldots, 
 $$G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> **General discounted return:**
 $$G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
 
@@ -62,6 +65,7 @@ $$G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
 $$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1}$$
 
 **Recursive decomposition (foundati...
+
 </div>
 
 
@@ -78,6 +82,7 @@ $$G_t = R_{t+1} + \gamma G_{t+1}$$
 ### Bellman Expectation — State-Value
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Bellman Expectation — State-Value
 
 $$V^\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\left[r + \gamma V^\pi(s')\right]$$
@@ -85,6 +90,7 @@ $$V^\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a)\left[r + \ga
 ### Bellman Expectation — Action-Value
 
 $$Q^\pi(s, a) = \...
+
 </div>
 
 
@@ -119,11 +125,13 @@ $$\pi^*(s) = \arg\max_a Q^*(s, a)$$
 ### Episodic vs Continuing Tasks
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Episodic vs Continuing Tasks
 
 | | Episodic | Continuing |
 |--|---------|-----------|
 | Terminal state?
+
 </div>
 
 

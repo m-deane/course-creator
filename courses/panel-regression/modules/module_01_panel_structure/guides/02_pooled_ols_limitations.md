@@ -50,6 +50,7 @@ This ignores:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -100,6 +101,7 @@ print(f"Fixed Effects: {fe.params['x']:.4f}")
 print(f"\nPooled OLS Bias: {pooled.params['x'] - true_beta:.4f}")
 ```
 
+
 </div>
 
 ### Why Does Bias Occur?
@@ -115,6 +117,7 @@ When $Cov(X_{it}, \alpha_i) \neq 0$, the estimate is biased.
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # Visualize the endogeneity
@@ -150,6 +153,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+
 </div>
 
 ## Serial Correlation Problem
@@ -161,6 +165,7 @@ Even without endogeneity, pooled OLS ignores within-entity correlation:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def demonstrate_serial_correlation(df, entity_col, time_col, y_col, x_cols):
@@ -204,6 +209,7 @@ def demonstrate_serial_correlation(df, entity_col, time_col, y_col, x_cols):
 
 demonstrate_serial_correlation(df, 'entity', 'time', 'y', ['x'])
 ```
+
 
 </div>
 
@@ -440,7 +446,6 @@ pooled_ols_diagnostic(df, 'y', ['x'], 'entity', 'time')
 **Practice Question 1:** Why does pooled OLS produce biased estimates when there is unobserved heterogeneity correlated with the regressors?
 
 **Practice Question 2:** Under what conditions is pooled OLS actually the correct estimator for panel data?
-
 
 
 ---

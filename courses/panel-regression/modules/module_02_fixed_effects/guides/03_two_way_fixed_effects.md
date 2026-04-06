@@ -48,6 +48,7 @@ Without time FE, these confound the X-Y relationship.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 import numpy as np
@@ -107,6 +108,7 @@ print(f"  Investment coefficient: {fe_twoway.params['investment']:.4f}")
 print(f"  (True effect ≈ 0.80)")
 ```
 
+
 </div>
 
 ## The Two-Way Transformation
@@ -136,6 +138,7 @@ where:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def double_demean(df, entity_col, time_col, variables):
@@ -170,6 +173,7 @@ print(f"\nManual two-way transformation:")
 print(f"  Investment coefficient: {manual_twfe.params['investment_dd']:.4f}")
 ```
 
+
 </div>
 
 ## Visualizing Time Effects
@@ -179,6 +183,7 @@ print(f"  Investment coefficient: {manual_twfe.params['investment_dd']:.4f}")
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def plot_time_effects(model_results, year_range):
@@ -220,6 +225,7 @@ def plot_time_effects(model_results, year_range):
 
 plot_time_effects(fe_twoway, range(2010, 2025))
 ```
+
 
 </div>
 
@@ -438,7 +444,6 @@ print(comparison)
 **Practice Question 1:** Why can fixed effects not estimate the impact of time-invariant variables like gender or geographic region?
 
 **Practice Question 2:** When would entity fixed effects alone be insufficient, requiring two-way (entity + time) fixed effects?
-
 
 
 ---

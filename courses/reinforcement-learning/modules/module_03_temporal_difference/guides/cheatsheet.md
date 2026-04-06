@@ -7,9 +7,11 @@
 ### TD(0) Prediction
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### TD(0) Prediction
 
 Evaluate a fixed policy $\pi$ by updating state values after every step.
+
 </div>
 
 
@@ -191,6 +193,8 @@ Correct update order per step:
 
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> 12 (eligibility traces)
 - Watkins & Dayan (1992).
+
 </div>

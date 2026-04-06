@@ -7,7 +7,9 @@
 AI Builder is Microsoft's no-code AI capability embedded in the Power Platform. It provides pre-built and custom AI models that you can drop into Power Automate flows as actions — no data science background required. This guide covers the available AI Builder action types, how to use them in flows, and how Copilot can help you wire them up.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> AI Builder is Microsoft's no-code AI capability embedded in the Power Platform. It provides pre-built and custom AI models that you can drop into Power Automate flows as actions — no data science background required.
+
 </div>
 
 
@@ -18,6 +20,7 @@ AI Builder is Microsoft's no-code AI capability embedded in the Power Platform. 
 AI Builder provides two categories of models:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> AI Builder provides two categories of models:
 
 **Pre-built models** — Microsoft-trained models ready to use immediately:
@@ -25,6 +28,7 @@ AI Builder provides two categories of models:
 - Entity extraction
 - Category classification
 - Key phrase...
+
 </div>
 
 
@@ -55,7 +59,9 @@ For most Power Automate use cases, pre-built models are the starting point. Cust
 AI Builder actions appear in the Power Automate action picker under the "AI Builder" connector. Each model type has one or more corresponding actions.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> AI Builder actions appear in the Power Automate action picker under the "AI Builder" connector.
+
 </div>
 
 
@@ -187,7 +193,9 @@ For most Power Automate beginner and intermediate workflows, text-based AI Build
 This flow processes incoming emails from vendors: it extracts invoice data from attachments, analyzes the email sentiment, and drafts a reply using GPT.
 
 <div class="callout-info">
+
 <strong>Info:</strong> This flow processes incoming emails from vendors: it extracts invoice data from attachments, analyzes the email sentiment, and drafts a reply using GPT.
+
 </div>
 
 
@@ -214,6 +222,7 @@ When I receive an email with an attachment from a sender whose address contains
 "vendor", extract invoice data from the attachment, analyze the email body
 sentiment, and create a SharePoint list item with the results
 ```
+
 </div>
 
 > **On screen:** Copilot generates a flow with: Outlook trigger, a placeholder for invoice processing, a placeholder for sentiment analysis, and a SharePoint create item action. It will likely not include all three AI Builder steps correctly — use this as a starting point and add the AI Builder actions manually.
@@ -269,6 +278,7 @@ Email Sentiment: [Predicted sentiment from sentiment analysis output]
 If sentiment is Negative, add a note acknowledging any concerns. Keep the reply
 under 100 words. Do not include a subject line.
 ```
+
 </div>
 
 > **On screen:** When you click the "Vendor Name" field reference in your prompt, use the expression editor to reference the invoice extraction output. The output field name is typically `vendorName` — find it in dynamic content under the invoice extraction action.
@@ -319,6 +329,7 @@ The following implementation builds on the approach above:
 Add error handling so that if the invoice extraction fails, send me an email
 with the attachment name and the error message instead of failing the flow
 ```
+
 </div>
 
 <div class="code-window">
@@ -327,11 +338,14 @@ with the attachment name and the error message instead of failing the flow
 <span class="filename">example.py</span>
 </div>
 
+
 ```text
 Change the SharePoint list to also record the email subject line and the
 date the email was received
 ```
+
 </div>
+
 
 ```text
 Add a condition: if the invoice total is greater than 10000, also post a

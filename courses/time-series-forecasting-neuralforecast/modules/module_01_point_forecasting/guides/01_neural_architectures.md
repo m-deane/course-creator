@@ -11,15 +11,15 @@
 </div>
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 
 
 The following implementation builds on the approach above:
 
 
-
-
 Run this first.
+
 </div>
 
 
@@ -46,6 +46,7 @@ nf.fit(bakery)
 forecast = nf.predict()
 print(forecast.head())
 ```
+
 </div>
 
 Run this first. The rest of the guide explains why it works.
@@ -57,7 +58,9 @@ Run this first. The rest of the guide explains why it works.
 Before 2020, most production forecasters used classical methods: ARIMA, ETS, Prophet. These methods are interpretable and fast, but they struggle with:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Before 2020, most production forecasters used classical methods: ARIMA, ETS, Prophet.
+
 </div>
 
 
@@ -89,7 +92,9 @@ Every neural forecasting model maps a fixed-length input window to a fixed-lengt
 | **DLinear / NLinear** | Linear | ~1K | Fastest | Surprisingly strong baseline |
 
 <div class="callout-info">
+
 <strong>Info:</strong> NHITS achieves state-of-the-art long-horizon accuracy with fewer parameters than Transformer models, by using structured inductive biases instead of raw capacity.
+
 </div>
 
 
@@ -102,7 +107,9 @@ The table shows a key insight: **more parameters is not always better**. NHITS a
 A multi-layer perceptron (MLP) is the simplest neural forecaster. It flattens the input window into a vector, passes it through dense layers with non-linearities, and produces the forecast vector.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A multi-layer perceptron (MLP) is the simplest neural forecaster.
+
 </div>
 
 
@@ -125,6 +132,7 @@ model = MLP(
     max_steps=500
 )
 ```
+
 </div>
 
 **Weakness**: MLPs treat each input time step as an independent feature. There is no structure that forces the model to reason about temporal order, trends, or seasonality — it must discover everything from data.
@@ -136,7 +144,9 @@ model = MLP(
 N-BEATS (Neural Basis Expansion Analysis for Time Series, Oreshkin et al. 2019) introduces two innovations:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> N-BEATS (Neural Basis Expansion Analysis for Time Series, Oreshkin et al.
+
 </div>
 
 
@@ -169,6 +179,7 @@ model = NBEATS(
     max_steps=500
 )
 ```
+
 </div>
 
 **Strength**: Excellent on M3/M4 competition benchmarks. Interpretable decomposition. Clean inductive bias.  
@@ -181,7 +192,9 @@ model = NBEATS(
 NHITS (Neural Hierarchical Interpolation for Time Series, Challu et al. 2022, AAAI 2023) extends N-BEATS with two additional ideas designed specifically for long-horizon forecasting:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> NHITS (Neural Hierarchical Interpolation for Time Series, Challu et al.
+
 </div>
 
 
@@ -213,6 +226,7 @@ Where `Interp_s` upsamples stack $s$'s coarse output to the full `h`-step horizo
 <span class="filename">example.py</span>
 </div>
 
+
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
@@ -238,6 +252,7 @@ flowchart TD
     
     F1 & F2 & F3 --> SUM["Sum\nFinal forecast"]
 ```
+
 </div>
 
 ### Why NHITS Is the Default Choice
@@ -260,6 +275,7 @@ flowchart TD
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step rose">5. Practical</div>
 </div>
+
 
 ```python
 from neuralforecast.models import NHITS
@@ -287,7 +303,9 @@ model = NHITS(
 PatchTST (Nie et al. 2023) divides the input time series into non-overlapping patches and treats each patch as a token in a Transformer encoder. This reduces the sequence length from `T` to `T/P` (where `P` is patch size), making attention computationally feasible.
 
 <div class="callout-info">
+
 <strong>Info:</strong> 2023) divides the input time series into non-overlapping patches and treats each patch as a token in a Transformer encoder.
+
 </div>
 
 
@@ -418,7 +436,6 @@ For the bakery forecasting problem (h=7, daily data, multiple products), **NHITS
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

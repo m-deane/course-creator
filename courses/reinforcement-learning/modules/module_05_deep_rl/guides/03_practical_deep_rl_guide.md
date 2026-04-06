@@ -7,7 +7,9 @@
 Deep RL training involves more failure modes than supervised learning. Policy optimization is non-stationary, reward signals are delayed, and hyperparameter sensitivity is high. This guide covers how to configure, debug, and reproduce deep RL experiments systematically.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Deep RL training involves more failure modes than supervised learning. Policy optimization is non-stationary, reward signals are delayed, and hyperparameter sensitivity is high.
+
 </div>
 
 
@@ -18,9 +20,10 @@ Most deep RL training failures are diagnosable from four time series: episode re
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Most deep RL training failures are diagnosable from four time series: episode return, mean Q-value, gradient norm, and TD loss.
+
 </div>
 ## Hyperparameter Tuning for DQN
 
@@ -95,6 +98,7 @@ scheduler = optim.lr_scheduler.StepLR(
     optimizer, step_size=500_000, gamma=0.5
 )
 ```
+
 </div>
 
 ### Discount Factor Selection
@@ -202,6 +206,7 @@ class TrainingLogger:
             for i in range(1, len(values) + 1)
         ]
 ```
+
 </div>
 
 ### Failure Mode Diagnosis
@@ -247,6 +252,7 @@ flowchart TD
     style D4 fill:#4A90D9,color:#fff
     style D5 fill:#4CAF50,color:#fff
 ```
+
 </div>
 
 ### Common Failure Modes and Solutions
@@ -267,6 +273,7 @@ Solutions:
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Ensure target network is present and synced
 assert target_net is not None
@@ -278,6 +285,7 @@ optimizer = optim.Adam(q_net.parameters(), lr=1e-5)
 # Add gradient clipping (should always be present)
 nn.utils.clip_grad_norm_(q_net.parameters(), max_norm=10.0)
 ```
+
 </div>
 
 **Failure Mode 2 — No improvement after many episodes**
@@ -537,15 +545,19 @@ def aggregate_runs(returns_per_seed: List[List[float]]) -> dict:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Tuning hyperparameters on a single seed.**
 Deep RL training variance is high enough that a hyperparameter may appear better on one seed purely by chance. Always evaluate hyperparameter choices across at least 3–5 seeds before drawing conclusions.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Tuning hyperparameters on a single seed.**
 Deep RL training variance is high enough that a hyperparameter may appear better on one seed purely by chance.
+
 </div>
 
 **Pitfall 2 — Evaluating policy while ε > 0.**
@@ -583,7 +595,9 @@ def save_checkpoint(agent, step: int, checkpoint_dir: str):
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** DQN (Guide 01), DQN improvements (Guide 02), gradient descent fundamentals

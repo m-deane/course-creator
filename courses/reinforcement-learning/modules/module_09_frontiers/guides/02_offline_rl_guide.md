@@ -7,7 +7,9 @@
 Offline RL (also called batch RL) learns a policy entirely from a fixed, pre-collected dataset of transitions — without any interaction with the environment during training. The agent cannot take new actions to collect new data; it must extract a good policy purely from whatever trajectories exist in the dataset.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Offline RL (also called batch RL) learns a policy entirely from a fixed, pre-collected dataset of transitions — without any interaction with the environment during training. The agent cannot take new actions to collect new data; it must extract a good policy purely from whatever trajectories exist in the dataset.
+
 </div>
 
 
@@ -18,18 +20,21 @@ The defining challenge of offline RL is **distribution shift**: a learned policy
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The defining challenge of offline RL is **distribution shift**: a learned policy will visit states and take actions that are poorly represented in the training data, and the Q-function learned from th...
+
 </div>
 ## Formal Definition
 
 Given a fixed dataset $\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}$ collected by some **behavior policy** $\pi_\beta$, the offline RL problem is:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Given a fixed dataset $\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}$ collected by some **behavior policy** $\pi_\beta$, the offline RL problem is:
 
 $$\max_\pi \; J(\pi) = \mathbb{E}_{s_0}\left[\sum_{t=0...
+
 </div>
 
 
@@ -46,9 +51,11 @@ The dataset coverage is characterized by $d^{\pi_\beta}(s, a)$ — the state-act
 ### Safety-Critical Domains
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ### Safety-Critical Domains
 
 In healthcare, autonomous vehicles, or industrial control, deploying a partially-trained agent to collect exploration data may cause irreversible harm.
+
 </div>
 
 
@@ -97,6 +104,7 @@ flowchart TD
     style Error fill:#d63031,color:#fff
     style OOD fill:#d63031,color:#fff
 ```
+
 </div>
 
 **The death spiral:** Q-values for OOD actions are overestimated → the greedy policy selects those actions → those actions have no supporting data → Q-values get even more inaccurate through bootstrapping → the policy becomes increasingly OOD.
@@ -178,6 +186,7 @@ def cql_loss(q_net, target_q_net, batch: dict, alpha: float = 1.0, gamma: float 
 
     return bellman_error + alpha * conservative_penalty
 ```
+
 </div>
 
 ---
@@ -220,6 +229,7 @@ flowchart LR
     style TR fill:#4A90D9,color:#fff
     style Apred fill:#6ab04c,color:#fff
 ```
+
 </div>
 
 **Advantages over CQL:**
@@ -255,6 +265,7 @@ For $\tau \to 1$, $V(s)$ approaches $\max_{a \in \mathcal{D}(s)} Q(s, a)$ — th
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:
     """
@@ -285,6 +296,7 @@ def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:
     weight = torch.where(u > 0, tau * torch.ones_like(u), (1 - tau) * torch.ones_like(u))
     return (weight * u ** 2).mean()
 ```
+
 </div>
 
 ---
@@ -321,15 +333,19 @@ Offline logs contain user interactions, but the logged policy (the old recommend
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Extrapolation error from bootstrapping.**
 Every Bellman backup that evaluates $\max_{a'} Q(s', a')$ on actions not in the dataset is potentially extrapolating the Q-function. In offline settings, extrapolation errors compound through multiple bootstrapping steps and lead to catastrophically overestimated Q-values. Use CQL, IQL, or avoid Bellman backups entirely (Decision Transformer).
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Extrapolation error from bootstrapping.**
 Every Bellman backup that evaluates $\max_{a'} Q(s', a')$ on actions not in the dataset is potentially extrapolating the Q-function.
+
 </div>
 
 **Pitfall 2 — Overestimation of out-of-distribution actions.**
@@ -350,7 +366,9 @@ You cannot evaluate a policy by running it in the environment (offline setting).
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Q-learning and temporal difference (Module 3), function approximation (Module 4), policy gradient (Module 6)

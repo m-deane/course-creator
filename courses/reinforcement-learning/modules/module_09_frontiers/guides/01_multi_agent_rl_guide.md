@@ -7,7 +7,9 @@
 Multi-agent reinforcement learning (MARL) extends the single-agent RL framework to settings where multiple agents simultaneously interact with a shared environment. Each agent observes (possibly partial) state, selects actions, and receives rewards — but now every agent's behavior shapes the environment experienced by all others.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Multi-agent reinforcement learning (MARL) extends the single-agent RL framework to settings where multiple agents simultaneously interact with a shared environment. Each agent observes (possibly partial) state, selects actions, and receives rewards — but now every agent's behavior shapes the environment experienced by all others.
+
 </div>
 
 
@@ -18,20 +20,23 @@ The fundamental difficulty of MARL is that the environment appears **non-station
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The fundamental difficulty of MARL is that the environment appears **non-stationary** to every individual agent: as agents update their policies, the transition and reward distributions experienced by...
+
 </div>
 ## Formal Definition
 
 A Multi-Agent MDP (MMDP) for $n$ agents is a tuple $(\mathcal{S}, \{\mathcal{A}^i\}_{i=1}^n, \mathcal{P}, \{R^i\}_{i=1}^n, \gamma)$ where:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> A Multi-Agent MDP (MMDP) for $n$ agents is a tuple $(\mathcal{S}, \{\mathcal{A}^i\}_{i=1}^n, \mathcal{P}, \{R^i\}_{i=1}^n, \gamma)$ where:
 
 | Symbol | Meaning |
 |--------|---------|
 | $\mathcal{S}$ | ...
+
 </div>
 
 
@@ -55,9 +60,11 @@ The joint policy is $\boldsymbol{\pi} = (\pi^1, \ldots, \pi^n)$.
 ### Cooperative (Team Reward)
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Cooperative (Team Reward)
 
 All agents share a single reward signal: $R^1 = R^2 = \cdots = R^n = R$.
+
 </div>
 
 
@@ -132,6 +139,7 @@ class IndependentLearner:
         self.optimizer.step()
         return loss.item()
 ```
+
 </div>
 
 ---
@@ -169,6 +177,7 @@ flowchart TD
     style Training fill:#4A90D9,color:#fff
     style Execution fill:#E8844A,color:#fff
 ```
+
 </div>
 
 **Key algorithms using CTDE:**
@@ -235,6 +244,7 @@ class CommunicatingAgent:
         # Condition policy on own obs + aggregated peer information
         return self.actor(torch.cat([obs, aggregated], dim=-1))
 ```
+
 </div>
 
 ---
@@ -313,15 +323,19 @@ Joint action space grows exponentially: $|\mathcal{A}| = \prod_{i=1}^n |\mathcal
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Applying single-agent convergence guarantees to multi-agent settings.**
 Q-learning provably converges in single-agent MDPs. In multi-agent settings with simultaneously-learning agents, Q-values chase moving targets. Do not assume convergence without additional assumptions (e.g., two-player zero-sum, or all agents converging in a specific order).
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Applying single-agent convergence guarantees to multi-agent settings.**
 Q-learning provably converges in single-agent MDPs.
+
 </div>
 
 **Pitfall 2 — Ignoring non-stationarity in replay buffers.**
@@ -342,7 +356,9 @@ Learned communication algorithms often pass dense continuous message vectors at 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** MDP formalism (Module 0), policy gradient methods (Module 6), value function approximation (Module 4)

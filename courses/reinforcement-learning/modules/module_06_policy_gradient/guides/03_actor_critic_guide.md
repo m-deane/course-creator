@@ -7,7 +7,9 @@
 Actor-critic methods decompose the policy gradient agent into two separate components: an **actor** (the policy network $\pi(a|s;\theta)$) that selects actions, and a **critic** (the value network $V(s;\mathbf{w})$) that evaluates how good states are. The critic's value estimates replace the high-variance Monte Carlo returns of REINFORCE, enabling online updates, lower variance, and applicability to continuing tasks.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Actor-critic methods decompose the policy gradient agent into two separate components: an **actor** (the policy network $\pi(a|s;\theta)$) that selects actions, and a **critic** (the value network $V(s;\mathbf{w})$) that evaluates how good states are. The critic's value estimates replace the high-variance Monte Carlo returns of REINFORCE, enabling online updates, lower variance, and applicability to continuing tasks.
+
 </div>
 
 
@@ -18,16 +20,19 @@ REINFORCE must wait until an episode ends to compute $G_t$. The actor-critic rep
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> REINFORCE must wait until an episode ends to compute $G_t$.
+
 </div>
 ## The Two Networks: Actor and Critic
 
 The most important design principle of actor-critic is that the actor and critic are **separate networks with different roles, different parameters, and different loss functions**. They are not interchangeable, and their updates are independent.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The most important design principle of actor-critic is that the actor and critic are **separate networks with different roles, different parameters, and different loss functions**.
+
 </div>
 
 
@@ -62,7 +67,9 @@ The critic does **not** select actions. The actor does **not** evaluate states. 
 The simplest actor-critic variant performs one update per time step using a one-step TD error.
 
 <div class="callout-info">
+
 <strong>Info:</strong> The simplest actor-critic variant performs one update per time step using a one-step TD error.
+
 </div>
 
 
@@ -192,6 +199,7 @@ graph TB
     style CV fill:#E8844A,color:#fff
     style TD fill:#9B59B6,color:#fff
 ```
+
 </div>
 
 The actor (blue) and critic (orange) can share a backbone encoder for efficiency, but their output heads and update rules remain fully independent.
@@ -258,6 +266,7 @@ graph TB
     style W3 fill:#E8844A,color:#fff
     style WN fill:#E8844A,color:#fff
 ```
+
 </div>
 
 **Key insight:** Asynchronous workers implicitly decorrelate their experience, acting like a distributed replay buffer without the off-policy complications.
@@ -449,6 +458,7 @@ def compute_gae(
 
     return torch.FloatTensor(advantages)
 ```
+
 </div>
 
 ---
@@ -456,15 +466,19 @@ def compute_gae(
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Mixing actor and critic parameters.**
 The actor and critic must have separate parameters and separate optimizers. A common mistake in implementations is to accidentally share parameters or update them with the same optimizer, causing unstable learning. The actor's loss should use `td_error.detach()` so the critic's gradient doesn't flow through the actor computation graph.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Mixing actor and critic parameters.**
 The actor and critic must have separate parameters and separate optimizers.
+
 </div>
 
 **Pitfall 2 — Bootstrapping into terminal states.**
@@ -488,7 +502,9 @@ When actor and critic share a feature extractor, their conflicting gradient sign
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Policy gradient theorem (Guide 01), REINFORCE and advantage function (Guide 02), TD learning (Module 03), function approximation (Module 04)

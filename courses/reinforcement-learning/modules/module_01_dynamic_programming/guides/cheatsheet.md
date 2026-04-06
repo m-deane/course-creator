@@ -24,11 +24,13 @@
 ### Policy Evaluation (Bellman Expectation)
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Policy Evaluation (Bellman Expectation)
 
 $$V_{k+1}(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V_k(s')\bigr]$$
 
 Applied iteratively until $\max_s |V_{k+1}(s) - V_k(s)| < \...
+
 </div>
 
 
@@ -90,11 +92,13 @@ $$\pi^*(s) = \arg\max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V(s')\bi
 All three algorithms rely on the **contraction mapping theorem** (Banach fixed-point theorem):
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> All three algorithms rely on the **contraction mapping theorem** (Banach fixed-point theorem):
 
 | Operator | Contraction factor | Fixed point |
 |---|---|---|
 | $\mathcal{T}^\pi$ | $\gamma$ | $V^\pi$ |...
+
 </div>
 
 
@@ -120,12 +124,14 @@ Do not use $\theta = \epsilon$ directly — the actual error is up to $\frac{\ga
 ### DP Requirements
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### DP Requirements
 
 | Requirement | Description |
 |---|---|
 | **Full model** | Must know $p(s', r \mid s, a)$ for all $(s, a, s')$ |
 | **Finite state space** | Must enumerate all states $\mathcal{S}$...
+
 </div>
 
 

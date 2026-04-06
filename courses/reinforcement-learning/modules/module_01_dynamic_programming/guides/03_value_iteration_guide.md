@@ -7,11 +7,15 @@
 Value iteration computes the optimal value function $V^*$ by repeatedly applying the Bellman optimality operator, collapsing policy evaluation and improvement into a single update. It can be understood as policy iteration where evaluation is truncated to exactly one sweep before improvement. The algorithm converges asymptotically (not in finite steps like policy iteration), but each iteration is cheap and the error bound after $k$ sweeps is tight.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The Bellman optimality operator $\mathcal{T}^*$ is also a contraction. Iterating it from any starting point drives $V_k$ to $V^*$ geometrically fast. Once convergence is declared, extracting $\pi^*$ requires only a single greedy step.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Value iteration computes the optimal value function $V^*$ by repeatedly applying the Bellman optimality operator, collapsing policy evaluation and improvement into a single update. It can be understood as policy iteration where evaluation is truncated to exactly one sweep before improvement.
+
 </div>
 
 
@@ -22,7 +26,9 @@ Value iteration computes the optimal value function $V^*$ by repeatedly applying
 Value iteration works backward from the horizon. Imagine a finite-horizon problem: at the last step, the value of each state is just its immediate reward. One step from the end, the value is the reward plus the discounted terminal value. Two steps from the end, the value propagates back another step. Value iteration applies this backward induction repeatedly until the finite-horizon estimates stop changing — which happens because the discount factor makes distant futures irrelevant.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Value iteration works backward from the horizon.
+
 </div>
 
 
@@ -36,11 +42,13 @@ The $\max$ in the update is the crucial difference from policy evaluation. Inste
 ### The Bellman Optimality Equation
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### The Bellman Optimality Equation
 
 The optimal value function $V^*$ is the unique solution to:
 
 $$V^*(s) = \max_a \sum_{s', r} p(s', r \mid s, a)\bigl[r + \gamma V^*(s')\bigr] \quad \forall s \in \m...
+
 </div>
 
 
@@ -76,11 +84,13 @@ Policy iteration alternates:
 - Greedy improvement: $\pi_{k+1} = \text{greedy}(V^{\pi_k})$
 
 <div class="callout-info">
+
 <strong>Info:</strong> Policy iteration alternates:
 - **Full** policy evaluation (iterate until convergence): $V^{\pi_k}$
 - Greedy improvement: $\pi_{k+1} = \text{greedy}(V^{\pi_k})$
 
 What if we truncate evaluation to a sin...
+
 </div>
 
 
@@ -249,6 +259,7 @@ def value_iteration_vectorized(P, R, gamma=0.99, theta=1e-8):
     pi = np.argmax(Q, axis=1)
     return V, pi
 ```
+
 </div>
 
 ---
@@ -316,6 +327,7 @@ flowchart TD
     style VI fill:#4a90d9,color:#fff
     style PIt fill:#9b59b6,color:#fff
 ```
+
 </div>
 
 Value iteration and policy iteration are endpoints of a continuous spectrum parametrized by $m$.
@@ -325,13 +337,17 @@ Value iteration and policy iteration are endpoints of a continuous spectrum para
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 ### 1. Using $\|V_{k+1} - V_k\|_\infty < \theta$ without accounting for $\gamma$
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> ### 1.
+
 </div>
 
 This condition does not guarantee $\|V_k - V^*\|_\infty < \theta$. The correct bound is $\|V_k - V^*\|_\infty \leq \frac{\gamma}{1-\gamma} \|V_{k+1} - V_k\|_\infty$. For $\gamma = 0.99$, this multiplies the observed delta by a factor of 99. Use a much smaller $\theta$ than your target accuracy.
@@ -362,7 +378,9 @@ For episodic MDPs, add a terminal absorbing state with $V = 0$ and zero-reward s
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Policy evaluation (Guide 01), policy improvement theorem (Guide 02), contraction mapping theorem

@@ -7,7 +7,9 @@
 A cloud flow is a sequence of automated steps—trigger, optional conditions, and actions—that runs in the Microsoft cloud without any server to manage. In this guide you build a working flow that fetches today's weather and emails it to you every morning.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A cloud flow is a sequence of automated steps—trigger, optional conditions, and actions—that runs in the Microsoft cloud without any server to manage. In this guide you build a working flow that fetches today's weather and emails it to you every morning.
+
 </div>
 
 
@@ -16,9 +18,11 @@ A cloud flow is a sequence of automated steps—trigger, optional conditions, an
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -35,12 +39,13 @@ By the end of this guide you will be able to:
 Every Power Automate flow follows the same three-part skeleton:
 
 <div class="callout-key">
-<strong>Key Point:</strong> Every Power Automate flow follows the same three-part skeleton:
 
+<strong>Key Point:</strong> Every Power Automate flow follows the same three-part skeleton:
 
 
 - **Trigger** — the event that starts the flow (a button press, an email arriving, a schedule)
 - **Logic** — optional conditions and ...
+
 </div>
 
 
@@ -61,7 +66,9 @@ Microsoft runs this entire sequence in the cloud. You do not provision servers o
 Before building anything, know the layout of the canvas you will use.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Before building anything, know the layout of the canvas you will use.
+
 </div>
 
 
@@ -254,7 +261,9 @@ The **dynamic content panel** organises tokens by the step that produces them. O
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Microsoft 365 account access, basic email familiarity

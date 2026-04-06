@@ -168,6 +168,7 @@ One bad year affects all years for that entity.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -247,6 +248,7 @@ plt.savefig('missing_patterns.png', dpi=150, bbox_inches='tight')
 print("\nMissing patterns visualization saved to missing_patterns.png")
 ```
 
+
 </div>
 
 ### Testing for Missing Data Bias
@@ -256,6 +258,7 @@ print("\nMissing patterns visualization saved to missing_patterns.png")
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -309,6 +312,7 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
     print(f"  SE (missing): {result['se_missing']:.4f}")
 ```
 
+
 </div>
 
 ### Handling Unbalanced Panels
@@ -318,6 +322,7 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # Create strongly unbalanced panel
@@ -371,6 +376,7 @@ print(f"  Coefficient: {model_unbalanced.params['x']:.4f}")
 print(f"  SE: {model_unbalanced.std_errors['x']:.4f}")
 print(f"  True value: 1.500")
 ```
+
 
 </div>
 

@@ -7,7 +7,9 @@
 Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s)$ — a dot product between a weight vector and a hand-crafted feature vector. Combined with semi-gradient TD(0), this produces an efficient, convergent on-policy learning algorithm with well-understood theoretical properties.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s)$ — a dot product between a weight vector and a hand-crafted feature vector. Combined with semi-gradient TD(0), this produces an efficient, convergent on-policy learning algorithm with well-understood theoretical properties.
+
 </div>
 
 
@@ -18,15 +20,17 @@ Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T 
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> "Semi-gradient" means we treat the TD target as a fixed label and differentiate only through the prediction, not the target.
+
 </div>
 ## 1. Linear Function Approximation
 
 ### Formal Definition
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Formal Definition
 
 $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
@@ -34,6 +38,7 @@ $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_
 where:
 - $\mathbf{w} \in \mathbb{R}^d$ — the weight vector (the parameters we learn)
 - $\...
+
 </div>
 
 
@@ -117,6 +122,7 @@ s = np.array([0.5, -0.3])
 x = polynomial_features(s, degree=2)
 print(f"Features: {x}")  # [1, 0.5, -0.3, 0.25, -0.15, 0.09]
 ```
+
 </div>
 
 ### 2.2 Fourier Basis
@@ -171,6 +177,7 @@ def fourier_alphas(coeffs, base_alpha):
     norms = np.linalg.norm(coeffs, axis=1)
     return np.where(norms == 0, base_alpha, base_alpha / norms)
 ```
+
 </div>
 
 ### 2.3 Tile Coding (Deep Dive)
@@ -277,6 +284,7 @@ x = coder.encode(state)
 print(f"Feature vector: {x.shape} features, {int(x.sum())} active")
 # Output: (512,) features, 8 active
 ```
+
 </div>
 
 #### Why Multiple Tilings?
@@ -296,6 +304,7 @@ n tilings: Resolution = tile_width / n
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def rbf_features(state, centers, sigma=1.0):
@@ -317,6 +326,7 @@ def rbf_features(state, centers, sigma=1.0):
     dists_sq = np.sum((centers - state) ** 2, axis=1)
     return np.exp(-dists_sq / (2 * sigma**2))
 ```
+
 </div>
 
 ---
@@ -563,15 +573,19 @@ The "stop gradient" annotation marks the semi-gradient point. The target $v_t' =
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1: Setting $\alpha$ too large for tile coding.**
 The standard rule is $\alpha = \alpha_0 / n_{\text{tilings}}$ where $\alpha_0 \in [0.1, 0.5]$. Tile coding activates $n_{\text{tilings}}$ features simultaneously, so the effective step size scales with $n_{\text{tilings}}$. Dividing by $n_{\text{tilings}}$ keeps the effective step constant regardless of the number of tilings.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1: Setting $\alpha$ too large for tile coding.**
 The standard rule is $\alpha = \alpha_0 / n_{\text{tilings}}$ where $\alpha_0 \in [0.1, 0.5]$.
+
 </div>
 
 **Pitfall 2: Forgetting the terminal-state treatment.**
@@ -592,7 +606,9 @@ Semi-gradient TD does not follow the gradient of any objective function. This me
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Guide 01 (function approximation motivation and feature vectors), Module 03 (tabular TD(0) — linear methods are the same algorithm with generalization added)

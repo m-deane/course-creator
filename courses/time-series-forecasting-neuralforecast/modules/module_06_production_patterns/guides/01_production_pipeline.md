@@ -61,10 +61,13 @@ q80_col = "NHITS-MQLoss-q-0.8"
 order_qty = int(forecast[q80_col].sum())
 print(f"\n80% service level order for the week: {order_qty} baguettes")
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> This guide shows how to build a complete, production-ready forecasting pipeline using NeuralForecast. You will wrap data ingestion, model training, probabilistic simulation, and explainability into a single `ForecastPipeline` class that makes a complete business decision in one call.
+
 </div>
 
 
@@ -75,7 +78,9 @@ print(f"\n80% service level order for the week: {order_qty} baguettes")
 Ad-hoc notebooks do not survive contact with production. Three failure modes appear within the first month of deployment:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Ad-hoc notebooks do not survive contact with production.
+
 </div>
 
 
@@ -105,15 +110,15 @@ A `ForecastPipeline` class solves all three by making every stage explicit, test
 </div>
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> example.py
 
 
 The following implementation builds on the approach above:
 
 
-
-
 Each stage is a method on `ForecastPipeline`.
+
 </div>
 
 
@@ -139,6 +144,7 @@ flowchart LR
     M -->|sliding window| G
     M -->|expanding window| G
 ```
+
 </div>
 
 Each stage is a method on `ForecastPipeline`. This makes unit testing trivial and lets orchestrators (Airflow, Prefect, GitHub Actions) call individual stages.
@@ -154,15 +160,15 @@ Each stage is a method on `ForecastPipeline`. This makes unit testing trivial an
 </div>
 
 <div class="callout-info">
+
 <strong>Info:</strong> example.py
 
 
 The following implementation builds on the approach above:
 
 
-
-
 ---
+
 </div>
 
 
@@ -372,6 +378,7 @@ class ForecastPipeline:
         if self._nf is None:
             raise RuntimeError("Call .train() before generating forecasts.")
 ```
+
 </div>
 
 ---
@@ -381,7 +388,9 @@ class ForecastPipeline:
 The choice of model depends on three factors: series length, available features, and interpretability requirements.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The choice of model depends on three factors: series length, available features, and interpretability requirements.
+
 </div>
 
 
@@ -401,6 +410,7 @@ The choice of model depends on three factors: series length, available features,
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 def select_model(series_length: int, n_features: int, needs_explanation: bool) -> str:
     """
@@ -417,6 +427,7 @@ def select_model(series_length: int, n_features: int, needs_explanation: bool) -
         return "nhits"
     return "nhits"  # default for long, feature-rich series
 ```
+
 </div>
 
 ---
@@ -558,7 +569,6 @@ print(f"Daily breakdown     : {decision['daily_breakdown']}")
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

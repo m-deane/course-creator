@@ -9,7 +9,9 @@ Most real automation scenarios involve collections — a list of new orders, a s
 Equally important is what happens when something goes wrong. Network timeouts, deleted items, service outages, and bad data are a normal part of production flows. Power Automate's error handling tools — **Configure Run After**, **Scope actions**, **Terminate**, and **Retry policies** — give you fine-grained control over how your flow responds to failure.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Most real automation scenarios involve collections — a list of new orders, a set of approval responses, a batch of files to process. Power Automate provides two loop types to work through collections and repeated conditions: **Apply to Each** and **Do Until**.
+
 </div>
 
 
@@ -20,7 +22,9 @@ Equally important is what happens when something goes wrong. Network timeouts, d
 Apply to Each runs a set of actions once for every item in an array. The array can come from anywhere: a SharePoint list query, an array variable, the body of an HTTP response, the results of a filter action.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Apply to Each runs a set of actions once for every item in an array.
+
 </div>
 
 
@@ -88,7 +92,9 @@ By default, Apply to Each processes items sequentially — one at a time, in ord
 Do Until runs its contained actions repeatedly until a condition becomes true — or until it hits a count or time limit. This is the right tool when you do not know in advance how many iterations you need.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Do Until runs its contained actions repeatedly until a condition becomes true — or until it hits a count or time limit.
+
 </div>
 
 
@@ -165,7 +171,9 @@ See detailed comparison in the table above.
 Every action in Power Automate has a **Run after** configuration that determines under what conditions it should execute. By default, each action runs only if the previous action **Succeeded**. Configure Run After lets you change this.
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Every action in Power Automate has a **Run after** configuration that determines under what conditions it should execute.
+
 </div>
 
 
@@ -213,7 +221,9 @@ This is the default behavior. When action A fails, all subsequent actions config
 A **Scope** is a container action that groups other actions together. Scopes serve two purposes:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A **Scope** is a container action that groups other actions together.
+
 </div>
 
 
@@ -279,6 +289,7 @@ The following implementation builds on the approach above:
   }
 }
 ```
+
 </div>
 
 > **On screen:** Inside the Catch Scope, add a Compose action or a Send email action. In the body, click **Expression** and type `result('Try')[0]['error']['message']` to access the first error's message. This gives you the actual error text to include in your notification.
@@ -309,7 +320,9 @@ A flow that processes orders and must handle partial failures:
 The **Terminate** action immediately stops a flow run and sets its final status. It is the Power Automate equivalent of `sys.exit()` or `process.exit()`.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The **Terminate** action immediately stops a flow run and sets its final status.
+
 </div>
 
 

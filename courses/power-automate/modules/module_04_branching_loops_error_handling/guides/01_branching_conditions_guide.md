@@ -18,7 +18,9 @@ Power Automate provides four branching tools:
 This guide covers all four in depth, including UI walkthroughs for each.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Control flow is the mechanism that lets a flow make decisions. Without branching, every flow executes the same actions in the same order every time — which covers a narrow slice of real business scenarios.
+
 </div>
 
 
@@ -29,7 +31,9 @@ This guide covers all four in depth, including UI walkthroughs for each.
 The Condition action is the fundamental branching tool. It evaluates a logical expression and routes execution to one of two branches: **If yes** (the expression is true) and **If no** (the expression is false).
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The Condition action is the fundamental branching tool.
+
 </div>
 
 
@@ -126,7 +130,9 @@ Check that an invoice is over $5,000 AND the vendor is not on the approved list:
 The visual condition builder handles most comparisons. For complex logic — string manipulation, date math, array operations — you need expressions.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The visual condition builder handles most comparisons.
+
 </div>
 
 
@@ -188,7 +194,9 @@ Converts a text field to an integer before numeric comparison. SharePoint and fo
 A nested condition is a Condition block placed inside the **If yes** or **If no** branch of a parent Condition. This lets you ask a follow-up question once you have established a first fact.
 
 <div class="callout-info">
+
 <strong>Info:</strong> A nested condition is a Condition block placed inside the **If yes** or **If no** branch of a parent Condition.
+
 </div>
 
 
@@ -221,7 +229,9 @@ Power Automate imposes no hard limit on nesting depth, but deep nesting becomes 
 A Switch action evaluates a single value and routes execution to one of several named cases. It is the Power Automate equivalent of a `switch` statement in code.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> A Switch action evaluates a single value and routes execution to one of several named cases.
+
 </div>
 
 

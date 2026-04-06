@@ -7,11 +7,15 @@
 This guide builds a complete IT helpdesk Copilot agent from scratch. By the end you will have a working agent connected to SharePoint lists and Power Automate flows that employees can use to search KB articles, create support tickets, check ticket status, and escalate critical issues—all through a natural language conversation in Microsoft Teams.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Build the data layer first, then the flows, then the agent. Each layer depends on the one below it. Trying to build the agent before the flows are ready forces you to return and rewire things repeatedly.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> This guide builds a complete IT helpdesk Copilot agent from scratch. By the end you will have a working agent connected to SharePoint lists and Power Automate flows that employees can use to search KB articles, create support tickets, check ticket status, and escalate critical issues—all through a natural language conversation in Microsoft Teams.
+
 </div>
 
 
@@ -22,12 +26,14 @@ This guide builds a complete IT helpdesk Copilot agent from scratch. By the end 
 ### Persona
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ### Persona
 
 - **Name:** Helpdesk Bot
 - **Tone:** Professional, concise, action-oriented
 - **Scope:** IT issues only — hardware, software, network, accounts
 - **Limitations:** Does not provide general...
+
 </div>
 
 
@@ -81,6 +87,7 @@ Topic matched by trigger phrase
                Action: Escalation Approval flow → notifies IT manager, returns confirmation
                Message: confirms escalation and provides reference number
 ```
+
 </div>
 
 ---
@@ -90,7 +97,9 @@ Topic matched by trigger phrase
 Both SharePoint lists must be created before building any flows or topics.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Both SharePoint lists must be created before building any flows or topics.
+
 </div>
 
 
@@ -147,7 +156,9 @@ Both SharePoint lists must be created before building any flows or topics.
 All four flows use the **"When a flow is run from Copilot"** trigger from the Microsoft Copilot Studio connector.
 
 <div class="callout-info">
+
 <strong>Info:</strong> All four flows use the **"When a flow is run from Copilot"** trigger from the Microsoft Copilot Studio connector.
+
 </div>
 
 
@@ -691,7 +702,9 @@ For production monitoring, set up a separate monitoring flow that queries the fl
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 - **Flow not appearing in Copilot Studio action picker:** Confirm the flow uses the "When a flow is run from Copilot" trigger and is saved without errors. Check that you are in the same environment in both tools.
@@ -701,7 +714,9 @@ For production monitoring, set up a separate monitoring flow that queries the fl
 - **System.User.Email is empty in test canvas:** The test canvas does not authenticate as a real user. Hard-code a test email in the mapping while testing, then switch back to the system variable before publishing.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> - **Flow not appearing in Copilot Studio action picker:** Confirm the flow uses the "When a flow is run from Copilot" trigger and is saved without errors.
+
 </div>
 
 ---
@@ -710,7 +725,9 @@ For production monitoring, set up a separate monitoring flow that queries the fl
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Guide 01 — Copilot agents overview and architecture

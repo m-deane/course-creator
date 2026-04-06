@@ -32,6 +32,7 @@ $$H_0: \alpha_1 = \alpha_2 = ... = \alpha_N$$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -113,6 +114,7 @@ df = pd.DataFrame(data)
 f_test_fixed_effects(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
+
 </div>
 
 ## Breusch-Pagan LM Test
@@ -133,6 +135,7 @@ $$H_0: \sigma_u^2 = 0$$ (No random effects)
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def breusch_pagan_lm(df, y_col, x_cols, entity_col, time_col):
@@ -192,6 +195,7 @@ def breusch_pagan_lm(df, y_col, x_cols, entity_col, time_col):
 breusch_pagan_lm(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
+
 </div>
 
 ## Robust Hausman Test
@@ -203,6 +207,7 @@ The standard Hausman test can have size distortions with heteroskedasticity. A r
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from linearmodels.panel import RandomEffects
@@ -255,6 +260,7 @@ def robust_hausman_test(df, y_col, x_cols, entity_col, time_col):
 
 robust_hausman_test(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
+
 
 </div>
 
@@ -494,7 +500,6 @@ all_results = run_all_specification_tests(df, 'y', ['x1', 'x2'], 'entity', 'time
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

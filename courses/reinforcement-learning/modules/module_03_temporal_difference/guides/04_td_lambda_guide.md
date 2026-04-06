@@ -7,7 +7,9 @@
 TD(λ) is a family of algorithms parameterized by $\lambda \in [0, 1]$ that interpolates between one-step TD and Monte Carlo methods. The parameter $\lambda$ controls how many steps of actual rewards are used before bootstrapping. TD(0) ($\lambda=0$) and Monte Carlo ($\lambda=1$) are both special cases of a single unified framework.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> TD(λ) is a family of algorithms parameterized by $\lambda \in [0, 1]$ that interpolates between one-step TD and Monte Carlo methods. The parameter $\lambda$ controls how many steps of actual rewards are used before bootstrapping.
+
 </div>
 
 
@@ -18,15 +20,17 @@ Every one-step TD estimate can be improved by looking further ahead. n-step retu
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Every one-step TD estimate can be improved by looking further ahead.
+
 </div>
 ## Formal Definition
 
 ### n-Step Returns
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### n-Step Returns
 
 The n-step return from time $t$ uses $n$ actual rewards before bootstrapping with $V(S_{t+n})$:
@@ -34,6 +38,7 @@ The n-step return from time $t$ uses $n$ actual rewards before bootstrapping wit
 $$G_t^{(n)} = \sum_{k=0}^{n-1} \gamma^k R_{t+k+1} + \gamma^n V(S_{t+n})$$
 
 | $n$ | ...
+
 </div>
 
 
@@ -60,11 +65,13 @@ requires waiting $n$ steps before updating — online but not as immediate as TD
 Instead of picking a single $n$, the $\lambda$-return takes an exponentially weighted average over all n-step returns:
 
 <div class="callout-info">
+
 <strong>Info:</strong> Instead of picking a single $n$, the $\lambda$-return takes an exponentially weighted average over all n-step returns:
 
 $$G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}$$
 
 The w...
+
 </div>
 
 
@@ -341,6 +348,7 @@ print("TD(0.5) V:", V_td5.round(3))
 print("TD(1)  V:", V_tdmc.round(3))
 env.close()
 ```
+
 </div>
 
 ---
@@ -363,15 +371,19 @@ There is no universally optimal $\lambda$ — treat it as a hyperparameter to tu
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Not resetting traces at episode boundaries.**
 Eligibility traces must be zeroed at the start of each episode. If you carry traces across episodes, credit from the previous episode's states contaminates updates in the new episode. This introduces incorrect dependencies and prevents convergence.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Not resetting traces at episode boundaries.**
 Eligibility traces must be zeroed at the start of each episode.
+
 </div>
 
 **Pitfall 2 — Confusing accumulating and replacing traces.**
@@ -396,7 +408,9 @@ The decay factor $\gamma\lambda$ determines how quickly traces fade. With $\gamm
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** TD(0) prediction (Guide 01), Monte Carlo prediction (Module 2), n-step returns

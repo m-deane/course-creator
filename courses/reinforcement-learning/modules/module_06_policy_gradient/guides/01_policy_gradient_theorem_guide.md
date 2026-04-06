@@ -7,7 +7,9 @@
 Policy gradient methods optimize the agent's policy directly by following the gradient of expected return with respect to the policy parameters $\theta$. The policy gradient theorem provides an analytically tractable expression for this gradient that can be estimated from sampled trajectories, enabling gradient ascent even when the environment dynamics are unknown.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Policy gradient methods optimize the agent's policy directly by following the gradient of expected return with respect to the policy parameters $\theta$. The policy gradient theorem provides an analytically tractable expression for this gradient that can be estimated from sampled trajectories, enabling gradient ascent even when the environment dynamics are unknown.
+
 </div>
 
 
@@ -18,16 +20,19 @@ Instead of learning a value function and deriving a policy from it, parameterize
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Instead of learning a value function and deriving a policy from it, parameterize the policy $\pi(a|s;\theta)$ directly and nudge its parameters in the direction that increases expected return.
+
 </div>
 ## Why Parameterize the Policy Directly?
 
 Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and derive a policy greedily: $\pi(s) = \arg\max_a Q(s,a)$. This works well in discrete action spaces but breaks down in several important scenarios.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and derive a policy greedily: $\pi(s) = \arg\max_a Q(s,a)$.
+
 </div>
 
 
@@ -55,9 +60,11 @@ The policy parameterization can encode domain knowledge directly — for example
 The goal is to find parameters $\theta$ that maximize expected return:
 
 <div class="callout-info">
+
 <strong>Info:</strong> The goal is to find parameters $\theta$ that maximize expected return:
 
 $$J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\sum_{t=0}^{T} \gamma^t R_t\right] = \mathbb{E}_{\tau \sim \pi_\theta}\!\left[G_0\r...
+
 </div>
 
 
@@ -195,6 +202,7 @@ graph TB
     style J2 fill:#4A90D9,color:#fff
     style G fill:#E8844A,color:#fff
 ```
+
 </div>
 
 Policy gradient methods perform gradient ascent on $J(\theta)$ using Monte Carlo estimates of the gradient. Because $J(\theta)$ is generally non-convex, convergence to global optima is not guaranteed — only local optima.
@@ -274,6 +282,7 @@ def compute_policy_gradient_loss(
     # Loss = -mean(log_probs * returns) gives ∇loss = -∇J
     return -(log_probs * returns).mean()
 ```
+
 </div>
 
 ---
@@ -281,15 +290,19 @@ def compute_policy_gradient_loss(
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — High variance gradient estimates.**
 Monte Carlo estimates of $Q^{\pi_\theta}(s,a)$ using episode returns have high variance because a single trajectory sample includes contributions from many stochastic decisions. Without variance reduction (baselines, control variates), learning is slow and unstable. See Guide 02 on REINFORCE with baseline and Guide 03 on actor-critic methods.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — High variance gradient estimates.**
 Monte Carlo estimates of $Q^{\pi_\theta}(s,a)$ using episode returns have high variance because a single trajectory sample includes contributions from many stochastic decisions.
+
 </div>
 
 **Pitfall 2 — Using absolute returns instead of advantages.**
@@ -310,7 +323,9 @@ The policy gradient theorem assumes on-policy data: trajectories sampled under $
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 00 (MDP formalism, $Q^{\pi}$, $V^{\pi}$), Module 04 (function approximation), Module 05 (neural network policies)

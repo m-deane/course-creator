@@ -26,6 +26,7 @@ The most common format for panel data analysis. Each row represents one observat
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 import numpy as np
@@ -42,6 +43,7 @@ long_data = pd.DataFrame({
 print("Long format:")
 print(long_data)
 ```
+
 
 </div>
 
@@ -76,6 +78,7 @@ Variables spread across columns by time period. Common in downloaded datasets bu
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Example: Wide format
 wide_data = pd.DataFrame({
@@ -91,6 +94,7 @@ wide_data = pd.DataFrame({
 print("Wide format:")
 print(wide_data)
 ```
+
 
 </div>
 
@@ -166,6 +170,7 @@ print(long_converted)
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Set MultiIndex for panel structure
 panel_data = long_data.copy()
@@ -176,6 +181,7 @@ print(panel_data)
 print(f"\nIndex names: {panel_data.index.names}")
 print(f"Index levels: {panel_data.index.nlevels}")
 ```
+
 
 </div>
 
@@ -512,7 +518,6 @@ print(financial_panel.describe())
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

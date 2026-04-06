@@ -35,10 +35,13 @@ print(f"Path 0 first 5 steps: {paths[0, :5].round(2)}")
 prob = (paths.sum(axis=1) > 10).mean()
 print(f"P(total > 10 over 14 days) ≈ {prob:.3f}")
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A probabilistic forecast gives you marginal distributions: the uncertainty around day 1, then day 2, then day 3, independently. A sample path gives you something more powerful — a single plausible trajectory for the entire forecast horizon, drawn from the joint distribution.
+
 </div>
 
 
@@ -49,7 +52,9 @@ print(f"P(total > 10 over 14 days) ≈ {prob:.3f}")
 A sample path is one draw from the joint forecast distribution over the entire horizon.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> A sample path is one draw from the joint forecast distribution over the entire horizon.
+
 </div>
 
 
@@ -90,6 +95,7 @@ flowchart LR
     PS --> STAT
     STAT --> ANSWER["Compute statistics\nover f(ω⁽¹⁾), ..., f(ω⁽ˢ⁾)"]
 ```
+
 </div>
 
 ---
@@ -99,9 +105,11 @@ flowchart LR
 Once you have $S$ sample paths, any business question becomes a three-step calculation:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Once you have $S$ sample paths, any business question becomes a three-step calculation:
 
 1.
+
 </div>
 
 
@@ -160,6 +168,7 @@ worst_day_80 = answer_business_question(
 )
 print(f"80th percentile worst day: {worst_day_80:.1f}")
 ```
+
 </div>
 
 ---
@@ -169,9 +178,11 @@ print(f"80th percentile worst day: {worst_day_80:.1f}")
 The 80th percentile quantile for day $t$ tells you: "On day $t$ alone, I need $q_t$ units with 80% confidence."
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The 80th percentile quantile for day $t$ tells you: "On day $t$ alone, I need $q_t$ units with 80% confidence."
 
 But the question "How much total inventory do I need for the whole week at 80% confiden...
+
 </div>
 
 
@@ -188,6 +199,7 @@ The gap between these two quantities depends on the inter-step correlation. For 
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # Demonstrate the inequality concretely
@@ -211,6 +223,7 @@ print(f"True 80th pct of weekly total:      {true_80th:.1f}")
 print(f"Sum of marginal 80th percentiles:   {marginal_80th_sum:.1f}")
 print(f"Overestimate by:                    {marginal_80th_sum - true_80th:.1f} units")
 ```
+
 </div>
 
 With $\phi = 0.7$, the naive sum overstates the true 80th percentile — a practitioner following the marginal approach would over-order every week.
@@ -222,7 +235,9 @@ With $\phi = 0.7$, the naive sum overstates the true 80th percentile — a pract
 Sample paths give direct answers to probability questions that have no clean closed form under marginal distributions.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Sample paths give direct answers to probability questions that have no clean closed form under marginal distributions.
+
 </div>
 
 
@@ -372,7 +387,6 @@ Module 02 guide covers exactly how neuralforecast constructs sample paths using 
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

@@ -7,7 +7,9 @@
 REINFORCE (Williams, 1992) is the simplest practical instantiation of the policy gradient theorem. It estimates the action-value $Q^{\pi_\theta}(s,a)$ using the complete Monte Carlo return $G_t$ from each time step in an episode, then uses the score-weighted return to update policy parameters via gradient ascent.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> REINFORCE (Williams, 1992) is the simplest practical instantiation of the policy gradient theorem. It estimates the action-value $Q^{\pi_\theta}(s,a)$ using the complete Monte Carlo return $G_t$ from each time step in an episode, then uses the score-weighted return to update policy parameters via gradient ascent.
+
 </div>
 
 
@@ -18,18 +20,21 @@ Replace the unknown $Q^{\pi_\theta}(s,a)$ in the policy gradient theorem with it
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Replace the unknown $Q^{\pi_\theta}(s,a)$ in the policy gradient theorem with its unbiased Monte Carlo estimate: the actual discounted return $G_t$ observed by running the policy to completion.
+
 </div>
 ## Intuitive Explanation
 
 Think of REINFORCE as a trial-and-error learner that watches entire episodes play out before updating:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Think of REINFORCE as a trial-and-error learner that watches entire episodes play out before updating:
 
 1.
+
 </div>
 
 
@@ -49,9 +54,11 @@ The intuition parallels human trial-and-error learning: you complete a task, rec
 Given a trajectory $\tau = (S_0, A_0, R_1, S_1, A_1, R_2, \ldots, S_{T-1}, A_{T-1}, R_T)$ sampled under $\pi_\theta$, define the **return from time $t$**:
 
 <div class="callout-info">
+
 <strong>Info:</strong> Given a trajectory $\tau = (S_0, A_0, R_1, S_1, A_1, R_2, \ldots, S_{T-1}, A_{T-1}, R_T)$ sampled under $\pi_\theta$, define the **return from time $t$**:
 
 $$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1...
+
 </div>
 
 
@@ -301,6 +308,7 @@ def train_reinforce(
     env.close()
     return episode_returns
 ```
+
 </div>
 
 ---
@@ -308,15 +316,19 @@ def train_reinforce(
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — High variance without baseline.**
 Vanilla REINFORCE (no baseline) requires hundreds to thousands of episodes to converge even on simple environments like CartPole. Always include at least a constant baseline (running mean of returns) and ideally a learned $V(s)$ baseline.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — High variance without baseline.**
 Vanilla REINFORCE (no baseline) requires hundreds to thousands of episodes to converge even on simple environments like CartPole.
+
 </div>
 
 **Pitfall 2 — Using future rewards only (causality).**
@@ -340,7 +352,9 @@ If some episodes are long (many steps) and others short, the gradient estimator 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Policy gradient theorem (Guide 01), Monte Carlo methods (Module 02)

@@ -7,7 +7,9 @@
 Tabular methods store a value for every state (or state-action pair). When the state space is large or continuous, that table becomes impossibly big. Function approximation replaces the table with a parameterized function $\hat{v}(s, \mathbf{w}) \approx V^\pi(s)$ that generalizes across states, making RL tractable in the real world.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Tabular methods store a value for every state (or state-action pair). When the state space is large or continuous, that table becomes impossibly big.
+
 </div>
 
 
@@ -18,18 +20,21 @@ A table is just a lookup function with one parameter per entry. Function approxi
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> A table is just a lookup function with one parameter per entry.
+
 </div>
 ## 1. The Curse of Dimensionality
 
 ### What It Is
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### What It Is
 
 The state space of a tabular RL agent grows exponentially with the number of state dimensions.
+
 </div>
 
 
@@ -59,7 +64,9 @@ Let $|\mathcal{S}|$ denote the number of states. Tabular storage is $\mathcal{O}
 Tabular methods treat every state as unrelated to every other. An agent that visits state $s_1$ and learns its value gains no information about $s_2$, even if $s_1$ and $s_2$ are nearly identical.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Tabular methods treat every state as unrelated to every other.
+
 </div>
 
 
@@ -240,6 +247,7 @@ def cartpole_features(state):
         x_dot_n * theta_dot_n   # velocity correlation
     ])
 ```
+
 </div>
 
 ---
@@ -319,15 +327,19 @@ Neural net:   ~~~~~~~~~~~~        (arbitrary smooth function)
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1: Forgetting to normalize features.**
 Features with very different scales (e.g., position in meters vs angle in radians) cause one feature to dominate gradient updates. Always normalize inputs before computing feature vectors.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1: Forgetting to normalize features.**
 Features with very different scales (e.g., position in meters vs angle in radians) cause one feature to dominate gradient updates.
+
 </div>
 
 **Pitfall 2: Using tabular Q-learning with a continuous state space by discretizing coarsely.**
@@ -348,7 +360,9 @@ Even with perfect weights, $\hat{v}(s, \mathbf{w})$ approximates $V^\pi(s)$ with
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 03 (tabular TD methods), Module 00 (MDP notation and $V^\pi$, $Q^\pi$ definitions)

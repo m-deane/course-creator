@@ -7,11 +7,15 @@
 Policy iteration finds an optimal policy by repeatedly alternating two steps: (1) evaluate the current policy to get $V^\pi$, and (2) improve the policy greedily with respect to $V^\pi$. The algorithm is guaranteed to converge to an optimal policy $\pi^*$ in a finite number of iterations because the state space is finite and policy quality is monotonically non-decreasing.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Each improvement step produces a policy that is at least as good as the current one — and strictly better unless the current policy is already optimal. Because there are only finitely many deterministic policies, the sequence must terminate.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Policy iteration finds an optimal policy by repeatedly alternating two steps: (1) evaluate the current policy to get $V^\pi$, and (2) improve the policy greedily with respect to $V^\pi$. The algorithm is guaranteed to converge to an optimal policy $\pi^*$ in a finite number of iterations because the state space is finite and policy quality is monotonically non-decreasing.
+
 </div>
 
 
@@ -22,7 +26,9 @@ Policy iteration finds an optimal policy by repeatedly alternating two steps: (1
 Imagine you manage a logistics fleet and need to assign routes to drivers. Today you tell every driver: "follow route plan $\pi$." After a week, you measure the average fuel cost from each starting depot — that is $V^\pi$. Now you ask: "Given these measurements, is there a better route from depot $s$?" For each depot, you compute which route leads to lower total fuel cost (immediate cost plus future costs). You tell drivers to switch to the better route wherever one exists. This is the improvement step. Next week you measure again. You keep iterating until no driver switches.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Imagine you manage a logistics fleet and need to assign routes to drivers.
+
 </div>
 
 
@@ -36,11 +42,13 @@ The key guarantee: each week's measurement is honest (we compute $V^\pi$ to conv
 ### The Policy Iteration Loop
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### The Policy Iteration Loop
 
 Starting from any initial policy $\pi_0$:
 
 1.
+
 </div>
 
 
@@ -69,11 +77,13 @@ Repeat until $\pi_{k+1} = \pi_k$ (the policy is stable).
 **Theorem (Sutton & Barto, Theorem 4.2).** Let $\pi$ and $\pi'$ be any pair of deterministic policies such that for all $s \in \mathcal{S}$:
 
 <div class="callout-info">
+
 <strong>Info:</strong> **Theorem (Sutton & Barto, Theorem 4.2).** Let $\pi$ and $\pi'$ be any pair of deterministic policies such that for all $s \in \mathcal{S}$:
 
 $$Q^\pi(s, \pi'(s)) \geq V^\pi(s)$$
 
 Then $\pi'$ is at lea...
+
 </div>
 
 
@@ -149,6 +159,7 @@ flowchart LR
     style Impr fill:#9b59b6,color:#fff
     style Opt fill:#4a90d9,color:#fff
 ```
+
 </div>
 
 The two phases alternate until stability. Stability implies optimality by the policy improvement theorem.
@@ -263,6 +274,7 @@ n_states, n_actions = 16, 4  # 4x4 grid, actions: 0=up,1=down,2=left,3=right
 # (Transition and reward matrices would be defined based on grid structure)
 # pi_star, V_star = policy_iteration(P, R, gamma=0.99)
 ```
+
 </div>
 
 ---
@@ -291,13 +303,17 @@ The guarantee: policy quality still monotonically improves, and convergence to $
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 ### 1. Evaluating the policy only partially
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> ### 1.
+
 </div>
 
 If evaluation stops too early (large $\theta$ or few sweeps), the improvement step gets inaccurate $Q$-values and may make bad greedy choices, slowing or disrupting convergence.
@@ -324,7 +340,9 @@ On small MDPs you may see policy iteration converge in 2-5 iterations, creating 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Iterative policy evaluation (Guide 01), Bellman equations, MDP formulation

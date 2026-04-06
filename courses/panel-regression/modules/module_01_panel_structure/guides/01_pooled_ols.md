@@ -24,6 +24,7 @@ $$y_{it} = \beta_0 + x_{it}'\beta + \epsilon_{it}$$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -62,6 +63,7 @@ pooled_lm = PooledOLS(data['y'], sm.add_constant(data['x'])).fit()
 print(f"\nPooled OLS (linearmodels):")
 print(pooled_lm.summary.tables[1])
 ```
+
 
 </div>
 
@@ -138,6 +140,7 @@ This measures the proportion of variance due to entity effects.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 def estimate_intraclass_correlation(data, y_col, entity_col):
     """Estimate intraclass correlation from panel data."""
@@ -157,6 +160,7 @@ data_flat = data.reset_index()
 rho = estimate_intraclass_correlation(data_flat, 'y', 'entity')
 print(f"Intraclass correlation: {rho:.3f}")
 ```
+
 
 </div>
 
@@ -183,6 +187,7 @@ Cluster standard errors at the entity level to account for within-entity correla
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Pooled OLS with clustered standard errors
 from linearmodels.panel import PooledOLS
@@ -200,6 +205,7 @@ print(pooled_clustered.summary.tables[1])
 print(f"\nHomoskedastic SE: {pooled_lm.std_errors['x']:.4f}")
 print(f"Clustered SE: {pooled_clustered.std_errors['x']:.4f}")
 ```
+
 
 </div>
 
@@ -298,7 +304,6 @@ if result['p_value'] < 0.05:
 **Practice Question 1:** Why does pooled OLS produce biased estimates when there is unobserved heterogeneity correlated with the regressors?
 
 **Practice Question 2:** Under what conditions is pooled OLS actually the correct estimator for panel data?
-
 
 
 ---

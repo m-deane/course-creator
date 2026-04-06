@@ -29,10 +29,13 @@ print(f"datasetsforecast {datasetsforecast.__version__}")
 print(f"utilsforecast {utilsforecast.__version__}")
 print("Environment ready.")
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Modern forecasting has moved well beyond producing a single number. This guide maps the forecasting landscape — point, probabilistic, and distributional approaches — and introduces the neuralforecast ecosystem that unifies all three in a single, consistent API.
+
 </div>
 
 
@@ -43,11 +46,13 @@ print("Environment ready.")
 A point forecast says: "Demand tomorrow will be 142 units."
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> A point forecast says: "Demand tomorrow will be 142 units."
 
 A probabilistic forecast says: "Demand tomorrow will be 142 units, with a 90% interval of [118, 171]."
 
 These two statements lead to comple...
+
 </div>
 
 
@@ -80,15 +85,15 @@ These two statements lead to completely different inventory decisions. The secon
 </div>
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> example.py
 
 
 The following implementation builds on the approach above:
 
 
-
-
 ---
+
 </div>
 
 
@@ -117,6 +122,7 @@ flowchart TD
     E --> E1["Monte Carlo trajectories"]
     E --> E2["Scenario analysis, risk simulation"]
 ```
+
 </div>
 
 ---
@@ -134,10 +140,12 @@ flowchart TD
 | **Calibration testable?** | No | Yes (coverage) | Yes (CRPS, reliability diagram) |
 
 <div class="callout-info">
+
 <strong>Info:</strong> Point
 
 
 See detailed comparison in the table above.
+
 </div>
 
 
@@ -168,7 +176,9 @@ See detailed comparison in the table above.
 A 90% prediction interval should contain the actual value 90% of the time. When it does, the forecast is **calibrated**. Calibration is testable — you can measure it on held-out data.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A 90% prediction interval should contain the actual value 90% of the time.
+
 </div>
 
 
@@ -189,9 +199,8 @@ where $F$ is the forecast CDF and $y$ is the actual observation. Lower CRPS is b
 The nixtla stack consists of three coordinated libraries:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The nixtla stack consists of three coordinated libraries:
-
-
 
 
 example.py
@@ -200,9 +209,8 @@ example.py
 The following implementation builds on the approach above:
 
 
-
-
 **datasetsforecast** — A catalog of benchmark datasets (M4, M5...
+
 </div>
 
 
@@ -226,6 +234,7 @@ flowchart LR
     style C fill:#fff3cd
     style D fill:#f8d7da
 ```
+
 </div>
 
 **datasetsforecast** — A catalog of benchmark datasets (M4, M5, ETT, French Bakery, Tourism) ready in the nixtla `(unique_id, ds, y)` format. No ETL required.
@@ -254,6 +263,7 @@ This format handles thousands of series uniformly — a single `NeuralForecast` 
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 from datasetsforecast.m4 import M4
@@ -268,6 +278,7 @@ print(train.head())
 print(f"Series count: {train['unique_id'].nunique()}")
 print(f"Rows: {len(train):,}")
 ```
+
 </div>
 
 ---
@@ -356,7 +367,6 @@ Continue to [02_neuralforecast_ecosystem.md](02_neuralforecast_ecosystem.md) for
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

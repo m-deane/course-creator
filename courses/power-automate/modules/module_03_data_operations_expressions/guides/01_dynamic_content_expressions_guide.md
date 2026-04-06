@@ -7,7 +7,9 @@
 Dynamic content and expressions are the mechanism Power Automate uses to move data between steps and compute new values at runtime. Dynamic content lets you select outputs from previous steps via a point-and-click panel; expressions let you write formulas that transform, compare, and format those values before they reach the next action.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Dynamic content and expressions are the mechanism Power Automate uses to move data between steps and compute new values at runtime. Dynamic content lets you select outputs from previous steps via a point-and-click panel; expressions let you write formulas that transform, compare, and format those values before they reach the next action.
+
 </div>
 
 
@@ -16,9 +18,11 @@ Dynamic content and expressions are the mechanism Power Automate uses to move da
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -35,7 +39,9 @@ By the end of this guide you will be able to:
 Every action in a flow exposes **outputs** — structured data produced when that step runs. Downstream steps can consume those outputs via tokens. Power Automate resolves every token at runtime by substituting the actual value before executing the next step.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Every action in a flow exposes **outputs** — structured data produced when that step runs.
+
 </div>
 
 
@@ -56,9 +62,11 @@ This substitution is what the term **dynamic content** means — content whose v
 ### Opening the Panel
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Opening the Panel
 
 Every text field in an action card that accepts dynamic values shows a lightning-bolt icon when you click into it.
+
 </div>
 
 
@@ -109,9 +117,11 @@ Only tokens from steps that are **upstream** of the current step appear in the p
 ### Switching to Expressions
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> ### Switching to Expressions
 
 > **On screen:** In the dynamic content panel, click the **Expression** tab.
+
 </div>
 
 
@@ -150,9 +160,11 @@ Inside the expression editor, dynamic content tokens are accessed via their inte
 ### `concat()`
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ### `concat()`
 
 Joins two or more strings together.
+
 </div>
 
 
@@ -235,9 +247,11 @@ Result: `purchase order`
 ### `utcNow()`
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### `utcNow()`
 
 Returns the current date and time in UTC as an ISO 8601 string.
+
 </div>
 
 
@@ -594,7 +608,9 @@ When an expression contains an error (wrong function name, mismatched parenthese
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 02 — Triggers and Connectors (understanding action outputs)

@@ -76,6 +76,7 @@ Long format "slices" this cube horizontally (by time) and stacks the slices on t
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 import numpy as np
@@ -298,6 +299,7 @@ if __name__ == "__main__":
     print(df_indexed.loc[(2, 3)])
 ```
 
+
 </div>
 
 ## Common Pitfalls
@@ -334,12 +336,14 @@ if __name__ == "__main__":
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
   # For dates
   df['time'] = pd.to_datetime(df['time'])
   # For integers
   df['time'] = df['time'].astype(int)
   ```
+
 
 </div>
 
@@ -362,12 +366,14 @@ if __name__ == "__main__":
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
   entities_per_period = df.groupby('time')['entity_id'].nunique()
   total_unique_entities = df['entity_id'].nunique()
   is_panel = (entities_per_period > 1).all() and \
              (df.groupby('entity_id')['time'].nunique() > 1).any()
   ```
+
 
 </div>
 

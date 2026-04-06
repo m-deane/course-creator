@@ -7,7 +7,9 @@
 Power Automate has first-class support for SharePoint: you can react to list events, read and write list items, manage document libraries, and apply fine-grained OData filters — all without writing a single line of server-side code. This guide walks through every major trigger and action, column type considerations, and a complete document approval workflow.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Power Automate has first-class support for SharePoint: you can react to list events, read and write list items, manage document libraries, and apply fine-grained OData filters — all without writing a single line of server-side code. This guide walks through every major trigger and action, column type considerations, and a complete document approval workflow.
+
 </div>
 
 
@@ -16,9 +18,11 @@ Power Automate has first-class support for SharePoint: you can react to list eve
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -42,7 +46,9 @@ By the end of this guide you will be able to:
 A trigger is the event that fires your flow. SharePoint exposes three commonly used triggers in Power Automate.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> A trigger is the event that fires your flow.
+
 </div>
 
 
@@ -119,7 +125,9 @@ This trigger places an **Automate** button in the SharePoint list's command bar.
 Power Automate exposes the full create-read-update-delete set for SharePoint list items.
 
 <div class="callout-info">
+
 <strong>Info:</strong> Power Automate exposes the full create-read-update-delete set for SharePoint list items.
+
 </div>
 
 
@@ -142,6 +150,7 @@ graph LR
     style U fill:#6264A7,color:#fff
     style D fill:#A4262C,color:#fff
 ```
+
 </div>
 
 ### 2.1 Create item
@@ -238,7 +247,9 @@ There is no recycle-bin safety net through the Power Automate action — the ite
 OData filters run on the SharePoint server before results are returned to your flow. Filtering server-side is always faster and cheaper than retrieving all items and filtering with a **Condition** action.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> OData filters run on the SharePoint server before results are returned to your flow.
+
 </div>
 
 
@@ -331,7 +342,9 @@ AssignedTo/EMail eq 'user@your-org.com'
 Document libraries store files. Power Automate provides separate actions for file content and file metadata.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Document libraries store files.
+
 </div>
 
 
@@ -593,7 +606,9 @@ The **Approval Outcome** token comes from the "Start and wait for an approval" s
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 04 — Condition, Apply to each, error handling scope

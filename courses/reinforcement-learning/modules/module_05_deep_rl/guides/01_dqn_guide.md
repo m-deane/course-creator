@@ -7,7 +7,9 @@
 DQN (Mnih et al., 2015) replaces the tabular Q-table with a neural network that approximates the action-value function $Q(s, a; \theta) \approx Q^*(s, a)$. Two stabilizing mechanisms — an **experience replay buffer** and a **target network** — make the training process tractable and converge reliably.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> DQN (Mnih et al., 2015) replaces the tabular Q-table with a neural network that approximates the action-value function $Q(s, a; \theta) \approx Q^*(s, a)$. Two stabilizing mechanisms — an **experience replay buffer** and a **target network** — make the training process tractable and converge reliably.
+
 </div>
 
 
@@ -18,20 +20,23 @@ Q-learning with a neural network approximator is unstable without intervention. 
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Q-learning with a neural network approximator is unstable without intervention.
+
 </div>
 ## Formal Definition
 
 The optimal action-value function satisfies the Bellman optimality equation:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The optimal action-value function satisfies the Bellman optimality equation:
 
 $$Q^*(s, a) = \mathbb{E}\!\left[r + \gamma \max_{a'} Q^*(s', a') \;\Big|\; S_t = s,\, A_t = a\right]$$
 
 DQN approximates $...
+
 </div>
 
 
@@ -130,6 +135,7 @@ flowchart TD
     style S fill:#4A90D9,color:#fff
     style Q fill:#E8844A,color:#fff
 ```
+
 </div>
 
 The network takes a state as input and outputs one Q-value per action simultaneously. At inference, the greedy action is $a^* = \arg\max_a Q(s, a; \theta)$.
@@ -339,6 +345,7 @@ class DQNAgent:
 
         return loss.item()
 ```
+
 </div>
 
 ---
@@ -346,15 +353,19 @@ class DQNAgent:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Omitting the target network.**
 Computing TD targets with the same network being updated creates a moving-target problem. Q-values and targets chase each other, typically causing divergence within a few thousand steps. Always use a separate, periodically updated target network.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Omitting the target network.**
 Computing TD targets with the same network being updated creates a moving-target problem.
+
 </div>
 
 **Pitfall 2 — Replay buffer too small.**
@@ -378,7 +389,9 @@ During training, the epsilon-greedy policy is necessary for exploration. During 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Q-learning (Module 03), Bellman equations (Module 00 Guide 03), function approximation concepts

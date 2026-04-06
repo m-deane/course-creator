@@ -7,7 +7,9 @@
 The Excel Online (Business) connector lets Power Automate read and write structured data in Excel tables stored on SharePoint or OneDrive for Business. You can list rows, add rows, update rows by key, and delete rows — all without opening Excel. This guide covers every table action, data type considerations, and a complete report-generation flow.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> The Excel Online (Business) connector lets Power Automate read and write structured data in Excel tables stored on SharePoint or OneDrive for Business. You can list rows, add rows, update rows by key, and delete rows — all without opening Excel.
+
 </div>
 
 
@@ -16,9 +18,11 @@ The Excel Online (Business) connector lets Power Automate read and write structu
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -43,7 +47,9 @@ By the end of this guide you will be able to:
 Power Automate provides two Excel connectors. Choose the right one:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Power Automate provides two Excel connectors.
+
 </div>
 
 
@@ -78,6 +84,7 @@ Workbook: Q4_Sales_Report.xlsx
         ├── Column: Revenue
         └── Column: Region
 ```
+
 </div>
 
 If your workbook does not have a Table, open it in Excel, select the data range including headers, and press **Ctrl+T** (or go to Insert → Table).
@@ -89,9 +96,11 @@ If your workbook does not have a Table, open it in Excel, select the data range 
 ### 2.1 List rows present in a table
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### 2.1 List rows present in a table
 
 Retrieves all rows from a named table.
+
 </div>
 
 
@@ -123,6 +132,7 @@ The following implementation builds on the approach above:
 │  Skip Count:    [ 0                                 ]      │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 </div>
 
 **Advanced options:**
@@ -168,10 +178,13 @@ The following implementation builds on the approach above:
 │  Region:      [ [Trigger Region]                    ]      │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Excel tables auto-expand. Power Automate appends to the next available row — you do not need to specify a row number.
+
 </div>
 
 ### 2.3 Update a row
@@ -186,6 +199,7 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 <span class="filename">example.py</span>
 </div>
 
+
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Update a row                                           ▲   │
@@ -199,6 +213,7 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 │  ProcessedAt: [ [utcNow()]                         ]       │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 </div>
 
 The `@row.index` token is available in the dynamic content from **List rows present in a table**. It is the row's position in the table, starting at 0.
@@ -247,7 +262,9 @@ Retrieves a single row by the value in a designated **Key Column**.
 Named ranges in Excel can be read (but not written) via the Excel connector's **Get a row** action when the range is formatted as a Table. For true named ranges (not Tables), use the **Get a row** action is unavailable — instead, use the **Run script** action (Office Scripts) or the **Send an HTTP request** action with the Excel REST API.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Named ranges in Excel can be read (but not written) via the Excel connector's **Get a row** action when the range is formatted as a Table.
+
 </div>
 
 
@@ -260,7 +277,9 @@ For most automation scenarios, converting named ranges to Tables is the practica
 Excel stores data in typed cells. Power Automate sends values as strings, and Excel performs type conversion automatically — but only if the destination column's format matches.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Excel stores data in typed cells.
+
 </div>
 
 
@@ -507,7 +526,9 @@ See detailed comparison in the table above.
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Guide 01 (SharePoint Integration) — OData filter syntax is identical

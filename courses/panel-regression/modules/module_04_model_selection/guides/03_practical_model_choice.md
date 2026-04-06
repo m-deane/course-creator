@@ -60,6 +60,7 @@ Fixed Effects      Random Effects
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -291,6 +292,7 @@ print("=" * 70)
 print(results.summary.tables[1])
 ```
 
+
 </div>
 
 ## Practical Considerations Beyond Tests
@@ -302,6 +304,7 @@ print(results.summary.tables[1])
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def consider_research_question():
@@ -342,6 +345,7 @@ def consider_research_question():
 consider_research_question()
 ```
 
+
 </div>
 
 ### 2. Data Characteristics
@@ -351,6 +355,7 @@ consider_research_question()
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def assess_data_characteristics(df, entity_col, time_col, x_cols):
@@ -398,6 +403,7 @@ def assess_data_characteristics(df, entity_col, time_col, x_cols):
 
 assess_data_characteristics(df, 'entity', 'time', ['x1', 'x2'])
 ```
+
 
 </div>
 
@@ -545,7 +551,6 @@ comparison = create_comparison_table(df, 'y', ['x1', 'x2'], 'entity', 'time')
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

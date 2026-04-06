@@ -7,7 +7,9 @@
 Monte Carlo (MC) prediction estimates the value function $V^\pi(s)$ for a given policy $\pi$ by averaging actual returns observed from sample episodes. No model of the environment is required — only experience.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Monte Carlo (MC) prediction estimates the value function $V^\pi(s)$ for a given policy $\pi$ by averaging actual returns observed from sample episodes. No model of the environment is required — only experience.
+
 </div>
 
 
@@ -18,16 +20,19 @@ Where Dynamic Programming computes value functions by solving Bellman equations 
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Where Dynamic Programming computes value functions by solving Bellman equations exactly (requiring a model), Monte Carlo simply asks: "Run the policy many times and average what you actually get." The...
+
 </div>
 ## Intuitive Explanation
 
 Imagine you want to know the average score a basketball player earns per game when playing a specific strategy. You could try to model every possible game scenario mathematically — or you could just watch 1,000 games and compute the average. Monte Carlo takes the second approach.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Imagine you want to know the average score a basketball player earns per game when playing a specific strategy.
+
 </div>
 
 
@@ -41,9 +46,11 @@ Each episode is one "game." The return $G_t$ from a state is the total discounte
 Given a policy $\pi$ and an episodic MDP with states $\mathcal{S}$, actions $\mathcal{A}$, and discount factor $\gamma \in [0, 1)$, the true state-value function is:
 
 <div class="callout-info">
+
 <strong>Info:</strong> Given a policy $\pi$ and an episodic MDP with states $\mathcal{S}$, actions $\mathcal{A}$, and discount factor $\gamma \in [0, 1)$, the true state-value function is:
 
 $$V^\pi(s) = \mathbb{E}_\pi\left[...
+
 </div>
 
 
@@ -71,7 +78,9 @@ where $N(s)$ is the number of times state $s$ has been visited.
 A single episode may visit the same state $s$ multiple times. The two variants differ in which visits count toward the average.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> A single episode may visit the same state $s$ multiple times.
+
 </div>
 
 
@@ -268,6 +277,7 @@ def mc_prediction_every_visit(env, policy, gamma=0.99, n_episodes=10_000):
     V = {s: returns_sum[s] / returns_count[s] for s in returns_count}
     return V
 ```
+
 </div>
 
 ---
@@ -338,15 +348,19 @@ The key condition is that every state be visited infinitely often — satisfied 
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **High variance in return estimates**
 Returns $G_t$ are sums of many random rewards. Variance compounds with episode length and discount: $\text{Var}[G_t] \approx \sum_{k} \gamma^{2k} \text{Var}[R_{t+k}]$. Mitigations: use $\gamma < 1$ to down-weight distant rewards; collect more episodes; use importance-sampling variance reduction (see Guide 03).
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **High variance in return estimates**
 Returns $G_t$ are sums of many random rewards.
+
 </div>
 
 **Requires complete episodes**
@@ -367,7 +381,9 @@ If $V(s)$ is initialized to non-zero values and updated incrementally, early est
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Markov Decision Processes (Module 0), policy evaluation concept from Dynamic Programming (Module 1)

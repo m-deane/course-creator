@@ -7,11 +7,15 @@
 The Approvals connector lets you embed structured human decisions into your flows. Instead of sending a generic email and waiting for a reply, the connector creates a trackable approval record, routes it to the right people, handles responses, and feeds the decision back into your automation—all without writing a line of custom email logic.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Approvals are not just email notifications. They are persistent records with a status (Pending, Approved, Rejected) that Power Automate can query, update, and act on—even days or weeks after the request was created.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> The Approvals connector lets you embed structured human decisions into your flows. Instead of sending a generic email and waiting for a reply, the connector creates a trackable approval record, routes it to the right people, handles responses, and feeds the decision back into your automation—all without writing a line of custom email logic.
+
 </div>
 
 
@@ -22,7 +26,9 @@ The Approvals connector lets you embed structured human decisions into your flow
 Before the Approvals connector, teams handled sign-off workflows by emailing someone a document, waiting for a reply, and manually updating a spreadsheet. Problems:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Before the Approvals connector, teams handled sign-off workflows by emailing someone a document, waiting for a reply, and manually updating a spreadsheet.
+
 </div>
 
 
@@ -40,7 +46,9 @@ The Approvals connector solves all four problems with a dedicated infrastructure
 Power Automate offers four distinct approval patterns. Choosing the right one determines the behavior of routing, notification, and completion.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Power Automate offers four distinct approval patterns.
+
 </div>
 
 
@@ -195,6 +203,7 @@ Business justification: Annual renewal for JetBrains IDEs used by the backend te
 <br>
 <a href="https://your-org.sharepoint.com/sites/Finance/Expenses/item123">View Receipt</a>
 ```
+
 </div>
 
 ### What Renders and What Does Not
@@ -315,7 +324,9 @@ Then add **Send an email (V2)** to notify the submitter of rejection, including 
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 - **Approval goes to wrong person**: The **Assigned to** field requires email addresses, not display names. Use the Office 365 Users connector to resolve names to emails when the approver is dynamic.
@@ -324,7 +335,9 @@ Then add **Send an email (V2)** to notify the submitter of rejection, including 
 - **HTML not rendering**: Check that the Details field contains valid HTML. Nested tags and unclosed elements break rendering silently.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> - **Approval goes to wrong person**: The **Assigned to** field requires email addresses, not display names.
+
 </div>
 
 ---
@@ -333,7 +346,9 @@ Then add **Send an email (V2)** to notify the submitter of rejection, including 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Module 05 — SharePoint triggers and list operations

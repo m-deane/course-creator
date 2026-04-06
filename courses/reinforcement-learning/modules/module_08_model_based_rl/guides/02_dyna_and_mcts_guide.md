@@ -7,7 +7,9 @@
 Dyna-Q (Sutton, 1991) is the foundational algorithm that unifies learning from real experience and planning with a learned model. Monte Carlo Tree Search (MCTS) is the dominant algorithm for lookahead planning in large discrete spaces and the engine behind AlphaGo and AlphaZero. Both methods exploit a model — one implicitly through replay, one explicitly through simulation.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Dyna-Q (Sutton, 1991) is the foundational algorithm that unifies learning from real experience and planning with a learned model. Monte Carlo Tree Search (MCTS) is the dominant algorithm for lookahead planning in large discrete spaces and the engine behind AlphaGo and AlphaZero.
+
 </div>
 
 
@@ -18,9 +20,10 @@ Dyna-Q asks: "After each real step, why not run several imagined steps too?" The
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Dyna-Q asks: "After each real step, why not run several imagined steps too?" The imagined steps use a tabular model fitted from real transitions and produce additional Q-learning updates at zero envir...
+
 </div>
 ## Intuitive Explanation: Dyna-Q
 
@@ -30,8 +33,10 @@ A student preparing for an exam:
 - **Planning** (Step 4): drill from memory — re-solve problems already seen, reinforce the solution pattern without doing new problems.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> A student preparing for an exam:
 - **Real experience** (Step 2): work through new practice problems as they encounter them.
+
 </div>
 
 
@@ -45,9 +50,11 @@ The $n$ parameter controls the ratio of drilling to new problems. $n = 0$ is pur
 ### Setting
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Setting
 
 Tabular MDP $(\mathcal{S}, \mathcal{A}, p, r, \gamma)$ with a deterministic learned model $\hat{p}$.
+
 </div>
 
 
@@ -99,7 +106,9 @@ Source: Sutton & Barto Figure 8.2 — the Maze example.
 Standard Dyna-Q assumes the environment is stationary. If the environment changes (e.g., a wall is removed or added), the model becomes stale and planning reinforces outdated beliefs.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Standard Dyna-Q assumes the environment is stationary.
+
 </div>
 
 
@@ -124,15 +133,15 @@ where $\tau(S, A)$ is the number of real time steps since $(S, A)$ was last exec
 </div>
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 
 
 The following implementation builds on the approach above:
 
 
-
-
 ---
+
 </div>
 
 
@@ -211,6 +220,7 @@ class DynaQ:
             td_error_sim = td_target_sim - self.Q[s_sim][a_sim]
             self.Q[s_sim][a_sim] += self.alpha * td_error_sim
 ```
+
 </div>
 
 ---
@@ -346,6 +356,7 @@ flowchart TD
     style SIM fill:#f0ffe8,stroke:#4A9D4A
     style BACK fill:#ffe8f4,stroke:#D44A7A
 ```
+
 </div>
 
 ---
@@ -514,6 +525,7 @@ def mcts_search(root_state, env_simulator, n_simulations: int, c: float = math.s
     best_action = max(root.children, key=lambda a: root.children[a].visit_count)
     return best_action
 ```
+
 </div>
 
 ---
@@ -521,15 +533,19 @@ def mcts_search(root_state, env_simulator, n_simulations: int, c: float = math.s
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Using stale model transitions in Dyna-Q after environment change.**
 If the environment changes (a wall is added, a reward location moves), Dyna-Q continues to plan with old model transitions that are now wrong. These incorrect planning updates can undo learning from real experience. Use Dyna-Q+ with an exploration bonus, or discard model entries older than a threshold.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Using stale model transitions in Dyna-Q after environment change.**
 If the environment changes (a wall is added, a reward location moves), Dyna-Q continues to plan with old model transitions that are now wrong.
+
 </div>
 
 **Pitfall 2 — Insufficient planning steps for the model quality.**
@@ -553,7 +569,9 @@ Dyna-Q improves the *global* Q-table by replaying past experience. MCTS improves
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Model-Based Overview (Guide 01), Q-learning and TD updates (Module 3), UCB1 bandit algorithm (Multi-Armed Bandits course)

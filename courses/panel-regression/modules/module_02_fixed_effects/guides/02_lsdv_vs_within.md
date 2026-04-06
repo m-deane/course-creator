@@ -61,6 +61,7 @@ where $D_{ij} = 1$ if $i = j$, else 0.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import pandas as pd
 import numpy as np
@@ -101,6 +102,7 @@ print(f"  R-squared: {lsdv_model.rsquared:.4f}")
 print(f"  Number of parameters: {len(lsdv_model.params)}")
 ```
 
+
 </div>
 
 ### Extracting Entity Effects
@@ -110,6 +112,7 @@ print(f"  Number of parameters: {len(lsdv_model.params)}")
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # Extract entity fixed effects from LSDV
@@ -124,6 +127,7 @@ print(f"\nEstimated entity effects (first 5):")
 for i, effect in enumerate(entity_effects_estimated[:5]):
     print(f"  Entity {i+1}: {effect:.4f}")
 ```
+
 
 </div>
 
@@ -153,6 +157,7 @@ Then estimate: $\tilde{y}_{it} = \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Manual within transformation
 df['y_mean'] = df.groupby('entity')['y'].transform('mean')
@@ -168,6 +173,7 @@ print("\nWithin Transformation (Manual):")
 print(f"  x coefficient: {within_manual.params['x_demean']:.4f}")
 print(f"  x std error (unadjusted): {within_manual.bse['x_demean']:.4f}")
 ```
+
 
 </div>
 
@@ -380,7 +386,6 @@ print(final_model.summary.tables[1])
 **Practice Question 1:** Why can fixed effects not estimate the impact of time-invariant variables like gender or geographic region?
 
 **Practice Question 2:** When would entity fixed effects alone be insufficient, requiring two-way (entity + time) fixed effects?
-
 
 
 ---

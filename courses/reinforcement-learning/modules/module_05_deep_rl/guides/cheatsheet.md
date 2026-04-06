@@ -7,9 +7,11 @@
 $$\mathcal{L}(\theta) = \mathbb{E}_{(s,\, a,\, r,\, s',\, \text{done}) \sim \mathcal{D}}\!\left[\bigl(Y - Q(s, a;\, \theta)\bigr)^2\right]$$
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> $$\mathcal{L}(\theta) = \mathbb{E}_{(s,\, a,\, r,\, s',\, \text{done}) \sim \mathcal{D}}\!\left[\bigl(Y - Q(s, a;\, \theta)\bigr)^2\right]$$
 
 $$Y = \begin{cases} r & \text{if done} \\ r + \gamma \disp...
+
 </div>
 
 
@@ -26,9 +28,11 @@ $$Y = \begin{cases} r & \text{if done} \\ r + \gamma \displaystyle\max_{a'} Q(s'
 **Decouple action selection from action evaluation:**
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Decouple action selection from action evaluation:**
 
 $$Y^{\text{DDQN}} = r + \gamma\, Q\!\left(s',\; \underbrace{\arg\max_a Q(s', a;\, \theta)}_{\text{selection by } \theta},\; \underbrace{\theta^-}...
+
 </div>
 
 
@@ -50,10 +54,12 @@ Motivation: $\mathbb{E}[\max_a Q(s', a; \theta^-)] \geq \max_a Q^*(s', a)$ — m
 $$Q(s, a;\, \theta) = V(s;\, \theta_V) + \left(A(s, a;\, \theta_A) - \frac{1}{|\mathcal{A}|}\sum_{a'} A(s, a';\, \theta_A)\right)$$
 
 <div class="callout-info">
+
 <strong>Info:</strong> $$Q(s, a;\, \theta) = V(s;\, \theta_V) + \left(A(s, a;\, \theta_A) - \frac{1}{|\mathcal{A}|}\sum_{a'} A(s, a';\, \theta_A)\right)$$
 
 - $V(s; \theta_V) \in \mathbb{R}$: state-value stream (scalar)
 - $A...
+
 </div>
 
 
@@ -73,6 +79,7 @@ State s → Shared Encoder → Value head    → V(s)    ─┐
 **Priority** (proportional variant):
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Priority** (proportional variant):
 
 $$p_i = |\delta_i| + \epsilon \qquad \delta_i = Y_i - Q(s_i, a_i;\theta), \quad \epsilon = 0.01$$
@@ -80,6 +87,7 @@ $$p_i = |\delta_i| + \epsilon \qquad \delta_i = Y_i - Q(s_i, a_i;\theta), \quad 
 **Sampling probability:**
 
 $$P(i) = \frac{p_i^\alpha}{\sum_k p_...
+
 </div>
 
 

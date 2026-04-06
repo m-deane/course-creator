@@ -7,7 +7,9 @@
 Soft Actor-Critic (Haarnoja et al., 2018) is an off-policy actor-critic algorithm built on the **maximum entropy reinforcement learning** framework. Rather than simply maximizing expected return, SAC maximizes a combination of return and policy entropy. This makes the learned policy stochastically exploratory by design, producing policies that are more robust, better at avoiding local optima, and more sample-efficient than on-policy methods like PPO.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Soft Actor-Critic (Haarnoja et al., 2018) is an off-policy actor-critic algorithm built on the **maximum entropy reinforcement learning** framework. Rather than simply maximizing expected return, SAC maximizes a combination of return and policy entropy.
+
 </div>
 
 
@@ -18,16 +20,19 @@ Standard RL trains a policy to be as deterministic as possible — commit to the
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Standard RL trains a policy to be as deterministic as possible — commit to the best action and ignore all others.
+
 </div>
 ## Intuitive Explanation
 
 Imagine training a robot arm to grasp objects. A standard RL policy commits to one specific joint trajectory. If the object is slightly displaced, the policy fails because it has no experience with variations. A maximum entropy policy explores many different grasping approaches simultaneously — it finds multiple ways to succeed. When the object moves, it has backup strategies available.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Imagine training a robot arm to grasp objects.
+
 </div>
 
 
@@ -41,6 +46,7 @@ The temperature $\alpha$ adjusts how much the robot "cares" about trying differe
 ### Maximum Entropy Reinforcement Learning
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Maximum Entropy Reinforcement Learning
 
 The standard RL objective is:
@@ -48,6 +54,7 @@ The standard RL objective is:
 $$J_{standard}(\pi) = \sum_{t} \mathbb{E}_{(s_t, a_t) \sim \rho_\pi}\!\left[r(s_t, a_t)\right]$$
 
 The maximum entropy RL obje...
+
 </div>
 
 
@@ -367,6 +374,7 @@ class SACAgent:
             "entropy":     -log_probs.mean().item(),
         }
 ```
+
 </div>
 
 ---
@@ -450,15 +458,19 @@ See detailed comparison in the table above.
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Replay buffer too small.**
 SAC requires a large replay buffer (at least 100K transitions, ideally 1M) for the off-policy updates to be effective. A buffer that is too small causes overfitting to recent experience and instability. This is the most common SAC failure mode.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Replay buffer too small.**
 SAC requires a large replay buffer (at least 100K transitions, ideally 1M) for the off-policy updates to be effective.
+
 </div>
 
 **Pitfall 2 — Target entropy set incorrectly.**
@@ -482,7 +494,9 @@ Polyak coefficient $\tau = 0.005$ (i.e., 99.5% old, 0.5% new per step) is the st
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Actor-critic architectures (Module 6), double Q-learning (Module 5), exploration-exploitation trade-offs (Modules 2-3)

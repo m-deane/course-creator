@@ -39,6 +39,7 @@ $$Var(X) = Var_{between}(\bar{X}_i) + Var_{within}(X_{it} - \bar{X}_i)$$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -114,6 +115,7 @@ for var in ['size', 'profitability']:
     print(f"  Within Variance:  {decomp['within']:.4f} ({decomp['within_pct']:.1f}%)")
 ```
 
+
 </div>
 
 ## Visualizing the Decomposition
@@ -130,6 +132,7 @@ for var in ['size', 'profitability']:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def plot_variance_decomposition(df, entity_col, variable, n_sample=10):
@@ -197,6 +200,7 @@ plot_variance_decomposition(df, 'firm', 'size')
 plot_variance_decomposition(df, 'firm', 'profitability')
 ```
 
+
 </div>
 
 ## Implications for Estimation
@@ -212,6 +216,7 @@ FE uses only within-entity changes over time.
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -250,6 +255,7 @@ df['profit_adj'] = 0.02 + 0.001 * df['size'] + np.random.normal(0, 0.02, len(df)
 
 fe_coef, between_coef = illustrate_fe_within(df, 'profit_adj', 'size', 'firm', 'year')
 ```
+
 
 </div>
 
@@ -468,7 +474,6 @@ simulate_measurement_error()
 **Practice Question 1:** What problem does this approach solve that simpler methods cannot?
 
 **Practice Question 2:** What are the key assumptions, and how would you test them in practice?
-
 
 
 ---

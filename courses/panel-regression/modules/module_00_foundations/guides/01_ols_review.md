@@ -125,6 +125,7 @@ $$\hat{\sigma}^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n - k} = \frac{(y - X\ha
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 from scipy import stats
@@ -228,6 +229,7 @@ if __name__ == "__main__":
     print(f"Residual std: {np.sqrt(results['sigma2']):.4f}")
 ```
 
+
 </div>
 
 ## Common Pitfalls
@@ -309,6 +311,7 @@ Implication: $\text{Cov}(X_j, \hat{\epsilon}) = 0$ for all predictors $X_j$. Thi
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 
@@ -335,6 +338,7 @@ print("M is idempotent:", np.allclose(M @ M, M))
 # Verify orthogonality: P @ M = 0
 print("P and M are orthogonal:", np.allclose(P @ M, np.zeros((n, n))))
 ```
+
 
 </div>
 </details>

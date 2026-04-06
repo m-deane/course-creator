@@ -7,7 +7,9 @@
 Proximal Policy Optimization (Schulman et al., 2017) achieves the stability of TRPO without the computational overhead of conjugate gradient and line search. Instead of enforcing a hard KL constraint, PPO clips the importance ratio to prevent large policy updates. The result is a first-order algorithm that is easy to implement, fast to run, and competitive with TRPO on nearly every benchmark.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Proximal Policy Optimization (Schulman et al., 2017) achieves the stability of TRPO without the computational overhead of conjugate gradient and line search. Instead of enforcing a hard KL constraint, PPO clips the importance ratio to prevent large policy updates.
+
 </div>
 
 
@@ -18,9 +20,10 @@ TRPO's KL constraint stops updates that move the policy too far. PPO approximate
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> TRPO's KL constraint stops updates that move the policy too far.
+
 </div>
 ## Intuitive Explanation
 
@@ -29,19 +32,21 @@ Imagine a hiring manager reviewing candidate scores. If a candidate scores 20% a
 ---
 
 
-
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Imagine a hiring manager reviewing candidate scores.
+
 </div>
 ## Formal Definition
 
 ### The Probability Ratio
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### The Probability Ratio
 
 PPO builds on the same importance-weighted surrogate as TRPO.
+
 </div>
 
 
@@ -295,6 +300,7 @@ def ppo_update(model, optimizer, rollout, n_epochs=4, batch_size=64,
 
     return {k: np.mean(v) for k, v in diagnostics.items()}
 ```
+
 </div>
 
 ### Advantage Estimation (GAE)
@@ -342,6 +348,7 @@ def compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):
     returns = advantages + values[:T]    # TD targets for value function
     return advantages, returns
 ```
+
 </div>
 
 ---
@@ -435,15 +442,19 @@ Monitor these quantities during training to detect problems early:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Advantages not normalized per mini-batch.**
 Normalizing advantages once over the full rollout is incorrect when using mini-batches. The statistics should be computed over the rollout (not per mini-batch), but mini-batches should use the rollout-level mean and std. Normalizing per mini-batch reintroduces scale noise.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Advantages not normalized per mini-batch.**
 Normalizing advantages once over the full rollout is incorrect when using mini-batches.
+
 </div>
 
 **Pitfall 2 — Recomputing old log-probabilities.**
@@ -467,7 +478,9 @@ When a trajectory is truncated (time limit hit, not episode end), the last value
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** TRPO (Guide 01) — PPO is TRPO with the hard constraint replaced by a soft penalty; policy gradient theorem (Module 5); GAE advantage estimation (Module 6)

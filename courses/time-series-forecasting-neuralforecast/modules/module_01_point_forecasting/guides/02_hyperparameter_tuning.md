@@ -11,15 +11,15 @@
 </div>
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 
 
 The following implementation builds on the approach above:
 
 
-
-
 Run this first.
+
 </div>
 
 
@@ -45,6 +45,7 @@ for input_size in [7, 14, 28, 56]:
     results[input_size] = score
     print(f"input_size={input_size:3d}  MAE={score:.2f}")
 ```
+
 </div>
 
 Run this first. It shows the most important hyperparameter decision.
@@ -56,11 +57,13 @@ Run this first. It shows the most important hyperparameter decision.
 Neural forecasters expose many parameters, but four decisions drive most of the quality difference:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Neural forecasters expose many parameters, but four decisions drive most of the quality difference:
 
 | Parameter | What it controls | Rule of thumb |
 |---|---|---|
 | `h` | Forecast horizon | Match you...
+
 </div>
 
 
@@ -80,7 +83,9 @@ The most impactful tuning decision is `input_size`. The others follow.
 `input_size` is the number of historical observations the model sees when making a forecast. Too small: the model lacks context. Too large: the model overfits to irrelevant history or trains slowly.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> `input_size` is the number of historical observations the model sees when making a forecast.
+
 </div>
 
 
@@ -113,6 +118,7 @@ model_long = NHITS(h=30, input_size=90, max_steps=1000)
 # Annual patterns — maximize lookback
 model_annual = NHITS(h=7, input_size=365, max_steps=1500)
 ```
+
 </div>
 
 ### The Validation Curve
@@ -134,7 +140,9 @@ There is typically a sweet spot — the model starts overfitting or spending cap
 NeuralForecast normalizes input windows before passing them to the model, and denormalizes outputs to the original scale. The `scaler_type` controls how this normalization is computed.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> NeuralForecast normalizes input windows before passing them to the model, and denormalizes outputs to the original scale.
+
 </div>
 
 
@@ -177,6 +185,7 @@ for scaler in scalers:
     score = mae(cv["y"], cv["NHITS"]).mean()
     print(f"scaler={scaler:10s}  MAE={score:.2f}")
 ```
+
 </div>
 
 ---
@@ -186,7 +195,9 @@ for scaler in scalers:
 The loss function determines what the model minimizes during training, which directly determines what "best forecast" means.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The loss function determines what the model minimizes during training, which directly determines what "best forecast" means.
+
 </div>
 
 
@@ -197,6 +208,7 @@ The loss function determines what the model minimizes during training, which dir
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 from neuralforecast.losses.pytorch import MAE, MSE, MQLoss, HuberLoss
@@ -213,6 +225,7 @@ model_mq = NHITS(h=7, input_size=28, loss=MQLoss(), max_steps=500)
 # Huber — MSE near zero, MAE for large errors
 model_huber = NHITS(h=7, input_size=28, loss=HuberLoss(delta=1.0), max_steps=500)
 ```
+
 </div>
 
 ### Which Loss to Choose
@@ -261,9 +274,11 @@ See detailed comparison in the table above.
 ### max_steps
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### max_steps
 
 `max_steps` is the number of gradient descent steps during training.
+
 </div>
 
 
@@ -470,7 +485,6 @@ flowchart LR
 **Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
 
 **Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
-
 
 
 ---

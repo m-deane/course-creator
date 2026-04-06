@@ -38,10 +38,13 @@ fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradie
 print(explanations.keys())
 # dict_keys(['insample', 'futr_exog', 'baseline_predictions'])
 ```
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" Start with the working API call below, then dig into the theory behind each method.
+
 </div>
 
 
@@ -52,7 +55,9 @@ print(explanations.keys())
 A model that produces accurate forecasts but cannot be interrogated creates three problems for practitioners.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> A model that produces accurate forecasts but cannot be interrogated creates three problems for practitioners.
+
 </div>
 
 
@@ -71,9 +76,11 @@ A model that produces accurate forecasts but cannot be interrogated creates thre
 ### Method 1: Integrated Gradients
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### Method 1: Integrated Gradients
 
 **Core idea.** Integrated Gradients (IG) attributes a prediction to each input feature by integrating the gradient of the model output with respect to that input al...
+
 </div>
 
 
@@ -109,6 +116,7 @@ The following implementation builds on the approach above:
 # IG is the default explainer and the recommended starting point
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
 ```
+
 </div>
 
 ---
@@ -134,6 +142,7 @@ The following implementation builds on the approach above:
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="InputXGradient")
 ```
+
 </div>
 
 ---
@@ -166,9 +175,11 @@ $$\sum_{i=1}^{n} \phi_i = f(x) - E[f(x)]$$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSampling")
 ```
+
 </div>
 
 ---
@@ -193,7 +204,9 @@ fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSamp
 All three methods are instances of a general attribution framework. Define an attribution function $A: \mathbb{R}^n \times \mathcal{F} \to \mathbb{R}^n$ that assigns a score to each feature. The methods differ in how they satisfy or violate the following axioms:
 
 <div class="callout-info">
+
 <strong>Info:</strong> All three methods are instances of a general attribution framework.
+
 </div>
 
 
@@ -212,11 +225,12 @@ IG satisfies all three. IxG violates completeness. Shapley sampling satisfies al
 Follow this decision tree:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Follow this decision tree:
 
 
-
 For most time series forecasting use cases, **Integrated Gradients is the right default**.
+
 </div>
 
 

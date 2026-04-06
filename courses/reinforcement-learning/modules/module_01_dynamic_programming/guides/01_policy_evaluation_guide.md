@@ -7,11 +7,15 @@
 Policy evaluation answers the question: "How good is this policy?" Given a fixed policy $\pi$, iterative policy evaluation computes the state-value function $V^\pi$ by repeatedly applying the Bellman expectation equation until convergence. It is the foundation on which policy improvement and policy iteration are built.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> We cannot solve the Bellman equation in closed form for large state spaces, but we can solve it iteratively. Each sweep of all states brings $V_k$ closer to the true $V^\pi$ — and the contraction mapping theorem guarantees we arrive.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Policy evaluation answers the question: "How good is this policy?" Given a fixed policy $\pi$, iterative policy evaluation computes the state-value function $V^\pi$ by repeatedly applying the Bellman expectation equation until convergence. It is the foundation on which policy improvement and policy iteration are built.
+
 </div>
 
 
@@ -22,7 +26,9 @@ Policy evaluation answers the question: "How good is this policy?" Given a fixed
 Think of the value function as a consensus estimate of long-run reward starting from each state. At initialization, every state's value is zero — we have no information. After the first sweep, states adjacent to high-reward transitions get a small positive signal. After the second sweep, states two steps away pick up that signal, discounted by $\gamma$. This propagation continues outward like ripples in a pond until the estimates stop changing — that fixed point is $V^\pi$.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Think of the value function as a consensus estimate of long-run reward starting from each state.
+
 </div>
 
 
@@ -36,11 +42,13 @@ The analogy: estimating average commute times in a city. On day 1 you have no da
 ### The Bellman Expectation Equation
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### The Bellman Expectation Equation
 
 For a policy $\pi$ and discount factor $\gamma \in [0, 1)$, the true value function $V^\pi$ satisfies:
 
 $$V^\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r | s, a)\...
+
 </div>
 
 
@@ -181,6 +189,7 @@ flowchart TD
     style Done fill:#4a90d9,color:#fff
     style Update fill:#e67e22,color:#fff
 ```
+
 </div>
 
 ---
@@ -277,6 +286,7 @@ V_pi = policy_evaluation(pi, P, R, gamma=0.9)
 print("V^pi:", V_pi.round(3))
 # Expected: values decrease toward terminal state
 ```
+
 </div>
 
 ---
@@ -284,13 +294,17 @@ print("V^pi:", V_pi.round(3))
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 ### 1. Forgetting to discount future values
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> ### 1.
+
 </div>
 
 The update must include $\gamma V_k(s')$, not just $V_k(s')$. Omitting $\gamma$ causes divergence when the environment has long cycles.
@@ -317,7 +331,9 @@ The dynamics $p(s', r | s, a)$ are indexed by $(s, a, s')$. A transposed array s
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Markov Decision Processes (MDP formulation), Bellman equations, discount factors

@@ -7,11 +7,15 @@
 NeuralForecast produces probabilistic forecasts by training with a loss function that directly optimizes quantile accuracy. The multi-quantile loss (MQLoss) is a sum of pinball losses — one per quantile level per time step. Understanding this loss function tells you exactly what the model is optimizing, what its output columns mean, and why it produces marginals rather than joint distributions.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> MQLoss trains the model to minimize a weighted asymmetric penalty. Overforecasting and underforecasting are penalized differently depending on the quantile level. This is what makes the output a calibrated quantile, not just a point estimate with noise.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> NeuralForecast produces probabilistic forecasts by training with a loss function that directly optimizes quantile accuracy. The multi-quantile loss (MQLoss) is a sum of pinball losses — one per quantile level per time step.
+
 </div>
 
 
@@ -26,6 +30,7 @@ NeuralForecast produces probabilistic forecasts by training with a loss function
 </div>
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> example.py
 
 
@@ -37,6 +42,7 @@ Output columns:
   ds
   NHITS        ← point forecast (mean / median depending on loss)
   NHITS-lo-50  ← 25th perce...
+
 </div>
 
 
@@ -86,6 +92,7 @@ print("Output columns:")
 for col in forecast.columns:
     print(f"  {col}")
 ```
+
 </div>
 
 Expected output:
@@ -111,7 +118,9 @@ The `level` parameter controls the **coverage** of each prediction interval. `le
 The pinball loss (also called the quantile loss or check function) is an asymmetric loss function that, when minimized in expectation, produces the desired quantile of the distribution.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The pinball loss (also called the quantile loss or check function) is an asymmetric loss function that, when minimized in expectation, produces the desired quantile of the distribution.
+
 </div>
 
 
@@ -183,6 +192,7 @@ print(f"  Loss = (0.90 - 1) × (-10) = {(0.90 - 1) * (-10):.1f}")
 print("\nFor q=0.90: underprediction is 9x more costly than overprediction.")
 print("The optimal predictor is the 90th percentile — below which you're right 90% of the time.")
 ```
+
 </div>
 
 ### Why This Produces the Quantile
@@ -198,9 +208,11 @@ The minimizer of the expected pinball loss $E[\rho_q(Y - c)]$ over constant $c$ 
 MQLoss trains all requested quantile levels simultaneously in a single forward pass:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> MQLoss trains all requested quantile levels simultaneously in a single forward pass:
 
 $$\mathcal{L}_{\text{MQ}} = \frac{1}{H \cdot |Q|} \sum_{t=1}^{H} \sum_{q \in Q} \rho_q\!\left(y_t - \hat{q}_t^q\ri...
+
 </div>
 
 
@@ -246,6 +258,7 @@ print("MQLoss level=[50, 80, 90] trains quantiles:")
 print("  q ∈ {0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95}")
 print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 ```
+
 </div>
 
 ---
@@ -255,9 +268,8 @@ print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 NeuralForecast uses a consistent naming convention for quantile output columns:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> NeuralForecast uses a consistent naming convention for quantile output columns:
-
-
 
 
 example.py
@@ -266,6 +278,7 @@ example.py
 ```python
 # ── Decode output column names ────────────────────────────────────────────────
 print("Colum...
+
 </div>
 
 
@@ -274,6 +287,7 @@ print("Colum...
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # ── Decode output column names ────────────────────────────────────────────────
@@ -306,6 +320,7 @@ for level in [80, 90]:
     ).mean()
     print(f"Empirical coverage at {level}%: {inside:.1%} (target: {level}%)")
 ```
+
 </div>
 
 ---
@@ -571,7 +586,9 @@ print("Module 3: Generating sample paths with NeuralForecast ConformalIntervals.
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 ### Builds on

@@ -37,20 +37,21 @@
 ---
 
 
-
 <div class="callout-insight">
+
 <strong>Insight:</strong> across episodes | Correlated within episode |
 | Convergence | Almost sure (S&B Theorem 5.1) | Almost sure asymptotically |
 | Preferred for | Theoretical analysis | Data-efficient implementation |
 | Fi...
+
 </div>
 ## MC Prediction Algorithm (First-Visit)
 
 **Estimates $V^\pi$ from episodes.**
 
 <div class="callout-key">
-<strong>Key Point:</strong> **Estimates $V^\pi$ from episodes.**
 
+<strong>Key Point:</strong> **Estimates $V^\pi$ from episodes.**
 
 
 **Key equations:**
@@ -58,6 +59,7 @@
 $$G_t = R_{t+1} + \gamma G_{t+1} \quad \text{(backward recursion)}$$
 
 $$V(s) \leftarrow V(s) + \frac{1}{N(s)}\bigl[G - V(s)\bigr] \quad \tex...
+
 </div>
 
 
@@ -91,13 +93,14 @@ $$V(s) \leftarrow V(s) + \frac{1}{N(s)}\bigl[G - V(s)\bigr] \quad \text{(increme
 **Estimates $Q^*$ and improves $\pi$ using the agent's own episodes.**
 
 <div class="callout-info">
-<strong>Info:</strong> **Estimates $Q^*$ and improves $\pi$ using the agent's own episodes.**
 
+<strong>Info:</strong> **Estimates $Q^*$ and improves $\pi$ using the agent's own episodes.**
 
 
 **$\varepsilon$-greedy policy:**
 
 $$\pi(a \mid s) = \begin{cases} 1 - \varepsilon + \varepsilon/|\mathcal{A}| & a = \arg\max_{...
+
 </div>
 
 
@@ -133,9 +136,11 @@ $$\pi(a \mid s) = \begin{cases} 1 - \varepsilon + \varepsilon/|\mathcal{A}| & a 
 For convergence of on-policy MC control to $Q^*$:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> For convergence of on-policy MC control to $Q^*$:
 
 **1.
+
 </div>
 
 
@@ -154,11 +159,13 @@ $$\lim_{k\to\infty} \pi_k(a \mid s) = \mathbf{1}\!\left[a = \arg\max_{a'} Q_k(s,
 For a trajectory segment from step $t$ to $T-1$:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> For a trajectory segment from step $t$ to $T-1$:
 
 $$\boxed{\rho_{t:T-1} = \prod_{k=t}^{T-1} \frac{\pi(A_k \mid S_k)}{b(A_k \mid S_k)}}$$
 
 - Environment transition probabilities $p(s'|s,a)$ cancel in n...
+
 </div>
 
 

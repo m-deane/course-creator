@@ -7,7 +7,9 @@
 Trust region methods constrain how much a policy can change in a single gradient update. Without such a constraint, large updates can collapse performance catastrophically and recovery is slow or impossible. TRPO (Schulman et al., 2015) formalizes this intuition as a constrained optimization problem, providing a principled guarantee that each update improves the policy.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Trust region methods constrain how much a policy can change in a single gradient update. Without such a constraint, large updates can collapse performance catastrophically and recovery is slow or impossible.
+
 </div>
 
 
@@ -18,16 +20,19 @@ Gradient descent assumes the loss landscape is locally linear near the current p
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> Gradient descent assumes the loss landscape is locally linear near the current parameters.
+
 </div>
 ## Intuitive Explanation
 
 Think of policy optimization as navigating a hill in the dark. You can feel which direction is uphill from where you stand, but you cannot see how the hill curves in the distance. Taking a very large step based on local gradient information risks stepping off a cliff.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Think of policy optimization as navigating a hill in the dark.
+
 </div>
 
 
@@ -190,6 +195,7 @@ def conjugate_gradient(Av, b, n_iters=10, tol=1e-10):
 
     return x
 ```
+
 </div>
 
 ---
@@ -257,15 +263,19 @@ For large networks this translates to 10-50x the compute of a plain gradient ste
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — KL constraint too loose.**
 Setting $\delta$ too large (e.g., $\delta = 0.5$) defeats the purpose: the trust region becomes so wide that catastrophic updates are not prevented. Typical values are $\delta \in [0.01, 0.05]$. If your policy collapses early in training, decrease $\delta$.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — KL constraint too loose.**
 Setting $\delta$ too large (e.g., $\delta = 0.5$) defeats the purpose: the trust region becomes so wide that catastrophic updates are not prevented.
+
 </div>
 
 **Pitfall 2 — Advantage estimates not normalized.**
@@ -286,7 +296,9 @@ The constraint is $D_{KL}(\pi_{\theta_{old}} \| \pi_\theta)$, i.e., the old poli
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Policy gradient theorem (Module 5), advantage estimation (Module 6), importance sampling

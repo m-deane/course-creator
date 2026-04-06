@@ -7,7 +7,9 @@
 Applying RL to financial markets formalizes portfolio management and execution as a sequential decision problem: at each time step, an agent observes market state, selects a position or trade, and receives a reward based on risk-adjusted returns. Unlike supervised learning approaches that predict prices, RL directly optimizes the objective that matters — portfolio performance — accounting for transaction costs, risk, and sequential dependencies.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Applying RL to financial markets formalizes portfolio management and execution as a sequential decision problem: at each time step, an agent observes market state, selects a position or trade, and receives a reward based on risk-adjusted returns. Unlike supervised learning approaches that predict prices, RL directly optimizes the objective that matters — portfolio performance — accounting for transaction costs, risk, and sequential dependencies.
+
 </div>
 
 
@@ -18,20 +20,23 @@ The central design challenge is the reward function: a naive reward of raw P&L e
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The central design challenge is the reward function: a naive reward of raw P&L encourages excessive risk, while a well-designed reward incorporating the Sharpe ratio or transaction costs shapes the ag...
+
 </div>
 ## Formal Definition: The Trading MDP
 
 The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R, \gamma)$:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R, \gamma)$:
 
 | Component | Trading Interpretation |
 |-----------|----------------------|
 | State $s \in \mathcal{S}$ | Pr...
+
 </div>
 
 
@@ -50,7 +55,9 @@ The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R,
 The state must capture everything relevant to the trading decision — without including information unavailable at decision time (look-ahead bias).
 
 <div class="callout-info">
+
 <strong>Info:</strong> The state must capture everything relevant to the trading decision — without including information unavailable at decision time (look-ahead bias).
+
 </div>
 
 
@@ -132,6 +139,7 @@ def build_state(prices: pd.DataFrame, holdings: np.ndarray, portfolio_value: flo
 
     return np.concatenate([price_features, portfolio_features])
 ```
+
 </div>
 
 ---
@@ -141,7 +149,9 @@ def build_state(prices: pd.DataFrame, holdings: np.ndarray, portfolio_value: flo
 The choice of action space fundamentally shapes what the agent can express and which algorithms apply.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The choice of action space fundamentally shapes what the agent can express and which algorithms apply.
+
 </div>
 
 
@@ -251,6 +261,7 @@ def trading_reward(
 
     return portfolio_return - transaction_cost - variance_penalty
 ```
+
 </div>
 
 ---
@@ -350,6 +361,7 @@ def walk_forward_backtest(
 
     return pd.DataFrame(results)
 ```
+
 </div>
 
 ---
@@ -396,6 +408,7 @@ Backtesting on only companies that exist today, excluding those that were delist
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Rolling Z-score normalization (uses only past data — no look-ahead)
 def rolling_zscore(series: pd.Series, window: int = 252) -> pd.Series:
@@ -403,6 +416,7 @@ def rolling_zscore(series: pd.Series, window: int = 252) -> pd.Series:
     rolling_std  = series.rolling(window).std()
     return (series - rolling_mean) / (rolling_std + 1e-8)
 ```
+
 </div>
 
 **Use returns, not price levels.** Returns are stationary (approximately); prices are not. Neural networks trained on price levels overfit to the specific price range seen during training.
@@ -468,15 +482,19 @@ Financial returns are highly noisy (Sharpe ratio of 1.0 is excellent, meaning si
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Optimizing raw P&L without risk adjustment.**
 An agent rewarded only on P&L will learn to maximize leverage and take excessive risk. Always include a risk term (variance penalty, Sharpe reward, drawdown constraint). The Sharpe ratio is the standard risk-adjusted performance metric.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Optimizing raw P&L without risk adjustment.**
 An agent rewarded only on P&L will learn to maximize leverage and take excessive risk.
+
 </div>
 
 **Pitfall 2 — Look-ahead bias in feature construction.**
@@ -500,7 +518,9 @@ A policy trained in a bull market may fail catastrophically in a bear market. Re
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Offline RL (Guide 02) — financial data is effectively a fixed dataset; RLHF and Safe RL (Guide 03) — reward shaping and risk constraints apply directly

@@ -94,6 +94,7 @@ Under H0: $H \sim \chi^2(K)$ where $K$ is the number of time-varying regressors.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -184,6 +185,7 @@ print(f"  P-value: {result['p_value']:.4f}")
 print(f"  Conclusion: {result['conclusion']}")
 ```
 
+
 </div>
 
 ## Limitations of the Hausman Test
@@ -200,6 +202,7 @@ Low power when:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def hausman_power_simulation(N, T, correlation, n_sims=500):
@@ -240,6 +243,7 @@ for corr in [0.0, 0.3, 0.5, 0.7]:
     print(f"  Correlation = {corr}: Power = {power:.1%}")
 ```
 
+
 </div>
 
 ### 2. Variance Matrix Issues
@@ -269,6 +273,7 @@ Test: $H_0: \gamma = 0$
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # Mundlak test
 data_flat = data.reset_index()
@@ -290,6 +295,7 @@ if re_mundlak.pvalues['x_mean'] < 0.05:
 else:
     print("  Conclusion: No evidence of correlation. RE acceptable.")
 ```
+
 
 </div>
 
@@ -374,7 +380,6 @@ A unified approach that nests FE and RE:
 **Practice Question 1:** The Hausman test compares FE and RE estimates. If they are very similar, what does that tell you about the correlation between unobserved effects and regressors?
 
 **Practice Question 2:** What are the limitations of relying solely on the Hausman test for model selection?
-
 
 
 ---

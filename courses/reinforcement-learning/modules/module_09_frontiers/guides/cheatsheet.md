@@ -34,9 +34,11 @@ Execution: Decentralized actor πⁱ(aⁱ | oⁱ) uses only own observation
 ### The Core Problem
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### The Core Problem
 
 Behavior policy $\pi_\beta$ induces dataset $\mathcal{D}$.
+
 </div>
 
 
@@ -80,9 +82,11 @@ Step 1: Supervised Fine-Tuning (SFT)
   Goal:  Initialize policy in good output region
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> ### DPO Alternative
 
 $$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[\log\sigma\!\left(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l...
+
 </div>
 
 
@@ -111,11 +115,13 @@ No reward model. No PPO. Single supervised pass on preference pairs. Often compe
 ### Constrained MDP (CMDP)
 
 <div class="callout-info">
+
 <strong>Info:</strong> ### Constrained MDP (CMDP)
 
 $$\max_\pi \; J_R(\pi) \quad \text{subject to} \quad J_{C_k}(\pi) \leq d_k, \quad k = 1, \ldots, K$$
 
 $$J_{C_k}(\pi) = \mathbb{E}_\pi\left[\sum_{t=0}^\infty \gamma^t C_k(S_...
+
 </div>
 
 

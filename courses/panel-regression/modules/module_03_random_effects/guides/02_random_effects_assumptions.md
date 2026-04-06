@@ -47,6 +47,7 @@ This means the entity effect is uncorrelated with all regressors across all time
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -131,6 +132,7 @@ def demonstrate_re_assumption_violation():
 df = demonstrate_re_assumption_violation()
 ```
 
+
 </div>
 
 ### 2. Composite Error Structure
@@ -148,6 +150,7 @@ $$Cov(v_{it}, v_{jt}) = 0 \quad (i \neq j)$$
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def visualize_error_structure():
@@ -206,6 +209,7 @@ def visualize_error_structure():
 visualize_error_structure()
 ```
 
+
 </div>
 
 ## GLS Estimation
@@ -226,6 +230,7 @@ OLS ignores the error correlation structure, leading to inefficient (though stil
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def compare_ols_gls_efficiency():
@@ -283,6 +288,7 @@ def compare_ols_gls_efficiency():
 
 compare_ols_gls_efficiency()
 ```
+
 
 </div>
 
@@ -531,7 +537,6 @@ breusch_pagan_lm_test(df_example, 'entity', 'y', ['x'])
 **Practice Question 1:** What is the key assumption that distinguishes random effects from fixed effects, and when is it likely to be violated?
 
 **Practice Question 2:** Why does random effects estimation produce more efficient estimates than fixed effects when its assumptions hold?
-
 
 
 ---

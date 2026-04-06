@@ -7,7 +7,9 @@
 Power Automate gives you three overlapping tools for understanding why a flow behaved the way it did: the **Test pane** (run it now and watch it live), **Run history** (browse every past execution), and **Input/Output inspection** (see the exact data each step received and produced). This guide walks through all three, plus the Flow Checker for catching configuration errors before the flow ever runs.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Power Automate gives you three overlapping tools for understanding why a flow behaved the way it did: the **Test pane** (run it now and watch it live), **Run history** (browse every past execution), and **Input/Output inspection** (see the exact data each step received and produced). This guide walks through all three, plus the Flow Checker for catching configuration errors before the flow ever runs.
+
 </div>
 
 
@@ -16,9 +18,11 @@ Power Automate gives you three overlapping tools for understanding why a flow be
 By the end of this guide you will be able to:
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> By the end of this guide you will be able to:
 
 1.
+
 </div>
 
 
@@ -36,11 +40,12 @@ By the end of this guide you will be able to:
 The recommended cycle for any flow change:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The recommended cycle for any flow change:
 
 
-
 Never skip the Save step.
+
 </div>
 
 
@@ -57,7 +62,9 @@ Never skip the Save step. The Test pane always runs the last saved version of th
 > **On screen:** With your flow open in the designer, click **Test** in the top toolbar. The Test pane slides in from the right side of the screen.
 
 <div class="callout-info">
+
 <strong>Info:</strong> > **On screen:** With your flow open in the designer, click **Test** in the top toolbar.
+
 </div>
 
 
@@ -77,7 +84,9 @@ You will see two options:
 > **On screen:** A confirmation screen appears. For a scheduled flow it says "Your flow will run right now." Click **Run flow**.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> > **On screen:** A confirmation screen appears.
+
 </div>
 
 
@@ -92,7 +101,9 @@ The run detail page is the same page you reach from the Run history — there is
 The run detail page shows the flow as a vertical stack of cards, identical to the designer canvas, but each card now displays its execution result.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The run detail page shows the flow as a vertical stack of cards, identical to the designer canvas, but each card now displays its execution result.
+
 </div>
 
 
@@ -265,7 +276,9 @@ The step name in the message (shown in single quotes with underscores, like `Get
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** Guide 01 — Creating Your First Cloud Flow

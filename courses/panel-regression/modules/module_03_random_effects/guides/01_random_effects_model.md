@@ -97,6 +97,7 @@ As $\sigma_\alpha^2 \to \infty$ or $T \to \infty$, $\theta \to 1$ (RE approaches
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -136,6 +137,7 @@ print(fe_results.summary.tables[1])
 print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 ```
 
+
 </div>
 
 ## Estimating Variance Components
@@ -147,6 +149,7 @@ print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 def estimate_variance_components(data, y_col, x_cols, entity_col, time_col):
@@ -206,6 +209,7 @@ for k, v in var_components.items():
     print(f"  {k}: {v:.4f}")
 ```
 
+
 </div>
 
 ## Time-Invariant Variables
@@ -217,6 +221,7 @@ A key advantage of RE: estimating effects of time-invariant variables.
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # Add time-invariant variable
@@ -235,6 +240,7 @@ re_with_invariant = RandomEffects(
 print("RE with Time-Invariant Variable:")
 print(re_with_invariant.summary.tables[1])
 ```
+
 
 </div>
 
@@ -318,7 +324,6 @@ Key points:
 **Practice Question 1:** What is the key assumption that distinguishes random effects from fixed effects, and when is it likely to be violated?
 
 **Practice Question 2:** Why does random effects estimation produce more efficient estimates than fixed effects when its assumptions hold?
-
 
 
 ---

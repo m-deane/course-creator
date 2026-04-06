@@ -7,11 +7,15 @@
 Prediction intervals describe uncertainty at a **single point in time**. They say nothing about how uncertainty unfolds across multiple periods together. This distinction — marginal versus joint distributions — is the central insight that separates good probabilistic forecasting from dangerous probabilistic forecasting.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The 80th percentile of Monday's sales plus the 80th percentile of Tuesday's sales is NOT the 80th percentile of the combined two-day total. Not even close.
+
 </div>
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Prediction intervals describe uncertainty at a **single point in time**. They say nothing about how uncertainty unfolds across multiple periods together.
+
 </div>
 
 
@@ -22,7 +26,9 @@ Prediction intervals describe uncertainty at a **single point in time**. They sa
 Train NHITS with quantile loss on the French Bakery dataset and look at what you actually get.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Train NHITS with quantile loss on the French Bakery dataset and look at what you actually get.
+
 </div>
 
 
@@ -64,6 +70,7 @@ baguettes = baguettes[baguettes["ds"].dt.weekday < 7]
 print(f"Dataset: {len(baguettes)} days of baguette sales")
 print(baguettes.head(10))
 ```
+
 </div>
 
 The following implementation builds on the approach above:
@@ -101,6 +108,7 @@ forecast = nf.predict()
 print("\nForecast columns:", forecast.columns.tolist())
 print(forecast)
 ```
+
 </div>
 
 The output columns are:
@@ -119,7 +127,9 @@ Each row is one day. Each interval is a **marginal** interval — it describes u
 A marginal distribution $F_t(y_t)$ describes the probability of the outcome at a single time step $t$, regardless of what happens at any other time step.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> A marginal distribution $F_t(y_t)$ describes the probability of the outcome at a single time step $t$, regardless of what happens at any other time step.
+
 </div>
 
 
@@ -136,6 +146,7 @@ This is what NHITS produces for each day. It is correct and useful. For a single
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
 </div>
+
 
 ```python
 # ── Visualize the marginal prediction intervals ───────────────────────────────
@@ -167,6 +178,7 @@ ax.legend()
 plt.tight_layout()
 plt.show()
 ```
+
 </div>
 
 The fan chart looks informative. Each day has a plausible range. But there is a hidden problem.
@@ -178,11 +190,13 @@ The fan chart looks informative. Each day has a plausible range. But there is a 
 Consider this business question:
 
 <div class="callout-info">
+
 <strong>Info:</strong> Consider this business question:
 
 > "How many total baguettes should I order for the entire week to meet demand with 80% probability?"
 
 A natural (wrong) answer: sum up the 80th percentile for each da...
+
 </div>
 
 
@@ -196,6 +210,7 @@ A natural (wrong) answer: sum up the 80th percentile for each day.
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 # ── The naive (wrong) approach ────────────────────────────────────────────────
 weekly_80_naive = forecast["NHITS-hi-80"].sum()
@@ -205,6 +220,7 @@ print(f"Sum of daily 80th percentiles: {weekly_80_naive:.0f} baguettes")
 print(f"Sum of daily point forecasts:  {weekly_point:.0f} baguettes")
 print(f"Naive 'buffer':                {weekly_80_naive - weekly_point:.0f} baguettes")
 ```
+
 </div>
 
 This gives a specific number. It looks precise. It is wrong.
@@ -228,11 +244,13 @@ graph TD
     end
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> The **joint distribution** $F_{1:H}(y_1, \ldots, y_H)$ describes the probability of all outcomes together:
 
 $$F_{1:H}(y_1, \ldots, y_H) = P(Y_1 \leq y_1, Y_2 \leq y_2, \ldots, Y_H \leq y_H)$$
 
 When yo...
+
 </div>
 
 
@@ -285,11 +303,13 @@ See detailed comparison in the table above.
 For the sum of $H$ random variables:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> For the sum of $H$ random variables:
 
 $$q^{\alpha}(Y_1 + \cdots + Y_H) \neq q^{\alpha}(Y_1) + \cdots + q^{\alpha}(Y_H)$$
 
 The left side is the $\alpha$-quantile of the total.
+
 </div>
 
 
@@ -529,7 +549,9 @@ Marginal quantiles (what MQLoss produces) sit at step 3. They are necessary — 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 ### Builds on

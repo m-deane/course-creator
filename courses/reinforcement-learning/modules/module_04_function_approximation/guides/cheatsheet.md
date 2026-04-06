@@ -23,11 +23,13 @@
 $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> $$\hat{v}(s, \mathbf{w}) = \mathbf{w}^T \mathbf{x}(s) = \sum_{i=1}^{d} w_i \, x_i(s)$$
 
 **Gradient** (constant — does not depend on $\mathbf{w}$):
 
 $$\nabla_{\mathbf{w}} \hat{v}(s, \mathbf{w}) = \math...
+
 </div>
 
 
@@ -46,6 +48,7 @@ $$\overline{VE}(\mathbf{w}) = \sum_{s \in \mathcal{S}} \mu(s) \left[ V^\pi(s) - 
 For transition $(S_t, R_{t+1}, S_{t+1})$:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> For transition $(S_t, R_{t+1}, S_{t+1})$:
 
 **Step 1 — TD error:**
@@ -53,6 +56,7 @@ For transition $(S_t, R_{t+1}, S_{t+1})$:
 $$\delta_t = R_{t+1} + \gamma \hat{v}(S_{t+1}, \mathbf{w}) - \hat{v}(S_t, \mathbf{w})$$
 
 (Use $\hat{v}(S_{t+1}, \mathbf{w}) = 0$ if $...
+
 </div>
 
 
@@ -84,12 +88,14 @@ $$\boxed{\mathbf{w} \leftarrow \mathbf{w} + \alpha \, \delta_t \, \mathbf{x}(S_t
    - State bounds: $[s_{\text{low}}, s_{\text{high}}]$ per dimension
 
 <div class="callout-info">
+
 <strong>Info:</strong> **Choose parameters:**
    - $n$ = number of tilings (typically 4, 8, or 16)
    - $m$ = tiles per dimension (typically 4, 8, 16)
    - State bounds: $[s_{\text{low}}, s_{\text{high}}]$ per dimension
 
 2.
+
 </div>
 
 
@@ -113,6 +119,7 @@ $$\boxed{\mathbf{w} \leftarrow \mathbf{w} + \alpha \, \delta_t \, \mathbf{x}(S_t
 <span class="filename">example.py</span>
 </div>
 
+
 ```python
 class TileCoder:
     def __init__(self, n_tilings, tiles_per_dim, state_low, state_high):
@@ -133,6 +140,7 @@ class TileCoder:
             features[i * self.n_tiles_per_tiling + flat] = 1.0
         return features
 ```
+
 </div>
 
 ---
@@ -146,7 +154,9 @@ class TileCoder:
 | **Off-Policy Training** | Behavior policy $b \neq$ target policy $\pi$ | Q-learning, experience replay |
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> All three → potential divergence.
+
 </div>
 
 
@@ -187,12 +197,14 @@ class TileCoder:
 ### Use Tabular RL When
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> ### Use Tabular RL When
 
 - State space is small and discrete (less than ~$10^6$ states)
 - You need convergence guarantees
 - Debugging a conceptual algorithm (tabular = transparent)
 - Environment: Grid...
+
 </div>
 
 

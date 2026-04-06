@@ -7,7 +7,9 @@
 Reinforcement learning (RL) is a computational framework for sequential decision-making: an agent learns a behavior policy by interacting with an environment and receiving scalar reward signals. Unlike supervised learning, no labeled data is provided; unlike unsupervised learning, a performance objective is explicit.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> Reinforcement learning (RL) is a computational framework for sequential decision-making: an agent learns a behavior policy by interacting with an environment and receiving scalar reward signals. Unlike supervised learning, no labeled data is provided; unlike unsupervised learning, a performance objective is explicit.
+
 </div>
 
 
@@ -18,16 +20,19 @@ The agent-environment interaction loop is the organizing idea of all RL. At ever
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The agent-environment interaction loop is the organizing idea of all RL.
+
 </div>
 ## Intuitive Explanation
 
 Think of a chess player learning to improve. The board position is the **state**, the chosen move is the **action**, winning or losing a piece is part of the **reward** (or the game outcome is the terminal reward), and the player's decision strategy is the **policy**.
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Think of a chess player learning to improve.
+
 </div>
 
 
@@ -41,11 +46,13 @@ The player does not have a teacher telling them the correct move for every posit
 A reinforcement learning problem is defined by:
 
 <div class="callout-info">
+
 <strong>Info:</strong> A reinforcement learning problem is defined by:
 
 - An **agent** that selects actions
 - An **environment** that responds to those actions with new states and rewards
 - A **policy** $\pi$ mapping states...
+
 </div>
 
 
@@ -132,6 +139,7 @@ flowchart LR
     style A fill:#4A90D9,color:#fff,stroke:#2C5F8A
     style E fill:#E8844A,color:#fff,stroke:#B05A28
 ```
+
 </div>
 
 At each discrete time step $t$:
@@ -224,6 +232,7 @@ episode_rewards = [run_episode(env, random_policy) for _ in range(100)]
 print(f"Random policy mean return: {sum(episode_rewards) / len(episode_rewards):.1f}")
 env.close()
 ```
+
 </div>
 
 ---
@@ -231,15 +240,19 @@ env.close()
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Reward shaping without domain understanding.**
 Manually engineering reward functions often introduces unintended behavior. An agent given +1 reward for staying alive in a game may learn never to take risks required to win. Always test whether the shaped reward actually aligns with the intended goal.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Reward shaping without domain understanding.**
 Manually engineering reward functions often introduces unintended behavior.
+
 </div>
 
 **Pitfall 2 — Confusing observation with state.**
@@ -260,7 +273,9 @@ Many bugs arise from failing to reset environments correctly between episodes or
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** probability theory, Markov chains, dynamic programming basics

@@ -7,7 +7,9 @@
 A Markov Decision Process (MDP) is the mathematical formalization of the reinforcement learning problem. It provides a precise language for specifying environments, reasoning about policies, and deriving algorithms. Every RL algorithm is implicitly a method for solving an MDP.
 
 <div class="callout-key">
+
 <strong>Key Concept:</strong> A Markov Decision Process (MDP) is the mathematical formalization of the reinforcement learning problem. It provides a precise language for specifying environments, reasoning about policies, and deriving algorithms.
+
 </div>
 
 
@@ -18,20 +20,23 @@ The MDP encodes two ideas simultaneously: the world transitions stochastically b
 ---
 
 
-
 <div class="callout-key">
+
 <strong>Key Point:</strong> The MDP encodes two ideas simultaneously: the world transitions stochastically based only on the current state and action (the Markov property), and the agent's goal is captured entirely by the reward...
+
 </div>
 ## Formal Definition
 
 A finite MDP is a tuple $(\mathcal{S}, \mathcal{A}, p, R, \gamma)$ where:
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> A finite MDP is a tuple $(\mathcal{S}, \mathcal{A}, p, R, \gamma)$ where:
 
 | Component | Symbol | Description |
 |-----------|--------|-------------|
 | State space | $\mathcal{S}$ | Set of all possible...
+
 </div>
 
 
@@ -54,9 +59,11 @@ $$\sum_{s' \in \mathcal{S}} \sum_{r \in \mathcal{R}} p(s', r \mid s, a) = 1 \qua
 The MDP assumes that the transition dynamics depend only on the current state and action — not on the full history:
 
 <div class="callout-info">
+
 <strong>Info:</strong> The MDP assumes that the transition dynamics depend only on the current state and action — not on the full history:
 
 $$p(s_{t+1}, r_{t+1} \mid s_t, a_t) = p(s_{t+1}, r_{t+1} \mid s_1, a_1, s_2, a_2, \...
+
 </div>
 
 
@@ -77,7 +84,9 @@ The Markov property makes the MDP tractable. Without it, the agent would need to
 The four-argument function $p(s', r \mid s, a)$ is the complete specification of environment dynamics. Useful derived quantities are:
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The four-argument function $p(s', r \mid s, a)$ is the complete specification of environment dynamics.
+
 </div>
 
 
@@ -184,6 +193,7 @@ stateDiagram-v2
     s2 --> s2 : a=right, r=+1
     s2 --> [*] : a=stop, r=+10
 ```
+
 </div>
 
 *A 3-state MDP: states $\{s_0, s_1, s_2\}$, actions $\{$left, right, stop$\}$. Transitions shown with associated action and immediate reward.*
@@ -258,6 +268,7 @@ print("Probability of reaching s2 from s0 with 'right':",
 print("Expected reward from s1 taking 'left':",
       expected_reward(mdp, "s1", "left"))   # -1.0
 ```
+
 </div>
 
 ---
@@ -265,15 +276,19 @@ print("Expected reward from s1 taking 'left':",
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+
 </div>
 
 **Pitfall 1 — Conflating state and observation.**
 The MDP's state $S_t$ must satisfy the Markov property. If your representation does not capture all relevant history (e.g., an agent that sees only the current price but not trend), the process is not Markovian. You must either enrich the state or switch to a POMDP formulation.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1 — Conflating state and observation.**
 The MDP's state $S_t$ must satisfy the Markov property.
+
 </div>
 
 **Pitfall 2 — Forgetting that $p$ is a joint distribution.**
@@ -294,7 +309,9 @@ Rewards must be a property of the environment, not the agent. If the reward you 
 
 
 <div class="callout-info">
+
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+
 </div>
 
 - **Builds on:** agent-environment loop (Guide 01), probability theory, Markov chains

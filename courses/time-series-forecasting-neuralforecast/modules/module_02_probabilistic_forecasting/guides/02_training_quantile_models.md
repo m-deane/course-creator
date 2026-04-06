@@ -29,24 +29,6 @@ NeuralForecast produces probabilistic forecasts by training with a loss function
 <span class="filename">example.py</span>
 </div>
 
-<div class="callout-insight">
-
-<strong>Insight:</strong> example.py
-
-
-The following implementation builds on the approach above:
-
-
-Output columns:
-  unique_id
-  ds
-  NHITS        ← point forecast (mean / median depending on loss)
-  NHITS-lo-50  ← 25th perce...
-
-</div>
-
-
-The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -138,7 +120,6 @@ $$\rho_q(u) = u \cdot (q - \mathbf{1}[u < 0])$$
 <span class="filename">example.py</span>
 </div>
 
-The following implementation builds on the approach above:
 
 ```python
 # ── Visualize the pinball loss for different quantiles ────────────────────────
@@ -226,7 +207,6 @@ where $Q$ is the set of quantile levels and $H$ is the forecast horizon.
 <span class="filename">example.py</span>
 </div>
 
-The following implementation builds on the approach above:
 
 ```python
 # ── Compare single vs multi-quantile training ─────────────────────────────────
@@ -266,21 +246,6 @@ print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 ## Interpreting the Output Columns
 
 NeuralForecast uses a consistent naming convention for quantile output columns:
-
-<div class="callout-warning">
-
-<strong>Warning:</strong> NeuralForecast uses a consistent naming convention for quantile output columns:
-
-
-example.py
-
-
-```python
-# ── Decode output column names ────────────────────────────────────────────────
-print("Colum...
-
-</div>
-
 
 <div class="code-window">
 <div class="code-header">
@@ -385,6 +350,8 @@ ax.legend(loc="upper left", fontsize=9)
 plt.tight_layout()
 plt.show()
 ```
+
+Verify that the quantiles are properly ordered (no crossings where a tighter interval is wider than a broader one):
 
 ```python
 # ── Check: are the quantiles non-crossing? ────────────────────────────────────

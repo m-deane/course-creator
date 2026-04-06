@@ -25,6 +25,7 @@ The value of a state equals the immediate reward plus the discounted value of th
 <strong>Key Point:</strong> The value of a state equals the immediate reward plus the discounted value of the states you land in next.
 
 </div>
+
 ## State-Value Function
 
 The **state-value function** $V^\pi(s)$ under policy $\pi$ is the expected return when starting in state $s$ and following $\pi$ thereafter:

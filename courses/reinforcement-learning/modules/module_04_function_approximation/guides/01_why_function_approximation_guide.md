@@ -25,6 +25,7 @@ A table is just a lookup function with one parameter per entry. Function approxi
 <strong>Key Point:</strong> A table is just a lookup function with one parameter per entry.
 
 </div>
+
 ## 1. The Curse of Dimensionality
 
 ### What It Is
@@ -308,6 +309,8 @@ Linear FA (infinite-state MDP):
    3 weights → approximate any state
    Generalizes across the whole space
 ```
+
+The following diagram illustrates how different approaches generalize across the state space:
 
 ```
 Generalization region of each approach:

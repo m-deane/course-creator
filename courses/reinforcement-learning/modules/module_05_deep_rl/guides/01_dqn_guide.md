@@ -25,6 +25,7 @@ Q-learning with a neural network approximator is unstable without intervention. 
 <strong>Key Point:</strong> Q-learning with a neural network approximator is unstable without intervention.
 
 </div>
+
 ## Formal Definition
 
 The optimal action-value function satisfies the Bellman optimality equation:

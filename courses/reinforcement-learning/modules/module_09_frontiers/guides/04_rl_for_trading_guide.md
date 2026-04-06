@@ -25,6 +25,7 @@ The central design challenge is the reward function: a naive reward of raw P&L e
 <strong>Key Point:</strong> The central design challenge is the reward function: a naive reward of raw P&L encourages excessive risk, while a well-designed reward incorporating the Sharpe ratio or transaction costs shapes the ag...
 
 </div>
+
 ## Formal Definition: The Trading MDP
 
 The trading problem maps onto an MDP $(\mathcal{S}, \mathcal{A}, \mathcal{P}, R, \gamma)$:

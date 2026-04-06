@@ -25,6 +25,7 @@ The triad is not a limitation of specific algorithms — it is a fundamental pro
 <strong>Key Point:</strong> The triad is not a limitation of specific algorithms — it is a fundamental property of the problem structure.
 
 </div>
+
 ## 1. The Three Conditions
 
 ### Condition 1: Function Approximation

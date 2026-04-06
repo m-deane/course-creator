@@ -25,6 +25,7 @@ Replace the unknown $Q^{\pi_\theta}(s,a)$ in the policy gradient theorem with it
 <strong>Key Point:</strong> Replace the unknown $Q^{\pi_\theta}(s,a)$ in the policy gradient theorem with its unbiased Monte Carlo estimate: the actual discounted return $G_t$ observed by running the policy to completion.
 
 </div>
+
 ## Intuitive Explanation
 
 Think of REINFORCE as a trial-and-error learner that watches entire episodes play out before updating:

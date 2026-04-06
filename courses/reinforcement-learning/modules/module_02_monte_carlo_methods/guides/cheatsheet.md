@@ -45,6 +45,7 @@
 | Fi...
 
 </div>
+
 ## MC Prediction Algorithm (First-Visit)
 
 **Estimates $V^\pi$ from episodes.**

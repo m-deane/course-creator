@@ -25,6 +25,7 @@ The defining challenge of offline RL is **distribution shift**: a learned policy
 <strong>Key Point:</strong> The defining challenge of offline RL is **distribution shift**: a learned policy will visit states and take actions that are poorly represented in the training data, and the Q-function learned from th...
 
 </div>
+
 ## Formal Definition
 
 Given a fixed dataset $\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}$ collected by some **behavior policy** $\pi_\beta$, the offline RL problem is:

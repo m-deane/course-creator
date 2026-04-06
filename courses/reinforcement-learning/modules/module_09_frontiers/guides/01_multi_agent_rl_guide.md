@@ -25,6 +25,7 @@ The fundamental difficulty of MARL is that the environment appears **non-station
 <strong>Key Point:</strong> The fundamental difficulty of MARL is that the environment appears **non-stationary** to every individual agent: as agents update their policies, the transition and reward distributions experienced by...
 
 </div>
+
 ## Formal Definition
 
 A Multi-Agent MDP (MMDP) for $n$ agents is a tuple $(\mathcal{S}, \{\mathcal{A}^i\}_{i=1}^n, \mathcal{P}, \{R^i\}_{i=1}^n, \gamma)$ where:

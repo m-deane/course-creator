@@ -346,6 +346,7 @@ date the email was received
 
 </div>
 
+You can also add conditional logic using natural language:
 
 ```text
 Add a condition: if the invoice total is greater than 10000, also post a

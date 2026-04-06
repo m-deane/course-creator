@@ -25,6 +25,7 @@ The challenge in applying Dyna-Q to rich, high-dimensional environments (pixel-b
 <strong>Key Point:</strong> The challenge in applying Dyna-Q to rich, high-dimensional environments (pixel-based games, robotics from cameras) is that modeling raw pixels is expensive and brittle.
 
 </div>
+
 ## Intuitive Explanation: World Models
 
 A film director preparing for a scene does not need to actually film every possible camera angle. They have a mental model of how lighting, actor positioning, and camera motion combine to produce an image. They can simulate in their mind which angles will look good and issue precise instructions on set — with minimal real takes.

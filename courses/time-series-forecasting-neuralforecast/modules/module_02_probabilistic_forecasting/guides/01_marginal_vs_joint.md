@@ -378,6 +378,8 @@ print(f"  vs correlated:  +{sum_of_q80 - true_q80_correlated:,.0f} baguettes "
       f"({(sum_of_q80/true_q80_correlated - 1)*100:.1f}% overestimate)")
 ```
 
+Visualize the distributions to make the gap between marginal and joint quantiles visible:
+
 ```python
 # ── Visualize the distributions to make the gap visible ──────────────────────
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))

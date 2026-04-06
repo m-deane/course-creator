@@ -25,6 +25,7 @@ Gradient descent assumes the loss landscape is locally linear near the current p
 <strong>Key Point:</strong> Gradient descent assumes the loss landscape is locally linear near the current parameters.
 
 </div>
+
 ## Intuitive Explanation
 
 Think of policy optimization as navigating a hill in the dark. You can feel which direction is uphill from where you stand, but you cannot see how the hill curves in the distance. Taking a very large step based on local gradient information risks stepping off a cliff.

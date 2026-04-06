@@ -25,6 +25,7 @@ Where Dynamic Programming computes value functions by solving Bellman equations 
 <strong>Key Point:</strong> Where Dynamic Programming computes value functions by solving Bellman equations exactly (requiring a model), Monte Carlo simply asks: "Run the policy many times and average what you actually get." The...
 
 </div>
+
 ## Intuitive Explanation
 
 Imagine you want to know the average score a basketball player earns per game when playing a specific strategy. You could try to model every possible game scenario mathematically — or you could just watch 1,000 games and compute the average. Monte Carlo takes the second approach.

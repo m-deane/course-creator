@@ -25,6 +25,7 @@ DP control used $V(s)$ but needed the model to do $\arg\max_a \sum_{s'} p(s'|s,a
 <strong>Key Point:</strong> DP control used $V(s)$ but needed the model to do $\arg\max_a \sum_{s'} p(s'|s,a)[r + \gamma V(s')]$.
 
 </div>
+
 ## Why $Q(s,a)$, Not $V(s)$, for Model-Free Control
 
 In Module 1, policy improvement used:

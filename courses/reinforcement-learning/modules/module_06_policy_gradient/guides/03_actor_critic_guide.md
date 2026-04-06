@@ -25,6 +25,7 @@ REINFORCE must wait until an episode ends to compute $G_t$. The actor-critic rep
 <strong>Key Point:</strong> REINFORCE must wait until an episode ends to compute $G_t$.
 
 </div>
+
 ## The Two Networks: Actor and Critic
 
 The most important design principle of actor-critic is that the actor and critic are **separate networks with different roles, different parameters, and different loss functions**. They are not interchangeable, and their updates are independent.

@@ -25,6 +25,7 @@ Every one-step TD estimate can be improved by looking further ahead. n-step retu
 <strong>Key Point:</strong> Every one-step TD estimate can be improved by looking further ahead.
 
 </div>
+
 ## Formal Definition
 
 ### n-Step Returns

@@ -25,6 +25,7 @@ The agent-environment interaction loop is the organizing idea of all RL. At ever
 <strong>Key Point:</strong> The agent-environment interaction loop is the organizing idea of all RL.
 
 </div>
+
 ## Intuitive Explanation
 
 Think of a chess player learning to improve. The board position is the **state**, the chosen move is the **action**, winning or losing a piece is part of the **reward** (or the game outcome is the terminal reward), and the player's decision strategy is the **policy**.

@@ -25,6 +25,7 @@ Each improvement is modular: Double DQN changes only the target computation, Due
 <strong>Key Point:</strong> Each improvement is modular: Double DQN changes only the target computation, Dueling DQN changes only the network architecture, and PER changes only the replay sampling strategy.
 
 </div>
+
 ## Improvement 1: Double DQN
 
 ### The Problem: Overestimation Bias

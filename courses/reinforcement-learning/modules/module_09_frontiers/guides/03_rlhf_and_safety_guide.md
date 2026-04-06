@@ -25,6 +25,7 @@ In RLHF, the reward function is not specified by the designer — it is **learne
 <strong>Key Point:</strong> In RLHF, the reward function is not specified by the designer — it is **learned** from human comparative judgments.
 
 </div>
+
 ## RLHF: Reinforcement Learning from Human Feedback
 
 RLHF became the standard approach for aligning large language models after InstructGPT (Ouyang et al., 2022) demonstrated that it dramatically improves model behavior on human-preferred outputs. The same three-step pipeline underpins ChatGPT, Claude, and most modern aligned LLMs.

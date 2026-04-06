@@ -25,6 +25,7 @@ Model-free methods are powerful but wasteful — they discard the structural inf
 <strong>Key Point:</strong> Model-free methods are powerful but wasteful — they discard the structural information in each transition $(S_t, A_t, R_{t+1}, S_{t+1})$ after using it once.
 
 </div>
+
 ## Intuitive Explanation
 
 Think of a chess grandmaster and a novice both studying to improve. The novice can only improve by playing real games (model-free). The grandmaster additionally runs games in their head — "If I move here, my opponent will likely respond there, then I could…" That internal simulation is planning. A strong mental model of how chess works makes each real game far more educational.

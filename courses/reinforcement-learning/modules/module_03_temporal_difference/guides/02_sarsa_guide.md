@@ -25,6 +25,7 @@ SARSA is *on-policy*: the action $A_{t+1}$ used in the bootstrap target is chose
 <strong>Key Point:</strong> SARSA is *on-policy*: the action $A_{t+1}$ used in the bootstrap target is chosen by the same policy currently being followed.
 
 </div>
+
 ## Formal Definition
 
 ### SARSA Update Rule

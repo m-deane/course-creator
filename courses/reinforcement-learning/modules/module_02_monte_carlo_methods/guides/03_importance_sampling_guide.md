@@ -25,6 +25,7 @@ We cannot always generate data from the policy we want to learn about. Importanc
 <strong>Key Point:</strong> We cannot always generate data from the policy we want to learn about.
 
 </div>
+
 ## The Off-Policy Problem
 
 **On-policy** (Guides 01–02): The policy we evaluate is the same policy we use to generate data.

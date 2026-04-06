@@ -25,6 +25,7 @@ Most deep RL training failures are diagnosable from four time series: episode re
 <strong>Key Point:</strong> Most deep RL training failures are diagnosable from four time series: episode return, mean Q-value, gradient norm, and TD loss.
 
 </div>
+
 ## Hyperparameter Tuning for DQN
 
 ### Complete Hyperparameter Reference

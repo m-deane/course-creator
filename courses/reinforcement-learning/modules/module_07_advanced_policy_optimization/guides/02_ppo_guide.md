@@ -25,6 +25,7 @@ TRPO's KL constraint stops updates that move the policy too far. PPO approximate
 <strong>Key Point:</strong> TRPO's KL constraint stops updates that move the policy too far.
 
 </div>
+
 ## Intuitive Explanation
 
 Imagine a hiring manager reviewing candidate scores. If a candidate scores 20% above the threshold, you hire them. If they score 100% above the threshold, you still just hire them — the extra margin gives you no additional benefit. PPO applies the same logic to policy updates: once you have improved an action's probability by $\epsilon$, further increase yields no reward gradient. The policy has no incentive to make radical changes in a single update.
@@ -37,6 +38,7 @@ Imagine a hiring manager reviewing candidate scores. If a candidate scores 20% a
 <strong>Key Point:</strong> Imagine a hiring manager reviewing candidate scores.
 
 </div>
+
 ## Formal Definition
 
 ### The Probability Ratio

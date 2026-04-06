@@ -25,6 +25,7 @@ The MDP encodes two ideas simultaneously: the world transitions stochastically b
 <strong>Key Point:</strong> The MDP encodes two ideas simultaneously: the world transitions stochastically based only on the current state and action (the Markov property), and the agent's goal is captured entirely by the reward...
 
 </div>
+
 ## Formal Definition
 
 A finite MDP is a tuple $(\mathcal{S}, \mathcal{A}, p, R, \gamma)$ where:

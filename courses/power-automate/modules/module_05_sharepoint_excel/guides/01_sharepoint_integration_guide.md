@@ -280,6 +280,8 @@ Combine multiple conditions with `and` and `or`:
 Status eq 'Pending' and Amount gt 500
 ```
 
+Use `or` to match multiple values:
+
 ```
 Department eq 'Finance' or Department eq 'Legal'
 ```

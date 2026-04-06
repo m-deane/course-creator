@@ -25,6 +25,7 @@ Dyna-Q asks: "After each real step, why not run several imagined steps too?" The
 <strong>Key Point:</strong> Dyna-Q asks: "After each real step, why not run several imagined steps too?" The imagined steps use a tabular model fitted from real transitions and produce additional Q-learning updates at zero envir...
 
 </div>
+
 ## Intuitive Explanation: Dyna-Q
 
 A student preparing for an exam:

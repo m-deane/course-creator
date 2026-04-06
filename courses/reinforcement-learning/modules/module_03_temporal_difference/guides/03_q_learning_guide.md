@@ -25,6 +25,7 @@ Q-learning's update target uses $\max_a Q(S_{t+1}, a)$ — the *best possible* n
 <strong>Key Point:</strong> Q-learning's update target uses $\max_a Q(S_{t+1}, a)$ — the *best possible* next action value — rather than the value of the action actually taken.
 
 </div>
+
 ## Formal Definition
 
 ### Q-Learning Update Rule

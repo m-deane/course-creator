@@ -25,6 +25,7 @@ Instead of learning a value function and deriving a policy from it, parameterize
 <strong>Key Point:</strong> Instead of learning a value function and deriving a policy from it, parameterize the policy $\pi(a|s;\theta)$ directly and nudge its parameters in the direction that increases expected return.
 
 </div>
+
 ## Why Parameterize the Policy Directly?
 
 Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and derive a policy greedily: $\pi(s) = \arg\max_a Q(s,a)$. This works well in discrete action spaces but breaks down in several important scenarios.

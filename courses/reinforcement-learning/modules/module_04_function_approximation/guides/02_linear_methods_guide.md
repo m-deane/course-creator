@@ -25,6 +25,7 @@ Linear function approximation represents $\hat{v}(s, \mathbf{w}) = \mathbf{w}^T 
 <strong>Key Point:</strong> "Semi-gradient" means we treat the TD target as a fixed label and differentiate only through the prediction, not the target.
 
 </div>
+
 ## 1. Linear Function Approximation
 
 ### Formal Definition

@@ -25,6 +25,7 @@ Standard RL trains a policy to be as deterministic as possible — commit to the
 <strong>Key Point:</strong> Standard RL trains a policy to be as deterministic as possible — commit to the best action and ignore all others.
 
 </div>
+
 ## Intuitive Explanation
 
 Imagine training a robot arm to grasp objects. A standard RL policy commits to one specific joint trajectory. If the object is slightly displaced, the policy fails because it has no experience with variations. A maximum entropy policy explores many different grasping approaches simultaneously — it finds multiple ways to succeed. When the object moves, it has backup strategies available.

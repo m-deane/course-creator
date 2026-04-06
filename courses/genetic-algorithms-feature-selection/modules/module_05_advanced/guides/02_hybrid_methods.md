@@ -4,12 +4,41 @@
 
 ## In Brief
 
-Hybrid methods combine genetic algorithms' global exploration with local search's exploitation, achieving faster convergence and better solutions than either method alone. Pure GAs explore broadly but converge slowly near optima. Pure local search (hill climbing, gradient descent) converges quickly but gets stuck in local optima. Memetic algorithms—GAs with local search refinement—inherit both strengths: global exploration from evolution, rapid local improvement from search.
+Hybrid methods combine genetic algorithms' global exploration with local search's exploitation, achieving faster convergence and better solutions than either method alone. Pure GAs explore broadly but converge slowly near optima. Pure local search (hill climbing, gradient descent) converges quickly but gets stuck in local optima. Memetic algorithms -- GAs with local search refinement -- inherit both strengths: global exploration from evolution, rapid local improvement from search.
 
-<div class="callout-insight">
-GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5× fewer evaluations to reach same quality, or better final solutions with same budget.
+<div class="callout-key">
+
+**Key Concept Summary:** A memetic algorithm is a GA where each individual gets a chance to "study for the exam" (local search) before being graded (selection). The GA handles the global question -- "which region of the search space is promising?" -- while local search handles the local question -- "what is the best solution *near* this point?" The two mechanisms are complementary, not redundant. The result: 2-5x fewer evaluations to reach the same solution quality, or better final solutions within the same computational budget.
+
 </div>
 
+<div class="callout-insight">
+GAs excel at finding "promising regions" of the search space but waste evaluations on marginal improvements. Local search excels at climbing to nearby peaks but has no escape mechanism. The synergy: GA identifies high-potential feature subsets (global), local search refines each to its local optimum (local), GA's crossover/selection moves between refined peaks. Result: 2-5x fewer evaluations to reach same quality, or better final solutions with same budget.
+</div>
+
+## When to Use Hybrid Methods
+
+Hybrid methods add complexity over a pure GA, so they are not always the right choice. Use this decision framework to determine whether the added complexity is justified.
+
+**USE hybrid methods when:**
+
+**(a) Fitness evaluations are cheap relative to GA overhead.** Local search adds many additional fitness evaluations (one per feature per local search step). If your fitness function runs in milliseconds (e.g., a simple model on a small dataset), the extra evaluations are affordable and the local refinement pays off in solution quality. A GA with population 50 and local search refinement on the top 10 individuals, flipping each of 30 features once, adds 300 evaluations per generation -- trivial if each evaluation takes 10ms (3 seconds) but prohibitive if each takes 10 seconds (50 minutes).
+
+**(b) The fitness landscape has many local optima that need refinement.** Feature selection landscapes are typically rugged: small changes to the feature set can cause significant fitness swings. A pure GA lands "near" good solutions but rarely hits the exact optimum because crossover and mutation make coarse moves. Local search performs the fine-grained exploration that pushes each candidate from "near the peak" to "on the peak."
+
+**(c) You need high-precision solutions, not just good-enough.** If the difference between selecting features [1,3,5,7] and [1,3,5,8] matters for your application (e.g., regulatory requirements, model interpretability constraints), local search provides the refinement that a pure GA's stochastic exploration is unlikely to achieve within a reasonable generation budget.
+
+**DO NOT use hybrid methods when:**
+
+**(a) Fitness evaluations are expensive.** If training a model takes 5-10 seconds per individual, local search (which evaluates ~n_features neighbors per individual) becomes the dominant cost. A single local search step on 100 features costs 100 evaluations -- roughly two full generations of a 50-individual population. In this case, the computational budget is better spent on more GA generations or a larger population.
+
+**(b) The fitness landscape is smooth.** If nearby feature subsets have similar fitness (e.g., because the model is robust to small feature changes), the GA converges to good solutions without local refinement. Local search adds cost but finds the same solutions the GA would eventually reach on its own.
+
+<div class="callout-insight">
+
+A practical test: run your pure GA and inspect the fitness improvement per generation in the final 10 generations. If fitness is still improving steadily, the GA has not converged and does not need local search. If fitness has plateaued but the average population fitness is far below the best, the GA is stuck near good solutions but not refining them -- this is the scenario where local search helps most.
+
+</div>
 
 ![GA Lifecycle](./ga_lifecycle.svg)
 
@@ -635,6 +664,12 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
    Refine top 10%: Fast, misses some improvements
    Refine every 5 generations: Batch efficiency
    Which strategy for 1-hour time limit?
+
+6. **Conceptual: When NOT to Hybridize**
+   You have a GA with fitness function that trains a deep neural network (30 seconds per evaluation), population size 50, and 30 generations. A colleague suggests adding Lamarckian local search to the top 20% of the population. Calculate the additional evaluations per generation and total added time. Is this a good idea? What alternative would you suggest?
+
+7. **Conceptual: Lamarckian vs Baldwinian**
+   In a non-stationary feature selection problem (the optimal features change as new data arrives monthly), which learning type -- Lamarckian or Baldwinian -- is more robust? Explain what goes wrong with the other choice.
 
 ## Further Reading
 

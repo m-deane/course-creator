@@ -1,6 +1,6 @@
 # Implementing GAs with DEAP
 
-> **Reading time:** ~5 min | **Module:** 4 — Implementation | **Prerequisites:** Modules 1-3
+> **Reading time:** ~8 min | **Module:** 4 — Implementation | **Prerequisites:** Modules 1-3
 
 ## Introduction to DEAP
 
@@ -12,9 +12,41 @@ pip install deap
 
 ![GA Lifecycle](./ga_lifecycle.svg)
 
+<div class="callout-key">
+
+**Key Concept Summary:** DEAP is not a black-box GA library -- it is a construction kit. You assemble a GA from four building blocks: **creator** (defines your data types), **toolbox** (registers your operators), **algorithms** (orchestrates the evolutionary loop), and **tools** (provides ready-made operators). Understanding this architecture lets you swap any component -- selection, crossover, mutation, fitness -- without rewriting the loop. Think of DEAP as a recipe framework: you declare the ingredients and the framework cooks them in the right order.
+
+</div>
+
+## DEAP Mental Model
+
+Before writing any code, understand how DEAP's four modules work together. Each module has a distinct responsibility:
+
+**1. Creator -- Defines *what* your GA works with.** The `creator` module creates new Python classes for your individuals and their fitness. When you call `creator.create("FitnessMin", base.Fitness, weights=(-1.0,))`, you are defining a new type that says "fitness is a single number, and lower is better." When you call `creator.create("Individual", list, fitness=creator.FitnessMin)`, you are saying "an individual is a Python list that carries a FitnessMin attribute." This is pure type definition -- no algorithms, no logic.
+
+**2. Toolbox -- Defines *how* your GA operates.** The `toolbox` is a registry of functions. You register every operation the GA needs: how to create a random gene (`attr_bool`), how to assemble genes into an individual (`individual`), how to build a population (`population`), how to evaluate fitness (`evaluate`), how to select parents (`select`), how to cross parents (`mate`), and how to mutate offspring (`mutate`). The toolbox does not run anything -- it stores your recipes.
+
+**3. Algorithms -- Orchestrates *when* things happen.** The `algorithms` module provides pre-built evolutionary loops like `eaSimple` (standard generational GA). The algorithm calls your toolbox functions in the canonical order: evaluate -> select -> mate -> mutate -> evaluate -> repeat. You can also write your own loop for full control.
+
+**4. Tools -- Provides *ready-made* operators.** The `tools` module contains implementations of common operators: `selTournament`, `cxUniform`, `mutFlipBit`, `HallOfFame`, `Statistics`, and many others. You pick the ones you need and register them in the toolbox.
+
+The analogy: **the toolbox is a recipe that defines your GA's ingredients -- what an individual looks like, how to select parents, how to combine them, how to mutate offspring.** The algorithm is the chef who follows the recipe. The creator defines the types of dishes. The tools are the pre-made ingredients you can use.
+
+**Conceptual flow:**
+
+```
+Creator                    Toolbox                     Algorithm
+  |                          |                            |
+  |-- defines Individual --> registers evaluate,    -->  calls toolbox
+  |-- defines Fitness        select, mate, mutate        in a loop:
+                             with specific operators      evaluate -> select
+                                                          -> mate -> mutate
+                                                          -> repeat
+```
+
 <div class="callout-insight">
 
-💡 **Key Insight:** DEAP's toolbox pattern decouples GA components (representation, operators, fitness) so you can swap any piece without rewriting the loop. This makes it the de facto standard for prototyping evolutionary algorithms in Python.
+DEAP's toolbox pattern is what makes it powerful for research and prototyping. Want to switch from tournament selection to rank-based? Change one line: `toolbox.register("select", tools.selRoulette)`. Want a custom fitness function? Register it: `toolbox.register("evaluate", my_custom_fitness)`. The algorithm loop does not change -- it just calls `toolbox.select`, `toolbox.mate`, and `toolbox.mutate` regardless of what is registered behind those names.
 
 </div>
 
@@ -114,6 +146,23 @@ def setup_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
 
     return toolbox
 ```
+
+</div>
+
+## Parameter Selection Guide
+
+The `setup_toolbox` function above uses specific values for `pop_size`, `indpb`, `tournsize`, and `mutation_prob`. These are not arbitrary -- each has a heuristic justification. The table below summarizes the recommended defaults and the reasoning behind them.
+
+| Parameter | Recommended Range | Heuristic | Reasoning |
+|---|---|---|---|
+| **pop_size** | 2-5x `n_features` | For 50 features, use 100-250 | Need diversity proportional to search space size ($2^n$). Too small and the GA converges prematurely; too large and each generation is expensive. |
+| **mutation_rate** (`indpb` for `mutFlipBit`) | `1/n_features` | For 50 features, use 0.02 | On average, one feature flips per individual. This is the minimal perturbation that still explores -- like a small learning rate in gradient descent. |
+| **crossover_prob** (`cxpb`) | 0.6-0.9 | Default: 0.8 | Crossover is the primary search operator that combines building blocks from parents. Below 0.6, the GA relies too heavily on mutation alone. |
+| **tournament_size** (`tournsize`) | 3-7 | Default: 3 | Balances selection pressure and diversity. Size 3 means the best of 3 random individuals becomes a parent -- moderate pressure. Size 7 is aggressive, suitable for large populations. |
+
+<div class="callout-warning">
+
+These parameters interact. If you increase tournament size (higher selection pressure), the population loses diversity faster, so you may need a larger population or higher mutation rate to compensate. If you lower mutation rate, crossover becomes the sole source of novelty -- make sure crossover probability is high (0.8+). Never tune one parameter in isolation.
 
 </div>
 
@@ -436,14 +485,34 @@ plot_evolution(result['history'])
 
 1. **DEAP provides flexibility** - customize every component
 
-2. **Toolbox pattern** organizes all GA components
+2. **Toolbox pattern** organizes all GA components -- creator defines types, toolbox registers operators, algorithms orchestrate, tools provide implementations
 
-3. **Hall of Fame** preserves best solutions
+3. **Hall of Fame** preserves best solutions across all generations
 
-4. **Early stopping** prevents wasted computation
+4. **Early stopping** prevents wasted computation when the GA has converged
 
-5. **Parallel evaluation** speeds up fitness computation
+5. **Parallel evaluation** speeds up fitness computation linearly with cores
+
+6. **Parameter choices matter** -- pop_size, mutation_rate, crossover_prob, and tournament_size interact as a system, not independently
 </div>
+
+## Practice Problems
+
+1. **DEAP Architecture**
+   Explain in your own words what happens when you call `algorithms.eaSimple(population, toolbox, ...)`. Which toolbox functions does it call, and in what order? What is the role of `stats` and `halloffame`?
+
+2. **Parameter Reasoning**
+   You have a dataset with 200 features. Using the heuristics from the Parameter Selection Guide, specify: population size, mutation rate, crossover probability, and tournament size. Justify each choice in one sentence.
+
+3. **Creator Global State**
+   Why does DEAP's `creator.create()` cause problems in Jupyter notebooks? What happens if you call `creator.create("FitnessMin", ...)` twice? How do you work around this?
+
+4. **Toolbox Swap**
+   You have a working GA using `tools.selTournament` and want to switch to rank-based selection. Which line(s) do you change? Do you need to modify the algorithm loop?
+
+5. **Fitness Function Design**
+   The `evaluate` function in `setup_toolbox` returns `(float('inf'),)` when no features are selected. Why is this necessary? What would happen if it returned `(0.0,)` instead?
+
 ---
 
 **Next:** [Companion Slides](./01_deap_implementation_slides.md) | [Notebook](../notebooks/01_deap_ga.ipynb)

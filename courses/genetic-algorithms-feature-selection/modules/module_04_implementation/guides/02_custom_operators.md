@@ -6,10 +6,41 @@
 
 Custom genetic operators adapt the GA to problem-specific structure, improving convergence speed and solution quality. Standard operators (uniform crossover, bit-flip mutation, tournament selection) work broadly but ignore domain knowledge. Custom operators encode problem constraints, exploit feature relationships, and bias search toward promising regions while maintaining population diversity.
 
-<div class="callout-insight">
-Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5× faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
+<div class="callout-key">
+
+**Key Concept Summary:** Standard GA operators assume all genes are independent and interchangeable. Real feature selection problems violate this assumption: one-hot encoded categories must be selected as groups, interaction terms require their base features, budget constraints limit the total number of features, and correlated features carry redundant information. Custom operators encode these structural realities directly into crossover and mutation, producing valid offspring without needing post-hoc repair. The payoff is 2-5x faster convergence because the GA never wastes evaluations on structurally invalid solutions.
+
 </div>
 
+<div class="callout-insight">
+Generic GAs treat all genes equally, but features have structure: feature groups (categorical expansions), hierarchical dependencies (interaction terms require base features), and domain constraints (budget limits, correlation requirements). Custom operators that respect this structure converge 2-5x faster than standard operators. The key: design operators that produce valid, high-quality offspring while maintaining diversity.
+</div>
+
+## When Do You Need Custom Operators?
+
+Before implementing custom operators, determine whether your problem actually needs them. Standard operators work well when features are independent, unordered, and unconstrained. Custom operators become necessary when the problem has *structure* that standard operators violate. Here are the four main cases:
+
+### (a) Grouped Features (e.g., one-hot encoded categories)
+
+When a categorical variable like "city" is one-hot encoded into [city_NYC, city_LA, city_CHI], these columns are not independent -- selecting two cities simultaneously is semantically invalid (or at minimum redundant for most models). Standard uniform crossover treats each column independently and happily produces children with two or zero cities selected. Group-aware crossover swaps entire feature groups as atomic units, guaranteeing that every offspring has exactly one city selected. Without this, the GA wastes evaluations on invalid solutions and the fitness function must either repair them or assign penalty scores.
+
+### (b) Hierarchical Features (e.g., derived from base features)
+
+When your feature set includes interaction terms like X1*X2 or polynomial features like X1^2, these derived features depend on their base features. Selecting X1*X2 without selecting X1 and X2 produces a model that lacks the constituent information. Standard crossover can break this dependency: parent A has [X1, X2, X1*X2] selected and parent B has [X3, X4, X3*X4] selected, but a crossover child might end up with [X1, X4, X1*X2, X3*X4] -- keeping the interaction X1*X2 but losing X2. Dependency-respecting operators enforce the rule: if an interaction is selected, its base features must also be selected.
+
+### (c) Budget-Constrained Features (e.g., max 10 features allowed)
+
+Some problems impose a hard constraint on the number of selected features -- for example, a production model that must use at most 10 features for interpretability or latency reasons. Standard bit-flip mutation changes the total number of selected features unpredictably: an individual with 10 features might gain 3 and lose 1, ending up with 12. Feasibility-preserving operators like swap mutation (simultaneously deselect one feature and select another) maintain the feature count exactly. Without this, you need either a repair step or a penalty term, both of which add complexity and degrade search efficiency.
+
+### (d) Correlated Features
+
+When features are highly correlated (e.g., GDP and GDP_per_capita), selecting one without the other is often suboptimal -- or selecting both is redundant. Standard mutation flips features independently, ignoring correlation structure. Correlation-aware mutation recognizes that flipping one member of a correlated pair should influence the other: if you deselect GDP, you might want to also deselect GDP_per_capita (since they carry similar information) or select it (to preserve the information content). This prevents the GA from repeatedly toggling between correlated alternatives without making progress.
+
+<div class="callout-warning">
+
+Not every problem needs custom operators. If your features are independent numeric columns with no groups, hierarchies, budget constraints, or strong correlations, standard operators are the right choice. Adding unnecessary complexity to operators increases implementation bugs and makes the GA harder to debug. Start with standard operators, identify whether the GA is producing invalid or redundant solutions, and only then design custom operators to address the specific structural issue.
+
+</div>
 
 ![Crossover Types](./crossover_types.svg)
 
@@ -734,6 +765,12 @@ print(f"  Fitness-only: {div_fitness:.2f}")
    Swap mutation: n_swaps=3.
    After mutation, how many features selected?
    What if n_swaps > number of selected features?
+
+6. **Conceptual: Operator Selection**
+   You have a dataset with 50 numeric features (no categories, no interactions, no budget constraint). A colleague proposes implementing group-aware crossover and correlation-aware mutation. Is this a good idea? Why or why not? Under what circumstances would you revisit this decision?
+
+7. **Conceptual: Standard Operator Failures**
+   Explain why standard bit-flip mutation is problematic for a budget-constrained feature selection problem where exactly 10 features must be selected. What happens to the population over time if you use bit-flip mutation with a penalty for violating the budget constraint versus using swap mutation that preserves the budget exactly?
 
 ## Further Reading
 

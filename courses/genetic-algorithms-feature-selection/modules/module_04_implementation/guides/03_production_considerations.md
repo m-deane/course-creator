@@ -6,8 +6,14 @@
 
 Production genetic algorithms require careful attention to computational efficiency, reproducibility, and system integration. Naive GA implementations are prohibitively slow for high-dimensional feature spaces (hours for 1000 features), non-reproducible due to random seeds, and difficult to integrate with ML pipelines. Production-ready GAs use parallel fitness evaluation, efficient caching, deterministic execution, and standard ML interfaces.
 
+<div class="callout-key">
+
+**Key Concept Summary:** Moving a GA from a notebook to production requires solving three problems that do not exist in prototyping: **speed** (parallel fitness evaluation + caching), **reproducibility** (deterministic random state management across all libraries), and **integration** (wrapping the GA in a sklearn-compatible interface so it plugs into pipelines, GridSearchCV, and deployment tooling). The sklearn interface is not cosmetic -- it unlocks the entire sklearn ecosystem for your GA.
+
+</div>
+
 <div class="callout-insight">
-The fitness function is the bottleneck—evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that's 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100× speedup while maintaining determinism through careful random state management.
+The fitness function is the bottleneck -- evaluating a single individual requires training a full ML model. With population size 100 and 50 generations, that is 5000 model training runs. Parallelization across individuals reduces wall-clock time linearly with available cores. Combined with fitness caching (avoiding duplicate evaluations), warm-start models, and early stopping, production GAs achieve 10-100x speedup while maintaining determinism through careful random state management.
 </div>
 
 
@@ -462,6 +468,34 @@ print(f"Identical: {np.array_equal(result1_pop, result2_pop)}")
 
 ### Production Integration
 
+#### Why a Sklearn-Compatible Interface Matters
+
+Wrapping your GA in a sklearn-compatible class (inheriting from `BaseEstimator` and `TransformerMixin`) is not a cosmetic choice -- it unlocks four concrete production capabilities:
+
+1. **Reproducibility.** Sklearn's `clone()` and `set_params()` methods create exact copies of your GA configuration. Every experiment is parameterized and reproducible without manual bookkeeping.
+
+2. **Pipeline integration.** A sklearn-compatible GA selector plugs directly into `Pipeline`, so you can chain it with scaling, imputation, and model training. The pipeline handles train/test splitting correctly -- the GA sees only training data during `fit()`.
+
+3. **Hyperparameter tuning.** With a sklearn interface, you can use `GridSearchCV` or `RandomizedSearchCV` to tune the GA's own parameters (population size, mutation rate, etc.) using the same cross-validation framework you use for model hyperparameters.
+
+4. **Consistent deployment API.** A `Pipeline` object with a GA selector serializes to a single pickle file. The `transform()` method applies the learned feature mask to new data at inference time without re-running evolution.
+
+<div class="callout-insight">
+
+Without a sklearn-compatible interface, integrating a GA into an ML pipeline requires custom glue code for training, prediction, serialization, and hyperparameter tuning. Each piece of glue code is a maintenance burden and a source of bugs. The sklearn interface eliminates all of it.
+
+</div>
+
+#### Monitoring, Logging, and Model Versioning
+
+Production GAs also need observability:
+
+- **Monitoring:** Track fitness (best and average) over generations in real time. Alert when fitness stalls for more than N generations -- this indicates premature convergence or a fitness function bug. Plot the fitness curve after every run to verify convergence behavior.
+
+- **Logging:** Record the best individual per generation (which features are selected), feature selection frequencies across the population (which features appear most often), and the GA's parameter settings. This log is essential for debugging and for understanding feature stability across runs.
+
+- **Model versioning:** Save the best feature set together with the trained model as a single artifact. A feature set without its model (or vice versa) is useless for deployment. Use tools like MLflow or DVC to version these artifacts together with the data and code that produced them.
+
 ```python
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
@@ -698,6 +732,12 @@ print(f"  Test accuracy: {test_score:.4f}")
    Deploy GA for daily feature selection on 10000 features.
    Requirements: <1 hour runtime, reproducible, fault-tolerant.
    Architecture design? Key components?
+
+6. **Conceptual: Sklearn Interface Value**
+   A colleague says: "I don't need a sklearn-compatible wrapper -- I'll just call my GA function directly." Describe two specific scenarios where the lack of a sklearn interface creates problems in production. How would the interface solve each problem?
+
+7. **Conceptual: Monitoring Design**
+   You are running a GA in production and notice that the best fitness has not improved for 20 generations, but the average fitness is still decreasing. What does this pattern tell you about the population? What action would you take?
 
 ## Further Reading
 

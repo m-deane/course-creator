@@ -6,8 +6,31 @@
 
 Adaptive operators automatically adjust GA parameters (mutation rate, crossover probability, population diversity) during evolution based on search progress, eliminating manual tuning and improving robustness. Fixed parameters work well for specific problems but fail across diverse landscapes. Self-adaptive GAs evolve their own parameters alongside solutions, with successful parameter settings propagating through the population via natural selection, achieving performance comparable to expert-tuned parameters without human intervention.
 
+<div class="callout-key">
+
+**Key Concept Summary:** The optimal mutation rate at generation 1 is not the same as at generation 50. Early search needs aggressive exploration (high mutation); late search needs gentle refinement (low mutation). Adaptive operators solve this by measuring the population's state -- diversity, improvement rate, convergence -- and adjusting parameters in response. The four main strategies (linear, diversity-based, feedback-based, self-adaptive) offer a tradeoff between simplicity and responsiveness. Diversity-based adaptation is the recommended default: it is robust, requires minimal tuning, and directly addresses the core problem of premature convergence.
+
+</div>
+
 <div class="callout-insight">
 Optimal GA parameters change during search: early exploration needs high mutation/diversity, late exploitation needs low mutation/focused search. Fixed parameters are either too exploratory (slow convergence) or too exploitative (premature convergence). Adaptive operators measure population state (diversity, fitness improvement, convergence rate) and dynamically adjust parameters. Self-adaptive operators encode parameters in chromosomes, allowing evolution to discover optimal settings for the current search phase.
+</div>
+
+## Comparing Adaptation Strategies
+
+Before diving into the formal definitions and code, here is a comparison of the four main adaptation strategies. This table helps you choose the right strategy for your problem.
+
+| Strategy | How It Works | Complexity | Robustness | Best For | Worst For |
+|---|---|---|---|---|---|
+| **Linear (scheduled)** | Mutation rate decreases on a fixed schedule from high to low over generations | Simplest -- no parameters beyond start/end rates | Predictable but not responsive to actual search state | Problems where you know the convergence profile in advance; quick prototyping | Problems where convergence speed varies unpredictably; multi-modal landscapes |
+| **Diversity-based** | Measures population diversity (Hamming distance); increases mutation when diversity is low, decreases when high | Low -- requires computing pairwise distances (cheap for typical populations) | Robust default -- directly reacts to the core problem (premature convergence) | General-purpose feature selection; default recommendation when you have no prior knowledge | Very large populations where pairwise distance computation becomes expensive |
+| **Feedback-based** | Tracks fitness improvement over a sliding window; increases mutation when improvement stalls, decreases when improving | Moderate -- requires defining "improvement" threshold and window size | Most responsive to actual search progress, but sensitive to threshold choice | Problems with expensive fitness functions where you want to minimize wasted evaluations | Noisy fitness functions where "improvement" is hard to measure reliably |
+| **Self-adaptive** | Mutation rate is encoded in the chromosome and evolves alongside the solution; successful rates propagate through selection | Highest -- requires larger populations and longer runs for parameter evolution to work | Most flexible -- discovers optimal parameters automatically | Long runs with large populations (200+); problems where optimal parameters differ across regions of the search space | Small populations (<50); short runs (<30 generations); problems where fast convergence is needed |
+
+<div class="callout-insight">
+
+If you are unsure which strategy to use, start with **diversity-based adaptation**. It addresses the single most common GA failure mode (premature convergence due to diversity loss) and requires no problem-specific tuning beyond setting the min/max mutation rate bounds. You can always switch to feedback-based or self-adaptive later if diversity-based proves insufficient.
+
 </div>
 
 
@@ -691,6 +714,12 @@ print(f"  Features selected: {result_self_adaptive['best_individual'].sum()}")
    Problem: High-dimensional (1000 features), smooth landscape.
    Choose: Linear, Feedback, Diversity, or Self-Adaptive?
    Justify choice.
+
+6. **Conceptual: Why Not Always Self-Adaptive?**
+   Self-adaptive GAs sound ideal -- the GA tunes itself. Explain two specific conditions under which self-adaptive parameter control performs *worse* than simple diversity-based adaptation. What happens to self-adapted mutation rates in a population of 30 individuals over 20 generations?
+
+7. **Conceptual: Adaptation Interactions**
+   You are using diversity-based mutation adaptation and notice that the mutation rate oscillates rapidly between 0.001 and 0.1 every 2-3 generations. Diagnose the problem. What is happening in the population to cause this oscillation? How would you fix it?
 
 ## Further Reading
 

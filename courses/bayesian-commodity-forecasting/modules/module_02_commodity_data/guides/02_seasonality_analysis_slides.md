@@ -21,6 +21,10 @@ Predictable, recurring patterns tied to calendar periods
 > Many commodities exhibit strong seasonal patterns driven by predictable demand cycles (heating oil in winter, gasoline in summer) or supply cycles (agricultural harvest). Failing to account for seasonality leads to systematic forecast errors.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Formal Definition
@@ -39,11 +43,16 @@ $$y_t = T_t + S_t + C_t + I_t$$
 A series is seasonal with period $m$ if: $\mathbb{E}[S_t] = \mathbb{E}[S_{t+m}] \;\forall\, t$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Decomposition Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Y["Original Series y_t"] --> T["Estimate Trend T_t\n(moving average / loess)"]
     T --> DT["Detrend: y_t - T_t"]
@@ -51,11 +60,13 @@ flowchart TD
     S --> R["Residual: y_t - T_t - S_t"]
     R --> ITER["Iterate to refine"]
     ITER --> T
-    style Y fill:#4a90d9,color:#fff
-    style S fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -91,6 +102,10 @@ flowchart TD
 </div>
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Agricultural Example: Corn Prices
@@ -108,6 +123,7 @@ flowchart TD
 ## Seasonal Pattern Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph NatGas["Natural Gas"]
         W1["Winter\n(high)"] --> Sp1["Spring\n(low)"] --> Su1["Summer\n(moderate)"] --> F1["Fall\n(low)"] --> W1
@@ -115,8 +131,6 @@ flowchart LR
     subgraph Corn["Corn"]
         Sp2["Spring\n(rising)"] --> Su2["Summer\n(volatile)"] --> F2["Fall\n(harvest low)"] --> W2["Winter\n(stable)"] --> Sp2
     end
-    style W1 fill:#c0392b,color:#fff
-    style F2 fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -310,6 +324,7 @@ with pm.Model() as seasonal_model:
 ## Choosing the Method
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["How to model\nseasonality?"] --> Q1{"Fixed or\nchanging?"}
     Q1 -->|"Fixed"| Q2{"Smooth or\nirregular?"}
@@ -317,8 +332,6 @@ flowchart TD
     Q2 -->|"Smooth"| FOU["Fourier Terms\n(K=1-3)"]
     Q2 -->|"Irregular"| DUM["Seasonal\nDummies"]
     Q1 -->|"Unknown"| BAY["Bayesian Model\nwith uncertainty"]
-    style BAY fill:#27ae60,color:#fff
-    style STL fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -371,13 +384,13 @@ Different months have different numbers of trading days. Adjust accordingly.
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     F["Foundations\n(Module 0)"] --> SA["Seasonality\nAnalysis"]
     BF["Bayesian Fundamentals\n(Module 1)"] --> SA
     SA --> SSM["Seasonal State Space\nBSM Models\n(Module 3)"]
     SA --> HM["Shared Seasonal Patterns\nacross commodities\n(Module 4)"]
     SA --> FI["Combining seasonal +\nfundamental drivers\n(Module 8)"]
-    style SA fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

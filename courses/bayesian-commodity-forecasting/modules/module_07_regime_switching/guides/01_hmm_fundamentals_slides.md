@@ -21,6 +21,10 @@ Inferring market regimes from observed prices
 > **HMMs separate "what regime are we in?" from "what do we observe?"** The regime is latent (unobserved) but influences the distribution of prices. By modeling this two-layer structure, we can infer regimes from prices and make regime-dependent forecasts.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## HMM Components
@@ -35,21 +39,22 @@ An HMM is defined by:
 | Emission distribution | $P(Y_t \mid S_t = k) = f_k(y_t)$ | Price distribution per regime |
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## HMM Graphical Structure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     S1["S₁\n(Hidden)"] -->|"A"| S2["S₂\n(Hidden)"] -->|"A"| S3["S₃\n(Hidden)"] -->|"A"| S4["S₄\n(Hidden)"]
     S1 -->|"f₁/f₂"| Y1["Y₁\n(Observed)"]
     S2 -->|"f₁/f₂"| Y2["Y₂\n(Observed)"]
     S3 -->|"f₁/f₂"| Y3["Y₃\n(Observed)"]
     S4 -->|"f₁/f₂"| Y4["Y₄\n(Observed)"]
-    style S1 fill:#4a90d9,color:#fff
-    style S2 fill:#4a90d9,color:#fff
-    style S3 fill:#c0392b,color:#fff
-    style S4 fill:#c0392b,color:#fff
 ```
 
 **Assumptions:**
@@ -57,6 +62,10 @@ flowchart LR
 2. **Conditional independence:** $P(Y_t | S_t, Y_{1:t-1}) = P(Y_t | S_t)$
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Two-State Commodity Model
@@ -75,11 +84,16 @@ Bull markets last ~50 days ($1/0.02$), bear markets ~20 days ($1/0.05$).
 | Bear | $\mu = -0.10\%$ | $\sigma = 2.5\%$ |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Commodity Market Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Hidden["Hidden Layer (Regimes)"]
         BULL["Bull Market\n+drift, low vol"] -->|"2% daily"| BEAR["Bear Market\n-drift, high vol"]
@@ -92,8 +106,6 @@ flowchart TD
     end
     BULL -.-> R1
     BEAR -.-> R1
-    style BULL fill:#27ae60,color:#fff
-    style BEAR fill:#c0392b,color:#fff
 ```
 
 > From returns alone, we infer the current regime and forecast future regimes.
@@ -142,6 +154,7 @@ $$P(S_t = k \mid Y_{1:T}) = \frac{\alpha_t(k) \cdot \beta_t(k)}{\sum_j \alpha_t(
 ## Forward-Backward Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Forward["Forward Pass (α)"]
         direction LR
@@ -153,7 +166,6 @@ flowchart LR
     end
     Forward --> COMBINE["γₜ = αₜ × βₜ\n(Smoothed Probs)"]
     Backward --> COMBINE
-    style COMBINE fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -306,13 +318,13 @@ $$\pi^*_{\text{bull}} = \frac{p_{\text{bear,bull}}}{p_{\text{bear,bull}} + p_{\t
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SSM["State Space Models\n(Module 3)"] --> HMM["HMM\nFundamentals"]
     MCMC["MCMC for Parameters\n(Module 6)"] --> HMM
     HMM --> CPD["Change Point\nDetection (guide 2)"]
     HMM --> RSV["Regime-Switching\nVolatility (guide 3)"]
     HMM --> FI["Regime-Dependent\nForecasts (Module 8)"]
-    style HMM fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

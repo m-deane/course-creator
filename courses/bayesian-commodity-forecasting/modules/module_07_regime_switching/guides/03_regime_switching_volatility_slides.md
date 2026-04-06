@@ -21,6 +21,10 @@ Capturing calm and crisis periods in commodity markets
 > **Asset returns don't have constant volatility.** Oil prices might have $\sigma = 2\%$ daily in stable markets but $\sigma = 8\%$ during supply disruptions. Regime-switching models learn distinct volatility levels, regime persistence, and transition probabilities, enabling better risk management.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Two-Regime Volatility Model
@@ -40,11 +44,16 @@ $$y_t | s_t = k \sim \mathcal{N}(\mu_k, \sigma^2_k)$$
 > Low-vol regime lasts ~50 days; high-vol lasts ~12 days.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Model Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Regimes["Latent Regime Process"]
         R1["Low-Vol\nσ = 1.5%"] -->|"2%"| R2["High-Vol\nσ = 5.0%"]
@@ -57,11 +66,13 @@ flowchart TD
     end
     R1 -.->|"emission"| Y
     R2 -.->|"emission"| Y
-    style R1 fill:#27ae60,color:#fff
-    style R2 fill:#c0392b,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## MS-SV: Regime-Switching Stochastic Volatility
@@ -77,6 +88,10 @@ $$y_t | s_t = k, \sigma^2_{k,t} \sim \mathcal{N}(\mu_k, \sigma^2_{k,t})$$
 > Combines regime switching with time-varying volatility within each regime.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Why Regime-Switching for Commodities?
@@ -273,6 +288,7 @@ def fit_gaussian_hmm(returns, n_components=2):
 ## Volatility Forecasting with Regime Uncertainty
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CURR["Current Regime\nProbabilities"] --> TRANS["Apply Transition\nMatrix P^h"]
     TRANS --> FUTURE["Future Regime\nDistribution"]
@@ -280,7 +296,6 @@ flowchart LR
     FUTURE --> SIGMA2["σ₂ × P(high-vol)"]
     SIGMA1 --> EVOL["Expected\nVolatility"]
     SIGMA2 --> EVOL
-    style EVOL fill:#27ae60,color:#fff
 ```
 
 ```python
@@ -327,6 +342,7 @@ def forecast_volatility(trace, returns, horizon=20):
 ## Filtered vs Smoothed Probabilities
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Filtered["Filtered (Real-Time)"]
         F1["P(s_t | y_{1:t})"]
@@ -338,8 +354,6 @@ flowchart LR
         S2["Uses all data"]
         S3["For: Analysis, research"]
     end
-    style Filtered fill:#27ae60,color:#fff
-    style Smoothed fill:#4a90d9,color:#fff
 ```
 
 > Always use filtered for real-time decisions. Smoothed for historical analysis.
@@ -350,6 +364,7 @@ flowchart LR
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     HMM["HMM Fundamentals\n(guide 1)"] --> RSV["Regime-Switching\nVolatility"]
     CPD["Change Point Detection\n(guide 2)"] --> RSV
@@ -357,7 +372,6 @@ flowchart TD
     RSV --> OPT["Option Pricing\n(regime-dependent)"]
     RSV --> RISK["Risk Management\n(tail risk in high-vol)"]
     RSV --> PORT["Portfolio Optimization\n(regime-conditional)"]
-    style RSV fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

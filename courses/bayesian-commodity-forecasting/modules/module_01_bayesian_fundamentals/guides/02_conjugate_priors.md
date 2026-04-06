@@ -1,5 +1,8 @@
 # Conjugate Priors: Analytical Bayesian Updates
 
+> **Reading time:** ~7 min | **Module:** 1 — Bayesian Fundamentals | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 
 A **conjugate prior** is a prior distribution that, when combined with a particular likelihood, yields a posterior distribution in the same family as the prior. This allows for closed-form posterior computation without numerical methods.
@@ -20,11 +23,20 @@ $$p(\theta | y) \propto p(y | \theta) \cdot p(\theta)$$
 
 yields a posterior $p(\theta|y)$ in the same distributional family as $p(\theta)$.
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> A **conjugate prior** is a prior distribution that, when combined with a particular likelihood, yields a posterior distribution in the same family as the prior.
+</div>
+
 ---
 
 ## Major Conjugate Families
 
 ### 1. Beta-Binomial (Proportions)
+<div class="callout-warning">
+<strong>Warning:</strong> **Use case:** Estimating probabilities, success rates, fill rates
+</div>
+
 
 **Use case:** Estimating probabilities, success rates, fill rates
 
@@ -35,6 +47,13 @@ yields a posterior $p(\theta|y)$ in the same distributional family as $p(\theta)
 **Posterior:** $\theta | y \sim \text{Beta}(\alpha + y, \beta + n - y)$
 
 **Commodity application:** Probability that a crop report exceeds expectations; fill rate on limit orders.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Example: Estimating probability of inventory draw
@@ -51,6 +70,9 @@ print(f"Prior: Beta({alpha_prior}, {beta_prior})")
 print(f"Posterior: Beta({alpha_post}, {beta_post})")
 print(f"Posterior mean: {alpha_post / (alpha_post + beta_post):.3f}")
 ```
+
+</div>
+</div>
 
 ---
 
@@ -73,6 +95,13 @@ $$\mu_{\text{post}} = \frac{\tau_0 \mu_0 + n\tau \bar{y}}{\tau_{\text{post}}}$$
 where $\tau = 1/\sigma^2$ is precision.
 
 **Commodity application:** Estimating equilibrium price level; long-term mean reversion target.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -97,6 +126,9 @@ print(f"Posterior: N({mu_post:.2f}, {sigma_post:.2f}²)")
 print(f"Posterior 95% CI: [{mu_post - 1.96*sigma_post:.2f}, {mu_post + 1.96*sigma_post:.2f}]")
 ```
 
+</div>
+</div>
+
 **Key insight:** The posterior mean is a **precision-weighted average** of prior mean and data mean.
 
 ---
@@ -112,6 +144,13 @@ print(f"Posterior 95% CI: [{mu_post - 1.96*sigma_post:.2f}, {mu_post + 1.96*sigm
 **Posterior:** $\lambda | y \sim \text{Gamma}(\alpha + \sum y_i, \beta + n)$
 
 **Commodity application:** Number of supply disruptions per quarter; frequency of limit moves.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from scipy import stats
@@ -131,6 +170,9 @@ post_dist = stats.gamma(alpha_post, scale=1/beta_post)
 print(f"Posterior mean rate: {post_dist.mean():.2f} per year")
 print(f"95% CI: [{post_dist.ppf(0.025):.2f}, {post_dist.ppf(0.975):.2f}]")
 ```
+
+</div>
+</div>
 
 ---
 
@@ -178,8 +220,19 @@ This is the **Normal-Inverse-Gamma** prior, conjugate for the Normal likelihood 
 ## Why Conjugate Priors Matter for Time Series
 
 ### Sequential Updating
+<div class="callout-insight">
+<strong>Insight:</strong> For online learning, conjugate priors allow instant updates:
+</div>
+
 
 For online learning, conjugate priors allow instant updates:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 class BayesianMeanEstimator:
@@ -217,6 +270,9 @@ for p in prices:
     print(f"After observing {p}: μ = {mu:.2f} ± {1.96*std:.2f}")
 ```
 
+</div>
+</div>
+
 ### Kalman Filter Connection
 
 The Kalman filter (Module 3) is essentially conjugate Normal-Normal updating in state space form. Understanding conjugacy now makes state space models intuitive later.
@@ -238,15 +294,32 @@ When you have little prior knowledge:
 
 **Example:** Seasonal inventory typically ranges from -5 to +10 million barrels
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Prior mean: (10 + (-5)) / 2 = 2.5
 # Prior std: Range/4 ≈ 3.75 (covers ~95% of expected range)
 mu_0, sigma_0 = 2.5, 3.75
 ```
 
+</div>
+</div>
+
 ### Prior Predictive Checks
 
 Always simulate from your prior and check if the predictions are reasonable:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -257,6 +330,9 @@ prior_samples = np.random.normal(0, 5, 10000)
 print(f"Prior 95% interval: [{np.percentile(prior_samples, 2.5):.1f}, "
       f"{np.percentile(prior_samples, 97.5):.1f}] million barrels")
 ```
+
+</div>
+</div>
 
 If this range doesn't match domain knowledge, adjust the prior.
 
@@ -304,6 +380,19 @@ Derive the posterior for the Normal-Normal case from scratch using Bayes' theore
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
+
+2. Given a real-world scenario involving conjugate priors: analytical bayesian updates, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Murphy, K.** *Machine Learning: A Probabilistic Perspective* - Chapter 3 for conjugate families
@@ -313,3 +402,17 @@ Derive the posterior for the Normal-Normal case from scratch using Bayes' theore
 ---
 
 *Conjugate priors are training wheels. They help you learn to ride, but eventually you'll want the full bicycle of MCMC.*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_conjugate_priors_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_bayesian_regression_pymc.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -1,10 +1,15 @@
 # State Space Fundamentals
 
+> **Reading time:** ~6 min | **Module:** 3 — State-Space Models | **Prerequisites:** Module 2 Commodity Data
+
+
 ## In Brief
 
 State space models decompose observed time series into unobserved (latent) components that evolve according to known dynamics. This framework provides a unified approach to trend extraction, forecasting, and uncertainty quantification.
 
-> 💡 **Key Insight:** **Think of state space as a hidden story.** We observe the outcome (prices) but not the underlying drivers (trend, momentum, sentiment). State space models infer these hidden states from observable data.
+<div class="callout-insight">
+<strong>Insight:</strong> **Think of state space as a hidden story.** We observe the outcome (prices) but not the underlying drivers (trend, momentum, sentiment). State space models infer these hidden states from observable data.
+</div>
 
 ## Formal Definition
 
@@ -30,6 +35,11 @@ $$\alpha_1 \sim \mathcal{N}(a_1, P_1)$$
 | $H_t$ | $p \times p$ | Observation noise covariance |
 | $Q_t$ | $r \times r$ | State noise covariance |
 | $R_t$ | $m \times r$ | State noise selection matrix |
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> State space models decompose observed time series into unobserved (latent) components that evolve according to known dynamics.
+</div>
 
 ---
 
@@ -66,6 +76,10 @@ Obs:      │y₁│    │y₂│    │y₃│    │y₄│  (Observed)
 ## Common State Space Models
 
 ### 1. Local Level Model (Random Walk + Noise)
+<div class="callout-warning">
+<strong>Warning:</strong> The simplest state space model: a random walk observed with noise.
+</div>
+
 
 The simplest state space model: a random walk observed with noise.
 
@@ -165,6 +179,13 @@ Many ARIMA models have state space representations:
 
 ### PyMC State Space Model
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 import numpy as np
@@ -196,6 +217,9 @@ with pm.Model() as local_level:
 
     trace = pm.sample(1000, tune=1000)
 ```
+
+</div>
+</div>
 
 ---
 
@@ -259,6 +283,19 @@ You have weekly natural gas prices with occasional missing values (holidays). Ex
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving state space fundamentals, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Durbin & Koopman** *Time Series Analysis by State Space Methods* — Definitive reference
@@ -268,3 +305,17 @@ You have weekly natural gas prices with occasional missing values (holidays). Ex
 ---
 
 *State space models are like X-ray machines for time series: they reveal the hidden structure beneath the noisy surface.*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_state_space_fundamentals_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_local_level_model.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

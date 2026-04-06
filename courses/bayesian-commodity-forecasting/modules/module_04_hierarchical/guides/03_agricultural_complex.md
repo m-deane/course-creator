@@ -1,10 +1,20 @@
 # Hierarchical Models for Agricultural Commodities
 
+> **Reading time:** ~11 min | **Module:** 4 — Hierarchical Models | **Prerequisites:** Module 3 State-Space Models
+
+
 ## In Brief
 
 Agricultural markets form interconnected networks through crop rotation, feed demand, and land allocation decisions. Hierarchical models capture these structural relationships—pooling information across crops, regions, and time scales to improve forecasts while respecting biological and economic constraints.
 
-> 💡 **Key Insight:** **Corn doesn't exist in isolation.** When corn prices spike, farmers plant more corn (less soybeans). When corn is cheap, livestock producers expand herds (increasing feed demand). A hierarchical model for the agricultural complex jointly models these substitution and complementarity relationships, preventing forecast inconsistencies.
+<div class="callout-insight">
+<strong>Insight:</strong> **Corn doesn't exist in isolation.** When corn prices spike, farmers plant more corn (less soybeans). When corn is cheap, livestock producers expand herds (increasing feed demand). A hierarchical model for the agricultural complex jointly models these substitution and complementarity relationships, preventing forecast inconsistencies.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Agricultural markets form interconnected networks through crop rotation, feed demand, and land allocation decisions.
+</div>
 
 ---
 
@@ -63,6 +73,10 @@ Global Ag Factor (food demand, energy prices, USD)
 ## Why Hierarchical Models for Agriculture?
 
 ### 1. Crop Rotation & Land Competition
+<div class="callout-warning">
+<strong>Warning:</strong> Farmers choose what to plant based on relative profitability.
+</div>
+
 
 Farmers choose what to plant based on relative profitability.
 
@@ -121,6 +135,13 @@ Farmers choose what to plant based on relative profitability.
 ## Code Implementation
 
 ### Basic Grain Complex Hierarchy
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -219,11 +240,21 @@ for c, crop in enumerate(crop_names):
     print(f"{crop}: Sep={harvest_seasonal[c, 9]:.2f}, Oct={harvest_seasonal[c, 10]:.2f}, Nov={harvest_seasonal[c, 11]:.2f}")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Corn-Soybean Land Competition Model
 
 ### Economic Constraint: Farmer Planting Decisions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Data: corn and soybean prices, planted acres
@@ -278,11 +309,21 @@ with pm.Model() as corn_soy_competition:
 # Model predicts farmers shift to soybeans → corn prices rise (less supply)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Regional Hierarchy: US vs. South America
 
 ### Brazil and Argentina Production
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as regional_soy:
@@ -351,6 +392,9 @@ with pm.Model() as regional_soy:
                               return_inferencedata=True)
 ```
 
+</div>
+</div>
+
 **Result:** Model captures:
 1. Global soybean demand (China imports)
 2. Regional basis (Brazil discount to US due to export taxes)
@@ -361,6 +405,13 @@ with pm.Model() as regional_soy:
 ## Incorporating Fundamentals: Stocks-to-Use Ratio
 
 ### Nonlinear Price-Stock Relationship
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as stocks_to_use:
@@ -404,6 +455,9 @@ with pm.Model() as stocks_to_use:
 # Interpretation: When stocks-to-use drops below 15%, prices become explosive
 ```
 
+</div>
+</div>
+
 ---
 
 ## Multi-Crop Forecast Consistency
@@ -411,6 +465,13 @@ with pm.Model() as stocks_to_use:
 ### Constraint: Corn-Soybean Ratio Bounds
 
 Economic theory: Corn/Soy price ratio should stay in reasonable range.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as ratio_constrained:
@@ -442,6 +503,9 @@ with pm.Model() as ratio_constrained:
                                   target_accept=0.9,
                                   return_inferencedata=True)
 ```
+
+</div>
+</div>
 
 **Result:** Forecasts respect economic equilibrium (no arbitrage opportunities).
 
@@ -483,6 +547,13 @@ US corn harvest (Oct) and Brazil corn harvest (Mar) shouldn't use same seasonal 
 
 ## Model Comparison
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Compare hierarchical vs. independent models
 with pm.Model() as independent_crops:
@@ -502,6 +573,9 @@ print(comparison)
 
 # Hierarchical should win (borrows strength across crops)
 ```
+
+</div>
+</div>
 
 ---
 
@@ -526,6 +600,10 @@ print(comparison)
 
 ### Problem 1
 Design a hierarchical model for wheat prices with three classes: Hard Red Winter (HRW), Soft Red Winter (SRW), and Spring Wheat. What determines the hierarchy structure?
+<div class="callout-warning">
+<strong>Warning:</strong> Design a hierarchical model for wheat prices with three classes: Hard Red Winter (HRW), Soft Red Winter (SRW), and Spring Wheat. What determines the hierarchy structure?
+</div>
+
 
 ### Problem 2
 The corn-soybean price ratio is currently 0.48. Historical range is [0.35, 0.50]. Your forecast predicts 0.60 next quarter. What constraint have you violated? How do you incorporate this into a Bayesian model?
@@ -540,6 +618,19 @@ You're forecasting corn and ethanol prices jointly. Corn is an input to ethanol 
 USDA forecasts ending stocks at 1.2 billion bushels (stocks-to-use = 8%, very tight). How would you incorporate this into a hierarchical corn price model? What prior should you use for the scarcity premium?
 
 ---
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving hierarchical models for agricultural commodities, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Further Reading
 
@@ -558,3 +649,17 @@ USDA forecasts ending stocks at 1.2 billion bushels (stocks-to-use = 8%, very ti
 ---
 
 *"In agricultural markets, every crop is a neighbor. Hierarchical models respect the community."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_agricultural_complex_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_pooling_comparison.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

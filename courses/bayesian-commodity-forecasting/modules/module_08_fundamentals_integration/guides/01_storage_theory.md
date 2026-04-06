@@ -1,10 +1,20 @@
 # Storage Theory: Economic Foundations of Commodity Pricing
 
+> **Reading time:** ~7 min | **Module:** 8 — Fundamentals Integration | **Prerequisites:** Modules 1-7
+
+
 ## In Brief
 
 Storage theory explains how inventory levels, storage costs, and the convenience of holding physical commodities determine the relationship between spot and futures prices. Understanding these economics is essential for building fundamentals-based forecasting models.
 
-> 💡 **Key Insight:** **Inventories are the bridge between supply and demand across time.** When supply exceeds demand, inventories build and futures trade at a premium (contango). When demand exceeds supply, inventories draw and futures trade at a discount (backwardation). This is the physical foundation of commodity prices.
+<div class="callout-insight">
+<strong>Insight:</strong> **Inventories are the bridge between supply and demand across time.** When supply exceeds demand, inventories build and futures trade at a premium (contango). When demand exceeds supply, inventories draw and futures trade at a discount (backwardation). This is the physical foundation of commodity prices.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Storage theory explains how inventory levels, storage costs, and the convenience of holding physical commodities determine the relationship between spot and futures prices.
+</div>
 
 ---
 
@@ -13,6 +23,10 @@ Storage theory explains how inventory levels, storage costs, and the convenience
 ### The Cost of Carry Model
 
 The theoretical relationship between spot ($S$) and futures ($F_T$) prices:
+<div class="callout-key">
+<strong>Key Point:</strong> The theoretical relationship between spot ($S$) and futures ($F_T$) prices:
+</div>
+
 
 $$F_T = S \cdot e^{(r + u - y)T}$$
 
@@ -154,6 +168,13 @@ Storage theory suggests:
 
 ### Model Specification
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 
@@ -174,6 +195,9 @@ with pm.Model() as storage_model:
     mu = alpha + beta_inventory * inventory_zscore + beta_production * production_zscore
     price = pm.Normal('price', mu=mu, sigma=sigma, observed=observed_prices)
 ```
+
+</div>
+</div>
 
 ### Dynamic Coefficient Model
 
@@ -217,6 +241,13 @@ Forecast components separately, aggregate to forecast inventory.
 ---
 
 ## Code Example: Convenience Yield Calculation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -286,6 +317,9 @@ else:
     print("Market in BACKWARDATION (spot > futures)")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -334,6 +368,19 @@ The inventory-price relationship varies:
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Framework" and why it matters in practice.
+
+2. Given a real-world scenario involving storage theory: economic foundations of commodity pricing, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Working, H.** "The Theory of Price of Storage" (1949) — Original theory
@@ -343,3 +390,17 @@ The inventory-price relationship varies:
 ---
 
 *"Storage theory isn't just academic—it's how physical traders actually price commodities. Models that ignore it are missing the economic fundamentals."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_storage_theory_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_storage_theory.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

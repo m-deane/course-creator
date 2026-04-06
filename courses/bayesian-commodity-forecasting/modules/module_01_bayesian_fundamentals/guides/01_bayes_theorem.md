@@ -1,10 +1,15 @@
 # Bayes' Theorem: The Foundation of Bayesian Inference
 
+> **Reading time:** ~6 min | **Module:** 1 — Bayesian Fundamentals | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 
 Bayes' theorem provides a principled way to update beliefs in light of new evidence. It forms the mathematical foundation for all probabilistic machine learning and is essential for building forecasting models that quantify uncertainty.
 
-> 💡 **Key Insight:** **Bayesian inference inverts the usual probability question.** Instead of asking "What's the probability of seeing this data given a parameter?" we ask "What's the probability of a parameter given this data?" This inversion is exactly what we need for forecasting.
+<div class="callout-insight">
+<strong>Insight:</strong> **Bayesian inference inverts the usual probability question.** Instead of asking "What's the probability of seeing this data given a parameter?" we ask "What's the probability of a parameter given this data?" This inversion is exactly what we need for forecasting.
+</div>
 
 ## Formal Definition
 
@@ -27,6 +32,11 @@ $$P(\theta | y) \propto P(y | \theta) \cdot P(\theta)$$
 **Posterior ∝ Likelihood × Prior**
 
 This is the form we use most often. The normalizing constant $P(y)$ is often intractable but unnecessary for inference.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Bayes' theorem provides a principled way to update beliefs in light of new evidence.
+</div>
 
 ---
 
@@ -93,6 +103,13 @@ This is crucial for time series: we update beliefs as each new observation arriv
 
 ### Simple Example: Estimating a Probability
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -133,7 +150,17 @@ print(f"Posterior std: {post_dist.std():.3f}")
 print(f"95% credible interval: [{post_dist.ppf(0.025):.3f}, {post_dist.ppf(0.975):.3f}]")
 ```
 
+</div>
+</div>
+
 ### PyMC Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -153,6 +180,9 @@ with pm.Model() as coin_model:
 # Posterior summary
 az.summary(trace, var_names=['theta'])
 ```
+
+</div>
+</div>
 
 ---
 
@@ -210,6 +240,19 @@ Starting with Beta(1,1) prior, you observe: success, success, failure, success. 
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving bayes' theorem: the foundation of bayesian inference, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **McElreath, Ch. 2** - "Small Worlds and Large Worlds" - Excellent intuitive introduction
@@ -229,3 +272,17 @@ Starting with Beta(1,1) prior, you observe: success, success, failure, success. 
 ---
 
 *"The posterior distribution represents everything we know about the parameter after seeing the data. Everything. If it's not in the posterior, we don't know it."* — Andrew Gelman
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_bayes_theorem_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_bayesian_regression_pymc.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

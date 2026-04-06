@@ -21,6 +21,10 @@ Decomposing observed series into hidden latent components
 > **Think of state space as a hidden story.** We observe the outcome (prices) but not the underlying drivers (trend, momentum, sentiment). State space models infer these hidden states from observable data.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## General Linear Gaussian State Space Model
@@ -35,6 +39,10 @@ $$\alpha_{t+1} = T_t \alpha_t + c_t + R_t \eta_t, \quad \eta_t \sim \mathcal{N}(
 $$\alpha_1 \sim \mathcal{N}(a_1, P_1)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Component Definitions
@@ -50,11 +58,16 @@ $$\alpha_1 \sim \mathcal{N}(a_1, P_1)$$
 | $R_t$ | $m \times r$ | State noise selection matrix |
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## The Two-Layer Model
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Hidden["Layer 1: Hidden States"]
         A1["α₁"] -->|"T"| A2["α₂"] -->|"T"| A3["α₃"] -->|"T"| A4["α₄"]
@@ -69,20 +82,16 @@ flowchart LR
     A2 -->|"Z"| Y2
     A3 -->|"Z"| Y3
     A4 -->|"Z"| Y4
-    style A1 fill:#e67e22,color:#fff
-    style A2 fill:#e67e22,color:#fff
-    style A3 fill:#e67e22,color:#fff
-    style A4 fill:#e67e22,color:#fff
-    style Y1 fill:#4a90d9,color:#fff
-    style Y2 fill:#4a90d9,color:#fff
-    style Y3 fill:#4a90d9,color:#fff
-    style Y4 fill:#4a90d9,color:#fff
 ```
 
 **Layer 1:** True underlying process (equilibrium price, volatility regime, trend)
 **Layer 2:** Noisy observations (market prices with bid-ask noise, microstructure)
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -151,6 +160,7 @@ Where $h_t = \log(\sigma_t^2)$ is log-volatility.
 ## Model Selection Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q["What do you need\nto model?"] --> Q1{"Time-varying\nlevel?"}
     Q1 -->|"Yes"| LL["Local Level\nModel"]
@@ -160,9 +170,6 @@ flowchart TD
     Q2 -->|"Yes"| SV["Stochastic\nVolatility"]
     Q --> Q3{"Regime\nchanges?"}
     Q3 -->|"Yes"| HMM["Module 7:\nHMM"]
-    style LL fill:#27ae60,color:#fff
-    style BSM fill:#e67e22,color:#fff
-    style SV fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -301,6 +308,7 @@ Compare specifications using WAIC, LOO-CV.
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BU["Sequential Bayesian\nUpdating (Module 1)"] --> SSM["State Space\nFundamentals"]
     LA["Linear Algebra"] --> SSM
@@ -309,7 +317,6 @@ flowchart TD
     SSM --> DR["Dynamic Regression\nfor Fundamentals\n(Module 8)"]
     SSM --> KF["Kalman Filter\n(next guide)"]
     SSM --> SV["Stochastic Volatility\n(guide 3)"]
-    style SSM fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

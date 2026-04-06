@@ -1,10 +1,15 @@
 # Variational Inference for Bayesian Models
 
+> **Reading time:** ~10 min | **Module:** 6 — Inference Methods | **Prerequisites:** Module 1 Bayesian Fundamentals
+
+
 ## In Brief
 
 Variational Inference (VI) approximates intractable posterior distributions by transforming Bayesian inference into an optimization problem. Instead of sampling (MCMC), VI finds the best approximation from a simpler family of distributions by maximizing the Evidence Lower Bound (ELBO).
 
-> 💡 **Key Insight:** MCMC explores the posterior through random sampling—accurate but slow. VI turns inference into optimization: find the distribution in a tractable family (e.g., Gaussians) that is closest to the true posterior. Trade exactness for speed—VI can be 100x faster than MCMC, enabling models with millions of parameters.
+<div class="callout-insight">
+<strong>Insight:</strong> MCMC explores the posterior through random sampling—accurate but slow. VI turns inference into optimization: find the distribution in a tractable family (e.g., Gaussians) that is closest to the true posterior. Trade exactness for speed—VI can be 100x faster than MCMC, enabling models with millions of parameters.
+</div>
 
 ## Formal Definition
 
@@ -80,6 +85,13 @@ VI trades accuracy for speed. How much accuracy? Depends on:
 ## Code Implementation
 
 ### Basic Variational Inference in PyMC
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -162,7 +174,17 @@ print("\nMCMC Results:")
 print(az.summary(trace_mcmc))
 ```
 
+</div>
+</div>
+
 ### Custom Variational Family (Full-Rank Gaussian)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from scipy.optimize import minimize
@@ -259,7 +281,17 @@ print(f"Covariance:\n{Sigma_opt}")
 print(f"\nTrue values: alpha={true_alpha}, beta={true_beta}, log_sigma={np.log(true_sigma)}")
 ```
 
+</div>
+</div>
+
 ### Stochastic Variational Inference (Mini-Batch)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -395,6 +427,9 @@ with torch.no_grad():
     print(f"  beta: {beta_samples.mean():.3f} (true: {true_beta})")
 ```
 
+</div>
+</div>
+
 ## Common Pitfalls
 
 **1. Mean-Field Assumption Too Restrictive**
@@ -482,6 +517,19 @@ with torch.no_grad():
    - Estimate computational cost vs MCMC (order of magnitude)
    - What convergence diagnostics would you use?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving variational inference for bayesian models, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Foundational Papers:**
@@ -504,6 +552,25 @@ with torch.no_grad():
 **Diagnostics:**
 10. **Yao et al. (2018)** - "Yes, but Did It Work?: Evaluating Variational Inference" - Quality checks
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Variational Inference (VI) approximates intractable posterior distributions by transforming Bayesian inference into an optimization problem.
+</div>
+
 ---
 
 *"Variational inference trades sampling for optimization: instead of exploring the posterior, find the best simple approximation. Faster but approximate."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_variational_inference_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_mcmc_foundations.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

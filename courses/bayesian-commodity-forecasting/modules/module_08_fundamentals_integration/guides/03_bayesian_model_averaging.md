@@ -1,14 +1,23 @@
 # Bayesian Model Averaging for Commodity Forecasting
 
+> **Reading time:** ~12 min | **Module:** 8 — Fundamentals Integration | **Prerequisites:** Modules 1-7
+
+
 ## In Brief
 
 Bayesian Model Averaging (BMA) combines predictions from multiple models weighted by their posterior model probabilities. Instead of selecting a single "best" model, BMA accounts for model uncertainty by averaging over all candidate models, yielding forecasts that are often more robust and better-calibrated than any individual model.
 
-> 💡 **Key Insight:** Model selection (choosing one model) discards information and understates uncertainty. If Model A has 60% posterior probability and Model B has 40%, why use only Model A? BMA uses both, weighted by their probabilities, capturing both parameter uncertainty (within models) and model uncertainty (across models). For commodity forecasting with competing fundamental specifications, BMA prevents overfitting to any single structural assumption.
+<div class="callout-insight">
+<strong>Insight:</strong> Model selection (choosing one model) discards information and understates uncertainty. If Model A has 60% posterior probability and Model B has 40%, why use only Model A? BMA uses both, weighted by their probabilities, capturing both parameter uncertainty (within models) and model uncertainty (across models). For commodity forecasting with competing fundamental specifications, BMA prevents overfitting to any single structural assumption.
+</div>
 
 ## Formal Definition
 
 ### The Model Averaging Framework
+<div class="callout-key">
+<strong>Key Point:</strong> Given data $\mathcal{D}$ and model space $\mathcal{M} = \{M_1, ..., M_K\}$:
+</div>
+
 
 Given data $\mathcal{D}$ and model space $\mathcal{M} = \{M_1, ..., M_K\}$:
 
@@ -86,6 +95,13 @@ For commodity forecasting:
 ## Code Implementation
 
 ### Basic BMA Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -338,7 +354,17 @@ plt.savefig('bma_weights.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+</div>
+
 ### Forecast Comparison: Individual Models vs BMA
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def compare_forecast_performance(y_true, X_test, bma):
@@ -404,7 +430,17 @@ print(f"  BMA RMSE: {results['rmse']:.3f}")
 print(f"  BMA Coverage: {results['coverage']:.2%}")
 ```
 
+</div>
+</div>
+
 ### Pseudo-BMA with Stacking
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def pseudo_bma_stacking(traces, y_holdout):
@@ -476,12 +512,19 @@ for i, name in enumerate(bma.model_names):
     print(f"    Stacking: {stacking_weights[i]:.4f}")
 ```
 
+</div>
+</div>
+
 ## Common Pitfalls
 
 **1. Misspecified Prior Model Probabilities**
 - **Problem:** Setting P(M_k) = 1/K (uniform) when domain knowledge suggests otherwise
 - **Symptom:** BMA gives weight to implausible models
 - **Solution:** Use informative prior model probabilities based on theory/experience
+<div class="callout-key">
+<strong>Key Point:</strong> **1. Misspecified Prior Model Probabilities**
+</div>
+
 
 **2. Overlapping Model Space**
 - **Problem:** Including highly similar models (AR(2) and AR(3))
@@ -563,6 +606,19 @@ for i, name in enumerate(bma.model_names):
    - BMA forecast?
    - If M₂ and M₃ both use inventory, is model space appropriate?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving bayesian model averaging for commodity forecasting, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Foundational:**
@@ -585,6 +641,25 @@ for i, name in enumerate(bma.model_names):
 **Commodity-Specific:**
 10. **Baumeister & Kilian (2015)** - "Forecasting the Real Price of Oil in a Changing World" - Model uncertainty in oil
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Bayesian Model Averaging (BMA) combines predictions from multiple models weighted by their posterior model probabilities.
+</div>
+
 ---
 
 *"BMA doesn't pick the 'best' model—it uses all models weighted by their plausibility, capturing model uncertainty ignored by selection."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_bayesian_model_averaging_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_storage_theory.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

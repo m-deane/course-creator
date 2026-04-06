@@ -40,6 +40,10 @@ Distribution: $\beta \sim \mathcal{N}(2.5, 0.3)$
 > The Bayesian answer helps you assess risk: Should I hedge? How big is my exposure?
 
 <!-- Speaker notes: Compare the two sides. Ask learners which approach they would use in their own work and why. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Formal Definition
@@ -57,11 +61,16 @@ $$y_i = \beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip} + \epsilon_i, \quad \
 | Posterior | $p(\beta, \sigma^2 \mid y, X) \propto p(y \mid X, \beta, \sigma^2)\, p(\beta, \sigma^2)$ |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Bayesian Regression Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PK["Prior Knowledge\np(β, σ²)"] --> BM["Bayesian\nModel"]
     D["Data\n(X, y)"] --> BM
@@ -69,11 +78,13 @@ flowchart LR
     Post --> PI["Prediction\nIntervals"]
     Post --> CI["Credible\nIntervals"]
     Post --> MC["Model\nComparison"]
-    style BM fill:#4a90d9,color:#fff
-    style Post fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -94,6 +105,10 @@ In matrix form:
 $$p(y \mid X, \beta, \sigma^2) = \mathcal{N}(y \mid X\beta, \sigma^2 I)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Conjugate Prior (Normal-Inverse-Gamma)
@@ -140,14 +155,13 @@ Result: a **Student's t-distribution** with interpretable parameters.
 ## Prior to Posterior Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     VP["Vague Prior\np(β) wide"] -->|"small n"| WP["Wide Posterior\nhigh uncertainty"]
     IP["Informative Prior\np(β) narrow"] -->|"small n"| MP["Moderate Posterior\nprior dominates"]
     VP -->|"large n"| NP["Narrow Posterior\ndata dominates"]
     IP -->|"large n"| NP
     NP --> MLE["Converges to MLE\nas n → ∞"]
-    style NP fill:#27ae60,color:#fff
-    style MLE fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -295,6 +309,7 @@ When data strongly contradicts prior:
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BT["Bayes' Theorem\n(1.1)"] --> BR["Bayesian\nRegression"]
     CP["Conjugate Priors\n(1.2)"] --> BR
@@ -303,7 +318,6 @@ flowchart TD
     BR --> HM["Hierarchical Models\nPartial pooling\n(Module 4)"]
     BR --> FI["Fundamentals Integration\n(Module 8)"]
     BR -.->|"Bayesian priors ↔\nRidge/Lasso"| REG["Regularization"]
-    style BR fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

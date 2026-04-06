@@ -22,6 +22,10 @@ math: mathjax
 Think of GPS: speedometer predicts position, GPS measurements correct it. The Kalman filter optimally combines both.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## State Space Model
@@ -33,6 +37,10 @@ $$y_t = Z_t \alpha_t + \epsilon_t, \quad \epsilon_t \sim \mathcal{N}(0, H_t)$$
 $$\alpha_{t+1} = T_t \alpha_t + R_t \eta_t, \quad \eta_t \sim \mathcal{N}(0, Q_t)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Kalman Filter Recursions
@@ -58,18 +66,20 @@ $$P_{t|t} = P_{t|t-1} - K_t Z_t P_{t|t-1}$$
 </div>
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Kalman Filter Cycle
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     PR["Predict\nα_{t|t-1}, P_{t|t-1}"] -->|"forecast error v_t"| OBS["Observe y_t"]
     OBS -->|"Kalman gain K_t"| UP["Update\nα_{t|t}, P_{t|t}"]
     UP -->|"state transition"| PR2["Predict\nα_{t+1|t}"]
-    style PR fill:#e67e22,color:#fff
-    style OBS fill:#4a90d9,color:#fff
-    style UP fill:#27ae60,color:#fff
 ```
 
 **Uncertainty Evolution:**
@@ -77,6 +87,10 @@ flowchart LR
 - **Update:** $P$ decreases (Kalman gain reduces uncertainty)
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Kalman Gain
@@ -104,12 +118,10 @@ The Kalman filter is **Normal-Normal conjugate updating**:
 **Posterior:** $\alpha_t \mid y_t \sim \mathcal{N}(\hat{\alpha}_{t|t}, P_{t|t})$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Prior["Prior\nN(α_{t|t-1}, P_{t|t-1})"] -->|"× Likelihood"| Post["Posterior\nN(α_{t|t}, P_{t|t})"]
     Lik["Likelihood\nN(Z_tα_t, H_t)"] --> Post
-    style Prior fill:#27ae60,color:#fff
-    style Lik fill:#e67e22,color:#fff
-    style Post fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -292,6 +304,7 @@ Nonlinear systems need: **EKF** (linearize), **UKF** (better approximation), or 
 ## Kalman Filter Variants
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     KF["Kalman Filter\n(linear-Gaussian)"] --> EKF["Extended KF\n(linearize nonlinear)"]
     KF --> UKF["Unscented KF\n(sigma points)"]
@@ -299,8 +312,6 @@ flowchart TD
     KF --> BKF["Bayesian KF\n(estimate Q, H)"]
     EKF --> SV["Stochastic\nVolatility"]
     PF --> RS["Regime\nSwitching"]
-    style KF fill:#4a90d9,color:#fff
-    style BKF fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

@@ -21,6 +21,10 @@ Making GPs practical for large datasets
 > **Standard GP inference requires inverting an n x n covariance matrix, which becomes intractable for large datasets.** Sparse methods select m representative "inducing points" and approximate the full GP through these points, achieving a controlled trade-off between computational efficiency and model fidelity.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Scalability Problem
@@ -37,11 +41,16 @@ $$p(\mathbf{y} | \mathbf{X}) = \mathcal{N}(\mathbf{y} | \mathbf{0}, K_{nn} + \si
 For 10 years of daily data ($n = 2{,}500$): Full GP inverts a 2500 x 2500 matrix. Sparse GP with $m = 100$: **250x faster**.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Sparse GP Concept
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Full["Full GP: O(n^3)"]
         ALL["All n data points"] --> COV["n x n Covariance\nMatrix Inversion"]
@@ -51,11 +60,13 @@ flowchart TD
         DATA["n data points"] --> SCOV
     end
     Full -->|"Replace with"| Sparse
-    style Full fill:#c0392b,color:#fff
-    style Sparse fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Formal Definition
@@ -73,6 +84,10 @@ $$q(\mathbf{u}) = \mathcal{N}(\mathbf{m}, \mathbf{S})$$
 $$\mathcal{L} = \sum_{i=1}^n \mathbb{E}_{q(f_i)} [\log p(y_i | f_i)] - \text{KL}[q(\mathbf{u}) \| p(\mathbf{u})]$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -85,6 +100,7 @@ $$\mathcal{L} = \sum_{i=1}^n \mathbb{E}_{q(f_i)} [\log p(y_i | f_i)] - \text{KL}
 ## Taxonomy of Sparse Methods
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SPARSE["Sparse GP Methods"] --> SOR["Subset of Regressors\n(SoR)"]
     SPARSE --> DTC["Deterministic Training\nConditional (DTC)"]
@@ -94,8 +110,6 @@ flowchart TD
     SOR -.-> NOTE1["Simple but ignores\nremaining data"]
     FITC -.-> NOTE2["Better uncertainty\nthan DTC"]
     VFE -.-> NOTE3["Optimal variational bound\nMini-batch training\nMost widely used"]
-    style VFE fill:#27ae60,color:#fff
-    style HSGP fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -359,6 +373,7 @@ def sparse_gp_pymc(X_train, y_train, num_inducing=50):
 ## HSGP vs SVGP
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph SVGP["SVGP (GPyTorch)"]
         IP["Inducing Points Z"] --> VAR["Variational\nOptimization"]
@@ -368,8 +383,6 @@ flowchart LR
         BF["Basis Functions"] --> MCMC["Full MCMC\nSampling"]
         MCMC --> PRED2["Predictions +\nFull Posterior"]
     end
-    style SVGP fill:#4a90d9,color:#fff
-    style HSGP fill:#27ae60,color:#fff
 ```
 
 | Feature | SVGP | HSGP |
@@ -415,6 +428,7 @@ for n in [100, 500, 1000, 2500, 5000]:
 ## Choosing $m$ (Number of Inducing Points)
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Choose m"] --> RULE["Rule of thumb:\nm = sqrt(n)"]
     RULE --> CHECK{"Monitor ELBO\nand holdout MSE"}
@@ -422,8 +436,6 @@ flowchart TD
     CHECK -->|"ELBO still rising"| MORE["Increase m"]
     CHECK -->|"Overfitting"| LESS["Decrease m"]
     DONE --> VALIDATE["Validate vs full GP\non data subset"]
-    style DONE fill:#27ae60,color:#fff
-    style START fill:#4a90d9,color:#fff
 ```
 
 | Dataset Size | Recommended $m$ | Notes |
@@ -461,6 +473,7 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GPF["GP Fundamentals\n(guide 1)"] --> SA["Sparse\nApproximations"]
     KD["Kernel Design\n(guide 2)"] --> SA
@@ -469,7 +482,6 @@ flowchart TD
     SA --> STREAM["Real-Time GP Updates\n(Module 7)"]
     SA --> PROD["Production Deployment\n(< 100ms inference)"]
     SA -.-> RFF["Random Fourier Features\n(alternative approach)"]
-    style SA fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

@@ -1,10 +1,20 @@
 # Partial Pooling: The Logic of Hierarchical Models
 
+> **Reading time:** ~5 min | **Module:** 4 — Hierarchical Models | **Prerequisites:** Module 3 State-Space Models
+
+
 ## In Brief
 
 Partial pooling is a compromise between treating each commodity independently (no pooling) and treating all commodities identically (complete pooling). It enables information sharing while respecting individual differences.
 
-> 💡 **Key Insight:** **Shrinkage is intelligent borrowing.** When a commodity has limited data, its estimates are "shrunk" toward the group mean. When it has abundant data, it stands on its own. The model automatically determines how much to shrink based on data quality and group coherence.
+<div class="callout-insight">
+<strong>Insight:</strong> **Shrinkage is intelligent borrowing.** When a commodity has limited data, its estimates are "shrunk" toward the group mean. When it has abundant data, it stands on its own. The model automatically determines how much to shrink based on data quality and group coherence.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Partial pooling is a compromise between treating each commodity independently (no pooling) and treating all commodities identically (complete pooling).
+</div>
 
 ---
 
@@ -135,6 +145,13 @@ Partial pooling minimizes total prediction error.
 
 ## Code Example
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 import numpy as np
@@ -194,6 +211,9 @@ for j in range(n_commodities):
     print(f"{j:<12} {true_means[j]:<10.2f} {sample_mean:<12.2f} {hier_mean:<12.2f}")
 ```
 
+</div>
+</div>
+
 ---
 
 ## When Hierarchical Models Excel
@@ -250,6 +270,19 @@ Always examine how much shrinkage occurred—extreme shrinkage may indicate mode
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving partial pooling: the logic of hierarchical models, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Gelman & Hill** *Data Analysis Using Regression and Multilevel/Hierarchical Models* — Definitive reference
@@ -259,3 +292,17 @@ Always examine how much shrinkage occurred—extreme shrinkage may indicate mode
 ---
 
 *"Hierarchical models are not about assuming commodities are the same—they're about learning how different they actually are."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_partial_pooling_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_pooling_comparison.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -21,6 +21,10 @@ From pattern recognition to economic reasoning
 > **Pure statistical models learn patterns from price history but ignore why prices move.** Fundamental models incorporate the causal drivers: oil prices rise because inventories are low and demand is high, not just because they were rising yesterday. Bayesian frameworks excel at combining uncertain fundamental data with price history.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Fundamental-Augmented Model
@@ -37,11 +41,16 @@ $$p_t = f(p_{t-1}, \ldots, \mathbf{X}_t, \mathbf{Z}_t) + \epsilon_t$$
 | $\mathbf{Z}_t$ | Latent fundamentals (supply/demand balance) |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Categories of Fundamental Variables
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FUND["Fundamental\nVariables"] --> SUPPLY["Supply Side"]
     FUND --> DEMAND["Demand Side"]
@@ -59,10 +68,13 @@ flowchart TD
     EXOG --> E1["Weather"]
     EXOG --> E2["Geopolitical Risk"]
     EXOG --> E3["Currency"]
-    style FUND fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Crude Oil Fundamentals
@@ -79,6 +91,10 @@ flowchart TD
 | | Low | Bearish (weak demand) |
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Structural Relationships
@@ -214,6 +230,7 @@ with pm.Model() as model:
 ## Variable Importance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Importance["Variable Importance (Example)"]
         direction TB
@@ -223,9 +240,6 @@ flowchart LR
         V4["Currency\n(10%)"]
         V5["Weather\n(5%)"]
     end
-    style V1 fill:#27ae60,color:#fff
-    style V2 fill:#4a90d9,color:#fff
-    style V3 fill:#e67e22,color:#fff
 ```
 
 ```python
@@ -266,6 +280,7 @@ def compute_variable_importance(trace, X, var_names):
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     ST["Storage Theory\n(guide 1)"] --> FV["Fundamental\nVariables"]
     GP["GP Models\n(Module 5)"] --> FV
@@ -273,7 +288,6 @@ flowchart TD
     FV --> BMA["Bayesian Model\nAveraging (guide 3)"]
     FV --> EVAL["Forecast Evaluation\n(guide 4)"]
     FV --> TRADE["Trading Strategies\n(fundamental signals)"]
-    style FV fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

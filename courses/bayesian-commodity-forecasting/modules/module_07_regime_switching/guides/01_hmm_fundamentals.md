@@ -1,10 +1,20 @@
 # Hidden Markov Model Fundamentals
 
+> **Reading time:** ~6 min | **Module:** 7 — Regime Switching | **Prerequisites:** Module 3 State-Space Models
+
+
 ## In Brief
 
 A Hidden Markov Model (HMM) describes a system that transitions between discrete hidden states over time, with each state generating observations according to a state-specific distribution. For commodities, states represent market regimes, and observations are prices or returns.
 
-> 💡 **Key Insight:** **HMMs separate "what regime are we in?" from "what do we observe?"** The regime is latent (unobserved) but influences the distribution of prices. By modeling this two-layer structure, we can infer regimes from prices and make regime-dependent forecasts.
+<div class="callout-insight">
+<strong>Insight:</strong> **HMMs separate "what regime are we in?" from "what do we observe?"** The regime is latent (unobserved) but influences the distribution of prices. By modeling this two-layer structure, we can infer regimes from prices and make regime-dependent forecasts.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> A Hidden Markov Model (HMM) describes a system that transitions between discrete hidden states over time, with each state generating observations according to a state-specific distribution.
+</div>
 
 ---
 
@@ -151,6 +161,13 @@ $$P(S_t = k | Y_{1:T}) = \frac{\alpha_t(k) \cdot \beta_t(k)}{\sum_j \alpha_t(j) 
 
 ### Basic HMM Class
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import numpy as np
 from scipy import stats
@@ -250,6 +267,9 @@ smoothed = hmm.smooth(returns)
 print(f"Final regime probabilities: Bull={smoothed[-1, 0]:.2%}, Bear={smoothed[-1, 1]:.2%}")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Regime Duration and Characteristics
@@ -314,6 +334,19 @@ Point estimates of regimes ignore classification uncertainty.
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving hidden markov model fundamentals, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Rabiner** "A Tutorial on HMMs" (1989) — Classic introduction
@@ -323,3 +356,17 @@ Point estimates of regimes ignore classification uncertainty.
 ---
 
 *"Regimes are the market's hidden heartbeat. HMMs let us hear it through the noise of daily prices."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_hmm_fundamentals_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_hmm_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -21,11 +21,16 @@ Reliable data on prices, fundamentals, and positioning
 > **Free, official data often beats expensive commercial feeds for fundamentals.** EIA, USDA, and CFTC provide authoritative data that moves markets. Commercial data adds value primarily for higher frequency or alternative datasets.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Data Source Landscape
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DS["Commodity Data Sources"] --> E["Energy\n(EIA)"]
     DS --> A["Agriculture\n(USDA)"]
@@ -36,10 +41,13 @@ flowchart TD
     A --> AW["WASDE\nCrop Progress"]
     M --> MW["Warehouse Stocks\nInventory"]
     P --> PW["COT Report\nSpeculator Positioning"]
-    style DS fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -65,6 +73,10 @@ The most market-moving energy report in the world.
 | Crude Production | WCRFPUS2 | Weekly crude oil production |
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## EIA Python Retrieval
@@ -88,6 +100,10 @@ def get_eia_petroleum(series_id, api_key):
 ```
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key lines and explain the purpose of each section. Encourage learners to run this in their own notebooks. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Natural Gas Weekly Update
@@ -201,14 +217,13 @@ def get_usda_nass(commodity, year, api_key):
 ## COT Data Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CFTC["CFTC\nTuesday Data"] -->|"Friday Release"| DL["Download\nCSV/API"]
     DL --> Parse["Parse by\nTrader Category"]
     Parse --> Net["Calculate\nNet Positions"]
     Net --> Norm["Normalize\n(percentile rank)"]
     Norm --> Sig["Signal\nGeneration"]
-    style CFTC fill:#e67e22,color:#fff
-    style Sig fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -293,6 +308,7 @@ def get_available_data(date, release_schedule):
 ## Recommended Data Pipeline Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RAW["raw/\n(original downloads)"] --> P["processed/\n(cleaned, aligned)"]
     P --> F["features/\n(engineered features)"]
@@ -300,9 +316,6 @@ flowchart TD
     EIA["eia/"] --> RAW
     USDA["usda/"] --> RAW
     PRICES["prices/"] --> RAW
-    style RAW fill:#e67e22,color:#fff
-    style P fill:#4a90d9,color:#fff
-    style F fill:#27ae60,color:#fff
 ```
 
 **Principles:** Idempotent, Logged, Versioned, Tested
@@ -324,6 +337,7 @@ flowchart TD
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     EIA["EIA\n(Energy)"] --> DL["Data\nLake"]
     USDA["USDA\n(Agriculture)"] --> DL
@@ -332,8 +346,6 @@ flowchart TD
     YF["yfinance/FRED\n(Prices)"] --> DL
     DL --> QC["Quality\nChecks"]
     QC --> MODEL["Bayesian\nModels"]
-    style DL fill:#4a90d9,color:#fff
-    style MODEL fill:#27ae60,color:#fff
 ```
 
 > *"Know your data sources better than you know your models. The data is the foundation."*

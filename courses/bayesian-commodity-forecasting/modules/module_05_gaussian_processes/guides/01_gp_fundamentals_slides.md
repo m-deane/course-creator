@@ -21,6 +21,10 @@ A prior over functions, not parameters
 > **A GP places a prior directly on the space of functions.** Just as a Normal prior on a parameter expresses beliefs about where it lies, a GP prior expresses beliefs about what functions are plausible.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Formal Definition
@@ -35,24 +39,30 @@ $$\begin{bmatrix} f(x_1) \\ \vdots \\ f(x_n) \end{bmatrix} \sim \mathcal{N}\!\le
 | $k(x,x') = \text{Cov}(f(x), f(x'))$ | Kernel / covariance function |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## GP Prior to Posterior
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P["GP Prior\nm(x), k(x,x')"] -->|"observe data"| Post["GP Posterior\nm*(x), k*(x,x')"]
     D["Data\n(X, y)"] --> Post
     Post --> Pred["Predictions\nwith uncertainty"]
-    style P fill:#27ae60,color:#fff
-    style Post fill:#4a90d9,color:#fff
-    style Pred fill:#e67e22,color:#fff
 ```
 
 - **Before data:** Many plausible functions (prior samples)
 - **After data:** Function "pinned down" at observations, uncertain elsewhere
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## GP Regression
@@ -72,6 +82,10 @@ $$\text{Cov}(f_*) = K_{**} - K_*^T (K + \sigma_n^2 I)^{-1} K_*$$
 | $K_{**}$ | $k(\mathbf{X}_*, \mathbf{X}_*)$ — test covariance |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -136,6 +150,7 @@ $$k(x, x') = \sigma^2 \exp\!\left(-\frac{2\sin^2(\pi|x-x'|/p)}{\ell^2}\right)$$
 ## Kernel Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     K["Kernel Choice"] --> SE["Squared Exponential\n(very smooth)"]
     K --> M52["Matern-5/2\n(recommended default)"]
@@ -147,7 +162,6 @@ flowchart TD
     M52 --> GEN["General forecasting"]
     M12 --> VOL["Volatile commodities"]
     PER --> SEA["Seasonal patterns"]
-    style M52 fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -257,13 +271,12 @@ k_total = k_trend + k_seasonal * k_short + k_noise
 ## Kernel Composition Rules
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     ADD["Addition: k₁ + k₂\nSum of independent processes"] --> TS["Trend + Seasonality"]
     MUL["Multiplication: k₁ × k₂\nModulation (one scales other)"] --> TV["Time-varying\nseasonal amplitude"]
     ADD --> EX1["k_Matern(trend) + k_Periodic(seasonal)"]
     MUL --> EX2["k_Matern(slow) × k_Periodic(fast)"]
-    style ADD fill:#4a90d9,color:#fff
-    style MUL fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -292,6 +305,7 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BI["Bayesian Inference\n(Module 1)"] --> GP["GP Fundamentals"]
     LA["Linear Algebra\nMVN Distribution"] --> GP
@@ -299,7 +313,6 @@ flowchart TD
     GP --> SA["Sparse Approximations\n(guide 3)"]
     GP --> INF["GP Inference via MCMC\n(Module 6)"]
     GP --> FI["GP with Fundamentals\n(Module 8)"]
-    style GP fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

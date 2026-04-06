@@ -21,6 +21,10 @@ Choosing the right lens for your data
 > **Kernels encode assumptions about function smoothness and structure.** A smooth exponential kernel assumes gradual price changes (fine for stable markets), while a Matern-1/2 kernel allows sudden jumps (better for supply shocks). Choosing the wrong kernel is like wearing the wrong glasses — everything is blurry.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Kernel Function Definition
@@ -34,11 +38,16 @@ For a GP prior $f \sim \mathcal{GP}(m, k)$, any finite collection is MVN:
 $$\begin{bmatrix} f(x_1) \\ \vdots \\ f(x_n) \end{bmatrix} \sim \mathcal{N}\!\left( \begin{bmatrix} m(x_1) \\ \vdots \\ m(x_n) \end{bmatrix}, \begin{bmatrix} k(x_1,x_1) & \cdots & k(x_1,x_n) \\ \vdots & \ddots & \vdots \\ k(x_n,x_1) & \cdots & k(x_n,x_n) \end{bmatrix} \right)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Kernel Design Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA["Commodity Data"] --> Q1{"Smooth or Rough?"}
     Q1 -->|"Smooth trends"| SE["SE / RBF Kernel"]
@@ -53,11 +62,13 @@ flowchart TD
     MAT --> FINAL
     PER --> FINAL
     LIN --> FINAL
-    style FINAL fill:#27ae60,color:#fff
-    style DATA fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -83,6 +94,10 @@ $$k_{\text{SE}}(x_i, x_j) = \sigma^2 \exp\!\left(-\frac{(x_i - x_j)^2}{2\ell^2}\
 **Problem:** Too smooth for commodities — no sharp moves
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Matern Kernel
@@ -171,14 +186,12 @@ $$k_{\text{RQ}}(x_i, x_j) = \sigma^2 \left(1 + \frac{(x_i - x_j)^2}{2\alpha \ell
 ## Kernel Smoothness Spectrum
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     M12["Matern-1/2\n(Roughest)"] --> M32["Matern-3/2"] --> M52["Matern-5/2"] --> SE["SE / RBF\n(Smoothest)"]
     M12 -.-> U1["Supply shocks\nWeather events"]
     M52 -.-> U2["General commodity\nforecasting"]
     SE -.-> U3["Equilibrium\nmodels"]
-    style M52 fill:#27ae60,color:#fff
-    style M12 fill:#c0392b,color:#fff
-    style SE fill:#4a90d9,color:#fff
 ```
 
 > Move left for volatile markets, right for stable markets. Matern-5/2 is the sweet spot.
@@ -200,12 +213,11 @@ flowchart LR
 $$k_{\text{total}} = k_{\text{Matern}}(\text{trend}) + k_{\text{Periodic}}(\text{seasonal})$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     T["Trend Process\n(Matern-5/2)"] --> PLUS(("+"))
     S["Seasonal Process\n(Periodic)"] --> PLUS
     PLUS --> TOTAL["Combined Signal\nTrend + Seasonality"]
-    style PLUS fill:#4a90d9,color:#fff
-    style TOTAL fill:#27ae60,color:#fff
 ```
 
 > Each process contributes independently to the observed signal.
@@ -222,12 +234,11 @@ $$k_{\text{varying}} = k_{\text{Matern}}(\text{slow}) \times k_{\text{Periodic}}
 This allows winter peaks to change magnitude year-to-year.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Slow Amplitude\n(Matern)"] --> TIMES(("x"))
     P["Fast Periodicity\n(Periodic)"] --> TIMES
     TIMES --> TV["Time-Varying\nSeasonal Amplitude"]
-    style TIMES fill:#e67e22,color:#fff
-    style TV fill:#27ae60,color:#fff
 ```
 
 > **Why multiplication?** Winter 2014: $6/mmBtu swings; Winter 2020: $3/mmBtu swings.
@@ -327,17 +338,13 @@ with pm.Model() as corn_model:
 ## Commodity Kernel Selection Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CRUDE["Crude Oil"] --> K1["Matern-5/2 (trend)\n+ Exponential (shock)"]
     GAS["Natural Gas"] --> K2["Matern-5/2 x Periodic\n(time-varying seasonal)"]
     CORN["Agriculture"] --> K3["Periodic (harvest)\n+ Matern-5/2 (trend)\n+ Matern-1/2 (weather)"]
     METALS["Metals"] --> K4["Matern-5/2 (trend)\n+ Linear (inflation)"]
     ELEC["Electricity"] --> K5["Periodic (daily)\n+ Periodic (weekly)\n+ Matern-3/2 (demand)"]
-    style CRUDE fill:#4a90d9,color:#fff
-    style GAS fill:#e67e22,color:#fff
-    style CORN fill:#27ae60,color:#fff
-    style METALS fill:#9b59b6,color:#fff
-    style ELEC fill:#c0392b,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -501,6 +508,7 @@ cov = sigma**2 * pm.gp.cov.Periodic(1, period=period, ls=ell)
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GPF["GP Fundamentals\n(guide 1)"] --> KD["Kernel Design"]
     SSM["State Space Models\n(Module 3: periodic)"] --> KD
@@ -508,7 +516,6 @@ flowchart TD
     KD --> CP["Change Point Detection\n(Module 7)"]
     KD --> FI["Fundamentals as\nGP Inputs (Module 8)"]
     KD -.-> SPEC["Spectral Analysis\n(Fourier connection)"]
-    style KD fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

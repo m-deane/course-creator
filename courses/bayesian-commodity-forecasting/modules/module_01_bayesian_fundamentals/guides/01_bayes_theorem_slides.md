@@ -22,6 +22,10 @@ math: mathjax
 This inversion is exactly what we need for forecasting.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Bayes' Theorem — Formal Definition
@@ -36,6 +40,10 @@ $$P(\theta \mid y) = \frac{P(y \mid \theta) \cdot P(\theta)}{P(y)}$$
 | **Evidence** | $P(y)$ | Normalizing constant |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Proportional Form (Most Useful)
@@ -49,22 +57,28 @@ $$\boxed{\text{Posterior} \propto \text{Likelihood} \times \text{Prior}}$$
 > The normalizing constant $P(y)$ is often intractable but unnecessary for inference.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Bayesian Update Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P["Prior\nP(θ)"] -->|"multiply"| U["Unnormalized\nPosterior"]
     L["Likelihood\nP(y|θ)"] -->|"multiply"| U
     U -->|"normalize"| Post["Posterior\nP(θ|y)"]
     Post -->|"becomes\nnew prior"| P2["Next Prior"]
-    style P fill:#27ae60,color:#fff
-    style L fill:#e67e22,color:#fff
-    style Post fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -92,15 +106,13 @@ Forming beliefs about next month's crude oil inventory change:
 ## Sequential Updating
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     W1["Week 1"] --> P1["Prior"] --> |"+ EIA Data"| Post1["Posterior₁"]
     Post1 --> |"becomes prior"| P2["Prior₂"]
     W2["Week 2"] --> P2 --> |"+ EIA Data"| Post2["Posterior₂"]
     Post2 --> |"becomes prior"| P3["Prior₃"]
     W3["Week N"] --> P3 --> |"+ EIA Data"| PostN["PosteriorN"]
-    style Post1 fill:#4a90d9,color:#fff
-    style Post2 fill:#4a90d9,color:#fff
-    style PostN fill:#4a90d9,color:#fff
 ```
 
 **Today's posterior becomes tomorrow's prior.**
@@ -232,6 +244,7 @@ az.summary(trace, var_names=['theta'])
 ## MCMC Sampling Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     M["Define Model\n(Priors + Likelihood)"] --> S["Sample\npm.sample()"]
     S --> T["Tune\n(adapt step size)"]
@@ -239,8 +252,6 @@ flowchart TD
     D --> C["Check Convergence\n(R-hat, ESS)"]
     C -->|"converged"| A["Analyze\naz.summary()"]
     C -->|"not converged"| S2["Increase samples\nor reparameterize"]
-    style M fill:#27ae60,color:#fff
-    style A fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -279,14 +290,13 @@ The evidence $P(y)$ is often intractable. For most inference tasks (MCMC, MAP), 
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CP["Conditional Probability\nP(A|B) = P(A,B)/P(B)"] --> BT["Bayes' Theorem"]
     LTP["Law of Total Probability"] --> BT
     BT --> CJ["Conjugate Priors\n(next guide)"]
     BT --> MCMC["MCMC Methods\n(Module 6)"]
     BT --> HM["Hierarchical Models\n(Module 4)"]
-    style BT fill:#e67e22,color:#fff
-    style CJ fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

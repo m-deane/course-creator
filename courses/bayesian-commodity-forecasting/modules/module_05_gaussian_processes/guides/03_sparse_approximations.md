@@ -1,16 +1,25 @@
 # Sparse Approximations for Gaussian Processes
 
+> **Reading time:** ~10 min | **Module:** 5 — Gaussian Processes | **Prerequisites:** Module 4 Hierarchical Models
+
+
 ## In Brief
 
 Sparse approximations reduce the computational cost of Gaussian Process inference from O(n^3) to O(nm^2), where m << n is the number of inducing points. These methods enable GP modeling of large datasets (n > 10,000) by approximating the full covariance matrix with a lower-rank representation.
 
-> 💡 **Key Insight:** Standard GP inference requires inverting an n×n covariance matrix, which becomes intractable for large datasets. Sparse methods select m representative "inducing points" and approximate the full GP through these points, achieving a controlled trade-off between computational efficiency and model fidelity.
+<div class="callout-insight">
+<strong>Insight:</strong> Standard GP inference requires inverting an n×n covariance matrix, which becomes intractable for large datasets. Sparse methods select m representative "inducing points" and approximate the full GP through these points, achieving a controlled trade-off between computational efficiency and model fidelity.
+</div>
 
 ## Formal Definition
 
 ### Standard GP Regression
 
 For training data $(\mathbf{X}, \mathbf{y})$ with $|\mathbf{X}| = n$:
+<div class="callout-key">
+<strong>Key Point:</strong> For training data $(\mathbf{X}, \mathbf{y})$ with $|\mathbf{X}| = n$:
+</div>
+
 
 $$p(\mathbf{y} | \mathbf{X}) = \mathcal{N}(\mathbf{y} | \mathbf{0}, K_{nn} + \sigma^2_n I)$$
 
@@ -79,6 +88,13 @@ For commodity prices with 10 years of daily data (2,500 points), we might use:
 ## Code Implementation
 
 ### Basic Sparse GP with GPyTorch
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import torch
@@ -282,7 +298,17 @@ print(f"\nFinal inducing point locations:")
 print(inducing_points.flatten()[:10], "...")
 ```
 
+</div>
+</div>
+
 ### Comparison: Full GP vs Sparse GP
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import time
@@ -346,7 +372,17 @@ plt.savefig('sparse_gp_scaling.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+</div>
+
 ### PyMC Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -392,6 +428,9 @@ y = np.sin(X[:, 0]) + np.random.normal(0, 0.1, n)
 
 model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 ```
+
+</div>
+</div>
 
 ## Common Pitfalls
 
@@ -472,6 +511,19 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
    - What happens to ELBO if you: (a) Add more inducing points? (b) Use better kernel?
    - How does ELBO relate to predictive performance?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving sparse approximations for gaussian processes, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Foundational Papers:**
@@ -492,6 +544,25 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 9. **"High-Frequency Trading with Gaussian Processes"** - Real-time inference requirements
 10. **"Scalable Bayesian Models for Energy Markets"** - Sparse GPs for large-scale forecasting
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Sparse approximations reduce the computational cost of Gaussian Process inference from O(n^3) to O(nm^2), where m << n is the number of inducing points.
+</div>
+
 ---
 
 *"Sparse approximations make GPs practical for large datasets by learning a small set of inducing points that summarize the essential structure of the data."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_sparse_approximations_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_gp_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -22,6 +22,10 @@ A **conjugate prior** is a prior distribution that, when combined with a particu
 > Conjugate priors exist for mathematical convenience, not physical reality.
 
 <!-- Speaker notes: Explain In Brief. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Why Conjugate Priors?
@@ -32,6 +36,10 @@ A **conjugate prior** is a prior distribution that, when combined with a particu
 4. Initialization of MCMC samplers
 
 <!-- Speaker notes: Explain Why Conjugate Priors?. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Formal Definition
@@ -43,14 +51,17 @@ $$p(\theta \mid y) \propto p(y \mid \theta) \cdot p(\theta)$$
 yields a posterior $p(\theta \mid y)$ in the **same distributional family** as $p(\theta)$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Prior["Prior\nFamily F(α,β)"] -->|"× Likelihood"| Post["Posterior\nFamily F(α',β')"]
     L["Data y"] --> Post
-    style Prior fill:#27ae60,color:#fff
-    style Post fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -71,6 +82,10 @@ $$\text{Posterior: } \theta \mid y \sim \text{Beta}(\alpha + y,\; \beta + n - y)
 > **Commodity application:** Probability that a crop report exceeds expectations; fill rate on limit orders.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Beta-Binomial: Code Example
@@ -226,17 +241,13 @@ Conjugate for the Normal likelihood with **both** $\mu$ and $\sigma^2$ unknown.
 ## Conjugate Family Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BetaBin["Beta-Binomial\n(proportions)"] --> Prop["Crop report probabilities\nOrder fill rates"]
     NormNorm["Normal-Normal\n(means)"] --> Mean["Equilibrium prices\nMean reversion targets"]
     GammaPois["Gamma-Poisson\n(rates)"] --> Rate["Disruption frequency\nLimit move counts"]
     GammaNorm["Gamma-Normal\n(precision)"] --> Vol["Volatility estimation\nForecast error variance"]
     NIG["Normal-Inv-Gamma\n(mean + variance)"] --> Joint["Joint return + vol\nestimation"]
-    style BetaBin fill:#27ae60,color:#fff
-    style NormNorm fill:#4a90d9,color:#fff
-    style GammaPois fill:#e67e22,color:#fff
-    style GammaNorm fill:#8e44ad,color:#fff
-    style NIG fill:#c0392b,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -397,15 +408,13 @@ print(f"Prior 95% interval: [{np.percentile(prior_samples, 2.5):.1f}, "
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CP["Conjugate Priors\n(this guide)"] --> KF["Kalman Filter\n(Module 3)"]
     CP --> HM["Hierarchical Models\n(Module 4)"]
     CP --> MCMC["MCMC for\nGeneral Priors\n(Module 6)"]
     BT["Bayes' Theorem\n(previous guide)"] --> CP
     CP --> BR["Bayesian Regression\n(next guide)"]
-    style CP fill:#e67e22,color:#fff
-    style BT fill:#27ae60,color:#fff
-    style BR fill:#4a90d9,color:#fff
 ```
 
 > *Conjugate priors are training wheels. They help you learn to ride, but eventually you will want the full bicycle of MCMC.*

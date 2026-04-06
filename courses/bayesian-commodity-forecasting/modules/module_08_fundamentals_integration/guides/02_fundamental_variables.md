@@ -1,10 +1,15 @@
 # Fundamental Variables in Commodity Forecasting
 
+> **Reading time:** ~11 min | **Module:** 8 — Fundamentals Integration | **Prerequisites:** Modules 1-7
+
+
 ## In Brief
 
 Fundamental variables are economic, physical, and market factors that drive commodity prices through supply and demand mechanisms. These include inventory levels, production capacity, consumption patterns, weather conditions, and macroeconomic indicators. Integrating fundamentals into Bayesian models transforms price forecasting from pure time-series extrapolation to economically-grounded inference.
 
-> 💡 **Key Insight:** Pure statistical models (ARIMA, GP) learn patterns from price history but ignore why prices move. Fundamental models incorporate the causal drivers: oil prices rise because inventories are low and demand is high, not just because they were rising yesterday. Bayesian frameworks excel at combining uncertain fundamental data with price history, yielding forecasts that are both statistically sound and economically interpretable.
+<div class="callout-insight">
+<strong>Insight:</strong> Pure statistical models (ARIMA, GP) learn patterns from price history but ignore why prices move. Fundamental models incorporate the causal drivers: oil prices rise because inventories are low and demand is high, not just because they were rising yesterday. Bayesian frameworks excel at combining uncertain fundamental data with price history, yielding forecasts that are both statistically sound and economically interpretable.
+</div>
 
 ## Formal Definition
 
@@ -64,6 +69,10 @@ Low inventory → high price sensitivity
 ## Intuitive Explanation
 
 Think of commodity prices like housing prices:
+<div class="callout-insight">
+<strong>Insight:</strong> Think of commodity prices like housing prices:
+</div>
+
 
 **Without fundamentals (pure time series):**
 - "Prices rose 5% last quarter, so they'll rise 5% next quarter"
@@ -103,6 +112,13 @@ Bayesian model learns:
 ## Code Implementation
 
 ### Fundamental Variable Selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pandas as pd
@@ -247,7 +263,17 @@ fundamentals.add_variable(
 fundamentals.summary()
 ```
 
+</div>
+</div>
+
 ### Bayesian Linear Model with Fundamentals
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def fit_fundamental_model(prices, fundamentals):
@@ -339,7 +365,17 @@ plt.savefig('fundamental_coefficients.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+</div>
+
 ### Non-Linear Fundamental Effects
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def fit_nonlinear_fundamental_model(prices, fundamentals):
@@ -425,7 +461,17 @@ plt.savefig('nonlinear_inventory_effect.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+</div>
+
 ### Variable Importance via Posterior Predictive
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def compute_variable_importance(trace, X, var_names):
@@ -473,6 +519,9 @@ print("\nVariable Importance Ranking:")
 for i, idx in enumerate(sorted_idx):
     print(f"{i+1}. {names[idx]}: {importance[idx]:.3f}")
 ```
+
+</div>
+</div>
 
 ## Common Pitfalls
 
@@ -554,6 +603,19 @@ for i, idx in enumerate(sorted_idx):
    What confounders might exist?
    How would you test causality?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving fundamental variables in commodity forecasting, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Economic Theory:**
@@ -574,6 +636,25 @@ for i, idx in enumerate(sorted_idx):
 9. **USDA (U.S. Dept. of Agriculture)** - Agricultural supply/demand
 10. **World Bank Commodity Markets** - Global fundamentals
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Fundamental variables are economic, physical, and market factors that drive commodity prices through supply and demand mechanisms.
+</div>
+
 ---
 
 *"Fundamentals explain why prices move. Integrating them transforms forecasting from pattern recognition to economic reasoning."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_fundamental_variables_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_storage_theory.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

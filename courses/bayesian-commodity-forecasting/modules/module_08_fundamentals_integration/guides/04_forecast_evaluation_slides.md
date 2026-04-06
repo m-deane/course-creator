@@ -21,11 +21,16 @@ A forecast is not just a number -- it's a distribution
 > **A good Bayesian forecast has: (1) accurate central tendency (low MAE), (2) well-calibrated uncertainty (95% intervals contain 95% of outcomes), (3) sharp distributions (not overly conservative).** Proper scoring rules like CRPS evaluate the entire predictive distribution.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Two Levels of Evaluation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     EVAL["Forecast\nEvaluation"] --> POINT["Point Forecast\n(MAE, RMSE, MAPE)"]
     EVAL --> PROB["Probabilistic Forecast\n(Coverage, CRPS, LPD)"]
@@ -33,13 +38,15 @@ flowchart TD
     PROB --> CAL["Are intervals\nwell-calibrated?"]
     PROB --> SHARP["Are intervals\ninformative (sharp)?"]
     PROB --> FULL["Is the full\ndistribution correct?"]
-    style PROB fill:#27ae60,color:#fff
-    style POINT fill:#4a90d9,color:#fff
 ```
 
 > Evaluating only point accuracy ignores uncertainty quantification.
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Point Forecast Metrics
@@ -60,6 +67,10 @@ $$\text{MAPE} = \frac{100}{T} \sum_{t=1}^T \left|\frac{y_t - \hat{y}_t}{y_t}\rig
 | MAPE | Yes | Yes |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Probabilistic Metrics
@@ -80,11 +91,16 @@ $$\text{CRPS}(F_t, y_t) = \int_{-\infty}^{\infty} (F_t(x) - \mathbb{1}(x \geq y_
 > CRPS evaluates the entire predictive distribution. Lower is better.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Good vs Bad Forecasts
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Good["Good Forecast"]
         G1["Mean: $75/bbl"]
@@ -104,9 +120,6 @@ flowchart TD
         C3["Actual: $76"]
         C4["Within CI but useless"]
     end
-    style Good fill:#27ae60,color:#fff
-    style Overconfident fill:#c0392b,color:#fff
-    style Conservative fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -257,6 +270,7 @@ comparison = compare_forecasts(y_true, {
 ## Evaluation Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FIT["Fit Model\n(in-sample)"] --> OOS["Out-of-Sample\nPredictions"]
     OOS --> POINT["Point Metrics\n(MAE, RMSE)"]
@@ -266,8 +280,6 @@ flowchart TD
     PROB --> COMP
     COMP --> DM["Diebold-Mariano\nTest"]
     DM --> SELECT["Select/Average\nBest Models"]
-    style OOS fill:#4a90d9,color:#fff
-    style SELECT fill:#27ae60,color:#fff
 ```
 
 > Always evaluate out-of-sample. In-sample metrics are misleading.
@@ -300,6 +312,7 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BMA["Bayesian Model\nAveraging (guide 3)"] --> FE["Forecast\nEvaluation"]
     MCMC["MCMC / Predictive\nDistributions (Module 6)"] --> FE
@@ -307,7 +320,6 @@ flowchart TD
     FE --> TRADE["Trading Strategies\n(forecast skill -> sizing)"]
     FE --> RISK["Risk Management\n(calibrated intervals -> VaR)"]
     FE --> IMPROVE["Model Improvement\n(diagnostic feedback)"]
-    style FE fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

@@ -1,10 +1,15 @@
 # Bayesian Regression
 
+> **Reading time:** ~7 min | **Module:** 1 — Bayesian Fundamentals | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
 
 Bayesian regression treats regression coefficients as random variables with distributions, rather than fixed unknown values. This provides full uncertainty quantification for predictions and naturally handles regularization through priors.
 
-> 💡 **Key Insight:** In frequentist regression, we get point estimates: β̂ = 2.5. In Bayesian regression, we get distributions: β ~ Normal(2.5, 0.3), telling us both the most likely value AND our uncertainty about it.
+<div class="callout-insight">
+<strong>Insight:</strong> In frequentist regression, we get point estimates: β̂ = 2.5. In Bayesian regression, we get distributions: β ~ Normal(2.5, 0.3), telling us both the most likely value AND our uncertainty about it.
+</div>
 
 ## Formal Definition
 
@@ -79,6 +84,13 @@ This is a **Student's t-distribution** with interpretable parameters, giving nat
 
 ### Basic Bayesian Regression with PyMC
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 import numpy as np
@@ -114,7 +126,17 @@ print("\n95% Credible Intervals:")
 print(az.hdi(trace, hdi_prob=0.95))
 ```
 
+</div>
+</div>
+
 ### Prediction with Uncertainty
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Posterior predictive distribution
@@ -141,6 +163,9 @@ print(f"  95% CI: [${np.percentile(predictions, 2.5):.2f}, "
       f"${np.percentile(predictions, 97.5):.2f}]")
 ```
 
+</div>
+</div>
+
 ## Visual Representation
 
 ```
@@ -164,18 +189,42 @@ As prior gets weaker, posterior → MLE
 
 ### 1. Overly Informative Priors with Weak Data
 **Problem:** Strong prior + little data → Posterior mostly reflects prior, not data
+<div class="callout-warning">
+<strong>Warning:</strong> **Problem:** Strong prior + little data → Posterior mostly reflects prior, not data
+</div>
+
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # BAD: Very tight prior with only 10 data points
 beta = pm.Normal('beta', mu=0, sigma=0.1)  # σ=0.1 very tight!
 ```
 
+</div>
+</div>
+
 **Solution:** Use weakly informative priors unless you have strong domain knowledge
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # GOOD: Regularizing but not dominating
 beta = pm.Normal('beta', mu=0, sigma=10)  # Allows data to speak
 ```
+
+</div>
+</div>
 
 ### 2. Forgetting Uncertainty in Predictions
 **Problem:** Reporting posterior mean as point forecast without credible interval
@@ -226,6 +275,11 @@ c) `Normal(+5, 2)` - Positive effect, moderate uncertainty
 
 **Answer:** (b) - Economic theory says high inventory → lower prices (negative β)
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Bayesian regression treats regression coefficients as random variables with distributions, rather than fixed unknown values.
+</div>
+
 ---
 
 ### 2. Implementation: Commodity Regression
@@ -235,6 +289,13 @@ Given data on natural gas prices and heating degree days (HDD):
 - Make a prediction for HDD = 500
 
 **Starter code:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 
@@ -245,6 +306,9 @@ with pm.Model() as gas_model:
     # Sample posterior
     pass
 ```
+
+</div>
+</div>
 
 ---
 
@@ -269,6 +333,19 @@ c) Investigate why prior and data differ
 
 **Discussion:** This is a red flag requiring investigation - strong prior-data conflict often reveals model misspecification or data issues.
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving bayesian regression, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 ### Foundational Papers
@@ -291,3 +368,17 @@ c) Investigate why prior and data differ
 ---
 
 **Next:** Apply these concepts in the interactive notebook `03_bayesian_regression_pymc.ipynb`
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_bayesian_regression_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_bayesian_regression_pymc.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -1,10 +1,20 @@
 # Introduction to Commodity Markets
 
+> **Reading time:** ~7 min | **Module:** 0 — Foundations | **Prerequisites:** Basic probability, linear algebra
+
+
 ## In Brief
 
 Commodity markets trade physical goods—energy, metals, and agricultural products. Understanding their structure is essential for building meaningful forecasting models.
 
-> 💡 **Key Insight:** Commodity prices are driven by **physical fundamentals** (supply, demand, storage) overlaid with **financial dynamics** (speculation, hedging, risk premia). Effective forecasting models must capture both.
+<div class="callout-insight">
+<strong>Insight:</strong> Commodity prices are driven by **physical fundamentals** (supply, demand, storage) overlaid with **financial dynamics** (speculation, hedging, risk premia). Effective forecasting models must capture both.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Commodity markets trade physical goods—energy, metals, and agricultural products.
+</div>
 
 ---
 
@@ -301,6 +311,19 @@ Financial flows and positioning matter too. Large speculative positions can move
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "What Are Commodities?" and why it matters in practice.
+
+2. Given a real-world scenario involving introduction to commodity markets, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Geman, H.** *Commodities and Commodity Derivatives* - Comprehensive reference
@@ -311,3 +334,17 @@ Financial flows and positioning matter too. Large speculative positions can move
 ---
 
 *The commodity markets are where physical reality meets financial abstraction. Good models respect both.*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_commodity_markets_intro_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

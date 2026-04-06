@@ -1,16 +1,25 @@
 # Convergence Diagnostics for MCMC
 
+> **Reading time:** ~11 min | **Module:** 6 — Inference Methods | **Prerequisites:** Module 1 Bayesian Fundamentals
+
+
 ## In Brief
 
 Convergence diagnostics assess whether MCMC chains have reached their stationary distribution (the true posterior). Key metrics include $\hat{R}$ (comparing between-chain to within-chain variance), effective sample size (accounting for autocorrelation), and trace plots showing mixing behavior.
 
-> 💡 **Key Insight:** MCMC provides samples from the posterior—but only after the chain has converged. Running MCMC without checking convergence is like leaving bread in the oven without setting a timer: you might get perfect results or a charred mess. Diagnostics tell you when the chain has "burned in" and is providing valid posterior samples.
+<div class="callout-insight">
+<strong>Insight:</strong> MCMC provides samples from the posterior—but only after the chain has converged. Running MCMC without checking convergence is like leaving bread in the oven without setting a timer: you might get perfect results or a charred mess. Diagnostics tell you when the chain has "burned in" and is providing valid posterior samples.
+</div>
 
 ## Formal Definition
 
 ### The Convergence Question
 
 MCMC generates sequence $\{\theta^{(1)}, \theta^{(2)}, ..., \theta^{(T)}\}$
+<div class="callout-key">
+<strong>Key Point:</strong> MCMC generates sequence $\{\theta^{(1)}, \theta^{(2)}, ..., \theta^{(T)}\}$
+</div>
+
 
 **Goal:** $\theta^{(t)} \sim p(\theta | \mathbf{y})$ for large $t$
 
@@ -108,6 +117,13 @@ For commodity price models:
 ## Code Implementation
 
 ### Comprehensive Diagnostic Suite
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -308,7 +324,17 @@ print("\nPosterior Summary:")
 print(az.summary(trace, hdi_prob=0.95))
 ```
 
+</div>
+</div>
+
 ### Detecting Specific Issues
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def diagnose_convergence_issues(trace):
@@ -406,7 +432,17 @@ for rec in issues['recommendations']:
     print(f"  • {rec}")
 ```
 
+</div>
+</div>
+
 ### Automated Resampling
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def sample_until_converged(model, max_attempts=3, initial_draws=1000):
@@ -467,12 +503,19 @@ with pm.Model() as difficult_model:
 trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=500)
 ```
 
+</div>
+</div>
+
 ## Common Pitfalls
 
 **1. Ignoring R-hat for Individual Parameters**
 - **Problem**: Checking overall convergence but missing issues in specific parameters
 - **Symptom**: One parameter has $\hat{R} = 1.15$ while others are fine
 - **Solution**: Check $\hat{R}$ for each parameter individually
+<div class="callout-key">
+<strong>Key Point:</strong> **1. Ignoring R-hat for Individual Parameters**
+</div>
+
 
 **2. Accepting Low ESS**
 - **Problem**: ESS = 50 seems "good enough"
@@ -555,6 +598,19 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 
    Should you: (a) Stop, (b) Continue sampling, (c) Reparameterize?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving convergence diagnostics for mcmc, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Foundational:**
@@ -575,6 +631,25 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 9. **"Bayesian Workflow" (Gelman et al.)** - End-to-end diagnostic protocol
 10. **"Validating Bayesian Inference Algorithms with Simulation-Based Calibration"** - Rigorous validation
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Convergence diagnostics assess whether MCMC chains have reached their stationary distribution (the true posterior).
+</div>
+
 ---
 
 *"Convergence diagnostics ensure your MCMC samples are reliable. No diagnostics = no trust in posterior inference."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./04_convergence_diagnostics_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_mcmc_foundations.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

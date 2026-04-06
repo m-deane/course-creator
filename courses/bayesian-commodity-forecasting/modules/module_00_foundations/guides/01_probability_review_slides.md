@@ -19,6 +19,7 @@ Essential probability concepts for Bayesian inference in commodity markets
 ## Roadmap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Random Variables] --> B[Key Distributions]
     B --> C[Joint / Marginal / Conditional]
@@ -28,6 +29,10 @@ flowchart LR
 ```
 
 <!-- Speaker notes: Walk through the roadmap so learners know what to expect. Emphasize that each section builds on the previous one. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -61,6 +66,10 @@ $$P(a \leq X \leq b) = \int_a^b f(x)\, dx$$
 </div>
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Probability Mass / Density Functions
@@ -73,6 +82,10 @@ $$P(a \leq X \leq b) = \int_a^b f(x)\, dx$$
 > **Key insight:** For continuous variables, $P(X = x) = 0$ for any specific $x$. We work with densities and intervals.
 
 <!-- Speaker notes: Emphasize the key insight here -- this is a concept learners should remember. Relate it to practical commodity trading scenarios. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -96,6 +109,10 @@ $$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\ri
 > **In commodities:** Log returns often approximately Normal; used as likelihood in many models.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Gamma Distribution
@@ -146,6 +163,7 @@ $$X \sim t_\nu(\mu, \sigma^2)$$
 ## Distribution Family Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     N["Normal N(μ,σ²)"] -->|"precision prior"| G["Gamma(α,β)"]
     N -->|"heavy tails"| T["Student-t(ν)"]
@@ -153,10 +171,6 @@ flowchart TD
     B["Beta(α,β)"] -->|"conjugate to"| Bin["Binomial(n,p)"]
     G -->|"conjugate to"| Poi["Poisson(λ)"]
     N -->|"conjugate to"| NL["Normal Likelihood"]
-    style N fill:#4a90d9,color:#fff
-    style G fill:#e67e22,color:#fff
-    style B fill:#27ae60,color:#fff
-    style T fill:#8e44ad,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -222,6 +236,7 @@ Equivalently: $P(X \mid Y) = P(X)$
 ## Joint / Marginal / Conditional Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     J["Joint P(X,Y)"] -->|"sum/integrate out Y"| MX["Marginal P(X)"]
     J -->|"sum/integrate out X"| MY["Marginal P(Y)"]
@@ -229,9 +244,6 @@ flowchart TD
     CXY -->|"Bayes' Theorem"| CYX["Conditional P(Y|X)"]
     MX -->|"if independent"| J
     MY -->|"if independent"| J
-    style J fill:#4a90d9,color:#fff
-    style CXY fill:#e67e22,color:#fff
-    style CYX fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -311,15 +323,13 @@ $$P(\theta \mid \text{data}) = \frac{P(\text{data} \mid \theta) \cdot P(\theta)}
 ## Bayesian Update Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P["Prior P(θ)"] --> |"× Likelihood"| U["Unnormalized\nPosterior"]
     L["Likelihood\nP(data|θ)"] --> U
     U --> |"÷ Evidence"| Post["Posterior\nP(θ|data)"]
     Post --> |"new data arrives"| P2["Updated Prior"]
     P2 --> |"cycle repeats"| U2["Next Update"]
-    style P fill:#27ae60,color:#fff
-    style L fill:#e67e22,color:#fff
-    style Post fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -411,6 +421,7 @@ $$f(x) = \int f(x \mid \theta)\, f(\theta)\, d\theta$$
 ## Visual Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RV["Random Variables"] --> Dist["Key Distributions"]
     Dist --> JMC["Joint / Marginal / Conditional"]
@@ -418,9 +429,6 @@ flowchart TD
     EV --> BT["Bayes' Theorem"]
     BT --> LTP["Law of Total Probability"]
     LTP --> Ready["Ready for Module 1:\nBayesian Fundamentals"]
-    style RV fill:#3498db,color:#fff
-    style BT fill:#e67e22,color:#fff
-    style Ready fill:#27ae60,color:#fff
 ```
 
 *Answers and detailed solutions in the notebook exercises.*

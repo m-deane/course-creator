@@ -21,6 +21,10 @@ Volatility as a latent time-varying process
 > **Volatility has memory.** High volatility periods cluster together. Stochastic volatility models this persistence through a latent AR(1) process on log-variance, enabling both backward inference and forward prediction.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Standard SV Model
@@ -35,6 +39,10 @@ $$h_{t+1} = \mu + \phi(h_t - \mu) + \sigma_\eta \eta_t, \quad \eta_t \sim \mathc
 $$h_1 \sim \mathcal{N}\!\left(\mu, \frac{\sigma_\eta^2}{1 - \phi^2}\right)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Parameter Interpretation
@@ -50,11 +58,16 @@ $$h_1 \sim \mathcal{N}\!\left(\mu, \frac{\sigma_\eta^2}{1 - \phi^2}\right)$$
 **Stationary variance:** $\mathbb{E}[\sigma_t^2] = \exp\!\left(\mu + \frac{\sigma_\eta^2}{2(1-\phi^2)}\right)$
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## SV as Two-Layer State Space
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Hidden["Layer 1: Latent Log-Volatility"]
         H1["h₁"] -->|"AR(1)"| H2["h₂"] -->|"AR(1)"| H3["h₃"] -->|"AR(1)"| H4["h₄"]
@@ -69,13 +82,13 @@ flowchart TD
     H2 -->|"exp(h/2)"| Y2
     H3 -->|"exp(h/2)"| Y3
     H4 -->|"exp(h/2)"| Y4
-    style H1 fill:#27ae60,color:#fff
-    style H2 fill:#27ae60,color:#fff
-    style H3 fill:#c0392b,color:#fff
-    style H4 fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Why Log-Variance?
@@ -288,6 +301,7 @@ with pm.Model() as sv_student:
 ## SV Extensions Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SV["Basic SV\ny_t = exp(h_t/2)ε_t"] --> LEV["Leverage SV\n(correlated ε, η)"]
     SV --> SEAS["Seasonal SV\n(time-varying μ)"]
@@ -296,8 +310,6 @@ flowchart TD
     LEV --> FULL["Full Model:\nLeverage + Seasonal\n+ Heavy Tails"]
     SEAS --> FULL
     HT --> FULL
-    style SV fill:#4a90d9,color:#fff
-    style FULL fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -408,6 +420,7 @@ $$h_1 \sim \mathcal{N}\!\left(\mu,\; \frac{\sigma_\eta^2}{1 - \phi^2}\right)$$
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     SSM["State Space\nFundamentals"] --> SV["Stochastic\nVolatility"]
     BI["Bayesian Inference\nfor Latent Variables"] --> SV
@@ -415,7 +428,6 @@ flowchart TD
     SV --> RSV["Regime-Switching\nVolatility (Module 7)"]
     SV --> FV["Fundamentals-Driven\nVolatility (Module 8)"]
     SV -.->|"alternative"| GARCH["GARCH\n(frequentist)"]
-    style SV fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

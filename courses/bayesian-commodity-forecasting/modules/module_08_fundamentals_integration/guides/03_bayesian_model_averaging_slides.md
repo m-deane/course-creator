@@ -21,6 +21,10 @@ Using all models, weighted by plausibility
 > **Model selection discards information and understates uncertainty.** If Model A has 60% posterior probability and Model B has 40%, why use only Model A? BMA uses both, weighted by their probabilities, capturing both parameter uncertainty and model uncertainty.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## BMA Framework
@@ -38,6 +42,10 @@ $$P(y^* | \mathcal{D}) = \sum_{k=1}^K P(y^* | M_k, \mathcal{D})\, P(M_k | \mathc
 $$\hat{y}^* = \sum_{k=1}^K \mathbb{E}[y^* | M_k, \mathcal{D}] \cdot P(M_k | \mathcal{D})$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## BMA Variance Decomposition
@@ -45,24 +53,27 @@ $$\hat{y}^* = \sum_{k=1}^K \mathbb{E}[y^* | M_k, \mathcal{D}] \cdot P(M_k | \mat
 $$\text{Var}(y^* | \mathcal{D}) = \underbrace{\sum_k \text{Var}(y^* | M_k)\, P(M_k)}_{\text{Within-model}} + \underbrace{\sum_k (\mathbb{E}[y^* | M_k] - \hat{y}^*)^2\, P(M_k)}_{\text{Between-model}}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TOTAL["Total BMA\nVariance"] --> WITHIN["Within-Model\nVariance"]
     TOTAL --> BETWEEN["Between-Model\nVariance"]
     WITHIN --> W1["Parameter uncertainty\nwithin each model"]
     BETWEEN --> B1["Disagreement\nacross models"]
-    style TOTAL fill:#4a90d9,color:#fff
-    style WITHIN fill:#27ae60,color:#fff
-    style BETWEEN fill:#e67e22,color:#fff
 ```
 
 > Selection ignores between-model variance. BMA captures it.
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Model Selection vs BMA
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Selection["Model Selection"]
         S1["Pick best model\n(P=0.6)"]
@@ -74,13 +85,15 @@ flowchart LR
         B2["M1: $75 (0.2)\nM2: $78 (0.5)\nM3: $72 (0.3)"]
         B3["Forecast: $75.60"]
     end
-    style Selection fill:#c0392b,color:#fff
-    style BMA fill:#27ae60,color:#fff
 ```
 
 BMA is more robust: doesn't fully commit to one model.
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Commodity Model Space
@@ -220,6 +233,7 @@ with pm.Model() as m2:
 ## Pseudo-BMA with Stacking
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph WAIC_BMA["BMA (WAIC-based)"]
         W1["Weights from\nmarginal likelihood"]
@@ -231,7 +245,6 @@ flowchart LR
     end
     WAIC_BMA --> COMPARE["Compare Weights\n(often similar)"]
     Stacking --> COMPARE
-    style Stacking fill:#27ae60,color:#fff
 ```
 
 ```python
@@ -284,6 +297,7 @@ $$N_{\text{eff}} = \frac{1}{\sum_k w_k^2}$$
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MCMC["MCMC Inference\n(Module 6)"] --> BMA["Bayesian Model\nAveraging"]
     FV["Fundamental Variables\n(guide 2)"] --> BMA
@@ -291,7 +305,6 @@ flowchart TD
     BMA --> ENS["Ensemble Forecasting\n(robustness)"]
     BMA --> UQ["Uncertainty\nQuantification"]
     BMA --> EVAL["Forecast Evaluation\n(guide 4)"]
-    style BMA fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

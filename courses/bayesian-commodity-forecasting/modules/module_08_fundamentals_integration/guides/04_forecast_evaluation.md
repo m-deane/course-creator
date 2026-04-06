@@ -1,16 +1,25 @@
 # Forecast Evaluation for Bayesian Models
 
+> **Reading time:** ~11 min | **Module:** 8 — Fundamentals Integration | **Prerequisites:** Modules 1-7
+
+
 ## In Brief
 
 Forecast evaluation assesses prediction quality using both point forecast accuracy (MAE, RMSE) and probabilistic calibration (coverage, sharpness, proper scoring rules). Bayesian models provide full predictive distributions, enabling evaluation beyond simple point forecasts to measure whether uncertainty quantification is accurate.
 
-> 💡 **Key Insight:** A forecast is not just a number—it's a probability distribution. Evaluating only the mean (MAE, RMSE) ignores uncertainty quantification. A good Bayesian forecast has: (1) accurate central tendency (low MAE), (2) well-calibrated uncertainty (95% intervals contain 95% of outcomes), (3) sharp distributions (not overly conservative). Proper scoring rules like CRPS evaluate the entire predictive distribution.
+<div class="callout-insight">
+<strong>Insight:</strong> A forecast is not just a number—it's a probability distribution. Evaluating only the mean (MAE, RMSE) ignores uncertainty quantification. A good Bayesian forecast has: (1) accurate central tendency (low MAE), (2) well-calibrated uncertainty (95% intervals contain 95% of outcomes), (3) sharp distributions (not overly conservative). Proper scoring rules like CRPS evaluate the entire predictive distribution.
+</div>
 
 ## Formal Definition
 
 ### Point Forecast Metrics
 
 Given true values $\{y_t\}$ and forecasts $\{\hat{y}_t\}$ for $t = 1, ..., T$:
+<div class="callout-key">
+<strong>Key Point:</strong> Given true values $\{y_t\}$ and forecasts $\{\hat{y}_t\}$ for $t = 1, ..., T$:
+</div>
+
 
 **Mean Absolute Error (MAE):**
 $$\text{MAE} = \frac{1}{T} \sum_{t=1}^T |y_t - \hat{y}_t|$$
@@ -117,6 +126,13 @@ For commodity forecasts:
 ## Code Implementation
 
 ### Comprehensive Forecast Evaluation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -426,7 +442,17 @@ plt.savefig('residual_diagnostics.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
+</div>
+</div>
+
 ### Comparing Multiple Forecasts
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def compare_forecasts(y_true, forecasts_dict):
@@ -496,6 +522,9 @@ plt.tight_layout()
 plt.savefig('forecast_comparison.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+</div>
+</div>
 
 ## Common Pitfalls
 
@@ -576,6 +605,19 @@ plt.show()
 
    What's the problem? How to fix the model?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving forecast evaluation for bayesian models, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Forecast Evaluation Theory:**
@@ -599,6 +641,25 @@ plt.show()
 10. **ArviZ Documentation** - Bayesian forecast evaluation tools
 11. **scoringRules R package** - Proper scoring rules implementation
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Forecast evaluation assesses prediction quality using both point forecast accuracy (MAE, RMSE) and probabilistic calibration (coverage, sharpness, proper scoring rules).
+</div>
+
 ---
 
 *"Forecast evaluation should assess both accuracy and uncertainty. A perfect mean forecast with mis-calibrated intervals is still a bad forecast."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./04_forecast_evaluation_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_storage_theory.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

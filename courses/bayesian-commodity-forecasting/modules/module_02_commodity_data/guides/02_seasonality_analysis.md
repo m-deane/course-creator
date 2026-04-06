@@ -1,10 +1,15 @@
 # Seasonality Analysis in Commodity Markets
 
+> **Reading time:** ~9 min | **Module:** 2 — Commodity Data | **Prerequisites:** Module 1 Bayesian Fundamentals
+
+
 ## In Brief
 
 Seasonality refers to predictable, recurring patterns in commodity prices tied to calendar periods (months, quarters, seasons). Identifying and modeling these patterns is crucial for accurate forecasting and distinguishing fundamental cycles from random noise.
 
-> 💡 **Key Insight:** Many commodities exhibit strong seasonal patterns driven by predictable demand cycles (heating oil in winter, gasoline in summer) or supply cycles (agricultural harvest seasons). Failing to account for seasonality leads to systematic forecast errors and missed trading opportunities.
+<div class="callout-insight">
+<strong>Insight:</strong> Many commodities exhibit strong seasonal patterns driven by predictable demand cycles (heating oil in winter, gasoline in summer) or supply cycles (agricultural harvest seasons). Failing to account for seasonality leads to systematic forecast errors and missed trading opportunities.
+</div>
 
 ## Formal Definition
 
@@ -29,6 +34,10 @@ For monthly data: $m = 12$, for daily data with weekly patterns: $m = 7$
 ## Intuitive Explanation
 
 ### The Four Seasons of Natural Gas
+<div class="callout-insight">
+<strong>Insight:</strong> Natural gas prices exhibit clear seasonality:
+</div>
+
 
 Natural gas prices exhibit clear seasonality:
 
@@ -120,6 +129,13 @@ $$S_t = \sum_{k=1}^K \left[ a_k \sin\left(\frac{2\pi k t}{m}\right) + b_k \cos\l
 
 ### 1. Visual Inspection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pandas as pd
 import numpy as np
@@ -144,7 +160,17 @@ plt.grid(True, alpha=0.3)
 plt.show()
 ```
 
+</div>
+</div>
+
 ### 2. Classical Decomposition
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Ensure time series index
@@ -166,7 +192,17 @@ plt.show()
 seasonal_pattern = decomposition.seasonal
 ```
 
+</div>
+</div>
+
 ### 3. Seasonal Dummies Regression
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import statsmodels.api as sm
@@ -189,7 +225,17 @@ print("\nSeasonal Effects (relative to January):")
 print(seasonal_effects)
 ```
 
+</div>
+</div>
+
 ### 4. Fourier Seasonal Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def fourier_terms(t, period, K):
@@ -222,7 +268,17 @@ print(fourier_model.summary())
 seasonal_fourier = fourier_model.predict(X)
 ```
 
+</div>
+</div>
+
 ### 5. Bayesian Seasonal Model (PyMC)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -262,6 +318,9 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+</div>
+
 ## Visual Representation
 
 ```
@@ -299,16 +358,30 @@ Dec   │ +$2.00 │ Heating demand rises
 ## Common Pitfalls
 
 ### 1. Ignoring Changing Seasonality
+<div class="callout-warning">
+<strong>Warning:</strong> **Problem:** Seasonality can evolve over time (e.g., climate change affects heating demand)
+</div>
+
 
 **Problem:** Seasonality can evolve over time (e.g., climate change affects heating demand)
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # BAD: Assume fixed seasonal pattern
 seasonal_avg = df.groupby('month')['price'].mean()
 
 # BETTER: Use rolling seasonal estimates or time-varying model
 ```
+
+</div>
+</div>
 
 **Solution:** Use STL with time-varying smoothness or Bayesian model with evolving seasonal effects
 
@@ -321,6 +394,13 @@ seasonal_avg = df.groupby('month')['price'].mean()
 - Seasonality: Returns to same level after period $m$
 
 **Test:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Check for unit root (trend) vs stationary seasonality
 from statsmodels.tsa.stattools import adfuller
@@ -328,6 +408,9 @@ adf_result = adfuller(df['price'])
 print(f"ADF p-value: {adf_result[1]:.4f}")
 # p < 0.05 → stationary (no trend), seasonality possible
 ```
+
+</div>
+</div>
 
 ### 3. Overfitting with Too Many Fourier Terms
 
@@ -343,10 +426,20 @@ print(f"ADF p-value: {adf_result[1]:.4f}")
 **Problem:** Different months have different numbers of days/trading days
 
 **Fix:** Adjust for calendar effects
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 df['trading_days'] = df.groupby('month')['date'].transform('count')
 df['price_per_day'] = df['price'] / df['trading_days']
 ```
+
+</div>
+</div>
 
 ### 5. Using Wrong Decomposition Type
 
@@ -357,12 +450,22 @@ df['price_per_day'] = df['price'] / df['trading_days']
 - If seasonal swings constant → Additive
 
 **Test:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Plot seasonal variance over time
 df['seasonal_var'] = df.groupby('year')['price'].transform('std')
 plt.plot(df.groupby('year')['price'].mean(), df.groupby('year')['seasonal_var'].mean(), 'o')
 # If positive slope → multiplicative
 ```
+
+</div>
+</div>
 
 ## Connections
 
@@ -393,6 +496,11 @@ c) Holiday effects
 - Use autocorrelation function (ACF) at seasonal lags
 - Boxplots by month/day
 - Formal tests: Friedman test, Kruskal-Wallis test
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Seasonality refers to predictable, recurring patterns in commodity prices tied to calendar periods (months, quarters, seasons).
+</div>
 
 ---
 
@@ -428,10 +536,33 @@ Implement a Bayesian hierarchical model where:
 - Test if seasonality has changed over time
 
 **PyMC structure:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 seasonal_year[year, month] ~ Normal(seasonal_mean[month], tau)
 seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 ```
+
+</div>
+</div>
+
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving seasonality analysis in commodity markets, what would be your first three steps to apply the techniques from this guide?
+</div>
 
 ## Further Reading
 
@@ -456,3 +587,17 @@ seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 ---
 
 **Next:** Apply these methods to real commodity data in `03_seasonality_decomposition.ipynb`
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_seasonality_analysis_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_data_retrieval_pipeline.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

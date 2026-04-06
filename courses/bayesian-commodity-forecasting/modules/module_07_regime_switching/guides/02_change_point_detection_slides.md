@@ -21,6 +21,10 @@ Finding structural breaks in commodity markets
 > **Structural breaks announce themselves after they happen.** The shale revolution didn't ring a bell in 2010 -- it became obvious years later. Bayesian change point detection quantifies "how sure are we a regime changed?" and "when did it happen?", preventing false alarms while catching real shifts.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Formal Definition
@@ -34,11 +38,16 @@ $$y_t \sim \begin{cases} p(y_t | \theta_0) & t \leq \tau_1 \\ p(y_t | \theta_1) 
 **Goal:** Infer posterior $p(\tau, \theta | y)$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Why Change Points in Commodities?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Drivers["Change Point Drivers"]
         POL["Policy Changes\nOPEC, biofuels, sanctions"]
@@ -53,10 +62,13 @@ flowchart TD
     CP --> MEAN["Mean Shift"]
     CP --> VOL["Volatility Shift"]
     CP --> REL["Relationship Shift\n(inventory-price)"]
-    style CP fill:#c0392b,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Commodity Era Timeline
@@ -73,6 +85,10 @@ flowchart TD
 > Change point detection finds these chapter breaks automatically.
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -206,6 +222,7 @@ with pm.Model() as multi_cp:
 ## Bayesian Online Change Point Detection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DATA["New Data\ny_t"] --> UPDATE["Update Run\nLength Posterior"]
     UPDATE --> Q{"P(change) >\nthreshold?"}
@@ -214,8 +231,6 @@ flowchart LR
     CONTINUE --> DATA
     ALERT --> RESET["Reset to\nNew Regime"]
     RESET --> DATA
-    style ALERT fill:#c0392b,color:#fff
-    style CONTINUE fill:#27ae60,color:#fff
 ```
 
 **Run-length posterior:**
@@ -337,13 +352,13 @@ $$\mu_t = \mu_1 + (\mu_2 - \mu_1) \cdot \sigma(\lambda(t - \tau))$$
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BMC["Bayesian Model\nComparison (Module 1)"] --> CPD["Change Point\nDetection"]
     SSM["State Space\n(Module 3)"] --> CPD
     HMM["HMM Fundamentals\n(guide 1)"] --> CPD
     CPD --> RSF["Regime-Switching\nForecasts"]
     CPD --> COND["Conditional Forecasts\n(if regime persists vs changes)"]
-    style CPD fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

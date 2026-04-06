@@ -1,10 +1,15 @@
 # The Kalman Filter: Optimal Bayesian Updating for Linear-Gaussian Systems
 
+> **Reading time:** ~9 min | **Module:** 3 — State-Space Models | **Prerequisites:** Module 2 Commodity Data
+
+
 ## In Brief
 
 The Kalman filter is a recursive algorithm that optimally estimates the hidden state of a linear dynamical system from noisy observations. It's the Bayesian solution to state estimation when both the system dynamics and observations are linear with Gaussian noise.
 
-> 💡 **Key Insight:** The Kalman filter answers: "Given all observations up to now, what's my best estimate of the current hidden state, and how confident am I?" It does this by alternating between **prediction** (using system dynamics) and **update** (incorporating new observations).
+<div class="callout-insight">
+<strong>Insight:</strong> The Kalman filter answers: "Given all observations up to now, what's my best estimate of the current hidden state, and how confident am I?" It does this by alternating between **prediction** (using system dynamics) and **update** (incorporating new observations).
+</div>
 
 Think of it as GPS navigation: Your car's speedometer predicts where you are (prediction step), but GPS measurements correct this estimate (update step). The Kalman filter optimally combines these two sources of information.
 
@@ -77,6 +82,10 @@ The Kalman filter makes this combination optimal (minimum variance estimate).
 ## Mathematical Formulation
 
 ### Why the Kalman Filter is Optimal
+<div class="callout-warning">
+<strong>Warning:</strong> **Theorem:** Under linear-Gaussian assumptions, the Kalman filter produces:
+</div>
+
 
 **Theorem:** Under linear-Gaussian assumptions, the Kalman filter produces:
 1. **Minimum variance** unbiased estimates
@@ -113,6 +122,13 @@ $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 ## Code Implementation
 
 ### Simple Local Level Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -203,7 +219,17 @@ plt.show()
 print(f"Mean squared error: {np.mean((np.array(kf.filtered_states) - alpha_true)**2):.3f}")
 ```
 
+</div>
+</div>
+
 ### Commodity Application: Filtering Oil Prices
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pandas as pd
@@ -230,6 +256,9 @@ def filter_commodity_prices(prices, Q=0.5, H=2.0):
 # prices = fetch_wti_prices()  # Your data here
 # smooth_prices = filter_commodity_prices(prices)
 ```
+
+</div>
+</div>
 
 ## Visual Representation
 
@@ -267,10 +296,21 @@ Uncertainty Evolution:
 ## Common Pitfalls
 
 ### 1. Wrong Noise Variances (Q, H)
+<div class="callout-warning">
+<strong>Warning:</strong> **Problem:** If Q and H are misspecified, filter can be too sluggish or too jumpy.
+</div>
+
 
 **Problem:** If Q and H are misspecified, filter can be too sluggish or too jumpy.
 
 **Example:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Too small Q, too large H → Filter stuck, doesn't adapt
 kf = KalmanFilter(H=100, Q=0.01, ...)
@@ -278,6 +318,9 @@ kf = KalmanFilter(H=100, Q=0.01, ...)
 # Too large Q, too small H → Filter chases noise
 kf = KalmanFilter(H=0.01, Q=100, ...)
 ```
+
+</div>
+</div>
 
 **Solution:**
 - Estimate Q, H from data (maximum likelihood)
@@ -320,12 +363,22 @@ kf = KalmanFilter(H=0.01, Q=100, ...)
 **Diagnostic:** If $v_t$ (forecast errors) are not white noise, model is wrong!
 
 **Check:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 innovations = y - predictions
 # Should be uncorrelated, zero-mean, constant variance
 from statsmodels.graphics.tsaplots import plot_acf
 plot_acf(innovations)  # Should show no significant lags
 ```
+
+</div>
+</div>
 
 ## Connections
 
@@ -352,6 +405,11 @@ Show that the Kalman gain $K_t$ that minimizes the updated variance $P_{t|t}$ is
 $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 
 **Hint:** Minimize $P_{t|t} = (1 - K_t Z_t) P_{t|t-1}$ with respect to $K_t$.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The Kalman filter is a recursive algorithm that optimally estimates the hidden state of a linear dynamical system from noisy observations.
+</div>
 
 ---
 
@@ -388,11 +446,28 @@ Apply Kalman filter to:
 - Try different $Q$, $H$ values
 - Add trend component (local linear trend model)
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving the kalman filter: optimal bayesian updating for linear-gaussian systems, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 ### Classic References
 - **Kalman (1960):** "A New Approach to Linear Filtering and Prediction Problems" - Original paper
 - **Durbin & Koopman (2012):** *Time Series Analysis by State Space Methods* - Comprehensive treatment
+<div class="callout-warning">
+<strong>Warning:</strong> - **Kalman (1960):** "A New Approach to Linear Filtering and Prediction Problems" - Original paper
+</div>
+
 
 ### Applied Econometrics
 - **Hamilton (1994):** *Time Series Analysis* - Chapter 13 on state space models
@@ -415,3 +490,17 @@ Apply Kalman filter to:
 ---
 
 **Next:** Implement stochastic volatility models using the Kalman filter in `03_stochastic_volatility_pymc.ipynb`
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_kalman_filter_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_local_level_model.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

@@ -21,11 +21,16 @@ Crop rotation, feed demand, and land allocation
 > **Corn does not exist in isolation.** When corn prices spike, farmers plant more corn (less soybeans). When corn is cheap, livestock producers expand herds (increasing feed demand). A hierarchical model jointly captures these substitution and complementarity relationships.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Agricultural Pyramid
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GAF["Global Ag Factor\n(food demand, energy, USD)"] --> GF["Grains Factor"]
     GAF --> OF["Oilseeds Factor"]
@@ -39,13 +44,13 @@ flowchart TD
     SF --> Sugar["Sugar"]
     SF --> Cotton["Cotton"]
     SF --> Coffee["Coffee"]
-    style GAF fill:#4a90d9,color:#fff
-    style GF fill:#e67e22,color:#fff
-    style OF fill:#e67e22,color:#fff
-    style SF fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Three-Level Formal Definition
@@ -65,25 +70,32 @@ $$y_{c,t} \sim \mathcal{N}(\alpha_c + \beta_c \cdot \mu_{\text{category}} + \gam
 | $X_{c,t}$ | Stocks-to-use ratio, yield forecasts |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Information Propagation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DR["Drought in\nArgentina"] -->|"spike"| SOY["Soybeans"]
     SOY -->|"shift factor"| OF["Oilseeds\nFactor"]
     OF -->|"adjust"| CAN["Canola\nForecast"]
     OF -->|"weak link"| GAF["Global Ag\nFactor"]
     GAF -->|"propagate"| GF["Grains Factor"]
-    style DR fill:#c0392b,color:#fff
-    style OF fill:#e67e22,color:#fff
 ```
 
 1. Drought $\to$ Soybeans spike $\to$ Oilseeds factor shifts $\to$ Canola adjusts
 2. Weak Chinese demand $\to$ Global Ag drops $\to$ All categories weaken
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -255,6 +267,7 @@ with pm.Model() as corn_soy_competition:
 ## Regional Hierarchy: US vs. South America
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GS["Global Soybean\nMarket"] --> US["US Soybeans\nHarvest: Sep-Nov"]
     GS --> BR["Brazil Soybeans\nHarvest: Feb-Apr"]
@@ -262,7 +275,6 @@ flowchart TD
     US --> |"basis + freight"| USP["US Price"]
     BR --> |"basis - export tax"| BRP["Brazil Price"]
     AR --> |"basis - export tax"| ARP["Argentina Price"]
-    style GS fill:#4a90d9,color:#fff
 ```
 
 Opposite-hemisphere harvests fill supply gaps: Brazil harvest arrives when US stocks are low.
@@ -345,13 +357,13 @@ pm.Potential('ratio_bound',
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PP["Partial Pooling\n(guide 1)"] --> AC["Agricultural\nComplex"]
     DS["Agricultural Data\nUSDA WASDE (Module 2)"] --> AC
     ECON["Crop Substitution\nEconomics"] --> AC
     AC --> RS["Regime Switching\nPolicy Changes\n(Module 7)"]
     AC --> FI["Agronomic Models\nYield Functions\n(Module 8)"]
-    style AC fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

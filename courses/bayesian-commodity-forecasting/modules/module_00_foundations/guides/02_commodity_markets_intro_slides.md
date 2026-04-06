@@ -21,11 +21,16 @@ Physical goods, financial dynamics, and why Bayesian methods fit
 > Commodity prices are driven by **physical fundamentals** (supply, demand, storage) overlaid with **financial dynamics** (speculation, hedging, risk premia). Effective forecasting models must capture both.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Commodity Market Landscape
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CM["Commodity Markets"] --> E["Energy"]
     CM --> M["Metals"]
@@ -37,10 +42,13 @@ flowchart TD
     A --> A1["Corn\nWheat\nSoybeans"]
     L --> L1["Cattle\nHogs"]
     S --> S1["Cocoa\nCoffee\nSugar"]
-    style CM fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -61,6 +69,10 @@ flowchart TD
 | **Softs** | Cocoa, Coffee, Sugar, Orange juice | Weather in producing regions, disease |
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Why Trade Commodities?
@@ -71,6 +83,7 @@ flowchart TD
 4. **Index investors:** Diversification and inflation protection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     H["Hedgers\n(reduce risk)"] <-->|"trade"| S["Speculators\n(take risk)"]
     S <-->|"trade"| A["Arbitrageurs\n(exploit gaps)"]
@@ -78,10 +91,13 @@ flowchart LR
     H --> MKT
     S --> MKT
     A --> MKT
-    style MKT fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -174,6 +190,7 @@ flowchart LR
 ## Supply-Demand-Price Interaction
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S["Supply Factors"] --> P["Price Discovery"]
     D["Demand Factors"] --> P
@@ -182,8 +199,6 @@ flowchart TD
     P --> CV["Convenience Yield"]
     CS --> TS["Term Structure\n(Contango / Backwardation)"]
     CV --> TS
-    style P fill:#e67e22,color:#fff
-    style TS fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -341,14 +356,13 @@ $$F = S \cdot e^{(r + u - y)T}$$
 - **Curvature:** Roll dynamics, expiration effects
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     FT["Fat Tails"] --> MR["Model\nRequirements"]
     VC["Volatility\nClustering"] --> MR
     MRv["Mean\nReversion"] --> MR
     RS["Regime\nSwitching"] --> MR
     MR --> BM["Bayesian\nMethods"]
-    style BM fill:#27ae60,color:#fff
-    style MR fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -398,6 +412,7 @@ flowchart LR
 ## Bayesian Advantage for Commodities
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DK["Domain Knowledge\n(fundamentals, seasonality)"] --> Prior["Informative Priors"]
     SD["Sparse Data\n(monthly reports)"] --> BM["Bayesian Model"]
@@ -407,8 +422,6 @@ flowchart TD
     PD --> TD["Trading\nDecisions"]
     PD --> RM["Risk\nManagement"]
     PD --> PC["Portfolio\nConstruction"]
-    style BM fill:#4a90d9,color:#fff
-    style PD fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -446,16 +459,13 @@ flowchart TD
 ## Visual Summary and Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CM["Commodity Markets\n(Module 0)"] --> SSM["State Space Models\nfor Price Dynamics\n(Module 3)"]
     CM --> HM["Hierarchical Models\nfor Related Commodities\n(Module 4)"]
     CM --> FI["Fundamentals Integration\n(Module 8)"]
     SD["Supply/Demand\nEconomics"] --> CM
     FM["Financial Markets\nUnderstanding"] --> CM
-    style CM fill:#4a90d9,color:#fff
-    style SSM fill:#e67e22,color:#fff
-    style HM fill:#e67e22,color:#fff
-    style FI fill:#e67e22,color:#fff
 ```
 
 *The commodity markets are where physical reality meets financial abstraction. Good models respect both.*

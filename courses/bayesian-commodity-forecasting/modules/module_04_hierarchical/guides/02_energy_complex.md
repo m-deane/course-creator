@@ -1,10 +1,20 @@
 # Hierarchical Models for Energy Commodities
 
+> **Reading time:** ~9 min | **Module:** 4 — Hierarchical Models | **Prerequisites:** Module 3 State-Space Models
+
+
 ## In Brief
 
 Energy markets are interconnected through refining, transportation, and substitution. Hierarchical models pool information across crude grades, refined products, and geographic regions while respecting their structural relationships, improving forecasts for thinly-traded markets.
 
-> 💡 **Key Insight:** **Borrow strength across related markets.** WTI and Brent prices are highly correlated but not identical. A hierarchical model learns the common "oil market" dynamics while preserving spread relationships, preventing overfitting on individual time series.
+<div class="callout-insight">
+<strong>Insight:</strong> **Borrow strength across related markets.** WTI and Brent prices are highly correlated but not identical. A hierarchical model learns the common "oil market" dynamics while preserving spread relationships, preventing overfitting on individual time series.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Energy markets are interconnected through refining, transportation, and substitution.
+</div>
 
 ---
 
@@ -94,6 +104,13 @@ Portfolio VaR requires correlation structure. Hierarchical models provide:
 
 ### Basic Crude Oil Hierarchy
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 import numpy as np
@@ -173,13 +190,27 @@ print("Intercepts:", grade_intercepts)
 print("Estimated:", trace.posterior['grade_intercept'].mean(dim=['chain', 'draw']).values)
 ```
 
+</div>
+</div>
+
 ---
 
 ## The Crude-Products Hierarchy
 
 ### Crack Spread Model
+<div class="callout-insight">
+<strong>Insight:</strong> Refining adds value to crude oil. Model the spread hierarchically.
+</div>
+
 
 Refining adds value to crude oil. Model the spread hierarchically.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as crack_spread_model:
@@ -219,6 +250,9 @@ with pm.Model() as crack_spread_model:
     pm.Normal('gasoline_obs', mu=gasoline_price, sigma=1.5, observed=gasoline_data)
 ```
 
+</div>
+</div>
+
 This ensures gasoline and crude forecasts are consistent (no arbitrage opportunities).
 
 ---
@@ -226,6 +260,17 @@ This ensures gasoline and crude forecasts are consistent (no arbitrage opportuni
 ## Geographic Hierarchy: Regional Natural Gas
 
 ### US Regional Hub Hierarchy
+<div class="callout-warning">
+<strong>Warning:</strong> hubs = ['Henry_Hub', 'Chicago', 'NY', 'California']
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Regional hubs: Henry Hub (benchmark), Chicago, NY, California
@@ -274,6 +319,9 @@ with pm.Model() as gas_regional:
                  observed=gas_data[hub])
 ```
 
+</div>
+</div>
+
 **Result:** Regional forecasts account for:
 1. National supply/demand (shared factor)
 2. Transport costs (basis differentials)
@@ -284,8 +332,19 @@ with pm.Model() as gas_regional:
 ## Advanced: Dynamic Correlation Structure
 
 ### Time-Varying Crude Correlations
+<div class="callout-key">
+<strong>Key Point:</strong> During crises, crude grades converge (arbitrage opportunities shrink).
+</div>
+
 
 During crises, crude grades converge (arbitrage opportunities shrink).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as dynamic_correlation:
@@ -325,11 +384,21 @@ with pm.Model() as dynamic_correlation:
                  observed=prices[:, g])
 ```
 
+</div>
+</div>
+
 ---
 
 ## Model Comparison & Diagnostics
 
 ### Compare Hierarchical vs. Independent Models
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Independent model (no pooling)
@@ -358,6 +427,9 @@ comparison = az.compare({
 print(comparison)
 ```
 
+</div>
+</div>
+
 **Typically:** Hierarchical model wins (best of both worlds).
 
 ---
@@ -374,10 +446,20 @@ If markets are truly independent (e.g., WTI vs. lumber), hierarchy hurts.
 
 WTI-Brent spread cannot exceed tanker cost (~$5/bbl). Add constraints:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 spread = pm.Deterministic('spread', brent_price - wti_price)
 pm.Potential('arbitrage_bound', pm.math.switch(spread > 7, -np.inf, 0))
 ```
+
+</div>
+</div>
 
 ### 3. Static Loadings During Regime Shifts
 
@@ -426,6 +508,19 @@ You're forecasting diesel and jet fuel prices. Both are distillates refined from
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving hierarchical models for energy commodities, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Gelman, A. & Hill, J. (2006)**. *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.
@@ -443,3 +538,17 @@ You're forecasting diesel and jet fuel prices. Both are distillates refined from
 ---
 
 *"In energy markets, no crude grade is an island. Hierarchical models respect the interconnected reality."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_energy_complex_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_pooling_comparison.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

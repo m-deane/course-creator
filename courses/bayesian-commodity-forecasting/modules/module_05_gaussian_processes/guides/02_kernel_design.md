@@ -1,10 +1,20 @@
 # Kernel Design for Commodity Time Series
 
+> **Reading time:** ~10 min | **Module:** 5 — Gaussian Processes | **Prerequisites:** Module 4 Hierarchical Models
+
+
 ## In Brief
 
 The kernel function defines what "similarity" means in Gaussian Process models. Commodity time series exhibit trends, seasonality, cycles, and discontinuities—each requiring specific kernel choices. This guide provides a practical framework for designing and combining kernels for commodity forecasting.
 
-> 💡 **Key Insight:** **Kernels encode assumptions about function smoothness and structure.** A smooth exponential kernel assumes gradual price changes (fine for stable markets), while a Matérn-1/2 kernel allows sudden jumps (better for supply shocks). Choosing the wrong kernel is like wearing the wrong glasses—everything is blurry.
+<div class="callout-insight">
+<strong>Insight:</strong> **Kernels encode assumptions about function smoothness and structure.** A smooth exponential kernel assumes gradual price changes (fine for stable markets), while a Matérn-1/2 kernel allows sudden jumps (better for supply shocks). Choosing the wrong kernel is like wearing the wrong glasses—everything is blurry.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> The kernel function defines what "similarity" means in Gaussian Process models.
+</div>
 
 ---
 
@@ -25,6 +35,10 @@ $$\begin{bmatrix} f(x_1) \\ \vdots \\ f(x_n) \end{bmatrix} \sim \mathcal{N}\left
 ## Core Kernel Building Blocks
 
 ### 1. Stationary Kernels (Time-Invariant)
+<div class="callout-insight">
+<strong>Insight:</strong> Depend only on distance: $k(x_i, x_j) = k(|x_i - x_j|)$
+</div>
+
 
 Depend only on distance: $k(x_i, x_j) = k(|x_i - x_j|)$
 
@@ -139,6 +153,13 @@ This allows winter peaks to change magnitude year-to-year.
 
 ### 1. Crude Oil: Smooth Trend with Occasional Shocks
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 import pytensor.tensor as pt
@@ -169,6 +190,9 @@ with pm.Model() as crude_model:
     trace = pm.sample(1000, tune=2000, return_inferencedata=True)
 ```
 
+</div>
+</div>
+
 **Interpretation:**
 - Trend captures slow OPEC decisions, global demand shifts
 - Shock captures supply disruptions, geopolitical events
@@ -177,6 +201,13 @@ with pm.Model() as crude_model:
 ---
 
 ### 2. Natural Gas: Strong Seasonality with Time-Varying Amplitude
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as gas_model:
@@ -203,11 +234,21 @@ with pm.Model() as gas_model:
     trace = pm.sample(1000, tune=2000, return_inferencedata=True)
 ```
 
+</div>
+</div>
+
 **Why multiplication?** Winter 2014 had $6/mmBtu swings; winter 2020 had $3/mmBtu swings. Multiplication scales seasonality amplitude.
 
 ---
 
 ### 3. Agricultural (Corn): Harvest Seasonality + Trend + Weather Shocks
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as corn_model:
@@ -239,6 +280,9 @@ with pm.Model() as corn_model:
     trace = pm.sample(1000, tune=2000, return_inferencedata=True)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Incorporating Covariates
@@ -246,6 +290,13 @@ with pm.Model() as corn_model:
 ### Input-Dependent Kernels
 
 Model price as function of time *and* fundamentals (inventory, production).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as covariate_model:
@@ -268,11 +319,25 @@ with pm.Model() as covariate_model:
     trace = pm.sample(1000, tune=2000, return_inferencedata=True)
 ```
 
+</div>
+</div>
+
 **Result:** Model learns how price responds to inventory shocks nonlinearly.
 
 ---
 
 ## Forecasting with Custom Kernels
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+<div class="callout-warning">
+<strong>Warning:</strong> def forecast_gp(trace, model, X_obs, X_new, n_samples=500):
+</div>
+
 
 ```python
 # After fitting GP model
@@ -335,11 +400,25 @@ plt.title('Corn Price Forecast with GP (Custom Kernel)')
 plt.show()
 ```
 
+</div>
+</div>
+
 ---
 
 ## Kernel Diagnostic Tools
 
 ### 1. Length Scale Interpretation
+<div class="callout-key">
+<strong>Key Point:</strong> ell_trend_post = trace.posterior['ell_trend'].values.flatten()
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Extract length scales from trace
@@ -349,6 +428,9 @@ print(f"Trend length scale: {ell_trend_post.mean():.1f} ± {ell_trend_post.std()
 print(f"Interpretation: Trend changes over ~{ell_trend_post.mean():.0f} week horizon")
 ```
 
+</div>
+</div>
+
 **Sanity check:**
 - Crude trend $\ell \sim 50$ weeks (changes annually)
 - Gas seasonal $\ell \sim 5$ weeks (rapid cycles)
@@ -357,6 +439,13 @@ print(f"Interpretation: Trend changes over ~{ell_trend_post.mean():.0f} week hor
 ---
 
 ### 2. Posterior Predictive Checks
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with model:
@@ -372,6 +461,9 @@ ax.legend()
 plt.show()
 ```
 
+</div>
+</div>
+
 **Look for:**
 - Does replicated data match observed variability?
 - Are sudden jumps captured (if using Exponential kernel)?
@@ -380,6 +472,13 @@ plt.show()
 ---
 
 ### 3. Covariance Matrix Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Compute posterior mean covariance
@@ -396,6 +495,9 @@ plt.ylabel('Time')
 plt.show()
 ```
 
+</div>
+</div>
+
 **Patterns:**
 - Block diagonal: Independent segments (regime change?)
 - Banded: Local correlation (stationary kernel)
@@ -406,6 +508,10 @@ plt.show()
 ## Common Pitfalls
 
 ### 1. Wrong Smoothness Assumption
+<div class="callout-insight">
+<strong>Insight:</strong> Using SE kernel for volatile commodities smooths over real shocks.
+</div>
+
 
 Using SE kernel for volatile commodities smooths over real shocks.
 
@@ -418,10 +524,20 @@ Using SE kernel for volatile commodities smooths over real shocks.
 Natural gas heating season has shifted with climate change.
 
 **Fix:** Learn period as parameter:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 period = pm.Gamma('period', alpha=20, beta=20)  # Prior around 1 year
 cov_seasonal = sigma**2 * pm.gp.cov.Periodic(1, period=period, ls=ell)
 ```
+
+</div>
+</div>
 
 ---
 
@@ -430,11 +546,21 @@ cov_seasonal = sigma**2 * pm.gp.cov.Periodic(1, period=period, ls=ell)
 Adding too many components overfits.
 
 **Check:** Use LOO-CV to compare kernel designs:
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 loo_simple = az.loo(trace_simple)
 loo_complex = az.loo(trace_complex)
 print(az.compare({'Simple': loo_simple, 'Complex': loo_complex}))
 ```
+
+</div>
+</div>
 
 ---
 
@@ -472,6 +598,10 @@ Design a kernel for electricity prices with:
 - Daily cycle (24-hour period)
 - Weekly cycle (weekday vs. weekend)
 - Seasonal cycle (summer demand)
+<div class="callout-key">
+<strong>Key Point:</strong> Design a kernel for electricity prices with:
+</div>
+
 
 Write the kernel as a sum/product of base kernels.
 
@@ -491,6 +621,19 @@ You want to forecast copper prices using time + inventory + Chinese PMI. What ke
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving kernel design for commodity time series, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Rasmussen, C.E. & Williams, C.K.I. (2006)**. *Gaussian Processes for Machine Learning*. MIT Press.
@@ -508,3 +651,17 @@ You want to forecast copper prices using time + inventory + Chinese PMI. What ke
 ---
 
 *"A kernel is a prior over functions. Choose wisely, and your GP will see the patterns you need."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_kernel_design_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_gp_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

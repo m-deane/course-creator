@@ -1,10 +1,20 @@
 # Bayesian Change Point Detection
 
+> **Reading time:** ~11 min | **Module:** 7 — Regime Switching | **Prerequisites:** Module 3 State-Space Models
+
+
 ## In Brief
 
 Change point detection identifies moments when a time series undergoes structural shifts in mean, variance, or dynamics. Bayesian methods provide full posterior distributions over change point locations and parameters, enabling uncertainty quantification critical for commodity market regime identification.
 
-> 💡 **Key Insight:** **Structural breaks announce themselves after they happen.** The shale revolution didn't ring a bell in 2010—it became obvious years later. Bayesian change point detection quantifies "how sure are we a regime changed?" and "when did it happen?", preventing false alarms while catching real shifts.
+<div class="callout-insight">
+<strong>Insight:</strong> **Structural breaks announce themselves after they happen.** The shale revolution didn't ring a bell in 2010—it became obvious years later. Bayesian change point detection quantifies "how sure are we a regime changed?" and "when did it happen?", preventing false alarms while catching real shifts.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Change point detection identifies moments when a time series undergoes structural shifts in mean, variance, or dynamics.
+</div>
 
 ---
 
@@ -67,12 +77,23 @@ Each era has distinct characteristics (mean price, volatility). Change point det
 ## Why Change Point Detection for Commodities?
 
 ### 1. Policy Regime Changes
+<div class="callout-warning">
+<strong>Warning:</strong> **OPEC:** Production quota decisions alter supply dynamics
+</div>
+
 
 **OPEC:** Production quota decisions alter supply dynamics
 **Biofuel mandates:** US ethanol requirement links corn to oil (2005+)
 **Russian export ban (2010):** Wheat market regime shift
 
 **Example:** Pre/post-shale oil volatility
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # WTI volatility regimes
@@ -81,6 +102,9 @@ post_shale = oil_returns['2015':'2019'].std()  # ~0.02 daily
 
 # Shale (starting ~2010-2012) reduced volatility
 ```
+
+</div>
+</div>
 
 Change point detection identifies when this shift occurred and uncertainty around timing.
 
@@ -119,6 +143,13 @@ Change point detection identifies when this shift occurred and uncertainty aroun
 ## Code Implementation
 
 ### Basic Mean-Shift Detection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -199,11 +230,25 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+</div>
+
 ---
 
 ## Multiple Change Points
 
 ### Unknown Number of Change Points
+<div class="callout-insight">
+<strong>Insight:</strong> with pm.Model() as multiple_changepoints:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as multiple_changepoints:
@@ -245,6 +290,9 @@ print("Change points (std):", tau_post.std(axis=(0, 1)))
 # Large std → change point not well-supported (may not exist)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Variance Change Point Detection
@@ -252,6 +300,13 @@ print("Change points (std):", tau_post.std(axis=(0, 1)))
 ### Detecting Volatility Regime Changes
 
 Useful for identifying risk regime shifts (e.g., pre/post-crisis volatility).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as variance_changepoint:
@@ -281,11 +336,18 @@ print(f"Pre-change vol: {trace_var.posterior['sigma_pre'].mean():.4f}")
 print(f"Post-change vol: {trace_var.posterior['sigma_post'].mean():.4f}")
 ```
 
+</div>
+</div>
+
 ---
 
 ## Online Change Point Detection
 
 ### Recursive Bayesian Updating
+<div class="callout-key">
+<strong>Key Point:</strong> For real-time detection (new data arrives daily).
+</div>
+
 
 For real-time detection (new data arrives daily).
 
@@ -298,6 +360,13 @@ For real-time detection (new data arrives daily).
 
 **Run-length posterior:**
 $$p(r_t | y_{1:t}) \propto \sum_{r_{t-1}} p(r_t | r_{t-1}) p(y_t | r_t, y_{1:t-1}) p(r_{t-1} | y_{1:t-1})$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import numpy as np
@@ -386,6 +455,9 @@ detected_changepoints = np.where(change_prob > changepoint_threshold)[0]
 print(f"Detected change points: {detected_changepoints}")
 ```
 
+</div>
+</div>
+
 **Advantages:**
 - Real-time detection (no need to reprocess all data)
 - Full posterior over change point location
@@ -396,6 +468,13 @@ print(f"Detected change points: {detected_changepoints}")
 ## Model Comparison: Is There a Change Point?
 
 ### Bayes Factor for Change Point Model vs. No-Change Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Model 1: No change point (constant mean/variance)
@@ -421,11 +500,25 @@ print(comparison)
 # - If similar LOO → insufficient evidence
 ```
 
+</div>
+</div>
+
 ---
 
 ## Change Point Detection for Fundamentals
 
 ### Detect Structural Breaks in Inventory-Price Relationship
+<div class="callout-warning">
+<strong>Warning:</strong> with pm.Model() as inventory_changepoint:
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as inventory_changepoint:
@@ -463,6 +556,9 @@ with pm.Model() as inventory_changepoint:
 # Interpretation: When did inventory-price relationship change?
 # Example: Shale revolution weakened inventory signal (more flexible supply)
 ```
+
+</div>
+</div>
 
 ---
 
@@ -547,6 +643,19 @@ Design a "gradual transition" change point model for the introduction of biofuel
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving bayesian change point detection, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Chib, S. (1998)**. "Estimation and Comparison of Multiple Change-Point Models." *Journal of Econometrics*, 86(2), 221-241.
@@ -564,3 +673,17 @@ Design a "gradual transition" change point model for the introduction of biofuel
 ---
 
 *"Regimes change silently. Bayesian change point detection listens for the whisper before the shout."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_change_point_detection_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_hmm_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

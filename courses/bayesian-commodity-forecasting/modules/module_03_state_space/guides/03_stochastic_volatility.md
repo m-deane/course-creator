@@ -1,10 +1,15 @@
 # Stochastic Volatility Models for Commodities
 
+> **Reading time:** ~9 min | **Module:** 3 — State-Space Models | **Prerequisites:** Module 2 Commodity Data
+
+
 ## In Brief
 
 Stochastic volatility (SV) models treat volatility as a latent time-varying process rather than a deterministic function. This captures the clustering and persistence of volatility observed in commodity markets while providing probabilistic forecasts of future risk.
 
-> 💡 **Key Insight:** **Volatility has memory.** High volatility periods cluster together (calm markets follow calm markets, chaotic markets follow chaotic markets). Stochastic volatility models this persistence through a latent AR(1) process on log-variance, enabling both backward inference (what was the volatility?) and forward prediction (what will it be?).
+<div class="callout-insight">
+<strong>Insight:</strong> **Volatility has memory.** High volatility periods cluster together (calm markets follow calm markets, chaotic markets follow chaotic markets). Stochastic volatility models this persistence through a latent AR(1) process on log-variance, enabling both backward inference (what was the volatility?) and forward prediction (what will it be?).
+</div>
 
 ## Formal Definition
 
@@ -30,6 +35,11 @@ $$h_1 \sim \mathcal{N}\left(\mu, \frac{\sigma_\eta^2}{1 - \phi^2}\right)$$
 | $\sigma_t^2 = \exp(h_t)$ | $\mathbb{R}^+$ | Variance at time t |
 
 **Stationary variance:** $\mathbb{E}[\sigma_t^2] = \exp(\mu + \sigma_\eta^2 / (2(1-\phi^2)))$
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Stochastic volatility (SV) models treat volatility as a latent time-varying process rather than a deterministic function.
+</div>
 
 ---
 
@@ -103,6 +113,13 @@ Options pricing, VaR calculation, and position sizing require volatility forecas
 ## Code Implementation
 
 ### Basic Stochastic Volatility Model in PyMC
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -204,13 +221,27 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+</div>
+
 ---
 
 ## Commodity-Specific Extensions
 
 ### 1. Leverage Effect
+<div class="callout-warning">
+<strong>Warning:</strong> Negative returns increase volatility more than positive returns (especially in energy).
+</div>
+
 
 Negative returns increase volatility more than positive returns (especially in energy).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as sv_leverage:
@@ -237,9 +268,19 @@ with pm.Model() as sv_leverage:
     y_obs = pm.Normal('y_obs', mu=0, sigma=pm.math.exp(h/2) * z, observed=y)
 ```
 
+</div>
+</div>
+
 ### 2. Seasonal Volatility
 
 Natural gas volatility peaks in summer (cooling) and winter (heating).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as sv_seasonal:
@@ -257,9 +298,19 @@ with pm.Model() as sv_seasonal:
     # ... rest similar to basic model
 ```
 
+</div>
+</div>
+
 ### 3. Heavy Tails (Student-t Returns)
 
 Commodity returns have fatter tails than normal.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as sv_student:
@@ -277,11 +328,18 @@ with pm.Model() as sv_student:
     y_obs = pm.StudentT('y_obs', nu=nu, mu=0, sigma=pm.math.exp(h/2), observed=y)
 ```
 
+</div>
+</div>
+
 ---
 
 ## Forecasting Volatility
 
 ### One-Step-Ahead Forecast
+<div class="callout-key">
+<strong>Key Point:</strong> Given $h_t$, the predictive distribution for $h_{t+1}$:
+</div>
+
 
 Given $h_t$, the predictive distribution for $h_{t+1}$:
 
@@ -295,6 +353,13 @@ $$\sigma_{t+1}^2 | h_t \sim \text{LogNormal}(\mu + \phi(h_t - \mu), \sigma_\eta^
 $$h_{t+k} | h_t \sim \mathcal{N}\left(\mu + \phi^k(h_t - \mu), \frac{\sigma_\eta^2(1 - \phi^{2k})}{1 - \phi^2}\right)$$
 
 As $k \to \infty$, this converges to the stationary distribution.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Forecast volatility from PyMC trace
@@ -335,11 +400,21 @@ def forecast_volatility(trace, last_h, periods=20):
     })
 ```
 
+</div>
+</div>
+
 ---
 
 ## Model Comparison
 
 Compare SV specifications using LOO-CV:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 with pm.Model() as sv_basic:
@@ -360,6 +435,9 @@ comparison = az.compare({
 print(comparison)
 ```
 
+</div>
+</div>
+
 Lower LOO = better out-of-sample predictive performance.
 
 ---
@@ -370,6 +448,13 @@ Lower LOO = better out-of-sample predictive performance.
 
 Standard SV models can have poor geometry. Use non-centered parameterization:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Bad: Centered
 h[t] = mu + phi * (h[t-1] - mu) + sigma_eta * eta[t]
@@ -378,6 +463,9 @@ h[t] = mu + phi * (h[t-1] - mu) + sigma_eta * eta[t]
 h_raw[t] = phi * h_raw[t-1] + eta[t]
 h[t] = mu + sigma_eta / sqrt(1 - phi^2) * h_raw[t]
 ```
+
+</div>
+</div>
 
 ### 2. Initialization Sensitivity
 
@@ -418,6 +506,10 @@ Commodity volatility is highly persistent ($\phi > 0.9$ typical). Use strong pri
 A crude oil SV model estimates $\phi = 0.96$ and $\sigma_\eta = 0.15$. If current log-volatility is $h_t = 0.5$:
 1. What is the expected log-volatility in 1 week? 10 weeks?
 2. What is the uncertainty (standard deviation)?
+<div class="callout-insight">
+<strong>Insight:</strong> A crude oil SV model estimates $\phi = 0.96$ and $\sigma_\eta = 0.15$. If current log-volatility is $h_t = 0.5$:
+</div>
+
 
 ### Problem 2
 Why does the SV model use log-variance rather than log-standard-deviation as the latent state?
@@ -440,6 +532,19 @@ Which provides uncertainty estimates? Which adapts fastest to regime changes?
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving stochastic volatility models for commodities, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Kim, S., Shephard, N., & Chib, S. (1998)**. "Stochastic Volatility: Likelihood Inference and Comparison with ARCH Models." *Review of Economic Studies*, 65(3), 361-393.
@@ -457,3 +562,17 @@ Which provides uncertainty estimates? Which adapts fastest to regime changes?
 ---
 
 *"In commodity markets, predicting volatility is often more valuable than predicting prices—because volatility is more predictable."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_stochastic_volatility_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_local_level_model.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

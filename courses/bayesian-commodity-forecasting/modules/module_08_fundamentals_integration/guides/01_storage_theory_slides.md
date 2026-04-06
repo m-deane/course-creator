@@ -22,6 +22,10 @@ Inventories bridge supply and demand across time
 > **Inventories are the bridge between supply and demand across time.** When supply exceeds demand, inventories build and futures trade at a premium (contango). When demand exceeds supply, inventories draw and futures trade at a discount (backwardation).
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Cost of Carry Model
@@ -39,11 +43,16 @@ $$F_T = S \cdot e^{(r + u - y)T}$$
 > **Convenience yield** is the key variable for forecasting.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Contango vs Backwardation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Contango["Contango: F > S"]
         C1["Ample inventories"]
@@ -57,11 +66,13 @@ flowchart LR
     end
     Contango -.-> CT["Storage profitable\nBuy spot, sell futures"]
     Backwardation -.-> BT["Storage unprofitable\nMarket needs it NOW"]
-    style Contango fill:#4a90d9,color:#fff
-    style Backwardation fill:#c0392b,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Convenience Yield
@@ -82,11 +93,16 @@ $$y = r + u - \frac{1}{T}\ln\!\left(\frac{F_T}{S}\right)$$
 **Empirical:** $y_t = \alpha + \beta \cdot I_t + \epsilon_t$ where $\beta < 0$.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Inventory-Price Relationship
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INV["Inventory Level"] --> HIGH{"High Inventory?"}
     HIGH -->|"Yes"| LOW_CY["Low Convenience Yield"]
@@ -95,8 +111,6 @@ flowchart TD
     HIGH_CY --> BACKW["Backwardation\nBullish Pressure"]
     CONTANGO --> PRICE_DOWN["Prices Tend Down"]
     BACKW --> PRICE_UP["Prices Tend Up"]
-    style PRICE_UP fill:#27ae60,color:#fff
-    style PRICE_DOWN fill:#c0392b,color:#fff
 ```
 
 **Empirical model:**
@@ -228,13 +242,13 @@ $$\Delta I_t = \text{Production} - \text{Consumption} + \text{Net Imports}$$
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CD["Commodity Data\n(Module 2)"] --> ST["Storage Theory"]
     RS["Regime Switching\n(Module 7)"] --> ST
     ST --> FV["Fundamental Variables\n(guide 2)"]
     ST --> TRADE["Fair Value + Mean\nReversion Signals"]
     ST --> CAP["Full Fundamentals\nForecasting System"]
-    style ST fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

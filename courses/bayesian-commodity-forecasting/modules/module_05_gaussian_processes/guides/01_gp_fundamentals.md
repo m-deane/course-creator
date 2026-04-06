@@ -1,10 +1,20 @@
 # Gaussian Process Fundamentals
 
+> **Reading time:** ~6 min | **Module:** 5 — Gaussian Processes | **Prerequisites:** Module 4 Hierarchical Models
+
+
 ## In Brief
 
 A Gaussian Process (GP) defines a probability distribution over functions. Instead of parameterizing a specific functional form, GPs specify properties of functions (smoothness, periodicity) through a kernel, letting data determine the actual shape.
 
-> 💡 **Key Insight:** **Think of a GP as placing a prior directly on the space of functions.** Just as a Normal prior on a parameter expresses beliefs about where the parameter lies, a GP prior expresses beliefs about what functions are plausible.
+<div class="callout-insight">
+<strong>Insight:</strong> **Think of a GP as placing a prior directly on the space of functions.** Just as a Normal prior on a parameter expresses beliefs about where the parameter lies, a GP prior expresses beliefs about what functions are plausible.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> A Gaussian Process (GP) defines a probability distribution over functions.
+</div>
 
 ---
 
@@ -110,6 +120,10 @@ Where:
 ### What the Kernel Encodes
 
 The kernel function $k(x, x')$ specifies:
+<div class="callout-key">
+<strong>Key Point:</strong> The kernel function $k(x, x')$ specifies:
+</div>
+
 
 1. **Variance:** $k(x, x)$ — marginal variance at each point
 2. **Correlation Structure:** How function values relate across inputs
@@ -157,6 +171,13 @@ $$k(x, x') = \sigma^2 \exp\left(-\frac{2\sin^2(\pi|x - x'|/p)}{\ell^2}\right)$$
 ## Code Implementation
 
 ### Basic GP Regression in PyMC
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -212,6 +233,9 @@ plt.legend()
 plt.show()
 ```
 
+</div>
+</div>
+
 ---
 
 ## GP for Commodity Prices
@@ -225,6 +249,13 @@ For crude oil prices, we might combine:
 3. **Short-term dynamics:** Matérn with small length scale
 4. **Observation noise:** White noise kernel
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 # Composite kernel for commodities
 k_trend = pm.gp.cov.ExpQuad(1, ls=365*2)  # Multi-year trends
@@ -234,6 +265,9 @@ k_noise = pm.gp.cov.WhiteNoise(sigma=0.1)
 
 k_total = k_trend + k_seasonal * k_short + k_noise
 ```
+
+</div>
+</div>
 
 ---
 
@@ -275,6 +309,19 @@ GP uncertainty may not increase fast enough outside training range.
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving gaussian process fundamentals, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Rasmussen & Williams** *Gaussian Processes for Machine Learning* — Free online, definitive reference
@@ -284,3 +331,17 @@ GP uncertainty may not increase fast enough outside training range.
 ---
 
 *"GPs answer the question: given what I know about function smoothness and the data I've seen, what functions are plausible?"*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_gp_fundamentals_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_gp_fundamentals.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

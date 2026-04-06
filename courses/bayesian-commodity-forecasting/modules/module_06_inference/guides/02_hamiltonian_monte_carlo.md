@@ -1,10 +1,20 @@
 # Hamiltonian Monte Carlo for Bayesian Inference
 
+> **Reading time:** ~10 min | **Module:** 6 — Inference Methods | **Prerequisites:** Module 1 Bayesian Fundamentals
+
+
 ## In Brief
 
 Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributions by simulating Hamiltonian dynamics—treating parameters as positions and introducing auxiliary momentum variables. This enables efficient exploration of complex commodity forecasting models that defeat traditional MCMC.
 
-> 💡 **Key Insight:** **Random walk MCMC is drunk; HMC is a guided missile.** Traditional Metropolis walks randomly and wastes time revisiting the same regions. HMC uses gradient information to cruise through parameter space along high-probability contours, achieving better mixing with fewer samples.
+<div class="callout-insight">
+<strong>Insight:</strong> **Random walk MCMC is drunk; HMC is a guided missile.** Traditional Metropolis walks randomly and wastes time revisiting the same regions. HMC uses gradient information to cruise through parameter space along high-probability contours, achieving better mixing with fewer samples.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributions by simulating Hamiltonian dynamics—treating parameters as positions and introducing auxiliary momentum variables.
+</div>
 
 ---
 
@@ -13,6 +23,10 @@ Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributi
 ### Hamiltonian Dynamics
 
 **Goal:** Sample from target distribution $\pi(\theta) \propto \exp(-U(\theta))$ where $U(\theta) = -\log p(\theta, y)$.
+<div class="callout-key">
+<strong>Key Point:</strong> **Goal:** Sample from target distribution $\pi(\theta) \propto \exp(-U(\theta))$ where $U(\theta) = -\log p(\theta, y)$.
+</div>
+
 
 **Augmented Distribution:**
 Introduce momentum $p \in \mathbb{R}^d$ and define Hamiltonian:
@@ -102,6 +116,13 @@ Energy complex hierarchy: global factor → product factors → individual marke
 
 ### Basic HMC for Crude Oil State Space Model
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pymc as pm
 import numpy as np
@@ -151,6 +172,9 @@ print(f"R-hat: {az.rhat(trace)['sigma_level'].values}")
 az.plot_trace(trace, var_names=['sigma_level', 'sigma_obs'])
 ```
 
+</div>
+</div>
+
 ---
 
 ## NUTS: No-U-Turn Sampler
@@ -178,8 +202,19 @@ Where $\theta_-, \theta_+$ are endpoints of trajectory, $p_-, p_+$ are momenta.
 
 **Too small:** Tiny steps, slow exploration (wastes computation)
 **Too large:** Proposals rejected (low acceptance rate)
+<div class="callout-warning">
+<strong>Warning:</strong> **Too small:** Tiny steps, slow exploration (wastes computation)
+</div>
+
 
 **Optimal:** Acceptance rate ≈ 0.65 for high-dimensional problems
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 trace = pm.sample(
@@ -189,6 +224,9 @@ trace = pm.sample(
     return_inferencedata=True
 )
 ```
+
+</div>
+</div>
 
 **When to increase `target_accept`:**
 - Divergences during sampling
@@ -205,6 +243,13 @@ trace = pm.sample(
 **Dense mass matrix:** $M$ is full positive-definite matrix
 - Accounts for posterior correlations
 - More computation per step but better exploration
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 trace = pm.sample(
@@ -226,30 +271,64 @@ trace_dense = pm.sample(
 )
 ```
 
+</div>
+</div>
+
 ---
 
 ## Advanced: Reparameterization
 
 ### Non-Centered Parameterization
+<div class="callout-key">
+<strong>Key Point:</strong> **Problem:** Centered parameterization has poor geometry.
+</div>
+
 
 **Problem:** Centered parameterization has poor geometry.
 
 **Example (Stochastic Volatility):**
 
 **Centered (bad):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 h[t] = mu + phi * (h[t-1] - mu) + sigma_eta * eta[t]
 ```
 
+</div>
+</div>
+
 When $\sigma_\eta \to 0$, posterior becomes funnel-shaped (hard for HMC).
 
 **Non-centered (good):**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 h_raw[t] = phi * h_raw[t-1] + eta[t]  # eta ~ N(0, 1)
 h[t] = mu + sigma_eta * h_raw[t]
 ```
 
+</div>
+</div>
+
 **Implementation:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 with pm.Model() as sv_noncentered:
     mu = pm.Normal('mu', 0, 5)
@@ -278,6 +357,9 @@ with pm.Model() as sv_noncentered:
                      return_inferencedata=True)
 ```
 
+</div>
+</div>
+
 **Result:** Fewer divergences, better mixing.
 
 ---
@@ -287,14 +369,28 @@ with pm.Model() as sv_noncentered:
 ### 1. Divergences
 
 **Symptom:** Warning message: "X divergences after tuning"
+<div class="callout-insight">
+<strong>Insight:</strong> **Symptom:** Warning message: "X divergences after tuning"
+</div>
+
 
 **Cause:** Numerical instability in leapfrog integration (steep gradients, sudden curvature)
 
 **Fixes:**
 1. Increase `target_accept` (smaller step size):
-   ```python
+   <div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
+```python
    trace = pm.sample(1000, tune=2000, target_accept=0.95)
    ```
+
+</div>
+</div>
 
 2. Reparameterize model (non-centered)
 
@@ -309,10 +405,20 @@ with pm.Model() as sv_noncentered:
 **Cause:** High autocorrelation (samples not independent)
 
 **Check:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 ess = az.ess(trace)
 print(ess['sigma_level'])  # Should be > 400 for 1000 samples
 ```
+
+</div>
+</div>
 
 **Fixes:**
 1. Longer chains
@@ -342,10 +448,20 @@ $$\text{E-BFMI} = \frac{\mathbb{E}[\text{Var}(\Delta E)]}{\text{Var}(E)}$$
 **Threshold:** E-BFMI < 0.3 indicates problems
 
 **Check:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 bfmi = az.bfmi(trace)
 print(f"E-BFMI: {bfmi}")
 ```
+
+</div>
+</div>
 
 **Low E-BFMI → Poor exploration** (likely funnel geometry)
 
@@ -354,6 +470,13 @@ print(f"E-BFMI: {bfmi}")
 ---
 
 ## HMC for Hierarchical Commodity Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 # Energy complex hierarchy with HMC
@@ -409,6 +532,9 @@ if divergences > 0:
     print("  2. Reparameterize model")
     print("  3. Inspect posterior geometry with az.plot_pair()")
 ```
+
+</div>
+</div>
 
 ---
 
@@ -482,6 +608,10 @@ if divergences > 0:
 
 ### Problem 1
 A crude oil state space model has 200 latent states. Estimate the number of gradient evaluations HMC performs per iteration if $L=50$ leapfrog steps. Compare to Metropolis (no gradients).
+<div class="callout-key">
+<strong>Key Point:</strong> A crude oil state space model has 200 latent states. Estimate the number of gradient evaluations HMC performs per iteration if $L=50$ leapfrog steps. Compare to Metropolis (no gradients).
+</div>
+
 
 ### Problem 2
 Your HMC sampler reports 120 divergences out of 1000 samples. The model is a stochastic volatility model for natural gas.
@@ -506,6 +636,19 @@ You're forecasting copper prices with a GP model (100 inducing points, 5 kernel 
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving hamiltonian monte carlo for bayesian inference, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Neal, R.M. (2011)**. "MCMC Using Hamiltonian Dynamics." *Handbook of Markov Chain Monte Carlo*. CRC Press.
@@ -523,3 +666,17 @@ You're forecasting copper prices with a GP model (100 inducing points, 5 kernel 
 ---
 
 *"HMC doesn't wander through parameter space—it surfs the posterior contours with purpose."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_hamiltonian_monte_carlo_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_mcmc_foundations.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

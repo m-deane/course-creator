@@ -1,8 +1,16 @@
 # Probability Review for Bayesian Time Series
 
+> **Reading time:** ~6 min | **Module:** 0 — Foundations | **Prerequisites:** Basic probability, linear algebra
+
+
 ## In Brief
 
 This guide reviews the probability concepts essential for Bayesian inference. If these concepts feel unfamiliar, complete the prerequisite review before proceeding.
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> This guide reviews the probability concepts essential for Bayesian inference.
+</div>
 
 ---
 
@@ -228,3 +236,29 @@ $$f(x) = \int f(x | \theta) f(\theta) d\theta$$
 ---
 
 *Answers and detailed solutions in the notebook exercises.*
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Probability Fundamentals" and why it matters in practice.
+
+2. Given a real-world scenario involving probability review for bayesian time series, what would be your first three steps to apply the techniques from this guide?
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_probability_review_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_environment_setup.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

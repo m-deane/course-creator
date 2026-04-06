@@ -21,11 +21,16 @@ Pooling information across crude grades, products, and regions
 > **Borrow strength across related markets.** WTI and Brent are highly correlated but not identical. A hierarchical model learns common "oil market" dynamics while preserving spread relationships, preventing overfitting on individual series.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Energy Market Hierarchy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     GEF["Global Energy Factor"] --> COF["Crude Oil\nFactor"]
     GEF --> RPF["Refined Products\nFactor"]
@@ -40,13 +45,13 @@ flowchart TD
     NGF --> HH["Henry Hub"]
     NGF --> TTF["TTF (Europe)"]
     NGF --> JKM["JKM (Asia LNG)"]
-    style GEF fill:#4a90d9,color:#fff
-    style COF fill:#e67e22,color:#fff
-    style RPF fill:#e67e22,color:#fff
-    style NGF fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Three-Level Formal Definition
@@ -65,6 +70,10 @@ $$y_{i,t} \sim \mathcal{N}(\alpha_i + \beta_i \cdot \mu_{\text{product}} + f(X_{
 | $f(X_{i,t})$ | Observable fundamentals (inventories, capacity) |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Why Hierarchical for Energy?
@@ -101,6 +110,10 @@ $$y_{i,t} \sim \mathcal{N}(\alpha_i + \beta_i \cdot \mu_{\text{product}} + f(X_{
 </div>
 
 <!-- Speaker notes: Compare the two sides. Ask learners which approach they would use in their own work and why. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 <!-- _class: lead -->
@@ -217,15 +230,13 @@ with pm.Model() as crack_spread_model:
 ## Information Flow in the Hierarchy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     HH["Henry Hub\nPrice Shock"] -->|"updates"| NGF["Natural Gas\nFactor"]
     NGF -->|"informs"| TTF["TTF Forecast"]
     NGF -->|"informs"| JKM["JKM Forecast"]
     NGF -->|"weak link"| GEF["Global Energy\nFactor"]
     GEF -->|"weak update"| COF["Crude Oil\nFactor"]
-    style HH fill:#c0392b,color:#fff
-    style NGF fill:#e67e22,color:#fff
-    style GEF fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -282,13 +293,13 @@ pm.Potential('arbitrage_bound',
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     PP["Partial Pooling\n(previous guide)"] --> EC["Energy Complex"]
     SSM["State Space Models\n(Module 3)"] --> EC
     EC --> GP["GPs for Spatial\nInterpolation\n(Module 5)"]
     EC --> RS["Regime-Switching\nHierarchies\n(Module 7)"]
     EC --> FI["Storage/Capacity\nConstraints\n(Module 8)"]
-    style EC fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

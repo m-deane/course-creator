@@ -1,16 +1,30 @@
 # Commodity Data Sources Guide
 
+> **Reading time:** ~6 min | **Module:** 2 — Commodity Data | **Prerequisites:** Module 1 Bayesian Fundamentals
+
+
 ## In Brief
 
 Quality commodity forecasting requires reliable data on prices, fundamentals, and positioning. This guide maps the data landscape and provides practical retrieval strategies.
 
-> 💡 **Key Insight:** **Free, official data often beats expensive commercial feeds for fundamentals.** EIA, USDA, and CFTC provide authoritative data that moves markets. Commercial data adds value primarily for higher frequency or alternative datasets.
+<div class="callout-insight">
+<strong>Insight:</strong> **Free, official data often beats expensive commercial feeds for fundamentals.** EIA, USDA, and CFTC provide authoritative data that moves markets. Commercial data adds value primarily for higher frequency or alternative datasets.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Quality commodity forecasting requires reliable data on prices, fundamentals, and positioning.
+</div>
 
 ---
 
 ## 1. Energy Data (EIA)
 
 ### Weekly Petroleum Status Report
+<div class="callout-key">
+<strong>Key Point:</strong> The most market-moving energy report in the world.
+</div>
+
 
 The most market-moving energy report in the world.
 
@@ -28,6 +42,13 @@ The most market-moving energy report in the world.
 | Crude Production | WCRFPUS2 | Weekly crude oil production |
 
 **Python Retrieval:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import pandas as pd
 
@@ -60,6 +81,9 @@ def get_eia_petroleum(series_id, api_key):
     return df[['value']].rename(columns={'value': series_id})
 ```
 
+</div>
+</div>
+
 ### Natural Gas Weekly Update
 
 **Release:** Thursday 10:30 AM ET
@@ -84,6 +108,10 @@ def get_eia_petroleum(series_id, api_key):
 ### WASDE Report
 
 World Agricultural Supply and Demand Estimates - the most important agricultural report.
+<div class="callout-insight">
+<strong>Insight:</strong> World Agricultural Supply and Demand Estimates - the most important agricultural report.
+</div>
+
 
 **Release:** Monthly, around 12th
 **URL:** https://www.usda.gov/oce/commodity/wasde
@@ -94,6 +122,13 @@ World Agricultural Supply and Demand Estimates - the most important agricultural
 - Price forecasts
 
 **Retrieval via USDA NASS API:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import requests
 
@@ -121,6 +156,9 @@ def get_usda_nass(commodity, year, api_key):
     response = requests.get(base_url, params=params)
     return pd.DataFrame(response.json()['data'])
 ```
+
+</div>
+</div>
 
 ### Crop Progress Report
 
@@ -190,6 +228,13 @@ def get_usda_nass(commodity, year, api_key):
 
 ### Yahoo Finance (yfinance)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import yfinance as yf
 
@@ -204,7 +249,17 @@ zs = yf.download('ZS=F', start='2020-01-01')  # Soybeans
 # Note: These roll automatically but may have gaps
 ```
 
+</div>
+</div>
+
 ### FRED (Federal Reserve)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from fredapi import Fred
@@ -219,6 +274,9 @@ brent = fred.get_series('DCOILBRENTEU')  # Brent spot
 dxy = fred.get_series('DTWEXBGS')  # Dollar index
 fedfunds = fred.get_series('FEDFUNDS')  # Fed funds rate
 ```
+
+</div>
+</div>
 
 ---
 
@@ -243,6 +301,13 @@ fedfunds = fred.get_series('FEDFUNDS')  # Fed funds rate
 
 **Critical:** When backtesting, only use data available at the time.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 def get_available_data(date, release_schedule):
     """
@@ -254,6 +319,9 @@ def get_available_data(date, release_schedule):
     # Implementation depends on specific release schedule
     pass
 ```
+
+</div>
+</div>
 
 ---
 
@@ -295,6 +363,19 @@ data/
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Energy Data (EIA)" and why it matters in practice.
+
+2. Given a real-world scenario involving commodity data sources guide, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 - EIA API Documentation: https://www.eia.gov/opendata/
@@ -304,3 +385,17 @@ data/
 ---
 
 *"Know your data sources better than you know your models. The data is the foundation."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_data_sources_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_data_retrieval_pipeline.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

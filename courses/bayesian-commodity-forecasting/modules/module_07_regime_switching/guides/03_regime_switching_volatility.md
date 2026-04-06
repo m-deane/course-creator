@@ -1,10 +1,15 @@
 # Regime-Switching Volatility Models
 
+> **Reading time:** ~10 min | **Module:** 7 — Regime Switching | **Prerequisites:** Module 3 State-Space Models
+
+
 ## In Brief
 
 Regime-switching volatility models capture the observation that market volatility changes dramatically across different states—calm periods with low volatility versus crisis periods with high volatility. These models allow variance to switch between regimes governed by a latent Markov process.
 
-> 💡 **Key Insight:** Asset returns don't have constant volatility. Oil prices might have σ = 2% daily in stable markets, but σ = 8% during supply disruptions. A single volatility parameter cannot capture both regimes. Regime-switching models learn: (1) distinct volatility levels, (2) regime persistence, (3) transition probabilities, enabling better risk management and option pricing.
+<div class="callout-insight">
+<strong>Insight:</strong> Asset returns don't have constant volatility. Oil prices might have σ = 2% daily in stable markets, but σ = 8% during supply disruptions. A single volatility parameter cannot capture both regimes. Regime-switching models learn: (1) distinct volatility levels, (2) regime persistence, (3) transition probabilities, enabling better risk management and option pricing.
+</div>
 
 ## Formal Definition
 
@@ -82,6 +87,13 @@ This enables:
 ## Code Implementation
 
 ### Two-Regime Switching Volatility (PyMC)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 import pymc as pm
@@ -340,7 +352,17 @@ print("\nPosterior Parameter Estimates:")
 print(az.summary(trace, var_names=['sigma', 'mu', 'p_transition']))
 ```
 
+</div>
+</div>
+
 ### Simplified Implementation (hmmlearn)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 from hmmlearn import hmm
@@ -392,7 +414,17 @@ def fit_gaussian_hmm(returns, n_components=2):
 hmm_model, hmm_states = fit_gaussian_hmm(returns, n_components=2)
 ```
 
+</div>
+</div>
+
 ### Volatility Forecasting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
 
 ```python
 def forecast_volatility(trace, returns, horizon=20):
@@ -448,6 +480,9 @@ plt.grid(alpha=0.3)
 plt.savefig('volatility_forecast.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+</div>
+</div>
 
 ## Common Pitfalls
 
@@ -534,6 +569,19 @@ plt.show()
 
    Which should you use? Why does this matter?
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
+
+2. Given a real-world scenario involving regime-switching volatility models, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 **Foundational:**
@@ -556,6 +604,25 @@ plt.show()
 **Extensions:**
 10. **Haas et al. (2004)** - "A New Approach to Markov-Switching GARCH Models" - Advanced GARCH regimes
 
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Regime-switching volatility models capture the observation that market volatility changes dramatically across different states—calm periods with low volatility versus crisis periods with high volatility.
+</div>
+
 ---
 
 *"Volatility isn't constant—it switches between regimes. Model both calm and crisis periods to capture true risk."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_regime_switching_volatility_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_hmm_from_scratch.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

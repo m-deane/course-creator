@@ -1,10 +1,20 @@
 # MCMC Foundations: From Metropolis to Modern Samplers
 
+> **Reading time:** ~5 min | **Module:** 6 — Inference Methods | **Prerequisites:** Module 1 Bayesian Fundamentals
+
+
 ## In Brief
 
 Markov Chain Monte Carlo (MCMC) constructs a Markov chain whose stationary distribution is the target posterior. By simulating this chain long enough, we obtain samples that represent the posterior distribution.
 
-> 💡 **Key Insight:** **MCMC is random walk + acceptance rule.** We propose moves through parameter space and accept or reject them based on how much they improve the posterior density. The magic: this simple procedure produces samples from arbitrarily complex posteriors.
+<div class="callout-insight">
+<strong>Insight:</strong> **MCMC is random walk + acceptance rule.** We propose moves through parameter space and accept or reject them based on how much they improve the posterior density. The magic: this simple procedure produces samples from arbitrarily complex posteriors.
+</div>
+
+
+<div class="callout-key">
+<strong>Key Concept Summary:</strong> Markov Chain Monte Carlo (MCMC) constructs a Markov chain whose stationary distribution is the target posterior.
+</div>
 
 ---
 
@@ -80,6 +90,13 @@ Optimal: ~25-50% acceptance rate for high dimensions
 
 ## Implementation from Scratch
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+<div class="code-body">
+
 ```python
 import numpy as np
 from scipy import stats
@@ -149,6 +166,9 @@ samples, rate = metropolis_hastings(
 print(f"Acceptance rate: {rate:.2%}")
 print(f"Sample mean: {samples[1000:].mean(axis=0)}")  # Discard burn-in
 ```
+
+</div>
+</div>
 
 ---
 
@@ -262,6 +282,19 @@ Run several chains from different starting points:
 
 ---
 
+
+---
+
+## Practice Questions
+
+<div class="callout-info">
+<strong>Test Your Understanding</strong>
+
+1. Explain in your own words the key difference between the concepts covered in "The Core Problem" and why it matters in practice.
+
+2. Given a real-world scenario involving mcmc foundations: from metropolis to modern samplers, what would be your first three steps to apply the techniques from this guide?
+</div>
+
 ## Further Reading
 
 1. **Gelman et al.** *BDA* Chapter 11 — Comprehensive MCMC treatment
@@ -271,3 +304,17 @@ Run several chains from different starting points:
 ---
 
 *"MCMC is the engine that makes Bayesian inference practical. Understanding how it works—and when it fails—is essential for any Bayesian modeler."*
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_mcmc_foundations_slides.md">
+  <div class="link-card-title">Companion Slide Deck</div>
+  <div class="link-card-description">Visual presentation covering the key concepts from this guide.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_mcmc_foundations.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive notebook with working code examples and exercises.</div>
+</a>

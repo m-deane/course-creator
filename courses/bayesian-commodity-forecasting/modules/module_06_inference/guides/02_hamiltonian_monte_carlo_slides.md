@@ -21,6 +21,10 @@ Gradient-guided sampling for complex posteriors
 > **Random walk MCMC is drunk; HMC is a guided missile.** Traditional Metropolis walks randomly and wastes time revisiting the same regions. HMC uses gradient information to cruise through parameter space along high-probability contours, achieving better mixing with fewer samples.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Hamiltonian Dynamics
@@ -41,11 +45,16 @@ $$H(\theta, p) = U(\theta) + K(p)$$
 $$\frac{d\theta}{dt} = M^{-1} p, \qquad \frac{dp}{dt} = -\nabla U(\theta)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## HMC Sampling Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     MOM["Sample Momentum\np ~ N(0, M)"] --> LEAP["Leapfrog\nIntegration\n(L steps)"]
     LEAP --> PROP["Proposal\n(θ*, p*)"]
@@ -54,13 +63,15 @@ flowchart LR
     MH -->|"Reject"| KEEP["Keep θ"]
     STORE --> MOM
     KEEP --> MOM
-    style LEAP fill:#4a90d9,color:#fff
-    style STORE fill:#27ae60,color:#fff
 ```
 
 > Key property: Hamiltonian flow preserves total energy, giving high acceptance rates.
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Leapfrog Integrator
@@ -81,11 +92,16 @@ $$\alpha = \min\!\left(1, \exp\!\left(H(\theta, p) - H(\theta^*, p^*)\right)\rig
 If discretization is perfect, $\Delta H = 0$ and acceptance is always 1.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## The Physics Analogy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Surface["Posterior = Curved Surface"]
         VALLEY["Valley\n= High Probability"]
@@ -98,8 +114,6 @@ flowchart TD
     end
     PUSH --> ROLL --> STOP
     VALLEY -.-> ROLL
-    style VALLEY fill:#27ae60,color:#fff
-    style HILL fill:#c0392b,color:#fff
 ```
 
 - Gradient $\nabla U$ is the slope -- guides momentum
@@ -238,6 +252,7 @@ trace = pm.sample(
 ## Non-Centered Parameterization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Centered["Centered (Bad Geometry)"]
         C1["h[t] = mu + phi*(h[t-1]-mu)\n+ sigma_eta * eta[t]"]
@@ -249,8 +264,6 @@ flowchart LR
         NC3["Decoupled parameters"]
     end
     Centered -->|"Reparameterize"| NonCentered
-    style Centered fill:#c0392b,color:#fff
-    style NonCentered fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -365,6 +378,7 @@ with pm.Model() as energy_hierarchy:
 ## When to Use HMC vs Others
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TASK["Inference Task"] --> Q1{"Continuous\nparams?"}
     Q1 -->|"Yes"| Q2{"High\ndimensions?"}
@@ -373,9 +387,6 @@ flowchart TD
     Q2 -->|"No (<10)"| Q3{"Speed\ncritical?"}
     Q3 -->|"Yes"| VI["Variational\nInference"]
     Q3 -->|"No"| HMC
-    style HMC fill:#27ae60,color:#fff
-    style VI fill:#4a90d9,color:#fff
-    style MH fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -384,13 +395,13 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MCMC["MCMC Foundations\n(guide 1)"] --> HMC["Hamiltonian\nMonte Carlo"]
     GRAD["Gradient Computation\n(Autodiff)"] --> HMC
     HMC --> RS["Regime-Switching\n(Module 7: discrete+continuous)"]
     HMC --> ADV["Riemannian HMC\n(adaptive geometry)"]
     HMC -.-> VI["Variational Inference\n(optimization alternative)"]
-    style HMC fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

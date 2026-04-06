@@ -21,6 +21,10 @@ How to know when your chain has converged
 > **Running MCMC without checking convergence is like leaving bread in the oven without setting a timer.** Diagnostics tell you when the chain has "burned in" and is providing valid posterior samples.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Convergence Question
@@ -32,6 +36,7 @@ MCMC generates $\{\theta^{(1)}, \theta^{(2)}, \ldots, \theta^{(T)}\}$
 **Problem:** How large is "large enough"?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Bad["Not Converged"]
         B1["Chain drifting"]
@@ -42,11 +47,13 @@ flowchart LR
         G2["Chains agree"]
     end
     Bad -->|"More samples\nor reparameterize"| Good
-    style Bad fill:#c0392b,color:#fff
-    style Good fill:#27ae60,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## Three Key Diagnostics
@@ -60,6 +67,10 @@ flowchart LR
 Plus: **Divergences** (HMC-specific) should be **zero**.
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## R-hat: Between vs Within Chain Variance
@@ -78,6 +89,10 @@ $$\hat{R} = \sqrt{\frac{\hat{V}}{W}}$$
 > Run **4 chains** from different starting points to compute $\hat{R}$.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Effective Sample Size
@@ -85,6 +100,7 @@ $$\hat{R} = \sqrt{\frac{\hat{V}}{W}}$$
 $$\text{ESS} = \frac{T}{1 + 2\sum_{k=1}^{\infty} \rho_k}$$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Low["Low ESS (e.g., 50)"]
         L1["High autocorrelation"]
@@ -96,8 +112,6 @@ flowchart LR
         H2["Near-independent samples"]
         H3["Reliable inference"]
     end
-    style Low fill:#c0392b,color:#fff
-    style High fill:#27ae60,color:#fff
 ```
 
 | ESS | Assessment |
@@ -324,6 +338,7 @@ def diagnose_issues(trace):
 ## Diagnostic Decision Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START["Run 4 chains"] --> RHAT{"R-hat < 1.01\nfor ALL params?"}
     RHAT -->|"No"| FIX1["More warmup\nCheck multimodality"]
@@ -334,10 +349,6 @@ flowchart TD
     DIV -->|"Yes"| TRACE{"Trace plots\nstationary?"}
     TRACE -->|"Yes"| PASS["CONVERGED"]
     TRACE -->|"No"| FIX4["Investigate\nmodel structure"]
-    style PASS fill:#27ae60,color:#fff
-    style FIX1 fill:#c0392b,color:#fff
-    style FIX2 fill:#c0392b,color:#fff
-    style FIX3 fill:#c0392b,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -391,6 +402,7 @@ def sample_until_converged(model, max_attempts=3,
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MCMC["MCMC Foundations\n(guide 1)"] --> CD["Convergence\nDiagnostics"]
     HMC["HMC/NUTS\n(guide 2)"] --> CD
@@ -398,7 +410,6 @@ flowchart TD
     CD --> MS["Model Selection\n(requires converged samples)"]
     CD --> PPC["Posterior Predictive\nChecks"]
     CD --> PROD["Production Deployment\n(convergence = reliability)"]
-    style CD fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

@@ -22,6 +22,10 @@ Random walk + acceptance rule = posterior samples
 > **MCMC is random walk + acceptance rule.** We propose moves through parameter space and accept or reject them based on how much they improve the posterior density. The magic: this simple procedure produces samples from arbitrarily complex posteriors.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Core Problem
@@ -35,11 +39,16 @@ But $p(y) = \int p(y | \theta)\, p(\theta)\, d\theta$ is **intractable**.
 **Key observation:** We can evaluate $p(\theta | y) \propto p(y | \theta)\, p(\theta)$ up to a constant. MCMC only needs this unnormalized density.
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## MCMC Sampling Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     INIT["Initialize\nθ⁰"] --> PROP["Propose\nθ*"]
     PROP --> EVAL["Evaluate\nα = p(θ*)/p(θ)"]
@@ -48,14 +57,15 @@ flowchart LR
     DEC -->|"No (prob 1-α)"| REJ["θᵗ = θᵗ⁻¹"]
     ACC --> PROP
     REJ --> PROP
-    style EVAL fill:#4a90d9,color:#fff
-    style ACC fill:#27ae60,color:#fff
-    style REJ fill:#c0392b,color:#fff
 ```
 
 > Repeat thousands of times. The chain spends more time in high-density regions.
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## The Metropolis-Hastings Algorithm
@@ -74,11 +84,16 @@ $$\alpha = \min\!\left(1, \frac{p(\theta^* | y) \cdot q(\theta^{(t-1)} | \theta^
 $$\alpha = \min\!\left(1, \frac{p(\theta^* | y)}{p(\theta^{(t-1)} | y)}\right)$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Proposal Width Tradeoff
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Wide["Too Wide"]
         W1["Most proposals rejected"]
@@ -95,9 +110,6 @@ flowchart TD
     Wide -.-> BAD1["Low acceptance rate"]
     Narrow -.-> BAD2["High autocorrelation"]
     Optimal -.-> GOOD["Good mixing"]
-    style Optimal fill:#27ae60,color:#fff
-    style Wide fill:#c0392b,color:#fff
-    style Narrow fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -218,6 +230,7 @@ print(f"Sample mean: {samples[1000:].mean(axis=0)}")
 ## Burn-in, Thinning, and Multiple Chains
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RAW["Raw MCMC Output\n(T total samples)"] --> BURN["Discard Burn-in\n(first 50%)"]
     BURN --> THIN["Thin (optional)\nKeep every k-th"]
@@ -226,8 +239,6 @@ flowchart TD
     DIAG -->|"Yes"| USE["Use for\nInference"]
     DIAG -->|"No"| FIX["Fix: More samples\nor reparameterize"]
     FIX --> RAW
-    style USE fill:#27ae60,color:#fff
-    style FIX fill:#c0392b,color:#fff
 ```
 
 | Practice | Recommendation |
@@ -254,13 +265,13 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BT["Bayes' Theorem\n(Module 1)"] --> MCMC["MCMC Foundations"]
     MC["Markov Chains\nStationary Distributions"] --> MCMC
     MCMC --> HMC["Hamiltonian MC\n(next guide)"]
     MCMC --> VI["Variational Inference\n(guide 3)"]
     MCMC --> DIAG["Convergence\nDiagnostics (guide 4)"]
-    style MCMC fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

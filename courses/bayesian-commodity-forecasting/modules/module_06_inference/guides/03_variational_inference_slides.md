@@ -21,6 +21,10 @@ Turning Bayesian inference into optimization
 > **MCMC explores the posterior through random sampling -- accurate but slow. VI turns inference into optimization:** find the distribution in a tractable family that is closest to the true posterior. Trade exactness for speed -- VI can be 100x faster than MCMC.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## The Inference Problem
@@ -34,11 +38,16 @@ $$p(\boldsymbol{\theta} | \mathbf{y}) = \frac{p(\mathbf{y} | \boldsymbol{\theta}
 $$p(\boldsymbol{\theta} | \mathbf{y}) \approx q(\boldsymbol{\theta}; \boldsymbol{\phi})$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## MCMC vs VI
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph MCMC["MCMC (Sampling)"]
         M1["Random exploration"]
@@ -54,8 +63,6 @@ flowchart LR
     POST --> VI
     MCMC --> EX["Exact\nsamples"]
     VI --> AP["Best\napproximation"]
-    style MCMC fill:#4a90d9,color:#fff
-    style VI fill:#27ae60,color:#fff
 ```
 
 | Feature | MCMC | VI |
@@ -66,6 +73,10 @@ flowchart LR
 | Uncertainty | Full posterior | Often underestimates |
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Evidence Lower Bound (ELBO)
@@ -83,11 +94,16 @@ Since $\log p(\mathbf{y})$ is constant:
 $$\max_{\boldsymbol{\phi}} \mathcal{L} \iff \min_{\boldsymbol{\phi}} \text{KL}[q \| p]$$
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## ELBO Optimization Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize q(θ; φ)"] --> SAMPLE["Sample θ ~ q"]
     SAMPLE --> EVAL["Evaluate\nlog p(y,θ) - log q(θ)"]
@@ -96,8 +112,6 @@ flowchart TD
     UPDATE --> CHECK{"ELBO\nconverged?"}
     CHECK -->|"No"| SAMPLE
     CHECK -->|"Yes"| RESULT["Approximate\nPosterior q*(θ)"]
-    style RESULT fill:#27ae60,color:#fff
-    style GRAD fill:#4a90d9,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -275,6 +289,7 @@ def train_svi(X, y, batch_size=32, n_epochs=100):
 ## VI Decision Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TASK["Bayesian Inference"] --> Q1{"Dataset size?"}
     Q1 -->|"Small (< 10K)"| Q2{"Need exact\nposterior?"}
@@ -284,9 +299,6 @@ flowchart TD
     VI_REC --> Q3{"Posterior\ncorrelations?"}
     Q3 -->|"Strong"| FULLRANK["Full-Rank VI\nor Normalizing Flows"]
     Q3 -->|"Weak"| MEANFIELD["Mean-Field\nADVI"]
-    style MCMC_REC fill:#4a90d9,color:#fff
-    style VI_REC fill:#27ae60,color:#fff
-    style FULLRANK fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
@@ -331,6 +343,7 @@ flowchart TD
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BF["Bayesian Fundamentals\n(Module 1)"] --> VI["Variational\nInference"]
     MCMC["MCMC Foundations\n(guide 1)"] --> VI
@@ -338,7 +351,6 @@ flowchart TD
     VI --> SVGP["Sparse GP (SVGP)\n(Module 5)"]
     VI --> PROD["Production Systems\n(real-time inference)"]
     VI --> VAE["Deep Learning\n(VAE connection)"]
-    style VI fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

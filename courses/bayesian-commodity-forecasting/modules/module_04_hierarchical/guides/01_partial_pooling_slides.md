@@ -20,6 +20,10 @@ math: mathjax
 > **Shrinkage is intelligent borrowing.** When a commodity has limited data, its estimates are "shrunk" toward the group mean. When it has abundant data, it stands on its own. The model automatically determines how much to shrink.
 
 <!-- Speaker notes: Explain Key Insight. Connect this concept to the practical applications in commodity markets. Check for understanding before moving on. -->
+
+<div class="callout-info">
+This is a foundational concept for the rest of the module.
+</div>
 ---
 
 ## Hierarchical Model Structure
@@ -38,17 +42,19 @@ math: mathjax
 | $\tau$ | Group std (controls pooling) |
 
 <!-- Speaker notes: Walk through each row of the table. This is reference material learners will come back to, so highlight the most important entries. -->
+
+<div class="callout-key">
+This is the key takeaway from this section.
+</div>
 ---
 
 ## The Three Pooling Regimes
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     NP["No Pooling\nμ_j = ȳ_j"] --> PP["Partial Pooling\nμ_j = λȳ_j + (1-λ)μ₀"]
     PP --> CP["Complete Pooling\nμ_j = μ for all j"]
-    style NP fill:#c0392b,color:#fff
-    style PP fill:#27ae60,color:#fff
-    style CP fill:#4a90d9,color:#fff
 ```
 
 | Regime | Pros | Cons | When |
@@ -58,6 +64,10 @@ flowchart LR
 | **Partial Pooling** | Best of both worlds | More complex | Related commodities |
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->
+
+<div class="callout-warning">
+Common misconception — read carefully.
+</div>
 ---
 
 ## Shrinkage Formula
@@ -78,11 +88,16 @@ $$\lambda_j = \frac{n_j \tau^2}{n_j \tau^2 + \sigma^2}$$
 | Small $\tau^2$ | $\to 0$ | Groups very similar |
 
 <!-- Speaker notes: Walk through the mathematical notation carefully. Explain each symbol and relate it back to the intuitive explanation. Don't rush through formulas. -->
+
+<div class="callout-insight">
+This insight connects theory to practice.
+</div>
 ---
 
 ## Shrinkage Visualized
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Before["Individual Estimates (No Pooling)"]
         E1["Commodity A: 95"]
@@ -101,7 +116,6 @@ flowchart TD
     E2 -->|"shrink toward μ₀"| P2
     E3 -->|"shrink toward μ₀"| P3
     E4 -->|"shrink toward μ₀"| P4
-    style GM fill:#e67e22,color:#fff
 ```
 
 > Extreme estimates and small-sample commodities are pulled more toward the group mean.
@@ -251,10 +265,10 @@ Hierarchical priors reduce overfitting.
 ## Bias-Variance Tradeoff
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     NP["No Pooling\nHigh Variance\nLow Bias"] ---|"sweet spot"| PP["Partial Pooling\nOptimal Tradeoff"]
     PP ---|"too far"| CP["Complete Pooling\nLow Variance\nHigh Bias"]
-    style PP fill:#27ae60,color:#fff
 ```
 
 > Partial pooling minimizes total prediction error by optimally balancing bias and variance.
@@ -265,13 +279,13 @@ flowchart LR
 ## Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     BU["Prior-Posterior\nUpdating (Module 1)"] --> PP["Partial Pooling"]
     SSM["State Space Models\n(Module 3)"] --> PP
     PP --> EC["Energy Complex\n(next guide)"]
     PP --> AC["Agricultural Complex\n(guide 3)"]
     PP --> FI["Hierarchical Fundamentals\n(Module 8)"]
-    style PP fill:#e67e22,color:#fff
 ```
 
 <!-- Speaker notes: Use the diagram to illustrate the relationships visually. Point to each node as you explain the flow. Give learners time to study the diagram. -->

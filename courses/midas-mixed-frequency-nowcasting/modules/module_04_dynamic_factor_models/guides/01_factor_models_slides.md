@@ -34,6 +34,12 @@ $$\mathbf{x}_t = \mathbf{\Lambda}\mathbf{f}_t + \mathbf{e}_t, \quad q \ll N$$
 
 <!-- Speaker notes: The practical problem is clear: with 20 monthly indicators at K=12 lags each, U-MIDAS would require 241 parameters with only T=100 quarterly observations. The K/T ratio is 2.4 — way above the 0.05 threshold for U-MIDAS viability. Factor models solve this by projecting the N-dimensional data onto a q-dimensional factor space. The key insight is that most economic indicators share a common business cycle component — the first principal component of the indicator panel captures this. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## The Factor Model
@@ -51,9 +57,21 @@ Key assumptions:
 
 <!-- Speaker notes: The factor model decomposes each indicator into a common component (Lambda_i * f_t) and an idiosyncratic component (e_it). The common component captures comovement across indicators — when the economy booms, most indicators rise together. The idiosyncratic component captures indicator-specific variation. The key identifying assumption is that idiosyncratic errors are approximately uncorrelated across indicators — otherwise, you can't separate common from idiosyncratic. This is realistic for diversified indicator panels (IP, employment, retail sales, confidence), where no two indicators share the same idiosyncratic shock. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## Estimation: Principal Components
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -75,9 +93,17 @@ X_std = (X - X.mean(axis=0)) / X.std(axis=0)
 F, Lambda, var_exp = extract_factors_pca(X_std, n_factors=2)
 ```
 
+</div>
+
 PCA is consistent for the factor space as $N, T \to \infty$ (Stock & Watson 2002).
 
 <!-- Speaker notes: The PCA estimator is surprisingly powerful for factor extraction. Stock and Watson (2002) showed that PCA gives a consistent estimate of the factor space even without knowing the true number of factors, as long as N and T both grow to infinity. The key requirement is standardization: divide each indicator by its standard deviation so that high-variance indicators don't dominate the first factor just because they're more volatile. After standardization, the first PC captures the direction of maximum covariance across indicators, which is the common business cycle factor. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -102,11 +128,23 @@ Elbow at PC3 → select q=2 or q=3
 
 <!-- Speaker notes: The scree plot is the most common visual tool for determining the number of factors. The "elbow" is where the curve bends from steep to flat — each additional factor explains much less variance than the previous ones. In practice for a panel of 10-20 US economic indicators, the scree plot typically shows a sharp elbow at q=2 or q=3, meaning the first 2-3 factors explain the bulk of comovement while the remaining factors are largely idiosyncratic noise. The 50-60% variance explained threshold is a practical heuristic — there's no magic number, and the Bai-Ng criterion provides a more principled alternative. -->
 
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
+
 ---
 
 ## Bai-Ng Information Criteria
 
 $$IC_{p2}(q) = \log \hat{\sigma}^2(q) + q \cdot \frac{N+T}{NT} \cdot \log \min(N,T)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def select_n_factors_bai_ng(X, max_factors=8):
@@ -120,6 +158,8 @@ def select_n_factors_bai_ng(X, max_factors=8):
         ic_vals.append(np.log(sigma2) + q * g_NT)
     return np.argmin(ic_vals) + 1
 ```
+
+</div>
 
 Consistent for $q$ as $N, T \to \infty$.
 

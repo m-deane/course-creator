@@ -1,16 +1,65 @@
 # Direct vs. Iterated MIDAS Nowcasting
 
+> **Reading time:** ~13 min | **Module:** 03 — Nowcasting | **Prerequisites:** Module 2
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Load Ragged Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate MIDAS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Generate Nowcast</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Update as Data Arrives</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Two strategies for producing multi-horizon MIDAS nowcasts: direct (one model per horizon, minimize h-step MSE) and iterated (one model for one-step-ahead, iterate the AR component forward). For qua...
+
+</div>
 
 Two strategies for producing multi-horizon MIDAS nowcasts: direct (one model per horizon, minimize h-step MSE) and iterated (one model for one-step-ahead, iterate the AR component forward). For quarterly GDP nowcasting with monthly indicators, direct MIDAS typically outperforms iterated MIDAS at short horizons where the data environment is heterogeneous across the quarter.
 
 ## Key Insight
+
+<div class="compare">
+  <div class="compare-card">
+    <div class="header before">Direct Forecast</div>
+    <div class="body">
+      Estimates a separate model for each forecast horizon. No error accumulation. May be inconsistent across horizons.
+    </div>
+  </div>
+  <div class="compare-card">
+    <div class="header after">Iterated Forecast</div>
+    <div class="body">
+      Estimates a one-step model and iterates forward. Consistent across horizons. But errors compound at longer horizons.
+    </div>
+  </div>
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
 
 The direct approach avoids accumulating forecast errors across iterations at the cost of requiring a separate model for each horizon. The iterated approach uses a single consistent model but amplifies any misspecification when iterated forward. For nowcasting (h ≤ 1 quarter), the practical difference is small but the direct approach is more standard in applied work.
 
 ---
 
 ## The Two Strategies
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 ### Direct MIDAS
 
@@ -50,6 +99,12 @@ Parameters: $(α, ρ, β, θ_1, θ_2)$ — five free parameters.
 
 Estimation: Profile NLS over $(θ_1, θ_2)$ with $(α, ρ, β)$ solved by regressing $y_t$ on $(1, y_{t-1}, \tilde{x}_t(\theta))$.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def profile_sse_ar(theta, Y, X):
     """
@@ -81,6 +136,8 @@ def profile_sse_ar(theta, Y, X):
     return np.sum(resid**2)
 ```
 
+</div>
+
 ---
 
 ## When to Use Each Strategy
@@ -108,6 +165,12 @@ Marcellino, Stock, and Watson (2006) find that for quarterly US GDP, direct fore
 ## Implementing the Direct Approach
 
 For a $h$-period horizon nowcast using the direct MIDAS approach:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -226,11 +289,19 @@ def estimate_midas_direct(Y, X, starts=None):
     }
 ```
 
+</div>
+
 ---
 
 ## Combining Horizons: The Nowcast Panel
 
 For a complete nowcasting exercise, estimate one model per horizon ($h = 0, 1, 2$ missing months) and report the resulting RMSE by horizon:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def nowcast_panel(Y_train, Y_test, X_train_dict, X_test_dict):
@@ -256,6 +327,8 @@ def nowcast_panel(Y_train, Y_test, X_train_dict, X_test_dict):
         nowcasts[h] = est['alpha'] + est['beta'] * xw_test
     return nowcasts
 ```
+
+</div>
 
 ---
 
@@ -289,6 +362,13 @@ Always check all three conditions before adding AR terms.
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Guide 01 (nowcasting problem, ragged edge)
 - **Leads to:** Notebook 01 (gdp_nowcast.ipynb), Notebook 02 (ragged_edge_simulation.ipynb)
 - **Related to:** Marcellino-Stock-Watson (2006) direct vs. iterated; Ghysels (2016) MIDAS survey
@@ -302,3 +382,19 @@ Always check all three conditions before adding AR terms.
 2. For a 1-month nowcast (h_missing=2), the MIDAS weight function is estimated over $K-2$ lags instead of $K$ lags. If the true weight function is $\text{Beta}(1.5, 4.0)$ with K=12, what is the weight on lag j=0 in the truncated model relative to the full model?
 
 3. Describe the expanding-window cross-validation protocol for a direct MIDAS model with h_missing=1. How does it differ from the standard expanding-window protocol for the complete-quarter model?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_nowcasting_problem_guide.md">
+  <div class="link-card-title">01 Nowcasting Problem</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_nowcasting_problem_slides.md">
+  <div class="link-card-title">01 Nowcasting Problem — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

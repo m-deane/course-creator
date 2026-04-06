@@ -54,6 +54,12 @@ $$\hat{y}_{t+h|t} = \text{iterate}(\hat{\rho}, \hat{y}_{t+1|t}, ...)$$
 
 <!-- Speaker notes: The fundamental tradeoff is between fitting each horizon optimally (direct) versus using a unified model (iterated). Direct MIDAS gives each horizon its own weight function — the optimal weights for predicting 1-quarter-ahead may differ from those for 2-quarters-ahead. Iterated MIDAS constrains all horizons to use the same weight function but avoids the need to fit multiple models. The iterated approach requires forecasting the monthly indicators to fill in future values, which adds a second source of forecast error. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Which Performs Better?
@@ -72,6 +78,12 @@ Empirical evidence (Marcellino, Stock, Watson 2006; Foroni et al. 2015):
 
 <!-- Speaker notes: The empirical literature is consistent on this point: direct forecasts outperform iterated forecasts at short horizons for macroeconomic aggregates. The reason is model misspecification — the VAR-like structure underlying iterated forecasting assumes the same dynamics hold at all horizons, which is unrealistic. The direct approach sidesteps this by fitting each horizon directly. However, at long horizons (5-8 quarters), the direct approach requires many separate parameter estimates and suffers from parameter uncertainty, while the iterated approach pools information across time steps. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## The MIDAS-AR Model
@@ -88,9 +100,21 @@ $$\text{Regress: } y_t \sim (1, y_{t-1}, \tilde{x}_t(\theta)) \text{ for fixed }
 
 <!-- Speaker notes: The MIDAS-AR extension is the standard specification in most applied nowcasting work. The intuition is simple: quarterly GDP has mild positive autocorrelation (AR coefficient roughly 0.2-0.4), and ignoring this leaves autocorrelation in the residuals that biases inference. The AR term absorbs the persistence in GDP growth that isn't explained by the current quarter's IP activity. The profile NLS setup is straightforward: for fixed theta, regress Y on (1, Y_lag, xw) using ordinary OLS to get the three regression coefficients. This preserves the profile NLS framework exactly. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Profile NLS for MIDAS-AR
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def profile_sse_ar(theta, Y, X):
@@ -113,7 +137,15 @@ def profile_sse_ar(theta, Y, X):
     return np.sum(resid**2)
 ```
 
+</div>
+
 <!-- Speaker notes: The key difference from the standard profile_sse is the alignment: we use Y[1:] as the dependent variable and include Y[:-1] as a regressor. The xw also shifts to xw[1:] to align with the dependent variable. This is the standard lag alignment for an AR(1) model — we lose one observation from the beginning of the sample. For T=100 quarterly observations, we lose 1, giving T=99 effective observations. The OLS inside the profile SSE now estimates three coefficients (alpha, rho, beta) instead of two. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 

@@ -30,6 +30,12 @@ Quarterly GDP: observed only at $t = 3, 6, 9, \ldots$ (every third month)
 
 <!-- Speaker notes: The fundamental challenge of mixed-frequency modeling is how to put monthly and quarterly data in the same framework. The elegant solution from the DFM literature is to treat the quarterly variable as a monthly variable observed every third month — with the other months as missing data. The Kalman filter is designed to handle missing observations exactly: when an observation is missing, the filter simply skips the update step and continues with the prior. When the quarterly GDP arrives (every third month), it triggers a measurement update that can substantially revise the factor estimate. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## State-Space Formulation
@@ -47,6 +53,12 @@ $\mathbf{Z}_m$ changes each month:
 $$\text{GDP}_t^Q = \frac{1}{3}(f_{3t} + f_{3t-1} + f_{3t-2}) + u_t$$
 
 <!-- Speaker notes: The state-space formulation is the key to the mixed-frequency DFM. The state vector f_m evolves at monthly frequency according to a VAR. The observation equation has a time-varying measurement matrix Z_m that includes the quarterly GDP row only in the third month of each quarter. In months 1 and 2 of a quarter, only the monthly indicator equations are active. This is the 'skip-sampling' or 'stock-flow' approach to mixed-frequency modeling. The aggregation constraint (1/3 sum for flow variables) is a specific form of the Z matrix for quarterly GDP. Stock variables like unemployment rate would use a different aggregation. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -71,6 +83,12 @@ For each month m = 1, 2, ...:
 
 <!-- Speaker notes: The Kalman filter algorithm proceeds in two steps: prediction and update. The prediction step propagates the current state estimate forward using the VAR dynamics — this is the "prior" before seeing the new data. The update step corrects the prior using the new observation, with the Kalman gain K_m determining how much to weight the new data versus the prior. The critical feature for mixed-frequency is in the "if missing" branch: when the quarterly GDP observation doesn't arrive, we simply skip the update. This means the factor estimate continues to evolve based on the monthly indicators alone, and the uncertainty (P matrix) grows slightly each period without a quarterly update. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Course Implementation: Two-Step Approach
@@ -78,6 +96,12 @@ For each month m = 1, 2, ...:
 Full Kalman filter requires iterative EM estimation (complex).
 
 **Our approach:** PCA factors → quarterly aggregation → MIDAS regression.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Step 1: Extract monthly factors
@@ -93,7 +117,15 @@ Y_aligned, X_factor = build_midas_matrix(GDP, F_quarterly, K=4)
 est = estimate_midas(Y_aligned, X_factor)
 ```
 
+</div>
+
 <!-- Speaker notes: The two-step approach trades theoretical optimality for practical simplicity. By aggregating monthly factors to quarterly before running MIDAS, we lose some within-quarter information. However, the MIDAS weight structure at step 3 partly recovers this — by using K=4 quarterly lags of the factor, we preserve the timing structure across quarters. The main limitation is that the two-step approach can't produce within-quarter nowcast updates as new monthly releases arrive. For that, you need the full Kalman filter. For the purposes of this course, the two-step approach is sufficient to illustrate the factor augmentation benefit. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -118,6 +150,7 @@ $$\Delta\hat{y}_t^Q = \hat{\beta}_f \cdot \Delta\hat{f}_m$$
 ## Factor vs. Single-Indicator MIDAS
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     IP --> Factor
     Employment --> Factor
@@ -129,6 +162,7 @@ graph LR
 vs.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     IP --> MIDAS
     MIDAS --> GDP_Nowcast

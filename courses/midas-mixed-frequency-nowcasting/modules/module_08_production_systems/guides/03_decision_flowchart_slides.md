@@ -29,11 +29,18 @@ These trees are not sequential — you cycle through them throughout the model l
 
 <!-- Speaker notes: A common mistake is to treat model building as a one-time event: specify, estimate, deploy, done. In reality it is a cycle. You revisit the specification tree whenever new indicators become available. You revisit the estimation tree whenever the training window grows substantially. You run the evaluation gate every quarter. Think of these trees as the recurring decision rituals of a nowcasting team. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Tree 1: Model Specification
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Define forecasting objective] --> B{N indicators?}
     B -->|1-3| C[Basic MIDAS\nNLS + Beta weights\nK = 6-12 lags]
@@ -48,6 +55,12 @@ flowchart TD
 ```
 
 <!-- Speaker notes: The number of indicators is the primary branching point because it determines the dimensionality of the problem and therefore the appropriate regularisation strategy. With 1-3 indicators NLS estimation with Beta weights is feasible and interpretable. With 20+ indicators you need automatic selection because manual specification of which indicators matter is infeasible. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -65,11 +78,18 @@ flowchart TD
 
 <!-- Speaker notes: The Beta polynomial replaces K free lag coefficients with 2 shape parameters. When K is small, this restriction may bind unnecessarily and cost forecasting accuracy. When K is large, the restriction is essential — you cannot estimate 22 separate lag coefficients from 60 quarterly observations. The break-even point is roughly K=12: above that, Beta weights almost always help. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Tree 2: Ragged-Edge Fill Strategy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Indicator i needs filling] --> B{Series type?}
     B -->|Growth rate| C{Zero a reasonable prior?}
@@ -87,6 +107,12 @@ flowchart TD
 ```
 
 <!-- Speaker notes: The key insight here is that the fill strategy decision should be made separately for each indicator based on its statistical properties, not as a global setting. The practical default is carry-forward for everything, but a modelling team that wants to squeeze out additional accuracy will differentiate by series type. The lag-shift option in the bottom row is an advanced technique that avoids letting a filled value dominate the most informative lag position. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -112,6 +138,7 @@ flowchart TD
 ## Tree 3: Estimation and Regularisation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A{n observations?} -->|n < 40| B[Ridge only\nL2 regularisation\nNo variable selection]
     A -->|n ≥ 40| C{Sparsity prior?}
@@ -133,6 +160,12 @@ flowchart TD
 
 **Never use random k-fold CV for time series.**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # WRONG: shuffles time order
 from sklearn.model_selection import KFold
@@ -142,6 +175,8 @@ cv = KFold(n_splits=5, shuffle=True)
 from sklearn.model_selection import TimeSeriesSplit
 cv = TimeSeriesSplit(n_splits=5, gap=1)
 ```
+
+</div>
 
 <div class="columns">
 
@@ -164,6 +199,7 @@ where $K$ = lags, $N$ = indicators.
 ## Tree 4: Evaluation Gates
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Candidate model ready] --> B{OOS evaluation run?\nMin 8 periods?}
     B -->|No| C[Run it. No exceptions.]
@@ -204,6 +240,7 @@ $$\text{RMSE}^{\text{prt}} = \sqrt{\frac{1}{T-T_0} \sum_{t=T_0+1}^{T} (\hat{y}_t
 ## Tree 5: Production Maintenance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[After GDP advance release] --> B[Append error to rolling window]
     B --> C[Compute 8Q RMSE and bias]

@@ -33,6 +33,12 @@ Strategy: **Bottom-up** nowcasting — separate model for each component, aggreg
 
 <!-- Speaker notes: CPI has four main components with very different characteristics. Energy prices have daily predictors that are highly correlated with the energy CPI — crude oil today predicts energy CPI next month with R²≈0.75. Core services, which is more than half of CPI, has almost no good daily predictor. The best we can do for core services is an AR(1) model. The bottom-up approach is therefore natural: use MIDAS for the predictable components and AR for the rest. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Energy Inflation MIDAS
@@ -57,6 +63,12 @@ $$\pi^E_t = \mu + \phi_1\sum_{j=0}^{K-1} B_1(j)\Delta\log P^{\text{oil}}_{t-j/d}
 
 <!-- Speaker notes: The energy CPI is essentially a weighted average of gasoline and natural gas prices. These are set in commodity markets daily. The monthly CPI energy component reflects what consumers actually paid during the month, which is closely tracked by daily EIA gasoline price surveys and futures prices. This is why the R² is so high — the predictors and target are measuring almost the same thing at different frequencies. MIDAS MIDAS the aggregation cleanly. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## Food Inflation: Agricultural Futures Signal
@@ -64,6 +76,7 @@ $$\pi^E_t = \mu + \phi_1\sum_{j=0}^{K-1} B_1(j)\Delta\log P^{\text{oil}}_{t-j/d}
 Food CPI (at-home component) is predicted by agricultural commodity futures:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Corn futures<br>Daily] --> D[Food at Home<br>CPI Monthly]
     B[Wheat futures<br>Daily] --> D
@@ -76,6 +89,12 @@ graph LR
 Use MIDAS with 2-4 month daily lags to capture this lead-lag structure.
 
 <!-- Speaker notes: Food inflation transmission is slower than energy. A corn price spike in May due to drought concerns may not show up in grocery store prices until July or August, as processors, manufacturers, and retailers absorb and pass through costs over time. The MIDAS model captures this transmission lag through the Beta weights — if the optimal theta2 is small (flat profile), it means the transmission is slow and uniform across lags. If theta2 is large (rapid decay), recent prices dominate. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -94,6 +113,12 @@ Best available monthly indicators:
 
 <!-- Speaker notes: Core services is the humbling component of inflation nowcasting. Rent accounts for about 34% of CPI and is the biggest single component. Zillow's rental index provides a real-time signal for market rents, but CPI rent reflects existing lease renewals (which are slow-moving), so the correlation is significant but noisy. For super-core services (excluding shelter), the Bernanke-Blanchard finding is that wage growth is the best predictor. But wages are monthly, so no frequency benefit from MIDAS here. -->
 
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
+
 ---
 
 ## Labour Market: Claims → Payrolls
@@ -101,6 +126,7 @@ Best available monthly indicators:
 Initial jobless claims provide the earliest weekly signal of labour market conditions:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Workers file claims<br>Tuesday-Friday] --> B[DOL compiles<br>Thursday morning]
     B --> C[Released at<br>8:30am Thursday]
@@ -158,6 +184,7 @@ $$\Delta P_t = \mu + \phi_1\sum B_1 \cdot\text{Claims} + \phi_2 \cdot\text{ADP}_
 ## The Claims-Unemployment Chain
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Initial Claims ↑<br>Week t] --> B[Unemployed persons ↑<br>Month t+1]
     B --> C[Continuing Claims ↑<br>Weeks t+4 to t+8]

@@ -1,16 +1,50 @@
 # Mixed-Frequency DFMs
 
+> **Reading time:** ~13 min | **Module:** 04 — Dynamic Factor Models | **Prerequisites:** Module 3
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Identify Frequencies</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Align Time Indices</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Build MIDAS Regressors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Mixed-frequency DFMs (MF-DFMs) handle panels where some series are monthly and others are quarterly. The key innovation is treating quarterly series as monthly series observed only every third mont...
+
+</div>
 
 Mixed-frequency DFMs (MF-DFMs) handle panels where some series are monthly and others are quarterly. The key innovation is treating quarterly series as monthly series observed only every third month. The state-space representation with the Kalman filter naturally handles these missing observations.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** Factor models compress many noisy indicators into a few latent factors, which acts as a form of regularization. This is why DFM-based nowcasts often outperform single-indicator MIDAS models.
+
+</div>
+
 
 In the state-space framework, "missing" quarterly data is simply a missing observation in the monthly factor system. The Kalman filter propagates uncertainty through the missing periods and updates when a quarterly observation arrives. This is the theoretically clean solution to the mixed-frequency nowcasting problem.
 
 ---
 
 ## The Quarterly-Monthly Aggregation Constraint
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 Let $y_t^Q$ denote quarterly GDP growth and $y_{m}^M$ the corresponding monthly factor index. The aggregation constraint is:
 
@@ -50,6 +84,12 @@ The Kalman filter handles this automatically by setting $\mathbf{Z}_m$ appropria
 For the course, we use a simplified two-step approach that avoids full Kalman filter implementation:
 
 **Step 1: Extract factors from monthly panel**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def extract_monthly_factors(monthly_panel, n_factors):
     """
@@ -66,7 +106,15 @@ def extract_monthly_factors(monthly_panel, n_factors):
     return F_monthly, loadings, var_exp
 ```
 
+</div>
+
 **Step 2: Aggregate factors to quarterly frequency**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
     """
@@ -89,7 +137,15 @@ def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
     return F_aligned.values
 ```
 
+</div>
+
 **Step 3: MIDAS regression using factor as predictor**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def factor_augmented_midas(Y, F_monthly, K, n_factors=1):
     """
@@ -103,6 +159,8 @@ def factor_augmented_midas(Y, F_monthly, K, n_factors=1):
     Y_aligned, X_factor = build_midas_matrix_from_series(Y, F1_monthly, K)
     return estimate_midas(Y_aligned, X_factor)
 ```
+
+</div>
 
 ---
 
@@ -170,6 +228,13 @@ Each release contributes "news" proportional to:
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Guide 01 (factor models theory, PCA extraction)
 - **Leads to:** Guide 03 (Factor-augmented MIDAS implementation)
 - **Related to:** Bańbura-Rünstler (2011), Doz-Giannone-Reichlin (2012)
@@ -183,3 +248,29 @@ Each release contributes "news" proportional to:
 2. If the IP loading on the first factor is $\hat{\lambda}_{IP}=0.72$ and the factor standard deviation is 1, what is the variance of IP growth explained by the first factor? What is the idiosyncratic variance if total IP variance is 1?
 
 3. The MF-DFM nowcast updates when employment data is released. If the employment loading is $\hat{\lambda}_{emp}=0.65$ and the employment "surprise" (actual minus Kalman prediction) is +0.8%, estimate the factor update (approximately proportional to $\hat{\lambda}_{emp} \times \text{surprise}$).
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_factor_models_guide.md">
+  <div class="link-card-title">01 Factor Models</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_factor_models_slides.md">
+  <div class="link-card-title">01 Factor Models — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_factor_augmented_midas_guide.md">
+  <div class="link-card-title">03 Factor Augmented Midas</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_factor_augmented_midas_slides.md">
+  <div class="link-card-title">03 Factor Augmented Midas — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

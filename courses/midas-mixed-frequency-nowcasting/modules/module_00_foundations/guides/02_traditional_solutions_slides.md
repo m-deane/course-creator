@@ -35,6 +35,12 @@ Low-frequency target: y₁ᵠ                y₂ᵠ
 
 <!-- Speaker notes: These three strategies have distinct use cases. Aggregation is used when forecasting quarterly outcomes. Interpolation is used when you want a monthly version of a quarterly concept (like monthly GDP). Bridge equations are used for nowcasting. Critically, all three involve a data transformation step that discards information before any statistical estimation begins. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Strategy 1: Temporal Aggregation
@@ -50,6 +56,12 @@ Then run: $y_t^Q = \alpha + \beta \tilde{x}_t^Q + \varepsilon_t$
 **Information lost:** All within-quarter timing signal.
 
 <!-- Speaker notes: The flow/stock distinction matters for correct aggregation. Industrial production is a flow — you sum the monthly changes. An interest rate is a stock — you take the end-of-period value or average. Getting this wrong introduces a systematic aggregation error on top of the information loss from aggregation itself. A common mistake is applying end-of-period sampling to a flow variable. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -67,6 +79,12 @@ When we average $m$ monthly observations into one quarterly value, we collapse $
 
 <!-- Speaker notes: This information-theoretic framing is approximate — the actual information loss depends on the autocorrelation structure of the series. But the intuition is right: the higher the frequency ratio, the more information aggregation discards. This is why MIDAS is especially valuable for daily-to-quarterly models, where bridge equations are practically unusable due to the large number of daily observations that must be forecast. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Strategy 2: Chow-Lin Interpolation
@@ -83,9 +101,21 @@ The GLS estimator enforces the constraint while minimizing the error variance.
 
 <!-- Speaker notes: Chow-Lin is the gold standard for temporal disaggregation. It's implemented in the tempdisagg R package and used by Eurostat and national statistical offices. The key word is "disaggregation" — you're going from low to high frequency, which is the opposite direction from nowcasting. This means the interpolated series has useful properties for historical analysis but introduces a generated-regressors problem if used in subsequent regressions. -->
 
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
+
 ---
 
 ## Interpolation: The Synthetic Data Problem
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # What Chow-Lin gives you:
@@ -96,6 +126,8 @@ interpolated_gdp = [1.2, 1.5, 1.8,   # Q1 months (sum = 4.5 = quarterly value)
 model = OLS(interpolated_gdp, some_monthly_x)
 # ↑ Standard errors are WRONG because interpolated obs are correlated model outputs
 ```
+
+</div>
 
 **Correct use:** Interpolated series for visualization and historical analysis.
 **Incorrect use:** Input to further econometric models without correcting for the interpolation error.
@@ -212,6 +244,12 @@ Standard errors are also biased because $\tilde{\varepsilon}_t$ inherits MA stru
 
 ## Real Example: IP Aggregation, 2020Q1
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # March 2020: COVID shock
 monthly_ip_growth = [+0.003, -0.012, -0.065]  # Jan, Feb, Mar
@@ -225,6 +263,8 @@ sum_         = -0.0740  # -7.4% — flow variable total
 # An analyst watching daily news saw -6.5% in March alone
 # The aggregation discards 4 percentage points of signal
 ```
+
+</div>
 
 During COVID, equal-weight aggregation systematically underestimated the Q1 shock because it averaged in January and February.
 

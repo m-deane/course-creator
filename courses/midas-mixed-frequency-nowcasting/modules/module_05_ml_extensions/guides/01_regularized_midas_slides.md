@@ -30,6 +30,12 @@ $$\hat{\beta} = \arg\min_\beta \left\{ \frac{1}{T}\|y - X\beta\|_2^2 + \text{Pen
 
 <!-- Speaker notes: The core problem is dimensionality. A rich data environment is exactly what forecasters want, but it breaks OLS. The penalty term regularises the solution. Lambda controls the strength. Larger lambda means more shrinkage. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Ridge-MIDAS: $\ell_2$ Penalty
@@ -53,6 +59,12 @@ $$\hat{\beta}^{\text{Ridge}} = \arg\min_\beta \left\{ \frac{1}{T}\|y - X\beta\|_
 </div>
 
 <!-- Speaker notes: Ridge adds a squared penalty on coefficients. The solution regularises the eigenvalues of X'X, stabilising estimates when predictors are collinear. Adjacent high-frequency lags are highly correlated, so Ridge is well-suited. The key limitation is no sparsity. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -78,6 +90,12 @@ The corner geometry of the $\ell_1$ ball is the key to Lasso's sparsity property
 
 <!-- Speaker notes: This geometric picture is fundamental. The Ridge ball is smooth — ellipses touch it anywhere. The Lasso diamond has corners at the axes. Ellipses generically hit corners, setting the corresponding coefficient to zero. This is why Lasso does variable selection and Ridge does not. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Lasso-MIDAS: $\ell_1$ Penalty
@@ -94,6 +112,12 @@ $$\mathcal{S}_\lambda(z) = \text{sign}(z)(|z| - \lambda)_+ \quad \text{(soft thr
 In MIDAS: Lasso can select **specific high-frequency lags** while zeroing others.
 
 <!-- Speaker notes: Lasso is more powerful than Ridge for variable selection. The soft-thresholding update has a beautiful form: subtract lambda from the absolute value, threshold at zero. In MIDAS this means we can find that, say, only lags 1-3 of industrial production matter for GDP, with lags 4-12 zeroed out. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -195,6 +219,7 @@ midasml:         penalize θ_g (Legendre coefficients → smooth profiles)
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Raw lags<br>x_t-1, x_t-2, ..., x_t-m] --> B[Legendre<br>projection]
     B --> C[Smooth basis<br>θ₁, θ₂, ..., θ_d]
@@ -226,6 +251,12 @@ graph LR
 
 **Critical**: Never use random $k$-fold CV with time series
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.model_selection import TimeSeriesSplit
 
@@ -238,6 +269,8 @@ for train_idx, val_idx in tscv.split(X):
     # ... fit and evaluate
 ```
 
+</div>
+
 **Gap parameter**: skip observations to avoid look-ahead bias when $h > 1$.
 
 <!-- Speaker notes: Time-series CV is non-negotiable. Random k-fold allows future data to appear in training, which inflates performance estimates dramatically. The TimeSeriesSplit class implements expanding window CV. The gap parameter is important when forecasting h>1 steps ahead: skip h observations between train and val to mimic real-time conditions. -->
@@ -247,6 +280,7 @@ for train_idx, val_idx in tscv.split(X):
 ## Practical Pre-Processing Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Raw mixed-frequency data] --> B[Stationarise<br>differences/log]
     B --> C[Seasonal adjustment<br>X-13/STL]
@@ -265,6 +299,7 @@ graph TD
 ## Selecting the Right Estimator
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A{How many<br>predictors?} -->|Few, p < T/3| B[Classical MIDAS]
     A -->|Many, p > T/3| C{Collinearity?}

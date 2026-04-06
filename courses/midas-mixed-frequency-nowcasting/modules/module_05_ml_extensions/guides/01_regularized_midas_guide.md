@@ -1,6 +1,16 @@
 # Regularized MIDAS: Lasso, Ridge, Elastic Net, and Group Lasso
 
+> **Reading time:** ~20 min | **Module:** 05 — Ml Extensions | **Prerequisites:** Module 4
+
+
 ## Learning Objectives
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Standard MIDAS regression with unrestricted Beta or Almon weights handles a single high-frequency predictor elegantly. The weight function imposes a smooth constraint, keeping the effective paramet...
+
+</div>
 
 By the end of this guide you will be able to:
 
@@ -20,6 +30,13 @@ Standard MIDAS regression with unrestricted Beta or Almon weights handles a sing
 - Hundreds of daily series (market prices, sentiment scores, search trends)
 - Lags of each series stacked into the design matrix
 
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
+
 In a MIDAS design matrix $X \in \mathbb{R}^{T \times p}$ where $p = K \times m$ (K series each observed at m high-frequency periods per low-frequency period), the number of regressors can easily exceed the number of observations. Classical OLS becomes ill-posed. The weight function partially solves this, but unrestricted Almon polynomials of high degree also overfit.
 
 **Regularization** penalises coefficient magnitude during estimation, trading a small amount of bias for a large reduction in variance. This is the bias-variance tradeoff applied to the high-dimensional nowcasting setting.
@@ -27,6 +44,13 @@ In a MIDAS design matrix $X \in \mathbb{R}^{T \times p}$ where $p = K \times m$ 
 ---
 
 ## 2. Ridge-MIDAS
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 ### 2.1 Formulation
 
@@ -56,6 +80,12 @@ $$\text{df}(\lambda) = \text{tr}\left[ X(X^\top X + \lambda I)^{-1} X^\top \righ
 where $d_j$ are singular values of $X$. As $\lambda \to 0$, df approaches rank($X$); as $\lambda \to \infty$, df approaches 0.
 
 ### 2.4 Python Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -112,6 +142,8 @@ print(f"Optimal lambda: {ridge_cv.alpha_:.4f}")
 print(f"Number of nonzero coefficients: {np.sum(ridge_cv.coef_ != 0)}")  # Always all
 ```
 
+</div>
+
 ---
 
 ## 3. Lasso-MIDAS
@@ -150,6 +182,12 @@ where $r_{-j} = y - X_{-j}\hat{\beta}_{-j}$ is the partial residual and $\mathca
 
 ### 3.5 Python Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.linear_model import Lasso, LassoCV
 import matplotlib.pyplot as plt
@@ -184,6 +222,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ---
 
 ## 4. Elastic Net MIDAS
@@ -205,6 +245,12 @@ $$\hat{\beta}^{\text{EN}} = \arg\min_{\beta} \left\{ \frac{1}{T}\|y - X\beta\|_2
 3. **Oracle property**: With proper $\lambda$, Elastic Net achieves near-optimal prediction even with $p \gg T$.
 
 ### 4.3 Python Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import ElasticNetCV, ElasticNet
@@ -240,6 +286,8 @@ for name, model in models.items():
     nonzero = np.sum(model.coef_ != 0) if hasattr(model, 'coef_') else 'N/A'
     print(f"{name}: RMSE={rmse:.4f}, Selected={nonzero}")
 ```
+
+</div>
 
 ---
 
@@ -427,6 +475,13 @@ where $\hat{k}(\lambda)$ is the effective degrees of freedom (number of nonzero 
 
 ## 9. Key References
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - Tibshirani, R. (1996). Regression shrinkage and selection via the Lasso. *JRSS-B*, 58(1), 267–288.
 - Yuan, M., & Lin, Y. (2006). Model selection and estimation in regression with grouped variables. *JRSS-B*, 68(1), 49–67.
 - Babii, A., Ghysels, E., & Striaukas, J. (2021). Machine learning time series regressions with an application to nowcasting. *Journal of Business & Economic Statistics*, 40(3), 1094–1106.
@@ -445,3 +500,29 @@ Regularized MIDAS extends classical MIDAS to the high-dimensional setting by add
 - **midasml / Sparse Group Lasso**: Combines group selection with smooth lag profiles
 
 Next: [Machine Learning Nowcasting](02_ml_nowcasting_guide.md) — random forests and gradient boosting with mixed-frequency features.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary advantage of the approach described in this guide over simpler alternatives?
+
+**Practice Question 2:** What assumptions must hold for this method to produce reliable results?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_ml_nowcasting_guide.md">
+  <div class="link-card-title">02 Ml Nowcasting</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_ml_nowcasting_slides.md">
+  <div class="link-card-title">02 Ml Nowcasting — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

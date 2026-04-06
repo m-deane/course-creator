@@ -1,10 +1,27 @@
 # Factor-Augmented MIDAS
 
+> **Reading time:** ~18 min | **Module:** 04 — Dynamic Factor Models | **Prerequisites:** Module 3
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Factor-Augmented MIDAS (FA-MIDAS) combines the dimensionality reduction of DFMs with the mixed-frequency handling of MIDAS. Extract a common factor from a panel of monthly indicators via PCA, then use
+
+</div>
 
 Factor-Augmented MIDAS (FA-MIDAS) combines the dimensionality reduction of DFMs with the mixed-frequency handling of MIDAS. Extract a common factor from a panel of monthly indicators via PCA, then use the factor time series as the MIDAS predictor. The result: better nowcast accuracy than single-indicator MIDAS with fewer parameters than multi-indicator MIDAS.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** Factor models compress many noisy indicators into a few latent factors, which acts as a form of regularization. This is why DFM-based nowcasts often outperform single-indicator MIDAS models.
+
+</div>
+
 
 The factor acts as a noise-reduced aggregate of all available monthly indicators. By running MIDAS on the factor rather than on raw IP, we automatically incorporate information from employment, retail sales, and other indicators while maintaining the parsimonious 4-parameter MIDAS structure.
 
@@ -12,7 +29,20 @@ The factor acts as a noise-reduced aggregate of all available monthly indicators
 
 ## Implementation
 
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
+
 ### Step 1: Load and Standardize the Monthly Panel
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -46,7 +76,15 @@ def load_monthly_panel(series_dict):
     return panel_std, scaler
 ```
 
+</div>
+
 ### Step 2: Extract Common Factor
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def extract_factors(panel_std, n_factors=1, verbose=True):
@@ -92,7 +130,15 @@ def normalize_factor_sign(factors, loadings, reference_indicator):
     return factors, loadings
 ```
 
+</div>
+
 ### Step 3: Build MIDAS Matrix from Factor Series
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def build_midas_matrix_from_factor(Y_quarterly, F_monthly, K, m=3):
@@ -135,6 +181,8 @@ def build_midas_matrix_from_factor(Y_quarterly, F_monthly, K, m=3):
 
     return np.array(rows_Y), np.array(rows_X)
 ```
+
+</div>
 
 ### Step 4: Estimate FA-MIDAS
 
@@ -286,6 +334,13 @@ def compare_midas_fa_midas(Y_quarterly, ip_monthly, monthly_panel,
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Guide 01 (PCA factor extraction), Guide 02 (mixed-frequency DFM)
 - **Leads to:** Notebooks 01-03 (implementation and comparison)
 - **Related to:** Bai-Ng (2006) factor-augmented regression, Stock-Watson FAVAR
@@ -299,3 +354,29 @@ def compare_midas_fa_midas(Y_quarterly, ip_monthly, monthly_panel,
 2. If the factor loading of S&P 500 is negative ($\hat{\lambda}_{SP500} = -0.42$), what does this imply about the relationship between equity markets and the business cycle in our PCA normalization?
 
 3. The expanding-window FA-MIDAS re-estimates the factor loadings at each step. In early steps (t=30), the loadings are estimated on only ~90 monthly observations. In later steps (t=90), they're estimated on ~270 observations. How might this affect the factor stability and the consequent MIDAS estimates?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_factor_models_guide.md">
+  <div class="link-card-title">01 Factor Models</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_factor_models_slides.md">
+  <div class="link-card-title">01 Factor Models — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_dfm_mixed_frequency_guide.md">
+  <div class="link-card-title">02 Dfm Mixed Frequency</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_dfm_mixed_frequency_slides.md">
+  <div class="link-card-title">02 Dfm Mixed Frequency — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

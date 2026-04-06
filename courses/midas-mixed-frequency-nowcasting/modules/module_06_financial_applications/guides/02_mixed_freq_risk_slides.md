@@ -21,6 +21,7 @@ Module 06 — Financial Applications
 Financial risk exists at multiple temporal scales:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     D[Daily<br>Returns, prices<br>RV, positions] --> R[Risk<br>Models]
     W[Weekly<br>Options signals<br>Inventory reports] --> R
@@ -33,6 +34,12 @@ graph LR
 **MIDAS** integrates all frequencies optimally.
 
 <!-- Speaker notes: The key motivation is that risk models should use all available information, regardless of its frequency. A VaR model that ignores the monthly credit spread widening because it only uses daily data will under-predict risk in the lead-up to a financial crisis. MIDAS provides the framework to incorporate all frequency information simultaneously. -->
+
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
 
 ---
 
@@ -49,6 +56,12 @@ $$\text{VaR}^{1d}_t(\alpha) = \hat{\sigma}^{(m)}_t \cdot \frac{1}{\sqrt{22}} \cd
 For $\alpha = 1\%$: $z_{0.01} = -2.326$ → VaR = $2.326 \cdot \hat{\sigma}^{(m)}_t / \sqrt{22}$
 
 <!-- Speaker notes: The two-step approach is clean and practical. First, forecast monthly volatility using MIDAS-RV (yesterday's material). Second, convert to daily VaR by scaling by 1/sqrt(22) — the square root of time rule. This assumes i.i.d. daily returns within the month, which is an approximation. For more sophisticated VaR, we can directly model the MIDAS conditional quantile, but the two-step approach is often sufficient for practical applications. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -70,6 +83,12 @@ $$LR_{uc} = 2\left[V\log\frac{V/T}{\alpha} + (T-V)\log\frac{1-V/T}{1-\alpha}\rig
 
 <!-- Speaker notes: The Kupiec test is the most basic VaR backtest. It simply asks: over the evaluation period, what fraction of days did the actual loss exceed our VaR estimate? For 1% VaR, we expect about 1 in 100 days to be a violation. If we see 3% violations, the model is dangerously under-estimating risk. If we see 0.2%, the bank is holding too much capital unnecessarily. The chi-squared test makes this rigorous. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## VaR Backtest: Christoffersen Independence Test
@@ -85,6 +104,12 @@ $H_0$: Violations are i.i.d. → $\pi_{01} = \pi_{11}$ (no clustering)
 **Failing this test**: Two consecutive violations are more likely than expected — indicates model fails to respond to volatility clusters.
 
 <!-- Speaker notes: The Christoffersen independence test is critical. Even if the overall violation rate is correct (pass Kupiec), the model might be systematically wrong during volatility clusters. If violations cluster in consecutive days (pi_11 >> alpha), the model is failing exactly when risk management matters most — during stress periods. MIDAS-VaR with monthly macro conditioning tends to pass this test better than pure daily models because the macro component provides early warning of elevated-risk regimes. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -156,6 +181,12 @@ $$\text{EIA\_surprise}_t = \text{EIA\_actual}_t - \text{EIA\_expected}_t$$
 
 These weekly surprises provide the highest-frequency fundamental signal:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Map weekly surprises to monthly period
 # Weight: most recent weeks get highest weight via Beta polynomial
@@ -165,6 +196,8 @@ def weekly_to_monthly_midas(weekly_surprise, K_weeks=4, theta1=1, theta2=3):
     return weights @ weekly_surprise[-K_weeks:][::-1]
 ```
 
+</div>
+
 <!-- Speaker notes: The EIA weekly petroleum report is released every Wednesday at 10:30am EST. The surprise (actual minus Bloomberg consensus) moves crude oil prices by 1-3% on the release day. Over a month, there are 4-5 such reports. MIDAS weighting determines how to aggregate these 4-5 weekly surprises into a single monthly predictor — typically recent reports get higher weight. The Beta polynomial provides the flexibility to estimate this weighting from data. -->
 
 ---
@@ -172,6 +205,7 @@ def weekly_to_monthly_midas(weekly_surprise, K_weeks=4, theta1=1, theta2=3):
 ## Three Applications: Unified Framework
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[MIDAS-X Framework<br>y_low = μ + Σ_k φ_k · Σ_j B_k(j) · x_high_k_tj + ε] --> B[MIDAS-VaR<br>Target: Daily VaR<br>Predictor: Daily RV + Monthly macro]
     A --> C[Term Structure Nowcast<br>Target: Quarterly NS factor<br>Predictor: Daily NS factor]

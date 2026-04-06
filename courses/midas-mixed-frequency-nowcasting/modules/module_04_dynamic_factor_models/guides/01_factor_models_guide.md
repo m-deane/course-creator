@@ -1,16 +1,40 @@
 # Dynamic Factor Models: Theory and Intuition
 
+> **Reading time:** ~10 min | **Module:** 04 — Dynamic Factor Models | **Prerequisites:** Module 3
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A Dynamic Factor Model (DFM) extracts a small number of common factors $f_t$ from a large panel of economic indicators. Each indicator $x_{it}$ loads on the common factors, and the factors summariz...
+
+</div>
 
 A Dynamic Factor Model (DFM) extracts a small number of common factors $f_t$ from a large panel of economic indicators. Each indicator $x_{it}$ loads on the common factors, and the factors summarize the comovement across the panel. For nowcasting, DFMs extend naturally to mixed-frequency data: different indicators are observed at different frequencies, and the common factor evolves at the highest available frequency.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** Factor models compress many noisy indicators into a few latent factors, which acts as a form of regularization. This is why DFM-based nowcasts often outperform single-indicator MIDAS models.
+
+</div>
+
 
 The DFM solves the "curse of dimensionality" problem in nowcasting: when you have dozens of monthly indicators, unrestricted regression (U-MIDAS) with all of them has too many parameters. The DFM reduces the $N \times T$ data matrix to a $q \times T$ factor matrix ($q \ll N$), then uses the factors in a low-dimensional forecasting model.
 
 ---
 
 ## The Static Factor Model
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 The simplest factor model decomposes each indicator into a common and idiosyncratic component:
 
@@ -41,6 +65,12 @@ The factors are estimated as the first $q$ principal components of the data matr
 3. Extract the top $q$ eigenvectors
 4. Estimated factors: $\hat{\mathbf{F}} = \mathbf{X} \hat{\mathbf{V}}_q / N$ where $\hat{\mathbf{V}}_q$ contains the top-$q$ eigenvectors
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from sklearn.decomposition import PCA
@@ -67,6 +97,8 @@ def extract_factors_pca(X, n_factors):
     var_exp = pca.explained_variance_ratio_
     return F, Lambda, var_exp
 ```
+
+</div>
 
 ---
 
@@ -106,6 +138,12 @@ Common rule of thumb: select $q$ such that the first $q$ factors explain at leas
 
 For US quarterly macro data (N=15–30 indicators): typically $q = 2$ or $q = 3$ factors suffice.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def select_n_factors_bai_ng(X, max_factors=10):
     """
@@ -129,6 +167,8 @@ def select_n_factors_bai_ng(X, max_factors=10):
 
     return np.argmin(ic_values) + 1, np.array(ic_values)
 ```
+
+</div>
 
 ---
 
@@ -183,6 +223,13 @@ The single factor $f_t$ captures the common business cycle component. By constru
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Module 01 (MIDAS), Module 03 (nowcasting)
 - **Leads to:** Guide 02 (DFM mixed frequency), Guide 03 (Factor-augmented MIDAS)
 - **Related to:** Stock-Watson (2002), Giannone-Reichlin-Small (2008), Bai-Ng (2002)
@@ -196,3 +243,29 @@ The single factor $f_t$ captures the common business cycle component. By constru
 2. Write out the Bai-Ng IC_p2 criterion for $N=15$, $T=80$, $q=1$ vs. $q=2$. By how much must $\hat{\sigma}^2(2) < \hat{\sigma}^2(1)$ for the criterion to prefer $q=2$?
 
 3. The loading of IP growth on the first factor is $\hat{\lambda}_{IP} = 0.72$, and the factor has unit variance. If a new IP observation is 0.5 standard deviations above the current factor estimate, by how much does the factor estimate update? (Use the Kalman filter weight formula if you know it, or approximate it as the OLS coefficient.)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_dfm_mixed_frequency_guide.md">
+  <div class="link-card-title">02 Dfm Mixed Frequency</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_dfm_mixed_frequency_slides.md">
+  <div class="link-card-title">02 Dfm Mixed Frequency — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_factor_augmented_midas_guide.md">
+  <div class="link-card-title">03 Factor Augmented Midas</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_factor_augmented_midas_slides.md">
+  <div class="link-card-title">03 Factor Augmented Midas — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

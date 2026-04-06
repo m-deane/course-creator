@@ -31,6 +31,12 @@ This is a **naturally mixed-frequency problem** — MIDAS is the ideal framework
 
 <!-- Speaker notes: Volatility is unobservable, persistent, and regime-dependent. It's the most important quantity in quantitative finance after the price itself. The natural data structure for volatility forecasting is mixed-frequency: we want a monthly or quarterly forecast, but daily observations of realised volatility are available and highly informative. MIDAS exploits this directly. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Realised Volatility as a Proxy
@@ -49,6 +55,12 @@ MIDAS-RV uses $RV^{(m)}_t$ as the **target** and individual $RV^{(d)}_j$ as **hi
 
 <!-- Speaker notes: Realised variance provides a model-free, non-parametric proxy for latent variance. The Andersen-Bollerslev result is fundamental: as we sample more finely (5-min, 1-min, tick), RV converges to the true integrated variance. In practice, 5-minute returns provide a good balance of accuracy and microstructure noise. Monthly RV is the target; the 22 daily RV values within the month are the predictors. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## The MIDAS-RV Model
@@ -63,6 +75,12 @@ where $B(j;\theta_1,\theta_2)$ are Beta polynomial weights summing to 1.
 3. **K = 22**: One month of daily lags (approx 22 trading days)
 
 <!-- Speaker notes: The log specification is important. RV has a strongly right-skewed distribution. Log-RV is approximately normal, which validates inference. The Beta weights with K=22 daily lags means we estimate just 4 parameters (mu, phi, theta1, theta2) instead of 24 unconstrained lag coefficients. This is the parsimony advantage of MIDAS over U-MIDAS. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -89,11 +107,18 @@ For equity RV, estimated parameters are typically near $\theta_1 \approx 1, \the
 
 <!-- Speaker notes: The Beta distribution's flexibility is key. With just two parameters, we can represent geometric decay (exponential down-weighting of older observations), uniform weighting (all lags equal), hump-shaped (some intermediate lag matters most), or reverse decay. Empirically for equity markets, θ1≈1 and θ2≈5 captures the rapid decay of predictive information from older daily returns. -->
 
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
+
 ---
 
 ## MIDAS-RV vs GARCH vs HAR-RV
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[GARCH<br>Daily returns] --> B[Daily<br>conditional variance]
     B --> C[Aggregate to monthly<br>via simulation]
@@ -141,6 +166,12 @@ HAR-RV is harder to beat than it looks — the multi-scale averaging captures lo
 
 ## NLS Estimation Procedure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.optimize import minimize
 
@@ -166,6 +197,8 @@ result = minimize(midas_rv_loss, [0, 0.5, 1.0, 5.0],
                   method='L-BFGS-B',
                   bounds=[(None,None), (0,2), (0.01,20), (0.01,20)])
 ```
+
+</div>
 
 **Important**: Multiple starts recommended — the NLS objective may have local minima.
 

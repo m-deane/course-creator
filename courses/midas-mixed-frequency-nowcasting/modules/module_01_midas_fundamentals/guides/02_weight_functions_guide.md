@@ -1,16 +1,40 @@
 # MIDAS Weight Functions
 
+> **Reading time:** ~20 min | **Module:** 01 — Midas Fundamentals | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** MIDAS weight functions are parameterized mappings from lag index $j$ to weight $w_j(\theta)$. The choice of weight function determines how many parameters must be estimated and what shapes are poss...
+
+</div>
 
 MIDAS weight functions are parameterized mappings from lag index $j$ to weight $w_j(\theta)$. The choice of weight function determines how many parameters must be estimated and what shapes are possible. The Beta polynomial and Almon polynomial are the two most widely used in practice.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The choice of weight function matters more than the number of lags. A parsimonious weight function with 2-3 parameters can capture the decay pattern that an unrestricted model would need 12+ parameters to approximate.
+
+</div>
+
 
 A good weight function family must be: (1) flexible enough to capture the true lag pattern, (2) parsimonious enough to estimate reliably, and (3) constrained to produce non-negative weights that sum to 1. The Beta polynomial satisfies all three with just 2 parameters.
 
 ---
 
 ## Why Weight Functions Matter
+
+<div class="callout-warning">
+
+**Warning:** Flat weight functions (where all lags receive equal weight) defeat the purpose of MIDAS. If your estimated weights are approximately flat, the model is not finding useful within-period dynamics -- consider whether the high-frequency variable is actually informative.
+
+</div>
+
 
 The weight function is the mechanism by which MIDAS encodes the temporal structure of the high-frequency data's influence on the low-frequency outcome.
 
@@ -48,6 +72,12 @@ where $f_{\text{Beta}}(x; \theta_1, \theta_2) = \frac{x^{\theta_1-1}(1-x)^{\thet
 | 5.0 | 1.0 | Back-loaded (unusual in practice) |
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -133,6 +163,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ### Properties
 
 - **Non-negativity:** Beta PDF is non-negative for all $\theta_1, \theta_2 > 0$
@@ -164,6 +196,12 @@ Parameters $\theta_1, \theta_2 \in \mathbb{R}$ (no positivity constraint — eas
 | $< 0$ | $< 0$ | Strongly declining |
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def almon_weights(n_lags, theta1, theta2):
@@ -198,6 +236,8 @@ def almon_weights(n_lags, theta1, theta2):
     return raw / total
 ```
 
+</div>
+
 ### Almon vs. Beta: Comparison
 
 | Property | Beta Polynomial | Exponential Almon |
@@ -228,6 +268,12 @@ where groups $s = 1, 2, \ldots, S$ partition $\{0, 1, \ldots, K-1\}$ and $\delta
 - Group 2: $j \in \{3, 4, 5\}$ (one quarter back) — weight $\delta_2$
 - Group 3: $j \in \{6, 7, 8\}$ (two quarters back) — weight $\delta_3$
 - Group 4: $j \in \{9, 10, 11\}$ (three quarters back) — weight $\delta_4$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def step_weights(n_lags, deltas, group_size=None):
@@ -264,6 +310,8 @@ def step_weights(n_lags, deltas, group_size=None):
     weights = weights / weights.sum()
     return weights
 ```
+
+</div>
 
 ### When to Use Step Functions
 
@@ -397,6 +445,13 @@ Do you need quarterly groupings?
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. Compute the Beta polynomial weights for $K=6$, $\theta_1 = 1.0$, $\theta_2 = 3.0$ using the midpoint formula. Verify they sum to 1.
 
 2. The Almon polynomial with $\theta_2 = 0$ produces a monotone weight function. Show that it is equivalent to a geometric lag: $w_j \propto e^{\theta_1 j}$. For what value of $\theta_1$ does this give the same weights as the Beta(1, 5) polynomial (approximately)?
@@ -410,3 +465,29 @@ Do you need quarterly groupings?
 - Ghysels, E., Sinko, A., & Valkanov, R. (2007). "MIDAS regressions: Further results and new directions." *Econometric Reviews*, 26(1), 53–90. [Weight function taxonomy]
 - Chen, X., & Ghysels, E. (2011). "News — good or bad — and its impact on predicting future corporate earnings." *Review of Financial Studies.* [Application with Beta polynomial]
 - Andreou, E., Ghysels, E., & Kourtellos, A. (2013). "Should macroeconomic forecasters use daily financial data?" *Journal of Business & Economic Statistics.* [Daily-to-quarterly MIDAS]
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_midas_equation_guide.md">
+  <div class="link-card-title">01 Midas Equation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_midas_equation_slides.md">
+  <div class="link-card-title">01 Midas Equation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_umidas_guide.md">
+  <div class="link-card-title">03 Umidas</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_umidas_slides.md">
+  <div class="link-card-title">03 Umidas — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

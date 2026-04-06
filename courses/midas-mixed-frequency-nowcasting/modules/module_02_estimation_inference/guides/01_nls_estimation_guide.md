@@ -1,16 +1,50 @@
 # Non-Linear Least Squares Estimation for MIDAS
 
+> **Reading time:** ~17 min | **Module:** 02 — Estimation Inference | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Set Starting Values</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. NLS Optimization</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Check Convergence</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Validate Residuals</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** MIDAS regression with parameterized weight functions is nonlinear in parameters — the weights $w_j(\theta)$ depend nonlinearly on $\theta$. This requires non-linear least squares (NLS) rather than ...
+
+</div>
 
 MIDAS regression with parameterized weight functions is nonlinear in parameters — the weights $w_j(\theta)$ depend nonlinearly on $\theta$. This requires non-linear least squares (NLS) rather than OLS. Understanding NLS optimization, convergence, and the implied covariance matrix is essential for valid inference.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** Convergence failures in NLS estimation are often a signal of model misspecification, not just bad starting values. If the optimizer struggles, simplify the weight function before increasing iterations.
+
+</div>
+
 
 NLS for MIDAS minimizes the sum of squared residuals over $(α, β, θ)$ jointly. Because the model is nonlinear only through $θ$, a profile likelihood approach can reduce the optimization to a 2-dimensional search over $θ$ alone, with $(α, β)$ solved analytically at each $θ$.
 
 ---
 
 ## NLS Setup
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 The MIDAS objective function is:
 
@@ -41,6 +75,12 @@ $$Q_{\text{profile}}(θ) = \|\mathbf{M}(θ)\mathbf{y}\|^2$$
 where $\mathbf{M}(θ) = \mathbf{I} - \mathbf{P}_{[\mathbf{1}, \tilde{\mathbf{x}}(θ)]}$ is the annihilator of the design matrix at $θ$.
 
 This reduces the problem from optimizing over 4 parameters to optimizing over 2 ($θ_1, θ_2$).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -150,6 +190,8 @@ def estimate_midas_profile(Y, X, weight_fn, theta0=(1.0, 5.0)):
     }
 ```
 
+</div>
+
 ---
 
 ## Asymptotic Theory
@@ -172,6 +214,12 @@ The sandwich covariance matrix for HAC-robust inference:
 $$\text{Var}(\hat{θ}) = T^{-1} \hat{\mathbf{Q}}^{-1} \hat{\mathbf{S}} \hat{\mathbf{Q}}^{-1}$$
 
 where $\hat{\mathbf{S}}$ is the Newey-West estimator of the long-run variance of the gradient.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -238,6 +286,8 @@ def nls_covariance(theta_hat, Y, X, objective_fn, eps=1e-4):
     return vcov, se
 ```
 
+</div>
+
 ---
 
 ## Convergence Diagnostics
@@ -253,6 +303,12 @@ Common causes and remedies:
 **3. Multicollinearity in MIDAS matrix:** Adjacent monthly observations are highly correlated, making the Hessian near-singular. Solution: increase the number of lags so the spread of lags reduces correlation, or use ridge regularization.
 
 **4. Objective function not smooth:** Numerical issues in beta PDF evaluation at extreme parameters. Solution: use midpoint evaluation $(j+0.5)/K$ and ensure $\theta > 0$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def check_convergence(result, theta_hat, Y, X, objective_fn):
@@ -310,6 +366,8 @@ def check_convergence(result, theta_hat, Y, X, objective_fn):
 
     return diagnostics
 ```
+
+</div>
 
 ---
 
@@ -396,6 +454,13 @@ def test_aggregation_restriction(Y, X, beta_weights_fn, midas_result):
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. Show that when the weight function is flat ($w_j = 1/K$ for all $j$), the MIDAS NLS estimator reduces to OLS on the equal-weight aggregate. In particular, show that $\nabla_\theta Q = 0$ at $\theta_1 = \theta_2 = 1$ is not generally satisfied.
 
 2. Implement the profile NLS approach in Python and verify that it produces the same parameter estimates as joint 4D optimization. Compare convergence time for the two approaches.
@@ -409,3 +474,29 @@ def test_aggregation_restriction(Y, X, beta_weights_fn, midas_result):
 - Gallant, A. R. (1987). *Nonlinear Statistical Models.* Wiley.
 - Wooldridge, J. M. (1994). "A simple specification test for the predictive ability of transformation models." *Review of Economics and Statistics.*
 - Ghysels, E., & Qian, H. (2019). "Estimating MIDAS regressions via OLS with polynomial parameter profiling." *Econometrics and Statistics*, 9, 1–16. [Profile OLS paper]
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_model_selection_guide.md">
+  <div class="link-card-title">02 Model Selection</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_model_selection_slides.md">
+  <div class="link-card-title">02 Model Selection — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_inference_guide.md">
+  <div class="link-card-title">03 Inference</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_inference_slides.md">
+  <div class="link-card-title">03 Inference — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

@@ -1,6 +1,26 @@
 # Mixed-Frequency Risk Models: VaR, Term Structure, and Commodity Fundamentals
 
+> **Reading time:** ~20 min | **Module:** 06 — Financial Applications | **Prerequisites:** Module 5
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Identify Frequencies</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Align Time Indices</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Build MIDAS Regressors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Classical VaR models (Historical Simulation, GARCH-based) operate at a single frequency. In practice, risk managers face a mixed-frequency information structure:
+
+</div>
 
 By the end of this guide you will be able to:
 
@@ -43,6 +63,12 @@ A simpler but equivalent two-step approach:
 
 ### 1.3 Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from scipy import stats
@@ -69,6 +95,13 @@ def midas_var(daily_returns, monthly_rv_forecast, alpha=0.01):
     var_daily = -z_alpha * np.sqrt(daily_variance)
 
     return var_daily
+
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
 
 
 def backtest_var(returns, var_estimates, alpha=0.01):
@@ -107,9 +140,17 @@ def backtest_var(returns, var_estimates, alpha=0.01):
     return violation_rate, lr_stat, p_value
 ```
 
+</div>
+
 ### 1.4 Christoffersen's Conditional Coverage Test
 
 Beyond unconditional coverage, violations should be **serially independent** — clustering indicates model inadequacy:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def christoffersen_test(violations):
@@ -153,9 +194,18 @@ def christoffersen_test(violations):
     return cc_stat, cc_pval
 ```
 
+</div>
+
 ---
 
 ## 2. Term Structure Nowcasting
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 ### 2.1 The Mixed-Frequency Yield Curve
 
@@ -174,6 +224,12 @@ Rather than forecasting each maturity separately, decompose the yield curve into
 $$y_t(\tau) = \beta_{1t} + \beta_{2t}\frac{1-e^{-\lambda\tau}}{\lambda\tau} + \beta_{3t}\left(\frac{1-e^{-\lambda\tau}}{\lambda\tau} - e^{-\lambda\tau}\right)$$
 
 Then apply MIDAS to each factor:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -227,6 +283,8 @@ def midas_term_structure(factors_monthly, factors_daily, K_daily=22):
 
     return np.column_stack(nowcasts)
 ```
+
+</div>
 
 ### 2.3 MIDAS Spread Nowcasting
 
@@ -412,6 +470,13 @@ For daily RV computed from intraday data:
 
 ## 7. Key References
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - Andreou, E., Ghysels, E., & Kourtellos, A. (2010). Regression models with mixed sampling frequencies. *Journal of Econometrics*, 158(2), 246–261.
 - Engle, R. F., & Manganelli, S. (2004). CAViaR: Conditional autoregressive value at risk. *JBES*, 22(4), 367–381.
 - Kupiec, P. (1995). Techniques for verifying the accuracy of risk measurement models. *Journal of Derivatives*, 3(2).
@@ -432,3 +497,29 @@ Mixed-frequency risk models apply MIDAS to three important financial application
 All three share the same Beta-polynomial weight structure and are estimated by NLS with time-series cross-validation.
 
 Next: [S&P 500 MIDAS-RV Notebook](../notebooks/01_midas_rv_sp500.ipynb)
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** Why does temporal aggregation of high-frequency data to match a low-frequency target destroy information, even when the aggregated mean is unbiased?
+
+**Practice Question 2:** In what situations would last-period sampling outperform simple averaging as an aggregation strategy?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_midas_rv_guide.md">
+  <div class="link-card-title">01 Midas Rv</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_midas_rv_slides.md">
+  <div class="link-card-title">01 Midas Rv — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

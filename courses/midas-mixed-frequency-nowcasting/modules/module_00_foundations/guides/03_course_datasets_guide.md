@@ -1,10 +1,27 @@
 # Course Datasets Guide
 
+> **Reading time:** ~20 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This course uses real macroeconomic and financial data throughout. All datasets are sourced from FRED (Federal Reserve Bank of St. Louis) and Yahoo Finance. CSV fallbacks are provided in each module's
+
+</div>
 
 This course uses real macroeconomic and financial data throughout. All datasets are sourced from FRED (Federal Reserve Bank of St. Louis) and Yahoo Finance. CSV fallbacks are provided in each module's `resources/` directory so notebooks run offline.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 Working with real data from the beginning exposes the data challenges that make mixed-frequency modeling interesting: revision history, ragged edges, missing observations, and structural breaks. Synthetic data hides these complexities.
 
@@ -12,11 +29,24 @@ Working with real data from the beginning exposes the data challenges that make 
 
 ## Primary Data Sources
 
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
+
 ### FRED (Federal Reserve Economic Data)
 
 FRED is the primary source for macroeconomic data. The St. Louis Fed maintains over 800,000 series from 107 sources. All series used in this course are publicly available.
 
 **API Access:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Install: pip install fredapi
@@ -30,7 +60,15 @@ import os
 fred = Fred(api_key=os.environ.get('FRED_API_KEY'))
 ```
 
+</div>
+
 **Fallback (no API key required):**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -39,6 +77,8 @@ import pandas as pd
 gdp = pd.read_csv('resources/gdp_quarterly.csv', index_col=0, parse_dates=True)
 ip = pd.read_csv('resources/industrial_production_monthly.csv', index_col=0, parse_dates=True)
 ```
+
+</div>
 
 ---
 
@@ -55,6 +95,12 @@ ip = pd.read_csv('resources/industrial_production_monthly.csv', index_col=0, par
 
 **How to download:**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 from fredapi import Fred
@@ -70,6 +116,8 @@ print(f"GDP series: {len(gdp_growth)} observations")
 print(f"Date range: {gdp_growth.index[0]} to {gdp_growth.index[-1]}")
 print(f"Last value: {gdp_growth.iloc[-1]:.3f}%")
 ```
+
+</div>
 
 ### Monthly Series (Primary Regressors)
 
@@ -354,6 +402,13 @@ ip_quarterly_periods = ip_monthly.index.to_period('Q')
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. Download the INDPRO series from FRED (or load from CSV). Convert to monthly growth rates. Resample to quarterly frequency using three different aggregation methods (last, mean, sum). Plot all three. In which quarter does the choice of aggregation method matter most?
 
 2. The S&P 500 has approximately 65 trading days per calendar quarter. If you want to use 4 quarters of daily data as MIDAS lags, how many high-frequency lags do you need? Write out the expression for the total number of parameters in an unrestricted MIDAS model with this setup.
@@ -367,3 +422,29 @@ ip_quarterly_periods = ip_monthly.index.to_period('Q')
 - FRED Documentation: https://fred.stlouisfed.org/docs/api/fred/
 - McCracken, M., & Ng, S. (2016). "FRED-MD: A monthly database for macroeconomic research." *Journal of Business & Economic Statistics.*
 - Ghysels, E., & Qian, H. (2019). "Estimating MIDAS regressions via OLS with polynomial parameter profiling." *Econometrics and Statistics.*
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_mixed_frequency_problem_guide.md">
+  <div class="link-card-title">01 Mixed Frequency Problem</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_mixed_frequency_problem_slides.md">
+  <div class="link-card-title">01 Mixed Frequency Problem — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_traditional_solutions_guide.md">
+  <div class="link-card-title">02 Traditional Solutions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_traditional_solutions_slides.md">
+  <div class="link-card-title">02 Traditional Solutions — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

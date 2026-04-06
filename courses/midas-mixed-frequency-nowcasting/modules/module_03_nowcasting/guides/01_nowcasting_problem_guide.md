@@ -1,16 +1,50 @@
 # The Nowcasting Problem
 
+> **Reading time:** ~14 min | **Module:** 03 — Nowcasting | **Prerequisites:** Module 2
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Identify Frequencies</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Align Time Indices</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Build MIDAS Regressors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Nowcasting is real-time estimation of current-period GDP growth using high-frequency data that becomes available before the official GDP release. MIDAS regression is the workhorse tool because it n...
+
+</div>
 
 Nowcasting is real-time estimation of current-period GDP growth using high-frequency data that becomes available before the official GDP release. MIDAS regression is the workhorse tool because it naturally handles the mixed-frequency structure of the nowcasting problem.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
 
 At any point within a quarter, some monthly indicators (industrial production, employment, retail sales) have already been published for the current quarter while others have not. This creates a "ragged edge" — the MIDAS matrix has missing values for the most recent months. The nowcast updates each time a new monthly release arrives.
 
 ---
 
 ## The Timing Problem
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 GDP for quarter $t$ is released with a lag of approximately 4–6 weeks after the quarter ends. During the quarter and immediately after, we want to estimate $y_t$ using whatever high-frequency data is available.
 
@@ -75,6 +109,12 @@ $$\hat{y}_t^{(h)} = \hat{\alpha} + \hat{\beta} \sum_{j=h}^{K-1} \frac{w_j(\hat{\
 
 where $h$ is the number of missing months at the "ragged edge". This re-weights the observed data to maintain the correct shape.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def midas_nowcast_ragged(alpha, beta, theta1, theta2, X_current, h_missing, K):
     """
@@ -109,6 +149,8 @@ def midas_nowcast_ragged(alpha, beta, theta1, theta2, X_current, h_missing, K):
     xw_avail = X_current @ w_avail_norm
     return alpha + beta * (w_avail.sum() * xw_avail / w_avail_norm.sum())
 ```
+
+</div>
 
 ---
 
@@ -169,6 +211,13 @@ For this course, we use the current final vintage (as downloaded from FRED) and 
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Module 01 (MIDAS fundamentals), Module 02 (estimation and inference)
 - **Leads to:** Module 04 (Dynamic Factor Models for nowcasting with many indicators)
 - **Related to:** Real-time data vintages, forecast combination, Giannone-Reichlin-Small (2008)
@@ -182,3 +231,19 @@ For this course, we use the current final vintage (as downloaded from FRED) and 
 2. If $\hat{w}_0 = 0.25$ (most recent month carries 25% of the weight), how much does the nowcast change when month 3 of the quarter is released with IP growth of $+0.5\%$ instead of the expected $+0.3\%$?
 
 3. Derive the formula for the nowcast update $\hat{y}_t^{(0)} - \hat{y}_t^{(1)}$ in terms of the MIDAS weight function and the newly released monthly observation.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_direct_vs_iterated_guide.md">
+  <div class="link-card-title">02 Direct Vs Iterated</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_direct_vs_iterated_slides.md">
+  <div class="link-card-title">02 Direct Vs Iterated — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

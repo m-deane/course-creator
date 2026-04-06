@@ -1,16 +1,50 @@
 # Model Selection for MIDAS
 
+> **Reading time:** ~15 min | **Module:** 02 — Estimation Inference | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Specify Candidates</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate Each</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Compare IC / OOSF</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Select Best</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** MIDAS model selection involves three decisions: (1) how many high-frequency lags to include ($K$ or equivalently $P$ quarterly lags), (2) which weight function family (Beta, Almon, step, U-MIDAS), and
+
+</div>
 
 MIDAS model selection involves three decisions: (1) how many high-frequency lags to include ($K$ or equivalently $P$ quarterly lags), (2) which weight function family (Beta, Almon, step, U-MIDAS), and (3) whether to include AR terms. Information criteria (AIC/BIC) and expanding-window cross-validation are the primary tools.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 Information criteria balance fit and parsimony. For MIDAS, BIC typically selects more parsimonious models than AIC because $\ln T$ is large relative to 2 for typical macro sample sizes ($T \approx 80$–$200$, $\ln T \approx 4.4$–$5.3$). Cross-validation via an expanding window provides direct out-of-sample evidence that avoids in-sample overfitting entirely.
 
 ---
 
 ## Decision 1: Lag Order $K$ (or $P$)
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 ### Why Lag Order Matters
 
@@ -30,6 +64,12 @@ $$\text{BIC}(K) = T \ln\!\left(\frac{\text{SSE}(K)}{T}\right) + k(K) \ln T$$
 where $k(K) = 4$ for restricted Beta MIDAS (regardless of $K$!) or $k(K) = K + 1$ for U-MIDAS.
 
 **Critical observation:** For restricted MIDAS, $k$ does not grow with $K$! The SSE decreases as $K$ grows (more lags can fit better), but the penalty stays constant at 4 parameters. This means BIC will select the largest $K$ that provides meaningful SSE reduction.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -102,6 +142,8 @@ def midas_aic_bic(Y, X_list, weight_fn, n_params_list):
     return results
 ```
 
+</div>
+
 ### Practical Lag Selection
 
 A common empirical finding in quarterly GDP nowcasting:
@@ -145,6 +187,12 @@ $$y_t = \alpha + \sum_{p=1}^{P_y} \rho_p y_{t-p} + \beta \sum_{j=0}^{K-1} w_j(\t
 2. If $LB(p) < 0.10$ for small $p$, add AR terms
 3. Compare MIDAS vs. MIDAS-AR by BIC
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.stats import chi2
 
@@ -173,11 +221,19 @@ def ljung_box(residuals, n_lags=4):
     return Q, p_value
 ```
 
+</div>
+
 ---
 
 ## Expanding Window Cross-Validation
 
 The most reliable model selection method for forecasting: evaluate out-of-sample performance using the actual time ordering.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def expanding_window_cv(Y, X_dict, weight_fn_dict, min_train=30, horizon=1):
@@ -258,6 +314,8 @@ def expanding_window_cv(Y, X_dict, weight_fn_dict, min_train=30, horizon=1):
     return rmse_dict
 ```
 
+</div>
+
 ---
 
 ## Model Selection Summary Table
@@ -292,6 +350,13 @@ Recommendation: Beta MIDAS with K=12 lags (P=4 quarterly lags).
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Guide 01 (NLS estimation)
 - **Leads to:** Guide 03 (robust inference), Module 03 (nowcasting with selected model)
 - **Related to:** Information criteria in time series (Lütkepohl 2006), forecast evaluation
@@ -305,3 +370,29 @@ Recommendation: Beta MIDAS with K=12 lags (P=4 quarterly lags).
 2. Derive the F-test for whether the last quarterly lag (lags $K-3$, $K-2$, $K-1$) can be dropped. Under restricted MIDAS, how would you implement this test?
 
 3. The Diebold-Mariano test compares two forecasting models' mean squared errors out-of-sample. Write out the DM statistic for comparing Beta MIDAS and OLS-aggregate nowcasts.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_nls_estimation_guide.md">
+  <div class="link-card-title">01 Nls Estimation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_nls_estimation_slides.md">
+  <div class="link-card-title">01 Nls Estimation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_inference_guide.md">
+  <div class="link-card-title">03 Inference</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_inference_slides.md">
+  <div class="link-card-title">03 Inference — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

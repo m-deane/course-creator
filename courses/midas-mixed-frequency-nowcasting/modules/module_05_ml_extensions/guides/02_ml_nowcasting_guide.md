@@ -1,6 +1,26 @@
 # Machine Learning Nowcasting: Tree-Based Methods with Mixed-Frequency Features
 
+> **Reading time:** ~20 min | **Module:** 05 — Ml Extensions | **Prerequisites:** Module 4
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Identify Frequencies</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Align Time Indices</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Build MIDAS Regressors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Tree-based ensemble methods (random forests, gradient boosting) offer several advantages over linear MIDAS for nowcasting:
+
+</div>
 
 By the end of this guide you will be able to:
 
@@ -16,6 +36,13 @@ By the end of this guide you will be able to:
 
 Tree-based ensemble methods (random forests, gradient boosting) offer several advantages over linear MIDAS for nowcasting:
 
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
+
 1. **Nonlinearity**: Macroeconomic relationships are asymmetric — labour market deterioration during recessions differs from recovery dynamics.
 2. **Automatic interactions**: Trees capture interactions between indicators without specifying them explicitly.
 3. **Robustness to outliers**: Not affected by extreme observations that can distort linear regression.
@@ -26,6 +53,13 @@ The challenge: trees do not natively handle the temporal structure of mixed-freq
 ---
 
 ## 2. Feature Engineering Approaches
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 ### 2.1 The Fundamental Challenge
 
@@ -40,6 +74,12 @@ Three approaches, from simplest to most sophisticated:
 ### 2.2 Flat Stacking
 
 The simplest approach: for each high-frequency predictor, include lags $x_{t-1}, x_{t-2}, \ldots, x_{t-m}$ as separate features.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -87,11 +127,19 @@ def flat_stack_features(df_high, df_low, target_col, m=12):
     return X[valid], y[valid]
 ```
 
+</div>
+
 **Drawback**: With 20 monthly series and 12 lags, this produces 240 features. Trees handle this via feature importance, but interpretability suffers.
 
 ### 2.3 Statistical Summary Features
 
 Aggregate the lag window into economically meaningful statistics:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def summary_features(series_lags):
@@ -120,11 +168,19 @@ def summary_features(series_lags):
     }
 ```
 
+</div>
+
 This reduces 12 monthly lags to 10 features per series — a 17× reduction while preserving key temporal information.
 
 ### 2.4 Temporal Embeddings
 
 For large daily datasets (e.g., 65 trading days per quarter), embeddings via PCA or autoencoders compress high-dimensional lag windows:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -149,6 +205,8 @@ def pca_embedding(lag_matrix, n_components=3):
     print(f"Explained variance with {n_components} components: {explained[-1]:.1%}")
     return embedding, pca
 ```
+
+</div>
 
 For daily financial data, the first 3 principal components typically capture 80–95% of variance.
 
@@ -618,6 +676,13 @@ def midas_features_for_ml(beta_weights, x_high_lags):
 
 ## 8. Key References
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.
 - Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. *KDD 2016*.
 - Ke, G., et al. (2017). LightGBM: A highly efficient gradient boosting decision tree. *NeurIPS*.
@@ -639,3 +704,29 @@ Machine learning methods extend MIDAS nowcasting to nonlinear settings:
 - **Combination forecasts** often outperform individual models
 
 Next: [Lasso MIDAS Notebook](../notebooks/01_lasso_midas.ipynb) — hands-on implementation.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does the ragged-edge problem affect the reliability of real-time nowcasts compared to pseudo out-of-sample exercises?
+
+**Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_regularized_midas_guide.md">
+  <div class="link-card-title">01 Regularized Midas</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_regularized_midas_slides.md">
+  <div class="link-card-title">01 Regularized Midas — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

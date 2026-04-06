@@ -31,6 +31,12 @@ Module 00 — Guide 03
 
 <!-- Speaker notes: The decision to use only real data is deliberate. Synthetic data hides the messy realities that make mixed-frequency modeling challenging — data revisions, non-stationarity, outliers like COVID. By working with real data from the start, students encounter these challenges in a structured, guided context rather than being surprised by them when they try to apply the methods independently. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Primary Sources
@@ -65,6 +71,12 @@ Module 00 — Guide 03
 
 <!-- Speaker notes: The two-source setup covers all frequency ranges. FRED covers quarterly and monthly macro series plus some daily financial series (VIX, spreads, exchange rates). Yahoo Finance covers equity market data. The CSV fallbacks are essential for offline use — in classroom settings, internet access can be unreliable. All fallback CSVs cover 2000-2024 and are pre-cleaned. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## Quarterly Series: The Target Variables
@@ -75,6 +87,12 @@ Module 00 — Guide 03
 | `PCECC96` | Real Consumption | Billions 2017$, SAAR |
 | `GPDIC1` | Real Investment | Billions 2017$, SAAR |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from fredapi import Fred
 import os
@@ -84,9 +102,17 @@ gdp = fred.get_series('GDPC1', observation_start='2000-01-01')
 gdp_growth = gdp.pct_change() * 100   # QoQ growth rate
 ```
 
+</div>
+
 **Fallback:** `resources/gdp_quarterly.csv`
 
 <!-- Speaker notes: Real GDP (GDPC1) is the primary target variable throughout the course. We use quarterly growth rates (pct_change * 100) rather than log differences, because percent changes are directly interpretable and reported in news. The SAAR (seasonally adjusted annual rate) convention means the quarterly level is already annualized — growth rates from pct_change are quarterly, not annualized. Make sure students understand this distinction. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -100,6 +126,12 @@ gdp_growth = gdp.pct_change() * 100   # QoQ growth rate
 | `UNRATE` | Unemployment Rate | Level |
 | `CPIAUCSL` | CPI | YoY % change |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 ip = fred.get_series('INDPRO', observation_start='2000-01-01')
 ip_growth = ip.pct_change() * 100      # month-over-month %
@@ -108,7 +140,15 @@ payrolls = fred.get_series('PAYEMS', observation_start='2000-01-01')
 payrolls_chg = payrolls.diff()          # monthly change in thousands
 ```
 
+</div>
+
 <!-- Speaker notes: The transformation column is important. IP and retail sales are best expressed as month-over-month growth rates. Payrolls are expressed as the monthly change in thousands because the level is an index with no natural base. Unemployment rate is used in levels because it's already stationary (bounded between 0 and 100). CPI is typically used as year-over-year to handle the strong seasonality. Students often make the mistake of mixing growth rates and levels — always check what transformation is appropriate for the economic question. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -263,6 +303,7 @@ GDP growth, 2019Q4:
 ## Module Data Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     M00[Module 00\nGDP + IP\nQ + M] --> M01[Module 01\nGDP + IP growth\nNLLS estimation]
     M01 --> M02[Module 02\nGDP + IP + Payrolls\nModel selection]

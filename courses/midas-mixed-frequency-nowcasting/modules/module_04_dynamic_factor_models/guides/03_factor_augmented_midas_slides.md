@@ -21,6 +21,7 @@ Module 04 — Guide 03
 ## FA-MIDAS Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Monthly panel\nN indicators] --> B[Standardize\nmean=0, std=1]
     B --> C[PCA extraction\nq factors]
@@ -33,9 +34,21 @@ graph TD
 
 <!-- Speaker notes: The pipeline diagram shows the six steps from raw data to nowcast. The most error-prone step is sign normalization — students often forget this and end up with a factor series that flips sign mid-sample during the expanding window. A simple check: the IP loading should be positive (IP rises during expansions, factors capture business cycle). After normalization, the FA-MIDAS estimation is identical to standard Beta MIDAS — we've just replaced the raw IP series with the PCA-extracted factor series. Everything from Module 02 (HAC inference, F-test, bootstrap) applies unchanged. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Step 1-2: Extract and Normalize
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Step 1: Standardize panel
@@ -59,11 +72,25 @@ if lambda_hat[0, 0] < 0:
 factor = pd.Series(F1[:, 0], index=monthly_panel.index)
 ```
 
+</div>
+
 <!-- Speaker notes: The code shows the three-line core of FA-MIDAS factor extraction. StandardScaler handles the standardization. PCA() with n_components=1 extracts the first principal component. The sign normalization checks if the IP loading (column 0 in our panel) is positive — if not, we flip both the factor and the loadings. This ensures the factor consistently rises during expansions (positive IP growth) across all expanding-window iterations. Students should implement this sign check before running the expanding-window loop, not just once on the full sample. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
 ## Step 3-4: Build MIDAS Matrix and Estimate
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Build MIDAS matrix with factor as HF predictor
@@ -77,11 +104,19 @@ print(f"FA-MIDAS: beta={est['beta']:.4f}, "
 print(f"Comparison: standard MIDAS beta ≈ 0.52, theta ≈ (1.4, 4.8)")
 ```
 
+</div>
+
 The factor loading $\hat{\beta}_{FA}$ has different units than $\hat{\beta}_{MIDAS}$:
 - $\hat{\beta}_{MIDAS}$: GDP growth per % IP growth
 - $\hat{\beta}_{FA}$: GDP growth per unit of standardized factor
 
 <!-- Speaker notes: One important conceptual point: the FA-MIDAS beta coefficient has different units than the standard MIDAS beta. Standard MIDAS beta is interpreted as "a 1% increase in IP growth leads to a beta% increase in quarterly GDP growth." FA-MIDAS beta is "a 1 standard deviation increase in the business cycle factor leads to a beta% increase in quarterly GDP growth." The factor is dimensionless (standardized to unit variance), so the interpretation changes. You can recover an approximately interpretable scale by noting that the factor has a loading on IP of lambda_IP ≈ 0.7, so beta_FA * lambda_IP gives the GDP response per unit of IP-equivalent growth. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -102,6 +137,12 @@ Variance explained: 54%
 Negative loading → countercyclical (e.g., VIX, treasury spread).
 
 <!-- Speaker notes: The loadings tell us how each indicator relates to the common factor. IP has the strongest loading (0.72) because it's most directly related to economic output. Payrolls is slightly lower (0.65) because employment is a lagging indicator — it rises after the economy turns up and falls after it turns down. The S&P 500 has a positive but lower loading (0.48) because equity markets are forward-looking — they anticipate the cycle rather than directly measuring current activity. In a richer panel with VIX and credit spreads, these would have negative loadings because they spike during recessions. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -174,6 +215,7 @@ Diminishing returns: each indicator adds less improvement.
 ## Module 04 Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Guide 01\nDFM Theory\nPCA Factors] --> B[Guide 02\nMixed Freq\nKalman Filter]
     B --> C[Guide 03\nFA-MIDAS\nImplementation]

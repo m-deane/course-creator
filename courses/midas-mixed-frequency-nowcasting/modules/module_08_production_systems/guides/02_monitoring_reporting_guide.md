@@ -1,6 +1,26 @@
 # Model Monitoring and Reporting for Nowcasting Systems
 
+> **Reading time:** ~20 min | **Module:** 08 — Production Systems | **Prerequisites:** Module 7
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Load Ragged Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate MIDAS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Generate Nowcast</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Update as Data Arrives</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A model that was well-calibrated in 2019 may be systematically biased by 2022. Supply-chain disruptions, policy regime changes, and measurement revisions alter the statistical relationships MIDAS e...
+
+</div>
 
 After reading this guide you will be able to:
 
@@ -13,6 +33,13 @@ After reading this guide you will be able to:
 ---
 
 ## 1. Why Monitoring Is Non-Negotiable
+
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
 
 A model that was well-calibrated in 2019 may be systematically biased by 2022. Supply-chain disruptions, policy regime changes, and measurement revisions alter the statistical relationships MIDAS exploits. Without monitoring, you will continue publishing stale forecasts with no indication that the model has drifted.
 
@@ -28,9 +55,22 @@ Each goal requires a different diagnostic tool.
 
 ## 2. Rolling Forecast Accuracy
 
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
+
 ### Computing Evaluation Metrics
 
 After each GDP release, compare the terminal nowcast (the last estimate before the advance release) to the advance GDP figure. Accumulate these pairs into a rolling error database.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -89,6 +129,8 @@ def compute_rolling_metrics(
     return pd.DataFrame(records)
 ```
 
+</div>
+
 ### Interpreting Metrics
 
 | Metric | Good signal | Warning signal |
@@ -104,6 +146,12 @@ A single outlier quarter (e.g. COVID-19 2020-Q2) inflates RMSE temporarily but i
 ## 3. Bias Testing
 
 Systematic bias is detected with a simple t-test on the mean forecast error.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -149,6 +197,8 @@ def test_forecast_bias(
     }
 ```
 
+</div>
+
 For a production system, run this test monthly. Log the result; alert if `reject_null` is `True` for two consecutive months.
 
 ---
@@ -162,6 +212,12 @@ The Chow test asks whether the regression coefficients are the same in two subsa
 $$F = \frac{(RSS_R - RSS_{U1} - RSS_{U2}) / k}{(RSS_{U1} + RSS_{U2}) / (n - 2k)} \sim F(k, n-2k)$$
 
 where $k$ is the number of parameters, $n$ is total observations, and $R$, $U1$, $U2$ denote restricted (pooled) and unrestricted (split) regressions.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def chow_test(
@@ -213,6 +269,8 @@ def chow_test(
         "reject_null": p_value < 0.05,
     }
 ```
+
+</div>
 
 ### CUSUM Test
 
@@ -720,6 +778,13 @@ def emit_alert(
 
 ## 11. Summary
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 Monitoring a nowcasting system requires three parallel tracks:
 
 **Accuracy track**: Rolling RMSE/MAE/bias computed after each GDP release. Triggers re-estimation if RMSE exceeds the backtest benchmark by more than 20% for two consecutive periods.
@@ -739,3 +804,39 @@ The key outputs — nowcast evolution chart, news decomposition waterfall, rolli
 - Diebold, F. X., & Mariano, R. S. (1995). Comparing predictive accuracy. *Journal of Business & Economic Statistics*, 13(3), 253–263.
 - Banbura, M., & Modugno, M. (2014). Maximum likelihood estimation of factor models on datasets with arbitrary pattern of missing data. *Journal of Applied Econometrics*, 29(1), 133–160.
 - Giannone, D., Reichlin, L., & Small, D. (2008). Nowcasting: The real-time informational content of macroeconomic data. *Journal of Monetary Economics*, 55(4), 665–676.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does the ragged-edge problem affect the reliability of real-time nowcasts compared to pseudo out-of-sample exercises?
+
+**Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_pipeline_architecture_guide.md">
+  <div class="link-card-title">01 Pipeline Architecture</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_pipeline_architecture_slides.md">
+  <div class="link-card-title">01 Pipeline Architecture — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_decision_flowchart_guide.md">
+  <div class="link-card-title">03 Decision Flowchart</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_decision_flowchart_slides.md">
+  <div class="link-card-title">03 Decision Flowchart — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

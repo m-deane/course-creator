@@ -34,6 +34,12 @@ Jan  Feb  Mar  |  Apr  May  Jun  |  Jul  Aug  Sep  | Oct 30
 
 <!-- Speaker notes: Nowcasting has become one of the most practically important applications of econometrics. Central banks (ECB, Fed, Bank of England) nowcast GDP in real time to inform monetary policy decisions. The key feature is that we're trying to estimate something that hasn't been officially measured yet — using related data that comes out faster. The 4-6 week release lag means that when you make a monetary policy decision on November 1st, you may not yet know the Q3 GDP figure that ended September 30th. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## The Publication Calendar
@@ -50,6 +56,12 @@ Jan  Feb  Mar  |  Apr  May  Jun  |  Jul  Aug  Sep  | Oct 30
 The *nowcast revision* between successive vintages = information value of the new monthly release.
 
 <!-- Speaker notes: The publication calendar varies by country and statistical agency. For the US, BLS releases industrial production on the 15th or 16th of the following month. BEA releases the GDP advance estimate about 4 weeks after quarter end. The gap between the first quarterly IP release (mid-February for January) and the GDP release (late April for Q1) is about 10 weeks. This table shows the three information states that occur during Q1: 1-month (January only), 2-month (January-February), and 3-month (complete quarter). Each state corresponds to a different ragged edge in the MIDAS data matrix. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -69,6 +81,12 @@ At the 2-month vintage: the most recent monthly lag **is missing**.
 This is the "ragged edge" — the current quarter row of the MIDAS matrix is incomplete.
 
 <!-- Speaker notes: The ragged edge is what distinguishes nowcasting from regular forecasting. In regular forecasting, all your data is complete and you're predicting the future. In nowcasting, you have partial data for the current period and need to estimate what's already happening. The MIDAS matrix has a missing value at j=0 for the current quarter when the final monthly release hasn't happened yet. The figure shows K=12 monthly lags for illustration — the rightmost column of the current quarter row has a question mark. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -103,6 +121,12 @@ where $\tilde{w}$ corrects for missing mass.
 </div>
 
 <!-- Speaker notes: All three approaches are used in practice. The backward shift (Option 1) is by far the most common in academic papers and is what most researchers implement first. The EM imputation (Option 2) is used in professional nowcasting models like those at the NY Fed. The ragged-edge re-weighting (Option 3) is the most principled but requires careful implementation. For this course, we implement Options 1 and 3 to show the contrast. The difference in nowcast accuracy between the three approaches is typically small for quarterly GDP with monthly IP — the missing lag effect is modest. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -169,6 +193,7 @@ Typical finding: Beta MIDAS improves RMSE by 10-20% over AR(1) benchmark.
 ## Nowcast vs. Forecast vs. Backcast
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 timeline
     title Information relative to GDP release date
     section Backcast
@@ -226,6 +251,7 @@ A Feb 15 nowcast uses January IP (released Feb 15). It does NOT use February IP 
 ## Summary: Nowcasting Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Start of quarter] --> B[Monthly IP release 1\n→ 1-month nowcast]
     B --> C[Monthly IP release 2\n→ 2-month nowcast update]

@@ -31,6 +31,12 @@ $$\mathbf{y} = \alpha \mathbf{1} + \mathbf{X} \boldsymbol{\phi} + \boldsymbol{\v
 
 <!-- Speaker notes: The U-MIDAS model is just OLS. This is its main computational advantage — OLS has closed-form solutions, standard errors, and diagnostic tests that are all straightforward. Restricted MIDAS requires nonlinear optimization, which can fail to converge, get stuck in local minima, and requires more care in implementation. For small K, U-MIDAS may be the practical choice even if it's less efficient. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Parameter Count Comparison
@@ -65,6 +71,12 @@ $$\mathbf{y} = \alpha \mathbf{1} + \mathbf{X} \boldsymbol{\phi} + \boldsymbol{\v
 
 <!-- Speaker notes: The parameter count comparison shows that for small K (monthly-to-quarterly with few lags), the difference between U-MIDAS and restricted MIDAS is modest. For large K (daily data), the difference is enormous. This is why U-MIDAS is viable for monthly data but not daily data. The key number to remember: K/T should be less than about 0.05-0.10 for U-MIDAS to be reliable. At K=6, T=100: K/T = 0.06 — right on the boundary. At K=65, T=100: K/T = 0.65 — completely infeasible. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## The Bias-Variance Tradeoff
@@ -96,6 +108,12 @@ $$\text{U-MIDAS wins when: } K \sigma^2 / T < \text{Restriction bias}^2$$
 
 <!-- Speaker notes: This is the formal statement of the tradeoff. U-MIDAS has higher variance because it estimates K coefficients instead of 2. Restricted MIDAS has lower variance but introduces bias if the polynomial family doesn't fit the true weight pattern. U-MIDAS wins when restriction bias is large relative to variance — this happens when: (1) the true weights are non-smooth or irregular, (2) sample size is large (variance shrinks), (3) K is small (variance difference between models is small). Restricted MIDAS wins when: (1) the polynomial fits well, (2) sample is small, (3) K is large. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Empirical Finding: Foroni, Marcellino, Schumacher (2015)
@@ -114,11 +132,18 @@ $$\text{U-MIDAS wins when: } K \sigma^2 / T < \text{Restriction bias}^2$$
 
 <!-- Speaker notes: This empirical result from the landmark paper on U-MIDAS is striking: the unrestricted model wins or ties in about 75% of specifications. The key condition is m=3 (monthly to quarterly). This doesn't mean restricted MIDAS is useless — for daily data, restricted MIDAS wins overwhelmingly because U-MIDAS is infeasible. But for the most common macro application (quarterly GDP, monthly indicators), U-MIDAS is a serious competitor. -->
 
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
+
 ---
 
 ## When to Use U-MIDAS
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Frequency ratio m] --> B{m ≤ 4?}
     B -->|Yes, e.g. monthly/quarterly| C{Sample size T?}
@@ -136,6 +161,12 @@ graph TD
 ## U-MIDAS Estimation: OLS
 
 $$\hat{\boldsymbol{\phi}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import LinearRegression
@@ -156,6 +187,8 @@ def estimate_umidas(Y, X):
         'r2': r2,
     }
 ```
+
+</div>
 
 **Standard errors:** Use `statsmodels.OLS` for heteroscedasticity-robust (HC3) standard errors.
 
@@ -190,6 +223,12 @@ Implied weights: [0.39, -0.09, 0.26, 0.13, 0.21, 0.06]
 
 **Ridge regression adds a penalty:** $\lambda \sum_j \phi_j^2$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from sklearn.linear_model import RidgeCV
 import numpy as np
@@ -207,6 +246,8 @@ def estimate_ridge_umidas(Y, X):
 
     return model
 ```
+
+</div>
 
 **Effect of ridge:** Shrinks coefficients toward zero. Reduces oscillation but introduces slight bias. Often gives a smoother, more interpretable weight profile.
 

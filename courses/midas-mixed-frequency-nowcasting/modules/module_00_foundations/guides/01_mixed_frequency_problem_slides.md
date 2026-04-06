@@ -55,6 +55,12 @@ Module 00 — Foundations
 
 <!-- Speaker notes: Notice the pattern: quarterly data requires expensive, survey-based measurement. Monthly data piggybacks on administrative records. Daily data is transactional and nearly free. The measurement interval reflects both economic structure and data collection costs. A good nowcasting model uses information from all three layers. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Why This Matters: The Policy Maker's Problem
@@ -76,6 +82,12 @@ But we have:
 
 <!-- Speaker notes: This is the operational reality for every central bank and macro hedge fund. The most recent hard GDP data is always lagging. The nowcasting literature emerged precisely to address this: can we combine the higher-frequency series to estimate current-quarter GDP before it's released? The answer is yes — and MIDAS is one of the most successful approaches. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## Publication Calendar: Information Arrives Unevenly
@@ -93,6 +105,12 @@ But we have:
 
 <!-- Speaker notes: This table is worth memorizing. The publication lag column shows how far behind each series is. Payrolls come out within a week of month end — very fast. GDP comes out a month after the quarter closes. Financial data arrives instantly. This uneven arrival pattern creates the ragged edge problem we address in Module 03. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## The Aggregation Problem
@@ -108,6 +126,12 @@ $$\tilde{x}_t = \sum_{j=1}^{3} w_j \cdot x_{3(t-1)+j}^M$$
 **Problem with all three:** The weights are *imposed*, not estimated.
 
 <!-- Speaker notes: Every aggregation scheme pre-commits to a weighting of within-quarter information before seeing any data. What if the last month of the quarter is most informative? What if the pattern is U-shaped? Fixed aggregation can't adapt. MIDAS estimates the weights from the data — that's the core innovation. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -256,6 +280,7 @@ MIDAS learns that recent weeks matter more.
 ## Course Roadmap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     M00[M00: Foundations\nMixed-freq problem] --> M01[M01: MIDAS\nEquation & weights]
     M01 --> M02[M02: Estimation\nNLS & inference]

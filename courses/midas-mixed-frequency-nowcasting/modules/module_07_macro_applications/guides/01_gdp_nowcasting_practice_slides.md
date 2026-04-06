@@ -23,6 +23,7 @@ Module 07 — Macroeconomic Applications
 During the quarter, policymakers, investors, and businesses need to track economic momentum in real time.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Q3 Information Flow (Jul-Sep)
     dateFormat YYYY-MM-DD
@@ -39,11 +40,18 @@ Nowcasting = updating the GDP estimate continuously as new data arrives.
 
 <!-- Speaker notes: GDP is the most important economic indicator but is known with a long delay. The Federal Reserve's policy meetings happen every 6-8 weeks, and the Fed needs to know current economic conditions, not what happened last quarter. This drives the nowcasting problem: use all available monthly (and daily) data to estimate the current quarter's GDP growth in real time. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## The NY Fed GDP Nowcast Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[FRED API<br>Daily data pull] --> B[Vintage tracking<br>What was known when?]
     B --> C[Stationarity transforms<br>Logs, differences, pct changes]
@@ -57,6 +65,12 @@ graph TD
 Published every Friday at 11am ET. Consumed by markets within seconds.
 
 <!-- Speaker notes: The NY Fed's nowcast framework was developed by Giannone, Reichlin, and Small (2008). It processes about 40 data series including employment, industrial production, retail sales, housing starts, and financial conditions. The Kalman filter handles the ragged edge naturally — missing observations are treated as unobserved states in the state space model. The news decomposition tells policymakers exactly which data release caused each forecast revision. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -77,6 +91,12 @@ GDP Q1          |     |     |     |   (released Apr 25!)
 **The ragged edge**: At any point during a quarter, some variables have more recent observations than others.
 
 <!-- Speaker notes: The ragged edge is the fundamental practical challenge in nowcasting. On April 15, payrolls and PMI are available for March, but retail sales and industrial production are not yet. The model must produce a nowcast using this incomplete information set. The approach: fill missing recent observations with a simple assumption (carry-forward, zero, or AR projection), then apply the MIDAS model to the filled data. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -109,6 +129,12 @@ Fit AR(1) on available history, predict missing values.
 
 <!-- Speaker notes: For MIDAS models, the ragged edge requires a practical decision before building the design matrix. The carry-forward approach is problematic for growth rate variables — if we don't know March payrolls, we shouldn't assume February's growth rate continues. Zero-fill (assume no change from the last known value) is more appropriate for differenced series. AR projection uses the time series structure to make a principled guess about missing values. The Kalman filter is the gold standard but requires more engineering effort. -->
 
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
+
 ---
 
 ## Vintage Data: The Revision Problem
@@ -132,6 +158,12 @@ Economic data is **revised** repeatedly after initial release:
 
 A production nowcasting system maintains a publication calendar:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 PUBLICATION_CALENDAR = {
     'PAYEMS': {
@@ -152,6 +184,8 @@ PUBLICATION_CALENDAR = {
     },
 }
 ```
+
+</div>
 
 On any forecast date $t$, the system computes what each variable's latest vintage is.
 
@@ -194,6 +228,7 @@ $$\underbrace{\hat{y}_{t|S_{\text{after}}}}_{\text{Updated nowcast}} - \underbra
 ## ECB Nowcasting Lab Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Country data<br>Germany, France, Italy, Spain] --> B[National<br>factor models]
     B --> C[Euro Area<br>aggregate factor]
@@ -215,6 +250,7 @@ Key ECB innovations: country-level disaggregation; soft data (surveys) as early 
 **How to fairly evaluate a nowcasting model:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[For each forecast date t] --> B[Use only data<br>available at t]
     B --> C[Fit model on<br>real-time data]

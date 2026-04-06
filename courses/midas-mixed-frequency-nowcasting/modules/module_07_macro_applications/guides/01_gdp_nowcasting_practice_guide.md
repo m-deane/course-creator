@@ -1,6 +1,26 @@
 # GDP Nowcasting in Practice: Fed and ECB Approaches
 
+> **Reading time:** ~20 min | **Module:** 07 — Macro Applications | **Prerequisites:** Module 6
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Load Ragged Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate MIDAS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Generate Nowcast</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Update as Data Arrives</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** GDP is released with a lag of 3–5 weeks after quarter-end (advance estimate), with revisions for up to three years thereafter. During the quarter, policymakers, traders, and businesses need to trac...
+
+</div>
 
 By the end of this guide you will be able to:
 
@@ -18,6 +38,13 @@ GDP is released with a lag of 3–5 weeks after quarter-end (advance estimate), 
 ### 1.1 The Information Flow in GDP Nowcasting
 
 Consider Q3 GDP (July–September). The information available evolves as:
+
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
 
 ```
 July:        July employment, July ISM, July retail sales
@@ -39,6 +66,13 @@ A nowcasting model ingests each new data release and updates its GDP estimate in
 ---
 
 ## 2. The NY Fed GDP Nowcast
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 ### 2.1 Architecture
 
@@ -79,6 +113,12 @@ Economic data is subject to revision. The value published in month $t+1$ for var
 - Train only on data available as of each forecast date (avoid look-ahead bias)
 - Use a vintage database such as ALFRED (Archival FRED) or the St. Louis Fed's vintage data
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas_datareader.data as web
 from datetime import date
@@ -101,6 +141,8 @@ def get_vintage_data(series_id, vintage_date, start='2000-01-01'):
         return None
 ```
 
+</div>
+
 ### 3.2 Ragged Edges
 
 At any point during a quarter, the information set is "ragged" — some indicators are available through month $m$, others only through month $m-1$:
@@ -115,6 +157,12 @@ GDP Advance      |     |     |      | available Apr 28
 ```
 
 **Handling ragged edges in MIDAS**:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def handle_ragged_edge(df, target_date, method='last'):
@@ -176,6 +224,8 @@ def handle_ragged_edge(df, target_date, method='last'):
     return df_filled
 ```
 
+</div>
+
 ### 3.3 Publication Lags
 
 Each data release has a specific publication calendar:
@@ -199,6 +249,12 @@ A production-grade nowcasting system uses a **publication calendar** to know exa
 
 A practical MIDAS-based GDP nowcast uses 5-8 monthly indicators:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 NOWCAST_VARIABLES = {
     'PAYEMS': {'description': 'Nonfarm Payrolls', 'transform': 'pct_change'},
@@ -209,6 +265,8 @@ NOWCAST_VARIABLES = {
     'HOUST': {'description': 'Housing Starts', 'transform': 'pct_change'},
 }
 ```
+
+</div>
 
 For each quarterly observation, construct the MIDAS design matrix by stacking monthly lags.
 
@@ -315,6 +373,13 @@ A common pitfall: evaluating nowcasts against revised GDP rather than advance GD
 
 ## 7. Key References
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - Giannone, D., Reichlin, L., & Small, D. (2008). Nowcasting: The real-time informational content of macroeconomic data. *Journal of Monetary Economics*, 55(4), 665–676.
 - Bańbura, M., et al. (2013). Now-casting and the real-time data flow. In *Handbook of Economic Forecasting*, vol. 2A, pp. 195–237.
 - Aaronson, D., et al. (2016). The Federal Reserve Bank of New York Staff Nowcast. *FRBNY Staff Report* No. 791.
@@ -333,3 +398,29 @@ GDP nowcasting in practice requires:
 5. **Proper evaluation**: Pseudo-real-time with advance GDP as target, not revised GDP
 
 Next: [Inflation and Labour Market Nowcasting](02_inflation_labour_guide.md)
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does the ragged-edge problem affect the reliability of real-time nowcasts compared to pseudo out-of-sample exercises?
+
+**Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_inflation_labour_guide.md">
+  <div class="link-card-title">02 Inflation Labour</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_inflation_labour_slides.md">
+  <div class="link-card-title">02 Inflation Labour — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

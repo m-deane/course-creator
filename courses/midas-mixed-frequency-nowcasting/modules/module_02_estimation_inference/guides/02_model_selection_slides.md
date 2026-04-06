@@ -21,6 +21,7 @@ Module 02 — Guide 02
 ## Three Model Selection Decisions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[MIDAS Model Selection] --> B[Decision 1: Lag order K]
     A --> C[Decision 2: Weight function family]
@@ -33,6 +34,12 @@ graph TD
 **Tool for all three:** AIC/BIC + expanding-window cross-validation
 
 <!-- Speaker notes: The three decisions are somewhat independent but interact. The lag order K determines how much history is included. The weight function family determines how that history is aggregated. AR terms control residual autocorrelation. In practice, practitioners often make these decisions sequentially: first choose K by BIC, then choose weight function, then test for AR terms. A more principled approach uses cross-validation over all combinations simultaneously, but that's computationally expensive. -->
+
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
 
 ---
 
@@ -49,6 +56,12 @@ The SSE decreases as $K$ grows, but the penalty stays at 4 (or 2k = 8, or k lnT 
 So: **BIC selects the $K$ that most reduces SSE per additional "information".**
 
 <!-- Speaker notes: This is the key insight that makes model selection for restricted MIDAS different from for unrestricted regression. When you add more lags K to a restricted Beta MIDAS model, you're not adding more parameters — you're only extending the span of the existing 4-parameter weight function. The SSE can decrease but the AIC/BIC penalty stays constant at 4 (or 8, or 4 ln T). This means the criteria select the largest K that meaningfully improves fit, without the usual penalty for adding parameters. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -68,6 +81,12 @@ For quarterly GDP ~ monthly IP (K varies from 3 to 18):
 
 <!-- Speaker notes: This is a typical result for quarterly GDP nowcasting with monthly IP. The SSE decreases as more lags are added, but the improvement becomes negligible after P=4 (4 quarterly lags = 12 monthly lags). BIC identifies P=4 as the optimum because the SSE reduction from P=4 to P=6 is tiny (47.8 vs 47.6) while not changing the parameter count at all. Students should always report this table when presenting MIDAS results — it shows how the lag selection was made. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Weight Function Family Comparison
@@ -84,6 +103,12 @@ For $P=4$ (K=12) selected lags:
 **BIC strongly penalizes U-MIDAS** ($k=13$ vs $k=4$). Beta and Almon are nearly tied.
 
 <!-- Speaker notes: The table shows the typical outcome: OLS-aggregate has worst fit, U-MIDAS has best in-sample fit but worst BIC (due to k=13 parameters), and Beta/Almon MIDAS occupy the middle with best BIC. The out-of-sample RMSE (from expanding-window CV) shows that Beta MIDAS also has the best predictive accuracy. This consistency between BIC and OOS evaluation is reassuring — it validates using BIC as a selection criterion in this setting. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -113,6 +138,12 @@ After estimating MIDAS, test residuals for serial correlation:
 
 $$Q_{LB}(p) = T(T+2)\sum_{k=1}^p \frac{\hat{\rho}_k^2}{T-k} \sim \chi^2_p \text{ under H}_0$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.stats import chi2
 
@@ -124,6 +155,8 @@ def ljung_box(residuals, p=4):
     p_val = 1 - chi2.cdf(Q, df=p)
     return Q, p_val
 ```
+
+</div>
 
 **If p-value < 0.10:** Add AR(1) term and re-test.
 
@@ -150,6 +183,7 @@ Parameters: $k = 5$ (α, ρ, β, θ₁, θ₂)
 ## Model Selection Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Start: GDP ~ IP, monthly] --> B[Build MIDAS matrices\nfor P=1,2,3,4,6]
     B --> C[Estimate Beta MIDAS\nfor each P by profile NLS]

@@ -32,6 +32,12 @@ The weight function $\{w_j(\theta)\}$:
 
 <!-- Speaker notes: The weight function is where MIDAS makes its fundamental contribution. Everything else — the regression structure, the error term — is standard. The weight function is the single innovation that allows mixed frequencies to be combined coherently. This slide establishes why spending an entire guide on weight functions is justified. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Four Weight Shapes and Their Meanings
@@ -50,6 +56,12 @@ Lag 0 (most recent)   →   Lag K-1 (oldest)
 
 <!-- Speaker notes: These four archetypal shapes cover the realistic range of weight functions. In quarterly GDP nowcasting, the declining pattern dominates: the current quarter's monthly observations carry most weight, with decaying influence from previous quarters. The hump shape occasionally appears when there are reporting lags — if IP is released with a 15-day lag, the most recent month may be less informative than the one before it. Students should think about which shape is most plausible for each economic application before estimating. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## The Beta Polynomial: Definition
@@ -63,6 +75,12 @@ where $f_{\text{Beta}}(x;\theta_1,\theta_2) = \frac{x^{\theta_1-1}(1-x)^{\theta_
 **Parameters:** $\theta_1 > 0$, $\theta_2 > 0$ (two parameters for any $K$)
 
 <!-- Speaker notes: Work through the Beta formula step by step. First, we evaluate the Beta PDF at K equally-spaced points. The midpoint convention (j+0.5)/K avoids singularities when theta < 1. Then we normalize so the weights sum to 1. The convention that maps lag 0 to large x means theta2 controls the weight on recent observations: large theta2 concentrates mass near x=1, which maps to large weights at small j (recent lags). This is the typical declining pattern. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -95,6 +113,12 @@ $$\Rightarrow \text{Middle lags peak}$$
 **Beta(1,1) = uniform = equal-weight aggregation** is the testable null hypothesis.
 
 <!-- Speaker notes: Beta(1,1) being equal to the uniform distribution is an important result — it means we can formally test the aggregation assumption by testing whether theta1 = theta2 = 1. If the data rejects Beta(1,1) in favor of Beta(1, 5), we have statistical evidence that timing within the quarter matters. This is both a model selection tool and a formal hypothesis test. The theta values (1.5, 4.0) for the typical GDP model are not coincidental — they correspond to a gently declining function with the current quarter receiving about twice the weight of two quarters back. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -200,11 +224,19 @@ Groups: $[0,2]$ (current Q), $[3,5]$ (Q-1), $[6,8]$ (Q-2), $[9,11]$ (Q-3)
 
 **Parameters:** 3 free parameters ($\delta_4$ determined by constraint)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Example: declining quarterly weights
 deltas = [0.50, 0.30, 0.15, 0.05]  # unnormalized
 # After normalization: [0.50, 0.30, 0.15, 0.05] / (3 * sum * 1/3) ...
 ```
+
+</div>
 
 <!-- Speaker notes: Step functions are useful when you want quarterly-group interpretability. Instead of smooth weights, you assign one weight to each full quarter of lags. This makes results easy to communicate: "the current quarter's IP has a weight of 50%, last quarter's IP has 30%..." etc. Step functions are also useful for very high frequency ratios (daily data) where you might want monthly groups within each quarter. The downside is the discontinuity at group boundaries, which can occasionally cause numerical issues in optimization. -->
 
@@ -213,6 +245,7 @@ deltas = [0.50, 0.30, 0.15, 0.05]  # unnormalized
 ## Choosing Your Weight Function
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[How many lags K?] --> B{K ≤ 5?}
     B -->|Yes| C[U-MIDAS\nUnrestricted OLS]
@@ -250,6 +283,12 @@ From GDP nowcasting applications (Ghysels et al.):
 
 ## Implementation Notes
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Standard Beta polynomial implementation
 from scipy.stats import beta as beta_dist
@@ -275,6 +314,8 @@ for t1, t2 in [(1, 1), (1.5, 4), (2, 2)]:
     assert abs(w.sum() - 1.0) < 1e-10, f"Weights don't sum to 1 for ({t1},{t2})"
 print("All weight functions verified.")
 ```
+
+</div>
 
 <!-- Speaker notes: The log_raw -= log_raw.max() trick in the Almon implementation prevents numerical overflow. This is standard practice for softmax-type computations. Always include the sum-to-1 assertion as a sanity check — a weights bug that fails to normalize will produce coefficient estimates that are off by a constant factor, leading to confusing results. The midpoint evaluation (j+0.5)/n_lags in the Beta function is important when theta < 1 to avoid evaluating Beta(theta < 1) at x=0 or x=1 where the PDF diverges. -->
 

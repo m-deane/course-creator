@@ -33,6 +33,12 @@ But macroeconomic relationships are often **nonlinear**:
 
 <!-- Speaker notes: The linear MIDAS model is powerful but constrained. The real economy exhibits threshold effects, asymmetries, and interactions that linear models miss. Decision trees naturally detect these: a split at PMI=50 captures the recession threshold without anyone specifying it. The cost is interpretability and potential overfitting, which we manage with ensembles and regularisation. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## The Feature Engineering Problem
@@ -54,6 +60,12 @@ Three approaches:
 3. **Temporal embeddings** — PCA / neural compression
 
 <!-- Speaker notes: This is the fundamental challenge. MIDAS regression naturally handles the temporal structure via the weight function. Trees don't have that — they need a flat feature vector. The three approaches differ in complexity and information retention. Let's examine each. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -79,6 +91,12 @@ For each indicator $k$ with $m$ lags, create $m$ features: $x_{k,t-1}, x_{k,t-2}
 
 <!-- Speaker notes: Flat stacking is the conceptually simplest approach. For 20 monthly indicators with 12 lags each, you get 240 features. This is manageable for gradient boosting with regularization, but may overfit with random forests on small samples. The key advantage: the tree can detect exactly which lag matters — lag 2 but not lag 1, for example. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Approach 2: Statistical Summary Features
@@ -86,6 +104,12 @@ For each indicator $k$ with $m$ lags, create $m$ features: $x_{k,t-1}, x_{k,t-2}
 Reduce each lag window to economically meaningful statistics:
 
 $$\text{Window} = [x_{k,t-1}, \ldots, x_{k,t-m}] \rightarrow \{{\mu, \sigma, \text{last}, \text{first}, \text{momentum}, \text{trend}, \ldots}\}$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 features = {
@@ -98,9 +122,17 @@ features = {
 }
 ```
 
+</div>
+
 **Result**: 10 features per indicator instead of 12 — interpretable, robust.
 
 <!-- Speaker notes: Statistical summaries are a middle ground. Instead of all 12 lags, we compute 10 statistics that capture the level, dispersion, direction, and rate of change of the indicator over the lag window. These are economically meaningful: "momentum" is the net change, "acceleration" is whether the change is speeding up. This approach reduces dimensionality while keeping interpretability. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -109,6 +141,7 @@ features = {
 For daily data (e.g., 65 trading days per quarter), compress via PCA:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A[Daily returns<br>65 lags per quarter] --> B[PCA]
     B --> C[3 principal<br>components]
@@ -129,6 +162,7 @@ graph LR
 ## Random Forest Nowcasting
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A[Training data<br>X, y] --> B[Bootstrap<br>sample 1]
     A --> C[Bootstrap<br>sample 2]
@@ -188,6 +222,12 @@ where $\eta$ is the learning rate and $f_k$ fits residuals of the current ensemb
 
 ## Early Stopping in Expanding Window
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Expanding window with early stopping
 for t in range(min_train, T):
@@ -208,6 +248,8 @@ for t in range(min_train, T):
 
     forecasts[t] = model.predict(X[t:t+1])[0]
 ```
+
+</div>
 
 **Critical**: validation data must be **after** training data (no shuffling).
 
@@ -282,6 +324,7 @@ where $d_t = L(e_{1t}) - L(e_{2t})$ is the loss differential and $\hat{V}$ uses 
 ## When ML Beats MIDAS
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A{Nonlinear<br>relationships?} -->|Yes| B[ML likely better]
     A -->|No| C{p >> T?}

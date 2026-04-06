@@ -1,16 +1,40 @@
 # Hypothesis Testing and Robust Inference for MIDAS
 
+> **Reading time:** ~13 min | **Module:** 02 — Estimation Inference | **Prerequisites:** Module 1
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** MIDAS regression residuals frequently exhibit serial correlation and heteroscedasticity. Standard OLS standard errors are invalid; HAC (Heteroscedasticity and Autocorrelation Consistent) standard e...
+
+</div>
 
 MIDAS regression residuals frequently exhibit serial correlation and heteroscedasticity. Standard OLS standard errors are invalid; HAC (Heteroscedasticity and Autocorrelation Consistent) standard errors due to Newey and West (1987) provide valid inference. Additionally, we test the significance of the high-frequency regressors and the polynomial weight restriction.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 The HAC covariance estimator corrects for both serial correlation and heteroscedasticity in the error process without assuming a specific parametric model for the error dynamics. For MIDAS, applying HAC to the linearized model (after profiling out theta) gives valid standard errors for the regression coefficients $(\alpha, \beta)$.
 
 ---
 
 ## Why Standard Errors Fail for MIDAS
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 Three potential violations of the OLS covariance assumptions:
 
@@ -47,6 +71,12 @@ For MIDAS, apply HAC to the linearized model at the estimated $\hat{\theta}$:
 $$\text{Var}_{HAC}(\hat{\alpha}, \hat{\beta}) = (Z^\top Z)^{-1} \hat{S}_{NW} (Z^\top Z)^{-1}$$
 
 where $Z_t = (1, \tilde{x}_t(\hat{\theta}))$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -133,6 +163,8 @@ def midas_hac_inference(Y, X, theta1_hat, theta2_hat, beta_weights_fn, n_lags=No
     }
 ```
 
+</div>
+
 ---
 
 ## Key Hypothesis Tests
@@ -161,6 +193,12 @@ $$H_0: w_j(\hat{\theta}) = 1/K \text{ for all } j \quad (\text{i.e., } \theta_1 
 F-test comparing restricted (OLS-aggregate) to unrestricted (MIDAS) SSE:
 
 $$F = \frac{(SSE_R - SSE_U) / 2}{SSE_U / (T-4)} \sim F_{2, T-4}$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def test_equal_weights(Y, X, midas_result, beta_weights_fn):
@@ -194,11 +232,19 @@ def test_equal_weights(Y, X, midas_result, beta_weights_fn):
     return F, p_val
 ```
 
+</div>
+
 ---
 
 ## Bootstrap Standard Errors (Alternative)
 
 For small samples or when asymptotic theory is unreliable, bootstrap inference:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def bootstrap_midas(Y, X, beta_weights_fn, n_bootstrap=499, seed=42):
@@ -283,6 +329,8 @@ def bootstrap_se(boot_dist, param_names=None):
         print(f"{name:<12} {vals.mean():>10.4f} {vals.std():>10.4f} {ci[0]:>10.4f} {ci[1]:>10.4f}")
 ```
 
+</div>
+
 ---
 
 ## Common Pitfalls
@@ -297,6 +345,13 @@ def bootstrap_se(boot_dist, param_names=None):
 
 ## Connections
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - **Builds on:** Guide 01 (NLS estimation), Guide 02 (model selection)
 - **Leads to:** Module 03 (nowcasting with valid inference), Module 04 (DFM inference)
 - **Related to:** HAC estimators (Newey-West 1987), bootstrap for time series
@@ -310,3 +365,29 @@ def bootstrap_se(boot_dist, param_names=None):
 2. Using the Newey-West bandwidth rule $L = \lfloor 4(T/100)^{2/9}\rfloor$, compute $L$ for $T = 80$, $T = 150$, and $T = 400$.
 
 3. Why does the residual bootstrap preserve the time ordering of observations implicitly in the MIDAS context? When would the block bootstrap be preferred?
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_nls_estimation_guide.md">
+  <div class="link-card-title">01 Nls Estimation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_nls_estimation_slides.md">
+  <div class="link-card-title">01 Nls Estimation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_model_selection_guide.md">
+  <div class="link-card-title">02 Model Selection</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_model_selection_slides.md">
+  <div class="link-card-title">02 Model Selection — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

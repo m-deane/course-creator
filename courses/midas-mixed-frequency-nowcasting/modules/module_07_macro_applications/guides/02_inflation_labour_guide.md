@@ -1,6 +1,26 @@
 # Inflation and Labour Market Nowcasting
 
+> **Reading time:** ~16 min | **Module:** 07 — Macro Applications | **Prerequisites:** Module 6
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Load Ragged Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate MIDAS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Generate Nowcast</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Update as Data Arrives</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** CPI and PCE are released with a ~2-week lag after month-end. During the month, several high-frequency signals are available:
+
+</div>
 
 By the end of this guide you will be able to:
 
@@ -41,6 +61,12 @@ $$\pi^E_t = \mu + \phi_1 \sum_{j=0}^{K_d-1} B_1(j) \Delta \log P^{\text{oil}}_{t
 
 Typical $R^2$ for the energy component nowcast: 0.6–0.8 (daily energy prices are highly informative for monthly energy CPI).
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def build_inflation_midas_features(
     daily_oil_ret, daily_gasoline_ret, monthly_ppi,
@@ -59,6 +85,13 @@ def build_inflation_midas_features(
 
     for date in target_dates:
         row = {}
+
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
 
         # Daily oil lags
         d_avail_oil = daily_oil_ret[daily_oil_ret.index < date]
@@ -95,6 +128,8 @@ def build_inflation_midas_features(
     return X
 ```
 
+</div>
+
 ### 1.4 Core Inflation Nowcasting
 
 Core services (the "super-core") are the hardest to nowcast because:
@@ -103,6 +138,12 @@ Core services (the "super-core") are the hardest to nowcast because:
 - Seasonal adjustment complicates signal extraction
 
 **Practical approach**: Use a simple AR model for core services and MIDAS for energy/food.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def core_services_ar_forecast(core_cpi_monthly, h=1):
@@ -122,9 +163,18 @@ def core_services_ar_forecast(core_cpi_monthly, h=1):
     return beta[0] + beta[1] * y[-1]
 ```
 
+</div>
+
 ---
 
 ## 2. Labour Market Nowcasting
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 ### 2.1 Weekly Initial Claims → Monthly Payrolls
 
@@ -156,6 +206,12 @@ Beyond claims, several other high-frequency indicators are available:
 A MIDAS-X model can incorporate several of these simultaneously.
 
 ### 2.3 Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def build_labour_midas_features(
@@ -216,6 +272,8 @@ def build_labour_midas_features(
     X = pd.DataFrame(rows, index=dates)
     return X
 ```
+
+</div>
 
 ### 2.4 Relationship: Claims → Unemployment → Payrolls
 
@@ -312,6 +370,13 @@ where $x$ contains the common predictors. The key benefit: if payrolls surprise 
 
 ## 6. Key References
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - Brave, S., & Butters, R. A. (2010). Chicago Fed National Activity Index trends and cycles. *Economic Perspectives*, 34(Q1), 13–23.
 - Atkeson, A., & Ohanian, L. E. (2001). Are Phillips curves useful for forecasting inflation? *FRBM Quarterly Review*, 25(1), 2–11.
 - Modugno, M. (2013). Now-casting inflation using high-frequency data. *International Journal of Forecasting*, 29(4), 664–675.
@@ -336,3 +401,29 @@ Inflation and labour market nowcasting exploit specific high-frequency signals:
 Both applications use the same MIDAS-X framework with Beta polynomial weights. The key difference from GDP nowcasting is the specific predictor-target alignment (daily energy prices for inflation; weekly claims for payrolls).
 
 Next: `01_simplified_nyfed_nowcast.ipynb`
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does the ragged-edge problem affect the reliability of real-time nowcasts compared to pseudo out-of-sample exercises?
+
+**Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_gdp_nowcasting_practice_guide.md">
+  <div class="link-card-title">01 Gdp Nowcasting Practice</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_gdp_nowcasting_practice_slides.md">
+  <div class="link-card-title">01 Gdp Nowcasting Practice — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

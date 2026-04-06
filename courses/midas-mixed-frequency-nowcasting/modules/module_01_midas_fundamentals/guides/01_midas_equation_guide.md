@@ -1,16 +1,40 @@
 # The MIDAS Equation
 
+> **Reading time:** ~13 min | **Module:** 01 — Midas Fundamentals | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** MIDAS (Mixed Data Sampling) regression directly incorporates high-frequency regressors into a low-frequency model by applying a parameterized lag polynomial that weights each high-frequency observa...
+
+</div>
 
 MIDAS (Mixed Data Sampling) regression directly incorporates high-frequency regressors into a low-frequency model by applying a parameterized lag polynomial that weights each high-frequency observation. The weights are estimated from the data rather than imposed, recovering information that temporal aggregation discards.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 The MIDAS model replaces a fixed aggregation scheme with an estimated one. By parameterizing the weight function with just 2–3 parameters (instead of estimating each weight individually), MIDAS achieves efficient estimation even when the number of high-frequency lags is large.
 
 ---
 
 ## Notation
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 Let the low-frequency variable be observed at periods $t = 1, 2, \ldots, T$ (quarters) and the high-frequency variable at periods $\tau = 1, 2, \ldots, mT$ (months), where $m$ is the frequency ratio ($m = 3$ for monthly-to-quarterly).
 
@@ -117,6 +141,12 @@ We estimate the model:
 $$\text{GDP growth}_t = \alpha + \beta \sum_{j=0}^{8} w_j(\theta) \cdot \text{IP growth}_{3t-j} + \varepsilon_t$$
 
 with $K = 9$ (3 quarterly lags × 3 months) and Beta polynomial weights.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -244,6 +274,8 @@ def estimate_midas(Y, X, theta0=(1.0, 5.0)):
     }
 ```
 
+</div>
+
 **Key implementation notes:**
 
 1. The `beta_weights` function evaluates the Beta PDF at $K$ equally-spaced points and normalizes. The endpoints are set to $1/(2K)$ and $1 - 1/(2K)$ to avoid boundary singularities in $\text{Beta}(\theta_1, \theta_2)$ when $\theta_i < 1$.
@@ -257,6 +289,12 @@ def estimate_midas(Y, X, theta0=(1.0, 5.0)):
 ## Interpreting the Estimated Weights
 
 After estimation, plot the weights $w_j(\hat{\theta})$:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -297,6 +335,8 @@ def plot_midas_weights(weights, freq_ratio=3, title="Estimated MIDAS Weights"):
     plt.tight_layout()
     plt.show()
 ```
+
+</div>
 
 A declining weight pattern (high weight on lag 0, lower on older lags) indicates the most recent month of the quarter is most informative. A hump-shaped pattern would suggest an intermediate lag matters most.
 
@@ -341,6 +381,13 @@ The gain is larger when:
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. Show that the standard OLS regression of $y_t$ on $\bar{x}_t = (1/m)\sum_j x_{mt-j}$ is a special case of MIDAS with fixed weights $w_j = 1/m$.
 
 2. In the Beta polynomial MIDAS model with $\theta_1 = 1, \theta_2 = 1$, what does the weight function look like? (Hint: $\text{Beta}(1,1)$ is the uniform distribution.) How does this compare to equal-weight aggregation?
@@ -354,3 +401,29 @@ The gain is larger when:
 - Ghysels, E., Santa-Clara, P., & Valkanov, R. (2006). "Predicting volatility: Getting the most out of return data sampled at different frequencies." *Journal of Econometrics*, 131(1–2), 59–95.
 - Ghysels, E., & Qian, H. (2019). "Estimating MIDAS regressions via OLS with polynomial parameter profiling." *Econometrics and Statistics*, 9, 1–16.
 - Ghysels, E., Sinko, A., & Valkanov, R. (2007). "MIDAS regressions: Further results and new directions." *Econometric Reviews*, 26(1), 53–90.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_weight_functions_guide.md">
+  <div class="link-card-title">02 Weight Functions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_weight_functions_slides.md">
+  <div class="link-card-title">02 Weight Functions — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_umidas_guide.md">
+  <div class="link-card-title">03 Umidas</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_umidas_slides.md">
+  <div class="link-card-title">03 Umidas — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

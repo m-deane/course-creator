@@ -1,16 +1,40 @@
 # Unrestricted MIDAS (U-MIDAS)
 
+> **Reading time:** ~18 min | **Module:** 01 — Midas Fundamentals | **Prerequisites:** Module 0 Foundations
+
+
 ## In Brief
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Unrestricted MIDAS (U-MIDAS) estimates each high-frequency lag weight separately via OLS, without imposing a polynomial parameterization. When the frequency ratio $m$ is small, U-MIDAS can outperfo...
+
+</div>
 
 Unrestricted MIDAS (U-MIDAS) estimates each high-frequency lag weight separately via OLS, without imposing a polynomial parameterization. When the frequency ratio $m$ is small, U-MIDAS can outperform restricted MIDAS because it avoids misspecifying the weight function shape.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 The polynomial restriction in MIDAS is a bias-variance tradeoff. Restricted MIDAS reduces variance (fewer parameters) at the cost of potential bias (if the true weights don't conform to the polynomial shape). U-MIDAS has zero restriction bias but higher variance. The right choice depends on sample size, frequency ratio, and the true weight function shape.
 
 ---
 
 ## The U-MIDAS Model
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 ### Definition
 
@@ -35,6 +59,12 @@ $$\hat{\boldsymbol{\phi}}_{\text{OLS}} = \left(\mathbf{X}^\top \mathbf{X}\right)
 where $\mathbf{X} = [1, x_{m\cdot 1}, x_{m\cdot 1 - 1}, \ldots, x_{m\cdot 1 - (K-1)}; \ldots]$ is the MIDAS regressor matrix augmented with a constant.
 
 This is **computationally much simpler** than nonlinear least squares — no optimization required.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -86,6 +116,8 @@ def estimate_umidas(Y, X):
     }
 ```
 
+</div>
+
 ---
 
 ## When U-MIDAS Beats Restricted MIDAS
@@ -126,6 +158,12 @@ The right side is zero when the restriction is correctly specified, and nonzero 
 
 **Rule of thumb:** Use restricted MIDAS when $K/T > 0.1$ (more than 10% of sample size in parameters). Use U-MIDAS when $K/T < 0.05$ (fewer than 5%).
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
     """
@@ -149,9 +187,17 @@ def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
         print("  Recommendation: Restricted MIDAS (polynomial) — K/T too large for OLS")
 ```
 
+</div>
+
 ---
 
 ## Comparing U-MIDAS and Restricted MIDAS
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -204,6 +250,8 @@ def compare_midas_specifications(Y, X, labels=None):
 
     return results
 ```
+
+</div>
 
 ### The Formal Comparison: AIC and BIC
 
@@ -325,6 +373,13 @@ def estimate_regularized_umidas(Y, X, method='ridge'):
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. With $K = 6$ lags (2 quarterly lags × 3 months) and $T = 80$ observations, compute the ratio $K/T$. Based on the heuristic in this guide, should you use U-MIDAS or restricted MIDAS?
 
 2. Show algebraically that U-MIDAS with $K=m$ and an equal-weight restriction ($\phi_j = \phi$ for all $j$) is identical to OLS on the temporal average $\bar{x}_t = (1/m)\sum_j x_{mt-j}$ (up to a rescaling of the coefficient).
@@ -338,3 +393,29 @@ def estimate_regularized_umidas(Y, X, method='ridge'):
 - Foroni, C., Marcellino, M., & Schumacher, C. (2015). "Unrestricted mixed data sampling (MIDAS): MIDAS regressions with unrestricted lag polynomials." *Journal of the Royal Statistical Society: Series A*, 178(1), 57–82.
 - Andreou, E., Ghysels, E., & Kourtellos, A. (2010). "Regression models with mixed sampling frequencies." *Journal of Econometrics*, 158(2), 246–261.
 - Bai, J., Ghysels, E., & Wright, J. H. (2013). "State space models and MIDAS regressions." *Econometric Reviews*, 32(7), 779–813.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_midas_equation_guide.md">
+  <div class="link-card-title">01 Midas Equation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_midas_equation_slides.md">
+  <div class="link-card-title">01 Midas Equation — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_weight_functions_guide.md">
+  <div class="link-card-title">02 Weight Functions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_weight_functions_slides.md">
+  <div class="link-card-title">02 Weight Functions — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

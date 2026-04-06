@@ -1,6 +1,26 @@
 # Pipeline Architecture for Real-Time Nowcasting
 
+> **Reading time:** ~20 min | **Module:** 08 — Production Systems | **Prerequisites:** Module 7
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Load Ragged Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate MIDAS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Generate Nowcast</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Update as Data Arrives</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** A research nowcasting script answers: "What is the best model?" A production pipeline answers: "What is the best estimate *right now*, given exactly what data exist *right now*, and how do we deliv...
+
+</div>
 
 After reading this guide you will be able to:
 
@@ -18,6 +38,13 @@ A research nowcasting script answers: "What is the best model?" A production pip
 
 The gap between the two is large. Research code can assume data are always available, cleanly formatted, and never revised. Production code must handle:
 
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
+
 | Challenge | Research assumption | Production reality |
 |-----------|--------------------|--------------------|
 | Data availability | All series exist | Ragged edge: some series lag by weeks |
@@ -32,6 +59,13 @@ Production pipelines at the NY Fed, ECB, and Bank of England address all of thes
 ---
 
 ## 2. Architecture Overview
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 A nowcasting pipeline has five layers. Each layer has a single responsibility and communicates with adjacent layers through well-defined interfaces.
 
@@ -73,6 +107,12 @@ Each layer is implemented as a Python class. The pipeline orchestrator calls the
 Every economic release has a deterministic publication schedule known in advance. The BLS releases CPI on a fixed calendar; FRED provides API metadata for each series' next release date.
 
 A production system maintains a **publication calendar** — a table of `(series_id, release_date, pub_lag_days)` triples that drives all scheduling.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import datetime
@@ -134,6 +174,8 @@ class PublicationCalendar:
             json.dump(data, f, indent=2)
 ```
 
+</div>
+
 ### Standard Publication Lags
 
 The table below gives typical lags from the end of the reference period to the first data release. Use these to build your calendar.
@@ -149,6 +191,12 @@ The table below gives typical lags from the end of the reference period to the f
 | Advance GDP | GDP | 28 | Quarterly |
 
 ### Scheduler Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -194,6 +242,8 @@ class PipelineScheduler:
             time.sleep(self.poll_interval)
 ```
 
+</div>
+
 ---
 
 ## 4. Layer 2 — Data Acquisition and Vintage Storage
@@ -207,6 +257,12 @@ When the BLS publishes payrolls in early October, it simultaneously revises Sept
 ### Vintage Database Design
 
 The minimal viable schema stores one row per `(series_id, observation_date, vintage_date, value)` tuple.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import sqlite3
@@ -293,6 +349,8 @@ class VintageDatabase:
         )
         self.conn.commit()
 ```
+
+</div>
 
 ### Data Acquisition Layer
 
@@ -912,6 +970,13 @@ Expose a `/health` endpoint if the pipeline runs as a service. Return the timest
 
 ## 12. Summary
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 A production nowcasting pipeline has five distinct layers, each with a single responsibility:
 
 1. **Scheduler** — triggers runs on the publication calendar
@@ -932,3 +997,39 @@ In Module 08 Notebook 01 you will build a simplified version of this pipeline en
 - McCracken, M., & Ng, S. (2016). FRED-MD: A monthly database for macroeconomic research. *Journal of Business & Economic Statistics*, 34(4), 574–589.
 - NY Fed Staff Reports on the FRBNY Nowcast (2016–present).
 - ALFRED (Archival FRED): https://alfred.stlouisfed.org/
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does the ragged-edge problem affect the reliability of real-time nowcasts compared to pseudo out-of-sample exercises?
+
+**Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_monitoring_reporting_guide.md">
+  <div class="link-card-title">02 Monitoring Reporting</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_monitoring_reporting_slides.md">
+  <div class="link-card-title">02 Monitoring Reporting — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_decision_flowchart_guide.md">
+  <div class="link-card-title">03 Decision Flowchart</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_decision_flowchart_slides.md">
+  <div class="link-card-title">03 Decision Flowchart — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

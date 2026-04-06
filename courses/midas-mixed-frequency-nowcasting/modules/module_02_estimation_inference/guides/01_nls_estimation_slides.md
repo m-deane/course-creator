@@ -32,6 +32,12 @@ $$y_t = \alpha + \beta \sum_{j=0}^{K-1} w_j(\theta) x_{mt-j} + \varepsilon_t$$
 
 <!-- Speaker notes: The nonlinearity is entirely in theta. Given theta, the model is linear in alpha and beta. This structure is what enables the profile likelihood approach: we can solve analytically for alpha and beta at any theta, reducing the optimization to a 2D search over theta alone. This is much more numerically stable than optimizing all 4 parameters jointly. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## The NLS Objective
@@ -47,6 +53,12 @@ $$Q = \|\mathbf{y} - \alpha\mathbf{1} - \beta\mathbf{X}\mathbf{w}(\theta)\|^2$$
 $$(\hat{\alpha}, \hat{\beta}, \hat{\theta}) = \arg\min_{\alpha, \beta, \theta} Q(\alpha, \beta, \theta)$$
 
 <!-- Speaker notes: The NLS objective is just the familiar sum of squared residuals, but with the twist that the regressors themselves depend on unknown parameters theta. This is what makes the problem nonlinear. The optimizer must simultaneously find the regression coefficients and the shape parameters of the weight function. Using Nelder-Mead or L-BFGS-B from scipy.optimize is the standard approach. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -64,9 +76,21 @@ $$Q_{\text{prof}}(\theta) = \min_{\alpha, \beta} Q(\alpha, \beta, \theta)$$
 
 <!-- Speaker notes: The profile likelihood approach is the key practical insight of this guide. By recognizing that alpha and beta can be solved analytically given theta, we reduce the 4-parameter optimization to a 2-parameter optimization. This is dramatically more reliable — 2D optimization landscapes are much easier to explore than 4D ones, especially when starting values are uncertain. The Ghysels and Qian (2019) paper formalizes this approach as "OLS with polynomial parameter profiling." -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Profile NLS: Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def profile_sse(theta, Y, X, weight_fn):
@@ -89,7 +113,15 @@ result = minimize(profile_sse, [1.5, 4.0], args=(Y, X, beta_weights),
                   options={'maxiter': 20000, 'xatol': 1e-8})
 ```
 
+</div>
+
 <!-- Speaker notes: This is the code students will use in the notebook. The key point: minimize() only receives a 2-element theta vector. The optimizer never sees alpha and beta directly — they are computed inside profile_sse at each theta evaluation. This means the optimizer is working in a much cleaner, smoother landscape. Nelder-Mead is the default because it doesn't require gradient computation, but L-BFGS-B with numerical gradients also works well. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -111,6 +143,12 @@ where:
 ---
 
 ## Numerical Hessian for Standard Errors
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def numerical_hessian(fn, theta, eps=1e-4):
@@ -134,6 +172,8 @@ sigma2 = result.fun / (len(Y) - 4)  # Estimated error variance
 vcov = sigma2 * np.linalg.inv(H / len(Y))
 se_theta = np.sqrt(np.diag(vcov))
 ```
+
+</div>
 
 <!-- Speaker notes: The numerical Hessian approach is standard when analytical derivatives are not available. The step size eps=1e-4 works well for most MIDAS applications. Larger eps introduces numerical error; smaller eps causes cancellation error. If the Hessian is singular (non-invertible), the model may be over-parameterized or at a flat region of the objective. In that case, the standard errors will be NaN — a warning that inference is unreliable at this parameter point. -->
 

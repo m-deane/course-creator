@@ -1,6 +1,26 @@
 # Decision Flowcharts for Production Nowcasting
 
+> **Reading time:** ~20 min | **Module:** 08 — Production Systems | **Prerequisites:** Module 7
+
+
 ## Learning Objectives
+
+<div class="flow">
+<div class="flow-step mint">1. Load Ragged Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Estimate MIDAS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Generate Nowcast</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Update as Data Arrives</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** This guide presents the key decision points encountered when building a production MIDAS nowcasting system as explicit flowcharts. Each flowchart covers one phase of the system lifecycle.
+
+</div>
 
 After reading this guide you will be able to:
 
@@ -18,6 +38,13 @@ This guide presents the key decision points encountered when building a producti
 
 The five flowcharts are:
 
+<div class="callout-insight">
+
+**Insight:** Real-time nowcasting is fundamentally different from pseudo out-of-sample backtesting. The ragged-edge data structure means your model sees different information at different points within a quarter.
+
+</div>
+
+
 1. **Model specification**: choosing indicators, lag depth, and weight function
 2. **Ragged-edge handling**: per-indicator fill strategy selection
 3. **Estimation and regularisation**: model family and cross-validation design
@@ -27,6 +54,13 @@ The five flowcharts are:
 ---
 
 ## 2. Flowchart 1 — Model Specification
+
+<div class="callout-warning">
+
+**Warning:** Pseudo out-of-sample exercises that do not properly account for the real-time data vintage will overstate nowcast accuracy. Always use the ragged-edge structure that would have been available at each historical nowcast date.
+
+</div>
+
 
 ```
 START: Define forecasting objective
@@ -427,6 +461,13 @@ The key insight from this matrix: the **horizon** (how far before the release yo
 
 ## 10. Summary Checklist
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 Before deploying a production nowcasting model, verify each item:
 
 **Specification**
@@ -459,3 +500,39 @@ Before deploying a production nowcasting model, verify each item:
 - Andreou, E., Ghysels, E., & Kourtellos, A. (2010). Regression models with mixed sampling frequencies. *Journal of Econometrics*, 158(2), 246–261.
 - Brown, R. L., Durbin, J., & Evans, J. M. (1975). Techniques for testing the constancy of regression relationships over time. *JRSS Series B*, 37(2), 149–163.
 - Diebold, F. X., & Mariano, R. S. (1995). Comparing predictive accuracy. *JBES*, 13(3), 253–263.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** How does the ragged-edge problem affect the reliability of real-time nowcasts compared to pseudo out-of-sample exercises?
+
+**Practice Question 2:** What is the key difference between direct and iterated multi-step forecasts in a MIDAS context?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_pipeline_architecture_guide.md">
+  <div class="link-card-title">01 Pipeline Architecture</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_pipeline_architecture_slides.md">
+  <div class="link-card-title">01 Pipeline Architecture — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./02_monitoring_reporting_guide.md">
+  <div class="link-card-title">02 Monitoring Reporting</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_monitoring_reporting_slides.md">
+  <div class="link-card-title">02 Monitoring Reporting — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

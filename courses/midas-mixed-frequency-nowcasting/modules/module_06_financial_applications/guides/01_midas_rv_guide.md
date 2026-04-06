@@ -1,6 +1,16 @@
 # MIDAS-RV: Realised Volatility Forecasting
 
+> **Reading time:** ~20 min | **Module:** 06 — Financial Applications | **Prerequisites:** Module 5
+
+
 ## Learning Objectives
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Volatility is the central input to option pricing, risk management, and portfolio construction. It is:
+
+</div>
 
 By the end of this guide you will be able to:
 
@@ -16,6 +26,13 @@ By the end of this guide you will be able to:
 
 Volatility is the central input to option pricing, risk management, and portfolio construction. It is:
 
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
+
 - **Unobservable**: We cannot directly observe the "true" volatility at any point
 - **Persistent**: High volatility today predicts high volatility tomorrow (ARCH effects)
 - **Asymmetric**: Volatility tends to be higher after negative returns (leverage effect)
@@ -26,6 +43,13 @@ The advent of high-frequency transaction data since the 1990s enabled computatio
 ---
 
 ## 2. Realised Volatility
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 ### 2.1 Definition
 
@@ -93,6 +117,12 @@ The MIDAS-RV model captures that **not all lags of daily RV are equally informat
 
 ### 4.1 Beta Weight Function
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 from scipy.optimize import minimize
@@ -139,7 +169,15 @@ def plot_beta_weights(ax, K=22):
     ax.grid(True, alpha=0.3)
 ```
 
+</div>
+
 ### 4.2 MIDAS-RV Estimator
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.optimize import minimize
@@ -245,6 +283,8 @@ def fit_midas_rv(rv_daily, rv_monthly, K=22, log_transform=True):
     }, fitted
 ```
 
+</div>
+
 ---
 
 ## 5. HAR-RV Benchmark
@@ -254,6 +294,12 @@ The **Heterogeneous Autoregressive model** (Corsi 2009) is the standard benchmar
 $$RV^{(d)}_{t+1} = c + \beta^{(d)} RV^{(d)}_t + \beta^{(w)} RV^{(w)}_t + \beta^{(m)} RV^{(m)}_t + \varepsilon_{t+1}$$
 
 where $RV^{(w)}_t = \frac{1}{5}\sum_{j=0}^{4} RV^{(d)}_{t-j}$ (weekly average) and $RV^{(m)}_t = \frac{1}{22}\sum_{j=0}^{21} RV^{(d)}_{t-j}$ (monthly average).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def fit_har_rv(rv_daily):
@@ -277,6 +323,8 @@ def fit_har_rv(rv_daily):
 
     return beta, fitted, residuals, rmse
 ```
+
+</div>
 
 ---
 
@@ -431,6 +479,13 @@ Alternatively, for a historical simulation approach, MIDAS-RV provides the volat
 
 ## 9. Key References
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 - Ghysels, E., Santa-Clara, P., & Valkanov, R. (2005). There is a risk-return trade-off after all. *Journal of Financial Economics*, 76(3), 509–548.
 - Ghysels, E., Santa-Clara, P., & Valkanov, R. (2006). Predicting volatility: getting the most out of return data sampled at different frequencies. *Journal of Econometrics*, 131(1-2), 59–95.
 - Corsi, F. (2009). A simple approximate long-memory model of realized volatility. *JFEC*, 7(2), 174–196.
@@ -449,3 +504,29 @@ MIDAS-RV is the canonical model for forecasting multi-period volatility using hi
 - **Extension**: MIDAS-RV-X adds monthly macro predictors (default spreads, VIX) to capture macro-financial regime effects
 
 Next: [Mixed-Frequency Risk Models](02_mixed_freq_risk_guide.md) — daily VaR, term structure nowcasting, commodity fundamentals.
+
+
+---
+
+## Conceptual Practice Questions
+
+**Practice Question 1:** What is the primary advantage of the approach described in this guide over simpler alternatives?
+
+**Practice Question 2:** What assumptions must hold for this method to produce reliable results?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_mixed_freq_risk_guide.md">
+  <div class="link-card-title">02 Mixed Freq Risk</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_mixed_freq_risk_slides.md">
+  <div class="link-card-title">02 Mixed Freq Risk — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

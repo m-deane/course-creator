@@ -1,16 +1,50 @@
 # The Mixed-Frequency Problem
 
+> **Reading time:** ~11 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Identify Frequencies</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Align Time Indices</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Build MIDAS Regressors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Economic data arrives at different frequencies: GDP quarterly, employment monthly, stock prices daily. The mixed-frequency problem is how to combine these streams coherently without discarding info...
+
+</div>
 
 Economic data arrives at different frequencies: GDP quarterly, employment monthly, stock prices daily. The mixed-frequency problem is how to combine these streams coherently without discarding information or introducing distortions.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 When you aggregate high-frequency data to match a low-frequency target, you throw away information. MIDAS regression retains that information by letting the model directly use high-frequency observations as regressors — with structure imposed on the lag weights so estimation remains tractable.
 
 ---
 
 ## Why Frequencies Differ
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 Economic measurement is costly. National accounts (GDP, investment, government spending) require extensive data collection and reconciliation — hence quarterly publication. Administrative data (payrolls, claims) comes monthly because it piggybacks on existing business processes. Financial data is transactional and therefore available at tick or daily frequency.
 
@@ -64,6 +98,12 @@ With weights $w_j > 0$, $\sum w_j = 1$. Better, but weights must be specified a 
 
 Consider quarterly GDP growth regressed on quarterly-averaged industrial production growth (IP). The within-quarter pattern of IP carries information: if IP accelerates through a quarter, that is a different signal than the same average with IP decelerating. Simple aggregation conflates these two patterns.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -93,6 +133,8 @@ plt.suptitle("Same quarterly averages, different within-quarter dynamics")
 plt.tight_layout()
 plt.show()
 ```
+
+</div>
 
 After quarterly averaging, the two scenarios are indistinguishable — despite potentially carrying very different signals about momentum.
 
@@ -185,6 +227,13 @@ Quarter end: GDP release (30 days later)
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. The Conference Board Leading Economic Index is released monthly. It is used to predict business cycle turning points, which are designated quarterly. Describe how you would structure a mixed-frequency analysis to predict NBER recession dates using the LEI.
 
 2. Suppose you have daily stock returns ($m = 65$ trading days per quarter) and quarterly earnings growth. Sketch the data alignment problem. How many daily observations would enter a MIDAS model with four quarterly lags?
@@ -199,3 +248,29 @@ Quarter end: GDP release (30 days later)
 - Giannone, D., Reichlin, L., & Small, D. (2008). "Nowcasting: The real-time informational content of macroeconomic data." *Journal of Monetary Economics*, 55(4), 665–676.
 - Bańbura, M., Giannone, D., & Reichlin, L. (2010). "Nowcasting." In *Oxford Handbook of Economic Forecasting.*
 - Federal Reserve Bank of New York Nowcasting Report: https://www.newyorkfed.org/research/policy/nowcast
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_traditional_solutions_guide.md">
+  <div class="link-card-title">02 Traditional Solutions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_traditional_solutions_slides.md">
+  <div class="link-card-title">02 Traditional Solutions — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_course_datasets_guide.md">
+  <div class="link-card-title">03 Course Datasets</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_course_datasets_slides.md">
+  <div class="link-card-title">03 Course Datasets — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

@@ -30,11 +30,18 @@ Mixed-Frequency Models: MIDAS Regression and Nowcasting
 
 <!-- Speaker notes: The gap between a research notebook and a production nowcasting system is almost entirely operational, not statistical. The model equations are the same. What changes is everything around the equations: how data arrive, how failures are handled, and how results are stored for later audit. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Five-Layer Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Scheduler\nPublication Calendar] -->|trigger| B[Data Acquisition\nVintage Storage]
     B -->|vintage_df| C[Feature Engineering\nRagged-Edge Fill + MIDAS Matrix]
@@ -46,11 +53,23 @@ Each layer has **one responsibility**. Failures are caught at layer boundaries.
 
 <!-- Speaker notes: This diagram is the skeleton of every nowcasting system described in academic literature, including the NY Fed and ECB implementations. The names of components differ but the five-layer structure is universal. Each arrow is a well-defined interface — change one layer without touching the others. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## Layer 1 — Scheduler
 
 The pipeline must run **every time new data are published**, not on a fixed clock.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 @dataclass
@@ -62,9 +81,17 @@ class Release:
     priority: int         # higher → run immediately
 ```
 
+</div>
+
 The scheduler polls the `PublicationCalendar` hourly and fires the pipeline for each release event not yet processed.
 
 <!-- Speaker notes: A common mistake is to schedule the pipeline on the first of each month. But payrolls release on the first Friday, CPI in the second or third week, and GDP in the last week of the month after the quarter ends. A calendar-driven trigger is the only correct approach. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -83,6 +110,12 @@ The scheduler polls the `PublicationCalendar` hourly and fires the pipeline for 
 These lags define the **information flow** that creates the ragged edge.
 
 <!-- Speaker notes: These numbers are approximate medians. The exact day varies by month and year. For a production system you should fetch the actual release schedule from the BLS, BEA, and Federal Reserve release calendars, or use the FRED API's series/release endpoint which provides next-release metadata. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -110,6 +143,12 @@ Query: "What did we know on 2024-10-15?" → `vintage_date <= 2024-10-15`
 
 ## As-Of Query (Pseudo-Real-Time)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 def get_as_of(series_id: str, as_of_date: date) -> pd.Series:
     df = pd.read_sql("""
@@ -122,6 +161,8 @@ def get_as_of(series_id: str, as_of_date: date) -> pd.Series:
         .drop_duplicates("obs_date", keep="first")  # latest vintage
         .set_index("obs_date")["value"])
 ```
+
+</div>
 
 This single query powers **pseudo-real-time evaluation**: no look-ahead bias.
 
@@ -240,6 +281,7 @@ One row per run. Rows are never updated — revisions produce new rows.
 ## Orchestrator Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant S as Scheduler
     participant P as Pipeline

@@ -1,16 +1,50 @@
 # Traditional Solutions to the Mixed-Frequency Problem
 
+> **Reading time:** ~14 min | **Module:** 00 — Foundations | **Prerequisites:** None (entry point)
+
+
 ## In Brief
+
+<div class="flow">
+<div class="flow-step mint">1. Collect Data</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Identify Frequencies</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Align Time Indices</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Build MIDAS Regressors</div>
+</div>
+
+
+<div class="callout-key">
+
+**Key Concept Summary:** Before MIDAS, practitioners handled mixed-frequency data through temporal aggregation, interpolation, and bridge equations. Each approach trades off information loss against tractability. Understan...
+
+</div>
 
 Before MIDAS, practitioners handled mixed-frequency data through temporal aggregation, interpolation, and bridge equations. Each approach trades off information loss against tractability. Understanding their limitations motivates the MIDAS framework precisely.
 
 ## Key Insight
+
+<div class="callout-insight">
+
+**Insight:** The mixed-frequency approach preserves within-period dynamics that aggregation destroys. This is especially valuable when the timing of high-frequency movements carries economic information.
+
+</div>
+
 
 Every traditional solution pre-commits to a data transformation before estimation begins. MIDAS defers that commitment to estimation, letting the data determine the aggregation weights. The gap in forecast accuracy between the two approaches is the empirical measure of how much pre-aggregation costs.
 
 ---
 
 ## Strategy 1: Temporal Aggregation
+
+<div class="callout-warning">
+
+**Warning:** Be cautious about extrapolating MIDAS performance from stable periods to crisis periods. The relationship between high-frequency indicators and the low-frequency target can shift dramatically during regime changes.
+
+</div>
+
 
 ### What It Is
 
@@ -36,6 +70,12 @@ where $m$ is the frequency ratio (e.g., $m=3$ for monthly-to-quarterly, $m=65$ f
 
 Monthly industrial production growth $x_\tau^M$ aggregated to quarterly:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 import numpy as np
@@ -59,6 +99,8 @@ print(f"Equal average: {equal_avg:.4f}")  # -0.0247 (smooths the March shock)
 total = monthly_ip.sum()
 print(f"Sum: {total:.4f}")  # -0.0740
 ```
+
+</div>
 
 Notice that equal averaging effectively weights March 2020 (the large COVID shock) at only 1/3. Last-period sampling captures the shock, but misses the pre-shock values that provide context.
 
@@ -87,6 +129,12 @@ Formally, let $C$ be the temporal aggregation matrix mapping $T_H$ high-frequenc
 $$C \hat{y}^H = y^L$$
 
 The GLS solution provides minimum-variance interpolated values consistent with the aggregation constraint.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Conceptual illustration of Chow-Lin interpolation
@@ -147,6 +195,8 @@ def chow_lin_interpolate(y_low, z_high, m=3, rho=0.5):
     return y_high
 ```
 
+</div>
+
 ### Limitations of Interpolation
 
 1. **Synthetic data problem:** The interpolated high-frequency series is a model output, not a measurement. Subsequent analysis on interpolated data treats model errors as data.
@@ -180,6 +230,12 @@ When the current quarter is incomplete, forecast the missing monthly observation
 $$x_\tau^M = \mu + \sum_{j=1}^{J} \phi_j x_{\tau-j}^M + \eta_\tau$$
 
 Then aggregate the forecasted monthly values to form $\hat{\tilde{x}}_t^Q$ and plug into Step 1.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -235,6 +291,8 @@ def bridge_equation_nowcast(y_quarterly, x_monthly, current_quarter_obs):
     nowcast = bridge.predict([[x_current]])[0]
     return nowcast, bridge.coef_[0], bridge.intercept_
 ```
+
+</div>
 
 ### Error Compounding in Bridge Equations
 
@@ -306,6 +364,13 @@ The bias is zero only if the true weight function happens to equal the imposed a
 
 ## Practice Problems
 
+<div class="callout-danger">
+
+**Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
+
+</div>
+
+
 1. Write out the aggregation matrix $C$ for the case $m=3$ (monthly to quarterly), $T_L = 4$ quarters. What are its dimensions? What does each row sum to?
 
 2. A forecaster uses equal-weight aggregation of 3 monthly IP observations to predict quarterly GDP. She finds $\hat{\beta} = 0.4$, $R^2 = 0.35$. A colleague uses last-period (Month 3 only) aggregation and finds $\hat{\beta} = 0.55$, $R^2 = 0.40$. What does the higher R-squared of the last-period model suggest about the timing of information in IP data?
@@ -319,3 +384,29 @@ The bias is zero only if the true weight function happens to equal the imposed a
 - Chow, G., & Lin, A. (1971). "Best linear unbiased interpolation, distribution, and extrapolation of time series by related series." *Review of Economics and Statistics*, 53(4), 372–375.
 - Foroni, C., & Marcellino, M. (2013). "A survey of econometric methods for mixed-frequency data." *Norges Bank Working Paper.*
 - Ghysels, E., Hill, J., & Motegi, K. (2016). "Testing for Granger causality with mixed frequency data." *Journal of Econometrics*, 192(1), 207–230.
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_mixed_frequency_problem_guide.md">
+  <div class="link-card-title">01 Mixed Frequency Problem</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_mixed_frequency_problem_slides.md">
+  <div class="link-card-title">01 Mixed Frequency Problem — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+
+<a class="link-card" href="./03_course_datasets_guide.md">
+  <div class="link-card-title">03 Course Datasets</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_course_datasets_slides.md">
+  <div class="link-card-title">03 Course Datasets — Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the key points.</div>
+</a>
+

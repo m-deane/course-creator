@@ -35,11 +35,18 @@ A MIDAS model fit in 2019 exploits statistical regularities observed since 2000.
 
 <!-- Speaker notes: The 2020 COVID shock is the canonical example of silent model failure. Every macro model trained on 2000-2019 data was optimised for a world that no longer existed. Models that had monitoring systems caught the RMSE spike in Q1 2020 immediately. Those without monitoring kept publishing forecasts with no indication of degradation. Silent failure is worse than loud failure. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Three Monitoring Tracks
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[GDP Release\nActual Available] --> B[Accuracy Track\nRMSE · MAE · Bias]
     A --> C[Stability Track\nCUSUM · Chow Test]
@@ -51,6 +58,12 @@ flowchart LR
 ```
 
 <!-- Speaker notes: These three tracks run on different schedules. The accuracy track runs once per quarter when GDP is released. The stability track runs once per quarter with the same trigger but examines model coefficients rather than forecast errors. The operations track runs every time the pipeline executes — typically 15-30 times per quarter as new releases arrive. -->
+
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
 
 ---
 
@@ -78,6 +91,12 @@ $$\text{Bias}_t = \frac{1}{W} \sum_{q=t-W+1}^{t} (\hat{y}_q - y_q)$$
 
 <!-- Speaker notes: Eight quarters is a deliberate choice. Two years is long enough to average out single-event shocks but short enough to detect genuine drift within a business cycle. If you use 20 quarters the rolling window will be dominated by the training-period performance and will rarely signal anything. If you use 4 quarters, random variation will trigger too many false alarms. -->
 
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
+
 ---
 
 ## Bias Testing
@@ -88,6 +107,12 @@ $$t = \frac{\bar{e}}{s_e / \sqrt{n}} \sim t_{n-1}$$
 
 where $\bar{e}$ = mean error, $s_e$ = standard deviation of errors.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 result = test_forecast_bias(errors, alpha=0.05)
 # {'mean_error': -0.21, 't_stat': -2.8, 'p_value': 0.008,
@@ -95,9 +120,17 @@ result = test_forecast_bias(errors, alpha=0.05)
 #  'interpretation': 'BIAS DETECTED: reject unbiasedness.'}
 ```
 
+</div>
+
 **Action rule**: Alert if `reject_null` is True for **two consecutive months**.
 
 <!-- Speaker notes: One rejection can be a false positive — with alpha=0.05 you expect 5% of tests to reject even when the model is unbiased. Two consecutive rejections is much less likely to occur by chance. The two-month rule balances sensitivity against false alarms. For an even more conservative trigger, use a Bonferroni correction on the two tests: require each individual p-value below 0.025. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 
@@ -160,6 +193,12 @@ For $\alpha = 0.05$: $c_{0.05} = 0.948$.
 
 ## Re-Estimation Triggers
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 trigger = ReEstimationTrigger(
     backtest_rmse=0.45,    # from initial backtest
@@ -171,6 +210,8 @@ result = trigger.check(current_rmse=0.58, cusum_break=False)
 # {'should_reestimate': True,
 #  'reason': 'performance (RMSE 0.58 > threshold 0.54 for 2 periods)'}
 ```
+
+</div>
 
 Three independent trigger types — any one fires re-estimation:
 

@@ -36,6 +36,12 @@ $$y_t^Q = \alpha + \beta \underbrace{\sum_{j=0}^{K-1} w_j(\theta) \cdot x_{mt-j}
 
 <!-- Speaker notes: Start by connecting to the previous module. The only difference between these two equations is whether the weights are fixed or estimated. But that difference has large consequences for forecast accuracy. The parameters theta control the shape of the weight function — we'll spend most of this guide explaining what theta means and how the shape is parameterized. -->
 
+<div class="callout-key">
+
+The key advantage of MIDAS is preserving high-frequency information that temporal aggregation destroys.
+
+</div>
+
 ---
 
 ## Notation Reference
@@ -54,6 +60,12 @@ $$y_t^Q = \alpha + \beta \underbrace{\sum_{j=0}^{K-1} w_j(\theta) \cdot x_{mt-j}
 
 <!-- Speaker notes: The lag operator notation L^{1/m} is used in time series econometrics. L^{1/m} x_tau = x_{tau-1}, so (L^{1/m})^j x_tau = x_{tau-j}. The superscript 1/m indicates that one application shifts by one high-frequency period (one month) rather than one low-frequency period (one quarter). This notation is compact but students sometimes find it confusing — the concrete example with monthly observations is clearer. -->
 
+<div class="callout-insight">
+
+**Insight:** Parsimonious weight functions with 2-3 parameters can capture decay patterns that unrestricted models need 12+ parameters to approximate.
+
+</div>
+
 ---
 
 ## The Full MIDAS Equation
@@ -69,6 +81,12 @@ $$B\!\left(L^{1/m};\,\theta\right) x_{mt} = \sum_{j=0}^{K-1} w_j(\theta) \cdot x
 **Data structure:** $K$ high-frequency observations per low-frequency observation
 
 <!-- Speaker notes: This boxed equation is the heart of the course. B is the lag polynomial — it is a function that takes the high-frequency series x and returns a weighted average of K lags. The parameters theta control the shape of the weights inside B. We don't estimate K weights directly — we estimate 2 shape parameters theta, which then determine all K weights. This is the key restriction that makes MIDAS feasible. -->
+
+<div class="callout-warning">
+
+**Warning:** Always account for the real-time data vintage when evaluating nowcast performance. Using revised data overstates accuracy.
+
+</div>
 
 ---
 
@@ -103,6 +121,12 @@ $$B\!\left(L^{1/m};\,\theta\right) x_{mt} = \sum_{j=0}^{K-1} w_j(\theta) \cdot x
 > The polynomial restriction is a regularizer — it imposes smooth weight shapes from a rich family.
 
 <!-- Speaker notes: This parameter count comparison is the practical justification for the MIDAS parameterization. With K=12 lags and T=100 quarters, unrestricted estimation would require estimating 13 parameters from effectively 100 observations with serial correlation. The degrees of freedom are far too low for reliable inference. MIDAS reduces to 4 parameters — reasonable even with 60-80 observations. The restriction to smooth weight shapes is not arbitrary — empirically, weight functions in macro applications are indeed smooth. -->
+
+<div class="callout-info">
+
+**Info:** MIDAS models can handle any frequency ratio: monthly-to-quarterly (3:1), daily-to-monthly (~22:1), or even tick-to-daily.
+
+</div>
 
 ---
 

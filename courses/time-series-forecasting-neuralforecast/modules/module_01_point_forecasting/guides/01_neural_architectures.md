@@ -1,6 +1,29 @@
 # Neural Forecasting Architectures
 
+> **Reading time:** ~14 min | **Module:** 1 — Point Forecasting | **Prerequisites:** Module 0
+
 ## Start Here: Training NHITS in 60 Seconds
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+Run this first.
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -23,6 +46,7 @@ nf.fit(bakery)
 forecast = nf.predict()
 print(forecast.head())
 ```
+</div>
 
 Run this first. The rest of the guide explains why it works.
 
@@ -31,6 +55,11 @@ Run this first. The rest of the guide explains why it works.
 ## The Neural Forecasting Landscape
 
 Before 2020, most production forecasters used classical methods: ARIMA, ETS, Prophet. These methods are interpretable and fast, but they struggle with:
+
+<div class="callout-key">
+<strong>Key Point:</strong> Before 2020, most production forecasters used classical methods: ARIMA, ETS, Prophet.
+</div>
+
 
 - Long-horizon multi-step forecasts (error compounds)
 - Capturing non-linear seasonal interactions
@@ -59,6 +88,11 @@ Every neural forecasting model maps a fixed-length input window to a fixed-lengt
 | **PatchTST** | Transformer | ~5M | Moderate | Long sequences, channel mixing |
 | **DLinear / NLinear** | Linear | ~1K | Fastest | Surprisingly strong baseline |
 
+<div class="callout-info">
+<strong>Info:</strong> NHITS achieves state-of-the-art long-horizon accuracy with fewer parameters than Transformer models, by using structured inductive biases instead of raw capacity.
+</div>
+
+
 The table shows a key insight: **more parameters is not always better**. NHITS achieves state-of-the-art long-horizon accuracy with fewer parameters than Transformer models, by using structured inductive biases instead of raw capacity.
 
 ---
@@ -66,6 +100,19 @@ The table shows a key insight: **more parameters is not always better**. NHITS a
 ## MLP: The Baseline
 
 A multi-layer perceptron (MLP) is the simplest neural forecaster. It flattens the input window into a vector, passes it through dense layers with non-linearities, and produces the forecast vector.
+
+<div class="callout-warning">
+<strong>Warning:</strong> A multi-layer perceptron (MLP) is the simplest neural forecaster.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import MLP
@@ -78,6 +125,7 @@ model = MLP(
     max_steps=500
 )
 ```
+</div>
 
 **Weakness**: MLPs treat each input time step as an independent feature. There is no structure that forces the model to reason about temporal order, trends, or seasonality — it must discover everything from data.
 
@@ -86,6 +134,11 @@ model = MLP(
 ## N-BEATS: Neural Basis Expansion
 
 N-BEATS (Neural Basis Expansion Analysis for Time Series, Oreshkin et al. 2019) introduces two innovations:
+
+<div class="callout-insight">
+<strong>Insight:</strong> N-BEATS (Neural Basis Expansion Analysis for Time Series, Oreshkin et al.
+</div>
+
 
 1. **Doubly residual stacking**: Each block produces a *backcast* (what it explains from the input) and a *forecast* (its contribution to the output). Blocks are chained so each block processes the residual not yet explained by previous blocks.
 
@@ -96,6 +149,14 @@ Stack 1 (trend):       learns f(t) ≈ polynomial
 Stack 2 (seasonality): learns f(t) ≈ sum of sinusoids
 Residual connection:   next stack gets what's left unexplained
 ```
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from neuralforecast.models import NBEATS
@@ -108,6 +169,7 @@ model = NBEATS(
     max_steps=500
 )
 ```
+</div>
 
 **Strength**: Excellent on M3/M4 competition benchmarks. Interpretable decomposition. Clean inductive bias.  
 **Weakness**: The fixed basis can hurt when the signal does not cleanly decompose into trend + seasonality.
@@ -117,6 +179,11 @@ model = NBEATS(
 ## NHITS: The Default Choice
 
 NHITS (Neural Hierarchical Interpolation for Time Series, Challu et al. 2022, AAAI 2023) extends N-BEATS with two additional ideas designed specifically for long-horizon forecasting:
+
+<div class="callout-key">
+<strong>Key Point:</strong> NHITS (Neural Hierarchical Interpolation for Time Series, Challu et al.
+</div>
+
 
 ### 1. Multi-Rate Signal Sampling
 
@@ -139,6 +206,12 @@ Where `Interp_s` upsamples stack $s$'s coarse output to the full `h`-step horizo
 **Result**: Lower-frequency stacks contribute smooth, slowly-varying forecast components. Higher-frequency stacks layer in fine-grained detail. The final forecast is the additive combination.
 
 ### NHITS Architecture Diagram
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```mermaid
 flowchart TD
@@ -164,6 +237,7 @@ flowchart TD
     
     F1 & F2 & F3 --> SUM["Sum\nFinal forecast"]
 ```
+</div>
 
 ### Why NHITS Is the Default Choice
 
@@ -172,6 +246,19 @@ flowchart TD
 3. **Parameter efficiency**: ~800K parameters vs 5M+ for PatchTST.
 4. **Stability**: The multi-rate decomposition prevents the model from overfitting to spurious high-frequency noise.
 5. **Practical**: Works well without extensive tuning. The default architecture handles most time series forecasting problems out of the box.
+
+
+<div class="flow">
+<div class="flow-step mint">1. Accuracy</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Speed</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Parameter efficiency</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Stability</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Practical</div>
+</div>
 
 ```python
 from neuralforecast.models import NHITS
@@ -197,6 +284,11 @@ model = NHITS(
 ## PatchTST: When to Use Transformers
 
 PatchTST (Nie et al. 2023) divides the input time series into non-overlapping patches and treats each patch as a token in a Transformer encoder. This reduces the sequence length from `T` to `T/P` (where `P` is patch size), making attention computationally feasible.
+
+<div class="callout-info">
+<strong>Info:</strong> 2023) divides the input time series into non-overlapping patches and treats each patch as a token in a Transformer encoder.
+</div>
+
 
 ```python
 from neuralforecast.models import PatchTST
@@ -317,3 +409,26 @@ For the bakery forecasting problem (h=7, daily data, multiple products), **NHITS
 - **Notebook 01**: Train NHITS on bakery data, evaluate with MAE and MSE
 - **Guide 02**: Hyperparameter tuning — input_size, scaler_type, loss functions
 - **Notebook 02**: Cross-validation for honest evaluation
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_neural_architectures.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_training_nhits.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

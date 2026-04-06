@@ -1,10 +1,20 @@
 # XLinear: State-of-the-Art Multivariate Forecasting Architecture
 
+> **Reading time:** ~11 min | **Module:** 5 — xLinear | **Prerequisites:** Module 1
+
 ## In Brief
 
 XLinear achieves transformer-competitive accuracy on long-horizon multivariate forecasting benchmarks while requiring a fraction of the compute. The architecture combines learned embeddings, two gating modules for temporal and cross-variable dependencies, and reversible instance normalization — all without attention mechanisms.
 
 Start here: the code below trains XLinear on the ETTm1 dataset in under five minutes.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -43,12 +53,23 @@ test_size = 11520  # standard ETTm1 test split
 cv_df = nf.cross_validation(df=Y_df, val_size=val_size, test_size=test_size)
 print(cv_df.head())
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> XLinear achieves transformer-competitive accuracy on long-horizon multivariate forecasting benchmarks while requiring a fraction of the compute. The architecture combines learned embeddings, two gating modules for temporal and cross-variable dependencies, and reversible instance normalization — all without attention mechanisms.
+</div>
+
 
 ---
 
 ## 1. The Problem: Long-Horizon Multivariate Forecasting
 
 Forecasting a single time series 96 steps into the future is hard. Forecasting 7 correlated series simultaneously — where the temperature of one transformer predicts stress on another — is harder.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Forecasting a single time series 96 steps into the future is hard.
+</div>
+
 
 The benchmark dataset in this module is **ETTm1** (Electricity Transformer Temperature): 7 variables recorded every 15 minutes at a Chinese power station. The variables are:
 
@@ -69,6 +90,13 @@ Long-horizon forecasting (h=96, 192, 336, 720) is the community benchmark becaus
 ## 2. XLinear vs. Transformers: The Efficiency Case
 
 Transformer-based forecasters (Informer, Autoformer, PatchTST, iTransformer) dominate published benchmarks but carry significant costs:
+
+<div class="callout-key">
+<strong>Key Point:</strong> Transformer-based forecasters (Informer, Autoformer, PatchTST, iTransformer) dominate published benchmarks but carry significant costs:
+
+- **Quadratic attention:** O(L²) in sequence length for full at...
+</div>
+
 
 - **Quadratic attention:** O(L²) in sequence length for full attention
 - **Parameter count:** hundreds of millions for large variants
@@ -91,7 +119,50 @@ XLinear matches or beats transformer accuracy at the compute cost of simpler lin
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">2. XLinear</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Transformers: The Efficiency Case</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## 3. Architecture Overview
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-info">
+<strong>Info:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+The four architectural components each solve a distinct subproblem:
+
+1.
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart LR
@@ -110,6 +181,7 @@ flowchart LR
     style Head fill:#f3e5f5,stroke:#9c27b0
     style RevIN_inv fill:#e8f4f8,stroke:#2196f3
 ```
+</div>
 
 The four architectural components each solve a distinct subproblem:
 
@@ -117,6 +189,17 @@ The four architectural components each solve a distinct subproblem:
 2. **Time-wise Gating Module (TGM)** — learns which temporal patterns matter and gates them
 3. **Variate-wise Gating Module (VGM)** — learns cross-variable associations between exogenous inputs and targets
 4. **Prediction Head** — maps the gated representation to the forecast horizon via a fully connected layer
+
+
+<div class="flow">
+<div class="flow-step mint">1. Embedding Layer</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Time-wise Gating Module (TGM)</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Variate-wise Gating Module (VG...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Prediction Head</div>
+</div>
 
 RevIN bookends the architecture, handling distributional shift between training and inference.
 
@@ -126,6 +209,11 @@ RevIN bookends the architecture, handling distributional shift between training 
 
 The embedding layer transforms the raw input window into a richer representation. It performs three operations:
 
+<div class="callout-warning">
+<strong>Warning:</strong> The embedding layer transforms the raw input window into a richer representation.
+</div>
+
+
 **Input scaling.** The raw window `(B, L, N)` — batch size × lookback length × number of series — is projected to hidden dimension `d_model` via a learnable linear map:
 
 $$\mathbf{E} = \mathbf{X} \mathbf{W}_e + \mathbf{b}_e, \quad \mathbf{W}_e \in \mathbb{R}^{N \times d_{model}}$$
@@ -134,12 +222,21 @@ $$\mathbf{E} = \mathbf{X} \mathbf{W}_e + \mathbf{b}_e, \quad \mathbf{W}_e \in \m
 
 **Global context tokens.** This is the key innovation borrowed from vision transformers: a small set of learnable vectors (`[CLS]`-style tokens) are concatenated to the sequence. These tokens are not tied to any time step — they aggregate global information across the entire window and act as a summary representation that both TGM and VGM can attend to.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 # Conceptual illustration of global context token injection
 # In XLinear, these are learned parameters initialized from N(0, 0.02)
 global_ctx = nn.Parameter(torch.randn(1, n_ctx_tokens, d_model) * 0.02)
 x_with_ctx = torch.cat([x_embedded, global_ctx.expand(B, -1, -1)], dim=1)
 ```
+</div>
 
 The embedding layer effectively creates a unified token space where time steps and global context tokens coexist — the subsequent gating modules operate over this combined representation.
 
@@ -148,6 +245,11 @@ The embedding layer effectively creates a unified token space where time steps a
 ## 5. Component 2: Time-wise Gating Module (TGM)
 
 The TGM learns **which temporal positions matter** for each forecast, then uses that signal to gate the input.
+
+<div class="callout-insight">
+<strong>Insight:</strong> The TGM learns **which temporal positions matter** for each forecast, then uses that signal to gate the input.
+</div>
+
 
 The module is an MLP applied over the time dimension:
 
@@ -168,6 +270,11 @@ $$\mathbf{h}_{TGM} = \mathbf{G}_{time} \odot \mathbf{E}_{ctx}$$
 ## 6. Component 3: Variate-wise Gating Module (VGM)
 
 Where TGM operates over time, VGM operates **over variables**. It learns cross-series associations: which exogenous variables inform the target variable's future.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Where TGM operates over time, VGM operates **over variables**.
+</div>
+
 
 The VGM follows the same gating pattern but transposes the operation:
 
@@ -273,3 +380,26 @@ RevIN adds learnable affine parameters $\gamma$ and $\beta$ so the model can par
 - **Notebook:** `notebooks/01_training_xlinear.ipynb` — train XLinear on ETTm1, evaluate with utilsforecast metrics
 - **Guide:** `02_multivariate_forecasting.md` — deep dive into n_series, exogenous features, and hyperparameter tuning
 - **Notebook:** `notebooks/02_benchmarking.ipynb` — head-to-head XLinear vs. NHITS comparison with cross-validation
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_xlinear_architecture.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_training_xlinear.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

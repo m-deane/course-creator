@@ -1,10 +1,20 @@
 # Sample Paths — The Correct Uncertainty Framework
 
+> **Reading time:** ~11 min | **Module:** 3 — Sample Paths | **Prerequisites:** Module 2
+
 ## In Brief
 
 A probabilistic forecast gives you marginal distributions: the uncertainty around day 1, then day 2, then day 3, independently. A sample path gives you something more powerful — a single plausible trajectory for the entire forecast horizon, drawn from the joint distribution. Run hundreds of these paths and you can answer any business question by applying a function to each path and computing statistics over the results.
 
 Start here: generating sample paths from a random walk in six lines.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -25,12 +35,23 @@ print(f"Path 0 first 5 steps: {paths[0, :5].round(2)}")
 prob = (paths.sum(axis=1) > 10).mean()
 print(f"P(total > 10 over 14 days) ≈ {prob:.3f}")
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> A probabilistic forecast gives you marginal distributions: the uncertainty around day 1, then day 2, then day 3, independently. A sample path gives you something more powerful — a single plausible trajectory for the entire forecast horizon, drawn from the joint distribution.
+</div>
+
 
 ---
 
 ## 1. What Are Sample Paths?
 
 A sample path is one draw from the joint forecast distribution over the entire horizon.
+
+<div class="callout-insight">
+<strong>Insight:</strong> A sample path is one draw from the joint forecast distribution over the entire horizon.
+</div>
+
 
 **Marginal distribution** for step $t$: $F_t(y) = P(y_{T+t} \leq y \mid \mathcal{F}_T)$
 
@@ -46,6 +67,14 @@ $$\omega^{(s)} = \left(y_1^{(s)}, y_2^{(s)}, \ldots, y_H^{(s)}\right), \quad s =
 
 Each path is internally consistent: if Monday is high, Tuesday in that path reflects the realistic follow-on, not an independent draw.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart LR
     NOW["Current time T"] --> P1["Path 1: (y₁⁽¹⁾, ..., y_H⁽¹⁾)"]
@@ -60,6 +89,7 @@ flowchart LR
     PS --> STAT
     STAT --> ANSWER["Compute statistics\nover f(ω⁽¹⁾), ..., f(ω⁽ˢ⁾)"]
 ```
+</div>
 
 ---
 
@@ -67,9 +97,25 @@ flowchart LR
 
 Once you have $S$ sample paths, any business question becomes a three-step calculation:
 
+<div class="callout-key">
+<strong>Key Point:</strong> Once you have $S$ sample paths, any business question becomes a three-step calculation:
+
+1.
+</div>
+
+
 1. **Simulate**: generate $S$ paths $\{\omega^{(s)}\}_{s=1}^S$
 2. **Apply**: compute a function $f(\omega^{(s)})$ for each path
 3. **Aggregate**: compute statistics over $\{f(\omega^{(1)}), \ldots, f(\omega^{(S)})\}$
+
+
+<div class="flow">
+<div class="flow-step mint">1. Simulate</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Apply</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Aggregate</div>
+</div>
 
 This framework is universal. The function $f$ can be:
 
@@ -77,6 +123,14 @@ This framework is universal. The function $f$ can be:
 - A maximum (worst-case single day)
 - A threshold crossing (first day stock runs out)
 - A complex business rule (trigger reorder when cumulative demand exceeds safety stock)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # The universal Monte Carlo template
@@ -105,12 +159,20 @@ worst_day_80 = answer_business_question(
 )
 print(f"80th percentile worst day: {worst_day_80:.1f}")
 ```
+</div>
 
 ---
 
 ## 3. Why Marginal Quantiles Are Insufficient
 
 The 80th percentile quantile for day $t$ tells you: "On day $t$ alone, I need $q_t$ units with 80% confidence."
+
+<div class="callout-insight">
+<strong>Insight:</strong> The 80th percentile quantile for day $t$ tells you: "On day $t$ alone, I need $q_t$ units with 80% confidence."
+
+But the question "How much total inventory do I need for the whole week at 80% confiden...
+</div>
+
 
 But the question "How much total inventory do I need for the whole week at 80% confidence?" cannot be answered by summing marginal quantiles.
 
@@ -119,6 +181,12 @@ But the question "How much total inventory do I need for the whole week at 80% c
 $$Q_{0.8}\left(\sum_{t=1}^H y_t\right) \neq \sum_{t=1}^H Q_{0.8}(y_t)$$
 
 The gap between these two quantities depends on the inter-step correlation. For positively correlated series (common in demand), the right side overestimates. For negatively correlated series (mean-reverting), it underestimates. The only correct approach uses the joint distribution — which sample paths provide.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Demonstrate the inequality concretely
@@ -142,6 +210,7 @@ print(f"True 80th pct of weekly total:      {true_80th:.1f}")
 print(f"Sum of marginal 80th percentiles:   {marginal_80th_sum:.1f}")
 print(f"Overestimate by:                    {marginal_80th_sum - true_80th:.1f} units")
 ```
+</div>
 
 With $\phi = 0.7$, the naive sum overstates the true 80th percentile — a practitioner following the marginal approach would over-order every week.
 
@@ -150,6 +219,11 @@ With $\phi = 0.7$, the naive sum overstates the true 80th percentile — a pract
 ## 4. Answering Probability Questions Exactly
 
 Sample paths give direct answers to probability questions that have no clean closed form under marginal distributions.
+
+<div class="callout-warning">
+<strong>Warning:</strong> Sample paths give direct answers to probability questions that have no clean closed form under marginal distributions.
+</div>
+
 
 **Probability that weekly total exceeds a threshold $c$:**
 
@@ -290,3 +364,26 @@ The complete implementation with real French Bakery data is in Notebook 01.
 ## Next: The Gaussian Copula Method
 
 Module 02 guide covers exactly how neuralforecast constructs sample paths using the Gaussian Copula — building from marginal quantile forecasts to correlated joint draws in six precise steps.
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_sample_paths_theory.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_generating_sample_paths.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

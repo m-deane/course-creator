@@ -1,8 +1,17 @@
 # Portfolio Project Specification: Demand Forecasting System
 
+> **Reading time:** ~12 min | **Module:** 7 — Portfolio Project | **Prerequisites:** All prior modules
+
 ## Start Here: What You Are Building
 
 By the end of this project you will have a complete, deployable demand forecasting system that produces:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this project you will have a complete, deployable demand forecasting system that produces:
+
+1.
+</div>
+
 
 1. A trained neural model with probabilistic output
 2. Sample paths from the joint forecast distribution
@@ -18,6 +27,19 @@ This is a portfolio artifact, not a graded assignment. Build something you are p
 
 Design and implement a **demand forecasting system** that goes from raw time series data to actionable business intelligence. The system must demonstrate the full forecasting stack covered in this course:
 
+<div class="callout-key">
+<strong>Key Point:</strong> Design and implement a **demand forecasting system** that goes from raw time series data to actionable business intelligence.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart LR
     DATA["Real Dataset\n(your choice)"] --> EDA["EDA\n& Preprocessing"]
@@ -28,12 +50,20 @@ flowchart LR
     DECISION --> SUMMARY["Stakeholder Summary\nwith Visualizations"]
     EXPLAIN --> SUMMARY
 ```
+</div>
 
 ---
 
 ## Requirements
 
 ### Requirement 1: Select a Real Time Series Dataset
+
+<div class="callout-info">
+<strong>Info:</strong> ### Requirement 1: Select a Real Time Series Dataset
+
+You must use real data.
+</div>
+
 
 You must use real data. The dataset must have:
 - At least one identifiable series with strong seasonal structure
@@ -59,6 +89,14 @@ Train either NHITS or XLinear using `MQLoss`. Your trained model must:
 - Be calibrated: 80% intervals should cover actuals 80% of the time (±5%)
 - Produce quantile forecasts at minimum levels [10, 50, 90]
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 from neuralforecast.models import NHITS
 from neuralforecast.losses.pytorch import MQLoss
@@ -71,6 +109,7 @@ model = NHITS(
     max_steps=1000,
 )
 ```
+</div>
 
 ### Requirement 3: Generate Sample Paths
 
@@ -79,6 +118,14 @@ Use `.simulate()` to generate at least 200 sample paths over the full forecast h
 - Be used to answer the business question (Requirement 4)
 - Be visualized as a fan chart or spaghetti plot
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 paths_df = nf.models[0].simulate(
     futr_df=None,
@@ -86,6 +133,7 @@ paths_df = nf.models[0].simulate(
     n_paths=200,
 )
 ```
+</div>
 
 ### Requirement 4: Answer a Specific Business Question Using the Joint Distribution
 
@@ -114,10 +162,17 @@ Run `.explain()` on your trained model and report:
 - A bar chart of attributions ordered by magnitude
 - One sentence interpreting the most important feature in business terms
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 explanations = nf.models[0].explain(df=df_test, level=90)
 # explanations: dict with keys 'attributions', 'feature_names'
 ```
+</div>
 
 ### Requirement 6: Create a Stakeholder-Facing Summary
 
@@ -135,6 +190,11 @@ The summary must be readable by a non-technical stakeholder — no model interna
 ## Milestones
 
 The project is organized into four weekly milestones. These are checkpoints for your own planning — nothing is submitted or graded.
+
+<div class="callout-warning">
+<strong>Warning:</strong> The project is organized into four weekly milestones.
+</div>
+
 
 ### Milestone 1: Data Selection and EDA (Week 1)
 
@@ -192,6 +252,11 @@ The project is organized into four weekly milestones. These are checkpoints for 
 ## Example Project Outline
 
 The following outline shows what a complete project looks like for the French Bakery dataset with an inventory stocking question. Use it as a structural template, not a content template — your business question and dataset should be your own choices.
+
+<div class="callout-insight">
+<strong>Insight:</strong> The following outline shows what a complete project looks like for the French Bakery dataset with an inventory stocking question.
+</div>
+
 
 ```
 Project: Optimal Baguette Inventory Under Demand Uncertainty
@@ -265,6 +330,14 @@ The difference between adequate and strong is always interpretation. Numbers wit
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Connections to Previous Modules
 
 | Module | Concept Used In This Project |
@@ -286,3 +359,18 @@ After completing this project, the natural next steps are:
 - **Cross-series transfer learning**: fine-tune on your dataset using a foundation model from `nixtla` TimeGPT
 - **Real-time inference**: wrap the trained `NeuralForecast` object in a FastAPI endpoint
 - **Monitoring**: track calibration drift in production using `utilsforecast` on rolling windows
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_project_specification.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_project_starter.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

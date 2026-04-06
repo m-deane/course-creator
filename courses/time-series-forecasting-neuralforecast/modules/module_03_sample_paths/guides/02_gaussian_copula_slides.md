@@ -30,6 +30,11 @@ We want:
 The Gaussian Copula separates these two concerns:
 > **Marginals** from the trained model + **Dependence** from the data → **Joint paths**
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This framing is the key to understanding copulas. A copula is a mathematical tool that separates the marginal distributions from the dependence structure. We already have good marginal estimates from MQLoss. What we lack is the dependence structure — how adjacent steps co-vary. The Gaussian Copula borrows that structure from the historical data via AR(1). -->
 
 ---
@@ -37,6 +42,7 @@ The Gaussian Copula separates these two concerns:
 # Six-Step Pipeline Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Step 1: MQLoss training\nMarginal quantiles per step"] --> B
     B["Step 2: AR(1) estimation\nAutocorrelation φ from differenced data"] --> C
@@ -46,11 +52,22 @@ flowchart TD
     F["Step 6: Inverse quantile transform\nF_t⁻¹(u_t) → forecast scale"]
 ```
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: This pipeline diagram is the roadmap for the entire guide. Each box is one slide. The key message: steps 1-2 extract information from data, steps 3-5 build the correlation machinery, step 6 combines everything into paths. The architecture flows logically: get marginals → get dependence → combine them. -->
 
 ---
 
 # Step 1 — Marginal Quantiles from MQLoss
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast.models import NHITS
@@ -69,10 +86,16 @@ nf.fit(df_train)
 forecasts = nf.predict()
 # Columns: NHITS-lo-90, NHITS-lo-80, NHITS, NHITS-hi-80, NHITS-hi-90
 ```
+</div>
 
 MQLoss trains the model to minimize **pinball loss** at each quantile level.
 
 Result: for each horizon step $t$, we have an estimate of $Q_\alpha(y_{T+t})$.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: MQLoss with level=[80,90] actually requests quantiles at [0.05, 0.10, 0.20, ..., 0.80, 0.90, 0.95] — it adds symmetrically. The result is a grid of quantile estimates at each horizon step. These are the marginal distributions we need for Step 6. Steps 2-5 build the dependence structure that will link these marginals into correlated paths. -->
 
@@ -88,6 +111,12 @@ $$\Delta y_t = y_t - y_{t-1}$$
 Fit AR(1) on the differences:
 $$\Delta y_t = \phi \cdot \Delta y_{t-1} + \varepsilon_t$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from scipy.stats import pearsonr
 
@@ -99,6 +128,12 @@ def estimate_ar1_phi(series):
 phi = estimate_ar1_phi(df_train["y"].values)
 print(f"phi = {phi:.4f}")   # typical: 0.3 to 0.7 for daily demand
 ```
+</div>
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The differencing step is easy to overlook but critical. Without it, the AR(1) estimate will be biased upward because the trend creates spurious autocorrelation. After differencing, the residuals are stationary and the Pearson correlation of lag-1 pairs is an unbiased estimate of the AR(1) coefficient. The clip to [-0.999, 0.999] prevents numerical issues in the Cholesky decomposition. -->
 

@@ -18,6 +18,12 @@ math: mathjax
 
 # Parsing the explanations Dict
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 fcsts_df, explanations = nf.explain(
     futr_df=futr_df, explainer="IntegratedGradients"
@@ -31,8 +37,14 @@ print(insample.shape)      # (1, 28, 1, 1, 56, 2)
 print(futr_exog.shape)     # (1, 28, 1, 1, 84, 2)
 print(baseline_pred.shape) # (1, 28, 1, 1)
 ```
+</div>
 
 Three tensors. Each captures a different part of the model's attention. Let's decode each shape.
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Live-code this step with students. The shape output is the first concrete confirmation that the API worked. -->
 
@@ -57,11 +69,23 @@ The last dimension is always a pair: the actual lag value and its attribution sc
 
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Attribution scores: shape (horizon, input_size)
 attr = insample[0, :, 0, 0, :, 1]   # index 1 = attribution
 vals = insample[0, :, 0, 0, :, 0]   # index 0 = actual value
 ```
+</div>
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The final dimension of size 2 is easy to overlook. Always use index 1 for attribution scores and index 0 for the actual lag values. Confusing these is the most common mistake when first parsing the tensor. -->
 
@@ -74,10 +98,9 @@ vals = insample[0, :, 0, 0, :, 0]   # index 0 = actual value
 Why `input_size + horizon` positions?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Past window\n(input_size = 56 positions)\nModel saw past values\nof published, is_holiday"] --> B["Forecast window\n(horizon = 28 positions)\nModel sees future values\nof published, is_holiday"]
-    style A fill:#ddf
-    style B fill:#ffd
 ```
 
 Future exogenous features are known for BOTH past and future dates. The model attends to both windows. Attribution tensor reflects both.
@@ -88,6 +111,11 @@ input_size = 56
 # Positions 56..83: forecast window attributions
 published_future = futr_exog[0, :, 0, 0, input_size:, 0]  # (horizon, horizon)
 ```
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: This is the dimension that confuses practitioners most. The input_size+horizon length is not a bug -- it reflects the full context window the model uses for future covariates. -->
 
@@ -111,6 +139,11 @@ print(f"Attribution gap:            {actual_day1 - baseline_day1:.0f} visitors")
 The attribution gap is what all the attribution scores must add up to (completeness guarantee for IG).
 
 **Real example:** baseline ~500 visitors, actual forecast ~1110 visitors on a day an article is published → 610 visitors explained by `published` + lags.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The baseline prediction is the "reference point" for the whole analysis. If you change the baseline, all attributions change. This is why choosing a meaningful baseline (zeros for binary features) is important. -->
 
@@ -151,11 +184,9 @@ plt.show()
 # Expected Lag Attribution Pattern
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Lag 0\n(most recent)\nHighest attribution\nExpected"] --> B["Lags 1-6\nDecaying fast\nNormal"] --> C["Lags 7, 14, 21\nSecondary peak\nWeekly seasonality"] --> D["Lags 28-55\nNear zero\nNot useful"]
-    style A fill:#f66
-    style C fill:#f99
-    style D fill:#eee
 ```
 
 **Red flag:** distant lags outranking recent lags without a seasonal explanation → possible data leakage or overfitting.

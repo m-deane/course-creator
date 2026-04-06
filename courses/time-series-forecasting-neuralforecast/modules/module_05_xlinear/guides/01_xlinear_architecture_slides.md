@@ -29,6 +29,11 @@ math: mathjax
 
 > Forecasting correlated variables jointly should be better than forecasting each in isolation — but only if the model can learn cross-variable patterns efficiently.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: ETTm1 is the standard long-horizon benchmark. 7 variables = 7 correlated electrical load measurements and oil temperature. The key insight is that these variables have meaningful cross-correlations: high load drives temperature up. The question XLinear answers is how to exploit those correlations without the cost of attention. -->
 
 ---
@@ -48,6 +53,11 @@ math: mathjax
 
 XLinear wins on accuracy **and** on compute — no quadratic attention required.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: This table will likely surprise students who assume transformers always win. XLinear outperforms PatchTST (a strong patch-based transformer) on ETTm1 h=96 while using linear complexity in sequence length. The takeaway: the inductive biases in XLinear's gating design are better suited to multivariate structured time series than general-purpose attention. -->
 
 ---
@@ -55,6 +65,7 @@ XLinear wins on accuracy **and** on compute — no quadratic attention required.
 ## Full Architecture: Data Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     Input["Input\n(B × L × N)"] --> RevIN_fwd["RevIN\nnormalize"]
     RevIN_fwd --> Embed["Embedding\n+ Context Tokens"]
@@ -68,6 +79,11 @@ flowchart LR
 **Four learnable components** sandwiched by RevIN normalization.
 
 Each component solves a distinct subproblem — no component does double duty.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: Walk through this diagram left to right. B = batch size, L = lookback window length, N = number of series, H = forecast horizon. RevIN handles distributional shift before and after. The four middle blocks each have a specific job: embed, gate temporally, gate cross-variable, predict. This clean separation of concerns is a design strength. -->
 
@@ -92,7 +108,20 @@ After context:      [x_1, x_2, ..., x_L, ctx_1, ..., ctx_K]   (L+K tokens)
 
 Context tokens carry no time-step information — they aggregate global sequence statistics.
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The global context token is the most novel element in XLinear's embedding. Unlike BERT's single [CLS] token, XLinear uses K learnable vectors initialized with small random values. These tokens are updated during the forward pass through both TGM and VGM, acting as a "summary" that each gating module can consult. This is what allows linear-time gating to approximate attention-style global aggregation. -->
+
+<div class="flow">
+<div class="flow-step mint">Linear projection</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Embed dropout</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Global context tokens</div>
+</div>
 
 ---
 
@@ -205,6 +234,12 @@ RevIN is applied identically at training and inference — no distributional mis
 
 ## Training XLinear: Full Code
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from neuralforecast import NeuralForecast
 from neuralforecast.models import XLinear
@@ -224,6 +259,7 @@ cv_df = nf.cross_validation(
     df=Y_df, val_size=11520, test_size=11520
 )
 ```
+</div>
 
 Five hyperparameters matter most: `hidden_size`, `temporal_ff`, `channel_ff`, `head_dropout`, `max_steps`.
 

@@ -1,8 +1,18 @@
 # Explainability Methods for Neural Forecasting Models
 
+> **Reading time:** ~11 min | **Module:** 4 — Explainability | **Prerequisites:** Module 1
+
 ## In Brief
 
 Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" Start with the working API call below, then dig into the theory behind each method.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -28,12 +38,23 @@ fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradie
 print(explanations.keys())
 # dict_keys(['insample', 'futr_exog', 'baseline_predictions'])
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" Start with the working API call below, then dig into the theory behind each method.
+</div>
+
 
 ---
 
 ## 1. Why Explainability Matters
 
 A model that produces accurate forecasts but cannot be interrogated creates three problems for practitioners.
+
+<div class="callout-insight">
+<strong>Insight:</strong> A model that produces accurate forecasts but cannot be interrogated creates three problems for practitioners.
+</div>
+
 
 **Trust and adoption.** Stakeholders who cannot understand why a model issued a specific forecast are less likely to act on it. A commodity trader who sees a model predict a 40% price spike needs to know whether that prediction is driven by real supply signals or a data artifact. Attribution methods provide that answer.
 
@@ -48,6 +69,13 @@ A model that produces accurate forecasts but cannot be interrogated creates thre
 ## 2. The Three Attribution Methods
 
 ### Method 1: Integrated Gradients
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### Method 1: Integrated Gradients
+
+**Core idea.** Integrated Gradients (IG) attributes a prediction to each input feature by integrating the gradient of the model output with respect to that input al...
+</div>
+
 
 **Core idea.** Integrated Gradients (IG) attributes a prediction to each input feature by integrating the gradient of the model output with respect to that input along a straight path from a baseline (e.g., all zeros) to the actual input.
 
@@ -69,10 +97,19 @@ The attributions sum to the difference between the prediction and the baseline p
 
 **Implementation note.** NeuralForecast uses the `captum` library under the hood, which implements IG via `IntegratedGradients` from `captum.attr`.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 # IG is the default explainer and the recommended starting point
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
 ```
+</div>
 
 ---
 
@@ -86,9 +123,18 @@ $$\text{IxG}_i(x) = x_i \times \frac{\partial f(x)}{\partial x_i}$$
 
 **The bias problem with ReLU networks.** IxG violates additivity. For networks with ReLU activations, the gradient is zero wherever the neuron is off. A feature can have a large input value but zero gradient if the ReLU is inactive, and IxG will attribute zero to that feature — even if it was causally important in training. This is the **saturation problem** and it means IxG attributions should be interpreted with caution in deep networks.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="InputXGradient")
 ```
+</div>
 
 ---
 
@@ -114,9 +160,16 @@ This requires 100 to 1000 forward passes per prediction, making Shapley the slow
 
 $$\sum_{i=1}^{n} \phi_i = f(x) - E[f(x)]$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSampling")
 ```
+</div>
 
 ---
 
@@ -139,6 +192,11 @@ fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSamp
 
 All three methods are instances of a general attribution framework. Define an attribution function $A: \mathbb{R}^n \times \mathcal{F} \to \mathbb{R}^n$ that assigns a score to each feature. The methods differ in how they satisfy or violate the following axioms:
 
+<div class="callout-info">
+<strong>Info:</strong> All three methods are instances of a general attribution framework.
+</div>
+
+
 **Sensitivity.** If the model output changes when feature $i$ changes and the baseline is unchanged, $A_i \neq 0$.
 
 **Implementation invariance.** Two models that are functionally identical (same input-output mapping) must have identical attributions regardless of implementation.
@@ -152,6 +210,15 @@ IG satisfies all three. IxG violates completeness. Shapley sampling satisfies al
 ## 5. Choosing a Method in Practice
 
 Follow this decision tree:
+
+<div class="callout-warning">
+<strong>Warning:</strong> Follow this decision tree:
+
+
+
+For most time series forecasting use cases, **Integrated Gradients is the right default**.
+</div>
+
 
 ```mermaid
 flowchart TD
@@ -207,3 +274,18 @@ Full tensor shape interpretation is covered in `02_interpreting_attributions.md`
 - `02_interpreting_attributions.md` — Tensor shapes in depth, visualization techniques, business interpretation
 - `notebooks/01_explain_api.ipynb` — End-to-end walkthrough with synthetic blog traffic data
 - `notebooks/02_attribution_visualization.ipynb` — Comparing all three methods side by side
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_explainability_methods.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_explain_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

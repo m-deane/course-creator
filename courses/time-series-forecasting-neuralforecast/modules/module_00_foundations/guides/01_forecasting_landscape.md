@@ -1,10 +1,20 @@
 # The Forecasting Landscape: From Point Estimates to Distributional Forecasts
 
+> **Reading time:** ~10 min | **Module:** 0 — Foundations | **Prerequisites:** Python, pandas, basic statistics
+
 ## In Brief
 
 Modern forecasting has moved well beyond producing a single number. This guide maps the forecasting landscape — point, probabilistic, and distributional approaches — and introduces the neuralforecast ecosystem that unifies all three in a single, consistent API.
 
 Start here: the code below installs neuralforecast and verifies the installation in under 30 seconds.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # Install the full nixtla forecasting stack
@@ -19,12 +29,27 @@ print(f"datasetsforecast {datasetsforecast.__version__}")
 print(f"utilsforecast {utilsforecast.__version__}")
 print("Environment ready.")
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Modern forecasting has moved well beyond producing a single number. This guide maps the forecasting landscape — point, probabilistic, and distributional approaches — and introduces the neuralforecast ecosystem that unifies all three in a single, consistent API.
+</div>
+
 
 ---
 
 ## 1. Why Forecasting Matters for Business Decisions
 
 A point forecast says: "Demand tomorrow will be 142 units."
+
+<div class="callout-insight">
+<strong>Insight:</strong> A point forecast says: "Demand tomorrow will be 142 units."
+
+A probabilistic forecast says: "Demand tomorrow will be 142 units, with a 90% interval of [118, 171]."
+
+These two statements lead to comple...
+</div>
+
 
 A probabilistic forecast says: "Demand tomorrow will be 142 units, with a 90% interval of [118, 171]."
 
@@ -35,9 +60,39 @@ These two statements lead to completely different inventory decisions. The secon
 2. **Asymmetric costs ignored** — understocking a warehouse and overstocking it carry different costs; a point forecast cannot optimize for this
 3. **Cascade failures in pipelines** — upstream point forecasts feed downstream models, compounding hidden uncertainty at every step
 
+
+<div class="flow">
+<div class="flow-step mint">1. Silent overconfidence</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Asymmetric costs ignored</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Cascade failures in pipelines</div>
+</div>
+
 ---
 
 ## 2. The Forecasting Taxonomy
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-key">
+<strong>Key Point:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+---
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart TD
@@ -61,6 +116,7 @@ flowchart TD
     E --> E1["Monte Carlo trajectories"]
     E --> E2["Scenario analysis, risk simulation"]
 ```
+</div>
 
 ---
 
@@ -76,11 +132,44 @@ flowchart TD
 | **neuralforecast model** | `NHITS` (default) | `NHITS` + `MQLoss` quantiles | `NHITS` + `MQLoss` full distribution |
 | **Calibration testable?** | No | Yes (coverage) | Yes (CRPS, reliability diagram) |
 
+<div class="callout-info">
+<strong>Info:</strong> Point
+
+
+See detailed comparison in the table above.
+</div>
+
+
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">3. Point</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Probabilistic vs Distributional: A Direct Comparison</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## 4. Calibration: The Property That Makes Probabilistic Forecasts Useful
 
 A 90% prediction interval should contain the actual value 90% of the time. When it does, the forecast is **calibrated**. Calibration is testable — you can measure it on held-out data.
+
+<div class="callout-warning">
+<strong>Warning:</strong> A 90% prediction interval should contain the actual value 90% of the time.
+</div>
+
 
 **Why calibration matters:**
 
@@ -98,6 +187,32 @@ where $F$ is the forecast CDF and $y$ is the actual observation. Lower CRPS is b
 
 The nixtla stack consists of three coordinated libraries:
 
+<div class="callout-insight">
+<strong>Insight:</strong> The nixtla stack consists of three coordinated libraries:
+
+
+
+
+example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+**datasetsforecast** — A catalog of benchmark datasets (M4, M5...
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 flowchart LR
     A[datasetsforecast] -->|"Loads & formats\ntime series data"| B[neuralforecast]
@@ -109,6 +224,7 @@ flowchart LR
     style C fill:#fff3cd
     style D fill:#f8d7da
 ```
+</div>
 
 **datasetsforecast** — A catalog of benchmark datasets (M4, M5, ETT, French Bakery, Tourism) ready in the nixtla `(unique_id, ds, y)` format. No ETL required.
 
@@ -130,6 +246,12 @@ Every model in the ecosystem expects data in a three-column format:
 
 This format handles thousands of series uniformly — a single `NeuralForecast` instance trains one model across all series simultaneously.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import pandas as pd
 from datasetsforecast.m4 import M4
@@ -144,6 +266,7 @@ print(train.head())
 print(f"Series count: {train['unique_id'].nunique()}")
 print(f"Rows: {len(train):,}")
 ```
+</div>
 
 ---
 
@@ -224,3 +347,26 @@ plt.show()
 ## What's Next
 
 Continue to [02_neuralforecast_ecosystem.md](02_neuralforecast_ecosystem.md) for a detailed walkthrough of the neuralforecast API: fitting models, generating forecasts, running cross-validation, producing sample paths, and explaining predictions.
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_forecasting_landscape.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_quickstart_neuralforecast.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

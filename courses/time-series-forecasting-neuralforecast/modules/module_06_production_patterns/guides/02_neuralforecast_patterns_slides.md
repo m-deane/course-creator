@@ -19,6 +19,7 @@ Custom losses · GPU checkpointing · Multi-series scaling · Logging · Error h
 ## Eight Patterns, One Goal
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Production NeuralForecast] --> B[Custom Losses]
     A --> C[GPU + Checkpointing]
@@ -36,6 +37,11 @@ flowchart TD
     F --> F1[Fallback models]
     F --> F2[Sanity checks]
 ```
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Walk through the overview. Each leaf node maps to a concrete code snippet in the guide. This deck focuses on the why and when; the guide contains the complete what. -->
 
@@ -55,9 +61,16 @@ flowchart TD
 <div>
 
 **Symmetric** (default):
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 MQLoss(quantiles=[0.1, 0.5, 0.9])
 ```
+</div>
 
 Three heads: lower bound, median, upper bound.
 
@@ -67,12 +80,19 @@ Equal resolution at both tails.
 <div>
 
 **Asymmetric** (upper-tail focus):
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 MQLoss(quantiles=[
     0.5, 0.7, 0.8,
     0.85, 0.9, 0.95
 ])
 ```
+</div>
 
 More heads in the upper tail.
 
@@ -82,6 +102,11 @@ Finer resolution where stockout risk lies.
 </div>
 
 MQLoss trains all quantile heads in a single forward pass — adding quantiles does not double training time.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The practical point: adding quantiles is cheap. Training six quantile heads instead of three adds ~20% compute. But you get 3x finer resolution in the tail that matters. For inventory decisions, the upper tail is almost always more important. -->
 
@@ -108,6 +133,11 @@ nb_loss = DistributionLoss(
 
 **Key difference:** MQLoss estimates specific quantiles. DistributionLoss fits a parametric family — then any quantile can be computed analytically, and sample paths can be drawn directly.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: DistributionLoss is more powerful but requires choosing the right distributional family. For most retail demand data: Normal works for continuous, high-volume SKUs. NegativeBinomial works for integer count data with zeros. If you need sample paths for simulation, DistributionLoss is the natural choice because you sample directly from the fitted distribution. -->
 
 ---
@@ -123,6 +153,11 @@ nb_loss = DistributionLoss(
 | General-purpose production default | MQLoss |
 
 Both are valid for production. Start with MQLoss. Switch to DistributionLoss if you need sample paths or if calibration tests fail.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The practical advice: MQLoss is the safe default. It makes no distributional assumption and trains robustly on any time series. DistributionLoss is the upgrade when you have a specific reason — either you need sample paths or you have count data that violates the continuous assumption. -->
 

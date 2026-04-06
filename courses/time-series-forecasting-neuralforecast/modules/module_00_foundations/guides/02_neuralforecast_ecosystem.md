@@ -1,10 +1,20 @@
 # The NeuralForecast Ecosystem: API, Models, and Workflows
 
+> **Reading time:** ~15 min | **Module:** 0 — Foundations | **Prerequisites:** Python, pandas, basic statistics
+
 ## In Brief
 
 This guide is a hands-on tour of the neuralforecast API. By the end, you will have run a complete fit → predict → cross-validation cycle, generated probabilistic sample paths, and inspected model explanations — all using the French Bakery daily sales dataset.
 
 Start here: load the dataset and inspect its structure.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -24,6 +34,7 @@ print(df.head())
 print("\nSeries:")
 print(df['unique_id'].value_counts())
 ```
+</div>
 
 Expected output:
 ```
@@ -42,11 +53,29 @@ croissant          547
 ...
 ```
 
+<div class="callout-key">
+<strong>Key Concept:</strong> This guide is a hands-on tour of the neuralforecast API. By the end, you will have run a complete fit → predict → cross-validation cycle, generated probabilistic sample paths, and inspected model explanations — all using the French Bakery daily sales dataset.
+</div>
+
+
 ---
 
 ## 1. The NeuralForecast API Overview
 
 The `NeuralForecast` class is the entry point for everything. It wraps one or more model instances and provides a unified interface.
+
+<div class="callout-insight">
+<strong>Insight:</strong> The `NeuralForecast` class is the entry point for everything.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -74,12 +103,18 @@ nf.fit(df=train)                         # .fit()
 forecasts = nf.predict()                 # .predict()
 cv_results = nf.cross_validation(df=df)  # .cross_validation()
 ```
+</div>
 
 ---
 
 ## 2. Key Models
 
 neuralforecast ships over 20 neural models. For Module 0, two are essential:
+
+<div class="callout-key">
+<strong>Key Point:</strong> neuralforecast ships over 20 neural models.
+</div>
+
 
 ### NHITS (Neural Hierarchical Interpolation for Time Series)
 
@@ -106,6 +141,14 @@ NHITS decomposes a time series into multiple frequency components using hierarch
 
 A linear model trained across all series simultaneously. Extremely fast and interpretable. Use it as a baseline before any neural model.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 from neuralforecast.models import NHITS, XLinear
 
@@ -115,6 +158,7 @@ models = [
 ]
 nf = NeuralForecast(models=models, freq='D')
 ```
+</div>
 
 Running both at once produces side-by-side forecasts in a single DataFrame — column names distinguish models.
 
@@ -124,7 +168,20 @@ Running both at once produces side-by-side forecasts in a single DataFrame — c
 
 ### Preparing the Train/Test Split
 
+<div class="callout-info">
+<strong>Info:</strong> ### Preparing the Train/Test Split
+
+neuralforecast's `.predict()` method generates out-of-sample forecasts for the next `h` steps after the last observed date.
+</div>
+
+
 neuralforecast's `.predict()` method generates out-of-sample forecasts for the next `h` steps after the last observed date. To evaluate on held-out data, split before fitting.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Split: hold out last 7 days per series for evaluation
@@ -140,6 +197,7 @@ test = df.groupby('unique_id').apply(
 print(f"Train rows: {len(train):,}")
 print(f"Test rows:  {len(test):,}")
 ```
+</div>
 
 ### Fitting the Model
 
@@ -224,6 +282,11 @@ plot_forecast_with_intervals(train, forecasts, series_id='baguette')
 
 Cross-validation in time series requires special care: future data must never be used to train the model. neuralforecast implements **rolling-window cross-validation** automatically.
 
+<div class="callout-warning">
+<strong>Warning:</strong> Cross-validation in time series requires special care: future data must never be used to train the model.
+</div>
+
+
 ```python
 cv_results = nf.cross_validation(
     df=df,
@@ -259,6 +322,11 @@ print(scores)
 ## 6. The `.simulate()` Method: Sample Paths
 
 Sample paths are Monte Carlo draws from the predictive distribution. They answer the question: "What might actually happen?" rather than "What is the probability of each outcome?"
+
+<div class="callout-insight">
+<strong>Insight:</strong> Sample paths are Monte Carlo draws from the predictive distribution.
+</div>
+
 
 **Use cases:**
 - Scenario analysis ("What if demand hits the 95th percentile for 3 consecutive weeks?")
@@ -297,6 +365,11 @@ plt.show()
 ## 7. The `.explain()` Method: Feature Importance
 
 `NeuralForecast.explain()` uses SHAP-based attribution to quantify how much each lagged input contributes to the forecast. This works with NHITS and NBEATS.
+
+<div class="callout-key">
+<strong>Key Point:</strong> `NeuralForecast.explain()` uses SHAP-based attribution to quantify how much each lagged input contributes to the forecast.
+</div>
+
 
 ```python
 # Compute SHAP-based explanations
@@ -413,3 +486,26 @@ This 30-line pipeline trains two models, runs time-series cross-validation acros
 ## What's Next
 
 Work through [Notebook 01: QuickStart](../notebooks/01_quickstart_neuralforecast.ipynb) to train NHITS on the French Bakery dataset interactively, then explore [Notebook 02: Exploring Datasets](../notebooks/02_exploring_datasets.ipynb) to understand EDA patterns across multiple dataset types.
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_neuralforecast_ecosystem.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_quickstart_neuralforecast.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

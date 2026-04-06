@@ -20,6 +20,7 @@ Build a complete forecasting pipeline. Ship something real.
 ## What You Are Building
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DATA["Real Dataset"] --> EDA["EDA"]
     EDA --> MODEL["NHITS or XLinear\nwith MQLoss"]
@@ -31,6 +32,11 @@ flowchart LR
 ```
 
 Six components. Four weeks. One deployable artifact.
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Walk through the pipeline. Each box maps directly to a module: model training is Module 1-2, sample paths are Module 3, explainability is Module 4, and the stakeholder summary synthesizes all of them. The key design principle is that every step produces output that feeds the next — nothing is produced just to show the model works. Everything connects to the business question. -->
 
@@ -46,6 +52,11 @@ Six components. Four weeks. One deployable artifact.
 | 4 | Explainability + stakeholder summary | Attribution report, executive summary |
 
 No submissions. No grades. These are your own checkpoints.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The four-week structure gives learners a pacing guide. Each milestone has a concrete, tangible deliverable that is either done or not done — there is no partial credit to hide behind. Milestone 2 is where most learners get stuck: calibration verification catches overconfident models. Encourage them to iterate on the model before moving to sample paths. -->
 
@@ -71,6 +82,11 @@ No submissions. No grades. These are your own checkpoints.
 
 All except "bring your own" load via `datasetsforecast` with zero ETL.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The French Bakery dataset is the recommended starting point for learners who want to move fast. It loads in seconds, has clear weekly seasonality, and maps naturally to the inventory stocking business question. M5 is the right choice for learners targeting retail or supply chain roles — it is the industry benchmark. Tourism is good for learners in hospitality or government. Learners who bring their own data almost always produce the strongest projects. -->
 
 ---
@@ -90,6 +106,11 @@ It cannot be answered by looking at each forecast day independently.
 Stockouts and overstock have different costs. The optimal answer depends on this ratio.
 
 $$\text{Optimal stock} = Q_\tau\!\left(\sum_{t=1}^H y_t\right), \quad \tau = \frac{c_\text{under}}{c_\text{under} + c_\text{over}}$$
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The formula is the newsvendor solution, generalized to a distributional forecast. The optimal quantile tau is the critical ratio from operations research — it equals the cost of understocking divided by the total cost. For a bakery where stockouts cost €12 and overstock costs €2, tau = 12/(12+2) = 0.857. The business question forces learners to think about cost asymmetry, which is one of the main reasons probabilistic forecasting exists. -->
 
@@ -123,6 +144,12 @@ If coverage is too high: model is underconfident. Narrow intervals or add `scale
 
 ### Calibration check code
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from utilsforecast.evaluation import evaluate
 from utilsforecast.losses import coverage
@@ -135,6 +162,7 @@ results = evaluate(
 )
 print(results)
 ```
+</div>
 
 </div>
 </div>
@@ -146,6 +174,12 @@ print(results)
 ## Comparing Against Baselines
 
 Always compare your neural model against a classical baseline. Complexity must earn its keep.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from statsforecast import StatsForecast
@@ -167,6 +201,7 @@ neural_crps = crps(neural_forecasts, df_test)
 improvement = (baseline_crps - neural_crps) / baseline_crps * 100
 print(f"CRPS improvement over seasonal naive: {improvement:.1f}%")
 ```
+</div>
 
 A 20%+ improvement justifies the complexity.
 
@@ -185,6 +220,7 @@ A 20%+ improvement justifies the complexity.
 ## From Paths to Decisions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     TRAIN["Trained NHITS\n(MQLoss)"] --> SIM[".simulate(n_paths=200)"]
     SIM --> PATHS["paths_df\nshape: (n_series×h, 202)"]

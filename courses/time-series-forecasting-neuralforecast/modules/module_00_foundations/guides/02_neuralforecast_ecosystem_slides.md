@@ -20,6 +20,7 @@ API, models, and the fit → predict → evaluate workflow
 ## What We Cover
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Setup &\nData Load"] --> B["fit() →\npredict()"]
     B --> C["cross_validation()"]
@@ -29,6 +30,11 @@ flowchart LR
 
 Real dataset throughout: **French Bakery Daily Sales**
 8 bakery items · daily frequency · ~550 observations per series
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Emphasize that we use real data throughout, not toy examples. The French Bakery dataset is small enough to train in minutes on a laptop but realistic enough to show meaningful patterns. Every code block in this deck is copy-paste ready. -->
 
@@ -43,6 +49,12 @@ Real dataset throughout: **French Bakery Daily Sales**
 ---
 
 ## French Bakery: Load and Inspect
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -62,14 +74,26 @@ print(f"Series: {df['unique_id'].nunique()}")
 print(f"Date range: {df['ds'].min()} → {df['ds'].max()}")
 print(f"Rows per series: {len(df) // df['unique_id'].nunique()}")
 ```
+</div>
 
 The format is already correct: `unique_id`, `ds`, `y`. No reshaping needed.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: This is intentional — datasetsforecast and the nixtla datasets repo always deliver data in this format. In production, the learner's own ETL pipeline needs to output this exact three-column structure. The most common mistake is delivering a wide-format DataFrame with one column per series. -->
 
 ---
 
 ## Train / Test Split
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 horizon = 7  # forecast 7 days ahead
@@ -86,8 +110,14 @@ test = (df.groupby('unique_id', group_keys=False)
 print(f"Train: {len(train):,} rows")
 print(f"Test:  {len(test):,} rows  ({horizon} days × {test['unique_id'].nunique()} series)")
 ```
+</div>
 
 Always split **before** fitting. neuralforecast respects temporal order — it never shuffles rows.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: Stress the temporal integrity point. Unlike tabular ML where you can shuffle and split randomly, time series splits must always keep earlier dates in train and later dates in test. The groupby-apply pattern here ensures each series is split at the correct cutoff independently. -->
 
@@ -126,6 +156,11 @@ Each stack $k$ processes a **different temporal resolution** via hierarchical in
 | `loss` | Forecast type |
 
 </div>
+</div>
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
 </div>
 
 <!-- Speaker notes: The multi-resolution decomposition is what makes NHITS outperform vanilla MLPs on seasonal data. Stack 1 might process at daily resolution, stack 2 at weekly, stack 3 at monthly. Each stack specializes in one frequency band. The sum of their outputs covers the full time series. -->

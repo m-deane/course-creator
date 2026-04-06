@@ -21,6 +21,7 @@ math: mathjax
 > Do other series carry information about the target that is not already in the target's own history?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1["Correlated\nco-variables exist?"]
     Q1 -->|No| UV["Univariate\nNHITS / NBEATS"]
@@ -32,6 +33,11 @@ flowchart TD
 ```
 
 **ETTm1:** Electrical load drives transformer temperature → physical reason exists → XLinear.
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Emphasize the "physical reason" criterion. Many datasets have statistically correlated series that are not causally related — they are both driven by a common factor (e.g., time of day). In those cases, a well-specified univariate model with calendar features often matches a multivariate model. The physical/causal test is a useful heuristic: if you can draw an arrow from variable A to variable B in a causal diagram, multivariate modeling is likely to help. -->
 
@@ -55,11 +61,22 @@ XLinear's VGM learns to assign high gate values to load variables when forecasti
 
 > Multivariate wins when correlation has a mechanism, not just a statistic.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: This physical story makes the ETTm1 benchmark meaningful beyond just numbers. Students should be able to describe why HUFL -> OT is a real predictive relationship. When they see XLinear outperform NHITS on this dataset, they can attribute it specifically to the VGM learning these cross-series relationships. This is much more satisfying than "the model found a pattern in the data." -->
 
 ---
 
 ## Univariate NHITS vs. Multivariate XLinear: Code
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast.models import NHITS, XLinear
@@ -81,8 +98,14 @@ cv_df = nf.cross_validation(
     df=Y_df, val_size=11520, test_size=11520
 )
 ```
+</div>
 
 Same API. Fundamentally different architectures. The benchmark tells the story.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: One of NeuralForecast's great strengths is that you can benchmark radically different architectures with identical code — just change the models list. NHITS internally loops over each unique_id and trains a separate model. XLinear receives all 7 series simultaneously and shares parameters across them. The API hides this complexity, which is why n_series is the key parameter to get right when using XLinear. -->
 
@@ -100,6 +123,12 @@ Same API. Fundamentally different architectures. The benchmark tells the story.
 | VGM | Channel MLP input dimension: $N$ |
 | Prediction Head | Output reshape: $(B, H \times N)$ |
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Always count before setting
 n_unique = Y_df["unique_id"].nunique()
@@ -109,8 +138,14 @@ print(f"n_series should be: {n_unique}")
 # - Shape errors (n_series > actual)
 # - Missing cross-variable information (n_series < actual)
 ```
+</div>
 
 **Never guess. Always count.**
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Shape errors from n_series mismatch are a common source of frustration. The error messages from PyTorch can be cryptic — students might see a matrix multiplication error that is hard to trace back to n_series. Make it a habit: count unique_ids first, set n_series second. For ETTm1 this is always 7 (HUFL, HULL, MUFL, MULL, LUFL, LULL, OT). -->
 
@@ -353,6 +388,18 @@ print(per_series.sort_values("mae"))
 5. **Alignment is required:** all series must have identical timestamps before XLinear training
 
 <!-- Speaker notes: End with these five takeaways. Ask students to recall one ETTm1 example for each point: (1) load -> temperature causality, (2) n_series=7 for ETTm1, (3) VGM gating of HUFL for OT prediction, (4) hidden_size=512 as starting point, (5) 69680 timestamps per series alignment check. Connecting abstract principles to concrete ETTm1 examples helps retention. -->
+
+<div class="flow">
+<div class="flow-step mint">Multivariate beats univar...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">`n_series` must match</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">VGM gates exogenous featu...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">Tune in order:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">Alignment is required:</div>
+</div>
 
 ---
 

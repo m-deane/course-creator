@@ -1,6 +1,29 @@
 # Hyperparameter Tuning for Neural Forecasters
 
+> **Reading time:** ~15 min | **Module:** 1 — Point Forecasting | **Prerequisites:** Module 0
+
 ## Start Here: See the Impact of input_size
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+Run this first.
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -22,6 +45,7 @@ for input_size in [7, 14, 28, 56]:
     results[input_size] = score
     print(f"input_size={input_size:3d}  MAE={score:.2f}")
 ```
+</div>
 
 Run this first. It shows the most important hyperparameter decision.
 
@@ -30,6 +54,15 @@ Run this first. It shows the most important hyperparameter decision.
 ## The Four Key Hyperparameters
 
 Neural forecasters expose many parameters, but four decisions drive most of the quality difference:
+
+<div class="callout-key">
+<strong>Key Point:</strong> Neural forecasters expose many parameters, but four decisions drive most of the quality difference:
+
+| Parameter | What it controls | Rule of thumb |
+|---|---|---|
+| `h` | Forecast horizon | Match you...
+</div>
+
 
 | Parameter | What it controls | Rule of thumb |
 |---|---|---|
@@ -46,6 +79,11 @@ The most impactful tuning decision is `input_size`. The others follow.
 
 `input_size` is the number of historical observations the model sees when making a forecast. Too small: the model lacks context. Too large: the model overfits to irrelevant history or trains slowly.
 
+<div class="callout-key">
+<strong>Key Point:</strong> `input_size` is the number of historical observations the model sees when making a forecast.
+</div>
+
+
 ### Rule of Thumb: 2–4× the Horizon
 
 For `h=7`:
@@ -57,6 +95,14 @@ For `h=7`:
 
 With weekly data and `h=7`, an `input_size=28` gives the model four complete weekly cycles. The NHITS MaxPool layers can extract the weekly pattern at multiple scales. If you are forecasting daily bakery sales and the summer slowdown matters, extend to `input_size=112` or `input_size=365` to give the model access to annual patterns.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 # Short horizon — keep lookback tight
 model_short = NHITS(h=7, input_size=14, max_steps=500)
@@ -67,6 +113,7 @@ model_long = NHITS(h=30, input_size=90, max_steps=1000)
 # Annual patterns — maximize lookback
 model_annual = NHITS(h=7, input_size=365, max_steps=1500)
 ```
+</div>
 
 ### The Validation Curve
 
@@ -86,6 +133,11 @@ There is typically a sweet spot — the model starts overfitting or spending cap
 
 NeuralForecast normalizes input windows before passing them to the model, and denormalizes outputs to the original scale. The `scaler_type` controls how this normalization is computed.
 
+<div class="callout-warning">
+<strong>Warning:</strong> NeuralForecast normalizes input windows before passing them to the model, and denormalizes outputs to the original scale.
+</div>
+
+
 | scaler_type | Formula | Use when |
 |---|---|---|
 | `"standard"` | $(x - \mu) / \sigma$ | Approximately Gaussian data |
@@ -102,6 +154,14 @@ $$x_{\text{scaled}} = \frac{x - \text{median}(x)}{\text{IQR}(x)}$$
 
 A single Christmas surge does not distort the normalization for the entire series.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```python
 # Compare scalers on bakery data
 from neuralforecast import NeuralForecast
@@ -117,6 +177,7 @@ for scaler in scalers:
     score = mae(cv["y"], cv["NHITS"]).mean()
     print(f"scaler={scaler:10s}  MAE={score:.2f}")
 ```
+</div>
 
 ---
 
@@ -124,7 +185,18 @@ for scaler in scalers:
 
 The loss function determines what the model minimizes during training, which directly determines what "best forecast" means.
 
+<div class="callout-insight">
+<strong>Insight:</strong> The loss function determines what the model minimizes during training, which directly determines what "best forecast" means.
+</div>
+
+
 ### Available Loss Functions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast.losses.pytorch import MAE, MSE, MQLoss, HuberLoss
@@ -141,6 +213,7 @@ model_mq = NHITS(h=7, input_size=28, loss=MQLoss(), max_steps=500)
 # Huber — MSE near zero, MAE for large errors
 model_huber = NHITS(h=7, input_size=28, loss=HuberLoss(delta=1.0), max_steps=500)
 ```
+</div>
 
 ### Which Loss to Choose
 
@@ -163,9 +236,36 @@ MSE squares the error — a single day with error 100 contributes 10,000 to the 
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">MAE</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">MSE: Concrete Impact</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## max_steps and Learning Rate
 
 ### max_steps
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### max_steps
+
+`max_steps` is the number of gradient descent steps during training.
+</div>
+
 
 `max_steps` is the number of gradient descent steps during training. NeuralForecast uses the full dataset (with windowing) at each step.
 
@@ -362,3 +462,26 @@ flowchart LR
 - **Notebook 01**: Train NHITS on bakery data, evaluate with MAE and MSE
 - **Notebook 02**: Cross-validation — compare NHITS vs DLinear, visualize error distributions
 - **Guide (Module 02)**: Probabilistic forecasting with MQLoss and conformal prediction
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_hyperparameter_tuning.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_training_nhits.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

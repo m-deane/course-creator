@@ -27,11 +27,22 @@ math: mathjax
 
 **Most impactful first**: tune `input_size` before anything else.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Open by orienting learners to what actually matters. Many practitioners get distracted by model architecture choices when the biggest gain comes from simply providing the right amount of historical context via input_size. For bakery sales data, moving from input_size=7 to input_size=28 typically reduces MAE by 20-30%. Scaler choice matters less but is important for robustness. Loss function determines the statistical property being optimized. max_steps is about training duration. -->
 
 ---
 
 # input_size: The Most Important Choice
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 results = {}
@@ -43,6 +54,7 @@ for input_size in [7, 14, 28, 56]:
     cv = nf.cross_validation(df, n_windows=4)
     results[input_size] = mae(cv["y"], cv["NHITS"]).mean()
 ```
+</div>
 
 Typical result on bakery daily data:
 
@@ -53,6 +65,11 @@ Typical result on bakery daily data:
 | **28** | **~16.8** | **4 weekly cycles** |
 | 56 | ~16.2 | 8 weekly cycles |
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through this table. The MAE numbers are illustrative but representative of the pattern seen on real bakery data. The improvement from 7 to 28 is large because NHITS's multi-rate MaxPool layers need multiple complete weekly cycles to extract the weekly pattern at different resolutions. Beyond 56, improvements diminish and may even reverse if very old data is irrelevant (e.g., pre-expansion inventory) or if the model starts overfitting. -->
 
 ---
@@ -62,6 +79,7 @@ Typical result on bakery daily data:
 For `h=7` (weekly forecast), `input_size=28` gives NHITS **four complete weekly cycles**.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph input_size28["input_size = 28 days"]
         W1["Week 1\n(Mon–Sun)"]
@@ -81,6 +99,11 @@ flowchart LR
 - Stack 2 (pool=2): sees 14 points → learns weekly pattern
 - Stack 3 (no pool): sees all 28 → handles daily residuals
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: This diagram shows why 4× works structurally. Each NHITS stack uses a different pooling kernel. With input_size=28 and a stack with MaxPool(kernel=4), the effective sequence length is 7 — exactly one period of the weekly cycle, giving the model one weekly "summary". With MaxPool(kernel=2), it sees 14 points — two weekly cycles. Without pooling it sees all 28. This alignment between the seasonal period (7) and the pooling ratios (1x, 2x, 4x) is the reason 4× is the right default for daily data with weekly seasonality. -->
 
 ---
@@ -99,6 +122,11 @@ $$x_{\text{scaled}} = \frac{x - \text{center}}{\text{scale}}$$
 | `None` | — | — | Depends on data |
 
 **For bakery sales**: use `"robust"`. Holiday spikes (3× normal sales) distort mean and std but not median and IQR.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Scaler_type is applied per-window, not per-series. For each training window, NHITS computes the center and scale, normalizes, runs the MLP, then denormalizes the output. This means a window containing a Christmas spike won't distort the normalization for future windows. The robust scaler uses the median as center and the IQR (75th percentile minus 25th percentile) as scale. These statistics are resistant to outliers — a single extreme value does not shift them. For sales data with promotional spikes or holiday effects, this is the right default. -->
 
@@ -128,9 +156,16 @@ Normalized Christmas: (500-90)/100 = 4.1
 
 </div>
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 NHITS(h=7, input_size=28, max_steps=500, scaler_type="robust")
 ```
+</div>
 
 <!-- Speaker notes: This comparison makes the scaler difference concrete. With standard scaling, a single Christmas week with 500 units sold (vs 80-200 normally) produces a scaled value of 6.9, which contributes a squared gradient about 50x larger than normal days when using MSE loss. With robust scaling, the same day normalizes to 4.1, which is still an outlier but the distortion is much smaller. The robust scaler shifts the model's focus toward the typical weekly pattern rather than the exceptional days. -->
 
@@ -293,6 +328,7 @@ print(per_series.sort_values(ascending=False))
 # Tuning Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["1. Baseline\nDLinear cross_validation"] --> B["2. NHITS default\ninput_size=2×h, scaler=robust"]
     B --> C{Beat baseline?}
@@ -345,6 +381,18 @@ print(f"NHITS:    {mae(cv_nhits['y'], cv_nhits['NHITS']).mean():.2f}")
 6. Always **benchmark against DLinear** — neural models must earn their complexity
 
 <!-- Speaker notes: Summarize the five actionable rules. Emphasize that the most common mistake is tuning model architecture (NHITS vs NBEATS vs PatchTST) before tuning the data input (input_size, scaler_type). The architecture is less important than the quality of the input window. Next: Notebook 01 trains NHITS on the bakery data, evaluates with MAE and MSE, and plots the actual vs predicted. Notebook 02 puts cross_validation() into practice and compares NHITS against DLinear. -->
+
+<div class="flow">
+<div class="flow-step mint">`input_size`</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">`scaler_type="robust"`</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">`MAE()` loss</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">`max_steps=500`</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">`cross_validation()`</div>
+</div>
 
 ---
 

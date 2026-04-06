@@ -1,10 +1,20 @@
 # Interpreting Attribution Tensors
 
+> **Reading time:** ~13 min | **Module:** 4 — Explainability | **Prerequisites:** Module 1
+
 ## In Brief
 
 Running `.explain()` returns an `explanations` dictionary with attribution tensors. Raw tensors are not interpretable until you know what each dimension means. This guide maps every dimension, shows how to slice the tensors into business-relevant views, and covers three visualization techniques: heatmaps, waterfall plots, and bar charts.
 
 Start by parsing the dictionary:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # After fitting and calling .explain()
@@ -21,12 +31,25 @@ print("baseline_pred shape: ", baseline_pred.shape)
 # futr_exog shape:      (1, 28, 1, 1, 84, 2)
 # baseline_pred shape:  (1, 28, 1, 1)
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Running `.explain()` returns an `explanations` dictionary with attribution tensors. Raw tensors are not interpretable until you know what each dimension means.
+</div>
+
 
 ---
 
 ## 1. The `insample` Tensor: Past Lag Attributions
 
 ### Shape Reference
+
+<div class="callout-insight">
+<strong>Insight:</strong> ### Shape Reference
+
+`insample` has shape `[batch, horizon, series, output, input_size, 2]`.
+</div>
+
 
 `insample` has shape `[batch, horizon, series, output, input_size, 2]`.
 
@@ -42,6 +65,14 @@ print("baseline_pred shape: ", baseline_pred.shape)
 The last dimension always contains two values: the actual input value at that lag, and the attribution score assigned to that lag.
 
 ### Extracting Lag Attributions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -60,6 +91,7 @@ most_important_lag = np.argmax(np.abs(lag_attributions), axis=1)
 print("Most important lag per forecast step:", most_important_lag)
 # Typical output: [0 0 0 0 1 0 ...] — lag 0 (most recent) is usually dominant
 ```
+</div>
 
 ### What "Lag 0" Means
 
@@ -72,6 +104,13 @@ Lag 0 is the most recent observation before the forecast origin. Lag 1 is one pe
 ## 2. The `futr_exog` Tensor: Exogenous Feature Attributions
 
 ### Shape Reference
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### Shape Reference
+
+`futr_exog` has shape `[batch, horizon, series, output, input_size+horizon, n_features]`.
+</div>
+
 
 `futr_exog` has shape `[batch, horizon, series, output, input_size+horizon, n_features]`.
 
@@ -87,6 +126,14 @@ Lag 0 is the most recent observation before the forecast origin. Lag 1 is one pe
 Future exogenous features span the full `input_size + horizon` window because the model can see past values of the feature (in the lookback) and future values (in the forecast horizon). The `published` column is known for past and future dates; same for `is_holiday`.
 
 ### Extracting Feature Attributions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # Feature index mapping (matches futr_exog_list order)
@@ -111,12 +158,24 @@ holiday_total   = holiday_attr.sum()
 print(f"published total attribution: {published_total:.1f}")
 print(f"is_holiday total attribution: {holiday_total:.1f}")
 ```
+</div>
 
 ---
 
 ## 3. Visualization Technique 1: Heatmap of Lag Importances
 
 A heatmap with forecast steps on the y-axis and lag positions on the x-axis reveals how the model's attention to historical data changes across the horizon.
+
+<div class="callout-info">
+<strong>Info:</strong> A heatmap with forecast steps on the y-axis and lag positions on the x-axis reveals how the model's attention to historical data changes across the horizon.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -162,6 +221,7 @@ fig = plot_lag_attribution_heatmap(insample, "NHITS Lag Attribution: Blog Traffi
 plt.savefig("../resources/lag_attribution_heatmap.png", dpi=150)
 plt.show()
 ```
+</div>
 
 **Reading the heatmap:** dark red cells indicate lags that push the forecast up; dark blue cells push it down. A column of high-magnitude cells at lag 0 confirms the model relies heavily on recent history, which is expected and healthy for a daily series.
 
@@ -170,6 +230,11 @@ plt.show()
 ## 4. Visualization Technique 2: Waterfall Plot with SHAP
 
 A waterfall plot shows how each feature contribution adds or subtracts from the baseline prediction to arrive at the final forecast. SHAP's built-in waterfall is the clearest way to communicate this to stakeholders.
+
+<div class="callout-warning">
+<strong>Warning:</strong> A waterfall plot shows how each feature contribution adds or subtracts from the baseline prediction to arrive at the final forecast.
+</div>
+
 
 ```python
 import shap
@@ -228,6 +293,11 @@ For blog traffic: if publishing an article (`published=1`) adds a large positive
 ## 5. Visualization Technique 3: Bar Chart of Feature Importance
 
 A summary bar chart aggregates attributions across all forecast steps and shows net impact per feature.
+
+<div class="callout-insight">
+<strong>Insight:</strong> A summary bar chart aggregates attributions across all forecast steps and shows net impact per feature.
+</div>
+
 
 ```python
 import matplotlib.pyplot as plt
@@ -350,3 +420,26 @@ This narrative can be included in a dashboard, a model card, or a presentation t
 - `notebooks/01_explain_api.ipynb` — Run `.explain()` end-to-end on synthetic blog traffic data, extract lag attributions, visualize
 - `notebooks/02_attribution_visualization.ipynb` — Compare all three methods, generate waterfall and heatmap, write business narrative
 - `exercises/01_explainability_exercises.py` — Self-check: verify dict keys, extract shapes, find the dominant lag
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_interpreting_attributions.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_explain_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

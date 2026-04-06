@@ -1,10 +1,20 @@
 # Production Pipeline: From Raw Data to Operational Decisions
 
+> **Reading time:** ~13 min | **Module:** 6 — Production Patterns | **Prerequisites:** Modules 1-5
+
 ## In Brief
 
 This guide shows how to build a complete, production-ready forecasting pipeline using NeuralForecast. You will wrap data ingestion, model training, probabilistic simulation, and explainability into a single `ForecastPipeline` class that makes a complete business decision in one call.
 
 Start here: the pipeline below runs end-to-end on the French Bakery dataset and answers "How many baguettes should we order for next week at an 80% service level?"
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 from neuralforecast import NeuralForecast
@@ -51,6 +61,12 @@ q80_col = "NHITS-MQLoss-q-0.8"
 order_qty = int(forecast[q80_col].sum())
 print(f"\n80% service level order for the week: {order_qty} baguettes")
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> This guide shows how to build a complete, production-ready forecasting pipeline using NeuralForecast. You will wrap data ingestion, model training, probabilistic simulation, and explainability into a single `ForecastPipeline` class that makes a complete business decision in one call.
+</div>
+
 
 ---
 
@@ -58,15 +74,50 @@ print(f"\n80% service level order for the week: {order_qty} baguettes")
 
 Ad-hoc notebooks do not survive contact with production. Three failure modes appear within the first month of deployment:
 
+<div class="callout-insight">
+<strong>Insight:</strong> Ad-hoc notebooks do not survive contact with production.
+</div>
+
+
 1. **Data drift without detection** — the pipeline trains on historical data once; when the distribution shifts, forecasts degrade silently.
 2. **Manual retraining triggers** — someone remembers to retrain every quarter, or doesn't.
 3. **Non-reproducible forecasts** — different team members run different notebook cells in different orders.
+
+
+<div class="flow">
+<div class="flow-step mint">1. Data drift without detection</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Manual retraining triggers</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Non-reproducible forecasts</div>
+</div>
 
 A `ForecastPipeline` class solves all three by making every stage explicit, testable, and callable from a scheduler.
 
 ---
 
 ## 2. Pipeline Architecture
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-key">
+<strong>Key Point:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+Each stage is a method on `ForecastPipeline`.
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart LR
@@ -87,12 +138,34 @@ flowchart LR
     M -->|sliding window| G
     M -->|expanding window| G
 ```
+</div>
 
 Each stage is a method on `ForecastPipeline`. This makes unit testing trivial and lets orchestrators (Airflow, Prefect, GitHub Actions) call individual stages.
 
 ---
 
 ## 3. The ForecastPipeline Class
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-info">
+<strong>Info:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+---
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -298,12 +371,18 @@ class ForecastPipeline:
         if self._nf is None:
             raise RuntimeError("Call .train() before generating forecasts.")
 ```
+</div>
 
 ---
 
 ## 4. Model Selection: NHITS vs XLinear
 
 The choice of model depends on three factors: series length, available features, and interpretability requirements.
+
+<div class="callout-warning">
+<strong>Warning:</strong> The choice of model depends on three factors: series length, available features, and interpretability requirements.
+</div>
+
 
 | Factor | Prefer NHITS | Prefer XLinear |
 |---|---|---|
@@ -314,6 +393,12 @@ The choice of model depends on three factors: series length, available features,
 | Data distribution | Non-linear, seasonal | Near-linear trends |
 
 **Decision rule:**
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def select_model(series_length: int, n_features: int, needs_explanation: bool) -> str:
@@ -331,8 +416,29 @@ def select_model(series_length: int, n_features: int, needs_explanation: bool) -
         return "nhits"
     return "nhits"  # default for long, feature-rich series
 ```
+</div>
 
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">4. Model Selection: NHITS</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">XLinear</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## 5. Retraining Strategies
 
@@ -443,3 +549,26 @@ print(f"Daily breakdown     : {decision['daily_breakdown']}")
 ---
 
 **Next:** `02_neuralforecast_patterns.md` — GPU training, custom losses, wandb logging, and error-handling patterns.
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_production_pipeline.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_end_to_end_pipeline.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

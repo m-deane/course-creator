@@ -1,14 +1,46 @@
 # Training Quantile Models: MQLoss and the Pinball Loss
 
+> **Reading time:** ~16 min | **Module:** 2 — Probabilistic Forecasting | **Prerequisites:** Module 1
+
 ## In Brief
 
 NeuralForecast produces probabilistic forecasts by training with a loss function that directly optimizes quantile accuracy. The multi-quantile loss (MQLoss) is a sum of pinball losses — one per quantile level per time step. Understanding this loss function tells you exactly what the model is optimizing, what its output columns mean, and why it produces marginals rather than joint distributions.
 
-> **Key Insight:** MQLoss trains the model to minimize a weighted asymmetric penalty. Overforecasting and underforecasting are penalized differently depending on the quantile level. This is what makes the output a calibrated quantile, not just a point estimate with noise.
+<div class="callout-insight">
+<strong>Insight:</strong> MQLoss trains the model to minimize a weighted asymmetric penalty. Overforecasting and underforecasting are penalized differently depending on the quantile level. This is what makes the output a calibrated quantile, not just a point estimate with noise.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> NeuralForecast produces probabilistic forecasts by training with a loss function that directly optimizes quantile accuracy. The multi-quantile loss (MQLoss) is a sum of pinball losses — one per quantile level per time step.
+</div>
+
 
 ---
 
 ## Start Here: Training with MQLoss
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+Output columns:
+  unique_id
+  ds
+  NHITS        ← point forecast (mean / median depending on loss)
+  NHITS-lo-50  ← 25th perce...
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -54,6 +86,7 @@ print("Output columns:")
 for col in forecast.columns:
     print(f"  {col}")
 ```
+</div>
 
 Expected output:
 ```
@@ -77,6 +110,11 @@ The `level` parameter controls the **coverage** of each prediction interval. `le
 
 The pinball loss (also called the quantile loss or check function) is an asymmetric loss function that, when minimized in expectation, produces the desired quantile of the distribution.
 
+<div class="callout-key">
+<strong>Key Point:</strong> The pinball loss (also called the quantile loss or check function) is an asymmetric loss function that, when minimized in expectation, produces the desired quantile of the distribution.
+</div>
+
+
 For quantile level $q \in (0, 1)$ and residual $u = y - \hat{y}$:
 
 $$\rho_q(u) = \begin{cases} q \cdot u & \text{if } u \geq 0 \quad \text{(underprediction)} \\ (q - 1) \cdot u & \text{if } u < 0 \quad \text{(overprediction)} \end{cases}$$
@@ -84,6 +122,14 @@ $$\rho_q(u) = \begin{cases} q \cdot u & \text{if } u \geq 0 \quad \text{(underpr
 Which simplifies to:
 
 $$\rho_q(u) = u \cdot (q - \mathbf{1}[u < 0])$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # ── Visualize the pinball loss for different quantiles ────────────────────────
@@ -137,6 +183,7 @@ print(f"  Loss = (0.90 - 1) × (-10) = {(0.90 - 1) * (-10):.1f}")
 print("\nFor q=0.90: underprediction is 9x more costly than overprediction.")
 print("The optimal predictor is the 90th percentile — below which you're right 90% of the time.")
 ```
+</div>
 
 ### Why This Produces the Quantile
 
@@ -150,9 +197,24 @@ The minimizer of the expected pinball loss $E[\rho_q(Y - c)]$ over constant $c$ 
 
 MQLoss trains all requested quantile levels simultaneously in a single forward pass:
 
+<div class="callout-insight">
+<strong>Insight:</strong> MQLoss trains all requested quantile levels simultaneously in a single forward pass:
+
+$$\mathcal{L}_{\text{MQ}} = \frac{1}{H \cdot |Q|} \sum_{t=1}^{H} \sum_{q \in Q} \rho_q\!\left(y_t - \hat{q}_t^q\ri...
+</div>
+
+
 $$\mathcal{L}_{\text{MQ}} = \frac{1}{H \cdot |Q|} \sum_{t=1}^{H} \sum_{q \in Q} \rho_q\!\left(y_t - \hat{q}_t^q\right)$$
 
 where $Q$ is the set of quantile levels and $H$ is the forecast horizon.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # ── Compare single vs multi-quantile training ─────────────────────────────────
@@ -184,12 +246,34 @@ print("MQLoss level=[50, 80, 90] trains quantiles:")
 print("  q ∈ {0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95}")
 print("  (symmetric around each level: level=80 → q=0.10 and q=0.90)")
 ```
+</div>
 
 ---
 
 ## Interpreting the Output Columns
 
 NeuralForecast uses a consistent naming convention for quantile output columns:
+
+<div class="callout-warning">
+<strong>Warning:</strong> NeuralForecast uses a consistent naming convention for quantile output columns:
+
+
+
+
+example.py
+
+
+```python
+# ── Decode output column names ────────────────────────────────────────────────
+print("Colum...
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # ── Decode output column names ────────────────────────────────────────────────
@@ -222,6 +306,7 @@ for level in [80, 90]:
     ).mean()
     print(f"Empirical coverage at {level}%: {inside:.1%} (target: {level}%)")
 ```
+</div>
 
 ---
 
@@ -431,6 +516,26 @@ print("\nTarget: 80%. Models close to 80% are well-calibrated.")
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">MQLoss</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">DistributionLoss</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Why This Is Necessary But Not Sufficient
 
 MQLoss gives you well-calibrated marginal quantiles. For single-step decisions, this is exactly what you need.
@@ -454,7 +559,20 @@ print("Module 3: Generating sample paths with NeuralForecast ConformalIntervals.
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 ### Builds on
 - Guide 01: Marginal vs joint distributions — the conceptual foundation
@@ -474,3 +592,31 @@ print("Module 3: Generating sample paths with NeuralForecast ConformalIntervals.
 4. **More levels** produce a smoother fan chart but cost more computation — `level=[80, 90]` is a good default.
 5. **MQLoss vs DistributionLoss:** MQLoss is nonparametric and robust; DistributionLoss is more appropriate when you know the data's distributional family.
 6. **Marginal, not joint:** MQLoss produces per-step quantiles that are correct individually but cannot describe multi-period behavior.
+
+
+<div class="flow">
+<div class="flow-step mint">1. Pinball loss</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. MQLoss</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Output column convention:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. More levels</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. MQLoss vs DistributionLoss:</div>
+</div>
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_training_quantile_models.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_quantiles_not_enough.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

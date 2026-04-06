@@ -19,6 +19,7 @@ From raw data to operational decisions in a single, testable class
 ## What We Build
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Raw Data] --> B[Ingest & Validate]
     B --> C[Train Model]
@@ -30,6 +31,11 @@ flowchart LR
 ```
 
 One class. One call chain. Reproducible results every run.
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: The key insight is that every stage is a method, so every stage is independently testable. A scheduler calls pipeline.ingest().train().predict(), and the output is always the same for the same input. No notebook cells, no manual steps. -->
 
@@ -68,11 +74,22 @@ Someone forgets. Or leaves the team. Or the quarter gets busy.
 
 **Failure 3: Non-reproducible results** — different cells executed in different orders produce different outputs. Debugging takes days.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Each of these has happened at real companies. Data drift is the most insidious because it is silent. Manual retraining is the most common. Non-reproducibility is the most frustrating to debug. A pipeline class eliminates all three. -->
 
 ---
 
 ## The ForecastPipeline Class: Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 class ForecastPipeline:
@@ -94,14 +111,26 @@ class ForecastPipeline:
     def service_level_order(self, forecast, service_level=0.8) -> dict:
         """Convert quantile forecast to order quantity."""
 ```
+</div>
 
 Each method returns `self` (except the last three) — enabling method chaining.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: The method chaining pattern (fluent interface) is intentional. pipeline.ingest().train() is readable and enforces stage order. Each method validates its preconditions — ingest checks for duplicate timestamps, train checks that ingest was called. Fail-fast design. -->
 
 ---
 
 ## Stage 1: Ingest & Validate
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def ingest(self, df, id_col, ds_col, y_col):
@@ -122,8 +151,14 @@ def ingest(self, df, id_col, ds_col, y_col):
     if min_len < 2 * self.horizon:
         raise ValueError("Insufficient history")
 ```
+</div>
 
 Validate loudly. Silent bad data is worse than a raised exception.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Two validations that catch real production bugs. Duplicate timestamps happen when ETL pipelines re-run. Insufficient history happens when new products are added to the catalog. Both would produce silently wrong forecasts without these checks. -->
 

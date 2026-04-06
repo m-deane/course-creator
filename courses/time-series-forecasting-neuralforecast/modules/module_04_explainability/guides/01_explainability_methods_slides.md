@@ -26,11 +26,30 @@ Three problems that un-explainable models create:
 
 > "Publishing an article raised the 28-day visitor forecast by ~610." That sentence is actionable. A 28-day matrix of numbers is not.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Ask the room: has anyone had a model rejected by a risk committee not because it was inaccurate but because it could not be explained? Attribution methods solve that problem. -->
+
+<div class="flow">
+<div class="flow-step mint">Trust gap</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Silent failures</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Compliance</div>
+</div>
 
 ---
 
 # The .explain() API in One Slide
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast import NeuralForecast
@@ -51,8 +70,14 @@ fcsts_df, explanations = nf.explain(
     explainer="IntegratedGradients"   # or InputXGradient or ShapleyValueSampling
 )
 ```
+</div>
 
 **`explanations`** is a dict with keys: `insample`, `futr_exog`, `baseline_predictions`
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Show this slide twice if needed. The key point is that .explain() is a drop-in complement to .predict(). No architectural changes required. -->
 
@@ -67,6 +92,11 @@ fcsts_df, explanations = nf.explain(
 | Additive? | Yes | No | Yes |
 | ReLU safe? | Yes | No | Yes |
 | Best for | Default use | Production latency | Audit/compliance |
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: Walk through each column. Emphasize that "additive" means attributions sum to the prediction difference from baseline -- this is what makes them trustworthy and auditable. -->
 
@@ -89,13 +119,17 @@ We want to know: how much did input feature $i$ contribute to the forecast?
 **IG's solution:** integrate the gradient along the straight-line path from a baseline input $x'$ to the actual input $x$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Baseline x'\n(zeros or mean)"] --> B["α = 0.25\nx' + 0.25(x-x')"] --> C["α = 0.50\nx' + 0.50(x-x')"] --> D["α = 0.75\nx' + 0.75(x-x')"] --> E["Actual x\nα = 1.0"]
-    style A fill:#f99
-    style E fill:#9f9
 ```
 
 Gradient is evaluated at each step. The area under the curve is the attribution.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Analogy: think of driving from city A to city B. A single-point gradient only tells you the slope at the destination. IG tells you the total elevation change along the full route. -->
 
@@ -157,6 +191,12 @@ $$\text{IxG}_i(x) = x_i \times \frac{\partial f(x)}{\partial x_i}$$
 
 **The ReLU saturation problem:**
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # ReLU kills gradients when neuron is off
 # If a hidden unit h = max(0, Wx + b) and Wx + b < 0:
@@ -164,6 +204,7 @@ $$\text{IxG}_i(x) = x_i \times \frac{\partial f(x)}{\partial x_i}$$
 # IxG attributes 0 to x_i even if x_i was large
 # The feature appears unimportant — but it was simply saturated
 ```
+</div>
 
 **Verdict:** Use IxG for first-pass exploratory analysis and production latency-constrained settings. Do not use it as the sole evidence in an audit.
 
@@ -198,6 +239,7 @@ $$\phi_i = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!(|N|-|S|-1)!}{|N|!} \l
 # Shapley Sampling: Monte Carlo Approximation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Sample random permutation of all features] --> B[For each position k in permutation]
     B --> C["Compute f(features 1..k) — coalition with feature i"]
@@ -219,6 +261,7 @@ flowchart TD
 # Choosing a Method: Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Need to explain a forecast?] --> B{Latency constraint?}
     B -- "< 100ms required" --> C[InputXGradient\nSingle pass\nWatch for ReLU bias]

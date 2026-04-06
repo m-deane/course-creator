@@ -20,6 +20,7 @@ From point estimates to full predictive distributions
 ## What We Cover
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Point Forecasting] --> B[Probabilistic Forecasting]
     B --> C[Distributional Forecasting]
@@ -28,6 +29,11 @@ flowchart LR
 ```
 
 By the end of this deck you will be able to explain why uncertainty quantification changes decisions, distinguish the three forecasting paradigms, and describe the role of each library in the nixtla stack.
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
 
 <!-- Speaker notes: Walk through the roadmap so learners know where we are going. Stress that the goal is not to memorize definitions but to understand the practical difference these paradigms make in real decisions. -->
 
@@ -69,6 +75,11 @@ Decision-maker asks: what does understocking cost versus overstocking?
 </div>
 </div>
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: This side-by-side is the core message. The point forecast is not wrong — 142 is still the median. The problem is it gives no signal about downside risk. The probabilistic forecast enables explicit cost-benefit analysis. -->
 
 ---
@@ -86,6 +97,11 @@ $$\text{Cost}(\text{understock}) \neq \text{Cost}(\text{overstock})$$
 **3. Cascade failures in pipelines**
 Upstream point forecasts feed downstream models. Hidden uncertainty compounds at every step.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: These three failure modes come up repeatedly in industry. Emphasize cascade failures for learners working in large organizations where forecasting outputs feed into pricing models, logistics optimizers, or financial planning tools. Each hidden uncertainty multiplies. -->
 
 ---
@@ -101,6 +117,7 @@ Upstream point forecasts feed downstream models. Hidden uncertainty compounds at
 ## Three Paradigms
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Forecasting Methods] --> B[Point Forecasting]
     A --> C[Probabilistic Forecasting]
@@ -116,6 +133,11 @@ flowchart TD
     D --> D2["Loss: CRPS / MQLoss"]
     D --> D3["→ Sample paths available"]
 ```
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The key insight is that these are not completely different models — they are often the same architecture with a different loss function. NHITS can be a point forecaster with MAE or a distributional forecaster with MQLoss. The architecture does the heavy lifting; the loss function shapes what it learns to produce. -->
 
@@ -185,10 +207,17 @@ $$\text{CRPS}(F, y) = \int_{-\infty}^{\infty} \left(F(z) - \mathbf{1}[z \geq y]\
 
 **In practice:** `utilsforecast` computes CRPS for you.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from utilsforecast.losses import crps
 scores = crps(forecasts_df, actual_df)
 ```
+</div>
 
 <!-- Speaker notes: The integral form looks intimidating but the intuition is simple: CRPS penalizes the forecast CDF for being far from the step function that places all mass at the observed value. A sharp, well-calibrated CDF gets a low score. CRPS is to probabilistic forecasting what MAE is to point forecasting. -->
 
@@ -205,15 +234,12 @@ scores = crps(forecasts_df, actual_df)
 ## Three Libraries, One Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["datasetsforecast\nBenchmark datasets\nin nixtla format"] -->|"unique_id, ds, y"| B["neuralforecast\nNeural models\nfit / predict / cv"]
     B -->|"Forecast DataFrames"| C["utilsforecast\nMetrics, reconciliation\naggregation"]
     C --> D[Decision]
 
-    style A fill:#e8f4f8
-    style B fill:#d4edda
-    style C fill:#fff3cd
-    style D fill:#f8d7da
 ```
 
 <div class="columns">

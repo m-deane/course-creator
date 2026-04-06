@@ -30,6 +30,11 @@ It **cannot** answer:
 - When is the latest safe **reorder point**?
 - What is my **worst-case day** this week?
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Recap the Module 02 cliffhanger. The audience already understands that quantiles fail. Now we introduce the solution. The key insight: quantiles give per-step marginals; we need the joint distribution over the whole horizon. -->
 
 ---
@@ -44,6 +49,11 @@ Each path is a **complete, internally consistent future**.
 
 If Monday is high in path $s$, Tuesday in path $s$ reflects the realistic follow-on — not an independent draw.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: The word "internally consistent" is the key differentiator. In a marginal quantile world, each day is drawn independently. In a sample path, the days co-vary as they do in real data. A high-demand Monday correlates with a high-demand Tuesday in the same path. -->
 
 ---
@@ -51,6 +61,7 @@ If Monday is high in path $s$, Tuesday in path $s$ reflects the realistic follow
 # Paths Fan Out From the Present
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     NOW["Current time T"] --> P1["Path 1: (y₁⁽¹⁾, ..., y_H⁽¹⁾)"]
     NOW --> P2["Path 2: (y₁⁽²⁾, ..., y_H⁽²⁾)"]
@@ -63,6 +74,11 @@ flowchart LR
     PS --> STAT
     STAT --> ANSWER["Compute statistics over results"]
 ```
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: This diagram is the mental model for the whole module. Each path starts from the same point (current time T) and fans out differently. The spread of paths represents genuine uncertainty. After generating all paths, we apply a business function to each one and compute statistics over those results. -->
 
@@ -85,6 +101,11 @@ Good for: "What is the 80th percentile **over the whole week**?"
 </div>
 
 Sample paths draw from $F_{1:H}$. Quantile forecasts only describe each $F_t$.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: This slide makes the mathematical distinction precise. Marginal distributions strip out the joint structure — they treat each step as if it were the only step. The joint distribution keeps the correlations intact. Sample paths are draws from the joint distribution, which is why they contain more information than marginal quantiles. -->
 
@@ -115,6 +136,12 @@ The function $f$ can be:
 
 # One Path in Code
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import numpy as np
 
@@ -130,6 +157,7 @@ print(f"paths.shape = {paths.shape}")  # (200, 14)
 # Each ROW is one complete plausible future
 print(paths[0].round(2))  # [-0.50, -0.23, 0.89, ...]
 ```
+</div>
 
 The shape convention: **rows are paths, columns are horizon steps**.
 
@@ -140,6 +168,12 @@ Every function you write operates on one row at a time.
 ---
 
 # The Universal Monte Carlo Template
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 def answer_business_question(paths, f, quantile=0.80):
@@ -161,6 +195,7 @@ max_80 = answer_business_question(
     paths, f=lambda p: p.max(), quantile=0.80
 )
 ```
+</div>
 
 <!-- Speaker notes: This template is copied verbatim into Notebook 02. The pattern is: define f, call the template, get your answer. The function is deliberately simple — a list comprehension followed by np.quantile. More complex functions (reorder timing, safety stock) follow exactly the same structure with a more elaborate f. -->
 

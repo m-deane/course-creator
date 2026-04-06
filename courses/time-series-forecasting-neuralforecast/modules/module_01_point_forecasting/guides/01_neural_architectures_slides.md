@@ -36,6 +36,11 @@ $$\underbrace{[y_{t-H+1}, \ldots, y_t]}_{\text{input window}} \xrightarrow{\text
 
 </div>
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This slide establishes the fundamental difference between classical and neural approaches. The direct multi-step output is key — instead of predicting one step and feeding it back recursively (which compounds errors), neural forecasters output the entire horizon in one forward pass. This is why they excel at long-horizon problems. -->
 
 ---
@@ -52,11 +57,22 @@ $$\underbrace{[y_{t-H+1}, \ldots, y_t]}_{\text{input window}} \xrightarrow{\text
 
 **Key insight**: More parameters $\neq$ better accuracy. NHITS uses structured inductive biases instead of raw capacity.
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through each row. Emphasize that NHITS sits in the sweet spot: it achieves Transformer-level accuracy at MLP-level speed. The parameter count is lower than NBEATS because hierarchical interpolation reduces the output dimension that each stack must predict directly. PatchTST should be reserved for long sequences or multi-channel problems. -->
 
 ---
 
 # MLP: The Baseline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast.models import MLP
@@ -69,12 +85,18 @@ model = MLP(
     max_steps=500
 )
 ```
+</div>
 
 - Flattens input window → dense layers → forecast vector
 - No temporal structure assumed
 - Must discover trend, seasonality from data alone
 
 **Always benchmark against MLP first.**
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: The MLP treats each time step as an independent feature — there is no architectural prior that values are ordered in time. The model can still learn temporal patterns from data, but it requires more training examples to do so. It is fast and easy to understand, making it a useful baseline before moving to more complex architectures. -->
 
@@ -83,6 +105,7 @@ model = MLP(
 # N-BEATS: Residual Decomposition
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     X["Input\nwindow"] --> B1["Block 1\nTrend basis"]
     B1 -->|backcast residual| B2["Block 2\nSeasonal basis"]
@@ -95,6 +118,11 @@ flowchart LR
 
 Each block explains what previous blocks missed.
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: N-BEATS introduced two key innovations. First, doubly residual stacking: each block outputs a backcast (what it explains from the input) and a forecast (its contribution to output). The next block processes what the current block could not explain. Second, interpretable basis: trend stack outputs are constrained to lie in a polynomial basis; seasonality stacks use a Fourier basis. This makes N-BEATS interpretable by construction. -->
 
 ---
@@ -104,6 +132,7 @@ Each block explains what previous blocks missed.
 Each stack sees the input at a different resolution:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     X["Input window [y_{t-27}, ..., y_t]"]
     X --> P1["MaxPool(kernel=4)\nCoarse — 7 points"]
@@ -236,6 +265,7 @@ df = pd.read_csv(url, parse_dates=["ds"])
 # Architecture Selection Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{Horizon length?}
     Q1 -->|"h ≤ 14"| Q2{Speed critical?}
@@ -261,6 +291,16 @@ flowchart TD
 6. For bakery data: **NHITS, h=7, input_size=28, scaler_type="robust"**
 
 <!-- Speaker notes: Summarize the five architectures covered. The practical message is that NHITS is the default. Learners should think of it as their go-to choice and only deviate when they have a specific reason: DLinear if the signal is simple, PatchTST if they have very long sequences or multiple correlated channels. Next up: Guide 02 covers hyperparameter tuning, where we will see that input_size and scaler_type have the largest impact on NHITS forecast quality. -->
+
+<div class="flow">
+<div class="flow-step mint">DLinear</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">N-BEATS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">NHITS</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">PatchTST</div>
+</div>
 
 ---
 

@@ -1,10 +1,20 @@
 # The Gaussian Copula Method for Sample Path Generation
 
+> **Reading time:** ~15 min | **Module:** 3 — Sample Paths | **Prerequisites:** Module 2
+
 ## In Brief
 
 NeuralForecast's `.simulate()` uses the Gaussian Copula method to generate sample paths. It starts from marginal quantile forecasts — which NHITS with MQLoss already produces — and builds correlated joint trajectories that respect the temporal autocorrelation of your data. This guide walks through all six steps with mathematics and working code.
 
 Start with the complete working example, then study each step in detail.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import numpy as np
@@ -41,10 +51,37 @@ paths_df = nf.models[0].simulate(n_paths=100)
 print(paths_df.shape)    # (7, 102) — 7 horizon steps, 100 path columns + id/ds
 print(paths_df.columns[:5].tolist())  # ['unique_id', 'ds', 'sample_1', 'sample_2', ...]
 ```
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> NeuralForecast's `.simulate()` uses the Gaussian Copula method to generate sample paths. It starts from marginal quantile forecasts — which NHITS with MQLoss already produces — and builds correlated joint trajectories that respect the temporal autocorrelation of your data.
+</div>
+
 
 ---
 
 ## The Six-Step Pipeline
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+<div class="callout-insight">
+<strong>Insight:</strong> example.py
+
+
+The following implementation builds on the approach above:
+
+
+
+
+---
+</div>
+
+
+The following implementation builds on the approach above:
 
 ```mermaid
 flowchart TD
@@ -55,6 +92,7 @@ flowchart TD
     E["Step 5: CDF transform Φ(z) → u ∈ [0,1]\nStandard normal CDF"] --> F
     F["Step 6: Inverse quantile transform F_t⁻¹(u_t)\nBack to forecast scale"]
 ```
+</div>
 
 ---
 
@@ -62,7 +100,20 @@ flowchart TD
 
 NHITS trained with `MQLoss(level=[80, 90])` produces, for each horizon step $t$, an estimate of the quantile function $Q_\alpha(y_{T+t})$ at requested levels $\alpha \in \{0.05, 0.10, \ldots, 0.90, 0.95\}$.
 
+<div class="callout-key">
+<strong>Key Point:</strong> NHITS trained with `MQLoss(level=[80, 90])` produces, for each horizon step $t$, an estimate of the quantile function $Q_\alpha(y_{T+t})$ at requested levels $\alpha \in \{0.05, 0.10, \ldots, 0.90, 0....
+</div>
+
+
 These are **marginal** quantile forecasts: the distribution of step $t$ conditioned only on history, without reference to other steps.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # Inspect the marginal quantile forecasts
@@ -74,6 +125,7 @@ print(forecasts.columns.tolist())
 # These are the quantile estimates for each step
 print(forecasts[["ds", "NHITS-lo-80", "NHITS", "NHITS-hi-80"]].to_string())
 ```
+</div>
 
 At this point we have the marginal forecasts. The problem: these treat each day independently. The Gaussian Copula will stitch them into correlated paths.
 
@@ -83,6 +135,11 @@ At this point we have the marginal forecasts. The problem: these treat each day 
 
 To build paths with realistic temporal correlation, we need to know how strongly adjacent days co-vary. The AR(1) coefficient $\phi$ captures this.
 
+<div class="callout-info">
+<strong>Info:</strong> To build paths with realistic temporal correlation, we need to know how strongly adjacent days co-vary.
+</div>
+
+
 **Why differencing?** AR(1) estimation requires a stationary time series. Raw demand often has trend and seasonality. First-differencing removes both, leaving residuals that satisfy the stationarity assumption.
 
 $$\Delta y_t = y_t - y_{t-1}$$
@@ -90,6 +147,12 @@ $$\Delta y_t = y_t - y_{t-1}$$
 **Fitting the AR(1) model on differenced data:**
 
 $$\Delta y_t = \phi \cdot \Delta y_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma^2)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import pearsonr
@@ -109,6 +172,7 @@ y_train = df_train["y"].values
 phi = estimate_ar1_phi(y_train)
 print(f"Estimated AR(1) coefficient: phi = {phi:.4f}")
 ```
+</div>
 
 Typical values for daily retail demand: $\phi \in [0.3, 0.7]$, reflecting moderate positive autocorrelation (busy days cluster together).
 
@@ -117,6 +181,11 @@ Typical values for daily retail demand: $\phi \in [0.3, 0.7]$, reflecting modera
 ## Step 3: Build the Toeplitz Correlation Matrix
 
 The AR(1) model implies a specific correlation structure: the correlation between steps $i$ and $j$ decays geometrically with their distance.
+
+<div class="callout-warning">
+<strong>Warning:</strong> The AR(1) model implies a specific correlation structure: the correlation between steps $i$ and $j$ decays geometrically with their distance.
+</div>
+
 
 $$\Sigma_{ij} = \phi^{|i-j|}, \quad i,j \in \{1, \ldots, H\}$$
 
@@ -154,6 +223,15 @@ The diagonal is 1 (each step is perfectly correlated with itself). Off-diagonals
 ## Step 4: Cholesky Decomposition and Correlated Normal Draws
 
 To draw from a multivariate normal with correlation structure $\Sigma$, use the Cholesky decomposition:
+
+<div class="callout-insight">
+<strong>Insight:</strong> To draw from a multivariate normal with correlation structure $\Sigma$, use the Cholesky decomposition:
+
+$$\Sigma = LL^T$$
+
+where $L$ is lower triangular.
+</div>
+
 
 $$\Sigma = LL^T$$
 
@@ -206,6 +284,11 @@ With 100 paths the empirical correlation will be close but not exact. With 10,00
 ## Step 5: CDF Transform — Correlated Normals to Uniform [0,1]
 
 The correlated normal draws $z_{t}^{(s)}$ live on $\mathbb{R}$. We need to map them to probabilities in $[0, 1]$ so we can later apply the quantile function of the forecast distribution.
+
+<div class="callout-key">
+<strong>Key Point:</strong> The correlated normal draws $z_{t}^{(s)}$ live on $\mathbb{R}$.
+</div>
+
 
 The standard normal CDF $\Phi$ provides an exact, monotone mapping:
 
@@ -367,6 +450,15 @@ A well-generated set of paths should satisfy three properties:
 2. **Correct correlation:** Adjacent columns should be correlated with magnitude approximately $\phi$.
 3. **Plausible range:** No path should contain negative demand or extreme outliers far outside the training range.
 
+
+<div class="flow">
+<div class="flow-step mint">1. Correct marginals:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Correct correlation:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Plausible range:</div>
+</div>
+
 ```python
 # Validation checks
 paths = paths_array  # from nf.models[0].simulate()
@@ -410,3 +502,26 @@ The `.simulate()` API executes all six steps in a single call. The manual implem
 
 Notebook 01 trains the model on real French Bakery data and generates 100 sample paths.  
 Notebook 02 applies the Monte Carlo framework to three business decision problems.
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_gaussian_copula.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_generating_sample_paths.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

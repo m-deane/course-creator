@@ -1,16 +1,38 @@
 # Marginal vs Joint Distributions: Why Your Forecast Intervals Lie
 
+> **Reading time:** ~16 min | **Module:** 2 — Probabilistic Forecasting | **Prerequisites:** Module 1
+
 ## In Brief
 
 Prediction intervals describe uncertainty at a **single point in time**. They say nothing about how uncertainty unfolds across multiple periods together. This distinction — marginal versus joint distributions — is the central insight that separates good probabilistic forecasting from dangerous probabilistic forecasting.
 
-> **Key Insight:** The 80th percentile of Monday's sales plus the 80th percentile of Tuesday's sales is NOT the 80th percentile of the combined two-day total. Not even close.
+<div class="callout-insight">
+<strong>Insight:</strong> The 80th percentile of Monday's sales plus the 80th percentile of Tuesday's sales is NOT the 80th percentile of the combined two-day total. Not even close.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Prediction intervals describe uncertainty at a **single point in time**. They say nothing about how uncertainty unfolds across multiple periods together.
+</div>
+
 
 ---
 
 ## Start Here: Code First
 
 Train NHITS with quantile loss on the French Bakery dataset and look at what you actually get.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Train NHITS with quantile loss on the French Bakery dataset and look at what you actually get.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 import pandas as pd
@@ -42,6 +64,17 @@ baguettes = baguettes[baguettes["ds"].dt.weekday < 7]
 print(f"Dataset: {len(baguettes)} days of baguette sales")
 print(baguettes.head(10))
 ```
+</div>
+
+The following implementation builds on the approach above:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```python
 # ── Train NHITS with quantile loss ───────────────────────────────────────────
@@ -68,6 +101,7 @@ forecast = nf.predict()
 print("\nForecast columns:", forecast.columns.tolist())
 print(forecast)
 ```
+</div>
 
 The output columns are:
 - `NHITS` — the point forecast (mean)
@@ -84,6 +118,11 @@ Each row is one day. Each interval is a **marginal** interval — it describes u
 
 A marginal distribution $F_t(y_t)$ describes the probability of the outcome at a single time step $t$, regardless of what happens at any other time step.
 
+<div class="callout-key">
+<strong>Key Point:</strong> A marginal distribution $F_t(y_t)$ describes the probability of the outcome at a single time step $t$, regardless of what happens at any other time step.
+</div>
+
+
 $$F_t(y_t) = P(Y_t \leq y_t)$$
 
 The 80th percentile $q_t^{0.8}$ satisfies:
@@ -91,6 +130,12 @@ The 80th percentile $q_t^{0.8}$ satisfies:
 $$P(Y_t \leq q_t^{0.8}) = 0.80$$
 
 This is what NHITS produces for each day. It is correct and useful. For a single-day decision — "should I order enough inventory to cover today's demand at 80% service level?" — this is exactly what you need.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # ── Visualize the marginal prediction intervals ───────────────────────────────
@@ -122,6 +167,7 @@ ax.legend()
 plt.tight_layout()
 plt.show()
 ```
+</div>
 
 The fan chart looks informative. Each day has a plausible range. But there is a hidden problem.
 
@@ -131,9 +177,24 @@ The fan chart looks informative. Each day has a plausible range. But there is a 
 
 Consider this business question:
 
+<div class="callout-info">
+<strong>Info:</strong> Consider this business question:
+
+> "How many total baguettes should I order for the entire week to meet demand with 80% probability?"
+
+A natural (wrong) answer: sum up the 80th percentile for each da...
+</div>
+
+
 > "How many total baguettes should I order for the entire week to meet demand with 80% probability?"
 
 A natural (wrong) answer: sum up the 80th percentile for each day.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # ── The naive (wrong) approach ────────────────────────────────────────────────
@@ -144,6 +205,7 @@ print(f"Sum of daily 80th percentiles: {weekly_80_naive:.0f} baguettes")
 print(f"Sum of daily point forecasts:  {weekly_point:.0f} baguettes")
 print(f"Naive 'buffer':                {weekly_80_naive - weekly_point:.0f} baguettes")
 ```
+</div>
 
 This gives a specific number. It looks precise. It is wrong.
 
@@ -163,6 +225,15 @@ graph TD
         M1 -.- M2 -.- M3 -.- M7
         note1["Each day is independent\nNo cross-day correlation"]
     end
+
+<div class="callout-key">
+<strong>Key Point:</strong> The **joint distribution** $F_{1:H}(y_1, \ldots, y_H)$ describes the probability of all outcomes together:
+
+$$F_{1:H}(y_1, \ldots, y_H) = P(Y_1 \leq y_1, Y_2 \leq y_2, \ldots, Y_H \leq y_H)$$
+
+When yo...
+</div>
+
 
     subgraph Joint["Joint Distribution (what we need)"]
         J["P(Y_Mon ≤ q₁, Y_Tue ≤ q₂, ..., Y_Sun ≤ q₇) = 0.80"]
@@ -188,9 +259,38 @@ $$P(S \leq q^{0.8}_S) = 0.80$$
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Marginal</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Joint: The Core Distinction</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## The Key Formula: Why Sums Break
 
 For the sum of $H$ random variables:
+
+<div class="callout-key">
+<strong>Key Point:</strong> For the sum of $H$ random variables:
+
+$$q^{\alpha}(Y_1 + \cdots + Y_H) \neq q^{\alpha}(Y_1) + \cdots + q^{\alpha}(Y_H)$$
+
+The left side is the $\alpha$-quantile of the total.
+</div>
+
 
 $$q^{\alpha}(Y_1 + \cdots + Y_H) \neq q^{\alpha}(Y_1) + \cdots + q^{\alpha}(Y_H)$$
 
@@ -416,7 +516,20 @@ Marginal quantiles (what MQLoss produces) sit at step 3. They are necessary — 
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 ### Builds on
 - Module 1: Point forecasting with NHITS — understanding what the model produces
@@ -437,6 +550,34 @@ Marginal quantiles (what MQLoss produces) sit at step 3. They are necessary — 
 4. **Three failure modes:** annual budgeting, inventory reorder timing, order sizing — all stem from the same root cause.
 5. **Sample paths are the solution** — coherent trajectories that capture temporal correlation and support any aggregation query.
 
+
+<div class="flow">
+<div class="flow-step mint">1. Marginal quantiles describe pe...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Multi-step decisions require j...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. The error grows with the horiz...</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Three failure modes:</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step rose">5. Sample paths are the solution</div>
+</div>
+
 ---
 
 *"The sum of the quantiles is not the quantile of the sum. This is not a rounding error. It is a structural error that grows with your planning horizon."*
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_marginal_vs_joint.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_quantiles_not_enough.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

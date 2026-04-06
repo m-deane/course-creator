@@ -18,9 +18,17 @@ math: mathjax
 Speaker notes: This deck covers how NeuralForecast's MQLoss actually works under the hood. Students have seen the output in Guide 01. Now they understand the training objective that produces it. Key payoff: understanding WHY MQLoss produces marginals (the loss sums independently across time steps) reinforces the structural argument from Guide 01.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Training Quantile Models. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # What MQLoss Gives You
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 model = NHITS(
@@ -29,6 +37,7 @@ model = NHITS(
     loss=MQLoss(level=[80, 90]),
 )
 ```
+</div>
 
 Output per day, per quantile level:
 
@@ -45,6 +54,13 @@ Output per day, per quantile level:
 <!--
 Speaker notes: Make sure students see the mapping clearly. level=80 means an 80% coverage interval, which is defined by the 10th and 90th percentiles (the middle 80%). This is different from setting q=0.8, which gives the 80th percentile directly. The naming level= is about coverage, not quantile level.
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about What MQLoss Gives You. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -81,6 +97,13 @@ That is the 90th percentile.
 Speaker notes: Walk through the arithmetic carefully. At q=0.90, undershooting by 10 units costs 9.0. Overshooting by 10 costs 1.0. The model minimizes expected loss by choosing the threshold where undershooting 10% of the time equals the trade-off. That threshold is the 90th percentile. This is the mathematical proof that minimizing pinball loss produces the quantile.
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Pinball Loss. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Visualizing the Asymmetry
@@ -106,6 +129,13 @@ Loss
 Speaker notes: Draw attention to the V-shape and its asymmetry. At q=0.50 the slopes are equal — this is just absolute value loss / median regression. As q increases toward 1, the right slope increases and the left slope decreases. The model learns to stay above the true value more often. This is exactly why q=0.90 gives you the 90th percentile.
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Visualizing the Asymmetry. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Multi-Quantile Loss
@@ -120,6 +150,12 @@ $$\mathcal{L}_{\text{MQ}} = \frac{1}{H \cdot |Q|} \sum_{t=1}^{H} \sum_{q \in Q} 
 - Prevents quantile crossing in practice
 - Gradient flows through all quantile heads simultaneously
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # level=[80, 90] → trains quantiles q ∈ {0.05, 0.10, 0.90, 0.95}
 loss=MQLoss(level=[80, 90])
@@ -127,10 +163,18 @@ loss=MQLoss(level=[80, 90])
 # level=[50, 80, 90] → trains q ∈ {0.05, 0.10, 0.25, 0.75, 0.90, 0.95}
 loss=MQLoss(level=[50, 80, 90])
 ```
+</div>
 
 <!--
 Speaker notes: The key advantage of MQLoss over training separate models for each quantile: shared representations. The model learns what drives the conditional distribution once, and the different quantile heads read off different percentiles of that learned distribution. This also means quantiles are less likely to cross (though not guaranteed — crossing is enforced by post-processing in some implementations).
 -->
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Multi-Quantile Loss. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -152,11 +196,19 @@ There is no term that penalizes incoherent behavior **across** time steps.
 Speaker notes: This is the mathematical explanation for why MQLoss produces marginals. The loss function is separable across time steps. There is no joint term. The model is never penalized for being inconsistent about how Monday and Tuesday co-vary. This explains everything from Guide 01 — it's baked into the training objective.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Why MQLoss Produces Marginals. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Fan Chart
 
 Layer multiple prediction intervals for visual uncertainty:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 model = NHITS(
@@ -164,6 +216,7 @@ model = NHITS(
     loss=MQLoss(level=[50, 70, 80, 90]),
 )
 ```
+</div>
 
 ```
 Baguettes
@@ -182,6 +235,8 @@ Width reflects uncertainty. Outer bands = tail risk.
 <!--
 Speaker notes: The fan chart is the standard visualization for probabilistic forecasts. The inner band (50%) is where the model thinks the most probable outcomes are. The outer band (90%) captures most of the uncertainty. The shape of the fan — widening, narrowing, asymmetric — tells the story of how uncertainty evolves over the horizon.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Fan Chart. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -225,6 +280,8 @@ For production: `level=[80, 90]` is usually sufficient.
 Speaker notes: More quantile levels give a smoother, more professional-looking fan chart. The computational cost is linear in the number of levels since each level adds two quantile heads. For research or presentation purposes, 6 levels makes a beautiful chart. For production systems where training time matters, 2-3 levels is typical.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about More Levels = Smoother Fan. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # MQLoss vs DistributionLoss
@@ -253,6 +310,8 @@ For bakery data: **NegativeBinomial** is often more appropriate.
 <!--
 Speaker notes: The choice between MQLoss and DistributionLoss is domain-specific. Bakery demand is count data (integer, non-negative, potentially overdispersed). NegativeBinomial is parametrically appropriate. MQLoss is safer when you don't know the distribution family. DistributionLoss never has crossing quantiles because quantiles are derived from the fitted CDF.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about MQLoss vs DistributionLoss. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -283,6 +342,8 @@ print(f"Empirical 80% coverage: {coverage_80:.1%}")
 Speaker notes: Calibration is how you validate that the probabilistic forecast is actually probabilistic. A model that always predicts a wide interval will have great coverage but be useless for decision-making. A model with narrow intervals that is well-calibrated provides the most useful information. Coverage should be checked on held-out data, not training data.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Calibration: Does 80% Mean 80%?. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary
@@ -305,6 +366,8 @@ Speaker notes: Calibration is how you validate that the probabilistic forecast i
 Speaker notes: Recap the key learning points. The transition to the notebook is natural: students have seen the theory, now they'll run the actual code and verify calibration on real bakery data. The notebook also demonstrates the sum-of-quantiles failure concretely with numbers.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -321,3 +384,5 @@ Concrete demonstration on French Bakery data:
 <!--
 Speaker notes: The notebook takes everything from these two guides and makes it concrete with actual numbers. Students will compute the error themselves on real bakery data. By the end, the motivation for sample paths (Module 3) should feel unavoidable.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Next: The Failure, With Numbers. Pause for questions if the audience seems uncertain. -->

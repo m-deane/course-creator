@@ -1,12 +1,26 @@
 # Connectors Deep Dive
 
+> **Reading time:** ~21 min | **Module:** 2 — Triggers & Connectors | **Prerequisites:** Module 1
+
 ## In Brief
 
 A connector is a pre-built wrapper around an external service's API. Every action and trigger in Power Automate belongs to a connector. Choosing the right connectors — and understanding their licensing tier, authentication requirements, and rate limits — is the foundation of building reliable, production-grade flows.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> A connector is a pre-built wrapper around an external service's API. Every action and trigger in Power Automate belongs to a connector.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Distinguish standard, premium, and custom connectors and identify which license tier each requires
 2. Configure authentication for OAuth, API key, and shared-access connectors
@@ -19,6 +33,11 @@ By the end of this guide you will be able to:
 ## Connector Categories and Licensing
 
 Power Automate connectors fall into three licensing tiers. The tier determines what plan your organization needs to run flows that use the connector.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Power Automate connectors fall into three licensing tiers.
+</div>
+
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -54,6 +73,19 @@ Power Automate connectors fall into three licensing tiers. The tier determines w
 ## Key Connector Walkthroughs
 
 ### 1. Office 365 Outlook
+
+<div class="callout-key">
+<strong>Key Point:</strong> Office 365 Outlook
+
+**Tier:** Standard
+**Authentication:** OAuth 2.0 (Microsoft identity platform — signs in with your M365 account)
+
+**Primary triggers:**
+
+| Trigger | Description |
+|---------|------...
+</div>
+
 
 **Tier:** Standard
 **Authentication:** OAuth 2.0 (Microsoft identity platform — signs in with your M365 account)
@@ -298,6 +330,11 @@ For on-premises SQL Server, also select the **On-premises data gateway** install
 
 Every connector requires a **connection** — a saved credential that the connector uses to call the external service. Power Automate stores connections in the environment and reuses them across flows.
 
+<div class="callout-warning">
+<strong>Warning:</strong> Every connector requires a **connection** — a saved credential that the connector uses to call the external service.
+</div>
+
+
 ```
 Flow A  ──► Outlook Connection (OAuth token for alice@your-org.com) ──► Exchange Online
 Flow B  ──► Outlook Connection (OAuth token for alice@your-org.com) ──► Exchange Online
@@ -450,11 +487,24 @@ For flows that process large lists of items, use **Apply to each** with concurre
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Guide 01 — Trigger Types (triggers belong to connectors; connector tier affects trigger availability)
 - **Leads to:** Module 03 — Data Operations and Expressions (manipulating data returned by connector actions)
 - **Related to:** Module 05 — SharePoint and Excel in depth (SharePoint connector advanced patterns)
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -463,3 +513,18 @@ For flows that process large lists of items, use **Apply to each** with concurre
 - [Custom connector overview](https://learn.microsoft.com/en-us/connectors/custom-connectors/define-openapi-definition)
 - [Power Platform request limits](https://learn.microsoft.com/en-us/power-platform/admin/api-request-limits-allocations)
 - [Power Automate retry policies](https://learn.microsoft.com/en-us/power-automate/actions-reference/retry-policy)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_connectors_deep_dive_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_list_connectors_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

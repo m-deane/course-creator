@@ -1,16 +1,30 @@
 # Adaptive Cards and Business Process Patterns
 
+> **Reading time:** ~22 min | **Module:** 6 — Approval Flows | **Prerequisites:** Module 4
+
 ## In Brief
 
 Adaptive Cards are JSON-defined UI components that render natively inside Microsoft Teams and Outlook. When you use them in approval flows, approvers get a rich, interactive experience—formatted data, action buttons, and inline response forms—directly in their Teams channel or chat, without leaving the application.
 
-> **Key Insight:** A standard approval email is a notification. An Adaptive Card in Teams is an interactive application. Approvers can read context, review data, type comments, and submit their decision without opening a browser or navigating to another system.
+<div class="callout-insight">
+<strong>Insight:</strong> A standard approval email is a notification. An Adaptive Card in Teams is an interactive application. Approvers can read context, review data, type comments, and submit their decision without opening a browser or navigating to another system.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Adaptive Cards are JSON-defined UI components that render natively inside Microsoft Teams and Outlook. When you use them in approval flows, approvers get a rich, interactive experience—formatted data, action buttons, and inline response forms—directly in their Teams channel or chat, without leaving the application.
+</div>
+
 
 ---
 
 ## What Are Adaptive Cards?
 
 Adaptive Cards are a platform-agnostic UI framework. You write a JSON payload describing the card's structure, and the host application (Teams, Outlook, Windows Notifications) renders it using that platform's native UI components. The same JSON renders differently on desktop and mobile—the platform adapts it.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Adaptive Cards are a platform-agnostic UI framework.
+</div>
+
 
 For Power Automate approval flows, Adaptive Cards appear in:
 
@@ -28,6 +42,34 @@ The **Post Adaptive Card and Wait for Response** action in Power Automate handle
 
 Every Adaptive Card is a JSON object with this top-level structure:
 
+<div class="callout-key">
+<strong>Key Point:</strong> Every Adaptive Card is a JSON object with this top-level structure:
+
+
+
+
+example.json
+
+
+The following implementation builds on the approach above:
+
+
+
+
+### Body Elements
+
+The `body` array contains the v...
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```json
 {
     "type": "AdaptiveCard",
@@ -36,12 +78,21 @@ Every Adaptive Card is a JSON object with this top-level structure:
     "actions": []
 }
 ```
+</div>
 
 ### Body Elements
 
 The `body` array contains the visible content of the card. Key element types:
 
 **TextBlock** — Displays text with formatting control:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```json
 {
@@ -52,8 +103,17 @@ The `body` array contains the visible content of the card. Key element types:
     "color": "Accent"
 }
 ```
+</div>
 
 **FactSet** — Renders a label-value pair list, ideal for structured data:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```json
 {
@@ -66,8 +126,15 @@ The `body` array contains the visible content of the card. Key element types:
     ]
 }
 ```
+</div>
 
 **Container** — Groups elements with optional background color and padding:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
+</div>
 
 ```json
 {
@@ -79,6 +146,7 @@ The `body` array contains the visible content of the card. Key element types:
     ]
 }
 ```
+</div>
 
 **Input.Text** — Collects text input inline:
 
@@ -494,15 +562,28 @@ Include a summary of both stages: who approved, when, and any comments.
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 - **Adaptive Card JSON invalid**: The designer does not validate card JSON before runtime. Use the Adaptive Card Designer at adaptivecards.io to validate structure before pasting into Power Automate.
 - **Input.ChoiceSet returns null**: If the user submits without selecting a choice and `isRequired` is not set to true, the value is null. Always check for null before using the decision value.
 - **Card not rendering in Teams**: Verify the card version matches what Teams supports. Teams supports Adaptive Card schema 1.4 and below. Schema 1.5+ features may not render.
 - **User input expressions break**: The full expression path for reading card responses is verbose. Save it as a variable immediately after the card action to avoid repeating it: `Set variable ResponseData = outputs('Post_adaptive_card')?['body/data']`
 - **Parallel branch state sharing**: Power Automate parallel branches cannot write to the same variable. Use SharePoint or Dataverse columns as shared state for escalation timing patterns.
 
+<div class="callout-warning">
+<strong>Warning:</strong> - **Adaptive Card JSON invalid**: The designer does not validate card JSON before runtime.
+</div>
+
 ---
 
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 - **Builds on:** Guide 01 — Approvals connector basics; Module 04 — Conditions and parallel branches
 - **Leads to:** Module 07 — Desktop flows for document processing in approval pipelines
@@ -510,9 +591,32 @@ Include a summary of both stages: who approved, when, and any comments.
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Adaptive Cards designer (interactive)](https://adaptivecards.io/designer/)
 - [Adaptive Cards schema explorer](https://adaptivecards.io/explorer/)
 - [Microsoft Docs: Post adaptive card and wait for response](https://learn.microsoft.com/en-us/power-automate/adaptive-cards/create-adaptive-cards)
 - [Microsoft Docs: Approval escalation with parallel branches](https://learn.microsoft.com/en-us/power-automate/parallel-modern-approvals)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_adaptive_cards_business_patterns_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_adaptive_card_designer.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

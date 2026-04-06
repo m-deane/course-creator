@@ -40,6 +40,11 @@ math: mathjax
 
 </div>
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This slide frames the problem we are solving. Ask the audience: who has ever had a purchase order or contract sit in someone's inbox for two weeks? The Approvals connector converts that chaos into a managed process. Every request has an ID, a status, and a response that feeds directly back into the automation. -->
 
 ---
@@ -47,6 +52,7 @@ math: mathjax
 # Approvals Are Persistent Records
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> Pending : Flow creates approval
     Pending --> Approved : Approver clicks Approve
@@ -58,6 +64,11 @@ stateDiagram-v2
     Cancelled --> [*] : Flow handles cancellation
     Expired --> [*] : Flow handles escalation
 ```
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Approvals are not fire-and-forget emails. They exist as records in Dataverse with this state machine. Power Automate resumes the flow run the moment the state changes from Pending. This is why flows can wait for days without consuming compute—they are paused, not polling. The Expired and Cancelled states are often overlooked but critical for production flows. -->
 
@@ -74,6 +85,7 @@ stateDiagram-v2
 # Approve/Reject: First to Respond
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     T([Trigger]) --> A[Create Approval]
     A --> N1[Notify: Manager A]
@@ -89,6 +101,11 @@ flowchart LR
 **Completion condition:** First approver to respond determines the outcome.
 **Best for:** Requests where any authorized person can approve.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: This is the most common pattern. All approvers are notified simultaneously, and the moment one responds, the others receive a cancellation notification. Use this when you have a pool of approvers and want the fastest response time. Example: expense requests under $500 where any team lead can authorize. -->
 
 ---
@@ -96,6 +113,7 @@ flowchart LR
 # Approve/Reject: Everyone Must Approve
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T([Trigger]) --> A[Create Approval]
     A --> N1[Notify: Legal]
@@ -110,6 +128,11 @@ flowchart TD
 ```
 
 **Completion condition:** All approvers must respond. One rejection = Rejected outcome.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: This pattern is critical for compliance scenarios. Useful when the approval requires multiple independent authorities—legal, financial, and operational sign-off for a contract, for instance. Note that a single rejection immediately sets the outcome to Rejected even if others have approved. Also note: all approvers are notified in parallel, not sequentially. For sequential routing, see guide 02. -->
 
@@ -144,6 +167,7 @@ Custom responses let you define your own set of options. Examples:
 # Two Core Actions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Blocking["Start and Wait (Blocking)"]
         B1[Create approval record] --> B2[Pause flow]
@@ -190,6 +214,7 @@ Responses[0]['requestDate']       → when they were notified
 # Approval Lifecycle: Complete Picture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant R as Requestor
     participant PA as Power Automate
@@ -215,6 +240,7 @@ sequenceDiagram
 # Building the Expense Approval Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T([SharePoint: Item Created]) --> M[Office 365 Users:\nGet Manager V2]
     M --> APP[Approvals:\nStart and wait for an approval\nType: Approve/Reject First to respond\nAssigned to: Manager.Mail]

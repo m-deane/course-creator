@@ -16,6 +16,8 @@ math: mathjax
 Speaker notes: Welcome to Module 04. This first section covers how Power Automate makes decisions. Before we had conditions, flows were linear — every run took the same path. Conditions, Switch, and Parallel branches are what turn a rigid sequence into a real business process. We'll build from the simplest Yes/No split all the way to parallel execution.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Branching and Conditions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # What You Will Learn
@@ -32,11 +34,19 @@ By the end you will design multi-path flows that handle real business logic.
 Speaker notes: Five topics, all building on each other. Condition is the foundation — everything else is a variation or extension. We spend the most time on Condition because understanding it deeply makes Switch and Parallel branches easy to grasp.
 -->
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about What You Will Learn. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Condition Action: How It Works
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T([Trigger fires]) --> A[Actions before decision]
     A --> C{Condition\nevaluates}
@@ -51,6 +61,13 @@ flowchart TD
 <!--
 Speaker notes: This diagram is worth studying. The two branches are symmetric — Yes and No are equally valid paths. Neither is the "error path." After both branches finish, flow execution resumes from below the Condition block. This is different from an early-exit pattern; you'd need a Terminate action for that.
 -->
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Condition Action: How It Works. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -76,6 +93,7 @@ Speaker notes: This diagram is worth studying. The two branches are symmetric �
 <div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[+ New step] --> B[Search: condition]
     B --> C[Select Condition]
@@ -91,6 +109,13 @@ flowchart LR
 <!--
 Speaker notes: The search is important — "Condition" is the action name. Don't search for "if" or "branch." The three-field layout (left value, operator, right value) maps directly to a comparison expression: `[thing] [operator] [value]`. Walk learners through clicking inside the left field to open the dynamic content panel.
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Adding a Condition — UI Walkthrough. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -131,11 +156,19 @@ Speaker notes: The search is important — "Condition" is the action name. Don't
 Speaker notes: Most beginner mistakes come from using `is equal to` when they need `contains`, or vice versa. "Approved" is equal to "Approved" — but "The request has been Approved" is not equal to "Approved." For substring checks, always use contains. The null operators are underused — they're essential for optional fields that may or may not be populated at trigger time.
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Operator Reference. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Multiple Conditions: AND / OR Groups
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Invoice Amount > 5000] -->|AND| B[Vendor Status ≠ Approved]
     B --> C{Combined result}
@@ -173,6 +206,8 @@ Priority = "Critical"
 <!--
 Speaker notes: AND and OR are the building blocks of compound logic. A critical concept: AND narrows the result (fewer items pass), OR widens it (more items pass). When mixing AND and OR, use groups — click "Add group" — to control precedence. Without grouping, Power Automate evaluates rows top to bottom with the same combinator.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Multiple Conditions: AND / OR Groups. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -225,11 +260,14 @@ Right value: `5`
 Speaker notes: Expressions unlock the cases where the raw dynamic value isn't in the right form for comparison. The most common need is case normalization — if a user typed "approved" instead of "Approved", toUpper() on both sides fixes it. The date functions are invaluable for time-sensitive workflows like escalation rules.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Expressions in Condition Values. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Nested Conditions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A{Amount > $10,000?} -->|Yes| B{Requester is dept head?}
     A -->|No| C[Auto-approve]
@@ -247,11 +285,14 @@ flowchart TD
 Speaker notes: The diagram shows a classic two-level nest. The key question to ask is: "Does this second decision only apply when the first condition is true?" If yes, nest. If the second decision applies regardless of the first, it belongs after the Condition block, not inside it. Readability matters — a flow someone else cannot follow is a flow they will break.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Nested Conditions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Switch Action: Multiple Paths
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     S{Switch\non Category} -->|Hardware| H[Post to #it-hardware]
     S -->|Software| SW[Post to #it-software]
@@ -271,6 +312,8 @@ flowchart TD
 <!--
 Speaker notes: Switch is the right tool when routing on a category field. The mental model: think of a post office sorting machine — the package has one label, and the machine sends it to one of many bins. Default is the bin for anything that doesn't match a known label. Always populate Default in production — an unexpected value that silently goes nowhere is hard to diagnose.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Switch Action: Multiple Paths. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -307,11 +350,14 @@ Speaker notes: Switch is the right tool when routing on a category field. The me
 Speaker notes: The case-sensitive gotcha trips up almost everyone at least once. If your Category field contains "hardware" in some records and "Hardware" in others, none of your cases will match all records. The fix is toLower() on the On value — then all Case Equals values must also be lowercase to match.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Switch Action — UI Walkthrough. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Parallel Branches: Simultaneous Execution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     T([Trigger]) --> P{Parallel\nblock}
     P --> B1[Branch 1\nEmail manager]
@@ -331,6 +377,8 @@ Parallel time: max(2s, 2s, 2s) = **2 seconds**
 <!--
 Speaker notes: Parallel branches are the solution to a real performance problem. Approval flows that notify five approvers sequentially can take 10+ seconds; the same flow with parallel branches takes 2 seconds. The important constraint: branches cannot pass data to each other. Each branch sees the same inputs from before the parallel block. If you need to aggregate results, use variables set inside each branch and read after.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Parallel Branches: Simultaneous Execution. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -364,11 +412,14 @@ Speaker notes: Parallel branches are the solution to a real performance problem.
 Speaker notes: The variable workaround is important. If Branch 1 sets `var_result_1` and Branch 2 sets `var_result_2`, those are independent writes and both are safe. The problem is when two branches write to the same variable — only the last one wins, and which is "last" is non-deterministic in parallel execution. Design variable names to be branch-specific.
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Adding Parallel Branches — UI Walkthrough. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Branching Patterns: Decision Guide
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{Two\npossible\noutcomes?} -->|Yes| Q2{Complex\nlogic?}
     Q1 -->|No| Q3{Routing\non one\nvalue?}
@@ -381,6 +432,8 @@ flowchart TD
 <!--
 Speaker notes: Use this decision tree as a quick reference when designing new flows. Start by asking how many outcomes you need. Two outcomes → Condition. Multiple named outcomes → Switch. Actions that don't depend on a decision at all but need to run simultaneously → Parallel branches. When in doubt, start with Condition — you can always refactor.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Branching Patterns: Decision Guide. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -422,3 +475,5 @@ Speaker notes: Use this decision tree as a quick reference when designing new fl
 <!--
 Speaker notes: Recap the four tools and their distinct use cases. Emphasize that these tools compose — you can put a Switch inside a Condition branch, or a Condition inside a Switch Case. The next section continues control flow with loops and error handling, which build directly on what we covered here.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

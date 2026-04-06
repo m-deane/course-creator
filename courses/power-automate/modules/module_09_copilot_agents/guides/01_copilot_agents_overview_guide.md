@@ -1,16 +1,30 @@
 # Copilot Agents Overview: Conversational Automation with Copilot Studio
 
+> **Reading time:** ~15 min | **Module:** 9 — Copilot Agents | **Prerequisites:** Module 8
+
 ## In Brief
 
 Copilot agents are conversational AI assistants built in Microsoft Copilot Studio. They understand natural language, maintain multi-turn conversations, and execute actions—including Power Automate flows—on behalf of users. Where a standalone flow responds to events, a Copilot agent responds to people.
 
-> **Key Insight:** A Copilot agent is not a chatbot that talks. It is an automation layer with a conversational interface. Every topic in the agent is a structured decision tree that can call Power Automate flows, query data sources, and return formatted answers—all within a natural dialogue.
+<div class="callout-insight">
+<strong>Insight:</strong> A Copilot agent is not a chatbot that talks. It is an automation layer with a conversational interface. Every topic in the agent is a structured decision tree that can call Power Automate flows, query data sources, and return formatted answers—all within a natural dialogue.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Copilot agents are conversational AI assistants built in Microsoft Copilot Studio. They understand natural language, maintain multi-turn conversations, and execute actions—including Power Automate flows—on behalf of users.
+</div>
+
 
 ---
 
 ## Why Copilot Agents Exist
 
 Standalone flows are triggered by events: a file is created, a form is submitted, a schedule fires. They are invisible to end users. Copilot agents fill the gap where users need to initiate automation themselves, but the request is unpredictable in wording and context.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Standalone flows are triggered by events: a file is created, a form is submitted, a schedule fires.
+</div>
+
 
 Before Copilot Studio, teams built these interfaces with:
 - Custom bot frameworks requiring pro-developer skills
@@ -24,6 +38,11 @@ Copilot Studio (formerly Power Virtual Agents) provides a low-code environment w
 ## Copilot Agent vs. Standalone Flow: When to Use Which
 
 Use this decision matrix to choose the right tool for a given scenario.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Use this decision matrix to choose the right tool for a given scenario.
+</div>
+
 
 ```
 Trigger type         ──► Event (file, schedule, form)  ──► Standalone flow
@@ -50,6 +69,11 @@ Output               ──► System action (write, notify)  ──► Both
 ## Copilot Studio Overview
 
 Copilot Studio is a standalone web application at [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com). It provides the following building blocks.
+
+<div class="callout-info">
+<strong>Info:</strong> Copilot Studio is a standalone web application at [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com).
+</div>
+
 
 ### Topics
 
@@ -139,6 +163,17 @@ Copilot Studio agents do not perform raw intent classification. They use a combi
 2. **Fuzzy match** — similar phrasing that shares key words triggers the topic
 3. **Entity extraction** — within a matched topic, slot values (entities) are pulled from the user's message
 4. **Generative AI fallback** — if no topic matches, generative answers search connected knowledge sources
+
+
+<div class="flow">
+<div class="flow-step mint">1. Exact match</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Fuzzy match</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Entity extraction</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Generative AI fallback</div>
+</div>
 
 This means the agent does not require exhaustive NLU training. You write representative trigger phrases (5–10 per topic is sufficient) and the platform generalises from them.
 
@@ -300,15 +335,28 @@ Flows called from Copilot agents should operate with **least-privilege connectio
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 - **Flow trigger mismatch:** If the flow does not use the **"When a flow is run from Copilot"** trigger, it will not appear in the Copilot Studio action picker.
 - **Environment mismatch:** The agent and its flows must be in the same Power Platform environment. Cross-environment calls are not supported.
 - **Output parameters not mapped:** If the flow's "Return value(s)" action does not declare output parameters, no data returns to the agent and the output variables will be blank.
 - **Unpublished flows:** Flows must be saved and the connection must be healthy (no broken credentials) for the agent to call them reliably.
 - **Topic trigger phrase overlap:** If two topics share identical or very similar trigger phrases, the agent may route to the wrong topic. Review all topics for phrase conflicts in the Topics overview.
 
+<div class="callout-warning">
+<strong>Warning:</strong> - **Flow trigger mismatch:** If the flow does not use the **"When a flow is run from Copilot"** trigger, it will not appear in the Copilot Studio action picker.
+</div>
+
 ---
 
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 - **Builds on:** Module 08 — Copilot in Power Automate (AI-assisted flow building)
 - **Leads to:** Guide 02 — Building an end-to-end IT Helpdesk Agent
@@ -316,9 +364,32 @@ Flows called from Copilot agents should operate with **least-privilege connectio
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Microsoft Copilot Studio documentation](https://learn.microsoft.com/en-us/microsoft-copilot-studio/)
 - [Use a flow as an action in Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-flow)
 - [Publish a Copilot agent to Microsoft Teams](https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-microsoft-teams)
 - [Authentication in Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/configuration-end-user-authentication)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_copilot_agents_overview_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_copilot_agent_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

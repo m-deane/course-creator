@@ -1,5 +1,7 @@
 # Branching and Conditions in Power Automate
 
+> **Reading time:** ~18 min | **Module:** 4 — Branching, Loops & Error Handling | **Prerequisites:** Module 3
+
 ## In Brief
 
 Control flow is the mechanism that lets a flow make decisions. Without branching, every flow executes the same actions in the same order every time — which covers a narrow slice of real business scenarios. With branching, a single flow handles many paths: send an approval only if the amount exceeds a threshold; route a ticket to engineering only if the category is "Bug"; run three checks in parallel to save time.
@@ -15,11 +17,21 @@ Power Automate provides four branching tools:
 
 This guide covers all four in depth, including UI walkthroughs for each.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Control flow is the mechanism that lets a flow make decisions. Without branching, every flow executes the same actions in the same order every time — which covers a narrow slice of real business scenarios.
+</div>
+
+
 ---
 
 ## The Condition Action: Yes/No Branches
 
 The Condition action is the fundamental branching tool. It evaluates a logical expression and routes execution to one of two branches: **If yes** (the expression is true) and **If no** (the expression is false).
+
+<div class="callout-insight">
+<strong>Insight:</strong> The Condition action is the fundamental branching tool.
+</div>
+
 
 ### Mental Model
 
@@ -55,6 +67,15 @@ The Condition block displays three fields arranged horizontally:
 1. **Left value** — the item you are evaluating (a dynamic value from a previous step)
 2. **Operator** — the comparison type
 3. **Right value** — what you are comparing against
+
+
+<div class="flow">
+<div class="flow-step mint">1. Left value</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">2. Operator</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">3. Right value</div>
+</div>
 
 ### Configuring the Left Value
 
@@ -103,6 +124,11 @@ Check that an invoice is over $5,000 AND the vendor is not on the approved list:
 ## Configuring Conditions with Expressions
 
 The visual condition builder handles most comparisons. For complex logic — string manipulation, date math, array operations — you need expressions.
+
+<div class="callout-key">
+<strong>Key Point:</strong> The visual condition builder handles most comparisons.
+</div>
+
 
 ### Opening the Expression Editor
 
@@ -161,6 +187,11 @@ Converts a text field to an integer before numeric comparison. SharePoint and fo
 
 A nested condition is a Condition block placed inside the **If yes** or **If no** branch of a parent Condition. This lets you ask a follow-up question once you have established a first fact.
 
+<div class="callout-info">
+<strong>Info:</strong> A nested condition is a Condition block placed inside the **If yes** or **If no** branch of a parent Condition.
+</div>
+
+
 ### When to Use Nesting
 
 Use nesting when the second question only makes sense if the first answer is Yes. For example:
@@ -188,6 +219,11 @@ Power Automate imposes no hard limit on nesting depth, but deep nesting becomes 
 ## The Switch Action: Multiple Branches Based on Value
 
 A Switch action evaluates a single value and routes execution to one of several named cases. It is the Power Automate equivalent of a `switch` statement in code.
+
+<div class="callout-insight">
+<strong>Insight:</strong> A Switch action evaluates a single value and routes execution to one of several named cases.
+</div>
+
 
 ### Condition vs. Switch
 
@@ -243,6 +279,26 @@ Always populate the Default case in production flows. An unexpected value that s
 > 6. Default case: Post to `#it-general`
 
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Condition</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Switch</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## Parallel Branches: Running Actions Simultaneously
 
@@ -320,8 +376,31 @@ Keep the structure as flat as practical. Each additional level of nesting adds c
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Add a condition to a flow](https://learn.microsoft.com/en-us/power-automate/add-condition) — Official walkthrough with screenshots
 - [Use expressions in conditions](https://learn.microsoft.com/en-us/power-automate/use-expressions-in-conditions) — Expression reference for Condition fields
 - [Power Automate expression reference](https://learn.microsoft.com/en-us/azure/logic-apps/workflow-definition-language-functions-reference) — Full function library (shared with Azure Logic Apps)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_branching_conditions_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_flow_patterns_simulator.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

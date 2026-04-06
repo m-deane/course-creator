@@ -1,12 +1,26 @@
 # Creating Your First Cloud Flow
 
+> **Reading time:** ~10 min | **Module:** 1 — First Cloud Flow | **Prerequisites:** Module 0
+
 ## In Brief
 
 A cloud flow is a sequence of automated steps—trigger, optional conditions, and actions—that runs in the Microsoft cloud without any server to manage. In this guide you build a working flow that fetches today's weather and emails it to you every morning.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> A cloud flow is a sequence of automated steps—trigger, optional conditions, and actions—that runs in the Microsoft cloud without any server to manage. In this guide you build a working flow that fetches today's weather and emails it to you every morning.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Navigate the Power Automate portal to create a new flow
 2. Choose and configure a trigger
@@ -19,6 +33,16 @@ By the end of this guide you will be able to:
 ## What Is a Flow?
 
 Every Power Automate flow follows the same three-part skeleton:
+
+<div class="callout-key">
+<strong>Key Point:</strong> Every Power Automate flow follows the same three-part skeleton:
+
+
+
+- **Trigger** — the event that starts the flow (a button press, an email arriving, a schedule)
+- **Logic** — optional conditions and ...
+</div>
+
 
 ```
 Trigger  →  (optional Logic)  →  Actions
@@ -35,6 +59,11 @@ Microsoft runs this entire sequence in the cloud. You do not provision servers o
 ## The Flow Designer Canvas
 
 Before building anything, know the layout of the canvas you will use.
+
+<div class="callout-info">
+<strong>Info:</strong> Before building anything, know the layout of the canvas you will use.
+</div>
+
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -223,14 +252,42 @@ The **dynamic content panel** organises tokens by the step that produces them. O
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Microsoft 365 account access, basic email familiarity
 - **Leads to:** Guide 02 — Testing and Debugging Flows
 - **Next module:** Module 02 — Triggers and Connectors (deeper connector catalog)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Power Automate documentation — Create a cloud flow](https://learn.microsoft.com/en-us/power-automate/get-started-logic-flow)
 - [MSN Weather connector reference](https://learn.microsoft.com/en-us/connectors/msnweather/)
 - [Office 365 Outlook connector reference](https://learn.microsoft.com/en-us/connectors/office365/)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_creating_first_flow_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_trigger_flow_via_http.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

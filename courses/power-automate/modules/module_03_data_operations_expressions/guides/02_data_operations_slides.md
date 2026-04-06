@@ -21,6 +21,8 @@ Speaker notes: Key talking points for this slide
 - By the end: learners can produce a filtered, formatted CSV report from a SharePoint list in under 15 steps
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Data Operations. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Compose vs Variables: The Key Distinction
@@ -77,6 +79,13 @@ Speaker notes: Key talking points for this slide
 - If you just want to avoid repeating a complex expression, use Compose
 -->
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Compose vs Variables: The Key Distinction. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Compose Action
@@ -86,6 +95,7 @@ Speaker notes: Key talking points for this slide
 **Solution:** Write it once in Compose, reference the output everywhere.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     comp["Compose - TodayFormatted\nformatDateTime(utcNow(), 'MMMM d, yyyy')\n→ 'November 15, 2024'"]
 
@@ -104,11 +114,19 @@ Speaker notes: Key talking points for this slide
 - Common pattern: a "setup" section at the top of the flow with 3-5 Compose actions computing values used throughout
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about The Compose Action. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Variable Actions Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     init["Initialize variable\n(must be first, outside loops)"]
     init -->|text| set["Set variable\n(replace value)"]
@@ -133,6 +151,13 @@ Speaker notes: Key talking points for this slide
 - Increment variable is shorthand for Set variable where the new value equals the old value + N
 - Append to array is how you build a filtered list without using the Filter array action
 -->
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Variable Actions Overview. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -167,6 +192,13 @@ Speaker notes: Key talking points for this slide
 - Ask learners: "What type would you use if you want a running total of invoice amounts?" → Float
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Variable Lifecycle: Loop Counter Pattern. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Append to Array: Conditional Collector
@@ -199,6 +231,8 @@ Speaker notes: Key talking points for this slide
 - The resulting array can feed directly into Select, Join, Create CSV table, or Apply to each
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Append to Array: Conditional Collector. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -212,11 +246,14 @@ Speaker notes: Key talking points for this slide
 - This pipeline covers the majority of reporting and notification use cases in Power Automate
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Data Transformation Pipeline. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # The Data Transformation Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     raw["Raw array\n(all items, all fields)"]
     raw -->|Filter array\nkeep items matching condition| filtered["Filtered array\n(relevant items only)"]
@@ -236,6 +273,8 @@ Speaker notes: Key talking points for this slide
 - Both together: clean subset of relevant data in the right shape
 - Real scenario: SharePoint list of 5000 purchase requests → filter to this week's → select 4 columns → CSV attachment
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Data Transformation Pipeline. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -294,6 +333,8 @@ Speaker notes: Key talking points for this slide
 - The output is always an array even if only one item passes -- downstream steps always receive an array
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Select: Reshape Every Item. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Filter Array: Subset by Condition
@@ -328,6 +369,8 @@ Speaker notes: Key talking points for this slide
 - The output is always an array -- even if only one item matches -- so downstream steps should handle arrays
 - Empty result: if no items match, the output is [] (empty array). Always check with empty() before consuming.
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Filter Array: Subset by Condition. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -385,6 +428,8 @@ Speaker notes: Key talking points for this slide
 - Best practice: always use Select first (to control shape), then Automatic mode in CSV/HTML table
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Create CSV Table and HTML Table. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Join: Collapse Array to String
@@ -419,11 +464,14 @@ Speaker notes: Key talking points for this slide
 - Ask learners: "How would you produce 'Alice, Bob, and Priya' (Oxford comma + 'and')?" -- this requires Replace on the last separator
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Join: Collapse Array to String. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Parse JSON: Unlocking Structured Responses
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     http["HTTP response\nbody (string)\n'{\"id\":1,\"status\":\"OK\"}'"] -->|without Parse JSON| opaque["Opaque string\nNo field tokens available"]
     http -->|Parse JSON| tokens["Field tokens in panel:\n• id\n• status\n• amount"]
@@ -440,6 +488,8 @@ Speaker notes: Key talking points for this slide
 - Important: the schema only needs to cover the fields you want to USE, not every field in the response
 - Missing schema fields: they are ignored silently -- the flow does not fail if the schema is incomplete
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Parse JSON: Unlocking Structured Responses. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -487,11 +537,14 @@ Speaker notes: Key talking points for this slide
 - For arrays in the JSON: after Parse JSON, use Apply to each on the array token to iterate over line items
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Parse JSON: Generate Schema from Sample. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Full Pipeline: Filtered CSV Report
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     sp["Get items\n(SharePoint list)"] --> fa["Filter array\nApprovalStatus = 'Approved'"]
     fa --> sel["Select\nRequestID, Requester, Amount"]
@@ -511,6 +564,8 @@ Speaker notes: Key talking points for this slide
 - Performance: Filter array runs in-memory in Power Automate; no extra API calls to SharePoint
 - Timing: a flow executing this pipeline typically completes in under 5 seconds
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Full Pipeline: Filtered CSV Report. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -537,11 +592,14 @@ Speaker notes: Key talking points for this slide
 - Parse JSON confusion: learners often skip it and wonder why there are no field tokens -- make Parse JSON automatic practice when handling HTTP responses
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Variable vs Data Operation: Which to Use?. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     store["Store"] --> compose_v["Compose\nVariables"]
     transform["Transform"] --> sel_f["Select\nFilter array"]
@@ -569,3 +627,5 @@ Speaker notes: Key talking points for this slide
 - Next in the module: the Jupyter notebook exercises let learners explore equivalent Python patterns side-by-side with Power Automate expressions
 - Encourage learners to build the 5-step filtered CSV report as their hands-on project from this guide
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

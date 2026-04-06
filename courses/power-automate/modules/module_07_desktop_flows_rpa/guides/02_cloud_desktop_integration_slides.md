@@ -23,6 +23,7 @@ math: mathjax
 A finance team manually looks up invoice totals in an old billing application (no API) and copies them into an Excel tracker. Dozens of records per day.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph Before["Before: Manual Process"]
         H1["Finance analyst\nopens billing app"]
@@ -38,6 +39,11 @@ graph LR
 
 **Automation target:** Replace the loop with a scheduled cloud flow + desktop flow.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Start with the business problem to anchor the technical content. This scenario is deliberately generic — every organization has a version of it. The legacy billing app could be SAP GUI, a Delphi application, an AS/400 terminal, or any other thick-client that predates REST APIs. The swivel-chair pattern (copy from one app, paste into another) is among the top three automation use cases in enterprise RPA projects. After showing the "before" diagram, ask learners to think of a swivel-chair task in their own work — this creates immediate personal relevance for the technical content that follows. -->
 
 ---
@@ -45,6 +51,7 @@ graph LR
 # The Automated Solution
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     TRIGGER["Cloud Flow\n(Scheduled 8 AM daily)"]
 
@@ -59,10 +66,12 @@ graph TB
 
     LOOP --> EMAIL["Office 365 Outlook:\nSend summary email\nto finance manager"]
 
-    style TRIGGER fill:#0078d4,color:#fff
-    style RUN fill:#742774,color:#fff
-    style EMAIL fill:#0078d4,color:#fff
 ```
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Walk through this diagram step by step. The cloud flow (blue) handles everything that cloud connectors can do: scheduling, variable management, Excel Online writes, and email. The desktop flow (purple) handles the one step that requires local UI access — the legacy billing app lookup. The loop runs the desktop flow once per customer ID. This separation of concerns is the key architectural principle: keep cloud logic in cloud flows and UI interaction in desktop flows. The cloud flow also provides the audit trail — Power Automate logs every run with inputs, outputs, and duration in the run history. -->
 
@@ -73,6 +82,7 @@ graph TB
 Before recording a single action, declare the data contract.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph InputVars["Input Variables (received from cloud flow)"]
         IV1["CustomerID\nType: Text\nDescription: Account ID to look up"]
@@ -94,6 +104,11 @@ graph LR
 
 > **On screen:** Variables panel → **+** → **Input** for CustomerID. Variables panel → **+** → **Output** for InvoiceTotal. Save the flow. These now appear in the cloud flow action card automatically.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: Declaring variables before recording is a professional habit that prevents a common beginner mistake: recording first, then discovering there is no clean way to parameterize the hardcoded values. With input variables declared first, the recorder captures the correct structure and the developer only needs to replace the default value reference. The three-tier variable structure shown here — Input, Output, Flow — is a useful mental model. Input and Output are visible to the cloud flow. Flow variables are private implementation details. Teaching this distinction early prevents learners from accidentally marking internal working variables as outputs. -->
 
 ---
@@ -101,6 +116,7 @@ graph LR
 # Recording and Editing: The Two-Step Workflow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Dev as Developer
     participant Rec as Recorder
@@ -124,6 +140,11 @@ sequenceDiagram
     Dev->>WS: Save (Ctrl+S)
 ```
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The two-step workflow — record, then edit — is the correct mental model. Recordings are rough drafts, not finished products. The most common edits: (1) replace literal strings with variable references (as shown in the diagram), (2) add Wait for UI element actions before steps that depend on a UI loading — recordings capture clicks but not the wait time, (3) fix selector fragility by editing selectors to use stable AutomationId instead of volatile window title or positional index, (4) add type conversions — the UI always returns text, even for numbers. Teach learners that a recording that needs zero edits is the exception; expecting to edit is the professional approach. -->
 
 ---
@@ -131,6 +152,7 @@ sequenceDiagram
 # Triggering the Desktop Flow from a Cloud Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph CloudFlow["Cloud Flow Actions"]
         CF1["Scheduled trigger\n(8 AM daily)"]
@@ -156,6 +178,7 @@ graph LR
 # Attended vs Unattended: The Core Decision
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     Q{"Does a human need\nto be present?"}
 
@@ -209,6 +232,7 @@ graph TB
 # Machine Group Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     CF["Cloud Flow\n(calls machine group 'InvoiceProcessors')"]
 
@@ -227,9 +251,6 @@ graph TB
     MA --> RUN1["Run: CustomerID = C-001"]
     MC --> RUN2["Run: CustomerID = C-002"]
 
-    style MA fill:#9f9,stroke:#090
-    style MB fill:#fa0,stroke:#a60
-    style MC fill:#9f9,stroke:#090
 ```
 
 > **On screen:** Navigate to **Monitor** → **Machine groups** → **New machine group**. Add registered machines. Target the group name in the cloud flow action instead of a single machine name.
@@ -241,6 +262,7 @@ graph TB
 # Error Handling Across the Cloud–Desktop Boundary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     CF["Cloud Flow:\ncall desktop flow"]
     CF --> DF["Desktop Flow begins"]
@@ -259,10 +281,6 @@ graph TB
     COND -->|"Yes (error)"| ALERT["Post Teams alert\nLog to SharePoint error list"]
     COND -->|"No (success)"| EXCEL["Append to Excel tracker"]
 
-    style SET_ERR fill:#f99,stroke:#900
-    style ALERT fill:#f99,stroke:#900
-    style SET_OK fill:#9f9,stroke:#090
-    style EXCEL fill:#9f9,stroke:#090
 ```
 
 <!-- Speaker notes: The sentinel value pattern (-1 for error) is the recommended approach for signaling desktop flow errors to cloud flows. The alternative — letting the desktop flow throw an unhandled exception — causes the cloud flow action to fail, which stops the entire Apply to each loop and skips all remaining customer IDs. By catching errors internally and returning a sentinel, the cloud flow loop continues for all customers and only the failed records are flagged. The On block error action in the desktop flow is the mechanism. Place it above the risky action sequence, configure "continue flow run on error," and ensure the error path sets the output variables to their sentinel values before the flow exits. The cloud flow then applies conditional logic to each return value. -->
@@ -272,6 +290,7 @@ graph TB
 # Hybrid Automation Pattern: Cloud → Desktop → Cloud
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Trigger as Cloud Trigger
     participant CloudPre as Cloud Flow (pre)
@@ -303,6 +322,7 @@ sequenceDiagram
 > **On screen:** Machine lifecycle in the Power Automate portal
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     INSTALL["Install Power Automate Desktop\non Windows machine"]
     SIGN_IN["Sign in with work account\n(same as make.powerautomate.com)"]
@@ -334,6 +354,7 @@ graph LR
 Before declaring a desktop flow integration production-ready:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     C1["Desktop flow saved\nwith all variables declared"] --> C2
     C2["Machine registered\nand shows Online in Monitor"] --> C3
@@ -343,7 +364,6 @@ graph TD
     C6["Error path handled:\nsentinel value checked\nin cloud flow condition"] --> C7
     C7["End-to-end test run\ncompleted successfully\nand logged in run history"] --> DONE["Production ready"]
 
-    style DONE fill:#9f9,stroke:#090
 ```
 
 <!-- Speaker notes: Use this checklist as a go/no-go gate before any desktop flow integration goes to production. Walk through each node. The most commonly skipped steps are C6 (error handling) and C7 (end-to-end test on the actual production machine with real data). Developers often test on their own machine in attended mode, then deploy to a production unattended machine and discover the service account lacks rights to the target application. The end-to-end test with the exact production configuration — service account, unattended mode, production machine — is non-negotiable before go-live. -->
@@ -365,6 +385,14 @@ graph TD
 5. The **hybrid pattern** (Cloud trigger → Desktop execution → Cloud follow-up) is the dominant production deployment model for organizations with legacy systems.
 
 <!-- Speaker notes: Close by reinforcing the architectural perspective. Desktop flows are not standalone automation tools in production — they are components in a larger cloud-orchestrated pipeline. The cloud flow provides the reliability, monitoring, retry logic, and integration with the rest of the organization's systems. The desktop flow provides the specialized UI capability. Together they close the automation gap that cloud connectors alone cannot address. The notebook (01_rpa_patterns.ipynb) shows Python equivalents of these patterns, which gives technically-oriented learners a familiar reference point for understanding what Power Automate Desktop is doing under the hood. -->
+
+<div class="flow">
+<div class="flow-step mint">Attended</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">Machine groups</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">Error handling</div>
+</div>
 
 ---
 

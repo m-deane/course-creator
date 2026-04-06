@@ -1,12 +1,26 @@
 # Desktop Flows and RPA Fundamentals
 
+> **Reading time:** ~18 min | **Module:** 7 — Desktop Flows & RPA | **Prerequisites:** Module 1
+
 ## In Brief
 
 Desktop flows are the Robotic Process Automation (RPA) engine inside Power Automate. They run on a Windows machine — not in the cloud — and automate any application that has a screen: legacy ERP systems, thick-client desktop apps, terminal emulators, web browsers, and even applications with no API whatsoever.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Desktop flows are the Robotic Process Automation (RPA) engine inside Power Automate. They run on a Windows machine — not in the cloud — and automate any application that has a screen: legacy ERP systems, thick-client desktop apps, terminal emulators, web browsers, and even applications with no API whatsoever.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Explain what desktop flows are and when to choose them over cloud flows
 2. Install and configure Power Automate Desktop on a Windows machine
@@ -21,6 +35,11 @@ By the end of this guide you will be able to:
 ## Cloud Flows vs Desktop Flows: The Core Distinction
 
 Before installing anything, understand the fundamental split.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Before installing anything, understand the fundamental split.
+</div>
+
 
 | Dimension | Cloud Flows | Desktop Flows |
 |---|---|---|
@@ -45,9 +64,34 @@ Desktop flows solve problems that cloud flows cannot:
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Cloud Flows</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Desktop Flows: The Core Distinction</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Power Automate Desktop: Installation and Setup
 
 Power Automate Desktop is the Windows application that runs, records, and edits desktop flows. It is free to download; the license controls which execution modes are available.
+
+<div class="callout-info">
+<strong>Info:</strong> Power Automate Desktop is the Windows application that runs, records, and edits desktop flows.
+</div>
+
 
 ### System Requirements
 
@@ -366,11 +410,19 @@ Cloud Flow (resumed)
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 - **Forgetting to save** — The designer has no auto-save. Use Ctrl+S frequently. An unsaved flow loses changes when the machine restarts.
 - **Fragile selectors** — Recording generates selectors based on window title and index position. If the window title changes (e.g., includes the current filename) or a list position shifts, the selector breaks. Always review and stabilize selectors after recording.
 - **Hardcoded delays** — Using **Wait** with a fixed number of seconds is brittle. Use **Wait for UI element** or **Wait for web page content** instead, which waits until the condition is met rather than sleeping unconditionally.
 - **Data type mismatches** — Passing a Text variable where a Number is expected causes a runtime error. Use **Convert text to number** or **Convert datetime to text** actions to transform types explicitly.
 - **Machine offline** — Desktop flows cannot run if Power Automate Desktop is not open and the machine is not online. For unattended execution, ensure the service account keeps the desktop app running.
+
+<div class="callout-warning">
+<strong>Warning:</strong> - **Forgetting to save** — The designer has no auto-save.
+</div>
 
 ---
 
@@ -387,3 +439,18 @@ Cloud Flow (resumed)
 - [Power Automate Desktop documentation](https://learn.microsoft.com/en-us/power-automate/desktop-flows/introduction) — official reference for all actions, selectors, and configuration options
 - [Power Automate Desktop action reference](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference) — complete catalog of every action group and action
 - [UI element selectors in desktop flows](https://learn.microsoft.com/en-us/power-automate/desktop-flows/ui-elements) — deep dive into selector syntax and best practices
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_desktop_flows_overview_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_rpa_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

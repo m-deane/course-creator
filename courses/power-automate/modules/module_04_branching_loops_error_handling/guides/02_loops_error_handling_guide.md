@@ -1,16 +1,28 @@
 # Loops and Error Handling in Power Automate
 
+> **Reading time:** ~18 min | **Module:** 4 — Branching, Loops & Error Handling | **Prerequisites:** Module 3
+
 ## In Brief
 
 Most real automation scenarios involve collections — a list of new orders, a set of approval responses, a batch of files to process. Power Automate provides two loop types to work through collections and repeated conditions: **Apply to Each** and **Do Until**.
 
 Equally important is what happens when something goes wrong. Network timeouts, deleted items, service outages, and bad data are a normal part of production flows. Power Automate's error handling tools — **Configure Run After**, **Scope actions**, **Terminate**, and **Retry policies** — give you fine-grained control over how your flow responds to failure.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Most real automation scenarios involve collections — a list of new orders, a set of approval responses, a batch of files to process. Power Automate provides two loop types to work through collections and repeated conditions: **Apply to Each** and **Do Until**.
+</div>
+
+
 ---
 
 ## Apply to Each: Iterating Over Arrays
 
 Apply to Each runs a set of actions once for every item in an array. The array can come from anywhere: a SharePoint list query, an array variable, the body of an HTTP response, the results of a filter action.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Apply to Each runs a set of actions once for every item in an array.
+</div>
+
 
 ### When to Use Apply to Each
 
@@ -75,6 +87,11 @@ By default, Apply to Each processes items sequentially — one at a time, in ord
 
 Do Until runs its contained actions repeatedly until a condition becomes true — or until it hits a count or time limit. This is the right tool when you do not know in advance how many iterations you need.
 
+<div class="callout-key">
+<strong>Key Point:</strong> Do Until runs its contained actions repeatedly until a condition becomes true — or until it hits a count or time limit.
+</div>
+
+
 ### When to Use Do Until
 
 - Poll an external system until a job status changes to "Complete"
@@ -123,9 +140,34 @@ If either limit is reached, the loop exits even if the condition is still false.
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Apply to Each</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Do Until</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Configure Run After: Controlling Error Flow
 
 Every action in Power Automate has a **Run after** configuration that determines under what conditions it should execute. By default, each action runs only if the previous action **Succeeded**. Configure Run After lets you change this.
+
+<div class="callout-danger">
+<strong>Danger:</strong> Every action in Power Automate has a **Run after** configuration that determines under what conditions it should execute.
+</div>
+
 
 ### The Four Run After States
 
@@ -169,6 +211,11 @@ This is the default behavior. When action A fails, all subsequent actions config
 ## Scope Actions: Try/Catch/Finally Patterns
 
 A **Scope** is a container action that groups other actions together. Scopes serve two purposes:
+
+<div class="callout-warning">
+<strong>Warning:</strong> A **Scope** is a container action that groups other actions together.
+</div>
+
 
 1. **Organization** — collapse a group of actions to reduce visual clutter in complex flows
 2. **Error handling** — catch errors from an entire group of actions with a single handler
@@ -214,6 +261,14 @@ result('Try')
 
 This returns an array of action results from the Try Scope. Each result object contains:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```json
 {
   "name": "ActionName",
@@ -224,6 +279,7 @@ This returns an array of action results from the Try Scope. Each result object c
   }
 }
 ```
+</div>
 
 > **On screen:** Inside the Catch Scope, add a Compose action or a Send email action. In the body, click **Expression** and type `result('Try')[0]['error']['message']` to access the first error's message. This gives you the actual error text to include in your notification.
 
@@ -251,6 +307,11 @@ A flow that processes orders and must handle partial failures:
 ## The Terminate Action: Controlled Flow Ending
 
 The **Terminate** action immediately stops a flow run and sets its final status. It is the Power Automate equivalent of `sys.exit()` or `process.exit()`.
+
+<div class="callout-insight">
+<strong>Insight:</strong> The **Terminate** action immediately stops a flow run and sets its final status.
+</div>
+
 
 ### Terminate Statuses
 
@@ -393,9 +454,32 @@ Flow run starts
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Loop through arrays with Apply to each](https://learn.microsoft.com/en-us/power-automate/apply-to-each) — Official docs with examples
 - [Add loops to flows](https://learn.microsoft.com/en-us/power-automate/add-loops-to-flows) — Covers both Apply to Each and Do Until
 - [Handle errors in flows](https://learn.microsoft.com/en-us/power-automate/error-handling-flows) — Configure Run After and Scope patterns
 - [Retry policies](https://learn.microsoft.com/en-us/power-automate/connection-retry-policy) — Retry policy configuration reference
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_loops_error_handling_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_flow_patterns_simulator.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

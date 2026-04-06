@@ -21,11 +21,14 @@ Speaker notes: Key talking points for this slide
 - By the end of this module learners will have a working IT helpdesk agent connected to real Power Automate flows
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Copilot Agents with Power Automate. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # What Is a Copilot Agent?
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     U["User\n(natural language)"] -->|types message| CS["Copilot Agent\n(Copilot Studio)"]
     CS -->|matches topic| T["Topic\n(conversation flow)"]
@@ -46,6 +49,13 @@ Speaker notes: Key talking points for this slide
 - Topics are the intelligence layer: they decide which flow to call and what parameters to pass
 - Emphasise: this is not a chatbot for conversation's sake — it is automation with a conversational front-end
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about What Is a Copilot Agent?. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -69,6 +79,13 @@ Speaker notes: Key talking points for this slide
 - Both can coexist: agent collects context, flow does the work
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Agent vs. Standalone Flow: Decision Matrix. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -83,11 +100,14 @@ Speaker notes: Key talking points for this slide
 - Generative AI features (Generative Answers) are the fourth dimension — powerful for knowledge base scenarios
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Copilot Studio Components. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Copilot Studio: Four Building Blocks
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Agent["Copilot Agent"] --> Topics
     Agent --> Entities
@@ -118,11 +138,19 @@ Speaker notes: Key talking points for this slide
 - In this module we focus primarily on Topics and Actions
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Copilot Studio: Four Building Blocks. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Topics: Conversation Structure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     TG["Trigger node\n'search knowledge base'\n'how do I fix'\n'find an article'"]
     TG --> Q["Question node\nWhat are you looking for?\n→ saves to: searchQuery"]
@@ -139,6 +167,13 @@ Speaker notes: Key talking points for this slide
 - The condition node is identical in concept to the Condition control in Power Automate
 - Variables (searchQuery, articleTitle, summary) are topic-scoped — they exist for the lifetime of the conversation topic
 -->
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Topics: Conversation Structure. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -169,6 +204,8 @@ Speaker notes: Key talking points for this slide
 - Custom entities are defined once and reused across all topics in the agent
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Entities: Extracting Structured Data. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -183,11 +220,14 @@ Speaker notes: Key talking points for this slide
 - Mistakes here are the most common source of broken agents in production
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Connecting Power Automate Flows. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Flow Requirements for Agent Actions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     PA["Power Automate Flow"] --> T["Trigger:\nWhen a flow is run\nfrom Copilot"]
     T --> Logic["Flow logic\n(SharePoint, Approvals, etc.)"]
@@ -210,6 +250,8 @@ Speaker notes: Key talking points for this slide
 - If either the trigger or the return action is missing, the flow will not appear or will not return data
 - Both trigger inputs and return outputs require a type declaration: Text, Number, Boolean, or Table
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Flow Requirements for Agent Actions. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -239,11 +281,14 @@ Speaker notes: Key talking points for this slide
 - After the action node, these output variables are available to all subsequent nodes in the topic
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Wiring Flow to Topic: The Mapping Step. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Agent Architecture: Full Stack View
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Teams["Microsoft Teams\nor Microsoft 365 Copilot"] --> Agent
 
@@ -278,6 +323,8 @@ Speaker notes: Key talking points for this slide
 - Teams is the primary channel but the same agent can publish to web or M365 Copilot simultaneously
 - The Approvals connector in the escalation flow connects back to the approval infrastructure from Module 06
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Agent Architecture: Full Stack View. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -321,6 +368,8 @@ Speaker notes: Key talking points for this slide
 - Environment variables prevent hardcoded URLs from breaking when a solution is promoted from dev to production
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Authentication and Security Model. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Creating Your First Agent: Checklist
@@ -359,11 +408,14 @@ Speaker notes: Key talking points for this slide
 - Publishing to Teams is the most common first channel for internal enterprise agents
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Creating Your First Agent: Checklist. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     CopilotStudio["Copilot Studio\n(conversation layer)"] <-->|actions| PA["Power Automate\n(backend layer)"]
     PA <-->|read/write| Data["SharePoint\nDataverse\nExternal APIs"]
@@ -384,3 +436,5 @@ Speaker notes: Key talking points for this slide
 - Next guide builds this end-to-end with a real IT helpdesk scenario — four topics, four flows, two SharePoint lists
 - Learners who complete Guide 02 will have a production-ready agent architecture they can reuse for any support workflow
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

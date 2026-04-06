@@ -1,12 +1,26 @@
 # SharePoint Integration with Power Automate
 
+> **Reading time:** ~31 min | **Module:** 5 — SharePoint & Excel | **Prerequisites:** Module 2
+
 ## In Brief
 
 Power Automate has first-class support for SharePoint: you can react to list events, read and write list items, manage document libraries, and apply fine-grained OData filters — all without writing a single line of server-side code. This guide walks through every major trigger and action, column type considerations, and a complete document approval workflow.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Power Automate has first-class support for SharePoint: you can react to list events, read and write list items, manage document libraries, and apply fine-grained OData filters — all without writing a single line of server-side code. This guide walks through every major trigger and action, column type considerations, and a complete document approval workflow.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Choose the correct SharePoint trigger for a given automation scenario
 2. Configure Get items with OData filter queries to retrieve only the rows you need
@@ -26,6 +40,11 @@ By the end of this guide you will be able to:
 ## 1. SharePoint Triggers
 
 A trigger is the event that fires your flow. SharePoint exposes three commonly used triggers in Power Automate.
+
+<div class="callout-key">
+<strong>Key Point:</strong> A trigger is the event that fires your flow.
+</div>
+
 
 ```
 SharePoint Triggers
@@ -99,6 +118,19 @@ This trigger places an **Automate** button in the SharePoint list's command bar.
 
 Power Automate exposes the full create-read-update-delete set for SharePoint list items.
 
+<div class="callout-info">
+<strong>Info:</strong> Power Automate exposes the full create-read-update-delete set for SharePoint list items.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```mermaid
 graph LR
     C["Create item"] --> R["Get item\nGet items"]
@@ -109,6 +141,7 @@ graph LR
     style U fill:#6264A7,color:#fff
     style D fill:#A4262C,color:#fff
 ```
+</div>
 
 ### 2.1 Create item
 
@@ -203,6 +236,11 @@ There is no recycle-bin safety net through the Power Automate action — the ite
 
 OData filters run on the SharePoint server before results are returned to your flow. Filtering server-side is always faster and cheaper than retrieving all items and filtering with a **Condition** action.
 
+<div class="callout-warning">
+<strong>Warning:</strong> OData filters run on the SharePoint server before results are returned to your flow.
+</div>
+
+
 ### 3.1 Basic syntax
 
 ```
@@ -290,6 +328,11 @@ AssignedTo/EMail eq 'user@your-org.com'
 ## 4. Working with SharePoint Document Libraries
 
 Document libraries store files. Power Automate provides separate actions for file content and file metadata.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Document libraries store files.
+</div>
+
 
 ### 4.1 Get file content
 
@@ -547,12 +590,40 @@ The **Approval Outcome** token comes from the "Start and wait for an approval" s
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Module 04 — Condition, Apply to each, error handling scope
 - **Leads to:** Module 06 — Advanced approval flows with multiple levels and escalation
 - **Related to:** Module 02 — Trigger types and connector authentication
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
 - [SharePoint connector reference (Microsoft Docs)](https://learn.microsoft.com/en-us/connectors/sharepointonline/)
 - [OData query operations supported in SharePoint REST API](https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/use-odata-query-operations-in-sharepoint-rest-requests)
 - [Work with lists and list items with REST](https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/working-with-lists-and-list-items-with-rest)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_sharepoint_integration_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_sharepoint_graph_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

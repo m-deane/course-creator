@@ -1,12 +1,26 @@
 # Data Operations
 
+> **Reading time:** ~22 min | **Module:** 3 — Data Operations & Expressions | **Prerequisites:** Module 2
+
 ## In Brief
 
 Data operations are a category of built-in Power Automate actions that reshape, filter, and format structured data without calling any external service. Combined with variable actions, they let you accumulate values across loop iterations, transform arrays, and produce table outputs — all inside a single flow.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Data operations are a category of built-in Power Automate actions that reshape, filter, and format structured data without calling any external service. Combined with variable actions, they let you accumulate values across loop iterations, transform arrays, and produce table outputs — all inside a single flow.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Store intermediate computed values using the **Compose** action
 2. Declare, set, and update variables of all supported types
@@ -22,9 +36,22 @@ By the end of this guide you will be able to:
 
 **Compose** is the simplest data action: it accepts a single input — any value or expression — and exposes it as an output named **Outputs**. It has no other effect.
 
+<div class="callout-key">
+<strong>Key Point:</strong> **Compose** is the simplest data action: it accepts a single input — any value or expression — and exposes it as an output named **Outputs**.
+</div>
+
+
 ### Why Compose Exists
 
 Power Automate evaluates expressions inline in every field, but a complex expression written six different times in six different fields is hard to maintain. Compose solves this by computing the value once and letting downstream steps reference the single output.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```text
 Without Compose:
@@ -40,6 +67,7 @@ With Compose:
   Email body:     "Date: " + outputs('TodayFormatted')
   File name:      concat(outputs('TodayCompact'), '_report.csv')
 ```
+</div>
 
 ### Adding a Compose Action
 
@@ -60,6 +88,11 @@ After a Compose action runs, its output is available under the **Compose** step'
 ## Variable Actions
 
 Variables hold a value that persists across the entire flow and can be updated at any point — including inside loops. This is the critical distinction from Compose: Compose produces a one-time output; a variable retains its value until you change it.
+
+<div class="callout-info">
+<strong>Info:</strong> Variables hold a value that persists across the entire flow and can be updated at any point — including inside loops.
+</div>
+
 
 ### Supported Variable Types
 
@@ -93,17 +126,34 @@ Replaces the variable's current value with a new value.
 
 Example: after classifying an email, set `strStatus` to `"Approved"`:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```text
 Set variable
   Name:  strStatus
   Value: 'Approved'
 ```
+</div>
 
 ### Increment Variable
 
 Adds a number to an integer or float variable. This is the standard loop counter pattern.
 
 > **On screen:** Search for `Increment variable`. Select the action. Choose the variable and enter the increment amount (for example, `1`).
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```text
 Initialize variable
@@ -116,6 +166,7 @@ Initialize variable
     Name:   intCount
     Value:  1
 ```
+</div>
 
 After the loop, `intCount` contains the total number of items processed.
 
@@ -126,6 +177,12 @@ Concatenates text onto the end of a string variable. Useful for building a multi
 > **On screen:** Search for `Append to string variable`. Choose the variable and enter the text to append.
 
 Example: collect email subjects into a summary string:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```text
 Initialize variable
@@ -138,6 +195,7 @@ Initialize variable
     Name:   strSummary
     Value:  concat('- ', items('Apply_to_each')?['Subject'], '\n')
 ```
+</div>
 
 After the loop, `strSummary` contains a bullet-pointed list of subjects.
 
@@ -167,6 +225,11 @@ Initialize variable
 ## Data Operations: Select
 
 **Select** transforms an array by projecting each element into a new shape. It is the Power Automate equivalent of the `map()` function in programming languages.
+
+<div class="callout-warning">
+<strong>Warning:</strong> **Select** transforms an array by projecting each element into a new shape.
+</div>
+
 
 ### When to Use Select
 
@@ -203,6 +266,11 @@ Output array: `[{"Name": "Alice", "Email": "alice@contoso.com"}, ...]`
 ## Data Operations: Filter Array
 
 **Filter array** subsets an array to only the elements matching a condition. It is the Power Automate equivalent of `filter()`.
+
+<div class="callout-insight">
+<strong>Insight:</strong> **Filter array** subsets an array to only the elements matching a condition.
+</div>
+
 
 ### Adding a Filter Array Action
 
@@ -246,6 +314,11 @@ graph LR
 ## Data Operations: Create CSV Table
 
 **Create CSV table** converts an array of objects into a CSV-formatted string. This is the fastest path from a data array to a spreadsheet-ready attachment.
+
+<div class="callout-key">
+<strong>Key Point:</strong> **Create CSV table** converts an array of objects into a CSV-formatted string.
+</div>
+
 
 ### Adding a Create CSV Table Action
 
@@ -441,14 +514,42 @@ This walkthrough produces a CSV file listing only approved purchase requests fro
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Guide 01 — Dynamic Content and Expressions (expressions used in Filter array, Select)
 - **Leads to:** Module 04 — Branching, Loops and Error Handling (variables used inside Apply to each)
 - **Related to:** Module 05 — SharePoint and Excel (Get items feeds directly into Filter array → Select → CSV)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Data operations reference](https://learn.microsoft.com/en-us/power-automate/data-operations)
 - [Use variables in Power Automate](https://learn.microsoft.com/en-us/power-automate/environment-variables)
 - [Parse JSON action reference](https://learn.microsoft.com/en-us/power-automate/data-operations#use-the-parse-json-action)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_data_operations_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_expression_reference.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

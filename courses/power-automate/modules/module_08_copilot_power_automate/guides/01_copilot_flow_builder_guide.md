@@ -1,16 +1,28 @@
 # Copilot in Power Automate: Building Flows with Natural Language
 
+> **Reading time:** ~18 min | **Module:** 8 — Copilot & Power Automate | **Prerequisites:** Module 4
+
 ## In Brief
 
 Copilot in Power Automate lets you describe what you want a flow to do in plain English and watch it build the structure for you. Instead of searching through hundreds of connectors and manually wiring triggers to actions, you type a sentence and Copilot generates a working starting point that you then review and refine.
 
 This guide covers how to access Copilot, how to craft effective prompts, how to use Copilot for expressions and troubleshooting, and where its limits are so you know when to switch to manual editing.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Copilot in Power Automate lets you describe what you want a flow to do in plain English and watch it build the structure for you. Instead of searching through hundreds of connectors and manually wiring triggers to actions, you type a sentence and Copilot generates a working starting point that you then review and refine.
+</div>
+
+
 ---
 
 ## What Copilot in Power Automate Is
 
 Copilot is an AI assistant embedded directly into the Power Automate interface. It understands natural language descriptions of automation scenarios and translates them into flow structures: triggers, actions, conditions, and connector configurations.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Copilot is an AI assistant embedded directly into the Power Automate interface.
+</div>
+
 
 Copilot in Power Automate can:
 
@@ -27,6 +39,13 @@ Copilot is not a separate product. It is built into the standard Power Automate 
 ## Accessing Copilot
 
 ### From the Home Page
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### From the Home Page
+
+> **On screen:** After signing into `make.powerautomate.com`, you land on the Home page.
+</div>
+
 
 > **On screen:** After signing into `make.powerautomate.com`, you land on the Home page. In the center of the page there is a large text input field labeled "Describe what you'd like to automate" with a lightning bolt icon. This is the primary Copilot entry point.
 
@@ -56,6 +75,13 @@ The Copilot panel inside the designer is a chat interface. You can:
 ## Creating a Flow Using Copilot: Step by Step
 
 ### Step 1: Write Your Prompt
+
+<div class="callout-info">
+<strong>Info:</strong> ### Step 1: Write Your Prompt
+
+Navigate to **Home** and type your automation description.
+</div>
+
 
 Navigate to **Home** and type your automation description. Write in plain English as if you are explaining the task to a colleague. Include:
 - The trigger (what starts the flow)
@@ -107,6 +133,11 @@ After the test run, each step shows a green check (success) or red X (failure) w
 
 Once inside the flow designer with the Copilot panel open, you can modify the flow by describing the change in plain English.
 
+<div class="callout-warning">
+<strong>Warning:</strong> Once inside the flow designer with the Copilot panel open, you can modify the flow by describing the change in plain English.
+</div>
+
+
 ### Adding a Step
 
 In the Copilot chat panel, type:
@@ -143,6 +174,11 @@ Copilot removes the action and confirms what it changed.
 ## Using Copilot to Generate Expressions
 
 Power Automate expressions (used in the expression editor) follow a specific syntax for date formatting, string manipulation, conditionals, and data conversion. Writing them manually requires knowing the expression language. Copilot can write them for you.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Power Automate expressions (used in the expression editor) follow a specific syntax for date formatting, string manipulation, conditionals, and data conversion.
+</div>
+
 
 Open the Copilot panel and ask:
 
@@ -292,3 +328,26 @@ Copilot in Power Automate accelerates flow creation by translating natural langu
 6. Switch to manual editing for complex logic that Copilot approximates
 
 The next guide covers AI Builder actions, which take Copilot-assisted flows further by embedding pre-built AI models directly into your automation logic.
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_copilot_flow_builder_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_ai_builder_rest_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

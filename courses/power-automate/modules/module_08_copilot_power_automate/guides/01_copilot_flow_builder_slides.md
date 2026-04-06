@@ -21,6 +21,8 @@ Speaker notes: Key talking points for this slide
 - This module covers two major tools: Copilot (natural language flow creation) and AI Builder (embedding AI models into flows)
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Copilot in Power Automate. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # What Copilot Can Do
@@ -49,6 +51,7 @@ Speaker notes: Key talking points for this slide
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["You describe\nthe automation"] --> B["Copilot generates\nflow structure"]
     B --> C["You review\nand fill placeholders"]
@@ -68,11 +71,19 @@ Speaker notes: Key talking points for this slide
 - The diagram shows the ITERATIVE nature — generating once and saving without testing is a common mistake
 -->
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about What Copilot Can Do. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Copilot Interaction Model
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as You
     participant C as Copilot
@@ -98,6 +109,13 @@ Speaker notes: Key talking points for this slide
 - Testing with real data is mandatory — never save a Copilot-generated flow without at least one test run
 - The sequence shows two rounds; real workflows often have 3-5 refinement rounds before a flow is production-ready
 -->
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Copilot Interaction Model. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -135,18 +153,23 @@ Speaker notes: Key talking points for this slide
 - The sparkle icon (✨) is the universal Microsoft Copilot indicator across M365 apps
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Two Ways to Access Copilot. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Anatomy of a Copilot-Generated Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     A["Trigger\n(inferred from prompt)\ne.g. When new email arrives"] --> B["Action 1\n(generated)\ne.g. Create file in OneDrive"]
     B --> C["Action 2\n(generated)\ne.g. Post Teams message"]
 
-    style A fill:#d4edda,stroke:#28a745
-    style B fill:#fff3cd,stroke:#ffc107
-    style C fill:#fff3cd,stroke:#ffc107
 ```
 
 **What Copilot fills in:** connector choice, action sequence, parameter names
@@ -163,6 +186,13 @@ Speaker notes: Key talking points for this slide
 - Practical tip: after Copilot generates the flow, click EVERY action and check that required fields are populated
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Anatomy of a Copilot-Generated Flow. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -175,6 +205,8 @@ Speaker notes: Key talking points for this slide
 - The quality difference between a vague prompt and a specific prompt is dramatic
 - This section gives learners concrete patterns they can use immediately
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Prompt Engineering for Better Flows. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -209,6 +241,8 @@ Speaker notes: Key talking points for this slide
 - Conditions described explicitly produce condition blocks; conditions described vaguely produce missing logic
 - The NOT exclusion pattern is underused: "do not process files in subfolders" prevents a common mistake
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about What Makes a Good Copilot Prompt. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -260,11 +294,14 @@ Speaker notes: Key talking points for this slide
 - Practice exercise: take a vague prompt and rewrite it using the before/after framework
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Prompt Before/After Comparison. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Copilot Capabilities Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 mindmap
   root((Copilot in\nPower Automate))
     Create
@@ -299,6 +336,8 @@ Speaker notes: Key talking points for this slide
 - Explain is useful for flows you inherit from colleagues — ask "what does this flow do?" before modifying someone else's automation
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Copilot Capabilities Map. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Generating Expressions with Copilot
@@ -324,11 +363,14 @@ Speaker notes: Key talking points for this slide
 - Copy the expression from the Copilot panel chat, paste it into the expression editor — straightforward workflow
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Generating Expressions with Copilot. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Troubleshooting Errors with Copilot
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Flow run fails\nRed X on step"] --> B["Click failed step\nto see error JSON"]
     B --> C["Open Copilot panel\nPaste error message"]
@@ -355,6 +397,8 @@ Speaker notes: Key talking points for this slide
 - After Copilot suggests a fix, ask it to apply it: "add a condition to check if there are attachments before proceeding"
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Troubleshooting Errors with Copilot. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Copilot Limitations
@@ -379,6 +423,8 @@ Speaker notes: Key talking points for this slide
 - Pagination settings (for SharePoint lists with 5000+ items) are never configured by Copilot — this is a common production gap
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Copilot Limitations. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -390,6 +436,8 @@ Speaker notes: Key talking points for this slide
 - Summary slide — reinforce the three-part mental model: generate, fill, iterate
 - The next guide covers AI Builder actions, which extend this workflow with pre-built AI models
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Key Takeaways. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -432,3 +480,5 @@ Speaker notes: Key talking points for this slide
 - Bridge to the next guide: AI Builder takes Copilot-assisted flows further by adding AI processing capabilities to the flow logic itself
 - Encourage learners to practice: take a real automation they currently do manually and try to prompt Copilot to build it
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about What to Remember. Pause for questions if the audience seems uncertain. -->

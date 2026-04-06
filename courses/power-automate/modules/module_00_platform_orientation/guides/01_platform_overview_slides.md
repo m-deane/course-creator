@@ -31,6 +31,11 @@ math: mathjax
 
 > **Core idea:** When *something happens* in one system, Power Automate can *do something* in another system — automatically.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Emphasize the "no-code/low-code" positioning carefully. Power Automate does support expressions and code blocks, so it is more accurate to call it "low-code" — especially by Module 03 when learners encounter Power Fx and dynamic content. The table on this slide gives learners an immediate mental model for what problem space this tool occupies. Ask: "What manual, repetitive tasks do you do every week?" — that is the target for automation. -->
 
 ---
@@ -38,6 +43,7 @@ math: mathjax
 # The Power Platform Ecosystem
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph PowerPlatform["Microsoft Power Platform"]
         PA["Power Automate\n(Automate)"]
@@ -60,6 +66,11 @@ graph TB
     External["External SaaS\n(Salesforce, SAP,\nServiceNow, Slack)"] <-->|"Standard & Premium\nconnectors"| PA
 ```
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through this diagram slowly. The key insight is that Power Automate is rarely used in isolation — it is the automation glue between tools. The three clouds at the bottom (M365, Azure, External SaaS) represent the real-world integration targets. Dataverse at the center of the Power Platform cluster is the shared brain. A common exam/interview question: "Which Power Platform product would you use to…" — knowing this diagram makes those questions straightforward. -->
 
 ---
@@ -76,6 +87,11 @@ graph TB
 | **Dataverse** | "Where does the data live?" | Shared relational store |
 
 All five products share: **authentication**, **environments**, **connectors**, and **DLP policies**.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: The "question it answers" column is the most useful mental model. When a business stakeholder describes a problem, map their description to one of these questions. If they say "we need people to fill in a form," that is Power Apps. If they say "and then something should happen automatically," that is Power Automate. These tools complement rather than compete. A single business solution often uses three or four of them together. -->
 
@@ -99,6 +115,7 @@ A **flow** is the fundamental unit of automation in Power Automate. It defines:
 - The **conditions** that control branching
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T["Trigger\n(starts the flow)"] --> A1["Action 1"]
     A1 --> A2["Action 2"]
@@ -111,6 +128,11 @@ graph LR
 
 Think of a flow as a **recipe**: the trigger is the starting gun, actions are the steps, conditions are the decision points.
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The recipe analogy works well for beginners. A more technical analogy for those with programming backgrounds: a flow is an event handler function. The trigger is the event listener, and actions are the function body. Flows are stateless by default — each run is independent. State can be stored in Dataverse, SharePoint, or variables within a single run. -->
 
 ---
@@ -120,6 +142,7 @@ Think of a flow as a **recipe**: the trigger is the starting gun, actions are th
 A **trigger** is the event that starts a flow. Every flow has exactly one trigger.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph EventTriggers["Event Triggers (fire when something happens)"]
         E1["New email received\n(Outlook)"]
@@ -169,6 +192,7 @@ Actions run **sequentially** by default. Parallel branches and loops are availab
 A **connector** is a prebuilt adapter that wraps an external service's API and exposes its triggers and actions as named operations.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph PA["Power Automate"]
         FLOW["Your Flow"]
@@ -204,6 +228,7 @@ Microsoft ships **1,000+ connectors**. The connector handles authentication, rat
 # Connector Tiers
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Standard["Standard Connectors (included with Microsoft 365)"]
         S1["SharePoint"]
@@ -243,6 +268,7 @@ graph TB
 An **environment** is an isolated container holding flows, apps, connections, and data.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     ORG["Your Organization (Tenant)"]
 
@@ -258,10 +284,6 @@ graph TB
     DEV -.->|"No cross-environment\ndirect access"| PROD
     TEST -.->|"No cross-environment\ndirect access"| PROD
 
-    style DEFAULT fill:#ff9,stroke:#cc0
-    style DEV fill:#9f9,stroke:#090
-    style TEST fill:#9cf,stroke:#069
-    style PROD fill:#f99,stroke:#900
 ```
 
 Environments are the primary **security and governance boundary**. Each has its own DLP policies, maker permissions, and Dataverse database.
@@ -283,6 +305,7 @@ Environments are the primary **security and governance boundary**. Each has its 
 # Flow Types Taxonomy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     PA["Power Automate Flows"]
 
@@ -324,6 +347,7 @@ graph TB
 # Real-World Use Case Map
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph UseCases["Common Automation Scenarios"]
         UC1["Employee\nOnboarding"]
@@ -349,6 +373,7 @@ graph LR
 # Connector Ecosystem Overview
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Microsoft["Microsoft Ecosystem"]
         M1["SharePoint"]

@@ -1,12 +1,26 @@
 # Trigger Types in Power Automate
 
+> **Reading time:** ~14 min | **Module:** 2 — Triggers & Connectors | **Prerequisites:** Module 1
+
 ## In Brief
 
 A trigger is the event that starts every flow. Power Automate organises triggers into three families: **automated** (react to an external event), **instant** (fire on demand), and **scheduled** (run on a timer). Choosing the right trigger family determines how your flow behaves, how often it can run, and what data it receives at startup.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> A trigger is the event that starts every flow. Power Automate organises triggers into three families: **automated** (react to an external event), **instant** (fire on demand), and **scheduled** (run on a timer).
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Distinguish automated, instant, and scheduled trigger families and give an example of each
 2. Explain the difference between polling and webhook trigger mechanisms
@@ -30,6 +44,11 @@ By the end of this guide you will be able to:
    item changed     Teams action
 ```
 
+<div class="callout-key">
+<strong>Key Point:</strong> Every flow has exactly one trigger card — the topmost card on the canvas.
+</div>
+
+
 Every flow has exactly one trigger card — the topmost card on the canvas. The trigger determines:
 
 - **When** the flow starts
@@ -42,6 +61,11 @@ Every flow has exactly one trigger card — the topmost card on the canvas. The 
 ## Automated Triggers (Event-Driven)
 
 An automated trigger listens for a specific event in a connected system and starts the flow the moment that event occurs. The flow does not run on a schedule; it wakes up only when something happens.
+
+<div class="callout-info">
+<strong>Info:</strong> An automated trigger listens for a specific event in a connected system and starts the flow the moment that event occurs.
+</div>
+
 
 ### When an email arrives — Office 365 Outlook
 
@@ -101,6 +125,11 @@ Dynamic content includes all list column values from the item that changed, plus
 
 Instant triggers do not listen passively. A user or system actively fires them.
 
+<div class="callout-warning">
+<strong>Warning:</strong> Instant triggers do not listen passively.
+</div>
+
+
 ### Manual / Button Trigger
 
 > **On screen:** Click **+ Create**, then **Instant cloud flow**. The default trigger shown is **Manually trigger a flow**. Click **Create**.
@@ -153,6 +182,11 @@ Use cases:
 ## Scheduled Triggers (Timer-Based)
 
 Scheduled triggers fire automatically on a repeating clock, independent of any user action or external event.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Scheduled triggers fire automatically on a repeating clock, independent of any user action or external event.
+</div>
+
 
 ### Recurrence Trigger
 
@@ -272,6 +306,26 @@ Source service     Power Automate webhook endpoint
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Polling</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Webhook Triggers</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## Navigating Trigger Selection in the Portal
 
 ### Finding the Right Trigger Quickly
@@ -302,11 +356,24 @@ Changing the trigger family often invalidates dynamic content tokens used in dow
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Module 01 — Creating Your First Cloud Flow (trigger basics, canvas navigation)
 - **Leads to:** Guide 02 — Connectors Deep Dive (what happens after the trigger fires)
 - **Related to:** Module 03 — Expressions and conditions used in trigger condition expressions
 
 ---
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
@@ -314,3 +381,18 @@ Changing the trigger family often invalidates dynamic content tokens used in dow
 - [Polling vs push triggers explained](https://learn.microsoft.com/en-us/connectors/custom-connectors/connection-parameters#triggers)
 - [Trigger conditions reference](https://learn.microsoft.com/en-us/power-automate/triggers-introduction#add-a-trigger-condition)
 - [Recurrence trigger advanced options](https://learn.microsoft.com/en-us/power-automate/desktop-flows/recurrence)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_trigger_types_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_list_connectors_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

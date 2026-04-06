@@ -21,11 +21,14 @@ Speaker notes: Key talking points for this slide
 - This guide covers the most useful action types for business automation scenarios
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about AI Builder Actions in Power Automate. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # AI Builder Model Types
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     AIB["AI Builder"]
 
@@ -49,6 +52,13 @@ Speaker notes: Key talking points for this slide
 - Custom models are introduced here but covered in depth in advanced modules
 - Document processing models (invoices, receipts) are remarkably accurate for standard formats — Microsoft trained them on millions of real documents
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about AI Builder Model Types. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -93,6 +103,13 @@ Speaker notes: Key talking points for this slide
 - Category classification requires you to define your categories — the model adapts to your taxonomy using few-shot learning built into the prompt
 - Key phrase extraction creates a tag list automatically — useful for SharePoint document tagging workflows
 -->
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Pre-built Text Intelligence Actions. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -140,6 +157,13 @@ Speaker notes: Key talking points for this slide
 - Accuracy tip: rotate images right-side up before processing — orientation affects extraction accuracy significantly
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Document Processing Actions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # GPT Text Generation Action
@@ -147,6 +171,7 @@ Speaker notes: Key talking points for this slide
 The **Create text with GPT using a prompt** action is the most flexible AI Builder action.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Your prompt\n(static text +\ndynamic content)"] --> B["GPT Model\n(in Power Platform)"]
     B --> C["Generated text\n(stored in variable\nor used directly)"]
@@ -173,11 +198,19 @@ Speaker notes: Key talking points for this slide
 - The model runs inside the Power Platform data boundary — data does not go to external OpenAI endpoints directly, which matters for enterprise data governance
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about GPT Text Generation Action. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Email Processing Pipeline with AI Builder
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T["Outlook Trigger\nNew email with attachment"] --> F1["Filter\nHas attachment? Sender domain?"]
     F1 --> A1["AI Builder\nExtract invoice from attachment"]
@@ -189,12 +222,6 @@ flowchart TD
     C -->|"No"| DRAFT["Outlook\nSend draft to reviewer"]
     ESC --> DRAFT
 
-    style T fill:#d4edda,stroke:#28a745
-    style A1 fill:#cce5ff,stroke:#004085
-    style A2 fill:#cce5ff,stroke:#004085
-    style A3 fill:#cce5ff,stroke:#004085
-    style SP fill:#fff3cd,stroke:#ffc107
-    style C fill:#f8d7da,stroke:#721c24
 ```
 
 <!--
@@ -207,11 +234,14 @@ Speaker notes: Key talking points for this slide
 - Walking through this diagram before the hands-on portion helps learners understand what they are building
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Email Processing Pipeline with AI Builder. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # AI Builder Credit Consumption Model
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Credits["Monthly AI Builder Credits\n(allocated per environment)"]
 
@@ -242,6 +272,8 @@ Speaker notes: Key talking points for this slide
 - Organizations can purchase AI Builder credit add-ons if the included allocation is insufficient
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about AI Builder Credit Consumption Model. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Copilot-Assisted Flow Editing with AI Builder
@@ -270,6 +302,7 @@ Use the Copilot panel to add and configure AI Builder steps conversationally:
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     A["Copilot prompt:\n'Add sentiment analysis\nto the email body'"] --> B["Copilot inserts action\nat correct position"]
     B --> C["You verify:\nText field mapped to\nemail Body?"]
@@ -286,6 +319,8 @@ Speaker notes: Key talking points for this slide
 - The "explain output schema" query to Copilot is very useful: ask "what fields does invoice processing return?" and use the answer to configure downstream steps
 - GPT prompt text is always written by you — do not ask Copilot to write your AI Builder prompt, because that produces generic results
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Copilot-Assisted Flow Editing with AI Builder. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -333,6 +368,8 @@ Speaker notes: Key talking points for this slide
 - Weekly credit monitoring during rollout prevents the surprise of running out mid-month
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Best Practices. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -344,6 +381,8 @@ Speaker notes: Key talking points for this slide
 - Summary slide — three-part mental model: choose the right action, wire the outputs, handle credits and errors
 - This module bridges reactive automation (flows) with intelligent automation (AI-powered flows)
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Key Takeaways. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -385,3 +424,5 @@ Speaker notes: Key talking points for this slide
 - Credit awareness is a practical skill: building a flow that costs 10,000 credits/day needs approval and planning, not just technical implementation
 - Bridge to next module: Copilot agents go beyond individual flows — they make decisions and chain multiple actions autonomously, which is the direction intelligent automation is heading
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about What to Remember. Pause for questions if the audience seems uncertain. -->

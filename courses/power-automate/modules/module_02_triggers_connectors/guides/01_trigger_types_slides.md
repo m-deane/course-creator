@@ -38,6 +38,11 @@ External world          Power Automate
 
 One trigger per flow. No exceptions.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Reinforce that the trigger is not optional — every flow must have exactly one. Flows cannot have zero triggers or multiple triggers. Also clarify that "no exceptions" means even the very first Hello World flow had a trigger (manual or recurrence). Reinforce the mental model: trigger receives the initial data package, and that data flows downward through every action. -->
 
 ---
@@ -45,6 +50,7 @@ One trigger per flow. No exceptions.
 ## The Three Trigger Families
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     T["ALL TRIGGERS"]:::root --> A["AUTOMATED<br/>(event-driven)"]:::automated
     T --> I["INSTANT<br/>(on-demand)"]:::instant
@@ -68,6 +74,11 @@ graph TD
     classDef scheduled fill:#8764b8,color:#fff
 ```
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: Walk through this taxonomy slowly. Ask learners to think about the last repetitive task they did manually — which family would automate it? The taxonomy tree is the conceptual anchor for this entire module. Automated = reactive, Instant = imperative, Scheduled = periodic. -->
 
 ---
@@ -86,6 +97,11 @@ The flow **waits silently** until an event fires it
 
 No schedule. No human click. The **event triggers the flow.**
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The key insight is that automated triggers are reactive — they do not poll unless forced to by the connector mechanism (covered in the polling vs webhook slide). Contrast this with "I check my email every 15 minutes" vs "I get a push notification the instant an email arrives." That push notification model is what automated triggers implement. Mention that filtering exists on most triggers so you don't process every single event — that comes up in the trigger conditions slide. -->
 
 ---
@@ -95,6 +111,7 @@ No schedule. No human click. The **event triggers the flow.**
 A **person or system** decides when the flow runs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     U["User / App / Teams"]:::actor -- "clicks / calls / right-clicks" --> T["Instant Trigger"]:::trigger
     T --> F["Flow runs"]:::flow
@@ -111,6 +128,11 @@ graph LR
 | When a Teams message action is triggered | User right-clicking a Teams message |
 
 Instant triggers **can accept inputs** — data typed or passed at run time.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: Instant triggers are often overlooked by beginners who jump straight to automated or scheduled flows. But they are extremely powerful for human-in-the-loop processes: approvals, ad-hoc exports, one-off tasks. The Power Apps integration is where Power Automate and Power Apps become a unified platform — the app handles the UI, the flow handles the backend logic. The Teams message action trigger is a sleeper feature that lets you build moderation, translation, or escalation workflows that feel native to Teams. -->
 
@@ -140,6 +162,7 @@ Flows that run **regardless of events**
 ## Polling vs Webhook: How Events Actually Reach Power Automate
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant PA as Power Automate
     participant API as Connector API (polling)
@@ -152,6 +175,7 @@ sequenceDiagram
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant SRC as Source Service
     participant PA as Power Automate (webhook endpoint)
@@ -189,6 +213,7 @@ Without conditions: every event starts a run, even when the flow body would skip
 With conditions: Power Automate evaluates the expression **before** the run starts and before any run credits are consumed.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     E["Event occurs"]:::event --> C{"Trigger condition\nevaluates to true?"}:::decision
     C -- "Yes" --> R["Flow run starts"]:::run
@@ -230,6 +255,7 @@ Multiple conditions = **AND logic** (all must be true)
 ## Trigger Navigation: Finding the Right Trigger
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Start["I need to create a flow"]:::start --> Q1{"Does it react\nto an event?"}:::decision
     Q1 -- "Yes" --> Q2{"Does a human\ntrigger it?"}:::decision

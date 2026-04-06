@@ -1,12 +1,26 @@
 # Testing and Debugging Your Flow
 
+> **Reading time:** ~12 min | **Module:** 1 — First Cloud Flow | **Prerequisites:** Module 0
+
 ## In Brief
 
 Power Automate gives you three overlapping tools for understanding why a flow behaved the way it did: the **Test pane** (run it now and watch it live), **Run history** (browse every past execution), and **Input/Output inspection** (see the exact data each step received and produced). This guide walks through all three, plus the Flow Checker for catching configuration errors before the flow ever runs.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Power Automate gives you three overlapping tools for understanding why a flow behaved the way it did: the **Test pane** (run it now and watch it live), **Run history** (browse every past execution), and **Input/Output inspection** (see the exact data each step received and produced). This guide walks through all three, plus the Flow Checker for catching configuration errors before the flow ever runs.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Trigger a flow manually from the Test pane
 2. Read the run history to find failed executions
@@ -21,6 +35,15 @@ By the end of this guide you will be able to:
 
 The recommended cycle for any flow change:
 
+<div class="callout-key">
+<strong>Key Point:</strong> The recommended cycle for any flow change:
+
+
+
+Never skip the Save step.
+</div>
+
+
 ```
 Save → Test (manually) → Inspect run detail → Fix issue → Save → Test again
 ```
@@ -32,6 +55,11 @@ Never skip the Save step. The Test pane always runs the last saved version of th
 ## Step 1 — Open the Test Pane
 
 > **On screen:** With your flow open in the designer, click **Test** in the top toolbar. The Test pane slides in from the right side of the screen.
+
+<div class="callout-info">
+<strong>Info:</strong> > **On screen:** With your flow open in the designer, click **Test** in the top toolbar.
+</div>
+
 
 You will see two options:
 
@@ -48,6 +76,11 @@ You will see two options:
 
 > **On screen:** A confirmation screen appears. For a scheduled flow it says "Your flow will run right now." Click **Run flow**.
 
+<div class="callout-warning">
+<strong>Warning:</strong> > **On screen:** A confirmation screen appears.
+</div>
+
+
 > **On screen:** Click **Done**. Power Automate closes the confirmation and redirects you to the **run detail page** for this execution.
 
 The run detail page is the same page you reach from the Run history — there is no special "test results" view. Everything goes through the same interface.
@@ -57,6 +90,11 @@ The run detail page is the same page you reach from the Run history — there is
 ## Step 3 — Read the Run Detail Page
 
 The run detail page shows the flow as a vertical stack of cards, identical to the designer canvas, but each card now displays its execution result.
+
+<div class="callout-insight">
+<strong>Insight:</strong> The run detail page shows the flow as a vertical stack of cards, identical to the designer canvas, but each card now displays its execution result.
+</div>
+
 
 ### Card States
 
@@ -225,14 +263,42 @@ The step name in the message (shown in single quotes with underscores, like `Get
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Guide 01 — Creating Your First Cloud Flow
 - **Leads to:** Module 02 — Triggers and Connectors (connector authentication in depth)
 - **Related:** Module 04 — Error handling with "Configure run after" and Scope actions
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Power Automate — Troubleshoot a flow](https://learn.microsoft.com/en-us/power-automate/fix-flow-failures)
 - [Power Automate — View run history](https://learn.microsoft.com/en-us/power-automate/monitor-manage-processes)
 - [Power Automate — Error codes reference](https://learn.microsoft.com/en-us/power-automate/error-reference)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_testing_debugging_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_trigger_flow_via_http.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

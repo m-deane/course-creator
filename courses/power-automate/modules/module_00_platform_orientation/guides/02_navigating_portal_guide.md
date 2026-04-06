@@ -1,16 +1,30 @@
 # Navigating the Power Automate Portal
 
+> **Reading time:** ~16 min | **Module:** 0 — Platform Orientation | **Prerequisites:** None
+
 ## In Brief
 
 The Power Automate portal at `make.powerautomate.com` is the primary interface for creating, managing, monitoring, and deploying flows. This guide walks through every major section of the portal, explains what each section is for, and describes the UI in enough detail to navigate without screenshots.
 
-> **Key Insight:** The portal UI updates frequently. Microsoft ships weekly releases. If a menu label or icon differs slightly from what is described here, check `learn.microsoft.com/power-automate` for the current UI reference. The underlying concepts and section purposes remain stable.
+<div class="callout-insight">
+<strong>Insight:</strong> The portal UI updates frequently. Microsoft ships weekly releases. If a menu label or icon differs slightly from what is described here, check `learn.microsoft.com/power-automate` for the current UI reference. The underlying concepts and section purposes remain stable.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> The Power Automate portal at `make.powerautomate.com` is the primary interface for creating, managing, monitoring, and deploying flows. This guide walks through every major section of the portal, explains what each section is for, and describes the UI in enough detail to navigate without screenshots.
+</div>
+
 
 ---
 
 ## Signing In
 
 Navigate to `make.powerautomate.com` in any modern browser. Sign in with your Microsoft organizational account (work or school account). Consumer Microsoft accounts (personal @outlook.com, @hotmail.com) have limited access and cannot connect to organizational systems.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Navigate to `make.powerautomate.com` in any modern browser.
+</div>
+
 
 > **On screen:** The sign-in page shows the standard Microsoft identity prompt. If your organization uses single sign-on (SSO), you may be redirected to your organization's identity provider (Azure AD B2B, Okta, ADFS, etc.) before landing in the portal.
 
@@ -21,6 +35,11 @@ After sign-in, you land on the **Home** page inside the environment your account
 ## Environment Selector
 
 Before navigating any section, locate the **environment selector** — it appears in the **top-right area** of the portal header, showing the current environment name next to a small grid/globe icon.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Before navigating any section, locate the **environment selector** — it appears in the **top-right area** of the portal header, showing the current environment name next to a small grid/globe icon.
+</div>
+
 
 > **On screen:** The top header bar contains (left to right): the Power Automate logo, a search bar, and on the far right, your current environment name, a question-mark help icon, a notification bell, and your profile avatar. Click the environment name to open a dropdown listing all environments your account has access to.
 
@@ -149,6 +168,11 @@ Access to the Dataverse tables in the current environment. Shows table list, rel
 
 #### Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 **This is one of the most important management pages in the portal.**
 
 A connection is an authenticated instance of a connector. Before a flow can use a connector, a connection must exist.
@@ -244,6 +268,19 @@ Process Mining analyzes event logs from business systems to visualize how proces
 
 Power Automate licensing directly determines which connectors you can use and how flows can run. Choosing the wrong license tier is a common source of confusion when a flow that works in one environment fails in another.
 
+<div class="callout-info">
+<strong>Info:</strong> Power Automate licensing directly determines which connectors you can use and how flows can run.
+</div>
+
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```text
 Licensing Tiers (simplified):
 ├── Microsoft 365 (included with M365 subscriptions)
@@ -267,6 +304,7 @@ Licensing Tiers (simplified):
 └── Power Automate RPA (Unattended) — add-on to Per Flow
     └── Run desktop flows on dedicated machines, no user login required
 ```
+</div>
 
 > **On screen:** Your current license tier appears under your profile avatar > `View account`. In the Power Automate portal, attempting to add a Premium connector when you have only a Standard license shows an upgrade prompt inline in the flow designer — it does not block you from designing the flow, only from saving it in a licensed environment.
 
@@ -335,3 +373,18 @@ Shows the complete flow design — trigger, all actions, conditions — as a vis
 - [DLP policies documentation](https://learn.microsoft.com/en-us/power-platform/admin/wp-data-loss-prevention) — how admins configure connector groupings
 - [Solutions overview](https://learn.microsoft.com/en-us/power-platform/alm/solution-concepts-alm) — ALM practices for environment promotion
 - [On-premises data gateway](https://learn.microsoft.com/en-us/power-automate/gateway-reference) — when and how to deploy gateways
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_navigating_portal_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_power_automate_overview.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

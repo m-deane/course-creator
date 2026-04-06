@@ -1,16 +1,30 @@
 # Approvals Connector: Automating Human Decision Points
 
+> **Reading time:** ~14 min | **Module:** 6 — Approval Flows | **Prerequisites:** Module 4
+
 ## In Brief
 
 The Approvals connector lets you embed structured human decisions into your flows. Instead of sending a generic email and waiting for a reply, the connector creates a trackable approval record, routes it to the right people, handles responses, and feeds the decision back into your automation—all without writing a line of custom email logic.
 
-> **Key Insight:** Approvals are not just email notifications. They are persistent records with a status (Pending, Approved, Rejected) that Power Automate can query, update, and act on—even days or weeks after the request was created.
+<div class="callout-insight">
+<strong>Insight:</strong> Approvals are not just email notifications. They are persistent records with a status (Pending, Approved, Rejected) that Power Automate can query, update, and act on—even days or weeks after the request was created.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> The Approvals connector lets you embed structured human decisions into your flows. Instead of sending a generic email and waiting for a reply, the connector creates a trackable approval record, routes it to the right people, handles responses, and feeds the decision back into your automation—all without writing a line of custom email logic.
+</div>
+
 
 ---
 
 ## Why the Approvals Connector Exists
 
 Before the Approvals connector, teams handled sign-off workflows by emailing someone a document, waiting for a reply, and manually updating a spreadsheet. Problems:
+
+<div class="callout-insight">
+<strong>Insight:</strong> Before the Approvals connector, teams handled sign-off workflows by emailing someone a document, waiting for a reply, and manually updating a spreadsheet.
+</div>
+
 
 - No audit trail linking the request to the decision
 - Approver's reply can get buried in email
@@ -24,6 +38,11 @@ The Approvals connector solves all four problems with a dedicated infrastructure
 ## Approval Types
 
 Power Automate offers four distinct approval patterns. Choosing the right one determines the behavior of routing, notification, and completion.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Power Automate offers four distinct approval patterns.
+</div>
+
 
 ### Approve/Reject — First to Respond
 
@@ -157,6 +176,14 @@ The **Details** field in the approval action supports a limited set of HTML. Thi
 
 ### Basic HTML Structure
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.html</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```html
 <b>Expense Request Details</b><br>
 <br>
@@ -168,6 +195,7 @@ Business justification: Annual renewal for JetBrains IDEs used by the backend te
 <br>
 <a href="https://your-org.sharepoint.com/sites/Finance/Expenses/item123">View Receipt</a>
 ```
+</div>
 
 ### What Renders and What Does Not
 
@@ -286,14 +314,27 @@ Then add **Send an email (V2)** to notify the submitter of rejection, including 
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 - **Approval goes to wrong person**: The **Assigned to** field requires email addresses, not display names. Use the Office 365 Users connector to resolve names to emails when the approver is dynamic.
 - **Flow times out**: By default, flows time out after 30 days. For approvals that might take longer, use the **Reminder** settings or build an escalation step using a parallel branch.
 - **Outcome string mismatch**: The Outcome value is case-sensitive in some contexts. Use `"Approve"` (not `"Approved"`). Check the approval type documentation for exact output strings for custom responses.
 - **HTML not rendering**: Check that the Details field contains valid HTML. Nested tags and unclosed elements break rendering silently.
 
+<div class="callout-warning">
+<strong>Warning:</strong> - **Approval goes to wrong person**: The **Assigned to** field requires email addresses, not display names.
+</div>
+
 ---
 
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 - **Builds on:** Module 05 — SharePoint triggers and list operations
 - **Leads to:** Guide 02 — Adaptive Cards and multi-stage approval pipelines
@@ -301,8 +342,31 @@ Then add **Send an email (V2)** to notify the submitter of rejection, including 
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Microsoft Docs: Approvals connector reference](https://learn.microsoft.com/en-us/connectors/approvals/)
 - [Approvals Center in Microsoft Teams](https://support.microsoft.com/en-us/office/what-is-approvals-in-teams-f618e52c-0e01-4af3-857f-08e8cde55949)
 - [Power Automate: Manage long-running approvals](https://learn.microsoft.com/en-us/power-automate/approval-email-customization)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_approval_connector_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_adaptive_card_designer.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

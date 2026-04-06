@@ -1,16 +1,35 @@
 # Building an IT Helpdesk Copilot Agent: End-to-End Project
 
+> **Reading time:** ~27 min | **Module:** 9 — Copilot Agents | **Prerequisites:** Module 8
+
 ## In Brief
 
 This guide builds a complete IT helpdesk Copilot agent from scratch. By the end you will have a working agent connected to SharePoint lists and Power Automate flows that employees can use to search KB articles, create support tickets, check ticket status, and escalate critical issues—all through a natural language conversation in Microsoft Teams.
 
-> **Key Insight:** Build the data layer first, then the flows, then the agent. Each layer depends on the one below it. Trying to build the agent before the flows are ready forces you to return and rewire things repeatedly.
+<div class="callout-insight">
+<strong>Insight:</strong> Build the data layer first, then the flows, then the agent. Each layer depends on the one below it. Trying to build the agent before the flows are ready forces you to return and rewire things repeatedly.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> This guide builds a complete IT helpdesk Copilot agent from scratch. By the end you will have a working agent connected to SharePoint lists and Power Automate flows that employees can use to search KB articles, create support tickets, check ticket status, and escalate critical issues—all through a natural language conversation in Microsoft Teams.
+</div>
+
 
 ---
 
 ## Agent Design
 
 ### Persona
+
+<div class="callout-insight">
+<strong>Insight:</strong> ### Persona
+
+- **Name:** Helpdesk Bot
+- **Tone:** Professional, concise, action-oriented
+- **Scope:** IT issues only — hardware, software, network, accounts
+- **Limitations:** Does not provide general...
+</div>
+
 
 - **Name:** Helpdesk Bot
 - **Tone:** Professional, concise, action-oriented
@@ -27,6 +46,14 @@ This guide builds a complete IT helpdesk Copilot agent from scratch. By the end 
 | Escalate Issue | "escalate", "this is critical", "I need a manager" | Escalation Approval |
 
 ### Conversation Flow Overview
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```text
 User message
@@ -54,12 +81,18 @@ Topic matched by trigger phrase
                Action: Escalation Approval flow → notifies IT manager, returns confirmation
                Message: confirms escalation and provides reference number
 ```
+</div>
 
 ---
 
 ## Step 1: Create SharePoint Lists
 
 Both SharePoint lists must be created before building any flows or topics.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Both SharePoint lists must be created before building any flows or topics.
+</div>
+
 
 ### List 1: IT Knowledge Base Articles
 
@@ -112,6 +145,11 @@ Both SharePoint lists must be created before building any flows or topics.
 ## Step 2: Build the Power Automate Flows
 
 All four flows use the **"When a flow is run from Copilot"** trigger from the Microsoft Copilot Studio connector.
+
+<div class="callout-info">
+<strong>Info:</strong> All four flows use the **"When a flow is run from Copilot"** trigger from the Microsoft Copilot Studio connector.
+</div>
+
 
 ### Flow 1: Search KB Articles
 
@@ -652,15 +690,28 @@ For production monitoring, set up a separate monitoring flow that queries the fl
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 - **Flow not appearing in Copilot Studio action picker:** Confirm the flow uses the "When a flow is run from Copilot" trigger and is saved without errors. Check that you are in the same environment in both tools.
 - **Output variables are blank after the action node:** The flow's "Return value(s) to Power Virtual Agents" action must be reached. Check the flow run history to verify the return action executed.
 - **SharePoint filter query returning no results:** OData filter syntax is strict — spaces in field names must be encoded, and the `substringof` function requires the field name as the second argument. Test queries in the SharePoint REST API browser before using in flows.
 - **Escalation approval blocking the agent indefinitely:** The "Start and wait for an approval" action pauses the flow until the approver responds. Set a reasonable timeout by wrapping the approval in a **Do until** loop with a time-based exit condition.
 - **System.User.Email is empty in test canvas:** The test canvas does not authenticate as a real user. Hard-code a test email in the mapping while testing, then switch back to the system variable before publishing.
 
+<div class="callout-warning">
+<strong>Warning:</strong> - **Flow not appearing in Copilot Studio action picker:** Confirm the flow uses the "When a flow is run from Copilot" trigger and is saved without errors.
+</div>
+
 ---
 
 ## Connections
+
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
 
 - **Builds on:** Guide 01 — Copilot agents overview and architecture
 - **Builds on:** Module 06 — Approvals connector (used in Flow 3)
@@ -669,6 +720,14 @@ For production monitoring, set up a separate monitoring flow that queries the fl
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Microsoft Copilot Studio: Create a topic](https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-create-edit-topics)
@@ -676,3 +735,18 @@ For production monitoring, set up a separate monitoring flow that queries the fl
 - [Copilot Studio analytics overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-overview)
 - [Publish to Microsoft Teams](https://learn.microsoft.com/en-us/microsoft-copilot-studio/publication-add-bot-to-microsoft-teams)
 - [Power Platform environment variables](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/environmentvariables)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_building_it_helpdesk_agent_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_copilot_agent_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

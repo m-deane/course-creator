@@ -1,12 +1,26 @@
 # Dynamic Content and Expressions
 
+> **Reading time:** ~31 min | **Module:** 3 — Data Operations & Expressions | **Prerequisites:** Module 2
+
 ## In Brief
 
 Dynamic content and expressions are the mechanism Power Automate uses to move data between steps and compute new values at runtime. Dynamic content lets you select outputs from previous steps via a point-and-click panel; expressions let you write formulas that transform, compare, and format those values before they reach the next action.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Dynamic content and expressions are the mechanism Power Automate uses to move data between steps and compute new values at runtime. Dynamic content lets you select outputs from previous steps via a point-and-click panel; expressions let you write formulas that transform, compare, and format those values before they reach the next action.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Open the dynamic content panel and insert output tokens from any upstream step
 2. Switch to the expression editor and write valid Power Automate expressions
@@ -19,6 +33,11 @@ By the end of this guide you will be able to:
 ## How Data Flows Between Steps
 
 Every action in a flow exposes **outputs** — structured data produced when that step runs. Downstream steps can consume those outputs via tokens. Power Automate resolves every token at runtime by substituting the actual value before executing the next step.
+
+<div class="callout-key">
+<strong>Key Point:</strong> Every action in a flow exposes **outputs** — structured data produced when that step runs.
+</div>
+
 
 ```
 Step A runs
@@ -35,6 +54,13 @@ This substitution is what the term **dynamic content** means — content whose v
 ## The Dynamic Content Panel
 
 ### Opening the Panel
+
+<div class="callout-info">
+<strong>Info:</strong> ### Opening the Panel
+
+Every text field in an action card that accepts dynamic values shows a lightning-bolt icon when you click into it.
+</div>
+
 
 Every text field in an action card that accepts dynamic values shows a lightning-bolt icon when you click into it.
 
@@ -82,6 +108,13 @@ Only tokens from steps that are **upstream** of the current step appear in the p
 
 ### Switching to Expressions
 
+<div class="callout-warning">
+<strong>Warning:</strong> ### Switching to Expressions
+
+> **On screen:** In the dynamic content panel, click the **Expression** tab.
+</div>
+
+
 > **On screen:** In the dynamic content panel, click the **Expression** tab. A text box appears labelled **fx** with a cursor ready for input. Type your expression here. When finished, click **OK** to insert the result as a token in the field.
 
 Expressions use a language called **Workflow Definition Language (WDL)** — a superset of Azure Logic Apps expressions. Functions follow this pattern:
@@ -115,6 +148,13 @@ Inside the expression editor, dynamic content tokens are accessed via their inte
 ## String Functions
 
 ### `concat()`
+
+<div class="callout-insight">
+<strong>Insight:</strong> ### `concat()`
+
+Joins two or more strings together.
+</div>
+
 
 Joins two or more strings together.
 
@@ -193,6 +233,13 @@ Result: `purchase order`
 ## Date and Time Functions
 
 ### `utcNow()`
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### `utcNow()`
+
+Returns the current date and time in UTC as an ISO 8601 string.
+</div>
+
 
 Returns the current date and time in UTC as an ISO 8601 string.
 
@@ -545,14 +592,42 @@ When an expression contains an error (wrong function name, mismatched parenthese
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Module 02 — Triggers and Connectors (understanding action outputs)
 - **Leads to:** Guide 02 — Data Operations (Compose, Variables, Select, Filter)
 - **Related to:** Module 04 — Conditions and loops (logical expressions used in conditions)
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Power Automate expression reference](https://learn.microsoft.com/en-us/azure/logic-apps/workflow-definition-language-functions-reference)
 - [String functions reference](https://learn.microsoft.com/en-us/azure/logic-apps/workflow-definition-language-functions-reference#string-functions)
 - [Date and time functions reference](https://learn.microsoft.com/en-us/azure/logic-apps/workflow-definition-language-functions-reference#date-and-time-functions)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_dynamic_content_expressions_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_expression_reference.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

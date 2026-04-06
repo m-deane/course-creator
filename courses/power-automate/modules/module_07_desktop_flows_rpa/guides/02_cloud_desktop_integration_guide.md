@@ -1,12 +1,26 @@
 # Cloud ↔ Desktop Integration
 
+> **Reading time:** ~21 min | **Module:** 7 — Desktop Flows & RPA | **Prerequisites:** Module 1
+
 ## In Brief
 
 A desktop flow running alone on a machine is useful for manual tasks but reaches its full potential when a cloud flow orchestrates it — passing data in, receiving results out, and chaining the desktop interaction into a broader automated pipeline. This guide builds that complete integration: a cloud flow triggers a desktop flow that extracts invoice data from a legacy billing application and writes it to Excel, then the cloud flow sends the result for approval.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> A desktop flow running alone on a machine is useful for manual tasks but reaches its full potential when a cloud flow orchestrates it — passing data in, receiving results out, and chaining the desktop interaction into a broader automated pipeline. This guide builds that complete integration: a cloud flow triggers a desktop flow that extracts invoice data from a legacy billing application and writes it to Excel, then the cloud flow sends the result for approval.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Build a desktop flow that extracts data from a desktop application and writes it to Excel
 2. Record, edit, and test the desktop flow step by step
@@ -21,6 +35,11 @@ By the end of this guide you will be able to:
 ## The Scenario: Legacy Billing System to Excel
 
 The automation in this guide solves a real-world problem: a finance team manually opens a legacy billing application (a thick-client Windows app with no API), enters a customer ID, reads the outstanding invoice total from the screen, and enters it into an Excel tracker. This happens for dozens of customers every day.
+
+<div class="callout-key">
+<strong>Key Point:</strong> The automation in this guide solves a real-world problem: a finance team manually opens a legacy billing application (a thick-client Windows app with no API), enters a customer ID, reads the outstandi...
+</div>
+
 
 The automation replaces that swivel-chair work with:
 
@@ -37,6 +56,13 @@ Cloud flow (Scheduled, 8 AM daily)
 ## Building the Desktop Flow
 
 ### Step 1 — Create a New Desktop Flow
+
+<div class="callout-info">
+<strong>Info:</strong> ### Step 1 — Create a New Desktop Flow
+
+> **On screen:** Open Power Automate Desktop.
+</div>
+
 
 > **On screen:** Open Power Automate Desktop. On the **My flows** home screen, click **New flow** in the top-left. Enter the name `Extract Invoice Data`. Click **Create**. The designer opens with an empty workspace.
 
@@ -126,6 +152,13 @@ The value read from the UI is a Text string (e.g., `"$4,850.00"`). Convert it to
 ## Triggering the Desktop Flow from a Cloud Flow
 
 ### Step 1 — Open the Cloud Flow Builder
+
+<div class="callout-warning">
+<strong>Warning:</strong> ### Step 1 — Open the Cloud Flow Builder
+
+> **On screen:** Navigate to `make.powerautomate.com`.
+</div>
+
 
 > **On screen:** Navigate to `make.powerautomate.com`. Click **My flows** → **New flow** → **Scheduled cloud flow**. Name it `Daily Invoice Extract`. Set the recurrence to **1 Day**, starting at **8:00 AM** in your time zone. Click **Create**.
 
@@ -226,6 +259,26 @@ Good for high volume        No    Yes
 ```
 
 ---
+
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">Attended</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">Unattended Execution</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
 
 ## Machine Management and Machine Groups
 
@@ -418,11 +471,19 @@ If the machine is not reachable:
 
 ## Common Pitfalls
 
+<div class="callout-danger">
+<strong>Danger:</strong> The pitfalls below are the most common mistakes practitioners make. Each one can silently degrade your results without obvious errors.
+</div>
+
 - **Wrong run mode** — Setting Attended but the machine has no user logged in causes the cloud flow to queue forever. Set Unattended for headless machines.
 - **Service account issues** — Unattended flows run as a service account. That account must have rights to the target application and any file paths the desktop flow touches.
 - **Concurrency conflicts** — Two cloud flow runs targeting the same attended machine simultaneously: only one can run; the other queues. Use machine groups to parallelize.
 - **Output variable not set on error path** — If the desktop flow errors before setting the output variable, the cloud flow receives an empty/null value. Always initialize output variables to a default (e.g., `-1` or `"ERROR"`) at the top of the desktop flow.
 - **Application pop-ups** — Legacy apps often show unexpected dialogs (license warnings, update prompts) that block recorded steps. Add Wait for element + dismiss actions to handle known pop-ups.
+
+<div class="callout-warning">
+<strong>Warning:</strong> - **Wrong run mode** — Setting Attended but the machine has no user logged in causes the cloud flow to queue forever.
+</div>
 
 ---
 
@@ -434,9 +495,32 @@ If the machine is not reachable:
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Trigger a desktop flow from a cloud flow](https://learn.microsoft.com/en-us/power-automate/desktop-flows/link-pad-flow-portal) — step-by-step Microsoft documentation
 - [Attended vs unattended runs](https://learn.microsoft.com/en-us/power-automate/desktop-flows/run-pad-flow) — licensing and machine requirements
 - [Machine groups](https://learn.microsoft.com/en-us/power-automate/desktop-flows/manage-machine-groups) — setup, load balancing, and failover configuration
 - [Error handling in desktop flows](https://learn.microsoft.com/en-us/power-automate/desktop-flows/errors) — On block error and exception types
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_cloud_desktop_integration_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_rpa_patterns.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

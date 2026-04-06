@@ -33,6 +33,11 @@ Not every system has an API.
 
 > **RPA closes the automation gap** for the systems organizations cannot or will not modernize.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: Start with the business problem. Organizations have hundreds of applications, and only a fraction of them expose APIs. The rest require a human to open a window, click buttons, and type data. RPA replaces that human for repetitive, rule-based tasks. Power Automate Desktop is Microsoft's RPA engine, built into the Power Automate platform so it inherits connectors, licensing, environments, and governance. Ask learners: "What systems in your organization have no API?" — this is always a revealing question because the list is typically long. -->
 
 ---
@@ -40,6 +45,7 @@ Not every system has an API.
 # Cloud Flows vs Desktop Flows
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph CloudFlows["Cloud Flows (run in Microsoft cloud)"]
         CF1["Automated\n(event-driven)"]
@@ -62,6 +68,11 @@ graph TB
     DesktopFlows --> HYBRID
 ```
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: This decision diagram is the most important concept in the module. Train learners to ask the API question first. If the answer is yes, stay in the cloud — it is simpler, cheaper, and more reliable. If the answer is no, desktop flows are the path. If the answer is "partially" — for example, a cloud system triggers the process but a local legacy app must be touched — the hybrid pattern is the solution, which Guide 02 covers in detail. The hybrid pattern is by far the most common production deployment. -->
 
 ---
@@ -69,6 +80,7 @@ graph TB
 # Desktop Flow Action Categories
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 mindmap
   root((Desktop Flow\nActions))
     UI Automation
@@ -101,6 +113,11 @@ mindmap
       Wait for process
 ```
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: Walk through each branch of the mind map. The key mental model is: UI Automation = Windows desktop app elements; Browser/Web = web page elements in Edge or Chrome; Excel = direct COM automation of Excel workbooks (does not need Excel visible); File System = operating on the file system directly; Email = desktop mail clients or SMTP/IMAP; System = OS-level operations. In practice, most enterprise desktop flows combine several of these categories in sequence — for example, reading a file list (File System), opening each file in Excel (Excel), copying data to a legacy app (UI Automation), and sending a completion email (Email). -->
 
 ---
@@ -108,6 +125,7 @@ mindmap
 # Power Automate Desktop: Installation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant User
     participant Portal as make.powerautomate.com
@@ -125,6 +143,11 @@ sequenceDiagram
 ```
 
 > **On screen:** After installation, navigate to `make.powerautomate.com` → **Monitor** → **Machines**. Your machine name should appear with a green **Online** indicator while Power Automate Desktop is running.
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The machine registration step is critical and often missed. Without the machine appearing in Monitor → Machines, a cloud flow cannot target that machine to run a desktop flow. If the machine is not appearing, check: (1) is the user signed into the desktop app with the correct work account, (2) is the correct environment selected in the desktop app settings, (3) is there a firewall or proxy blocking the registration call to Power Automate cloud endpoints. The official troubleshooting doc at learn.microsoft.com/power-automate/desktop-flows/troubleshoot covers all common registration failures. -->
 
@@ -160,6 +183,7 @@ sequenceDiagram
 # Recording Desktop Actions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Dev as Flow Developer
     participant Designer as PAD Designer
@@ -186,6 +210,7 @@ sequenceDiagram
 # Web Recorder vs Desktop Recorder
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph WebRecorder["Web Recorder"]
         WR1["Target: Browser content\n(Edge or Chrome)"]
@@ -213,6 +238,7 @@ graph LR
 # Variables and Data Types
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph Types["Desktop Flow Data Types"]
         TEXT["Text\n'Invoice #1042'\n'John Smith'"]
@@ -243,6 +269,7 @@ graph TB
 # Input/Output Variables: Cloud ↔ Desktop Bridge
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant Cloud as Cloud Flow
     participant Desktop as Desktop Flow

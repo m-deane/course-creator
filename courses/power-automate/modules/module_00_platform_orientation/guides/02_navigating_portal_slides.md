@@ -20,6 +20,7 @@ math: mathjax
 # Portal Navigation Structure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     PORTAL["make.powerautomate.com"]
 
@@ -43,6 +44,11 @@ graph TB
     MONITOR --> MACH["Machines"]
 ```
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: This is the site map. Point out that the hierarchy goes: portal → section → sub-section. The most frequently used sections for a flow maker are Create, My Flows, Monitor, and Data > Connections. Solutions become important from Module 01 onward when we adopt ALM-first practices (always build inside a solution). Process Mining and AI Hub are module-specific — Desktop Flows (Module 07) and Copilot Agents (Module 09) respectively. -->
 
 ---
@@ -50,6 +56,7 @@ graph TB
 # The Environment Selector: Check This First
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph Header["Portal Header (top bar, right side)"]
         LOGO["PA Logo"] --- SEARCH["Search bar"] --- ENV["Environment Name\n← CLICK THIS"] --- HELP["? Help"] --- BELL["Notifications"] --- AVATAR["Profile"]
@@ -59,10 +66,14 @@ graph LR
 
     ENVLIST -->|"Select to switch"| CONTEXT["Everything changes:\n• My Flows list\n• Connections\n• Solutions\n• Dataverse data"]
 
-    style ENV fill:#ff9,stroke:#cc0,stroke-width:3px
 ```
 
 > **Rule:** Before asking "where is my flow?", check which environment you are in. Flows in Environment A are invisible when you are in Environment B.
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: The environment selector is the single most overlooked UI element for new learners. I recommend making this a ritual: every time you open the portal, glance at the environment name in the top right. It is highlighted in yellow on this diagram for that reason. The most common support question is "I can't find my flow" — 80% of the time, the user is in the wrong environment. -->
 
@@ -71,6 +82,7 @@ graph LR
 # Environment Hierarchy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     TENANT["Microsoft 365 Tenant\n(your organization)"]
 
@@ -83,14 +95,14 @@ graph TB
     DEV -->|"Solution export"| TEST
     TEST -->|"Solution import (managed)"| PROD
 
-    style DEFAULT fill:#ffd,stroke:#aa0
-    style DEV fill:#dfd,stroke:#080
-    style TEST fill:#ddf,stroke:#008
-    style PROD fill:#fdd,stroke:#800
-    style DEVPER fill:#edd,stroke:#808
 ```
 
 **Best practice:** Never build production flows in the Default environment. Default has no isolation, no promotion path, and everyone in the tenant can see everything.
+
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
 
 <!-- Speaker notes: The Dev → Test → Prod pipeline shown here is the ALM (Application Lifecycle Management) pattern Microsoft recommends. Solutions are the vehicle for this promotion. Flows built outside solutions cannot be cleanly promoted — they must be exported as packages (which is fragile) or rebuilt. This is why Module 01 immediately teaches building inside a solution. The Default environment is fine for personal productivity automations but should never be used for business-critical processes. -->
 
@@ -99,6 +111,7 @@ graph TB
 # My Flows: Managing Your Automations
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     MYFLOWS["My Flows"]
 
@@ -113,6 +126,11 @@ graph TB
     FLOWCARD -->|"Click name"| DETAIL["Flow Detail Page:\n• Visual diagram\n• Run history table\n• Connections used\n• Owners list"]
 ```
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: The status toggle (On/Off) on each flow card is important — it lets you disable a flow without deleting it. This is useful during maintenance windows or when a connected system is down. The "Save as" (clone) option is used constantly — when building a new flow similar to an existing one, clone and modify rather than starting from blank. The Flow Detail page's run history is the first stop for debugging: click any failed run to see exactly which action failed and why. -->
 
 ---
@@ -120,6 +138,7 @@ graph TB
 # Create: Choosing a Starting Point
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     CREATE["+ Create"]
 
@@ -145,6 +164,7 @@ graph LR
 # Data > Connections: The Most Important Management Page
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph ConnectionsPage["Data > Connections"]
         TABLE["Connections table:\nConnection name | Connector | Status | Created | Shared"]
@@ -178,6 +198,7 @@ graph TB
 # Monitor: Your Operational Dashboard
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     MONITOR["Monitor"]
 
@@ -201,6 +222,7 @@ graph TB
 # Solutions: The Right Way to Deploy Flows
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph DEV["Development Environment"]
         SOL_U["Unmanaged Solution\n(editable)\nContains: flows, apps,\ntables, connectors"]
@@ -220,9 +242,6 @@ graph LR
     SOL_U -.->|"Unmanaged = still\neditable in DEV"| SOL_U
     SOL_M_P -.->|"Managed = cannot edit\ndirectly in PROD"| SOL_M_P
 
-    style DEV fill:#dfd,stroke:#080
-    style TEST fill:#ddf,stroke:#008
-    style PROD fill:#fdd,stroke:#800
 ```
 
 > Build every flow inside a solution. Flows outside solutions cannot be cleanly promoted across environments.
@@ -234,6 +253,7 @@ graph LR
 # Licensing Tiers Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TB
     subgraph L1["Microsoft 365 (bundled)"]
         L1A["Standard connectors only"]

@@ -1,12 +1,26 @@
 # Excel Integration with Power Automate
 
+> **Reading time:** ~23 min | **Module:** 5 — SharePoint & Excel | **Prerequisites:** Module 2
+
 ## In Brief
 
 The Excel Online (Business) connector lets Power Automate read and write structured data in Excel tables stored on SharePoint or OneDrive for Business. You can list rows, add rows, update rows by key, and delete rows — all without opening Excel. This guide covers every table action, data type considerations, and a complete report-generation flow.
 
+<div class="callout-key">
+<strong>Key Concept:</strong> The Excel Online (Business) connector lets Power Automate read and write structured data in Excel tables stored on SharePoint or OneDrive for Business. You can list rows, add rows, update rows by key, and delete rows — all without opening Excel.
+</div>
+
+
 ## Learning Objectives
 
 By the end of this guide you will be able to:
+
+<div class="callout-insight">
+<strong>Insight:</strong> By the end of this guide you will be able to:
+
+1.
+</div>
+
 
 1. Explain the difference between the Excel Online (Business) and Excel Online (OneDrive) connectors
 2. Add, list, update, and delete rows in an Excel table from a Power Automate flow
@@ -28,6 +42,11 @@ By the end of this guide you will be able to:
 
 Power Automate provides two Excel connectors. Choose the right one:
 
+<div class="callout-key">
+<strong>Key Point:</strong> Power Automate provides two Excel connectors.
+</div>
+
+
 | Connector | File location | Best for |
 |-----------|--------------|---------|
 | Excel Online (Business) | SharePoint document library or OneDrive for Business (work account) | Enterprise workflows, team-shared workbooks |
@@ -41,6 +60,14 @@ For almost all business automation, use **Excel Online (Business)**.
 
 The Excel connector operates exclusively on **named Tables** (Insert → Table in Excel). It cannot read from raw cell ranges or worksheets without a Table. A Table gives every column a programmatic name, which Power Automate uses to map values.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```text
 Workbook: Q4_Sales_Report.xlsx
 └── Sheet: SalesData
@@ -51,6 +78,7 @@ Workbook: Q4_Sales_Report.xlsx
         ├── Column: Revenue
         └── Column: Region
 ```
+</div>
 
 If your workbook does not have a Table, open it in Excel, select the data range including headers, and press **Ctrl+T** (or go to Insert → Table).
 
@@ -60,9 +88,24 @@ If your workbook does not have a Table, open it in Excel, select the data range 
 
 ### 2.1 List rows present in a table
 
+<div class="callout-info">
+<strong>Info:</strong> ### 2.1 List rows present in a table
+
+Retrieves all rows from a named table.
+</div>
+
+
 Retrieves all rows from a named table. This is the primary read action.
 
 > **On screen:** Click **+ New step** → search **Excel Online (Business)** → select **List rows present in a table**.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -80,6 +123,7 @@ Retrieves all rows from a named table. This is the primary read action.
 │  Skip Count:    [ 0                                 ]      │
 └─────────────────────────────────────────────────────────────┘
 ```
+</div>
 
 **Advanced options:**
 
@@ -100,6 +144,14 @@ Appends a new row to the bottom of the table.
 
 > **On screen:** Select **Add a row into a table**. After selecting Location, Library, File, and Table, a field appears for each column in the table.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
+The following implementation builds on the approach above:
+
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Add a row into a table                                 ▲   │
@@ -116,14 +168,21 @@ Appends a new row to the bottom of the table.
 │  Region:      [ [Trigger Region]                    ]      │
 └─────────────────────────────────────────────────────────────┘
 ```
-
-**Important:** Excel tables auto-expand. Power Automate appends to the next available row — you do not need to specify a row number.
+</div<div class="callout-warning">
+<strong>Warning:</strong> Excel tables auto-expand. Power Automate appends to the next available row — you do not need to specify a row number.
+</div>
 
 ### 2.3 Update a row
 
 Modifies the values in an existing row, identified by its **row ID** (a zero-based integer index assigned by Excel).
 
 > **On screen:** Select **Update a row**. Enter Location, Library, File, Table, and the **Row ID** — an integer retrieved from a previous **List rows** or **Get a row** action.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -138,6 +197,7 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 │  ProcessedAt: [ [utcNow()]                         ]       │
 └─────────────────────────────────────────────────────────────┘
 ```
+</div>
 
 The `@row.index` token is available in the dynamic content from **List rows present in a table**. It is the row's position in the table, starting at 0.
 
@@ -184,6 +244,11 @@ Retrieves a single row by the value in a designated **Key Column**.
 
 Named ranges in Excel can be read (but not written) via the Excel connector's **Get a row** action when the range is formatted as a Table. For true named ranges (not Tables), use the **Get a row** action is unavailable — instead, use the **Run script** action (Office Scripts) or the **Send an HTTP request** action with the Excel REST API.
 
+<div class="callout-warning">
+<strong>Warning:</strong> Named ranges in Excel can be read (but not written) via the Excel connector's **Get a row** action when the range is formatted as a Table.
+</div>
+
+
 For most automation scenarios, converting named ranges to Tables is the practical solution. Select the range, press **Ctrl+T**, and Power Automate will detect it immediately.
 
 ---
@@ -191,6 +256,11 @@ For most automation scenarios, converting named ranges to Tables is the practica
 ## 4. Formatting and Data Type Considerations
 
 Excel stores data in typed cells. Power Automate sends values as strings, and Excel performs type conversion automatically — but only if the destination column's format matches.
+
+<div class="callout-insight">
+<strong>Insight:</strong> Excel stores data in typed cells.
+</div>
+
 
 ### 4.1 Numbers
 
@@ -402,6 +472,26 @@ A common design question is whether to store data in an Excel table or a SharePo
 
 ---
 
+
+<div class="compare">
+<div class="compare-card">
+<div class="header before">6. Excel</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+<div class="compare-card">
+<div class="header after">SharePoint — When to Use Which</div>
+<div class="body">
+
+See detailed comparison in the table above.
+
+</div>
+</div>
+</div>
+
 ## 7. Common Pitfalls
 
 - **Action fails with "Table not found":** The table must be a formal Excel Table (Insert → Table), not just a range with headers. Confirm by checking if the Table Design tab appears when you click inside the data.
@@ -413,12 +503,40 @@ A common design question is whether to store data in an Excel table or a SharePo
 
 ## Connections
 
+
+<div class="callout-info">
+<strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
+</div>
+
 - **Builds on:** Guide 01 (SharePoint Integration) — OData filter syntax is identical
 - **Leads to:** Module 06 — Approval flows that update Excel-based tracking sheets
 - **Related to:** Module 03 — Variables, expressions, and `formatDateTime`
+
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
 
 ## Further Reading
 
 - [Excel Online (Business) connector reference](https://learn.microsoft.com/en-us/connectors/excelonlinebusiness/)
 - [Work with Excel tables in Power Automate](https://learn.microsoft.com/en-us/power-automate/excel-connect)
 - [Office Scripts with Power Automate](https://learn.microsoft.com/en-us/office/dev/scripts/develop/power-automate-integration)
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_excel_integration_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_sharepoint_graph_api.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

@@ -25,6 +25,7 @@ A connector is a **pre-built API wrapper** that handles:
 - Error normalisation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     F["Flow Action Card"]:::flow -- "connector SDK" --> C["Connector"]:::connector
     C -- "authenticated API call" --> S["External Service\n(Outlook, SharePoint, SQL...)"]:::service
@@ -38,6 +39,11 @@ graph LR
 
 You configure **what** to do. The connector handles **how** to talk to the service.
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The abstraction point is critical. A connector hides hundreds of lines of authentication, serialisation, and error-handling code behind a simple action card with a few input fields. Without connectors, every flow would need to make raw HTTP calls with OAuth token management, JSON serialisation, and pagination logic — connectors automate all of that. The trade-off: connectors abstract away flexibility. When you need something the connector does not expose, you fall back to the HTTP connector or build a custom connector. -->
 
 ---
@@ -45,6 +51,7 @@ You configure **what** to do. The connector handles **how** to talk to the servi
 ## Connector Categories and Licensing
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     ALL["All Connectors\n(600+)"]:::all --> STD["STANDARD\n~400 connectors\nIncluded in M365"]:::standard
     ALL --> PREM["PREMIUM\n~200 connectors\nRequires PA plan"]:::premium
@@ -73,6 +80,11 @@ graph TD
     classDef custom fill:#8764b8,color:#fff
 ```
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
 <!-- Speaker notes: The licensing diagram is the first thing to check when planning a flow architecture. A flow that uses even one premium connector requires a Power Automate per-user or per-flow plan for every user who runs it. This is the single most common source of "my flow stopped working" tickets in enterprise environments — someone's license changed. The visual split of ~400 standard vs ~200 premium is approximate but directionally accurate as of the course date. Custom connectors have no hard count limit — an organisation can create as many as needed. -->
 
 ---
@@ -90,6 +102,11 @@ graph TD
 
 > Check connector tier **before** building. The Premium badge in the connector search is the fastest indicator.
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: The per-flow plan is worth explaining. Instead of licensing every user who triggers a flow, you buy one per-flow license (approximately $100/month) and that flow can run for any number of users. This is cost-effective when a flow is used by hundreds of users but runs infrequently. Per-user plan is better when users each need many flows. Real-world tip: always prototype flows using a developer environment (Power Apps/Power Automate developer plan is free) before deploying to production, so you can test premium connectors without committing production licenses. -->
 
 ---
@@ -97,6 +114,7 @@ graph TD
 ## Authentication Flows: How Connectors Prove Identity
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as User
     participant PA as Power Automate
@@ -116,6 +134,11 @@ sequenceDiagram
     Note over PA: Silently refreshes access token using refresh token
 ```
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
 <!-- Speaker notes: Walk through each arrow. The key learner takeaway is that Power Automate handles the token lifecycle — the user authenticates once when creating the connection, and Power Automate silently refreshes the short-lived access token using the long-lived refresh token for up to 90 days (longer if the user continues to be active). The connection breaks only if: (1) the user's password changes and MFA re-prompts, (2) the admin revokes the refresh token, or (3) the user's account is deleted. This is why service accounts are important for production flows — a human user's account lifecycle is unpredictable. -->
 
 ---
@@ -123,6 +146,7 @@ sequenceDiagram
 ## Authentication Types at a Glance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     AUTH["Authentication\nTypes"]:::root --> OA["OAuth 2.0\n(delegated)"]:::oauth
     AUTH --> AK["API Key\n(static)"]:::apikey
@@ -224,6 +248,7 @@ The **Post an Adaptive Card and wait for a response** action:
 **Standard — polling triggers (3-min lag), rich action set**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T["When item modified\n(SharePoint trigger)"]:::trigger --> F["Trigger Condition:\nStatus eq 'Approved'"]:::condition
     F --> G["Get item\n(fetch full data)"]:::action
@@ -247,6 +272,7 @@ graph LR
 ## Data Flow Between Multiple Connectors
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     T["SharePoint trigger\nNew item in Requests list"]:::trigger --> G1["Get item details\n(SharePoint)"]:::sp
     G1 --> C{"Priority\nfield?"}:::decision
@@ -300,6 +326,7 @@ Body:
 **Premium — on-premises or Azure SQL**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T["Recurrence\n(daily 6 AM)"]:::trigger --> Q["Get rows (V2)\nSELECT from Orders\nwhere Status='Pending'"]:::sql
     Q --> L["Apply to each\nrow in result set"]:::loop
@@ -322,6 +349,7 @@ graph LR
 ## Rate Limits: What Happens at Scale
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     F["Flow making API calls"]:::flow --> RL{"Rate limit\nexceeded?"}:::decision
     RL -- "No (under limit)" --> OK["Action succeeds"]:::success
@@ -350,6 +378,7 @@ Configure retry policy: action **…** menu → **Settings** → **Retry Policy*
 When no connector covers your API:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     API["Your REST API\n(OpenAPI spec)"]:::api --> W["Custom Connector\nWizard"]:::wizard
     W --> D1["1. General\nName, host URL, icon"]:::step

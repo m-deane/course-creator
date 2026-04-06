@@ -38,6 +38,7 @@ math: mathjax
 </div>
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     PA[Power Automate] -->|JSON payload| T[Teams / Outlook]
     T -->|Renders natively| C[Adaptive Card]
@@ -45,11 +46,22 @@ graph LR
     R --> PA
 ```
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
 <!-- Speaker notes: The core difference is interactivity. With a standard approval email, the approver clicks Approve or Reject and that is it. With an Adaptive Card, you can collect a structured decision, comments, delegation target, or any other input—all inline, without the approver leaving Teams. The card renders using Teams native components, so it feels like a first-class Teams feature, not an external tool. -->
 
 ---
 
 # Adaptive Card JSON Structure
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.json</span>
+</div>
 
 ```json
 {
@@ -83,6 +95,12 @@ graph LR
     ]
 }
 ```
+</div>
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
 
 <!-- Speaker notes: Walk through this JSON top to bottom. The body is an array—order here is display order. TextBlock for headings, FactSet for labeled data pairs, Input.ChoiceSet for the decision dropdown. The actions array defines the submit button. When the user clicks Submit, Teams sends all input values back to Power Automate keyed by the id property of each input. The id "decision" becomes the key in the response JSON. -->
 
@@ -101,6 +119,11 @@ graph LR
 | `Input.Date` | Date picker | `id`, `label` |
 | `Image` | Show an image | `url`, `altText`, `size` |
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
 <!-- Speaker notes: You will use TextBlock and FactSet in nearly every approval card. Container with style "emphasis" creates a visually distinct section—useful for the justification text so it stands out. Input.Text with isMultiline for comments, Input.ChoiceSet with style "expanded" shows radio buttons rather than a dropdown, which reduces clicks for binary choices. Always set id carefully—it is how you read the response in Power Automate. -->
 
 ---
@@ -108,6 +131,7 @@ graph LR
 # Rendering Flow: From JSON to Teams Card
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant PA as Power Automate
     participant BF as Bot Framework
@@ -123,6 +147,11 @@ sequenceDiagram
     BF->>PA: Resume flow with body/data object
     PA->>PA: Read decision, comments from response
 ```
+
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
 
 <!-- Speaker notes: The Bot Framework acts as the delivery mechanism. Power Automate sends the card JSON to the Bot Framework, which routes it to the correct Teams user. When the user submits, the input values travel back the same path. Power Automate reads the response from the output body/data object. This is a request-response pattern where the flow is paused between the Post and the Resume steps. -->
 
@@ -167,6 +196,7 @@ Then reference: variables('CardResponse')?['decision']
 # Multi-Stage Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T([New High-Value Request]) --> S1
 
@@ -218,6 +248,7 @@ Write each stage's data immediately after it completes using **Update item** (Sh
 # Escalation Pattern: SLA Enforcement
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     START([Create approval record]) --> PA[Start non-blocking\nCreate an approval]
     PA --> PARALLEL{Parallel branches}
@@ -240,6 +271,7 @@ flowchart TD
 # Escalation: Timeline View
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 gantt
     title Approval SLA Timeline
     dateFormat HH:mm
@@ -266,6 +298,7 @@ gantt
 # Delegation Pattern
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     CARD[Approval card sent\nto Approver A] --> SUB{Approver A\nsubmits}
 
@@ -287,6 +320,7 @@ To implement: add a third choice to the card's ChoiceSet and an Input.Text field
 # Conditional Routing by Request Value
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     T([New Request]) --> AMT{Amount?}
 

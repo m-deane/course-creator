@@ -21,11 +21,14 @@ Speaker notes: Key talking points for this slide
 - Learners should follow Guide 02 step-by-step alongside this deck
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Building an IT Helpdesk Copilot Agent. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Project Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     User["Employee\n(Microsoft Teams)"] -->|natural language| Agent["IT Helpdesk Assistant\n(Copilot Studio)"]
 
@@ -54,6 +57,13 @@ Speaker notes: Key talking points for this slide
 - The Approvals connector in F4 connects back to the approval infrastructure learners built in Module 06
 - Take a moment to count the components: 1 agent, 4 topics, 4 flows, 2 SharePoint lists, 1 approvals connection
 -->
+
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Project Architecture. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -102,6 +112,13 @@ Speaker notes: Key talking points for this slide
 - Add 3-5 sample KB articles immediately after creating the list so search tests return real results
 -->
 
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Step 1: Data Layer — Two SharePoint Lists. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Step 2: Flow Design — Shared Trigger Pattern
@@ -109,6 +126,7 @@ Speaker notes: Key talking points for this slide
 All four flows share this structure:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     Trigger["Trigger:\nWhen a flow is run from Copilot\n+ declared input parameters"] --> Logic["Flow logic\n(SharePoint, Approvals, etc.)"]
     Logic --> Return["Return value(s)\nto Power Virtual Agents\n+ declared output parameters"]
@@ -128,11 +146,19 @@ Speaker notes: Key talking points for this slide
 - Remind learners to always test flows in isolation (from Power Automate's test button) before wiring to the agent
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Step 2: Flow Design — Shared Trigger Pattern. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Flow 1: Search KB Articles
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     T["Trigger\nInput: SearchQuery (Text)"] --> GI["Get items (SharePoint)\nList: IT_KB_Articles\nFilter: substringof SearchQuery in Title or Keywords\nIsActive eq 1"]
     GI --> C{"Items found?\nlength > 0"}
@@ -150,11 +176,19 @@ Speaker notes: Key talking points for this slide
 - Both branches must reach a Return action — a flow that takes the NO path and returns no values leaves all output variables blank
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Flow 1: Search KB Articles. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Flow 2: Create Support Ticket
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     T["Trigger\nInputs: TicketTitle, Category,\nPriority, SubmitterEmail, SubmitterName"] --> IV["Initialize Variables\n• assignedTeam (routing logic)\n• slaEstimate (priority-based)"]
     IV --> CI["Create item (SharePoint)\nIT_Support_Tickets\nStatus: New"]
@@ -179,11 +213,14 @@ Speaker notes: Key talking points for this slide
 - The entire flow should run in under 3 seconds — fast enough that the user does not notice the wait in the conversation
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Flow 2: Create Support Ticket. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Flow 3: Escalation Approval
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     T["Trigger\nInputs: TicketID, EscalationReason,\nSubmitterEmail, SubmitterName"] --> A["Start and wait for approval\nType: Custom Responses\nOptions: Accept / Reject / More Info\nAssigned to: IT Manager"]
     A --> C{"Outcome?"}
@@ -201,11 +238,14 @@ Speaker notes: Key talking points for this slide
 - Set a Do Until timeout wrapping the approval action so the flow doesn't hang indefinitely if the manager doesn't respond
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Flow 3: Escalation Approval. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Flow 4: Get Ticket Status
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     T["Trigger\nInput: TicketID (Text)"] --> GI["Get items (SharePoint)\nIT_Support_Tickets\nFilter: TicketID eq 'INC-xxxx'\nTop: 1"]
     GI --> C{"Ticket found?\nlength > 0"}
@@ -223,6 +263,8 @@ Speaker notes: Key talking points for this slide
 - This flow is entirely read-only — it never modifies the ticket list
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Flow 4: Get Ticket Status. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -237,11 +279,14 @@ Speaker notes: Key talking points for this slide
 - The differences are in what is collected and which flow is called
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Step 3: Building the Agent Topics. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Topic Structure: The Universal Pattern
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     TG["Trigger node\n5-10 trigger phrases"] --> Q["Question node(s)\ncollect required parameters\nsave to topic variables"]
     Q --> A["Call Action node\n→ select Power Automate flow\nmap variables to parameters"]
@@ -261,11 +306,14 @@ Speaker notes: Key talking points for this slide
 - The "offer alternatives" at the end of failure branches is what makes the agent feel helpful rather than broken
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Topic Structure: The Universal Pattern. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Conversation Flow: Create Ticket
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 sequenceDiagram
     participant U as User
     participant A as Agent
@@ -298,11 +346,14 @@ Speaker notes: Key talking points for this slide
 - This entire conversation takes under 60 seconds for an experienced user to complete
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Conversation Flow: Create Ticket. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Ticket Lifecycle: Status Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> New : Ticket created\n(Create Ticket flow)
     New --> Assigned : Technician picks up ticket
@@ -326,11 +377,14 @@ Speaker notes: Key talking points for this slide
 - Closed tickets should be excluded from check-status results that are more than 30 days old — add a date filter
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Ticket Lifecycle: Status Flow. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Publishing Channels
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     Agent["IT Helpdesk\nAssistant"] --> Teams["Microsoft Teams\n✓ Authenticated\n✓ System.User.Email available\n✓ Approval notifications\n★ Recommended"]
     Agent --> Web["Web channel\n✓ External access\n✗ No authentication\n⚠ Limit to non-sensitive actions"]
@@ -346,6 +400,8 @@ Speaker notes: Key talking points for this slide
 - Custom app embedding is advanced — requires Power Platform CLI or manual configuration; covered in Microsoft documentation
 - An agent can be published to multiple channels simultaneously — Teams for employees, web for contractors, for example
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Publishing Channels. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -385,6 +441,8 @@ Speaker notes: Key talking points for this slide
 - SharePoint list verification (row created, columns populated) is important — the agent can look successful while the flow silently failed
 - The approval email test must be done with a real Teams or Outlook session, not the test canvas
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Testing Checklist Before Publishing. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -430,11 +488,14 @@ Speaker notes: Key talking points for this slide
 - Set up a weekly review of these metrics for the first 4 weeks after launch, then monthly thereafter
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Monitoring: Key Metrics. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary: What You Built
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     subgraph "Data Layer"
         SP1["IT_KB_Articles"]
@@ -482,3 +543,5 @@ Speaker notes: Key talking points for this slide
 - Learners now have a reusable template for HR tickets, finance approvals, legal requests, or any structured request workflow
 - Congratulations on completing the Power Automate course capstone
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary: What You Built. Pause for questions if the audience seems uncertain. -->

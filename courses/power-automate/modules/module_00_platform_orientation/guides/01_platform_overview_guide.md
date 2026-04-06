@@ -1,16 +1,35 @@
 # Power Automate: Platform Overview
 
+> **Reading time:** ~10 min | **Module:** 0 — Platform Orientation | **Prerequisites:** None
+
 ## In Brief
 
 Power Automate is Microsoft's cloud-based workflow automation service that lets you create automated processes — called **flows** — between applications and services without writing traditional code. It sits inside the broader **Microsoft Power Platform**, a suite of low-code tools designed to help organizations build solutions faster than conventional software development allows.
 
-> **Key Insight:** Power Automate is not a single tool — it is a runtime, a connector hub, and a process orchestrator rolled into one. Understanding where it fits in the Power Platform ecosystem determines which automations are practical and which require a different tool.
+<div class="callout-insight">
+<strong>Insight:</strong> Power Automate is not a single tool — it is a runtime, a connector hub, and a process orchestrator rolled into one. Understanding where it fits in the Power Platform ecosystem determines which automations are practical and which require a different tool.
+</div>
+
+<div class="callout-key">
+<strong>Key Concept:</strong> Power Automate is Microsoft's cloud-based workflow automation service that lets you create automated processes — called **flows** — between applications and services without writing traditional code. It sits inside the broader **Microsoft Power Platform**, a suite of low-code tools designed to help organizations build solutions faster than conventional software development allows.
+</div>
+
 
 ---
 
 ## Where Power Automate Fits: The Power Platform Ecosystem
 
 Microsoft Power Platform has five primary products that share a common data layer:
+
+<div class="callout-insight">
+<strong>Insight:</strong> Microsoft Power Platform has five primary products that share a common data layer:
+
+| Product | Primary Purpose |
+|---|---|
+| **Power Apps** | Build custom web and mobile applications |
+| **Power Auto...
+</div>
+
 
 | Product | Primary Purpose |
 |---|---|
@@ -51,6 +70,13 @@ Power Automate is often the connective tissue between tools that would otherwise
 ## Core Terminology
 
 ### Flow
+
+<div class="callout-key">
+<strong>Key Point:</strong> ### Flow
+
+A **flow** is the fundamental unit in Power Automate.
+</div>
+
 
 A **flow** is the fundamental unit in Power Automate. It is a defined sequence of steps that runs automatically when certain conditions are met. Every flow has at minimum one trigger and one action.
 
@@ -112,6 +138,11 @@ An **environment** is an isolated container that holds flows, apps, data, and co
 
 Power Automate supports five distinct flow types. Choosing the correct type is the first decision when designing any automation.
 
+<div class="callout-info">
+<strong>Info:</strong> Power Automate supports five distinct flow types.
+</div>
+
+
 ### 1. Automated Cloud Flow
 
 Triggered automatically when an event occurs in a connected service. The flow runs in the cloud with no user interaction required.
@@ -169,6 +200,16 @@ A structured, stage-based workflow that guides users through a defined process v
 ## Common Use Cases
 
 ### Business Process Automation
+
+<div class="callout-warning">
+<strong>Warning:</strong> ### Business Process Automation
+
+Replace manual, repetitive tasks with reliable automated sequences:
+
+- Employee onboarding: auto-create Active Directory account, assign licenses, send welcome email
+-...
+</div>
+
 
 Replace manual, repetitive tasks with reliable automated sequences:
 
@@ -231,8 +272,31 @@ The Power Automate portal lives at `make.powerautomate.com`. Key sections:
 
 ---
 
+
+## Practice Questions
+
+**Question 1 — Conceptual:** Based on the concepts in this guide, explain in your own words why the core technique matters and when you would choose it over alternatives.
+
+**Question 2 — Application:** Sketch out how you would apply the main concept from this guide to a real-world dataset or problem you have encountered. What would you need to watch out for?
+
+
 ## Further Reading
 
 - [Power Automate Documentation](https://learn.microsoft.com/en-us/power-automate/) — Official Microsoft docs; most reliable source for current feature availability
 - [Power Platform Licensing Guide](https://go.microsoft.com/fwlink/?linkid=2085130) — PDF updated quarterly; defines exactly what each license tier includes
 - [Connector Reference](https://learn.microsoft.com/en-us/connectors/connector-reference/) — Complete catalog of all connectors with trigger/action documentation
+
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_platform_overview_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_power_automate_overview.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
+</a>

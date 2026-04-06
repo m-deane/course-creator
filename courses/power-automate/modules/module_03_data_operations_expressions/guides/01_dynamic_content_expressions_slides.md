@@ -21,11 +21,14 @@ Speaker notes: Key talking points for this slide
 - By the end of this deck every learner will be able to write a working expression from scratch
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Dynamic Content and Expressions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # How Data Moves Between Steps
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     T["Trigger\n(Email arrives)"] -->|outputs tokens| A1
     A1["Step A\n(Get manager)"] -->|outputs tokens| A2
@@ -54,6 +57,13 @@ Speaker notes: Key talking points for this slide
 - Key question to ask learners: "What tokens would be available in the third step of a five-step flow?"
 -->
 
+
+<div class="callout-insight">
+<strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about How Data Moves Between Steps. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -66,6 +76,8 @@ Speaker notes: Key talking points for this slide
 - Two tabs: Dynamic content (click to insert) and Expression (type to compute)
 - We start with the click-to-insert tab before moving to formulas
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about The Dynamic Content Panel. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -92,6 +104,13 @@ Speaker notes: Key talking points for this slide
 - The panel slides out from the right and stays open until you click away
 - Live demo moment: open Power Automate and demonstrate clicking into a subject field
 -->
+
+
+<div class="callout-key">
+<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Opening the Dynamic Content Panel. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -128,6 +147,13 @@ Speaker notes: Key talking points for this slide
 - Clicking a token inserts it as a blue pill in the field -- the pill is the token, not the raw value
 -->
 
+
+<div class="callout-warning">
+<strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Dynamic Content Tab Structure. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Expression Tab: The Formula Language
@@ -157,6 +183,13 @@ Speaker notes: Key talking points for this slide
 - After clicking OK, the expression becomes a blue pill just like a dynamic content token
 -->
 
+
+<div class="callout-info">
+<strong>Info:</strong> This detail is useful context but not required to memorize.
+</div>
+
+<!-- Speaker notes: Cover the key points on this slide about Expression Tab: The Formula Language. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -171,11 +204,14 @@ Speaker notes: Key talking points for this slide
 - The full reference is in the Microsoft documentation linked at the end of the guide
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Expression Function Categories. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Expression Function Tree
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     root["Expression Functions"] --> str["String"]
     root --> dt["Date / Time"]
@@ -220,6 +256,8 @@ Speaker notes: Key talking points for this slide
 - Collection: working with arrays
 - Ask learners to identify which category would handle "check if an email contains the word URGENT"
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Expression Function Tree. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -278,11 +316,14 @@ Speaker notes: Key talking points for this slide
 - trim() catches the invisible whitespace bugs that appear when users type into web forms
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about String Functions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Date and Time Functions
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     utcNow["utcNow()\n2024-11-15T14:00:00Z"] -->|convertTimeZone| local["2024-11-15T09:00:00\nEastern"]
     local -->|formatDateTime| display["November 15, 2024\n9:00 AM"]
@@ -305,6 +346,8 @@ Speaker notes: Key talking points for this slide
 - convertTimeZone() uses Windows time zone names -- common ones: "Eastern Standard Time", "Pacific Standard Time", "GMT Standard Time"
 - Real scenario: a flow sends a report at 6 AM Eastern -- use convertTimeZone to compute that in UTC for the schedule trigger
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Date and Time Functions. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -348,6 +391,8 @@ Speaker notes: Key talking points for this slide
 - Common mistake: using if() when you need a Condition control shape -- clarify the distinction
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Logical Functions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Type Conversion Functions
@@ -380,6 +425,8 @@ Speaker notes: Key talking points for this slide
 - Ask learners: "A SharePoint list column called 'Quantity' returns '12'. What happens if you try to multiply it by a price?"
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Type Conversion Functions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Collection Functions
@@ -387,6 +434,7 @@ Speaker notes: Key talking points for this slide
 Working with arrays of items:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     arr["['a','b','c']"] -->|length| len["3"]
     arr -->|first| f["'a'"]
@@ -412,6 +460,8 @@ Speaker notes: Key talking points for this slide
 - Common pattern: split() to create an array, then Apply to each to process each item
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Collection Functions. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 <!-- _class: lead -->
@@ -425,6 +475,8 @@ Speaker notes: Key talking points for this slide
 - Three worked examples showing real patterns learners will encounter
 - Key insight: you can compose any transformation by combining simple functions
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Nesting Expressions. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -448,6 +500,7 @@ Step 3:  trim("  priya sharma  ")        →  "priya sharma"
 **Think of it as a pipeline:**
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     raw["Raw input\n'  Priya Sharma  '"] -->|toLower| lower["'  priya sharma  '"]
     lower -->|trim| clean["'priya sharma'"]
@@ -461,6 +514,8 @@ Speaker notes: Key talking points for this slide
 - Common mistake: applying toLower() after trim() doesn't matter, but applying them in the wrong logical order can break things
 - Live exercise: "What does trim(toLower('  HELLO  ')) produce?" -- trace through with the class
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Expression Nesting: How It Works. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -478,6 +533,7 @@ concat(
 Breakdown:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph TD
     u["utcNow()\n→ 2024-11-15T14:00:00Z"] --> f["formatDateTime(..., 'MMMM d, yyyy')\n→ 'November 15, 2024'"]
     f --> c["concat('Weekly Report - ', ...)\n→ 'Weekly Report - November 15, 2024'"]
@@ -490,6 +546,8 @@ Speaker notes: Key talking points for this slide
 - concat() can take more than two arguments: concat('a', 'b', 'c', 'd') -- all are joined in order
 - Ask learners to modify this to produce "Weekly Report - 15/11/2024" -- they need to change the format string to 'dd/MM/yyyy'
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Expression Breakdown: Report Subject Line. Pause for questions if the audience seems uncertain. -->
 
 ---
 
@@ -524,6 +582,8 @@ Speaker notes: Key talking points for this slide
 - Answer requires nesting two if() calls: if(< 12, 'morning', if(< 17, 'afternoon', 'evening'))
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Expression Breakdown: Conditional Greeting. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Adding an Expression: Step-by-Step
@@ -554,6 +614,8 @@ Speaker notes: Key talking points for this slide
 - Common live demo mistake: saving before clicking OK on the expression -- the expression is lost
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Adding an Expression: Step-by-Step. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Common Expression Mistakes
@@ -575,11 +637,14 @@ Speaker notes: Key talking points for this slide
 - Parenthesis matching: encourage learners to count from right to left as they type closing parens
 -->
 
+<!-- Speaker notes: Cover the key points on this slide about Common Expression Mistakes. Pause for questions if the audience seems uncertain. -->
+
 ---
 
 # Summary
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 graph LR
     dc["Dynamic Content Panel"] -->|click to insert| token["Token\nin field"]
     expr["Expression Editor"] -->|type formula| computed["Computed\nvalue"]
@@ -610,3 +675,5 @@ Speaker notes: Key talking points for this slide
 - Next guide: Data Operations -- Compose actions and Variables for storing intermediate results
 - Next module (04): Conditions and loops, where logical expressions drive branching behaviour
 -->
+
+<!-- Speaker notes: Cover the key points on this slide about Summary. Pause for questions if the audience seems uncertain. -->

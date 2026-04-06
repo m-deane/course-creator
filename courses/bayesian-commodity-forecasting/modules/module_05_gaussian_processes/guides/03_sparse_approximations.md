@@ -8,7 +8,9 @@
 Sparse approximations reduce the computational cost of Gaussian Process inference from O(n^3) to O(nm^2), where m << n is the number of inducing points. These methods enable GP modeling of large datasets (n > 10,000) by approximating the full covariance matrix with a lower-rank representation.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Standard GP inference requires inverting an n×n covariance matrix, which becomes intractable for large datasets. Sparse methods select m representative "inducing points" and approximate the full GP through these points, achieving a controlled trade-off between computational efficiency and model fidelity.
+
 </div>
 
 ## Formal Definition
@@ -17,7 +19,9 @@ Sparse approximations reduce the computational cost of Gaussian Process inferenc
 
 For training data $(\mathbf{X}, \mathbf{y})$ with $|\mathbf{X}| = n$:
 <div class="callout-key">
+
 <strong>Key Point:</strong> For training data $(\mathbf{X}, \mathbf{y})$ with $|\mathbf{X}| = n$:
+
 </div>
 
 
@@ -517,11 +521,13 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving sparse approximations for gaussian processes, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading
@@ -546,7 +552,9 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Sparse approximations reduce the computational cost of Gaussian Process inference from O(n^3) to O(nm^2), where m << n is the number of inducing points.
+
 </div>
 
 ---

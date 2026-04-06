@@ -8,12 +8,16 @@
 Markov Chain Monte Carlo (MCMC) constructs a Markov chain whose stationary distribution is the target posterior. By simulating this chain long enough, we obtain samples that represent the posterior distribution.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **MCMC is random walk + acceptance rule.** We propose moves through parameter space and accept or reject them based on how much they improve the posterior density. The magic: this simple procedure produces samples from arbitrarily complex posteriors.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Markov Chain Monte Carlo (MCMC) constructs a Markov chain whose stationary distribution is the target posterior.
+
 </div>
 
 ---
@@ -288,11 +292,13 @@ Run several chains from different starting points:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Core Problem" and why it matters in practice.
 
 2. Given a real-world scenario involving mcmc foundations: from metropolis to modern samplers, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

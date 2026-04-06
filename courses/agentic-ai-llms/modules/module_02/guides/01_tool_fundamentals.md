@@ -689,7 +689,6 @@ result = agent.run("What's the weather in London and what's 15% of 85?")
 *Tool calling transforms language models from conversationalists into actors. Master this fundamental pattern—every advanced agent capability builds on it.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

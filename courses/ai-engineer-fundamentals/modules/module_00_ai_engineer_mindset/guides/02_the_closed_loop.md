@@ -9,7 +9,9 @@
 The closed loop is the core mental model for building production LLM systems. It describes how an AI system receives goals, builds context, generates plans, takes actions, observes results, updates memory, and evaluates progress — repeatedly until the goal is achieved.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> A chatbot answers questions. A system achieves goals. The difference is the loop: generating, observing, learning, improving, generating again.
+
 </div>
 
 <div class="callout-key">
@@ -68,7 +70,9 @@ What the system must understand:
 </div>
 
 <div class="callout-info">
+
 <strong>Info:</strong> Parse natural language into structured intent. The gap between what the user says and what the system needs to know is where goal interpretation happens.
+
 </div>
 
 ### Stage 2: Context Building
@@ -176,7 +180,9 @@ class ToolExecutor:
 </div>
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Always wrap tool execution in error handling. A single unhandled tool failure can crash the entire agent loop.
+
 </div>
 
 ### Stage 5: Observe Results
@@ -313,7 +319,9 @@ return graceful_failure("Max iterations reached")
 </div>
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> An unbounded loop is a production incident waiting to happen. Always set max_iterations, timeout, and cost limits.
+
 </div>
 
 ## The Closed-Loop Advantage
@@ -336,15 +344,21 @@ return graceful_failure("Max iterations reached")
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Pitfall 1 — Infinite Loops:</strong> Agent keeps trying the same failing approach. Track attempted strategies and force alternatives after N failures.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 2 — Goal Drift:</strong> Agent solves a different problem than requested. Periodically re-check alignment with the original goal.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 3 — Memory Bloat:</strong> Storing everything fills context and slows retrieval. Use selective storage, summarization, and decay policies.
+
 </div>
 
 ## Implementation Skeleton

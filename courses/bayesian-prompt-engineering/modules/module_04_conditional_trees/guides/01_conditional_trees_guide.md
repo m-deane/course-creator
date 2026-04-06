@@ -9,7 +9,9 @@ Many questions that look like they have a single correct answer secretly contain
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Many questions that look like they have a single correct answer secretly contain a decision tree.
+
 </div>
 
 ---
@@ -52,7 +54,9 @@ The model is not failing. It is doing exactly what the math predicts: it's givin
 
 A question contains hidden conditional structure when:
 <div class="callout-warning">
+
 <strong>Warning:</strong> A question contains hidden conditional structure when:
+
 </div>
 
 
@@ -99,7 +103,9 @@ The model gave you the training prior. You needed your branch.
 
 Compare the flat answer to a conditional tree response for the same question:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Compare the flat answer to a conditional tree response for the same question:
+
 </div>
 
 
@@ -135,7 +141,9 @@ This answer is longer. It is also actually useful.
 
 There are three techniques for getting conditional tree responses.
 <div class="callout-warning">
+
 <strong>Warning:</strong> There are three techniques for getting conditional tree responses.
+
 </div>
 
 
@@ -284,11 +292,13 @@ After the model produces a tree, go back and tell it which branch you're on. The
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Hidden Structure Problem" and why it matters in practice.
 
 2. Given a real-world scenario involving conditional trees: when one answer is wrong, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

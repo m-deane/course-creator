@@ -8,7 +8,9 @@
 Seasonality refers to predictable, recurring patterns in commodity prices tied to calendar periods (months, quarters, seasons). Identifying and modeling these patterns is crucial for accurate forecasting and distinguishing fundamental cycles from random noise.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Many commodities exhibit strong seasonal patterns driven by predictable demand cycles (heating oil in winter, gasoline in summer) or supply cycles (agricultural harvest seasons). Failing to account for seasonality leads to systematic forecast errors and missed trading opportunities.
+
 </div>
 
 ## Formal Definition
@@ -35,7 +37,9 @@ For monthly data: $m = 12$, for daily data with weekly patterns: $m = 7$
 
 ### The Four Seasons of Natural Gas
 <div class="callout-insight">
+
 <strong>Insight:</strong> Natural gas prices exhibit clear seasonality:
+
 </div>
 
 
@@ -359,7 +363,9 @@ Dec   │ +$2.00 │ Heating demand rises
 
 ### 1. Ignoring Changing Seasonality
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Problem:** Seasonality can evolve over time (e.g., climate change affects heating demand)
+
 </div>
 
 
@@ -499,7 +505,9 @@ c) Holiday effects
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Seasonality refers to predictable, recurring patterns in commodity prices tied to calendar periods (months, quarters, seasons).
+
 </div>
 
 ---
@@ -557,11 +565,13 @@ seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving seasonality analysis in commodity markets, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

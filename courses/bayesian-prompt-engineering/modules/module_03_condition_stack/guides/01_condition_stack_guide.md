@@ -9,7 +9,9 @@ The Condition Stack is a 6-layer protocol for writing prompts. It specifies cond
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The Condition Stack is a 6-layer protocol for writing prompts.
+
 </div>
 
 ---
@@ -18,7 +20,9 @@ The Condition Stack is a 6-layer protocol for writing prompts. It specifies cond
 
 Here is a prompt a professional wrote after thinking carefully about it:
 <div class="callout-key">
+
 <strong>Key Point:</strong> Here is a prompt a professional wrote after thinking carefully about it:
+
 </div>
 
 
@@ -41,7 +45,9 @@ The Condition Stack fixes this by making the high-leverage conditions explicit �
 
 ### Layer 1: Jurisdiction + Rule Set
 <div class="callout-insight">
+
 <strong>Insight:</strong> **What it is:** Which country, state/province, and regulatory regime governs this situation? Which specific ruleset applies?
+
 </div>
 
 
@@ -138,7 +144,9 @@ With Layers 1–4 set, facts become maximally informative. The model knows exact
 
 The instinct to lead with facts is rational. Facts are what you know. They are concrete. They feel like the "substance" of the question. The framing conditions (jurisdiction, objective, constraints) feel like preamble — like housekeeping you should be able to skip.
 <div class="callout-warning">
+
 <strong>Warning:</strong> The instinct to lead with facts is rational. Facts are what you know. They are concrete. They feel like the "substance" of the question. The framing conditions (jurisdiction, objective, constraints) feel like preamble — like housekeeping you should be able to skip.
+
 </div>
 
 
@@ -157,7 +165,9 @@ The fact (positive test) has no meaning without the context. The same is true of
 
 Copy this template. Fill in each layer. Remove the bracketed instructions before sending.
 <div class="callout-key">
+
 <strong>Key Point:</strong> Copy this template. Fill in each layer. Remove the bracketed instructions before sending.
+
 </div>
 
 
@@ -196,7 +206,9 @@ Length: [approximate target length or "be concise"]
 
 ## Before and After: The Same Question with and without the Stack
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Without the Condition Stack (Layer 5 only):**
+
 </div>
 
 
@@ -257,7 +269,9 @@ The output from the stacked version is actionable, California-specific, calibrat
 **Pitfall 1: Writing the jurisdiction in the question instead of the stack**
 "What are the California tax rules for home office deductions?" — this puts the jurisdiction in the question but not in a structured way the model can use to constrain the entire response. Put it in Layer 1 so it governs everything.
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1: Writing the jurisdiction in the question instead of the stack**
+
 </div>
 
 
@@ -289,11 +303,13 @@ The template is a thinking tool, not a form. Some layers have one sentence; some
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Central Problem: Why Most Prompts Fail" and why it matters in practice.
 
 2. Given a real-world scenario involving guide 1: the condition stack framework, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

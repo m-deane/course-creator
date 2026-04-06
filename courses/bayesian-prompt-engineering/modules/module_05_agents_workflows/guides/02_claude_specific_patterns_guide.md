@@ -21,7 +21,9 @@ By the end of this guide you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The abstract condition stack has a direct mapping to Claude API features.
+
 </div>
 
 ---
@@ -60,7 +62,9 @@ Each parameter is a different conditioning lever. Most developers use only `mess
 
 The system prompt is not Layer 1 of the condition stack. It is **Layer 0** — a prior that persists across every turn of a conversation and has higher effective attention weight than user messages.
 <div class="callout-warning">
+
 <strong>Warning:</strong> The system prompt is not Layer 1 of the condition stack. It is **Layer 0** — a prior that persists across every turn of a conversation and has higher effective attention weight than user messages.
+
 </div>
 
 
@@ -108,7 +112,9 @@ The system prompt should contain conditions that are stable across all queries t
 
 ## Prefilling: Constraining the Posterior Before Generation
 <div class="callout-key">
+
 <strong>Key Point:</strong> Prefilling means providing the beginning of the assistant's response. Claude completes from where you left off.
+
 </div>
 
 
@@ -180,7 +186,9 @@ Prefilling is especially powerful in multi-agent systems where output format mus
 
 When you give Claude tools, the tool descriptions are read before any response is generated. They function as **constraint injection** — they narrow the posterior over what the model considers a valid action.
 <div class="callout-insight">
+
 <strong>Insight:</strong> When you give Claude tools, the tool descriptions are read before any response is generated. They function as **constraint injection** — they narrow the posterior over what the model considers a valid action.
+
 </div>
 
 
@@ -252,7 +260,9 @@ The constraints in the description condition which queries the model constructs 
 
 ## Structured Outputs: The Condition Passing Mechanism
 <div class="callout-warning">
+
 <strong>Warning:</strong> For multi-agent systems, structured outputs are the mechanism for passing switch variables between agents without loss.
+
 </div>
 
 
@@ -370,7 +380,9 @@ ACTIVE CONDITIONS (apply to all reasoning):
 
 The complete pattern for passing switch variables between two Claude agents.
 <div class="callout-key">
+
 <strong>Key Point:</strong> The complete pattern for passing switch variables between two Claude agents.
+
 </div>
 
 
@@ -549,7 +561,9 @@ Answer the question with full awareness of these conditions. If a variable has m
 **Pitfall 1: Putting everything in user messages**
 The `system` parameter exists because some conditions should have persistent high-weight presence. A jurisdiction condition buried in a long user message gets less attention than one in the system prompt. Use the right layer.
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1: Putting everything in user messages**
+
 </div>
 
 
@@ -589,11 +603,13 @@ If you pass switch variables as prose ("keep in mind the user is a corporation")
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Learning Objectives" and why it matters in practice.
 
 2. Given a real-world scenario involving claude-specific conditioning patterns, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

@@ -51,7 +51,9 @@ What kind of information?
 </div>
 
 <div class="callout-info">
+
 <strong>Info:</strong> Use the same embedding model for indexing and querying. Over-retrieve, then rerank to the final count.
+
 </div>
 
 ---
@@ -67,7 +69,9 @@ What kind of information?
 | **Recursive** | Target size | 10-20% | Mixed content |
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Start with 500 tokens, 10% overlap. Adjust based on retrieval quality.
+
 </div>
 
 ---

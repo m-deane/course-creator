@@ -8,7 +8,9 @@
 Bayesian regression treats regression coefficients as random variables with distributions, rather than fixed unknown values. This provides full uncertainty quantification for predictions and naturally handles regularization through priors.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> In frequentist regression, we get point estimates: β̂ = 2.5. In Bayesian regression, we get distributions: β ~ Normal(2.5, 0.3), telling us both the most likely value AND our uncertainty about it.
+
 </div>
 
 ## Formal Definition
@@ -190,7 +192,9 @@ As prior gets weaker, posterior → MLE
 ### 1. Overly Informative Priors with Weak Data
 **Problem:** Strong prior + little data → Posterior mostly reflects prior, not data
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Problem:** Strong prior + little data → Posterior mostly reflects prior, not data
+
 </div>
 
 
@@ -277,7 +281,9 @@ c) `Normal(+5, 2)` - Positive effect, moderate uncertainty
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Bayesian regression treats regression coefficients as random variables with distributions, rather than fixed unknown values.
+
 </div>
 
 ---
@@ -339,11 +345,13 @@ c) Investigate why prior and data differ
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving bayesian regression, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

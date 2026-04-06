@@ -9,7 +9,9 @@ This guide reviews the probability concepts essential for Bayesian inference. If
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> This guide reviews the probability concepts essential for Bayesian inference.
+
 </div>
 
 ---
@@ -242,11 +244,13 @@ $$f(x) = \int f(x | \theta) f(\theta) d\theta$$
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Probability Fundamentals" and why it matters in practice.
 
 2. Given a real-world scenario involving probability review for bayesian time series, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ---

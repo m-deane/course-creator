@@ -8,14 +8,18 @@
 Bayesian Model Averaging (BMA) combines predictions from multiple models weighted by their posterior model probabilities. Instead of selecting a single "best" model, BMA accounts for model uncertainty by averaging over all candidate models, yielding forecasts that are often more robust and better-calibrated than any individual model.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Model selection (choosing one model) discards information and understates uncertainty. If Model A has 60% posterior probability and Model B has 40%, why use only Model A? BMA uses both, weighted by their probabilities, capturing both parameter uncertainty (within models) and model uncertainty (across models). For commodity forecasting with competing fundamental specifications, BMA prevents overfitting to any single structural assumption.
+
 </div>
 
 ## Formal Definition
 
 ### The Model Averaging Framework
 <div class="callout-key">
+
 <strong>Key Point:</strong> Given data $\mathcal{D}$ and model space $\mathcal{M} = \{M_1, ..., M_K\}$:
+
 </div>
 
 
@@ -522,7 +526,9 @@ for i, name in enumerate(bma.model_names):
 - **Symptom:** BMA gives weight to implausible models
 - **Solution:** Use informative prior model probabilities based on theory/experience
 <div class="callout-key">
+
 <strong>Key Point:</strong> **1. Misspecified Prior Model Probabilities**
+
 </div>
 
 
@@ -612,11 +618,13 @@ for i, name in enumerate(bma.model_names):
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving bayesian model averaging for commodity forecasting, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading
@@ -643,7 +651,9 @@ for i, name in enumerate(bma.model_names):
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Bayesian Model Averaging (BMA) combines predictions from multiple models weighted by their posterior model probabilities.
+
 </div>
 
 ---

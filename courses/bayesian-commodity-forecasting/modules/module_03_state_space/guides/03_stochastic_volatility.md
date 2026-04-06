@@ -8,7 +8,9 @@
 Stochastic volatility (SV) models treat volatility as a latent time-varying process rather than a deterministic function. This captures the clustering and persistence of volatility observed in commodity markets while providing probabilistic forecasts of future risk.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Volatility has memory.** High volatility periods cluster together (calm markets follow calm markets, chaotic markets follow chaotic markets). Stochastic volatility models this persistence through a latent AR(1) process on log-variance, enabling both backward inference (what was the volatility?) and forward prediction (what will it be?).
+
 </div>
 
 ## Formal Definition
@@ -38,7 +40,9 @@ $$h_1 \sim \mathcal{N}\left(\mu, \frac{\sigma_\eta^2}{1 - \phi^2}\right)$$
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Stochastic volatility (SV) models treat volatility as a latent time-varying process rather than a deterministic function.
+
 </div>
 
 ---
@@ -230,7 +234,9 @@ plt.show()
 
 ### 1. Leverage Effect
 <div class="callout-warning">
+
 <strong>Warning:</strong> Negative returns increase volatility more than positive returns (especially in energy).
+
 </div>
 
 
@@ -337,7 +343,9 @@ with pm.Model() as sv_student:
 
 ### One-Step-Ahead Forecast
 <div class="callout-key">
+
 <strong>Key Point:</strong> Given $h_t$, the predictive distribution for $h_{t+1}$:
+
 </div>
 
 
@@ -507,7 +515,9 @@ A crude oil SV model estimates $\phi = 0.96$ and $\sigma_\eta = 0.15$. If curren
 1. What is the expected log-volatility in 1 week? 10 weeks?
 2. What is the uncertainty (standard deviation)?
 <div class="callout-insight">
+
 <strong>Insight:</strong> A crude oil SV model estimates $\phi = 0.96$ and $\sigma_\eta = 0.15$. If current log-volatility is $h_t = 0.5$:
+
 </div>
 
 
@@ -538,11 +548,13 @@ Which provides uncertainty estimates? Which adapts fastest to regime changes?
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving stochastic volatility models for commodities, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

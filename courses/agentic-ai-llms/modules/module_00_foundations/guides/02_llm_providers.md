@@ -485,7 +485,6 @@ class RateLimitedProvider(LLMProvider):
 *Choosing the right LLM provider is about matching capabilities to requirements. Build abstractions that let you switch providers easily, and don't hesitate to use multiple models for different purposes.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

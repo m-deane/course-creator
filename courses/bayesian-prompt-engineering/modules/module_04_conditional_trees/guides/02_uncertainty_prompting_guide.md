@@ -9,7 +9,9 @@ Language models are trained to produce confident, complete responses. This train
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Language models are trained to produce confident, complete responses.
+
 </div>
 
 ---
@@ -34,7 +36,9 @@ The model knows what would change this answer. It knows that pre-revenue B2B ent
 
 There are three types of uncertainty in a model's response:
 <div class="callout-insight">
+
 <strong>Insight:</strong> There are three types of uncertainty in a model's response:
+
 </div>
 
 
@@ -61,7 +65,9 @@ Uncertainty prompting targets all three types, but the techniques differ.
 
 The meta-prompt is a prefix instruction that changes how the model approaches any question:
 <div class="callout-warning">
+
 <strong>Warning:</strong> The meta-prompt is a prefix instruction that changes how the model approaches any question:
+
 </div>
 
 
@@ -148,7 +154,9 @@ This format forces the model to separate assumptions from conclusions — a dist
 
 In high-stakes domains, the most useful model behavior is to ask you for information before answering.
 <div class="callout-insight">
+
 <strong>Insight:</strong> In high-stakes domains, the most useful model behavior is to ask you for information before answering.
+
 </div>
 
 
@@ -210,7 +218,9 @@ This format is particularly useful for:
 
 Models make assumptions constantly. Most of them are invisible. One technique for surfacing them:
 <div class="callout-key">
+
 <strong>Key Point:</strong> Models make assumptions constantly. Most of them are invisible. One technique for surfacing them:
+
 </div>
 
 
@@ -297,7 +307,9 @@ This two-phase pattern consistently produces better answers than single-shot pro
 
 Uncertainty prompting can produce unhelpful results in these situations:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Uncertainty prompting can produce unhelpful results in these situations:
+
 </div>
 
 
@@ -316,7 +328,9 @@ Uncertainty prompting can produce unhelpful results in these situations:
 **Pitfall 1: Confusing "I need more information" with failure**
 A model that says "I need to know X before I can answer specifically" is providing more useful output than one that gives a confident wrong answer. Reframe uncertainty as a feature.
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1: Confusing "I need more information" with failure**
+
 </div>
 
 
@@ -356,11 +370,13 @@ Sometimes the right fix is to reframe the question, not ask for uncertainty. If 
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Confidence Illusion" and why it matters in practice.
 
 2. Given a real-world scenario involving uncertainty prompting: getting the model to say what it doesn't know, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

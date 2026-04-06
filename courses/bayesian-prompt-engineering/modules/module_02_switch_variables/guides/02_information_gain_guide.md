@@ -13,7 +13,9 @@ The skill of prompt engineering, viewed through information theory, is **maximiz
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Adding more words to a prompt does not automatically improve the answer.
+
 </div>
 
 ---
@@ -25,7 +27,9 @@ The skill of prompt engineering, viewed through information theory, is **maximiz
 ```
 Answer distribution for "How should I handle this situation?" (no context):
 <div class="callout-key">
+
 <strong>Key Point:</strong> Answer distribution for "How should I handle this situation?" (no context):
+
 </div>
 
 
@@ -106,7 +110,9 @@ The goal is not zero entropy — that would require completely specifying every 
 
 Numbers are seductive because they feel precise. "47 employees," "$2.3M ARR," "3 years in operation." They feel like data.
 <div class="callout-key">
+
 <strong>Key Point:</strong> Numbers are seductive because they feel precise. "47 employees," "$2.3M ARR," "3 years in operation." They feel like data.
+
 </div>
 
 
@@ -128,7 +134,9 @@ When a number crosses a threshold that changes the applicable rule set, it becom
 
 ### Example: "How do I structure my equity compensation plan?"
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Add in this order:** C-Corp or LLC? US employees? What's the primary goal? Pre or post-Series A? Employee vs. contractor? Then stop — you've captured the high-gain conditions.
+
 </div>
 
 
@@ -151,7 +159,9 @@ When a number crosses a threshold that changes the applicable rule set, it becom
 
 Information gain from conditions follows a concave curve:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Information gain from conditions follows a concave curve:
+
 </div>
 
 
@@ -271,11 +281,13 @@ The skip list is not "wrong" information — it's just not worth the budget. You
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Visual Explanation" and why it matters in practice.
 
 2. Given a real-world scenario involving information gain: why "more detail" is not "better conditions", what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

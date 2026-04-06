@@ -25,7 +25,9 @@
 </div>
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Whoever runs this loop faster and cleaner wins.
+
 </div>
 
 ---

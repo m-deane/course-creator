@@ -608,7 +608,6 @@ def evaluate_few_shot(
 *Few-shot learning is about communication through demonstration. Choose your examples as carefully as you would write production code—they directly shape your agent's behavior.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

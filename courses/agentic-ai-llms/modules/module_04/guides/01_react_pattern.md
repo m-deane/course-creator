@@ -623,7 +623,6 @@ class RobustReActAgent(ReActAgent):
 *ReAct is the fundamental reasoning pattern for agentic AI. Master it, and you'll have the foundation for building agents that can tackle any complex task.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

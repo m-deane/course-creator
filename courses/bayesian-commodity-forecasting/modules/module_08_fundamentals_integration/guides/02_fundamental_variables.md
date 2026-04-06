@@ -8,7 +8,9 @@
 Fundamental variables are economic, physical, and market factors that drive commodity prices through supply and demand mechanisms. These include inventory levels, production capacity, consumption patterns, weather conditions, and macroeconomic indicators. Integrating fundamentals into Bayesian models transforms price forecasting from pure time-series extrapolation to economically-grounded inference.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Pure statistical models (ARIMA, GP) learn patterns from price history but ignore why prices move. Fundamental models incorporate the causal drivers: oil prices rise because inventories are low and demand is high, not just because they were rising yesterday. Bayesian frameworks excel at combining uncertain fundamental data with price history, yielding forecasts that are both statistically sound and economically interpretable.
+
 </div>
 
 ## Formal Definition
@@ -70,7 +72,9 @@ Low inventory → high price sensitivity
 
 Think of commodity prices like housing prices:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Think of commodity prices like housing prices:
+
 </div>
 
 
@@ -609,11 +613,13 @@ for i, idx in enumerate(sorted_idx):
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving fundamental variables in commodity forecasting, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading
@@ -638,7 +644,9 @@ for i, idx in enumerate(sorted_idx):
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Fundamental variables are economic, physical, and market factors that drive commodity prices through supply and demand mechanisms.
+
 </div>
 
 ---

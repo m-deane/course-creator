@@ -8,7 +8,9 @@
 Bayes' theorem provides a principled way to update beliefs in light of new evidence. It forms the mathematical foundation for all probabilistic machine learning and is essential for building forecasting models that quantify uncertainty.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Bayesian inference inverts the usual probability question.** Instead of asking "What's the probability of seeing this data given a parameter?" we ask "What's the probability of a parameter given this data?" This inversion is exactly what we need for forecasting.
+
 </div>
 
 ## Formal Definition
@@ -35,7 +37,9 @@ This is the form we use most often. The normalizing constant $P(y)$ is often int
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Bayes' theorem provides a principled way to update beliefs in light of new evidence.
+
 </div>
 
 ---
@@ -246,11 +250,13 @@ Starting with Beta(1,1) prior, you observe: success, success, failure, success. 
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving bayes' theorem: the foundation of bayesian inference, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

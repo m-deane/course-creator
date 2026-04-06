@@ -8,12 +8,16 @@
 The kernel function defines what "similarity" means in Gaussian Process models. Commodity time series exhibit trends, seasonality, cycles, and discontinuities—each requiring specific kernel choices. This guide provides a practical framework for designing and combining kernels for commodity forecasting.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Kernels encode assumptions about function smoothness and structure.** A smooth exponential kernel assumes gradual price changes (fine for stable markets), while a Matérn-1/2 kernel allows sudden jumps (better for supply shocks). Choosing the wrong kernel is like wearing the wrong glasses—everything is blurry.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The kernel function defines what "similarity" means in Gaussian Process models.
+
 </div>
 
 ---
@@ -36,7 +40,9 @@ $$\begin{bmatrix} f(x_1) \\ \vdots \\ f(x_n) \end{bmatrix} \sim \mathcal{N}\left
 
 ### 1. Stationary Kernels (Time-Invariant)
 <div class="callout-insight">
+
 <strong>Insight:</strong> Depend only on distance: $k(x_i, x_j) = k(|x_i - x_j|)$
+
 </div>
 
 
@@ -335,7 +341,9 @@ with pm.Model() as covariate_model:
 </div>
 <div class="code-body">
 <div class="callout-warning">
+
 <strong>Warning:</strong> def forecast_gp(trace, model, X_obs, X_new, n_samples=500):
+
 </div>
 
 
@@ -409,7 +417,9 @@ plt.show()
 
 ### 1. Length Scale Interpretation
 <div class="callout-key">
+
 <strong>Key Point:</strong> ell_trend_post = trace.posterior['ell_trend'].values.flatten()
+
 </div>
 
 
@@ -509,7 +519,9 @@ plt.show()
 
 ### 1. Wrong Smoothness Assumption
 <div class="callout-insight">
+
 <strong>Insight:</strong> Using SE kernel for volatile commodities smooths over real shocks.
+
 </div>
 
 
@@ -599,7 +611,9 @@ Design a kernel for electricity prices with:
 - Weekly cycle (weekday vs. weekend)
 - Seasonal cycle (summer demand)
 <div class="callout-key">
+
 <strong>Key Point:</strong> Design a kernel for electricity prices with:
+
 </div>
 
 
@@ -627,11 +641,13 @@ You want to forecast copper prices using time + inventory + Chinese PMI. What ke
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving kernel design for commodity time series, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

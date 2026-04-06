@@ -8,7 +8,9 @@
 The Kalman filter is a recursive algorithm that optimally estimates the hidden state of a linear dynamical system from noisy observations. It's the Bayesian solution to state estimation when both the system dynamics and observations are linear with Gaussian noise.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> The Kalman filter answers: "Given all observations up to now, what's my best estimate of the current hidden state, and how confident am I?" It does this by alternating between **prediction** (using system dynamics) and **update** (incorporating new observations).
+
 </div>
 
 Think of it as GPS navigation: Your car's speedometer predicts where you are (prediction step), but GPS measurements correct this estimate (update step). The Kalman filter optimally combines these two sources of information.
@@ -83,7 +85,9 @@ The Kalman filter makes this combination optimal (minimum variance estimate).
 
 ### Why the Kalman Filter is Optimal
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Theorem:** Under linear-Gaussian assumptions, the Kalman filter produces:
+
 </div>
 
 
@@ -297,7 +301,9 @@ Uncertainty Evolution:
 
 ### 1. Wrong Noise Variances (Q, H)
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Problem:** If Q and H are misspecified, filter can be too sluggish or too jumpy.
+
 </div>
 
 
@@ -408,7 +414,9 @@ $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The Kalman filter is a recursive algorithm that optimally estimates the hidden state of a linear dynamical system from noisy observations.
+
 </div>
 
 ---
@@ -452,11 +460,13 @@ Apply Kalman filter to:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving the kalman filter: optimal bayesian updating for linear-gaussian systems, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading
@@ -465,7 +475,9 @@ Apply Kalman filter to:
 - **Kalman (1960):** "A New Approach to Linear Filtering and Prediction Problems" - Original paper
 - **Durbin & Koopman (2012):** *Time Series Analysis by State Space Methods* - Comprehensive treatment
 <div class="callout-warning">
+
 <strong>Warning:</strong> - **Kalman (1960):** "A New Approach to Linear Filtering and Prediction Problems" - Original paper
+
 </div>
 
 

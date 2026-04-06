@@ -8,12 +8,16 @@
 A Gaussian Process (GP) defines a probability distribution over functions. Instead of parameterizing a specific functional form, GPs specify properties of functions (smoothness, periodicity) through a kernel, letting data determine the actual shape.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Think of a GP as placing a prior directly on the space of functions.** Just as a Normal prior on a parameter expresses beliefs about where the parameter lies, a GP prior expresses beliefs about what functions are plausible.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> A Gaussian Process (GP) defines a probability distribution over functions.
+
 </div>
 
 ---
@@ -121,7 +125,9 @@ Where:
 
 The kernel function $k(x, x')$ specifies:
 <div class="callout-key">
+
 <strong>Key Point:</strong> The kernel function $k(x, x')$ specifies:
+
 </div>
 
 
@@ -315,11 +321,13 @@ GP uncertainty may not increase fast enough outside training range.
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving gaussian process fundamentals, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

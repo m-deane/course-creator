@@ -9,7 +9,9 @@
 AI Engineering divides into three complementary tracks: Model & Training Core (understanding and modifying the engine), Alignment & Safety (shaping behavior), and Agent Systems (connecting to reality). Mastering all three makes you a complete AI Engineer.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> You don't need to be a researcher to be an AI Engineer, but you need to understand enough of each track to make good architectural decisions.
+
 </div>
 
 <div class="callout-key">
@@ -97,7 +99,9 @@ tokens_needed = 20 * num_parameters  # Chinchilla optimal
 </div>
 
 <div class="callout-info">
+
 <strong>When You Need Track A:</strong> Fine-tuning for specific domains, optimizing inference cost and latency, debugging unexpected model behavior, choosing between model sizes, understanding capability limits.
+
 </div>
 
 **Career Focus:** ML Engineers at AI labs, model optimization specialists, training infrastructure engineers, research engineers.
@@ -168,7 +172,9 @@ def regression_test(model_v1, model_v2, test_cases):
 </div>
 
 <div class="callout-info">
+
 <strong>When You Need Track B:</strong> Building customer-facing AI products, ensuring brand-safe responses, meeting compliance requirements, reducing support escalations, preventing harmful outputs.
+
 </div>
 
 **Career Focus:** AI Safety engineers, Product AI engineers, Trust & Safety teams, AI policy and governance.
@@ -246,7 +252,9 @@ def run_agent(goal: str):
 </div>
 
 <div class="callout-info">
+
 <strong>When You Need Track C:</strong> Building AI-powered applications, integrating LLMs with existing systems, creating autonomous agents, connecting to enterprise data, scaling to production.
+
 </div>
 
 **Career Focus:** AI Application engineers, Full-stack AI developers, Platform engineers, Startup founders.
@@ -269,7 +277,9 @@ def run_agent(goal: str):
 </div>
 
 <div class="callout-key">
+
 <strong>Track C Knowledge:</strong> RAG for product documentation. Tool integration for order lookup and refunds. Memory for conversation continuity. Logging for debugging and improvement.
+
 </div>
 
 ## Recommended Learning Paths

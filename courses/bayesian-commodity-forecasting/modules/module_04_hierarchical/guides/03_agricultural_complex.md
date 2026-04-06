@@ -8,12 +8,16 @@
 Agricultural markets form interconnected networks through crop rotation, feed demand, and land allocation decisions. Hierarchical models capture these structural relationships—pooling information across crops, regions, and time scales to improve forecasts while respecting biological and economic constraints.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Corn doesn't exist in isolation.** When corn prices spike, farmers plant more corn (less soybeans). When corn is cheap, livestock producers expand herds (increasing feed demand). A hierarchical model for the agricultural complex jointly models these substitution and complementarity relationships, preventing forecast inconsistencies.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Agricultural markets form interconnected networks through crop rotation, feed demand, and land allocation decisions.
+
 </div>
 
 ---
@@ -74,7 +78,9 @@ Global Ag Factor (food demand, energy prices, USD)
 
 ### 1. Crop Rotation & Land Competition
 <div class="callout-warning">
+
 <strong>Warning:</strong> Farmers choose what to plant based on relative profitability.
+
 </div>
 
 
@@ -601,7 +607,9 @@ print(comparison)
 ### Problem 1
 Design a hierarchical model for wheat prices with three classes: Hard Red Winter (HRW), Soft Red Winter (SRW), and Spring Wheat. What determines the hierarchy structure?
 <div class="callout-warning">
+
 <strong>Warning:</strong> Design a hierarchical model for wheat prices with three classes: Hard Red Winter (HRW), Soft Red Winter (SRW), and Spring Wheat. What determines the hierarchy structure?
+
 </div>
 
 
@@ -625,11 +633,13 @@ USDA forecasts ending stocks at 1.2 billion bushels (stocks-to-use = 8%, very ti
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving hierarchical models for agricultural commodities, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

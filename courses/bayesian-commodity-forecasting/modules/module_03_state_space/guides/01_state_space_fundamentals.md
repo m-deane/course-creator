@@ -8,7 +8,9 @@
 State space models decompose observed time series into unobserved (latent) components that evolve according to known dynamics. This framework provides a unified approach to trend extraction, forecasting, and uncertainty quantification.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Think of state space as a hidden story.** We observe the outcome (prices) but not the underlying drivers (trend, momentum, sentiment). State space models infer these hidden states from observable data.
+
 </div>
 
 ## Formal Definition
@@ -38,7 +40,9 @@ $$\alpha_1 \sim \mathcal{N}(a_1, P_1)$$
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> State space models decompose observed time series into unobserved (latent) components that evolve according to known dynamics.
+
 </div>
 
 ---
@@ -77,7 +81,9 @@ Obs:      │y₁│    │y₂│    │y₃│    │y₄│  (Observed)
 
 ### 1. Local Level Model (Random Walk + Noise)
 <div class="callout-warning">
+
 <strong>Warning:</strong> The simplest state space model: a random walk observed with noise.
+
 </div>
 
 
@@ -289,11 +295,13 @@ You have weekly natural gas prices with occasional missing values (holidays). Ex
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving state space fundamentals, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

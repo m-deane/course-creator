@@ -25,7 +25,9 @@ yields a posterior $p(\theta|y)$ in the same distributional family as $p(\theta)
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> A **conjugate prior** is a prior distribution that, when combined with a particular likelihood, yields a posterior distribution in the same family as the prior.
+
 </div>
 
 ---
@@ -34,7 +36,9 @@ yields a posterior $p(\theta|y)$ in the same distributional family as $p(\theta)
 
 ### 1. Beta-Binomial (Proportions)
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Use case:** Estimating probabilities, success rates, fill rates
+
 </div>
 
 
@@ -221,7 +225,9 @@ This is the **Normal-Inverse-Gamma** prior, conjugate for the Normal likelihood 
 
 ### Sequential Updating
 <div class="callout-insight">
+
 <strong>Insight:</strong> For online learning, conjugate priors allow instant updates:
+
 </div>
 
 
@@ -386,11 +392,13 @@ Derive the posterior for the Normal-Normal case from scratch using Bayes' theore
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving conjugate priors: analytical bayesian updates, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

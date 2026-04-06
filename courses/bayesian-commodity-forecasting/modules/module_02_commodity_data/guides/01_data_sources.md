@@ -8,12 +8,16 @@
 Quality commodity forecasting requires reliable data on prices, fundamentals, and positioning. This guide maps the data landscape and provides practical retrieval strategies.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Free, official data often beats expensive commercial feeds for fundamentals.** EIA, USDA, and CFTC provide authoritative data that moves markets. Commercial data adds value primarily for higher frequency or alternative datasets.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Quality commodity forecasting requires reliable data on prices, fundamentals, and positioning.
+
 </div>
 
 ---
@@ -22,7 +26,9 @@ Quality commodity forecasting requires reliable data on prices, fundamentals, an
 
 ### Weekly Petroleum Status Report
 <div class="callout-key">
+
 <strong>Key Point:</strong> The most market-moving energy report in the world.
+
 </div>
 
 
@@ -109,7 +115,9 @@ def get_eia_petroleum(series_id, api_key):
 
 World Agricultural Supply and Demand Estimates - the most important agricultural report.
 <div class="callout-insight">
+
 <strong>Insight:</strong> World Agricultural Supply and Demand Estimates - the most important agricultural report.
+
 </div>
 
 
@@ -369,11 +377,13 @@ data/
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Energy Data (EIA)" and why it matters in practice.
 
 2. Given a real-world scenario involving commodity data sources guide, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

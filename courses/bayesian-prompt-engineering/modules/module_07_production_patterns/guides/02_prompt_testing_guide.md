@@ -9,7 +9,9 @@ Most prompts are never tested. They are written, tried once, and declared "good 
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Most prompts are never tested.
+
 </div>
 
 ---
@@ -40,7 +42,9 @@ You do not need to evaluate whether the outputs are "correct." You only need to 
 
 Output stability is the average pairwise similarity between outputs from N runs of the same prompt on the same input.
 <div class="callout-warning">
+
 <strong>Warning:</strong> Output stability is the average pairwise similarity between outputs from N runs of the same prompt on the same input.
+
 </div>
 
 
@@ -128,7 +132,9 @@ For production baselines, N=10 is the minimum. For A/B comparisons where you nee
 
 Length variance measures the standard deviation of output token counts across N runs. High variance means the model is uncertain about the depth of response the prompt warrants.
 <div class="callout-key">
+
 <strong>Key Point:</strong> Length variance measures the standard deviation of output token counts across N runs. High variance means the model is uncertain about the depth of response the prompt warrants.
+
 </div>
 
 
@@ -174,7 +180,9 @@ A coefficient of variation (CV) above 0.3 is a signal to inspect Layer 6 (output
 
 Key entity consistency measures what fraction of important terms appear across all N runs. If the prompt is about a specific regulation (SEC Rule 10b-5) or a specific procedure (Form 8-K filing), those terms should appear in every run.
 <div class="callout-insight">
+
 <strong>Insight:</strong> Key entity consistency measures what fraction of important terms appear across all N runs. If the prompt is about a specific regulation (SEC Rule 10b-5) or a specific procedure (Form 8-K filing), those terms should appear in every run.
+
 </div>
 
 
@@ -220,7 +228,9 @@ def entity_consistency(outputs: list[str], key_entities: list[str]) -> float:
 
 Structure consistency measures whether outputs share the same format: heading count, presence of lists, paragraph count, and section labels.
 <div class="callout-warning">
+
 <strong>Warning:</strong> Structure consistency measures whether outputs share the same format: heading count, presence of lists, paragraph count, and section labels.
+
 </div>
 
 
@@ -280,7 +290,9 @@ def structure_consistency(outputs: list[str]) -> dict:
 
 Condition sensitivity measures how much the output stability changes when you remove or alter one condition at a time. It answers: which conditions are actually doing work?
 <div class="callout-key">
+
 <strong>Key Point:</strong> Condition sensitivity measures how much the output stability changes when you remove or alter one condition at a time. It answers: which conditions are actually doing work?
+
 </div>
 
 
@@ -402,7 +414,9 @@ This protocol takes approximately 30 minutes for a single prompt, including API 
 **Pitfall 1: Running N=1 and declaring the prompt stable.**
 One run tells you nothing about stability. The minimum for any meaningful stability test is N=3; the standard is N=5.
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Pitfall 1: Running N=1 and declaring the prompt stable.**
+
 </div>
 
 
@@ -441,9 +455,11 @@ With fewer than 20 inputs, input variance dominates the comparison. You are meas
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving how to test and measure prompt quality, what would be your first three steps to apply the techniques from this guide?
+
 </div>

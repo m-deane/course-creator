@@ -13,14 +13,18 @@ The model is not malfunctioning when it gives a bad answer. It is answering the 
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Every bad AI answer is a predictable output of a specific probability mistake.
+
 </div>
 
 ---
 
 ## Mistake 1: Confusing "More Detail" with "More Conditions"
 <div class="callout-insight">
+
 <strong>Insight:</strong> You get a generic answer. You try to fix it by adding more text — more context, more background, a longer paragraph. You get a slightly longer version of the same generic answer.
+
 </div>
 
 
@@ -81,7 +85,9 @@ Structure your additions as conditions, not narrative:
 
 ## Mistake 2: Asking for One Answer When You Need a Conditional Tree
 <div class="callout-warning">
+
 <strong>Warning:</strong> You ask a question and get a confident single answer. You follow the advice. It doesn't work — or it works for someone else's situation but not yours.
+
 </div>
 
 
@@ -134,7 +140,9 @@ For these questions, add: "Before answering, map the conditions that would chang
 
 ## Mistake 3: Treating AI Like a Search Engine (Keywords Instead of Inference)
 <div class="callout-key">
+
 <strong>Key Point:</strong> Prompts that look like search queries: short, noun-heavy, no structure. The model returns a document summary or a list of definitions. You wanted reasoning.
+
 </div>
 
 
@@ -191,7 +199,9 @@ The question "what is X?" asks for a definition. The question "given conditions 
 
 ### What It Looks Like
 <div class="callout-insight">
+
 <strong>Insight:</strong> You ask for advice. The advice seems reasonable. But when you look closely, it's optimizing for the wrong thing — speed when you wanted safety, cost when you wanted reliability, the average case when you're in the tail.
+
 </div>
 
 
@@ -248,7 +258,9 @@ A clean format: "Optimize for [primary goal]. Acceptable to sacrifice [tradeable
 
 ### What It Looks Like
 <div class="callout-warning">
+
 <strong>Warning:</strong> The advice is correct — but for a different time. You're asking about what to do now, and the model answers based on what the right answer was historically, or what the right answer will be eventually, or what the right answer is in steady state — none of which is what you need.
+
 </div>
 
 
@@ -303,7 +315,9 @@ Also ask: "What would have to change about the timing or phase for this answer t
 
 ### What It Looks Like
 <div class="callout-key">
+
 <strong>Key Point:</strong> You ask a question that seems specific. The model answers confidently, accurately — for the average person in the average situation. But you're not average. Your context, your constraints, your existing beliefs are different from the training distribution. The model doesn't know this, and neither do you until the advice fails.
+
 </div>
 
 
@@ -364,11 +378,13 @@ Then make those priors explicit:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving the six probability mistakes in prompt engineering, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

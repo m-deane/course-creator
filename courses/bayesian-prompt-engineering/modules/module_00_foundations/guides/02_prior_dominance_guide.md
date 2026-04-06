@@ -9,7 +9,9 @@ When a language model generates an answer that is confident, fluent, and wrong f
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> When a language model generates an answer that is confident, fluent, and wrong for your situation, the cause is almost always the same: the model has defaulted to the most common context in its training data rather than the specific context you are in.
+
 </div>
 
 ---
@@ -40,7 +42,9 @@ This distribution reflects what followed that token sequence in training data â€
 
 Consider the prompt: `"What are the tax implications of filing late?"`
 <div class="callout-warning">
+
 <strong>Warning:</strong> Consider the prompt: `"What are the tax implications of filing late?"`
+
 </div>
 
 
@@ -67,7 +71,9 @@ Every one of those conditions shifts the correct answer dramatically. None of th
 
 This example illustrates prior dominance at its most concrete.
 <div class="callout-key">
+
 <strong>Key Point:</strong> This example illustrates prior dominance at its most concrete.
+
 </div>
 
 
@@ -108,7 +114,9 @@ The conditions you added were not context-setting niceties. They were the eviden
 
 It is tempting to frame prior dominance as a flaw that should be fixed. It is not. It is the correct behaviour of a probabilistic model operating with incomplete information.
 <div class="callout-insight">
+
 <strong>Insight:</strong> It is tempting to frame prior dominance as a flaw that should be fixed. It is not. It is the correct behaviour of a probabilistic model operating with incomplete information.
+
 </div>
 
 
@@ -129,7 +137,9 @@ This third point is the dangerous one. Unlike a doctor, a language model does no
 
 The fix for prior dominance is precise: supply the conditions that distinguish your situation from the most typical situation.
 <div class="callout-warning">
+
 <strong>Warning:</strong> The fix for prior dominance is precise: supply the conditions that distinguish your situation from the most typical situation.
+
 </div>
 
 
@@ -174,7 +184,9 @@ The relationship between conditions and probability shifts is not linear. Some c
 
 **Medical:** The model's prior assumes an adult patient with no unusual comorbidities in a high-income country. Age, weight, kidney function, concurrent medications, and country of practice are all conditions that can reverse a recommendation.
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Medical:** The model's prior assumes an adult patient with no unusual comorbidities in a high-income country. Age, weight, kidney function, concurrent medications, and country of practice are all conditions that can reverse a recommendation.
+
 </div>
 
 
@@ -195,7 +207,9 @@ In each case, the fix is the same: supply the conditions that distinguish your s
 **Pitfall 1: Mistaking fluency for accuracy**
 A prior-dominated answer is often perfectly fluent and well-structured. Fluency is a property of the generation process, not a signal that the answer is correct for your situation. Always check whether the model's assumed context matches yours.
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Pitfall 1: Mistaking fluency for accuracy**
+
 </div>
 
 
@@ -234,11 +248,13 @@ Adding many conditions that are obvious or that match the default wastes prompt 
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving prior dominance: why llms produce coherent but wrong answers, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

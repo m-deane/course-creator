@@ -9,7 +9,9 @@ Language models generate text one token at a time, where each token is sampled f
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Language models generate text one token at a time, where each token is sampled from a conditional probability distribution over the entire vocabulary, conditioned on every token that came before it.
+
 </div>
 
 ---
@@ -45,7 +47,9 @@ Tokens are not words. They are chunks of text determined by a compression algori
 
 At every step $n$, the model computes a score (logit) for every token in its vocabulary — typically 50,000–130,000 tokens. Those scores are converted to probabilities via softmax:
 <div class="callout-warning">
+
 <strong>Warning:</strong> At every step $n$, the model computes a score (logit) for every token in its vocabulary — typically 50,000–130,000 tokens. Those scores are converted to probabilities via softmax:
+
 </div>
 
 
@@ -113,7 +117,9 @@ Each pass through the transformer conditions on the entire prior context via the
 
 The chain rule form of the generation probability makes the role of your prompt explicit:
 <div class="callout-warning">
+
 <strong>Warning:</strong> The chain rule form of the generation probability makes the role of your prompt explicit:
+
 </div>
 
 
@@ -152,7 +158,9 @@ A neural language model parameterises each conditional factor $P(t_n \mid t_1, \
 **Pitfall 1: Treating the model as a search engine**
 The model does not retrieve facts; it generates the most probable continuation of your token sequence. This is why confident-sounding hallucinations exist: the generated text can be syntactically and stylistically indistinguishable from correct text.
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Pitfall 1: Treating the model as a search engine**
+
 </div>
 
 
@@ -191,11 +199,13 @@ Setting temperature to 0 does not make the model correct — it makes it determi
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving autoregressive generation: llms as conditional probability machines, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

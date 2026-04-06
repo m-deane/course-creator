@@ -9,7 +9,9 @@
 An agent is an LLM that can take actions in the world, observe results, and iterate until a goal is achieved. The agent loop is the fundamental pattern that makes this possible.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The agent loop transforms a "text predictor" into a "goal achiever" by closing the feedback loop between generation and world state.
+
 </div>
 
 <div class="callout-key">
@@ -96,7 +98,9 @@ def decide_action(messages: list, tools: list) -> dict:
 </div>
 
 <div class="callout-info">
+
 <strong>Info:</strong> The model evaluates available tools against the current goal, considers tool descriptions and parameter schemas, and chooses the most appropriate action -- or responds directly if no tool is needed.
+
 </div>
 
 ### 3. Execute Tool
@@ -128,7 +132,9 @@ def execute_tool(tool_name: str, tool_input: dict, tool_registry: dict) -> str:
 </div>
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Always wrap tool execution in try/catch. A single unhandled exception crashes the agent loop and leaves the user with no response.
+
 </div>
 
 ### 4. Observe Result
@@ -280,19 +286,27 @@ class LoopController:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Pitfall 1 — No termination condition:</strong> Agent loops forever. Always set max_iterations and implement explicit exit conditions.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 2 — Lost context:</strong> Model forgets earlier tool results. Maintain full message history; consider summarization for long conversations.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 3 — Tool description mismatch:</strong> Model calls tools incorrectly because descriptions are vague. Write clear, specific tool descriptions with examples.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 4 — No error handling:</strong> Single tool failure crashes the agent. Wrap tool execution in try/catch, provide error feedback to model.
+
 </div>
 
 ## Practice Questions

@@ -446,7 +446,6 @@ class MessageRouter:
 *Effective communication transforms independent agents into collaborative systems. Design your protocols as carefully as your individual agents.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

@@ -8,12 +8,16 @@
 Energy markets are interconnected through refining, transportation, and substitution. Hierarchical models pool information across crude grades, refined products, and geographic regions while respecting their structural relationships, improving forecasts for thinly-traded markets.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Borrow strength across related markets.** WTI and Brent prices are highly correlated but not identical. A hierarchical model learns the common "oil market" dynamics while preserving spread relationships, preventing overfitting on individual time series.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Energy markets are interconnected through refining, transportation, and substitution.
+
 </div>
 
 ---
@@ -199,7 +203,9 @@ print("Estimated:", trace.posterior['grade_intercept'].mean(dim=['chain', 'draw'
 
 ### Crack Spread Model
 <div class="callout-insight">
+
 <strong>Insight:</strong> Refining adds value to crude oil. Model the spread hierarchically.
+
 </div>
 
 
@@ -261,7 +267,9 @@ This ensures gasoline and crude forecasts are consistent (no arbitrage opportuni
 
 ### US Regional Hub Hierarchy
 <div class="callout-warning">
+
 <strong>Warning:</strong> hubs = ['Henry_Hub', 'Chicago', 'NY', 'California']
+
 </div>
 
 
@@ -333,7 +341,9 @@ with pm.Model() as gas_regional:
 
 ### Time-Varying Crude Correlations
 <div class="callout-key">
+
 <strong>Key Point:</strong> During crises, crude grades converge (arbitrage opportunities shrink).
+
 </div>
 
 
@@ -514,11 +524,13 @@ You're forecasting diesel and jet fuel prices. Both are distillates refined from
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving hierarchical models for energy commodities, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

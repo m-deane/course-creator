@@ -582,7 +582,6 @@ class SessionManager:
 *Conversation memory transforms stateless API calls into continuous interactions. Choose the right strategy for your use case and iterate based on real usage patterns.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

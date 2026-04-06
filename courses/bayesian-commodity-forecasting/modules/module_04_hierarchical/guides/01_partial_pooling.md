@@ -8,12 +8,16 @@
 Partial pooling is a compromise between treating each commodity independently (no pooling) and treating all commodities identically (complete pooling). It enables information sharing while respecting individual differences.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Shrinkage is intelligent borrowing.** When a commodity has limited data, its estimates are "shrunk" toward the group mean. When it has abundant data, it stands on its own. The model automatically determines how much to shrink based on data quality and group coherence.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Partial pooling is a compromise between treating each commodity independently (no pooling) and treating all commodities identically (complete pooling).
+
 </div>
 
 ---
@@ -276,11 +280,13 @@ Always examine how much shrinkage occurred—extreme shrinkage may indicate mode
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving partial pooling: the logic of hierarchical models, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

@@ -8,7 +8,9 @@
 Regime-switching volatility models capture the observation that market volatility changes dramatically across different states—calm periods with low volatility versus crisis periods with high volatility. These models allow variance to switch between regimes governed by a latent Markov process.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Asset returns don't have constant volatility. Oil prices might have σ = 2% daily in stable markets, but σ = 8% during supply disruptions. A single volatility parameter cannot capture both regimes. Regime-switching models learn: (1) distinct volatility levels, (2) regime persistence, (3) transition probabilities, enabling better risk management and option pricing.
+
 </div>
 
 ## Formal Definition
@@ -575,11 +577,13 @@ plt.show()
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving regime-switching volatility models, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading
@@ -606,7 +610,9 @@ plt.show()
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Regime-switching volatility models capture the observation that market volatility changes dramatically across different states—calm periods with low volatility versus crisis periods with high volatility.
+
 </div>
 
 ---

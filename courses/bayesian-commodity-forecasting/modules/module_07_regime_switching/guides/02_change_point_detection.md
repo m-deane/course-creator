@@ -8,12 +8,16 @@
 Change point detection identifies moments when a time series undergoes structural shifts in mean, variance, or dynamics. Bayesian methods provide full posterior distributions over change point locations and parameters, enabling uncertainty quantification critical for commodity market regime identification.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Structural breaks announce themselves after they happen.** The shale revolution didn't ring a bell in 2010—it became obvious years later. Bayesian change point detection quantifies "how sure are we a regime changed?" and "when did it happen?", preventing false alarms while catching real shifts.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Change point detection identifies moments when a time series undergoes structural shifts in mean, variance, or dynamics.
+
 </div>
 
 ---
@@ -78,7 +82,9 @@ Each era has distinct characteristics (mean price, volatility). Change point det
 
 ### 1. Policy Regime Changes
 <div class="callout-warning">
+
 <strong>Warning:</strong> **OPEC:** Production quota decisions alter supply dynamics
+
 </div>
 
 
@@ -239,7 +245,9 @@ plt.show()
 
 ### Unknown Number of Change Points
 <div class="callout-insight">
+
 <strong>Insight:</strong> with pm.Model() as multiple_changepoints:
+
 </div>
 
 
@@ -345,7 +353,9 @@ print(f"Post-change vol: {trace_var.posterior['sigma_post'].mean():.4f}")
 
 ### Recursive Bayesian Updating
 <div class="callout-key">
+
 <strong>Key Point:</strong> For real-time detection (new data arrives daily).
+
 </div>
 
 
@@ -509,7 +519,9 @@ print(comparison)
 
 ### Detect Structural Breaks in Inventory-Price Relationship
 <div class="callout-warning">
+
 <strong>Warning:</strong> with pm.Model() as inventory_changepoint:
+
 </div>
 
 
@@ -649,11 +661,13 @@ Design a "gradual transition" change point model for the introduction of biofuel
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving bayesian change point detection, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

@@ -9,7 +9,9 @@
 The Transformer architecture is a breakthrough in sequence modeling, but it's only the engine of a modern LLM system. Production applications require alignment, memory, tools, protocols, and evaluation — the model alone is insufficient.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The Transformer gives you text generation. A system gives you reliable task completion.
+
 </div>
 
 When you fine-tune a model, ship a chatbot, connect it to a database, your "LLM project" becomes a messy systems problem:
@@ -56,7 +58,9 @@ Understanding these limitations is crucial for system design.
 ### 1. Knowledge in Weights Is Hard to Update
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> The model "knows" things by storing patterns in weights. Updating those patterns requires expensive retraining. A model trained in 2024 doesn't know 2025 events.
+
 </div>
 
 **Solution:** RAG — retrieve current information at inference time. The model reads documents, not remembers them.
@@ -75,7 +79,9 @@ Even "long context" models have finite windows. You cannot fit entire databases 
 ### 3. Generation Can Be Confidently Wrong
 
 <div class="callout-danger">
+
 <strong>Danger:</strong> Models output probability distributions over tokens. High confidence does not equal correctness. "The capital of Australia is Sydney" — confident, wrong.
+
 </div>
 
 **Solution:** Grounding — retrieve facts, verify with tools, evaluate outputs, maintain uncertainty.
@@ -173,7 +179,9 @@ You're not building a model. You're building a system that:
 </div>
 
 <div class="callout-info">
+
 <strong>Info:</strong> Whoever runs this loop faster and cleaner wins.
+
 </div>
 
 ## Common Pitfalls
@@ -194,13 +202,17 @@ You're not building a model. You're building a system that:
 ### Pitfall 2: Ignoring Evaluation
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> "It seems to work in my tests..." — Anecdotal testing misses edge cases, regressions, and distribution shift. You need systematic evaluation.
+
 </div>
 
 ### Pitfall 3: Underestimating Memory
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> "I'll just use a long context window..." — Long context is expensive and doesn't scale. You need hierarchical memory with intelligent retrieval.
+
 </div>
 
 ## Practice Questions

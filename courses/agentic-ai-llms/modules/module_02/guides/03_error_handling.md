@@ -664,7 +664,6 @@ class ToolMetrics:
 *Errors are inevitable—poor error handling is not. Build agents that fail gracefully, communicate clearly, and recover when possible.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

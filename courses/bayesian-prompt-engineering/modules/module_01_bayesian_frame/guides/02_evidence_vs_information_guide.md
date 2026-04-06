@@ -9,7 +9,9 @@ Information and evidence are not the same thing. Information is any fact you inc
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Information and evidence are not the same thing.
+
 </div>
 
 ---
@@ -24,7 +26,9 @@ Information and evidence are not the same thing. Information is any fact you inc
 
 ### Information
 <div class="callout-insight">
+
 <strong>Insight:</strong> A statement is **information** if it is true and relevant to the topic.
+
 </div>
 
 
@@ -60,7 +64,9 @@ Each of these eliminates categories of possible answers and directs the model to
 
 A common mistake: adding numbers to a prompt as if they are inherently more specific.
 <div class="callout-warning">
+
 <strong>Warning:</strong> A common mistake: adding numbers to a prompt as if they are inherently more specific.
+
 </div>
 
 
@@ -87,7 +93,9 @@ The phrase "structured as an S-corp" immediately narrows to S-corp-specific stra
 
 Research on what actually changes model responses points to four categories of conditions that consistently shift posteriors:
 <div class="callout-key">
+
 <strong>Key Point:</strong> Research on what actually changes model responses points to four categories of conditions that consistently shift posteriors:
+
 </div>
 
 
@@ -190,7 +198,9 @@ Why this works: The specific metrics (8% conversion = 2-4x above average, 3% chu
 
 Before adding any sentence to a prompt, apply this test:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Before adding any sentence to a prompt, apply this test:
+
 </div>
 
 
@@ -252,11 +262,13 @@ This test is rigorous. Most sentences in most prompts fail it.
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving evidence vs. information: why "more detail" often fails, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

@@ -8,12 +8,16 @@
 Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributions by simulating Hamiltonian dynamics—treating parameters as positions and introducing auxiliary momentum variables. This enables efficient exploration of complex commodity forecasting models that defeat traditional MCMC.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Random walk MCMC is drunk; HMC is a guided missile.** Traditional Metropolis walks randomly and wastes time revisiting the same regions. HMC uses gradient information to cruise through parameter space along high-probability contours, achieving better mixing with fewer samples.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributions by simulating Hamiltonian dynamics—treating parameters as positions and introducing auxiliary momentum variables.
+
 </div>
 
 ---
@@ -24,7 +28,9 @@ Hamiltonian Monte Carlo (HMC) samples from high-dimensional posterior distributi
 
 **Goal:** Sample from target distribution $\pi(\theta) \propto \exp(-U(\theta))$ where $U(\theta) = -\log p(\theta, y)$.
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Goal:** Sample from target distribution $\pi(\theta) \propto \exp(-U(\theta))$ where $U(\theta) = -\log p(\theta, y)$.
+
 </div>
 
 
@@ -203,7 +209,9 @@ Where $\theta_-, \theta_+$ are endpoints of trajectory, $p_-, p_+$ are momenta.
 **Too small:** Tiny steps, slow exploration (wastes computation)
 **Too large:** Proposals rejected (low acceptance rate)
 <div class="callout-warning">
+
 <strong>Warning:</strong> **Too small:** Tiny steps, slow exploration (wastes computation)
+
 </div>
 
 
@@ -280,7 +288,9 @@ trace_dense = pm.sample(
 
 ### Non-Centered Parameterization
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Problem:** Centered parameterization has poor geometry.
+
 </div>
 
 
@@ -370,7 +380,9 @@ with pm.Model() as sv_noncentered:
 
 **Symptom:** Warning message: "X divergences after tuning"
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Symptom:** Warning message: "X divergences after tuning"
+
 </div>
 
 
@@ -609,7 +621,9 @@ if divergences > 0:
 ### Problem 1
 A crude oil state space model has 200 latent states. Estimate the number of gradient evaluations HMC performs per iteration if $L=50$ leapfrog steps. Compare to Metropolis (no gradients).
 <div class="callout-key">
+
 <strong>Key Point:</strong> A crude oil state space model has 200 latent states. Estimate the number of gradient evaluations HMC performs per iteration if $L=50$ leapfrog steps. Compare to Metropolis (no gradients).
+
 </div>
 
 
@@ -642,11 +656,13 @@ You're forecasting copper prices with a GP model (100 inducing points, 5 kernel 
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving hamiltonian monte carlo for bayesian inference, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

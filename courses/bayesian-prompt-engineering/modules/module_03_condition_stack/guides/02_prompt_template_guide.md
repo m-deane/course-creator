@@ -9,7 +9,9 @@ The Condition Stack template becomes a skill through use, not through reading. T
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> The Condition Stack template becomes a skill through use, not through reading.
+
 </div>
 
 ---
@@ -55,7 +57,9 @@ Length: [approximate target or "be concise"]
 
 A married couple in their late 40s runs a small business selling handmade ceramics online and at craft fairs. They want to understand whether to file as a partnership or have the LLC treated as an S-Corporation for 2024 taxes.
 <div class="callout-insight">
+
 <strong>Insight:</strong> A married couple in their late 40s runs a small business selling handmade ceramics online and at craft fairs. They want to understand whether to file as a partnership or have the LLC treated as an S-Corporation for 2024 taxes.
+
 </div>
 
 
@@ -136,7 +140,9 @@ The unstacked prompt produces a 600-word article explaining how S-Corps save on 
 
 ### Scenario
 <div class="callout-warning">
+
 <strong>Warning:</strong> A senior engineer needs to decide whether to build a new internal data pipeline using Apache Kafka or AWS SQS + Lambda. The company processes about 50,000 events per day with occasional spikes to 500,000. Multiple downstream teams consume the data.
+
 </div>
 
 
@@ -230,7 +236,9 @@ The unstacked prompt produces a feature comparison table of Kafka vs. SQS that i
 
 A nurse practitioner is seeing a 58-year-old patient in a primary care setting who presents with a 3-week history of fatigue and mild shortness of breath on exertion. She needs to build a differential and decide which workup to order.
 <div class="callout-key">
+
 <strong>Key Point:</strong> A nurse practitioner is seeing a 58-year-old patient in a primary care setting who presents with a 3-week history of fatigue and mild shortness of breath on exertion. She needs to build a differential and decide which workup to order.
+
 </div>
 
 
@@ -316,7 +324,9 @@ The unstacked prompt produces a differential that includes anemia, hypothyroidis
 
 The template is domain-agnostic by design. The layer names are abstractions. Here is how to translate them for four common professional contexts:
 <div class="callout-insight">
+
 <strong>Insight:</strong> The template is domain-agnostic by design. The layer names are abstractions. Here is how to translate them for four common professional contexts:
+
 </div>
 
 
@@ -394,9 +404,11 @@ Three responses:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "The Template (Reference)" and why it matters in practice.
 
 2. Given a real-world scenario involving guide 2: the plug-and-play prompt template — worked examples, what would be your first three steps to apply the techniques from this guide?
+
 </div>

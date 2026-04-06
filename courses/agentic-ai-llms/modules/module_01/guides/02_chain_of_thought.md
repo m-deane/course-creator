@@ -512,7 +512,6 @@ def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:
 *Chain-of-thought transforms LLMs from pattern matchers to reasoners. Master these techniques—they're the foundation for every advanced agent capability.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

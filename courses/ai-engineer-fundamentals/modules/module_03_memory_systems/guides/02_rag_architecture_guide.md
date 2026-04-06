@@ -9,7 +9,9 @@
 RAG (Retrieval-Augmented Generation) combines the reasoning power of LLMs with the ability to access external knowledge at inference time. Instead of memorizing everything in weights, retrieve what's relevant when you need it.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Separate "what to know" (retriever) from "how to express it" (generator). This makes knowledge updatable without retraining.
+
 </div>
 
 <div class="callout-key">
@@ -92,7 +94,9 @@ collection.add(
 ### Step 2: Query Embedding
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> Use the same embedding model for queries and documents. Mismatched models produce poor retrieval.
+
 </div>
 
 ### Step 3: Retrieval
@@ -153,7 +157,9 @@ def rerank(query: str, documents: list, top_k: int = 3) -> list:
 </div>
 
 <div class="callout-info">
+
 <strong>Why rerank?</strong> Bi-encoders (embedding models) are fast but less accurate. Cross-encoders see query and document together, giving more accurate relevance scores. Retrieve many (k=20), rerank to few (k=3).
+
 </div>
 
 ### Step 5: Generation
@@ -248,7 +254,9 @@ def hybrid_search(query: str, k: int = 5, alpha: float = 0.5) -> list:
 ### Query Expansion
 
 <div class="callout-info">
+
 <strong>Info:</strong> Improve retrieval by using an LLM to generate alternative phrasings of the user's query before searching.
+
 </div>
 
 ### Contextual Compression
@@ -258,19 +266,27 @@ Extract only query-relevant portions from retrieved chunks to reduce context win
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Pitfall 1 — Wrong chunk size:</strong> Too large pollutes context with irrelevant content. Too small loses context. Start with 200-500 tokens and test with your data.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 2 — No overlap between chunks:</strong> Information at chunk boundaries gets lost. Use 10-20% overlap.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 3 — Ignoring metadata:</strong> Without metadata, you can't filter by source, date, or other attributes. Store rich metadata.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 4 — Retrieving too much:</strong> Context window pollution, slower generation, higher cost. Retrieve more, rerank to less. Quality over quantity.
+
 </div>
 
 ## Evaluation Metrics

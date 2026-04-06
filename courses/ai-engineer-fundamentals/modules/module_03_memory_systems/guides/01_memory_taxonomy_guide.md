@@ -9,7 +9,9 @@
 Memory in LLM systems is not a single thing -- it's a taxonomy of mechanisms that provide different types of information at different timescales. Understanding this taxonomy is the foundation for building effective agent systems.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> Memory is an evolving state the agent can read and write while making decisions. It's not just storage -- it has a lifecycle (formation, retrieval, evolution) and comes in different forms optimized for different functions.
+
 </div>
 
 <div class="callout-key">
@@ -58,7 +60,9 @@ flowchart TB
 **What goes here:** System prompts, conversation history, retrieved documents, current task context.
 
 <div class="callout-warning">
+
 <strong>Warning:</strong> When the context window is full, something must be dropped. This limitation drives the need for smart memory management.
+
 </div>
 
 <div class="code-window">
@@ -97,7 +101,9 @@ class ContextManager:
 | **Cost** | Embedding + search adds latency |
 
 <div class="callout-key">
+
 <strong>Key Point:</strong> Don't memorize everything in weights. Retrieve what's relevant when needed.
+
 </div>
 
 <div class="code-window">
@@ -145,7 +151,9 @@ def retrieve(query: str, k: int = 5) -> list:
 | **Control** | Agent manages read/write operations |
 
 <div class="callout-info">
+
 <strong>Info:</strong> Long-term memory requires a lifecycle policy -- not just storage, but formation, retrieval, and evolution.
+
 </div>
 
 <div class="code-window">
@@ -234,19 +242,27 @@ Use this to design your memory system:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Pitfall 1 — Treating all memory as context:</strong> Stuffing everything into the prompt until it overflows. Use hierarchical memory -- only retrieve what's relevant.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 2 — Storing everything:</strong> Memory bloats, retrieval quality degrades. Apply importance scoring and periodic pruning.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 3 — No memory evolution:</strong> Stale, redundant, or contradictory memories accumulate. Implement consolidation, decay, and conflict resolution.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 4 — Wrong form for the function:</strong> Using RAG for rapidly-changing task state, or context for static knowledge. Match memory form to function using the matrix above.
+
 </div>
 
 ## Practice Questions

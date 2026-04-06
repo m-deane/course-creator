@@ -9,7 +9,9 @@ A language model does not retrieve answers. It samples from a conditional distri
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> A language model does not retrieve answers.
+
 </div>
 
 ---
@@ -26,7 +28,9 @@ A language model does not retrieve answers. It samples from a conditional distri
 
 Language models assign probability to every possible continuation of a sequence. When you provide a prompt $C$ (conditions), the model generates answers from:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Language models assign probability to every possible continuation of a sequence. When you provide a prompt $C$ (conditions), the model generates answers from:
+
 </div>
 
 
@@ -62,7 +66,9 @@ This means:
 
 ## The Prior: What the Model Assumes When You Say Nothing
 <div class="callout-warning">
+
 <strong>Warning:</strong> The model's training prior is the aggregate distribution of all text it processed. For any question type, there is a statistical center — the most common framing, the most common jurisdiction, the most common timeframe, the most common objective.
+
 </div>
 
 
@@ -86,7 +92,9 @@ This is why weak prompts produce generic answers that *feel* correct. The prior 
 
 ## The Accountant Example: Watching a Posterior Shift
 <div class="callout-key">
+
 <strong>Key Point:</strong> Consider this question: *"What happens if I miss the filing deadline?"*
+
 </div>
 
 
@@ -152,7 +160,9 @@ One sentence did not "add detail." It provided evidence that eliminated most of 
 
 The most common failure mode is not that prompts are short. It is that they are long with information that does not discriminate between worlds.
 <div class="callout-insight">
+
 <strong>Insight:</strong> The most common failure mode is not that prompts are short. It is that they are long with information that does not discriminate between worlds.
+
 </div>
 
 
@@ -223,11 +233,13 @@ Asking "what should I do?" before establishing the constraints, timeline, and ob
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving prompts as evidence: the p(a|c) frame, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

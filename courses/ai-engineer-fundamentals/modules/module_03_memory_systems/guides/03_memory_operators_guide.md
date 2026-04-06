@@ -9,7 +9,9 @@
 Memory isn't just storage -- it's a living system with three core operators: **Formation** (how memories enter), **Retrieval** (how memories are accessed), and **Evolution** (how memories change over time). Master these operators to build agents that truly learn.
 
 <div class="callout-insight">
+
 <strong>Key Insight:</strong> The practical product question is never "How do I add memory?" It's: "Which memory form + which memory function + which lifecycle policy actually improves decision quality for my agent?"
+
 </div>
 
 <div class="callout-key">
@@ -282,15 +284,21 @@ class AgentMemory:
 ## Common Pitfalls
 
 <div class="callout-danger">
+
 <strong>Pitfall 1 — No formation filtering:</strong> Everything becomes a memory, causing bloat. Apply importance scoring and deduplication.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 2 — Static retrieval:</strong> Always retrieving the same way regardless of context. Use adaptive retrieval with multiple strategies.
+
 </div>
 
 <div class="callout-warning">
+
 <strong>Pitfall 3 — No evolution:</strong> Memories become stale and contradictory. Implement decay, consolidation, and pruning.
+
 </div>
 
 ## Practice Questions

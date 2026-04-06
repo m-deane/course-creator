@@ -8,12 +8,16 @@
 Storage theory explains how inventory levels, storage costs, and the convenience of holding physical commodities determine the relationship between spot and futures prices. Understanding these economics is essential for building fundamentals-based forecasting models.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> **Inventories are the bridge between supply and demand across time.** When supply exceeds demand, inventories build and futures trade at a premium (contango). When demand exceeds supply, inventories draw and futures trade at a discount (backwardation). This is the physical foundation of commodity prices.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Storage theory explains how inventory levels, storage costs, and the convenience of holding physical commodities determine the relationship between spot and futures prices.
+
 </div>
 
 ---
@@ -24,7 +28,9 @@ Storage theory explains how inventory levels, storage costs, and the convenience
 
 The theoretical relationship between spot ($S$) and futures ($F_T$) prices:
 <div class="callout-key">
+
 <strong>Key Point:</strong> The theoretical relationship between spot ($S$) and futures ($F_T$) prices:
+
 </div>
 
 
@@ -374,11 +380,13 @@ The inventory-price relationship varies:
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Framework" and why it matters in practice.
 
 2. Given a real-world scenario involving storage theory: economic foundations of commodity pricing, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

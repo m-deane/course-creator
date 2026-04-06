@@ -8,12 +8,16 @@
 Commodity markets trade physical goods—energy, metals, and agricultural products. Understanding their structure is essential for building meaningful forecasting models.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> Commodity prices are driven by **physical fundamentals** (supply, demand, storage) overlaid with **financial dynamics** (speculation, hedging, risk premia). Effective forecasting models must capture both.
+
 </div>
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Commodity markets trade physical goods—energy, metals, and agricultural products.
+
 </div>
 
 ---
@@ -317,11 +321,13 @@ Financial flows and positioning matter too. Large speculative positions can move
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "What Are Commodities?" and why it matters in practice.
 
 2. Given a real-world scenario involving introduction to commodity markets, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

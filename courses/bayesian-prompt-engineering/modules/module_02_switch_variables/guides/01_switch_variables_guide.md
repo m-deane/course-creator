@@ -13,7 +13,9 @@ The skill is asking: *"What are the top 5 conditions that, if different, would m
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> A **switch variable** is a condition whose value routes reasoning to a categorically different solution branch.
+
 </div>
 
 ---
@@ -62,7 +64,9 @@ A high switch size means the variable routes reasoning to an entirely different 
 
 Every switch variable in any domain falls into one of five categories:
 <div class="callout-warning">
+
 <strong>Warning:</strong> Every switch variable in any domain falls into one of five categories:
+
 </div>
 
 
@@ -142,7 +146,9 @@ What the answer is optimizing *for* — the metric that defines "correct."
 | Entity type | Individual, LLC, corporation, trust | Tax and liability rules differ |
 | Timeline | Before SOL, after SOL, pending deadline | Some options vanish entirely |
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Diagnostic question:** "Would a lawyer in [different jurisdiction/posture/goal] give the opposite advice?"
+
 </div>
 
 
@@ -208,7 +214,9 @@ What the answer is optimizing *for* — the metric that defines "correct."
 
 Apply this three-step procedure before writing any prompt:
 <div class="callout-insight">
+
 <strong>Insight:</strong> Apply this three-step procedure before writing any prompt:
+
 </div>
 
 
@@ -252,7 +260,9 @@ This question reframes prompt engineering from "give more detail" to "identify t
 
 **Mistake 1 — Adding volume instead of switches.**
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Mistake 1 — Adding volume instead of switches.**
+
 </div>
 
 
@@ -278,11 +288,13 @@ The objective is the most commonly missed switch variable because it feels impli
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Visual Explanation" and why it matters in practice.
 
 2. Given a real-world scenario involving switch variables: the conditions that actually matter, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Summary

@@ -619,7 +619,6 @@ What remains to be done? Express as a new goal."""
 *Goal decomposition transforms ambitious objectives into achievable task sequences. Master this skill to build agents that can tackle any complex challenge.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

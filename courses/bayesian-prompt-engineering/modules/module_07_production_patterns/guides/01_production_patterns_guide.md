@@ -9,7 +9,9 @@ A prompt that works once is a result. A prompt that works reliably across thousa
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> A prompt that works once is a result.
+
 </div>
 
 ---
@@ -37,7 +39,9 @@ The fix is not discipline or process — it is infrastructure. Condition stacks 
 
 ## Pattern 1: Parameterized Condition Stack Templates
 <div class="callout-warning">
+
 <strong>Warning:</strong> A static prompt is a fully-written condition stack stored as a string. It works, but it does not scale:
+
 </div>
 
 
@@ -101,7 +105,9 @@ The template enforces that all six layers are always present. A missing layer ra
 
 ### Static Templates Are Not Enough
 <div class="callout-key">
+
 <strong>Key Point:</strong> A parameterized template still requires someone to fill the parameters. At scale, that "someone" is a system — a database, a user profile service, an API response, or a real-time data feed.
+
 </div>
 
 
@@ -199,7 +205,9 @@ With injection, Layer 1–4 conditions are provided reliably regardless of what 
 
 ### What A/B Testing Means Here
 <div class="callout-insight">
+
 <strong>Insight:</strong> In prompt engineering, A/B testing does not mean changing random words. It means **systematically varying one condition at a time** and measuring whether the output changes in the predicted direction.
+
 </div>
 
 
@@ -249,7 +257,9 @@ It tests: does one condition stack produce a more constrained, consistent poster
 
 ### Why You Need a Metric
 <div class="callout-warning">
+
 <strong>Warning:</strong> Without a metric, prompt improvement is subjective. "This feels better" is not actionable at scale. You need a number — even a rough one — to know whether a change helped.
+
 </div>
 
 
@@ -424,9 +434,11 @@ Layer 5 (facts) should come from the user. Injecting pre-defined facts overrides
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving production patterns: bayesian prompting at scale, what would be your first three steps to apply the techniques from this guide?
+
 </div>

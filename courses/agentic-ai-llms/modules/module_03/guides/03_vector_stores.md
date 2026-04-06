@@ -610,7 +610,6 @@ def optimized_query(
 *Vector stores are the long-term memory of your agent. Design your knowledge architecture as carefully as you would design a database schema.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

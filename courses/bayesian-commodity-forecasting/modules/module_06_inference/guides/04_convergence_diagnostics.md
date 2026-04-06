@@ -8,7 +8,9 @@
 Convergence diagnostics assess whether MCMC chains have reached their stationary distribution (the true posterior). Key metrics include $\hat{R}$ (comparing between-chain to within-chain variance), effective sample size (accounting for autocorrelation), and trace plots showing mixing behavior.
 
 <div class="callout-insight">
+
 <strong>Insight:</strong> MCMC provides samples from the posterior—but only after the chain has converged. Running MCMC without checking convergence is like leaving bread in the oven without setting a timer: you might get perfect results or a charred mess. Diagnostics tell you when the chain has "burned in" and is providing valid posterior samples.
+
 </div>
 
 ## Formal Definition
@@ -17,7 +19,9 @@ Convergence diagnostics assess whether MCMC chains have reached their stationary
 
 MCMC generates sequence $\{\theta^{(1)}, \theta^{(2)}, ..., \theta^{(T)}\}$
 <div class="callout-key">
+
 <strong>Key Point:</strong> MCMC generates sequence $\{\theta^{(1)}, \theta^{(2)}, ..., \theta^{(T)}\}$
+
 </div>
 
 
@@ -513,7 +517,9 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 - **Symptom**: One parameter has $\hat{R} = 1.15$ while others are fine
 - **Solution**: Check $\hat{R}$ for each parameter individually
 <div class="callout-key">
+
 <strong>Key Point:</strong> **1. Ignoring R-hat for Individual Parameters**
+
 </div>
 
 
@@ -604,11 +610,13 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Formal Definition" and why it matters in practice.
 
 2. Given a real-world scenario involving convergence diagnostics for mcmc, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading
@@ -633,7 +641,9 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> Convergence diagnostics assess whether MCMC chains have reached their stationary distribution (the true posterior).
+
 </div>
 
 ---

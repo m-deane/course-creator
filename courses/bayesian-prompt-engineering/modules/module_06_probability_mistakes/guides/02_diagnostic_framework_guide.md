@@ -13,7 +13,9 @@ Treat every bad AI answer as a diagnostic signal, not a failure. The answer tell
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> When AI gives a bad answer, the cause is almost always structural — a missing condition, a misspecified objective, a temporal context the model couldn't infer.
+
 </div>
 
 ---
@@ -99,7 +101,9 @@ START: You received a bad answer
 
 The flowchart above is the fast path. Below is the deeper diagnostic question set for each branch.
 <div class="callout-key">
+
 <strong>Key Point:</strong> The flowchart above is the fast path. Below is the deeper diagnostic question set for each branch.
+
 </div>
 
 
@@ -234,7 +238,9 @@ CORRECT BUT GENERIC TO MY SITUATION?
 
 **Situation:** You ask Claude "How should I approach hiring my first 5 engineers?" You get a thorough response covering culture fit, technical assessment, diversity goals, and employer brand.
 <div class="callout-key">
+
 <strong>Key Point:</strong> **Situation:** You ask Claude "How should I approach hiring my first 5 engineers?" You get a thorough response covering culture fit, technical assessment, diversity goals, and employer brand.
+
 </div>
 
 
@@ -272,9 +278,11 @@ not the best long-term hiring process?
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Key Insight" and why it matters in practice.
 
 2. Given a real-world scenario involving diagnostic framework: when ai gives bad answers, what would be your first three steps to apply the techniques from this guide?
+
 </div>

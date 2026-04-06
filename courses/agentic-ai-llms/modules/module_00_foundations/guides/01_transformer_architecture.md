@@ -311,7 +311,6 @@ for text in examples:
 *Understanding transformers isn't about the math—it's about intuition for how tokens flow through the model and how that affects your agent designs.*
 
 
-
 ## Practice Questions
 
 1. Explain in your own words how the concepts in this guide relate to building production agents.

@@ -19,7 +19,9 @@ By the end of this guide you will be able to:
 
 
 <div class="callout-key">
+
 <strong>Key Concept Summary:</strong> An AI agent workflow is a sequence of conditional probability computations.
+
 </div>
 
 ---
@@ -51,7 +53,9 @@ In a single-turn setting, all six layers are simultaneously present in the model
 
 When work is distributed across multiple agents, each agent receives only what was passed to it. Consider a three-agent pipeline for contract analysis:
 <div class="callout-warning">
+
 <strong>Warning:</strong> When work is distributed across multiple agents, each agent receives only what was passed to it. Consider a three-agent pipeline for contract analysis:
+
 </div>
 
 
@@ -156,7 +160,9 @@ User Question + Conditions
 
 The fix is to treat the condition stack as a first-class data object — not as implicit context embedded in natural language outputs.
 <div class="callout-warning">
+
 <strong>Warning:</strong> The fix is to treat the condition stack as a first-class data object — not as implicit context embedded in natural language outputs.
+
 </div>
 
 
@@ -239,7 +245,9 @@ Do not deviate from the objective and constraints above. If the task conflicts w
 
 ## Context Summaries: Token-Efficient Condition Passing
 <div class="callout-key">
+
 <strong>Key Point:</strong> In long pipelines, passing the full condition payload at every step costs tokens. The alternative is a **condition summary** — a compressed representation that preserves the high-leverage conditions.
+
 </div>
 
 
@@ -372,11 +380,13 @@ Not every condition is relevant at every step. Over-stuffing contexts degrades a
 ## Practice Questions
 
 <div class="callout-info">
+
 <strong>Test Your Understanding</strong>
 
 1. Explain in your own words the key difference between the concepts covered in "Learning Objectives" and why it matters in practice.
 
 2. Given a real-world scenario involving agent conditioning: how bayesian conditions flow through multi-step workflows, what would be your first three steps to apply the techniques from this guide?
+
 </div>
 
 ## Further Reading

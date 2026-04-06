@@ -10,6 +10,10 @@ Selection operators determine which individuals from the current population repr
 Selection pressure controls the trade-off between convergence speed and population diversity. High pressure (large tournaments, steep rank weighting) accelerates convergence but risks premature convergence to local optima. Low pressure maintains diversity but may converge too slowly.
 </div>
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Selection is the GA's steering wheel. It determines how aggressively the algorithm favors fit individuals. Too much pressure (large tournaments) and the population converges fast but often to a local optimum. Too little pressure (small tournaments or random selection) and the search wanders aimlessly. Tournament selection with size 3-5 is the robust default because it provides moderate pressure without requiring fitness scaling.
+</div>
+
 
 
 ![Selection Methods](./selection_methods.svg)
@@ -500,6 +504,42 @@ if __name__ == "__main__":
     measure_selection_pressure()
 ```
 
+## Selection Pressure Experiment
+
+To build intuition for how selection pressure affects GA behavior, consider this experiment: run the same GA on a 50-feature problem, varying only the tournament size. All other parameters are identical (population 100, 100 generations, uniform crossover at 0.8, mutation rate 0.02).
+
+| Tournament Size | Selection Pressure | Diversity at Gen 50 | Convergence Speed | Risk of Premature Convergence | Typical Use Case |
+|:--------------:|:------------------:|:-------------------:|:-----------------:|:-----------------------------:|:-----------------|
+| 2 | Low | High | Slow | Low | Early exploration, diverse problems |
+| 3 | Moderate | Moderate-high | Moderate | Low-moderate | **Robust default** |
+| 5 | Moderate-high | Moderate | Fast | Moderate | Well-understood problems |
+| 7 | High | Low-moderate | Very fast | High | Unimodal landscapes, final refinement |
+| 10 | Very high | Low | Very fast | Very high | Only with adaptive mutation to compensate |
+
+<div class="callout-insight">
+<strong>Practical guidance:</strong> Start with tournament size 3. If the GA converges too slowly (best fitness still improving at the end), increase to 5. If the GA converges too fast (best fitness plateaus early, diversity collapses), decrease to 2 or add adaptive mutation. Tournament size 7+ is rarely beneficial without compensating mechanisms.
+</div>
+
+**What "diversity at gen 50" means:** The fraction of unique chromosomes remaining in the population. At 100% diversity, all individuals are different. At 0%, all are identical (fully converged). Healthy GAs maintain 20-50% diversity through most of the run.
+
+**What "premature convergence" looks like:** Best fitness improves for 10-20 generations, then stalls. Average fitness quickly approaches best fitness. All individuals become nearly identical. Crossover produces clones. The GA has stopped searching.
+
+## Choose Your Selection Operator
+
+After seeing all three operators and understanding selection pressure, here is a decision guide:
+
+| Criterion | Tournament | Roulette Wheel | Rank |
+|-----------|:----------:|:--------------:|:----:|
+| Works for minimization? | Yes (directly) | Requires inversion | Yes (directly) |
+| Works for maximization? | Yes | Yes | Yes |
+| Sensitive to fitness scaling? | No | **Yes** (major issue) | No |
+| Handles negative fitness? | Yes | **No** (crashes or inverts) | Yes |
+| Tunable pressure? | Yes (tournament size) | Limited | Yes (pressure parameter) |
+| Handles fitness outliers? | Gracefully | **Poorly** (outlier dominates) | Gracefully |
+| Implementation complexity | Simple | Moderate | Moderate |
+
+**Recommendation:** Use tournament selection (size 3) as your default. Switch to rank selection if you observe fitness outliers causing instability. Use roulette wheel only when fitness values are well-behaved (positive, no extreme outliers, meaningful scale) and you specifically need fitness-proportionate selection.
+
 ## Common Pitfalls
 
 <div class="callout-danger">
@@ -688,6 +728,14 @@ def non_dominated_tournament(population: List[Individual],
     # Your implementation here
     pass
 ```
+
+### Problem 6: Conceptual — Selection Pressure Tradeoff
+
+**Question:** Explain why increasing tournament size from 3 to 10 speeds up convergence but increases the risk of premature convergence. What specific mechanism causes diversity loss under high selection pressure?
+
+### Problem 7: Conceptual — Roulette vs Tournament
+
+**Question:** Consider a population where the best individual has fitness 0.01 (very good) and all other individuals have fitness between 0.95 and 1.0 (poor). Compare what happens with roulette wheel selection vs tournament selection (size 3). Which method handles this situation better, and why?
 
 ## Further Reading
 

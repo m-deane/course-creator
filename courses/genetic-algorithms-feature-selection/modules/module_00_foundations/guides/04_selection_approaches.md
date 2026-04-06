@@ -10,9 +10,21 @@ Feature selection methods fall into three main categories: **filter methods** (s
 The choice of feature selection approach determines both what you optimize (statistical relevance vs. prediction accuracy) and how you search (independent evaluation vs. model-guided search). Filters are fast but ignore model interactions; wrappers are accurate but computationally expensive; embedded methods balance both but are model-specific.
 </div>
 
-
+<div class="callout-key">
+<strong>Key Concept:</strong> The three feature selection families -- filter, wrapper, embedded -- represent a fundamental tradeoff between computational cost and selection quality. Filters are cheap but blind to feature interactions. Wrappers see interactions but are expensive. Embedded methods are a compromise tied to a specific model. Understanding this tradeoff is essential for choosing the right approach (or combining them).
+</div>
 
 ![Feature Selection Pipeline](./feature_selection_pipeline.svg)
+
+## Intuitive Explanation
+
+Think of choosing team members for a project:
+
+**Filter Methods** are like reviewing resumes before interviews. You screen candidates based on measurable criteria (GPA, years of experience, certifications) without testing how they'd actually perform on your specific project. This is fast and gets rid of obviously unqualified candidates, but you might miss someone who interviews poorly yet would excel at your task, or keep someone who looks great on paper but doesn't fit your team.
+
+**Wrapper Methods** are like trial periods. You try different team combinations and see which actually performs best on your projects. This gives you the most accurate assessment but requires extensive testing time and the results are specific to your evaluation projects.
+
+**Embedded Methods** are like hiring people with built-in evaluation criteria. You design a work process that naturally reveals who's contributing (like tracking code commits) and automatically adjusts team composition based on ongoing performance.
 
 ## Formal Definition
 
@@ -71,16 +83,6 @@ Examples:
 </ul>
 </div>
 </div>
-
-## Intuitive Explanation
-
-Think of choosing team members for a project:
-
-**Filter Methods** are like reviewing resumes before interviews. You screen candidates based on measurable criteria (GPA, years of experience, certifications) without testing how they'd actually perform on your specific project. This is fast and gets rid of obviously unqualified candidates, but you might miss someone who interviews poorly yet would excel at your task, or keep someone who looks great on paper but doesn't fit your team.
-
-**Wrapper Methods** are like trial periods. You try different team combinations and see which actually performs best on your projects. This gives you the most accurate assessment but requires extensive testing time and the results are specific to your evaluation projects.
-
-**Embedded Methods** are like hiring people with built-in evaluation criteria. You design a work process that naturally reveals who's contributing (like tracking code commits) and automatically adjusts team composition based on ongoing performance.
 
 ## Mathematical Formulation
 
@@ -211,6 +213,8 @@ print(f"True relevant features: [0, 1, 2, 3, 4]")
 </div>
 
 
+Now that we have seen how filters evaluate features independently using statistical scores, let's examine the key limitation: filters miss feature interactions entirely. In the XOR problem, both features have zero individual correlation with the target, yet together they are perfectly predictive. Wrapper methods address this by evaluating feature *subsets* with the actual model, capturing interactions that filters cannot see. The cost is computational -- instead of scoring features one at a time, wrappers must train and validate the model for every candidate subset.
+
 ### Wrapper Method: Forward Selection
 
 <div class="code-window">
@@ -300,6 +304,8 @@ plt.tight_layout()
 ```
 
 </div>
+
+Wrapper methods give us interaction-aware selection, but they require explicitly searching through feature subsets -- and that search can be expensive and incomplete (forward selection is greedy). Embedded methods take a different approach: they build feature selection directly into the model training process. Instead of searching externally, the model itself decides which features matter. The tradeoff: embedded methods are fast and elegant, but the selection is tied to the specific model structure. Features selected by Lasso may not be the best features for a random forest.
 
 ### Embedded Method: Lasso
 
@@ -720,6 +726,14 @@ for method in ['filter', 'wrapper', 'embedded']:
     stability = evaluate_stability(X, y, method, n_iterations=20)
     print(f"{method.capitalize()} stability: {stability:.3f}")
 ```
+
+### Problem 4: Conceptual — Filter Limitations
+
+**Question:** Explain why mutual information (a filter method) can detect non-linear relationships between a single feature and the target, but still cannot detect the XOR interaction between two features. What fundamental limitation of filter methods does this illustrate?
+
+### Problem 5: Conceptual — Method Comparison
+
+**Question:** A colleague suggests using Lasso for feature selection because it is fast and handles high-dimensional data well. You know the downstream model will be a gradient boosting machine (GBM). Give two reasons why Lasso's selected features might not be optimal for the GBM, and suggest an alternative approach.
 
 ## Further Reading
 

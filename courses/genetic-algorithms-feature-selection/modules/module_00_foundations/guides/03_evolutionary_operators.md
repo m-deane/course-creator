@@ -8,6 +8,10 @@
 <strong>Key Takeaway:</strong> The three operators -- selection, crossover, mutation -- form a balanced system. Selection drives convergence, crossover combines good building blocks, and mutation prevents stagnation. Removing or misconfiguring any one breaks the system.
 </div>
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Think of the three operators as a team: selection provides *direction* (which solutions are worth pursuing), crossover provides *exploitation* (combining the best parts of known good solutions), and mutation provides *exploration* (discovering entirely new possibilities). The GA's power comes from these three forces working in tension -- not from any single operator.
+</div>
+
 Genetic algorithms evolve solutions through three fundamental operators:
 1. **Selection**: Choose parents for reproduction
 2. **Crossover**: Combine parent traits to create offspring
@@ -167,6 +171,14 @@ selected = rank_selection(population, fitness_scores)
 print(f"Rank selected: {selected}")
 ```
 
+### Choosing Your Selection Operator
+
+Now that you have seen all three operators, here is when to prefer each:
+
+- **Tournament selection** is the robust default. It works for both minimization and maximization, is insensitive to fitness scaling, and provides easily tunable pressure (adjust tournament size). Use this unless you have a specific reason not to.
+- **Roulette wheel** works when fitness values are meaningful and well-distributed. It fails badly when one individual has much higher fitness than the rest (that individual dominates selection). Avoid for minimization problems unless you carefully invert fitnesses.
+- **Rank selection** shines when fitness values have outliers or very different scales across generations. By converting fitness to ranks, it prevents any single super-fit individual from dominating. Use it when fitness distributions are highly skewed.
+
 ![Crossover Types](./crossover_types.svg)
 
 ## Crossover Operators
@@ -249,6 +261,22 @@ print(f"\nUniform crossover:")
 print(f"Child 1: {c1}")
 print(f"Child 2: {c2}")
 ```
+
+### Choosing Your Crossover Operator
+
+- **Single-point crossover** preserves contiguous blocks of the chromosome. This is useful when adjacent genes are meaningfully related (e.g., ordered sequences), but for feature selection, features have no natural ordering, so this creates arbitrary positional bias.
+- **Two-point crossover** exchanges a middle segment between parents. Less positional bias than single-point, but still assumes some positional structure.
+- **Uniform crossover** is the default for feature selection. Each feature is independently inherited from either parent, treating all positions equally. This is correct because the ordering of features in the chromosome is arbitrary.
+
+## Exploitation vs. Exploration: The Crossover-Mutation Duality
+
+Before examining mutation operators, it is important to understand the complementary roles of crossover and mutation. This duality is the conceptual heart of how GAs work.
+
+**Crossover is exploitation.** It takes what the population already knows -- feature subsets that have proven effective -- and combines them. If Parent A discovered that {RSI, MACD} is a good combination and Parent B discovered that {VIX, Gold spread} is good, crossover can produce an offspring with {RSI, MACD, VIX, Gold spread}. Crossover never introduces a feature that is not already present in the population. It recombines existing knowledge.
+
+**Mutation is exploration.** It introduces features that no individual in the population currently uses, or removes features that everyone currently uses. If the entire population has converged and every individual includes RSI, only mutation can try removing RSI. If no individual has tried the Copper/Gold ratio feature, only mutation can introduce it.
+
+**Both are necessary.** Without crossover, the GA cannot combine building blocks -- it degrades to a random search with selection pressure (slow, inefficient). Without mutation, the GA cannot discover new building blocks once the population loses diversity -- it converges prematurely and stalls. The tension between exploitation and exploration is what makes the GA effective.
 
 ![Mutation Types](./mutation_types.svg)
 
@@ -481,6 +509,23 @@ def compare_operators(n_trials=100):
 compare_operators()
 ```
 
+## System Dynamics: What Happens When You Remove an Operator?
+
+The introduction stated that removing any operator "breaks the system." Here is precisely what breaks and why.
+
+| Scenario | What Happens | Result |
+|----------|-------------|--------|
+| **No selection** (random parents) | Good and bad solutions reproduce equally. No fitness pressure drives improvement. | Random walk through search space. No convergence toward good solutions. |
+| **No crossover** (selection + mutation only) | Each individual evolves independently through small random changes. Cannot combine good building blocks from different individuals. | Slow progress, similar to parallel random hill climbing. May find decent solutions but misses the power of recombination. |
+| **No mutation** (selection + crossover only) | Population can only recombine existing genetic material. Once diversity is lost, all individuals become identical and crossover produces clones. | **Premature convergence.** The GA locks into a local optimum and stalls, often within 20-30 generations. This is the most common GA failure mode. |
+| **No selection, no crossover** (mutation only) | Pure random search. Each generation, random bits are flipped with no bias toward better solutions. | Extremely slow. Equivalent to sampling random feature subsets -- ignores all fitness information. |
+
+<div class="callout-danger">
+<strong>Danger:</strong> Premature convergence (the "no mutation" failure) is the most common and least obvious GA problem. The GA appears to be working -- fitness improves, the best solution looks good -- but it stopped exploring too early. Always monitor population diversity alongside fitness.
+</div>
+
+The three-operator system works because selection provides direction, crossover provides speed (via building block combination), and mutation provides insurance (against diversity loss). The balance between them -- controlled by tournament size, crossover probability, and mutation rate -- determines whether the GA converges quickly to a good solution or gets stuck.
+
 ## Key Takeaways
 
 <div class="callout-key">
@@ -490,14 +535,27 @@ compare_operators()
 
 2. **Tournament selection** is robust and easy to tune via tournament size
 
-3. **Crossover operators** differ in how they mix parent genetic material
+3. **Crossover operators** differ in how they mix parent genetic material -- uniform is best for feature selection
 
-4. **Mutation rate** should be low enough to preserve good solutions but high enough to maintain diversity
+4. **Mutation rate** should be low enough to preserve good solutions but high enough to maintain diversity (rule of thumb: 1/n)
 
 5. **Constraint handling** is essential for feature selection problems
 
 6. **Adaptive operators** can improve performance by responding to population state
+
+7. **All three operators are necessary** -- removing any one causes a specific, predictable failure mode
 </div>
+
+## Practice Problems
+
+### Problem 1: Conceptual — Operator Roles
+
+**Question:** Explain in your own words why crossover between two identical parents produces no useful offspring. What does this imply about the importance of population diversity?
+
+### Problem 2: Conceptual — Diagnosing Failure
+
+**Question:** You observe that your GA's best fitness improves rapidly for 10 generations, then stops improving for the remaining 90 generations, while average fitness converges toward the best. The mutation rate is 0.001 and population size is 50. Diagnose the likely problem and propose two fixes.
+
 ---
 
 **Next:** [Companion Slides](./03_evolutionary_operators_slides.md) | [Notebook](../notebooks/01_selection_comparison.ipynb)

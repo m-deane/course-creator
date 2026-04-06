@@ -10,6 +10,10 @@ Crossover combines genetic material from two parents to create offspring, enabli
 The effectiveness of genetic operators depends on the problem structure. For feature selection, uniform crossover often outperforms single-point crossover because feature interactions are typically non-positional. Mutation rate should be inversely proportional to chromosome length to maintain approximately one change per individual.
 </div>
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Crossover and mutation serve fundamentally different purposes. Crossover *exploits* existing knowledge by combining proven feature groups from different parents. Mutation *explores* new territory by introducing features no one has tried. A GA without crossover is a random search with selection; a GA without mutation converges prematurely and stalls. The balance between them -- controlled by crossover probability and mutation rate -- is the most important parameter decision you will make.
+</div>
+
 
 
 ![Crossover Types](./crossover_types.svg)
@@ -40,13 +44,49 @@ $$x'_i = \begin{cases} 1 - x_i & \text{with probability } p_m \\ x_i & \text{oth
 
 **Typical mutation rate**: $p_m = 1/n$ (one bit flip per individual on average)
 
-### Building Block Hypothesis
+### The Building Block Hypothesis
 
-Crossover works by combining **building blocks** (schemata): short, low-order, high-fitness patterns.
+The Building Block Hypothesis is the theoretical foundation for *why crossover works* and why GAs are more than random search with selection.
 
-A schema $H$ is a template: $H = [1, *, 0, *, *]$ matches chromosomes $[1,0,0,1,0]$, $[1,1,0,0,1]$, etc.
+**The core idea:** Crossover succeeds by combining **building blocks** -- small groups of genes (features) that work well together. Over generations, selection increases the frequency of good building blocks in the population, and crossover assembles them into complete solutions.
 
-Crossover preserves building blocks when crossover point falls outside the schema.
+A **schema** $H$ is a template with fixed and wildcard positions: $H = [1, *, 0, *, *]$ matches any chromosome with a 1 in position 1 and a 0 in position 3, regardless of positions 2, 4, and 5.
+
+**Building blocks in action -- a feature selection example:**
+
+Consider a 10-feature commodity forecasting problem. Two parents have each discovered a useful feature cluster:
+
+```
+Parent A:  [1, 1, 0, 0, 0, 0, 0, 1, 1, 0]   Fitness: 0.35
+           ^^^^                 ^^^^
+           Building Block 1:    Building Block 2:
+           {Price_Lag, RSI}     {VIX, Gold}
+           (captures momentum)  (captures risk sentiment)
+
+Parent B:  [0, 0, 1, 1, 1, 0, 0, 0, 0, 0]   Fitness: 0.38
+                 ^^^^^^^
+                 Building Block 3:
+                 {MACD, Bollinger, ATR}
+                 (captures volatility regime)
+```
+
+Parent A discovered that momentum features (Price_Lag + RSI) and risk sentiment features (VIX + Gold) work well together. Parent B discovered that volatility regime features (MACD + Bollinger + ATR) are predictive. Neither parent has both insights.
+
+After uniform crossover:
+
+```
+Offspring: [1, 1, 1, 1, 1, 0, 0, 1, 1, 0]   Fitness: 0.28 (BETTER)
+            ^^^^  ^^^^^^^       ^^^^
+            Block 1 + Block 3 + Block 2 combined!
+```
+
+The offspring inherits all three building blocks and outperforms both parents. This is the power of crossover: it did not discover any new features -- it assembled existing discoveries into a superior combination. No single-step mutation could have achieved this.
+
+<div class="callout-insight">
+<strong>Why this matters for feature selection:</strong> Building blocks in feature selection are groups of features that interact beneficially. Momentum indicators work together. Volatility measures reinforce each other. Cross-commodity spreads capture related signals. Crossover's ability to combine these groups is what makes GAs outperform single-solution methods like hill climbing.
+</div>
+
+**When building blocks break:** Single-point crossover can disrupt building blocks by cutting through them. If the crossover point falls between positions 0 and 1 (splitting Block 1), the offspring inherits only half of the momentum signal. Uniform crossover is more robust because each position is independently inherited, so building blocks are not disrupted by a single cut point -- though they can still be partially inherited by chance.
 
 ## Intuitive Explanation
 
@@ -296,6 +336,24 @@ def scattered_crossover(
 ```
 </div>
 
+
+## The Exploitation-Exploration Duality
+
+Now that we have seen crossover in detail, pause before examining mutation to understand how these two operators play complementary roles.
+
+**Crossover is exploitation.** It recombines genetic material that *already exists* in the population. If no individual currently includes the Copper/Gold ratio feature, no amount of crossover will introduce it. Crossover's strength is assembling known building blocks into better combinations. It is fast and directed -- it leverages the population's accumulated knowledge.
+
+**Mutation is exploration.** It introduces genetic material that *does not exist* in the population. A single bit flip can add a feature no one has tried or remove a feature everyone has been using. Mutation's strength is preventing the population from getting trapped in a local optimum where crossover can only produce minor variations of the same solution.
+
+**The interplay:** Early in the GA, the population is diverse and crossover is highly productive -- there are many different building blocks to combine. As the GA progresses and selection narrows the population, crossover becomes less effective (parents are increasingly similar). This is when mutation becomes critical: it injects the diversity that crossover needs to stay productive.
+
+| Phase | Crossover Role | Mutation Role | What Dominates |
+|-------|---------------|--------------|----------------|
+| Early (gen 1-20) | Rapidly combines diverse solutions | Minor perturbations | Crossover |
+| Middle (gen 20-60) | Refines promising regions | Maintains diversity | Both equally |
+| Late (gen 60+) | Diminishing returns (similar parents) | Prevents stagnation | Mutation |
+
+This is why adaptive mutation rates (higher later in the run) can be effective: they compensate for the natural decline in crossover productivity as the population converges.
 
 ### Mutation Operators
 
@@ -902,6 +960,14 @@ def ltga_crossover(parent1: Individual, parent2: Individual,
     """
     pass
 ```
+
+### Problem 6: Conceptual — Building Block Disruption
+
+**Question:** Explain why single-point crossover is more likely to disrupt a building block that spans positions 1-8 in a 20-gene chromosome than a building block that spans positions 1-3. How does uniform crossover change this analysis?
+
+### Problem 7: Conceptual — Exploitation-Exploration Balance
+
+**Question:** A GA has been running for 100 generations. The best individual has fitness 0.25 and has not improved for 40 generations. The average population fitness is 0.27, very close to the best. Diagnose the problem and recommend specific parameter changes to the crossover probability and mutation rate, explaining your reasoning.
 
 ## Further Reading
 

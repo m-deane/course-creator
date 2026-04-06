@@ -10,9 +10,24 @@ Feature selection is the process of identifying the most relevant subset of feat
 The feature selection problem grows exponentially with the number of features: with $p$ features, there are $2^p$ possible subsets to evaluate. For even moderate feature sets (p=30), exhaustive search requires evaluating over 1 billion combinations, making intelligent search strategies essential.
 </div>
 
-
+<div class="callout-key">
+<strong>Key Concept:</strong> Feature selection is a combinatorial search problem where the search space grows exponentially with the number of features. The core challenge is not computational speed -- it is that exhaustive evaluation becomes physically impossible beyond ~20 features, forcing you to use intelligent search strategies that find good (not perfect) subsets.
+</div>
 
 ![Feature Selection Pipeline](./feature_selection_pipeline.svg)
+
+## Intuitive Explanation
+
+Imagine building a weather forecasting model. You have access to 100 potential features: temperature readings from various locations, humidity levels, wind speeds, historical patterns, seasonal indicators, and more. Using all 100 features would be like asking 100 experts for opinions and trying to weigh them all equally -- you'd be overwhelmed and likely misled by irrelevant signals.
+
+Feature selection is like assembling the right team of experts. You want:
+- **Relevant experts** (features that actually help predict)
+- **Diverse perspectives** (features that provide unique information)
+- **A manageable team** (not so many that noise dominates)
+
+The challenge: with 100 features, there are $2^{100} \approx 10^{30}$ possible teams to evaluate -- more than the number of atoms in the human body!
+
+This is not just a "big number" problem. Even with a supercomputer evaluating a billion teams per second, you would need $10^{21}$ seconds -- roughly 30 trillion years. The universe is only 14 billion years old. No amount of hardware solves this; you need a fundamentally different approach to searching.
 
 ## Formal Definition
 
@@ -32,17 +47,6 @@ Where:
 - $X_s$ contains only columns where $s_i = 1$
 - $||s||_0$ counts selected features (parsimony penalty)
 - $\lambda$ controls complexity-accuracy tradeoff
-
-## Intuitive Explanation
-
-Imagine building a weather forecasting model. You have access to 100 potential features: temperature readings from various locations, humidity levels, wind speeds, historical patterns, seasonal indicators, and more. Using all 100 features would be like asking 100 experts for opinions and trying to weigh them all equally—you'd be overwhelmed and likely misled by irrelevant signals.
-
-Feature selection is like assembling the right team of experts. You want:
-- **Relevant experts** (features that actually help predict)
-- **Diverse perspectives** (features that provide unique information)
-- **A manageable team** (not so many that noise dominates)
-
-The challenge: with 100 features, there are $2^{100} \approx 10^{30}$ possible teams to evaluate—more than the number of atoms in the human body!
 
 ## Mathematical Formulation
 
@@ -450,6 +454,14 @@ n_features = count_lag_features(n_series=5, max_lag=20)
 print(f"Total features: {n_features}")
 print(f"Possible subsets: 2^{n_features} = {2**n_features:,.0f}")
 ```
+
+### Problem 4: Conceptual — Why Not Use All Features?
+
+**Question:** A colleague argues: "Modern models like gradient boosting can handle irrelevant features automatically through regularization. Why bother with feature selection at all?" Give two reasons why explicit feature selection is still valuable even when using regularized models.
+
+### Problem 5: Conceptual — Search Space Structure
+
+**Question:** Explain why the feature selection search space is harder to navigate than a continuous optimization problem (like finding the minimum of a smooth function). What property of the search space makes gradient-based methods inapplicable?
 
 ## Further Reading
 

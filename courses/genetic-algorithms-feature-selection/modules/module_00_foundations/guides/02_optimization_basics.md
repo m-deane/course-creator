@@ -2,6 +2,10 @@
 
 > **Reading time:** ~5 min | **Module:** 0 — Foundations | **Prerequisites:** Calculus, basic Python
 
+<div class="callout-key">
+<strong>Key Concept:</strong> Feature selection is an NP-hard combinatorial optimization problem. Exhaustive search is provably infeasible beyond ~20 features. Greedy methods are fast but miss feature interactions (the XOR problem). Genetic algorithms occupy the sweet spot: they explore multiple solutions simultaneously, escape local optima via crossover and mutation, and naturally encode feature inclusion as binary chromosomes.
+</div>
+
 ## The Feature Selection Problem
 
 ### Problem Definition
@@ -287,6 +291,50 @@ there exist other problems where B outperforms A.
 3. **Domain knowledge** improves performance
 4. **Hybrid approaches** often work best
 
+## Choosing Your Feature Selection Strategy
+
+The No Free Lunch Theorem tells us no single algorithm dominates, but **practical heuristics** narrow the choice considerably. The decision depends primarily on the number of features and your computational budget.
+
+### Decision Framework
+
+```
+How many candidate features?
+│
+├─ < 20 features
+│   → Exhaustive search is feasible (2^20 ≈ 1 million subsets)
+│   → Use exhaustive if compute allows; otherwise forward/backward selection
+│
+├─ 20–100 features
+│   → Exhaustive is infeasible (2^50 ≈ 10^15 subsets)
+│   → Greedy methods (forward, backward, RFE) are fast but miss interactions
+│   → GA shines here: discovers interactions, escapes local optima
+│   → Lasso/Elastic Net as fast embedded alternative if model is linear
+│
+└─ > 100 features
+    → Even GAs struggle with very high-dimensional spaces
+    → Use a two-stage approach:
+      1. Filter (MI, correlation) to reduce from 1000+ to ~50-100
+      2. GA on the reduced set for fine-grained selection
+```
+
+### Comparison of Approaches
+
+| Method | Handles Interactions? | Computational Cost | Optimality Guarantee | Best For |
+|--------|:--------------------:|:------------------:|:-------------------:|----------|
+| Exhaustive search | Yes | $O(2^p)$ -- infeasible for p > 20 | Global optimum | Small feature sets |
+| Forward selection | No (greedy) | $O(p^2)$ | Local optimum only | Quick baseline |
+| Backward elimination | Partial | $O(p^2)$ | Local optimum only | When most features are relevant |
+| RFE | Partial (model-dependent) | $O(p \cdot T_{model})$ | No guarantee | Model-specific importance |
+| Lasso / Elastic Net | Within linear model | $O(n \cdot p^2)$ | Convex optimum | Linear models, interpretability |
+| **Genetic Algorithm** | **Yes** | **$O(G \cdot N \cdot T_{eval})$** | **No guarantee, but robust** | **20-100 features, interaction detection** |
+| Filter then GA | Yes (in GA stage) | Filter: $O(n \cdot p)$ + GA | No guarantee | > 100 features |
+
+Where $G$ = generations, $N$ = population size, $T_{eval}$ = fitness evaluation time.
+
+<div class="callout-insight">
+<strong>Practical rule:</strong> If you have 20-100 features and suspect feature interactions matter (they usually do in time series), start with a GA. If you have > 100, filter first to ~50-100, then apply a GA. If you have < 20, exhaustive search gives you the guaranteed-best answer.
+</div>
+
 ## Mathematical Framework
 
 ### Optimization Formulation
@@ -339,6 +387,17 @@ Prediction Error
 
 5. **No free lunch** - algorithm choice depends on problem structure
 </div>
+
+## Practice Problems
+
+### Problem 1: Conceptual — Greedy vs GA
+
+**Question:** Explain why forward selection fails on the XOR problem but a genetic algorithm can solve it. What specific property of forward selection prevents it from discovering that features A and B are useful together but useless individually?
+
+### Problem 2: Conceptual — Choosing a Strategy
+
+**Question:** You have a dataset with 80 candidate features, 500 observations, and you suspect that several pairs of features have interaction effects. Your model training takes 2 seconds. Which feature selection strategy would you choose, and why? Consider computational cost and ability to detect interactions.
+
 ---
 
 **Next:** [Notebook](../notebooks/01_selection_comparison.ipynb)

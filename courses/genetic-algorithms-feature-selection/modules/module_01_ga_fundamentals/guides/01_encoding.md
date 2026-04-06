@@ -10,9 +10,31 @@ Binary and integer encoding schemes transform the feature selection problem into
 The choice of encoding determines what genetic operators can do. Binary encoding enables standard crossover/mutation operators and naturally handles variable-length feature sets, while integer encoding can be more compact but requires specialized operators to maintain validity.
 </div>
 
-
+<div class="callout-key">
+<strong>Key Concept:</strong> Encoding is the bridge between the problem domain (which features to select) and the GA's machinery (chromosomes, crossover, mutation). Binary encoding is the natural default for feature selection because it directly maps to inclusion/exclusion -- no transformation needed, and standard operators work out of the box.
+</div>
 
 ![GA Lifecycle](./ga_lifecycle.svg)
+
+## Intuitive Explanation
+
+Think of binary encoding like a **light switch panel** where each switch controls one feature. All switches are always present, but can be ON (1) or OFF (0). This makes it easy to flip switches (mutation) or exchange switch settings between two panels (crossover).
+
+```
+Light Switch Panel (Binary Encoding):
+
+Feature:  [Price_Lag1] [RSI] [MACD] [VIX] [Gold] [Rig_Count]
+Switch:   [  ON  ]    [ OFF ] [ ON ] [ ON ] [ OFF ] [  ON  ]
+Binary:   [  1   ]    [  0  ] [  1 ] [  1 ] [  0  ] [  1   ]
+
+Selected features: {Price_Lag1, MACD, VIX, Rig_Count}
+```
+
+Integer encoding is like a **list of which lights are ON**. The list can grow or shrink, and you need special care to avoid listing the same light twice. This is more compact when selecting few features from many, but requires more complex operations to maintain validity.
+
+**When to use each:**
+- **Binary encoding**: Default choice, simpler operators, works for any feature count
+- **Integer encoding**: When selecting very few features from many (e.g., 10 from 10,000)
 
 ## Formal Definition
 
@@ -57,16 +79,6 @@ A solution is represented as a variable-length vector $\mathbf{v} = [i_1, i_2, .
 </ul>
 </div>
 </div>
-
-## Intuitive Explanation
-
-Think of binary encoding like a light switch panel where each switch controls one feature. All switches are always present, but can be ON (1) or OFF (0). This makes it easy to flip switches (mutation) or exchange switch settings between two panels (crossover).
-
-Integer encoding is like a list of which lights are ON. The list can grow or shrink, and you need special care to avoid listing the same light twice. This is more compact when selecting few features from many, but requires more complex operations to maintain validity.
-
-**When to use each:**
-- **Binary encoding**: Default choice, simpler operators, works for any feature count
-- **Integer encoding**: When selecting very few features from many (e.g., 10 from 10,000)
 
 ## Code Implementation
 
@@ -683,6 +695,14 @@ class SparseBinaryIndividual:
         """Unpack and return selected feature indices."""
         pass
 ```
+
+### Problem 6: Conceptual — Encoding Choice
+
+**Question:** You need to select 5 features from a pool of 50,000 genomic markers. Explain why binary encoding would be wasteful here, and describe how integer encoding addresses the inefficiency. What new challenge does integer encoding introduce for the crossover operator?
+
+### Problem 7: Conceptual — Constraint Enforcement
+
+**Question:** After crossover, an offspring chromosome might have zero features selected (all zeros). Explain why this is a problem beyond just "the model won't train," and describe two strategies for handling it: repair (fix the invalid solution) vs. penalty (let it survive with bad fitness). What are the tradeoffs?
 
 ## Further Reading
 

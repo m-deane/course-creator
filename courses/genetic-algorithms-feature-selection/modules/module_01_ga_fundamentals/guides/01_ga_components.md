@@ -2,6 +2,10 @@
 
 > **Reading time:** ~6 min | **Module:** 1 — GA Fundamentals | **Prerequisites:** Module 0 foundations
 
+<div class="callout-key">
+<strong>Key Concept:</strong> A genetic algorithm is a loop: evaluate, select, recombine, mutate, repeat. Every GA -- regardless of the problem -- follows this same six-step cycle. What makes a GA specific to feature selection is just two things: the chromosome encoding (binary vector = feature mask) and the fitness function (model performance on selected features). Everything else is reusable infrastructure.
+</div>
+
 ## The GA Framework
 
 Genetic algorithms simulate natural evolution to solve optimization problems:
@@ -75,6 +79,26 @@ Features:    [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10]
 Selected:    {f1, f3, f4, f7, f9, f10}
 Not Selected: {f2, f5, f6, f8}
 ```
+
+### Why Classes? Connecting Data Structures to Algorithm Flow
+
+Before diving into the code, consider why we organize GA components as classes rather than loose functions and arrays.
+
+The GA loop (initialize, evaluate, select, crossover, mutate, replace) operates on two core abstractions:
+
+1. **Individual**: A single candidate solution. For feature selection, this is a binary chromosome (which features to include) paired with its fitness score (how well those features perform). Bundling the chromosome and fitness together means we never lose track of which score belongs to which feature set -- a common bug in array-based implementations.
+
+2. **Population**: A collection of individuals that evolves together. The population needs to support operations like "find the best individual," "compute average fitness," and "create a random initial set." Wrapping these in a class keeps the GA loop clean and readable.
+
+These two classes map directly to the algorithm flow:
+- **Initialize**: `Population.random()` creates the starting population
+- **Evaluate**: Set each `Individual.fitness` by running the model on `Individual.selected_features`
+- **Select**: Choose individuals from the population based on fitness
+- **Crossover**: Combine two `Individual.chromosome` arrays to produce offspring
+- **Mutate**: Flip bits in an `Individual.chromosome`
+- **Replace**: Build a new `Population` from elite parents and offspring
+
+Every operator in Modules 1-5 takes and returns `Individual` or `Population` objects. Understanding these two structures is the foundation for everything that follows.
 
 ### Implementation
 
@@ -476,6 +500,17 @@ def steady_state_replacement(
 
 5. **Elitism** preserves best solutions across generations
 </div>
+
+## Practice Problems
+
+### Problem 1: Conceptual — Algorithm Flow
+
+**Question:** Trace through one complete generation of a GA with population size 4 and tournament size 2. Start with four random 5-feature chromosomes, assign them arbitrary fitness values, and show each step: which individuals are selected as parents, what crossover produces, what mutation changes, and what the new population looks like.
+
+### Problem 2: Conceptual — Elitism Tradeoff
+
+**Question:** Explain why elitism (always keeping the best individual from the previous generation) improves convergence reliability but can reduce population diversity. Under what conditions would you increase the number of elite individuals, and when would you reduce it to zero?
+
 ---
 
 **Next:** [Companion Slides](./01_ga_components_slides.md) | [Notebook](../notebooks/01_basic_ga.ipynb)

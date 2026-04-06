@@ -41,6 +41,7 @@ HMMs model this disconnect between:
 # The HMM Structure
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Hidden["Hidden Layer (Markov Chain)"]
         q1["q1"] -->|"a_12"| q2["q2"]
@@ -58,6 +59,12 @@ flowchart LR
     q3 -->|"b3(o)"| o3
     q4 -->|"b4(o)"| o4
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: This is the canonical HMM diagram. The top row is the hidden Markov chain with transition probabilities. The bottom row is the observation sequence. Vertical arrows are emission probabilities. This diagram will reappear throughout the course. -->
 ---
@@ -167,6 +174,12 @@ states = [Bull, Bull, Bear, Bull, ...]              # Hidden regimes
 # 3. Inference: Use observations to infer most likely state sequence
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: This code snippet summarizes the three-step process: assume regimes exist, learn their parameters, then infer the most likely regime at each time point. This maps to the three fundamental HMM problems. -->
 ---
 
@@ -206,6 +219,7 @@ states = [Bull, Bull, Bear, Bull, ...]              # Hidden regimes
 # Reason 3 — Prediction
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Without["Without States"]
         H["Full History"] --> P1["Predict next return<br>(complex, non-stationary)"]
@@ -215,6 +229,12 @@ flowchart LR
         P2 --> P3["Predict return given state<br>(simple distribution)"]
     end
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 > Two simpler problems instead of one complex problem.
 
@@ -234,6 +254,12 @@ The hidden state layer provides **continuity** even when observations are missin
 ---
 
 # Code — Observable vs Hidden
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">observablemarkovchain.py</span>
+</div>
 
 ```python
 class ObservableMarkovChain:
@@ -258,10 +284,24 @@ class HiddenMarkovModel:
         return states, observations  # observations != states
 ```
 
+</div>
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: This code contrast makes the distinction concrete. In ObservableMarkovChain, observations equal states. In HiddenMarkovModel, observations are sampled from the emission distribution and differ from states. -->
 ---
 
 # Gaussian Emission Model
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussianemission.py</span>
+</div>
 
 ```python
 class GaussianEmission:
@@ -283,10 +323,18 @@ emissions = {
 }
 ```
 
+</div>
+
 <!-- Speaker notes: This class implements the per-state emission distribution. The pdf method is used by the Forward and Viterbi algorithms to compute emission probabilities. The sample method is used for simulation and model checking. -->
 ---
 
 # Why States Are Hidden — Observation Ambiguity
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # Same observation has non-zero probability under MULTIPLE states
@@ -301,12 +349,15 @@ obs_value = 0.0
 #   - Inference algorithms (Viterbi, Forward-Backward)
 ```
 
+</div>
+
 <!-- Speaker notes: This is the key insight: a single observation is ambiguous because it has non-zero probability under multiple states. We need the full sequence and the model parameters to disambiguate. -->
 ---
 
 # Emission Overlap
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Bull["Bull State"]
         B["N(mu=0.001, sigma=0.01)"]
@@ -373,6 +424,7 @@ flowchart TD
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MC["Markov Chains"] --> HS["Hidden States"]
     CP["Conditional Probability"] --> HS

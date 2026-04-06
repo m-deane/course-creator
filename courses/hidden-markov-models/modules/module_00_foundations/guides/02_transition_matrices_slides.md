@@ -46,6 +46,7 @@ where $a_{ij} = P(S_{t+1} = j | S_t = i)$
 2. **Row-stochastic**: $\sum_j a_{ij} = 1$ for all $i$
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> S0
     S0 --> S0: a_00
@@ -58,6 +59,12 @@ stateDiagram-v2
     S2 --> S1: a_21
     S2 --> S2: a_22
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: The state diagram visualizes the transition matrix. Each arrow is labeled with the corresponding matrix entry. The sum of all arrows leaving a state must equal 1. -->
 ---
@@ -86,6 +93,12 @@ def create_transition_matrix(n_states, style='random'):
         A[-1, :] = 0; A[-1, -1] = 1
     return A
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: This function generates four types of transition matrices. Persistent matrices have high diagonal values, modeling sticky regimes. Cyclic matrices rotate through states, modeling seasonal patterns. Absorbing matrices have a terminal state, modeling default or bankruptcy. -->
 ---
@@ -124,6 +137,7 @@ $$P(S_{t+n} = j | S_t = i) = [A^n]_{ij}$$
 # Multi-Step Transition Visualization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "Step 0"
         A0["State i"]
@@ -143,6 +157,12 @@ flowchart LR
     A1b --> A2
     A1c --> A2
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 All intermediate paths are summed: $[A^2]_{ij} = \sum_k a_{ik} \cdot a_{kj}$
 
@@ -166,6 +186,12 @@ def analyze_multistep_transitions(A, max_steps=10):
 
     return powers, stationary
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: This code computes transition matrix powers and the stationary distribution. The powers converge to a matrix where every row equals the stationary distribution, illustrating the ergodic theorem. -->
 ---
@@ -275,6 +301,7 @@ def compute_hitting_times(A, target_state):
 States $i$ and $j$ **communicate** if you can reach $i$ from $j$ AND $j$ from $i$.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     state "Class 1" as C1 {
         S0 --> S1
@@ -331,6 +358,12 @@ A = np.array([
 ```
 
 **Periodic** (period = 2):
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 A = np.array([
     [0.0, 1.0],
@@ -339,6 +372,14 @@ A = np.array([
 # Alternates: 0->1->0->1->...
 ```
 
+</div>
+
+</div>
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_period.py</span>
 </div>
 
 ```python
@@ -353,10 +394,18 @@ def compute_period(A, state=0, max_steps=100):
     return reduce(gcd, return_times) if len(return_times) >= 2 else 1
 ```
 
+</div>
+
 <!-- Speaker notes: Periodicity means the chain revisits a state only at regular intervals. Any self-transition breaks periodicity. Financial regime models almost always have self-transitions (persistent regimes), so aperiodicity is guaranteed. -->
 ---
 
 # Visualization — Heatmap and Graph
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">visualize_transition_matrix.py</span>
+</div>
 
 ```python
 def visualize_transition_matrix(A, state_names=None):
@@ -374,6 +423,8 @@ def visualize_transition_matrix(A, state_names=None):
     # Right: Network with arrows
     # ... (circular layout with weighted edges)
 ```
+
+</div>
 
 <!-- Speaker notes: Visualization is essential for understanding transition matrices. The heatmap shows the magnitude of each entry, making it easy to spot dominant transitions. The network graph shows the chain structure with edge widths proportional to transition probabilities. -->
 ---
@@ -395,6 +446,7 @@ def visualize_transition_matrix(A, state_names=None):
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     TM["Transition Matrices"] --> MST["Multi-Step<br>Transitions A^n"]
     TM --> SD["Stationary<br>Distribution"]

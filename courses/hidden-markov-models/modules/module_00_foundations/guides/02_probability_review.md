@@ -1,10 +1,35 @@
 # Probability Review for Hidden Markov Models
 
+> **Reading time:** ~9 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** Essential probability concepts for HMMs: conditional probability, Bayes' theorem, probability distributions, and the law of total probability. These form the mathematical foundation for understanding how hidden states generate observable sequences.
+
+</div>
+
 ## In Brief
 
 Essential probability concepts for HMMs: conditional probability, Bayes' theorem, probability distributions, and the law of total probability. These form the mathematical foundation for understanding how hidden states generate observable sequences.
 
-> 💡 **Key Insight:** HMMs are fundamentally about computing conditional probabilities of hidden states given observations. Bayes' theorem lets us invert relationships: from knowing P(observation|state) to inferring P(state|observation).
+<div class="callout-insight">
+
+**Insight:** HMMs are fundamentally about computing conditional probabilities of hidden states given observations. Bayes' theorem lets us invert relationships: from knowing P(observation|state) to inferring P(state|observation).
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
+
+**Conditional Probability** is updating beliefs with new information. If you know the market was in a bull regime, what's the probability of positive returns?
+
+**Bayes' Theorem** flips this around. You observe positive returns—what's the probability the market is in a bull regime?
+
+**Law of Total Probability** says to find the probability of an observation, consider all possible hidden states that could generate it, weighted by how likely each state is.
 
 ## Formal Definition
 
@@ -35,14 +60,6 @@ For random variables $X$ and $Y$:
 - **Joint:** $P(X=x, Y=y)$
 - **Marginal:** $P(X=x) = \sum_y P(X=x, Y=y)$
 - **Conditional:** $P(X=x|Y=y) = \frac{P(X=x, Y=y)}{P(Y=y)}$
-
-## Intuitive Explanation
-
-**Conditional Probability** is updating beliefs with new information. If you know the market was in a bull regime, what's the probability of positive returns?
-
-**Bayes' Theorem** flips this around. You observe positive returns—what's the probability the market is in a bull regime?
-
-**Law of Total Probability** says to find the probability of an observation, consider all possible hidden states that could generate it, weighted by how likely each state is.
 
 ### The HMM Connection
 
@@ -85,6 +102,12 @@ In HMMs: Future and past are conditionally independent given the present state.
 $$P(q_{t+1}, q_{t+2}, ... | q_t) = P(q_{t+1} | q_t) \cdot P(q_{t+2} | q_{t+1}) \cdots$$
 
 ## Code Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeinference.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -212,7 +235,15 @@ print(f"  P(Bull | +return) = {regime_model.posterior_bull_given_positive():.2%}
 print(f"  P(Bull | -return) = {regime_model.posterior_bull_given_negative():.2%}")
 ```
 
+</div>
+
 ### Discrete Probability Distributions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">discreteprobdist.py</span>
+</div>
 
 ```python
 class DiscreteProbDist:
@@ -268,7 +299,15 @@ samples = state_dist.sample(10)
 print(f"  Sample sequence: {samples}")
 ```
 
+</div>
+
 ### Continuous Distributions
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussiandistribution.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -323,6 +362,8 @@ print(f"P(return > 0 | Bull) = {1 - bull_returns.cdf(0):.2%}")
 print(f"P(return > 0 | Bear) = {1 - bear_returns.cdf(0):.2%}")
 ```
 
+</div>
+
 ## Common Pitfalls
 
 1. **Confusing P(A|B) with P(B|A)**
@@ -350,6 +391,12 @@ print(f"P(return > 0 | Bear) = {1 - bear_returns.cdf(0):.2%}")
    - Solution: Work in log space
    - log(a × b) = log(a) + log(b)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Bad: Numerical underflow
 probs = [0.01] * 100
@@ -363,6 +410,8 @@ product = np.exp(log_product)  # Accurate
 print(f"Direct product: {np.prod(probs)}")
 print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 ```
+
+</div>
 
 ## Connections
 
@@ -444,6 +493,12 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
               = 0.112 = 11.2%
    </details>
 
+<div class="callout-insight">
+
+**Insight:** Understanding probability review for hidden markov models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 ### Essential References
@@ -488,3 +543,42 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 ---
 
 **Next Steps:** With this probability foundation, you're ready to understand Markov chains (which add the temporal dimension) and Hidden Markov Models (which add the hidden state layer).
+
+---
+
+## Conceptual Practice Questions
+
+1. Why is a solid understanding of conditional probability essential for HMMs?
+
+2. Explain Bayes' theorem in the context of updating regime beliefs given new market data.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_probability_review_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_markov_chain_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_markov_chains.md">
+  <div class="link-card-title">01 Markov Chains</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_transition_matrices.md">
+  <div class="link-card-title">02 Transition Matrices</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

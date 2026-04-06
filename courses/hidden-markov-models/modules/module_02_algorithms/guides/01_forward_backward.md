@@ -1,5 +1,13 @@
 # Forward-Backward Algorithm
 
+> **Reading time:** ~5 min | **Module:** Module 2: Algorithms | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** Given an HMM $\lambda$ and observations $O = o_1, ..., o_T$, compute $P(O | \lambda)$.
+
+</div>
+
 ## The Evaluation Problem
 
 Given an HMM $\lambda$ and observations $O = o_1, ..., o_T$, compute $P(O | \lambda)$.
@@ -7,6 +15,12 @@ Given an HMM $\lambda$ and observations $O = o_1, ..., o_T$, compute $P(O | \lam
 **Naive approach**: Sum over all $K^T$ state sequences - exponential complexity!
 
 **Forward algorithm**: Dynamic programming in $O(T \cdot K^2)$ time.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Forward Algorithm
 
@@ -28,6 +42,12 @@ $$\alpha_t(j) = \left[ \sum_{i=1}^{K} \alpha_{t-1}(i) \cdot a_{ij} \right] \cdot
 $$P(O | \lambda) = \sum_{i=1}^{K} \alpha_T(i)$$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -83,9 +103,17 @@ print(f"Log-likelihood: {log_lik:.4f}")
 print(f"Forward variables:\n{alpha}")
 ```
 
+</div>
+
 ### Scaled Forward Algorithm
 
 For long sequences, $\alpha_t(i)$ underflows. Use scaling factors:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_scaled.py</span>
+</div>
 
 ```python
 def forward_scaled(
@@ -121,6 +149,8 @@ def forward_scaled(
     return alpha, scaling, log_likelihood
 ```
 
+</div>
+
 ## Backward Algorithm
 
 ### Backward Variables
@@ -138,6 +168,12 @@ $$\beta_T(i) = 1$$
 $$\beta_t(i) = \sum_{j=1}^{K} a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)$$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backward.py</span>
+</div>
 
 ```python
 def backward(
@@ -190,6 +226,8 @@ def backward_scaled(
     return beta
 ```
 
+</div>
+
 ## State Probabilities
 
 ### Posterior State Probability
@@ -207,6 +245,12 @@ $$\xi_t(i, j) = P(q_t = s_i, q_{t+1} = s_j | O, \lambda)$$
 $$= \frac{\alpha_t(i) \cdot a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)}{P(O | \lambda)}$$
 
 ### Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_posteriors.py</span>
+</div>
 
 ```python
 def compute_posteriors(
@@ -253,6 +297,8 @@ for t, g in enumerate(gamma):
     print(f"  t={t}: P(Sunny)={g[0]:.3f}, P(Rainy)={g[1]:.3f}")
 ```
 
+</div>
+
 ## Relationship Between Variables
 
 ```
@@ -276,6 +322,12 @@ Combined:      P(qₜ=i | O) ∝ α(i) × β(i)
 | Xi | O(T × K²) | O(T × K²) |
 
 ## Vectorized Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_vectorized.py</span>
+</div>
 
 ```python
 def forward_vectorized(
@@ -310,6 +362,14 @@ def forward_vectorized(
     return np.exp(log_alpha), log_likelihood
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding forward-backward algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Forward algorithm** computes P(O|λ) efficiently via dynamic programming
@@ -321,3 +381,42 @@ def forward_vectorized(
 4. **Scaling/log-domain** essential for numerical stability
 
 5. **O(T × K²)** complexity - linear in sequence length
+
+---
+
+## Conceptual Practice Questions
+
+1. Walk through the forward algorithm step by step. What is the computational advantage over brute force?
+
+2. Why do we need the backward algorithm in addition to the forward algorithm?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_forward_backward_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_forward_backward_impl.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_viterbi_algorithm.md">
+  <div class="link-card-title">02 Viterbi Algorithm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_baum_welch.md">
+  <div class="link-card-title">03 Baum Welch</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

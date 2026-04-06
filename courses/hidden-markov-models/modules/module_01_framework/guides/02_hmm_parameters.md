@@ -1,14 +1,39 @@
 # HMM Parameters: The Complete Picture
 
+> **Reading time:** ~7 min | **Module:** Module 1: Framework | **Prerequisites:** Module 0 Foundations
+
+<div class="callout-key">
+
+**Key Concept Summary:** A Hidden Markov Model is fully specified by three parameter sets:
+
+</div>
+
 ## The Three Parameter Sets
 
 A Hidden Markov Model is fully specified by three parameter sets:
+
+<div class="flow">
+<div class="flow-step mint">1. Initial distribution</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Transition matrix</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Emission parameters</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Emission parameters</div>
+</div>
+
 
 1. **Initial distribution** $\pi$: Starting state probabilities
 2. **Transition matrix** $A$: State-to-state transitions
 3. **Emission parameters** $B$: Observation probabilities given state
 
 Together: $\lambda = (\pi, A, B)$
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Initial State Distribution
 
@@ -94,6 +119,12 @@ print(hmm.A.round(3))
 
 ### Ergodicity and Stationarity
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">analyze_transition_matrix.py</span>
+</div>
+
 ```python
 def analyze_transition_matrix(A):
     """
@@ -151,6 +182,8 @@ def analyze_transition_matrix(A):
 analyze_transition_matrix(hmm.A)
 ```
 
+</div>
+
 ## Emission Parameters
 
 ### Discrete Emissions
@@ -158,6 +191,12 @@ analyze_transition_matrix(hmm.A)
 For discrete observations $o \in \{1, ..., M\}$:
 
 $$b_i(o) = P(O_t = o | S_t = i)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">discretehmm.py</span>
+</div>
 
 ```python
 class DiscreteHMM(HMMParameters):
@@ -205,11 +244,19 @@ print("(Rows = states, Columns = symbols)")
 print(discrete_hmm.B.round(3))
 ```
 
+</div>
+
 ### Gaussian Emissions
 
 For continuous observations:
 
 $$b_i(o) = \mathcal{N}(o; \mu_i, \sigma_i^2)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussianhmm.py</span>
+</div>
 
 ```python
 class GaussianHMM(HMMParameters):
@@ -303,9 +350,17 @@ print(f"Variances: {[c[0,0] for c in gauss_hmm.covars]}")
 gauss_hmm.visualize_emissions()
 ```
 
+</div>
+
 ## Parameter Constraints
 
 ### Ensuring Valid Parameters
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">validate_hmm_parameters.py</span>
+</div>
 
 ```python
 def validate_hmm_parameters(pi, A, B=None, means=None, covars=None):
@@ -384,9 +439,17 @@ validate_hmm_parameters(
 )
 ```
 
+</div>
+
 ## Parameter Interpretation
 
 ### Financial Market Example
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_market_regime_hmm.py</span>
+</div>
 
 ```python
 def create_market_regime_hmm():
@@ -447,6 +510,14 @@ for i, name in enumerate(state_names):
 market_hmm.visualize_emissions()
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding hmm parameters is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Three parameter sets** fully specify an HMM: $\lambda = (\pi, A, B)$
@@ -460,3 +531,37 @@ market_hmm.visualize_emissions()
 5. **Parameter interpretation** is domain-specific - design with application in mind
 
 6. **Validation** ensures mathematical consistency of parameters
+
+---
+
+## Conceptual Practice Questions
+
+1. What are the three parameter matrices in a Gaussian HMM and what does each control?
+
+2. Why is the number of hidden states a hyperparameter rather than a learned parameter?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_hmm_parameters_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_hmm_definition.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_hmm_definition.md">
+  <div class="link-card-title">01 Hmm Definition</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

@@ -19,6 +19,7 @@ math: mathjax
 # HMM Applications in Finance
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     HMM[\"HMM Framework\"] --> RD[\"Regime Detection\"]
     HMM --> VM[\"Volatility Modeling\"]
@@ -29,6 +30,12 @@ flowchart TD
     VM --> RM
     RD --> AA
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: This overview diagram shows the five main financial applications of HMMs. All flow from the core regime detection capability. The connections between applications show how regime information propagates through a trading system. -->
 ---
@@ -54,6 +61,12 @@ class MarketRegimeModel:
         return self
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: This is the production entry point for regime detection. It wraps hmmlearn with automatic label alignment. The bull state has the highest mean return, the bear state has the lowest. Always use 1000 iterations for production models. -->
 ---
 
@@ -72,6 +85,12 @@ def regime_probability(self, returns: np.ndarray) -> np.ndarray:
     probs = self.model.predict_proba(returns.reshape(-1, 1))
     return probs[:, self.bull_state]
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 > State labeling by learned mean ensures consistent bull/bear identification across runs.
 
@@ -96,6 +115,12 @@ def get_parameters(self) -> dict:
     }
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: Extracting regime parameters enables downstream analysis: the mean tells you the expected return, the std tells you the risk level, and the persistence tells you the expected regime duration. -->
 ---
 
@@ -109,6 +134,7 @@ def get_parameters(self) -> dict:
 # Trading Signal Generation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     R[\"Returns\"] --> RP[\"Regime<br>Probability\"]
     RP --> TH{\"Threshold\"}
@@ -170,6 +196,7 @@ def backtest(self, returns, signals) -> dict:
 # Backtesting Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA[\"Historical Returns\"] --> FIT[\"Fit HMM\"]
     FIT --> SIGNALS[\"Generate Signals\"]
@@ -217,6 +244,7 @@ class VolatilityRegimeModel:
 # Three Volatility Regimes
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     LowVol : Low Volatility
     MedVol : Medium Volatility
@@ -329,6 +357,7 @@ class RegimeSwitchingVaR:
 # Risk Model Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     RET[\"Returns\"] --> HMM[\"HMM Regime Model\"]
     HMM --> BP[\"Bull Probability\"]
@@ -346,6 +375,12 @@ flowchart TD
 ---
 
 # Expected Shortfall (CVaR)
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">calculate_expected_shortfall.py</span>
+</div>
 
 ```python
 def calculate_expected_shortfall(self, returns, confidence=0.95):
@@ -365,6 +400,8 @@ def calculate_expected_shortfall(self, returns, confidence=0.95):
             'weighted_es': weighted_es}
 ```
 
+</div>
+
 <!-- Speaker notes: Expected Shortfall gives the average loss in the worst (1-alpha) percent of scenarios. The phi_z divided by (1 minus confidence) adjustment accounts for the tail behavior of the Gaussian distribution. -->
 ---
 
@@ -376,6 +413,12 @@ def calculate_expected_shortfall(self, returns, confidence=0.95):
 ---
 
 # Avoiding Look-Ahead Bias
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">expanding_window_regime.py</span>
+</div>
 
 ```python
 def expanding_window_regime(returns, min_periods=252):
@@ -394,12 +437,20 @@ def expanding_window_regime(returns, min_periods=252):
     return regimes
 ```
 
+</div>
+
 > **Never fit on future data** — always use expanding or rolling windows.
 
 <!-- Speaker notes: The expanding window approach refits the HMM at each time step using only past data. This is computationally expensive but essential for honest backtesting. Never fit on future data. -->
 ---
 
 # Multiple Random Starts
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_with_multiple_starts.py</span>
+</div>
 
 ```python
 def fit_with_multiple_starts(returns, n_components=2, n_starts=10):
@@ -420,12 +471,15 @@ def fit_with_multiple_starts(returns, n_components=2, n_starts=10):
     return best_model
 ```
 
+</div>
+
 <!-- Speaker notes: Multiple starts address the local optima problem. Different seeds may find different regime structures. Keeping the best model (highest log-likelihood) improves robustness. -->
 ---
 
 # Practical Pitfalls
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     P1[\"Look-Ahead Bias\"] --> S1[\"Expanding window<br>only past data\"]
     P2[\"Local Optima\"] --> S2[\"Multiple random<br>initializations\"]
@@ -456,6 +510,7 @@ flowchart TD
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     GHMM[\"Gaussian<br>HMM\"] --> RD[\"Regime<br>Detection\"]
     RD --> TRADE[\"Trading<br>Strategies\"]

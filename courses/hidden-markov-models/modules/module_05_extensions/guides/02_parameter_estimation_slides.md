@@ -36,6 +36,7 @@ The Baum-Welch algorithm (covered in Module 02) iterates:
 EM converges to a **local** optimum. The starting point determines which one.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OBS["Observations"] --> INIT{"Initialization<br>Method?"}
     INIT -->|K-means| KM["Cluster observations"]
@@ -48,6 +49,12 @@ flowchart TD
     MEANS --> PI_A["pi = uniform<br>A = 0.9 diagonal"]
     MEANS2 --> PI_A
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Initialization is the single most important practical decision in HMM training. K-means initialization clusters the observations first, then uses cluster centers as initial means and within-cluster variances as initial variances. This gives the EM algorithm a head start by placing initial parameters near reasonable values. Random initialization chooses parameters from random distributions and is more exploratory but less reliable. -->
 
@@ -77,6 +84,12 @@ class BaumWelchTrainer:
                 for k in range(K)])
         return self
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: The initialization sets pi to uniform, the transition matrix to 0.9 on the diagonal with the remaining 0.1 spread evenly across off-diagonal entries. This encodes the prior belief that states are persistent. K-means provides data-driven initial estimates for means and variances. The small epsilon added to variances prevents degenerate solutions. -->
 
@@ -127,6 +140,12 @@ def fit_with_restarts(observations, n_states, n_restarts=10):
     return best_model
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: The strategy is to use K-means for the first restart, then random initialization for the remaining restarts. Each restart runs a shorter number of iterations since we only need to identify promising starting points. The try-except block catches numerical failures from bad initializations. We keep only the model with the highest final log-likelihood. -->
 
 ---
@@ -134,6 +153,7 @@ def fit_with_restarts(observations, n_states, n_restarts=10):
 # Restart Strategy Visualization
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Restarts["Multiple Initializations"]
         R1["Restart 1 (K-means)<br>LL = -450"]
@@ -149,6 +169,12 @@ flowchart TD
     R5 --> SEL
     SEL --> BEST["Best: Restart 3<br>LL = -445"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 > First restart uses K-means, remaining use random initialization.
 
@@ -223,6 +249,12 @@ flowchart TD
 
 When a state's variance approaches zero, it perfectly fits a single observation:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regularize_covars.py</span>
+</div>
+
 ```python
 # Regularization prevents degenerate covariance
 def regularize_covars(covars, min_variance=1e-6):
@@ -236,11 +268,19 @@ model = hmm.GaussianHMM(
     n_iter=200, random_state=42)
 ```
 
+</div>
+
 <!-- Speaker notes: Degenerate solutions occur when a state captures only one or two observations, driving its variance toward zero. This makes the emission probability for those points approach infinity, dominating the log-likelihood. The fix is simple: clamp the minimum variance to a small positive value. hmmlearn exposes this as the min_covar parameter. -->
 
 ---
 
 # Label Switching Problem
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">align_state_labels.py</span>
+</div>
 
 ```python
 def align_state_labels(model, reference='mean'):
@@ -260,6 +300,8 @@ def align_state_labels(model, reference='mean'):
     return model
 ```
 
+</div>
+
 <!-- Speaker notes: Label switching means that State 0 in one run might correspond to State 1 in another. This makes it impossible to compare parameters across runs without alignment. The simplest approach sorts states by their mean return: the lowest-mean state becomes State 0 (bear), the highest becomes the last state (bull). Always align labels after fitting and before extracting parameters. -->
 
 ---
@@ -273,6 +315,12 @@ def align_state_labels(model, reference='mean'):
 ---
 
 # Using hmmlearn in Production
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">train_with_hmmlearn.py</span>
+</div>
 
 ```python
 from hmmlearn import hmm
@@ -293,6 +341,8 @@ def train_with_hmmlearn(observations, n_states=2):
     print(f"Means: {model.means_.flatten()}")
     return model
 ```
+
+</div>
 
 > Use hmmlearn for production -- it handles scaling, convergence, and edge cases.
 
@@ -333,6 +383,7 @@ For everything else, use hmmlearn.
 # Convergence Monitoring
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     I["Random Init"] --> IT1["Iter 1<br>LL = -1000"]
     IT1 --> IT2["Iter 5<br>LL = -800"]
@@ -367,6 +418,7 @@ flowchart LR
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     FB["Forward-Backward<br>(Module 02)"] --> BW["Baum-Welch<br>(Module 02)"]
     BW --> ADV["Advanced<br>Estimation"]

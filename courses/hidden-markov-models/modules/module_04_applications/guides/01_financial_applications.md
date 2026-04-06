@@ -1,5 +1,13 @@
 # Financial Applications of HMMs
 
+> **Reading time:** ~6 min | **Module:** Module 4: Applications | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** HMMs are widely used in finance for: - Market regime detection - Volatility modeling - Asset allocation - Risk management - Trading signal generation
+
+</div>
+
 ## Overview
 
 HMMs are widely used in finance for:
@@ -8,6 +16,12 @@ HMMs are widely used in finance for:
 - Asset allocation
 - Risk management
 - Trading signal generation
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Market Regime Detection
 
@@ -165,6 +179,12 @@ for k, v in results.items():
 
 ### Multi-State Volatility Model
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">volatilityregimemodel.py</span>
+</div>
+
 ```python
 class VolatilityRegimeModel:
     """Detect volatility regimes using HMM on realized volatility."""
@@ -223,7 +243,15 @@ class VolatilityRegimeModel:
         return labels
 ```
 
+</div>
+
 ## Asset Allocation with Regimes
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeawareallocator.py</span>
+</div>
 
 ```python
 class RegimeAwareAllocator:
@@ -278,7 +306,15 @@ class RegimeAwareAllocator:
         }
 ```
 
+</div>
+
 ## Regime-Switching Risk Models
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeswitchingvar.py</span>
+</div>
 
 ```python
 class RegimeSwitchingVaR:
@@ -343,9 +379,17 @@ class RegimeSwitchingVaR:
         }
 ```
 
+</div>
+
 ## Practical Considerations
 
 ### Look-Ahead Bias
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">expanding_window_regime.py</span>
+</div>
 
 ```python
 def expanding_window_regime(
@@ -371,7 +415,15 @@ def expanding_window_regime(
     return regimes
 ```
 
+</div>
+
 ### Multiple Random Starts
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_with_multiple_starts.py</span>
+</div>
 
 ```python
 def fit_with_multiple_starts(
@@ -401,6 +453,14 @@ def fit_with_multiple_starts(
     return best_model
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding financial applications of hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Market regimes** naturally map to HMM states (bull/bear)
@@ -412,3 +472,37 @@ def fit_with_multiple_starts(
 4. **Multiple initializations** improve model robustness
 
 5. **Risk models** should be regime-conditional for accuracy
+
+---
+
+## Conceptual Practice Questions
+
+1. How can an HMM detect market regime changes in equity returns?
+
+2. What are the practical limitations of using HMMs for real-time regime detection?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_financial_applications_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_market_regimes.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_portfolio_allocation.md">
+  <div class="link-card-title">02 Portfolio Allocation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

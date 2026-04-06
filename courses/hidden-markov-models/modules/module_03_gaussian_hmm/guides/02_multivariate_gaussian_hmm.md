@@ -1,5 +1,13 @@
 # Multivariate Gaussian HMMs
 
+> **Reading time:** ~7 min | **Module:** Module 3: Gaussian Hmm | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Financial markets involve multiple correlated variables. Multivariate Gaussian HMMs model joint distributions:
+
+</div>
+
 ## Introduction
 
 Financial markets involve multiple correlated variables. Multivariate Gaussian HMMs model joint distributions:
@@ -7,6 +15,12 @@ Financial markets involve multiple correlated variables. Multivariate Gaussian H
 $$\mathbf{o}_t | s_t = k \sim \mathcal{N}(\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$$
 
 Each state has its own mean vector and covariance matrix.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Multivariate Emission Distribution
 
@@ -19,6 +33,12 @@ For $d$-dimensional observations:
 ### Probability Density
 
 $$b_k(\mathbf{o}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}_k|^{1/2}} \exp\left(-\frac{1}{2}(\mathbf{o} - \boldsymbol{\mu}_k)^\top \boldsymbol{\Sigma}_k^{-1}(\mathbf{o} - \boldsymbol{\mu}_k)\right)$$
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">multivariategaussianhmm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -153,9 +173,17 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Covariance Structures
 
 Different covariance structures trade off flexibility vs. parameters:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_covariance_types.py</span>
+</div>
 
 ```python
 def compare_covariance_types():
@@ -245,7 +273,15 @@ def count_parameters(n_states, n_features, cov_type):
 compare_covariance_types()
 ```
 
+</div>
+
 ## Using hmmlearn for Multivariate Data
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_multivariate_hmm_hmmlearn.py</span>
+</div>
 
 ```python
 def fit_multivariate_hmm_hmmlearn():
@@ -355,7 +391,15 @@ def fit_multivariate_hmm_hmmlearn():
 model, obs, true_states = fit_multivariate_hmm_hmmlearn()
 ```
 
+</div>
+
 ## Feature Engineering for HMMs
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">prepare_features_for_hmm.py</span>
+</div>
 
 ```python
 def prepare_features_for_hmm(prices, window=20):
@@ -407,7 +451,15 @@ print(f"  Means: {features.mean(axis=0).round(4)}")
 print(f"  Stds:  {features.std(axis=0).round(4)}")
 ```
 
+</div>
+
 ## Model Selection for Multivariate HMMs
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_multivariate_hmm.py</span>
+</div>
 
 ```python
 def select_multivariate_hmm(observations, max_states=5):
@@ -460,6 +512,14 @@ import pandas as pd
 selection_results = select_multivariate_hmm(obs, max_states=4)
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding multivariate gaussian hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Multivariate HMMs** model joint distributions of multiple features
@@ -473,3 +533,37 @@ selection_results = select_multivariate_hmm(obs, max_states=4)
 5. **Model selection** uses BIC to balance fit and complexity
 
 6. **hmmlearn** provides efficient implementation for Gaussian HMMs
+
+---
+
+## Conceptual Practice Questions
+
+1. How does a Gaussian HMM differ from a discrete-emission HMM?
+
+2. What financial phenomena can a two-state Gaussian HMM capture?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_gaussian_hmm.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_gaussian_emissions.md">
+  <div class="link-card-title">01 Gaussian Emissions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_gaussian_hmm.md">
+  <div class="link-card-title">01 Gaussian Hmm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

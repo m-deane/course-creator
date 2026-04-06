@@ -1,5 +1,13 @@
 # Gaussian HMMs for Continuous Observations
 
+> **Reading time:** ~5 min | **Module:** Module 3: Gaussian Hmm | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Financial data (returns, prices, volatility) is continuous. Gaussian HMMs model this directly:
+
+</div>
+
 ## From Discrete to Continuous
 
 Financial data (returns, prices, volatility) is continuous. Gaussian HMMs model this directly:
@@ -7,6 +15,12 @@ Financial data (returns, prices, volatility) is continuous. Gaussian HMMs model 
 $$o_t | q_t = k \sim \mathcal{N}(\mu_k, \Sigma_k)$$
 
 Each hidden state $k$ has its own mean $\mu_k$ and covariance $\Sigma_k$.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Gaussian Emission Model
 
@@ -77,6 +91,12 @@ print(f"Variances: {np.sqrt(model.covars_).flatten()}")
 
 ## Regime Detection Pipeline
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimedetector.py</span>
+</div>
+
 ```python
 class RegimeDetector:
     """Detect market regimes using Gaussian HMM."""
@@ -146,11 +166,19 @@ for label, stats in detector.get_regime_stats().items():
     print(f"    Persistence: {stats['persistence']:.2%}")
 ```
 
+</div>
+
 ## Model Selection
 
 ### Number of States
 
 Use information criteria to select optimal number of states:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_n_states.py</span>
+</div>
 
 ```python
 def select_n_states(returns: np.ndarray, max_states: int = 5) -> dict:
@@ -201,7 +229,15 @@ best_n = selection_results.loc[selection_results['bic'].idxmin(), 'n_states']
 print(f"\nBest number of states (BIC): {best_n}")
 ```
 
+</div>
+
 ### Covariance Type
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_covariance_types.py</span>
+</div>
 
 ```python
 def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
@@ -231,7 +267,15 @@ def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
     return pd.DataFrame(results)
 ```
 
+</div>
+
 ## Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_regime_detection.py</span>
+</div>
 
 ```python
 def plot_regime_detection(returns, predicted_states, state_probs, dates=None):
@@ -275,7 +319,15 @@ def plot_regime_detection(returns, predicted_states, state_probs, dates=None):
 plot_regime_detection(returns, predicted_states, state_probs)
 ```
 
+</div>
+
 ## Real-World Application
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_analysis.py</span>
+</div>
 
 ```python
 import yfinance as yf
@@ -329,6 +381,14 @@ result = regime_analysis('SPY', '2020-01-01', '2024-01-01')
 print(result['regime_stats'])
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding gaussian hmms for continuous observations is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Gaussian HMMs** handle continuous observations naturally
@@ -340,3 +400,37 @@ print(result['regime_stats'])
 4. **Model selection** uses BIC/AIC to choose number of states
 
 5. **Regime labeling** by mean distinguishes bull from bear markets
+
+---
+
+## Conceptual Practice Questions
+
+1. How does a Gaussian HMM differ from a discrete-emission HMM?
+
+2. What financial phenomena can a two-state Gaussian HMM capture?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="../notebooks/01_gaussian_hmm.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_gaussian_emissions.md">
+  <div class="link-card-title">01 Gaussian Emissions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_em_gaussian.md">
+  <div class="link-card-title">02 Em Gaussian</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

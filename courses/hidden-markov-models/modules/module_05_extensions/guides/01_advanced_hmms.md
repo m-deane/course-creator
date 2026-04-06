@@ -1,13 +1,30 @@
 # Advanced HMM Variants
 
+> **Reading time:** ~6 min | **Module:** Module 5: Extensions | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Standard HMMs assume all states transition with equal probability regardless of how long the model has been in a state. Advanced variants relax this assumption: Sticky HMMs stay in the current state longer, Input-Output HMMs condition transitions on external signals, and Hierarchical HMMs nest mu...
+
+</div>
+
 ## In Brief
 
 Standard HMMs assume all states transition with equal probability regardless of how long the model has been in a state. Advanced variants relax this assumption: Sticky HMMs stay in the current state longer, Input-Output HMMs condition transitions on external signals, and Hierarchical HMMs nest multiple levels of state structure. Each variant exists to model a real failure mode of the basic HMM.
 
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
 ## Key Insight
 
-> 💡 **Every advanced HMM variant solves a specific failure mode of the standard model.** Before reaching for a more complex variant, identify which assumption the standard HMM violates in your data — then choose the extension that fixes exactly that assumption.
+<div class="callout-info">
 
+**Info:** Before reaching for a more complex variant, identify which assumption the standard HMM violates in your data — then choose the extension that fixes exactly that assumption.
+
+</div>
 ## Sticky HMM
 
 Standard HMMs may switch states too frequently. Sticky HMMs increase self-transition probability:
@@ -91,6 +108,12 @@ Each regime $s_t$ has its own intercept, AR coefficient, and volatility.
 
 ### Implementation with statsmodels
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_markov_switching_ar.py</span>
+</div>
+
 ```python
 import numpy as np
 import pandas as pd
@@ -151,7 +174,15 @@ print(results.summary())
 smoothed_probs = results.smoothed_marginal_probabilities
 ```
 
+</div>
+
 ### Regime-Dependent Forecasting
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_forecast.py</span>
+</div>
 
 ```python
 def regime_forecast(
@@ -198,6 +229,8 @@ def regime_forecast(
     return forecasts
 ```
 
+</div>
+
 ## Hierarchical HMM
 
 Hierarchical HMMs have multiple levels of hidden states:
@@ -211,6 +244,12 @@ Observations
 ```
 
 ### Conceptual Implementation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">hierarchicalhmm.py</span>
+</div>
 
 ```python
 class HierarchicalHMM:
@@ -275,9 +314,17 @@ class HierarchicalHMM:
         return A_full
 ```
 
+</div>
+
 ## Input-Output HMM
 
 Include exogenous variables that affect transitions or emissions:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">inputoutputhmm.py</span>
+</div>
 
 ```python
 class InputOutputHMM:
@@ -305,9 +352,17 @@ class InputOutputHMM:
         return stats.norm.pdf(observation, mean, std)
 ```
 
+</div>
+
 ## Duration-Dependent HMM
 
 Standard HMMs have geometric duration distribution. Explicit duration models allow arbitrary distributions:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">explicitdurationhmm.py</span>
+</div>
 
 ```python
 class ExplicitDurationHMM:
@@ -343,6 +398,8 @@ class ExplicitDurationHMM:
         return np.dot(durations, self.duration_probs[state])
 ```
 
+</div>
+
 ## Comparison of HMM Variants
 
 | Variant | Use Case | Complexity |
@@ -353,6 +410,12 @@ class ExplicitDurationHMM:
 | Hierarchical HMM | Multi-scale regimes | High |
 | Duration HMM | Non-geometric durations | High |
 | Input-Output HMM | Exogenous variables | Medium |
+
+<div class="callout-insight">
+
+**Insight:** Understanding advanced hmm variants is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
 
 ## Key Takeaways
 
@@ -365,3 +428,37 @@ class ExplicitDurationHMM:
 4. **Duration models** allow non-geometric state persistence
 
 5. **Choose variant** based on data characteristics and modeling goals
+
+---
+
+## Conceptual Practice Questions
+
+1. What extensions to the basic HMM address its limitations for financial data?
+
+2. Compare hierarchical HMMs with standard HMMs for multi-scale regime detection.
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_advanced_hmms_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_hhmm_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_parameter_estimation.md">
+  <div class="link-card-title">02 Parameter Estimation</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

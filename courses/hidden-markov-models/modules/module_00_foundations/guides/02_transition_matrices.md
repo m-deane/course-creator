@@ -1,8 +1,22 @@
 # Transition Matrices and State Dynamics
 
+> **Reading time:** ~8 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** The transition matrix is the heart of Markov processes. It encodes the probabilistic rules governing state evolution.
+
+</div>
+
 ## Introduction
 
 The transition matrix is the heart of Markov processes. It encodes the probabilistic rules governing state evolution.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Definition and Properties
 
@@ -152,6 +166,12 @@ Or equivalently, $\pi$ is a left eigenvector of $A$ with eigenvalue 1.
 
 ### Computing the Stationary Distribution
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_stationary_distribution.py</span>
+</div>
+
 ```python
 def compute_stationary_distribution(A, method='eigenvalue'):
     """
@@ -202,11 +222,19 @@ for method in ['eigenvalue', 'power', 'linear_solve']:
     print(f"  ||π - πA|| = {residual:.2e}")
 ```
 
+</div>
+
 ## Expected Hitting Times
 
 ### First Passage Time
 
 Expected steps to reach state $j$ starting from state $i$:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_hitting_times.py</span>
+</div>
 
 ```python
 def compute_hitting_times(A, target_state):
@@ -258,11 +286,19 @@ for target in range(3):
                 print(f"  From state {i}: {h[i]:.2f} steps")
 ```
 
+</div>
+
 ## Classification of States
 
 ### Communicating Classes
 
 States $i$ and $j$ communicate if you can get from $i$ to $j$ and from $j$ to $i$.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">if.py</span>
+</div>
 
 ```python
 def find_communicating_classes(A, max_power=100):
@@ -318,7 +354,15 @@ print(f"\nCommunicating classes: {classes}")
 print(f"(This chain has {len(classes)} communicating classes - it's reducible)")
 ```
 
+</div>
+
 ### Periodicity
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_period.py</span>
+</div>
 
 ```python
 def compute_period(A, state=0, max_steps=100):
@@ -367,7 +411,15 @@ print(A_periodic)
 print(f"Period: {compute_period(A_periodic)}")
 ```
 
+</div>
+
 ## Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">visualize_transition_matrix.py</span>
+</div>
 
 ```python
 def visualize_transition_matrix(A, state_names=None):
@@ -451,6 +503,14 @@ A = np.array([
 visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding transition matrices and state dynamics is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Transition matrices encode state dynamics** - row $i$ gives probabilities of next state given current state $i$
@@ -462,3 +522,42 @@ visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 4. **Expected hitting times** measure reachability between states
 
 5. **Communication classes and periodicity** characterize chain structure
+
+---
+
+## Conceptual Practice Questions
+
+1. How do you interpret the entries of a transition matrix in a financial context?
+
+2. What does it mean for a Markov chain to be ergodic, and why does this matter?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_transition_matrices_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_markov_chain_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_markov_chains.md">
+  <div class="link-card-title">01 Markov Chains</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_probability_review.md">
+  <div class="link-card-title">02 Probability Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

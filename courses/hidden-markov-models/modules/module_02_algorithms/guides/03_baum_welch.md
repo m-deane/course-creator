@@ -1,10 +1,29 @@
 # Baum-Welch Algorithm: Learning HMM Parameters
 
+> **Reading time:** ~14 min | **Module:** Module 2: Algorithms | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Baum-Welch algorithm learns HMM parameters (transition probabilities, emission distributions, initial state distribution) from observed data using the Expectation-Maximization (EM) framework. It iteratively improves parameter estimates to maximize the likelihood of observed sequences.
+
+</div>
+
 ## In Brief
 
 The Baum-Welch algorithm learns HMM parameters (transition probabilities, emission distributions, initial state distribution) from observed data using the Expectation-Maximization (EM) framework. It iteratively improves parameter estimates to maximize the likelihood of observed sequences.
 
-> 💡 **Key Insight:** We can't directly count transitions between hidden states (they're hidden!), but we can compute expected counts using current parameter estimates. EM alternates between computing these expected counts (E-step) and updating parameters to maximize likelihood (M-step).
+<div class="callout-insight">
+
+**Insight:** We can't directly count transitions between hidden states (they're hidden!), but we can compute expected counts using current parameter estimates. EM alternates between computing these expected counts (E-step) and updating parameters to maximize likelihood (M-step).
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -79,8 +98,6 @@ $$\hat{\mu}_i = \frac{\sum_{t=1}^{T} \gamma_t(i) \cdot o_t}{\sum_{t=1}^{T} \gamm
 
 Variance:
 $$\hat{\sigma}_i^2 = \frac{\sum_{t=1}^{T} \gamma_t(i) \cdot (o_t - \hat{\mu}_i)^2}{\sum_{t=1}^{T} \gamma_t(i)}$$
-
-## Intuitive Explanation
 
 ### The Learning Challenge
 
@@ -445,6 +462,12 @@ print(f"\nState prediction accuracy: {accuracy:.2%}")
 
 ### Visualization
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 import matplotlib.pyplot as plt
 
@@ -485,12 +508,20 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Common Pitfalls
 
 1. **Local Maxima**
    - EM only guarantees convergence to local maximum
    - Solution: Run with multiple random initializations
    - Select model with highest final likelihood
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_with_multiple_initializations.py</span>
+</div>
 
 ```python
 def fit_with_multiple_initializations(observations, n_states, n_inits=10):
@@ -511,10 +542,18 @@ def fit_with_multiple_initializations(observations, n_states, n_inits=10):
     return best_hmm
 ```
 
+</div>
+
 2. **Numerical Underflow**
    - Forward/backward probabilities become very small
    - Multiplying many small numbers → underflow to zero
    - Solution: Use log-space computation or scaling
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_scaled.py</span>
+</div>
 
 ```python
 def forward_scaled(self, observations):
@@ -541,10 +580,18 @@ def forward_scaled(self, observations):
     return alpha, scales, log_likelihood
 ```
 
+</div>
+
 3. **Overfitting with Too Many States**
    - More states always increase training likelihood
    - But may not generalize to new data
    - Solution: Use BIC/AIC for model selection
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_bic.py</span>
+</div>
 
 ```python
 def compute_bic(log_likelihood, n_params, n_observations):
@@ -579,9 +626,17 @@ def select_num_states(observations, max_states=5):
     return best_K
 ```
 
+</div>
+
 4. **Poor Initialization**
    - Random initialization may start far from good solution
    - Better: K-means clustering of observations for initial state assignment
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">initialize_with_kmeans.py</span>
+</div>
 
 ```python
 from sklearn.cluster import KMeans
@@ -614,6 +669,8 @@ def initialize_with_kmeans(observations, n_states):
 
     return hmm
 ```
+
+</div>
 
 5. **Ignoring Convergence Criteria**
    - Stopping too early: Parameters haven't stabilized
@@ -708,6 +765,12 @@ def initialize_with_kmeans(observations, n_states):
    This is the maximum likelihood estimate when we have "soft" assignments (probabilities) rather than hard assignments.
    </details>
 
+<div class="callout-insight">
+
+**Insight:** Understanding baum-welch algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 ### Foundational Papers
@@ -749,3 +812,42 @@ def initialize_with_kmeans(observations, n_states):
 ---
 
 **Key Takeaway:** Baum-Welch solves the chicken-and-egg problem of HMM learning: we need states to estimate parameters, and parameters to infer states. By alternating between soft state inference (E-step) and parameter updates (M-step), we iteratively improve our model until convergence to a local optimum.
+
+---
+
+## Conceptual Practice Questions
+
+1. What are the three parameter matrices in a Gaussian HMM and what does each control?
+
+2. Why is the number of hidden states a hyperparameter rather than a learned parameter?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./03_baum_welch_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_forward_backward_impl.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_forward_backward.md">
+  <div class="link-card-title">01 Forward Backward</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_viterbi_algorithm.md">
+  <div class="link-card-title">02 Viterbi Algorithm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

@@ -40,6 +40,7 @@ $$b_i(o_t) = \mathcal{N}(o_t | \mu_i, \Sigma_i) = \frac{1}{(2\pi)^{D/2} |\Sigma_
 # EM Algorithm for Gaussian HMMs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize: pi, A, mu, Sigma"] --> ES["E-Step"]
     ES --> ALPHA["Forward: compute alpha"]
@@ -58,6 +59,12 @@ flowchart TD
     CONV -->|No| ES
     CONV -->|Yes| DONE["Done"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: The flow diagram shows that the E-step is identical to discrete HMMs. The difference is entirely in the M-step, where we update means and covariances instead of emission probabilities. -->
 ---
@@ -118,6 +125,7 @@ $$\hat{\mu}_{\text{Bull}} = \frac{0.85 \times 2.5\% + 0.10 \times (-3.0\%) + ...
 # Soft vs Hard Clustering
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Hard["Hard Assignment (K-means)"]
         H1["Return +2.5% -> Bull"]
@@ -130,6 +138,12 @@ flowchart LR
         S3["Return +0.1%: 55% Bull, 45% Bear"]
     end
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 > EM uses **soft assignments** (probabilities) instead of hard labels.
 
@@ -154,6 +168,12 @@ class GaussianHMM:
         return stats.multivariate_normal.pdf(
             observation, mean=self.means[state], cov=self.covars[state])
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: This class uses scipy's multivariate_normal for emission probability computation. The covariance type parameter controls the covariance structure. Full covariance captures cross-feature correlations. -->
 ---
@@ -185,10 +205,22 @@ def m_step(self, observations, gamma, xi):
         self.covars[i] += 1e-6 * np.eye(self.D)  # Regularization
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: The implementation uses vectorized operations for efficiency. The outer product diff[:,:,None] times diff[:,None,:] computes the per-observation covariance contribution. The regularization term (1e-6 times identity) prevents singular covariance matrices. -->
 ---
 
 # Convergence Monitoring
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit.py</span>
+</div>
 
 ```python
 def fit(self, observations, max_iter=100, tol=1e-4):
@@ -206,6 +238,8 @@ def fit(self, observations, max_iter=100, tol=1e-4):
                 break
     return log_likelihoods
 ```
+
+</div>
 
 <!-- Speaker notes: Monitor convergence by tracking log-likelihood. It must increase monotonically. If it decreases, there is a bug. Convergence typically occurs within 50 to 200 iterations for well-initialized models. -->
 ---
@@ -234,6 +268,12 @@ self.covars[i] += 1e-6 * np.eye(self.D)
 
 EM does not preserve state labels across runs.
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">identify_states.py</span>
+</div>
+
 ```python
 def identify_states(model):
     """Identify bull/bear by mean."""
@@ -242,12 +282,20 @@ def identify_states(model):
     return bull_idx, bear_idx
 ```
 
+</div>
+
 <!-- Speaker notes: Label switching means state 0 in one run might correspond to state 1 in another run. EM only finds emission parameters, not meaningful labels. Post-hoc identification by sorting states by their mean (or volatility) provides consistent labeling across runs. -->
 ---
 
 # Pitfall 3 — Initialization
 
 Random initialization can lead to poor local optima.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">initialize_from_kmeans.py</span>
+</div>
 
 ```python
 from sklearn.cluster import KMeans
@@ -263,12 +311,15 @@ def initialize_from_kmeans(model, observations):
     return model
 ```
 
+</div>
+
 <!-- Speaker notes: Random initialization often leads to poor local optima because the likelihood surface has many saddle points. K-means initialization clusters observations first, then uses cluster statistics as initial emission parameters. This dramatically improves convergence quality. -->
 ---
 
 # EM Convergence Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     I["Random Init"] --> IT1["Iteration 1<br>LL = -1000"]
     IT1 --> IT2["Iteration 2<br>LL = -800"]
@@ -285,6 +336,7 @@ flowchart LR
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DHM["Discrete HMM EM"] --> GEM["Gaussian EM<br>(same E-step)"]
     GD["Gaussian Distributions<br>MLE"] --> GEM

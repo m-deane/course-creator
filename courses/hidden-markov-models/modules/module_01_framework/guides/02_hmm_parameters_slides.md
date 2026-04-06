@@ -34,6 +34,7 @@ $$\lambda = (\pi, A, B)$$
 # HMM Parameter Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Lambda["HMM lambda = (pi, A, B)"]
         PI["pi: Initial Distribution<br>P(S_1 = i)"]
@@ -44,6 +45,12 @@ flowchart TD
     A --> ST["State at t>1"]
     B --> OT["Observation at t"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: The architecture diagram shows the data flow: pi determines the starting state, A determines subsequent states, and B determines observations. This three-level structure is the template for all HMM variants. -->
 ---
@@ -79,6 +86,12 @@ def set_initial_distribution(self, pi=None, style='uniform'):
     assert all(self.pi >= 0), "pi must be non-negative"
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: The four initialization styles serve different purposes. Uniform is the safest default, first_state is for when the starting condition is known, and random is for multiple restart training. -->
 ---
 
@@ -102,6 +115,12 @@ def set_transition_matrix(self, A=None, style='persistent', persistence=0.9):
     assert np.allclose(self.A.sum(axis=1), 1.0)
     assert np.all(self.A >= 0)
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: Persistent initialization with high diagonal values is the standard for financial applications because market regimes tend to last. The persistence parameter directly controls expected regime duration: 1 divided by (1 minus persistence). -->
 ---
@@ -136,12 +155,19 @@ def analyze_transition_matrix(A):
     ergodic = irreducible and aperiodic
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: This analysis function extracts three key properties: the stationary distribution (long-run regime probabilities), expected durations (how long each regime lasts), and ergodicity (whether the model is well-posed). -->
 ---
 
 # Transition Matrix Properties Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Transition Matrix A"] --> RS["Row Stochastic?<br>Rows sum to 1"]
     A --> IR["Irreducible?<br>All states reachable"]
@@ -212,6 +238,7 @@ class GaussianHMM(HMMParameters):
 # Emission Type Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     OT{Observation Type?}
     OT -->|Discrete| DE["Discrete Emissions<br>B matrix (K x M)<br>Rows sum to 1"]
@@ -228,6 +255,12 @@ flowchart TD
 ---
 
 # Gaussian HMM Example — 3 States
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 gauss_hmm = GaussianHMM(n_states=3, n_features=1)
@@ -246,6 +279,8 @@ gauss_hmm.set_emission_params(
 )
 ```
 
+</div>
+
 <!-- Speaker notes: This three-state example models bull, neutral, and bear markets with decreasing means and increasing variances. The transition matrix has high diagonal values for persistence. -->
 ---
 
@@ -257,6 +292,12 @@ gauss_hmm.set_emission_params(
 ---
 
 # Ensuring Valid Parameters
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">validate_hmm_parameters.py</span>
+</div>
 
 ```python
 def validate_hmm_parameters(pi, A, B=None, means=None, covars=None):
@@ -282,6 +323,8 @@ def validate_hmm_parameters(pi, A, B=None, means=None, covars=None):
 
     return len(errors) == 0
 ```
+
+</div>
 
 <!-- Speaker notes: Parameter validation is critical in production. Invalid parameters (rows not summing to 1, negative probabilities, non-positive-definite covariance) will cause algorithms to produce garbage results or crash. -->
 ---
@@ -310,6 +353,12 @@ def validate_hmm_parameters(pi, A, B=None, means=None, covars=None):
 
 # Market Regime HMM
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">create_market_regime_hmm.py</span>
+</div>
+
 ```python
 def create_market_regime_hmm():
     hmm = GaussianHMM(n_states=3, n_features=1)
@@ -332,12 +381,15 @@ def create_market_regime_hmm():
     return hmm
 ```
 
+</div>
+
 <!-- Speaker notes: This three-state financial model is more realistic than two states. The transition matrix shows that bull and bear are persistent (0.90 self-transition) while neutral has lower persistence (0.80), reflecting the transitory nature of sideways markets. -->
 ---
 
 # Market Regime State Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> Neutral: pi=0.6
     [*] --> Bull: pi=0.2
@@ -388,6 +440,7 @@ stateDiagram-v2
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DEF["HMM Definition"] --> PAR["HMM Parameters"]
     PAR --> VAL["Validation"]

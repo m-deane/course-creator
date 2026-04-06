@@ -1,10 +1,29 @@
 # EM for Gaussian HMMs: Continuous Observations
 
+> **Reading time:** ~13 min | **Module:** Module 3: Gaussian Hmm | **Prerequisites:** Modules 0-2
+
+<div class="callout-key">
+
+**Key Concept Summary:** Gaussian Hidden Markov Models extend HMMs to continuous observations by using Gaussian (normal) emission distributions. The EM algorithm adapts naturally: the E-step computes state occupation probabilities, and the M-step updates means and covariances using weighted maximum likelihood estimation.
+
+</div>
+
 ## In Brief
 
 Gaussian Hidden Markov Models extend HMMs to continuous observations by using Gaussian (normal) emission distributions. The EM algorithm adapts naturally: the E-step computes state occupation probabilities, and the M-step updates means and covariances using weighted maximum likelihood estimation.
 
-> 💡 **Key Insight:** For continuous observations (like financial returns), we can't count "how many times we saw value X in state i" because each observation is unique. Instead, we use probability densities and compute weighted statistics where weights are the probabilities of being in each state.
+<div class="callout-insight">
+
+**Insight:** For continuous observations (like financial returns), we can't count "how many times we saw value X in state i" because each observation is unique. Instead, we use probability densities and compute weighted statistics where weights are the probabilities of being in each state.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
+## Intuitive Explanation
 
 ## Formal Definition
 
@@ -59,8 +78,6 @@ $$\hat{\mu}_i = \frac{\sum_{t=1}^T \gamma_t(i) \cdot o_t}{\sum_{t=1}^T \gamma_t(
 
 Covariance matrix:
 $$\hat{\Sigma}_i = \frac{\sum_{t=1}^T \gamma_t(i) \cdot (o_t - \hat{\mu}_i)(o_t - \hat{\mu}_i)^T}{\sum_{t=1}^T \gamma_t(i)}$$
-
-## Intuitive Explanation
 
 ### The Learning Process
 
@@ -120,6 +137,12 @@ This is the maximum likelihood estimate given soft assignments!
 ## Code Implementation
 
 ### Complete Gaussian HMM with EM
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussianhmm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -547,6 +570,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Common Pitfalls
 
 1. **Singular Covariance Matrices**
@@ -574,6 +599,12 @@ model = GaussianHMM(n_states=2, covariance_type='diag')
    - State 0 in one run might be State 1 in another
    - Solution: Identify states by learned parameters (e.g., highest mean = bull)
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">identify_states.py</span>
+</div>
+
 ```python
 def identify_states(model):
     """Identify bull/bear by mean."""
@@ -582,6 +613,8 @@ def identify_states(model):
     return bull_idx, bear_idx
 ```
 
+</div>
+
 4. **Numerical Underflow**
    - Forward/backward probabilities become very small
    - Solution: Use scaling (shown in code) or log-space
@@ -589,6 +622,12 @@ def identify_states(model):
 5. **Initialization Matters**
    - Random initialization can lead to poor local optima
    - Better: K-means initialization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">initialize_from_kmeans.py</span>
+</div>
 
 ```python
 from sklearn.cluster import KMeans
@@ -607,6 +646,8 @@ def initialize_from_kmeans(model, observations):
 
     return model
 ```
+
+</div>
 
 ## Connections
 
@@ -705,6 +746,12 @@ def initialize_from_kmeans(model, observations):
    For market regimes, multivariate with diagonal covariance is often a good compromise.
    </details>
 
+<div class="callout-insight">
+
+**Insight:** Understanding em for gaussian hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Further Reading
 
 ### Key Papers
@@ -740,3 +787,42 @@ def initialize_from_kmeans(model, observations):
 ---
 
 **Key Takeaway:** Gaussian HMMs extend the EM framework to continuous observations by using probability densities instead of discrete probabilities. The M-step becomes weighted maximum likelihood estimation for Gaussian parameters, where weights are the state occupation probabilities from the E-step.
+
+---
+
+## Conceptual Practice Questions
+
+1. How does a Gaussian HMM differ from a discrete-emission HMM?
+
+2. What financial phenomena can a two-state Gaussian HMM capture?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_em_gaussian_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_gaussian_hmm.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_gaussian_emissions.md">
+  <div class="link-card-title">01 Gaussian Emissions</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./01_gaussian_hmm.md">
+  <div class="link-card-title">01 Gaussian Hmm</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

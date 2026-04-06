@@ -1,5 +1,13 @@
 # The Viterbi Algorithm: Finding the Most Likely State Sequence
 
+> **Reading time:** ~8 min | **Module:** Module 2: Algorithms | **Prerequisites:** Modules 0-1
+
+<div class="callout-key">
+
+**Key Concept Summary:** The Viterbi algorithm solves the **decoding problem**: Given observations $O = (o_1, ..., o_T)$ and model $\lambda$, find the most likely state sequence:
+
+</div>
+
 ## Introduction
 
 The Viterbi algorithm solves the **decoding problem**: Given observations $O = (o_1, ..., o_T)$ and model $\lambda$, find the most likely state sequence:
@@ -7,6 +15,12 @@ The Viterbi algorithm solves the **decoding problem**: Given observations $O = (
 $$S^* = \arg\max_S P(S | O, \lambda)$$
 
 This is different from computing marginal probabilities at each time step.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## The Key Insight
 
@@ -103,6 +117,12 @@ $$\psi_t(j) = \arg\max_i [\delta_{t-1}(i) \cdot a_{ij}]$$
 
 ### Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">viterbi_algorithm.py</span>
+</div>
+
 ```python
 def viterbi_algorithm(observations, pi, A, B):
     """
@@ -185,9 +205,17 @@ print("\nPsi (backtrack pointers):")
 print(psi)
 ```
 
+</div>
+
 ## Log-Space Implementation
 
 For numerical stability with long sequences:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">viterbi_log.py</span>
+</div>
 
 ```python
 def viterbi_log(observations, log_pi, log_A, log_B):
@@ -236,7 +264,15 @@ print(f"Log prob:  {log_prob:.4f}")
 print(f"Prob:      {np.exp(log_prob):.6e}")
 ```
 
+</div>
+
 ## Gaussian HMM Viterbi
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">viterbi_gaussian.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -354,7 +390,15 @@ accuracy = np.mean(np.array(decoded_path) == np.array(true_states))
 print(f"\nDecoding accuracy: {accuracy:.1%}")
 ```
 
+</div>
+
 ## Viterbi vs Forward-Backward
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_viterbi_forward_backward.py</span>
+</div>
 
 ```python
 def compare_viterbi_forward_backward(observations, pi, A, B):
@@ -425,7 +469,15 @@ gamma, viterbi, marginal = compare_viterbi_forward_backward(
 )
 ```
 
+</div>
+
 ## Applications in Finance
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_detection_with_viterbi.py</span>
+</div>
 
 ```python
 def regime_detection_with_viterbi():
@@ -505,6 +557,14 @@ def regime_detection_with_viterbi():
 regime_detection_with_viterbi()
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding the viterbi algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Viterbi finds the most likely state sequence** - not marginal maxima
@@ -518,3 +578,42 @@ regime_detection_with_viterbi()
 5. **Different from marginal probabilities** - Viterbi ensures valid transitions
 
 6. **Essential for regime detection** in financial applications
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the difference between the Viterbi path and the posterior state probabilities.
+
+2. When would you use Viterbi decoding vs. posterior decoding in a financial application?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_viterbi_algorithm_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_forward_backward_impl.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_forward_backward.md">
+  <div class="link-card-title">01 Forward Backward</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./03_baum_welch.md">
+  <div class="link-card-title">03 Baum Welch</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

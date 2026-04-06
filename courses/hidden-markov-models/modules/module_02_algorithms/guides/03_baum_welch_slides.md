@@ -33,6 +33,7 @@ $$\lambda^* = \arg\max_{\lambda} P(O|\lambda)$$
 # The Chicken-and-Egg Problem
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["To estimate parameters..."] --> B["Need to know which state<br>generated each observation"]
     C["To infer states..."] --> D["Need to know the<br>model parameters"]
@@ -40,6 +41,12 @@ flowchart TD
     D --> E
     E --> F["Solution: EM Algorithm<br>(Baum-Welch)"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: This framing is the most intuitive explanation of why EM is needed. We cannot compute state probabilities without parameters, and we cannot estimate parameters without state probabilities. EM breaks this circular dependency. -->
 ---
@@ -71,6 +78,7 @@ Each iteration **increases** (or keeps constant) the likelihood.
 # Baum-Welch Algorithm Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     INIT["Initialize parameters<br>pi, A, B randomly"] --> E["E-Step"]
     E --> FW["Forward pass -> alpha"]
@@ -86,6 +94,12 @@ flowchart TD
     CHECK -->|No| E
     CHECK -->|Yes| DONE["Return learned parameters"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: This detailed flow diagram shows the complete algorithm. The E-step uses forward-backward to compute gamma and xi. The M-step updates all parameters. The convergence check tests whether the log-likelihood has stabilized. -->
 ---
@@ -182,6 +196,12 @@ class BaumWelchHMM:
             self.continuous = True
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: The constructor initializes parameters randomly. For discrete emissions, B is a random stochastic matrix. For continuous emissions, means and standard deviations are initialized from the standard normal distribution. -->
 ---
 
@@ -207,6 +227,12 @@ def e_step(self, observations, alpha, beta):
 
     return gamma, xi
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: The E-step computes gamma and xi from alpha and beta. The small epsilon (1e-10) prevents division by zero. The triple nested loop for xi is O(T times K squared), matching the theoretical complexity. -->
 ---
@@ -313,6 +339,12 @@ alpha_t = 1e-100 * 0.3 * 0.01
 ```
 
 **Solution:**
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Use scaling factors
 alpha[t] /= scaling[t]
@@ -322,12 +354,20 @@ log_alpha[t] = logsumexp(...)
 
 </div>
 
+</div>
+
 <!-- Speaker notes: Numerical underflow in the forward-backward pass is the most common implementation bug. When sequence length exceeds about 100, raw probabilities underflow to zero. Scaling factors or log-space computation are essential for correctness. -->
 ---
 
 # Pitfall 3 — Model Selection
 
 More states always increase training likelihood but may **overfit**.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_bic.py</span>
+</div>
 
 ```python
 def compute_bic(log_likelihood, n_params, n_observations):
@@ -343,12 +383,15 @@ def select_num_states(observations, max_states=5):
         print(f"K={K}: BIC={bic:.2f}")
 ```
 
+</div>
+
 <!-- Speaker notes: Choosing the number of hidden states K is a model selection problem. Too few states underfit (miss important regime changes), too many overfit (detect noise as regimes). BIC penalizes complexity more heavily than AIC and is generally preferred for HMMs. -->
 ---
 
 # Model Selection Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     D["Data"] --> K2["Fit K=2"]
     D --> K3["Fit K=3"]
@@ -368,6 +411,12 @@ flowchart TD
 # Pitfall 4 — Poor Initialization
 
 Use K-means for smarter initial parameters:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">initialize_with_kmeans.py</span>
+</div>
 
 ```python
 from sklearn.cluster import KMeans
@@ -391,6 +440,8 @@ def initialize_with_kmeans(observations, n_states):
     return hmm
 ```
 
+</div>
+
 <!-- Speaker notes: K-means initialization is a practical technique that significantly improves convergence. By clustering observations first, we get reasonable initial emission parameters, and by counting transitions between cluster labels, we get a sensible initial transition matrix. -->
 ---
 
@@ -411,6 +462,7 @@ def initialize_with_kmeans(observations, n_states):
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     FB["Forward-Backward<br>Algorithm"] --> BW["Baum-Welch"]
     EM["EM Algorithm<br>(general framework)"] --> BW

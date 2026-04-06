@@ -43,6 +43,7 @@ $$b_k(o) = \frac{1}{(2\pi)^{d/2}|\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}(o - \mu
 # Gaussian HMM Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph States["Hidden States (Markov Chain)"]
         S1["State 1<br>Bull"] -->|a_12| S2["State 2<br>Bear"]
@@ -56,6 +57,12 @@ flowchart TD
     end
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: The architecture shows how hidden states follow a Markov chain at the top, and each state emits observations from its own Gaussian distribution. Bull markets have positive mean returns with low volatility, while bear markets have negative mean returns with high volatility. The overlap between these distributions is what makes states "hidden." -->
 
 ---
@@ -63,6 +70,7 @@ flowchart TD
 # Why Emissions Overlap Matters
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Bull["Bull State"]
         B["N(mu=+0.05, sigma=0.8)<br>Positive drift, low vol"]
@@ -76,6 +84,12 @@ flowchart TD
     B --> O
     Be --> O
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: A single observation like a return of 0.0 percent has non-zero probability under both bull and bear states. This is precisely why we need probabilistic inference algorithms like Forward-Backward and Viterbi -- we cannot deterministically assign observations to states. -->
 
@@ -101,6 +115,12 @@ returns[true_states == 0] = np.random.normal(0.05, 0.8, (true_states == 0).sum()
 returns[true_states == 1] = np.random.normal(-0.1, 1.5, (true_states == 1).sum())
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: This synthetic data generator creates a two-state market with realistic persistence. Bull states transition to bear with 2 percent probability per step, while bear transitions to bull with 5 percent probability. This creates persistent regimes that we can later try to recover with our HMM. -->
 
 ---
@@ -119,6 +139,12 @@ model.fit(returns.reshape(-1, 1))
 predicted_states = model.predict(returns.reshape(-1, 1))
 state_probs = model.predict_proba(returns.reshape(-1, 1))
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: hmmlearn provides production-ready HMM implementations. The key parameters are n_components (number of hidden states), covariance_type (how covariance matrices are parameterized), and n_iter (maximum EM iterations). The fit method runs Baum-Welch, predict runs Viterbi, and predict_proba gives posterior state probabilities. -->
 
@@ -165,6 +191,12 @@ class RegimeDetector:
 
 # Extracting Regime Statistics
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">get_regime_stats.py</span>
+</div>
+
 ```python
 def get_regime_stats(self):
     stats = {}
@@ -175,6 +207,8 @@ def get_regime_stats(self):
             'persistence': self.model.transmat_[idx, idx]}
     return stats
 ```
+
+</div>
 
 | Statistic | Bull | Bear |
 |-----------|------|------|
@@ -188,6 +222,12 @@ def get_regime_stats(self):
 ---
 
 # Model Selection with BIC
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_n_states.py</span>
+</div>
 
 ```python
 def select_n_states(returns, max_states=5):
@@ -204,6 +244,8 @@ def select_n_states(returns, max_states=5):
     return pd.DataFrame(results)
 ```
 
+</div>
+
 <!-- Speaker notes: BIC penalizes model complexity more heavily than AIC, which is generally preferred for HMM selection because it guards against overfitting. The parameter count includes initial distribution, transition matrix, means, and covariance parameters. Choose the model with the lowest BIC. -->
 
 ---
@@ -211,6 +253,7 @@ def select_n_states(returns, max_states=5):
 # Model Selection Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     D["Return Data"] --> F2["Fit K=2"]
     D --> F3["Fit K=3"]
@@ -231,6 +274,7 @@ flowchart TD
 # Covariance Type Selection
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CT{Covariance Type?}
     CT -->|Spherical| SP["1 param per state<br>Most constrained"]
@@ -260,6 +304,12 @@ flowchart TD
 
 # Real-World Regime Analysis
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regime_analysis.py</span>
+</div>
+
 ```python
 import yfinance as yf
 
@@ -279,6 +329,8 @@ def regime_analysis(ticker, start, end, n_states=2):
               f"days={mask.sum()}, pct={mask.mean():.1%}")
 ```
 
+</div>
+
 <!-- Speaker notes: This function downloads real market data and fits a Gaussian HMM to detect regimes. Annualizing daily returns multiplies the mean by 252 trading days and the standard deviation by the square root of 252. The output shows each regime's annualized return, volatility, number of days, and percentage of time spent in that regime. -->
 
 ---
@@ -286,6 +338,7 @@ def regime_analysis(ticker, start, end, n_states=2):
 # Regime Detection Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Raw Prices"] --> B["Compute Returns"]
     B --> C["Fit Gaussian HMM"]

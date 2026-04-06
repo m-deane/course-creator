@@ -45,6 +45,7 @@ $$b_k(\mathbf{o}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}_k|^{1/2}} \exp\lef
 # Multi-Feature Regime Concept
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Bull["Bull Regime"]
         BM["mu = [+return, low_vol, normal_volume]"]
@@ -63,6 +64,12 @@ flowchart TD
     Bear --> Data
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: In bear markets, all features tend to move together: returns drop, volatility spikes, and volume surges. This creates stronger correlations between features in the bear state. The covariance matrix per state captures this regime-dependent correlation structure, which is a major advantage over modeling features independently. -->
 
 ---
@@ -70,6 +77,7 @@ flowchart TD
 # Multivariate HMM Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph States["Hidden States"]
         S0["Bull"] -->|0.95| S0
@@ -86,6 +94,12 @@ flowchart TD
     S0 --> BE
     S1 --> BrE
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: This diagram shows a 2-state, 2-feature model. The transition probabilities are highly persistent (0.95 and 0.90 for self-transitions), reflecting the fact that market regimes tend to last for extended periods. Each state emits 2-dimensional observations from its own multivariate Gaussian. -->
 
@@ -110,6 +124,12 @@ class MultivariateGaussianHMM:
             observation, mean=self.means[state], cov=self.covars[state])
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: This custom class stores parameters explicitly for educational purposes. In production, use hmmlearn's GaussianHMM which handles numerical stability, scaling, and convergence automatically. The log-probability is used instead of raw probability to avoid numerical underflow when multiplying many small values. -->
 
 ---
@@ -131,6 +151,12 @@ model.set_parameters(
     ]
 )
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: The mean vectors encode that bull markets have positive returns with low volatility, while bear markets have negative returns with high volatility. The covariance matrices show that bear states have four times the variance and stronger cross-feature correlation, reflecting the well-known phenomenon that correlations increase during market stress. -->
 
@@ -160,6 +186,7 @@ model.set_parameters(
 # Covariance Selection Decision Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{"Enough data?"} -->|"N >> d^2"| FULL["Use Full covariance"]
     Q1 -->|"Limited data"| Q2{"Features correlated?"}
@@ -198,6 +225,12 @@ def count_parameters(n_states, n_features, cov_type):
 
 # Fitting with hmmlearn
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 from hmmlearn import hmm
 
@@ -214,11 +247,19 @@ if model.means_[0, 0] < model.means_[1, 0]:
     predicted_states = 1 - predicted_states
 ```
 
+</div>
+
 <!-- Speaker notes: When fitting multivariate data, ensure observations have shape T by d where T is the number of time steps and d is the number of features. After fitting, state labels may be swapped from run to run, so always align by comparing learned means. Here we check if the first feature's mean for state 0 is lower than state 1 and swap if needed. -->
 
 ---
 
 # Feature Engineering for HMMs
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">prepare_features.py</span>
+</div>
 
 ```python
 def prepare_features(prices, window=20):
@@ -237,6 +278,8 @@ def prepare_features(prices, window=20):
     return df[[f'{f}_std' for f in features]].values
 ```
 
+</div>
+
 > Always **standardize** features before fitting.
 
 <!-- Speaker notes: Feature engineering is critical for multivariate HMMs. We compute returns, rolling volatility, momentum, and price range, then standardize each to zero mean and unit variance. Standardization is essential because Gaussian HMMs are sensitive to scale differences between features. Without it, the feature with the largest variance would dominate the clustering. -->
@@ -246,6 +289,7 @@ def prepare_features(prices, window=20):
 # Feature Engineering Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     P["Raw Prices"] --> R["Returns"]
     P --> V["Volatility<br>(rolling std)"]
@@ -263,6 +307,12 @@ flowchart LR
 ---
 
 # Model Selection Grid Search
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">select_multivariate_hmm.py</span>
+</div>
 
 ```python
 def select_multivariate_hmm(observations, max_states=5):
@@ -283,6 +333,8 @@ def select_multivariate_hmm(observations, max_states=5):
     best = min(results, key=lambda x: x['bic'])
     return best
 ```
+
+</div>
 
 <!-- Speaker notes: The grid search tries all combinations of state count and covariance type. BIC balances model fit against complexity. For multivariate HMMs, this grid search is especially important because the parameter count grows quickly with the number of states and features. Run multiple random seeds for robustness. -->
 
@@ -306,6 +358,7 @@ def select_multivariate_hmm(observations, max_states=5):
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     UG["Univariate<br>Gaussian HMM"] --> MG["Multivariate<br>Gaussian HMM"]
     FE["Feature<br>Engineering"] --> MG

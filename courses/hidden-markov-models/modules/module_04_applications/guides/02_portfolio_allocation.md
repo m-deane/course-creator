@@ -1,5 +1,13 @@
 # Regime-Based Portfolio Allocation
 
+> **Reading time:** ~7 min | **Module:** Module 4: Applications | **Prerequisites:** Modules 0-3
+
+<div class="callout-key">
+
+**Key Concept Summary:** Market regimes have distinct risk-return characteristics. Optimal portfolio allocation should adapt to the current regime.
+
+</div>
+
 ## Introduction
 
 Market regimes have distinct risk-return characteristics. Optimal portfolio allocation should adapt to the current regime.
@@ -9,9 +17,21 @@ This guide covers:
 - Dynamic allocation strategies
 - Risk management with regime awareness
 
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
+
 ## Regime-Conditional Parameters
 
 ### Estimating Regime-Specific Statistics
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeawareportfolio.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -234,7 +254,15 @@ for r in range(2):
         print(f"    {asset}: {weight:.1%}")
 ```
 
+</div>
+
 ## Dynamic Allocation Strategy
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">dynamicregimeallocator.py</span>
+</div>
 
 ```python
 class DynamicRegimeAllocator:
@@ -368,7 +396,15 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Risk Management with Regimes
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeawareriskmanager.py</span>
+</div>
 
 ```python
 class RegimeAwareRiskManager:
@@ -501,6 +537,14 @@ scale = risk_manager.position_sizing(test_weights, max_var=0.02)
 print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding regime-based portfolio allocation is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Regime-specific parameters** differ significantly - optimize for each
@@ -514,3 +558,37 @@ print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 5. **Backtest rigorously** to validate regime-switching strategies
 
 6. **Transaction costs** matter for frequent rebalancing
+
+---
+
+## Conceptual Practice Questions
+
+1. How would you adjust portfolio allocation based on HMM regime probabilities?
+
+2. Why is regime-aware allocation potentially better than static mean-variance optimization?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_portfolio_allocation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_market_regimes.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_financial_applications.md">
+  <div class="link-card-title">01 Financial Applications</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

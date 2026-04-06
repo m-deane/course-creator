@@ -40,12 +40,19 @@ A = np.array([[0.0, 1.0],
 # Viterbi guarantees valid transitions: [0, 1, 0, 1]
 ```
 
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
+
 <!-- Speaker notes: This example demonstrates the problem concretely. With deterministic alternation, the marginal maximum at every time step might be the same state, but the resulting sequence has zero probability. Viterbi avoids this by tracking full paths. -->
 ---
 
 # Viterbi vs Marginal Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Marginal["Marginal Maximization"]
         M1["argmax P(q1|O)"] --> M2["argmax P(q2|O)"]
@@ -58,6 +65,12 @@ flowchart TD
         V3 --> VR["Guarantees valid<br>full sequence"]
     end
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: The side-by-side comparison shows the key difference: marginal maximization treats each time step independently and may violate transition constraints. Viterbi finds the globally optimal path that respects all constraints. -->
 ---
@@ -89,6 +102,7 @@ $$\psi_t(j) = \arg\max_i [\delta_{t-1}(i) \cdot a_{ij}]$$
 # Viterbi Trellis Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "t=1"
         S0_1["S0: delta_1(0)"]
@@ -116,6 +130,12 @@ flowchart LR
     S0_3 --> BT
     S1_3 --> BT
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 Bold arrows = chosen path (max). Dashed = alternative paths.
 
@@ -148,6 +168,12 @@ def viterbi_algorithm(observations, pi, A, B):
 
     return best_path, delta[T-1, best_path[T-1]], delta, psi
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: The implementation closely mirrors the forward algorithm. The key difference is argmax instead of sum when computing delta, plus the backtracking loop that recovers the optimal path from the psi pointers. -->
 ---
@@ -183,6 +209,12 @@ def viterbi_log(observations, log_pi, log_A, log_B):
 
 # Gaussian HMM Viterbi
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">viterbi_gaussian.py</span>
+</div>
+
 ```python
 def viterbi_gaussian(observations, pi, A, means, covars):
     T, K = len(observations), len(pi)
@@ -209,12 +241,15 @@ def viterbi_gaussian(observations, pi, A, means, covars):
     # Backtrack...
 ```
 
+</div>
+
 <!-- Speaker notes: For Gaussian emissions, we compute log emission probabilities from the normal distribution instead of looking up a discrete emission matrix. The rest of the algorithm is identical. -->
 ---
 
 # Viterbi Algorithm Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     I["Initialize:<br>delta_1(i) = pi_i * b_i(o_1)"] --> FP["Forward Pass"]
     FP --> |"For t=2..T"| R["delta_t(j) = max_i[delta_{t-1}(i) * a_ij] * b_j(o_t)<br>psi_t(j) = argmax_i[delta_{t-1}(i) * a_ij]"]
@@ -227,6 +262,12 @@ flowchart TD
 ---
 
 # Viterbi vs Forward-Backward Comparison
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compare_viterbi_forward_backward.py</span>
+</div>
 
 ```python
 def compare_viterbi_forward_backward(observations, pi, A, B):
@@ -242,6 +283,8 @@ def compare_viterbi_forward_backward(observations, pi, A, B):
     print(f"Viterbi path:  {viterbi_path}")
     print(f"Marginal path: {marginal_path}")
 ```
+
+</div>
 
 <!-- Speaker notes: This code demonstrates that the two methods can give different results. The forward-backward marginal path maximizes each time step independently, while Viterbi maximizes the entire sequence jointly. -->
 ---
@@ -269,6 +312,12 @@ def compare_viterbi_forward_backward(observations, pi, A, B):
 
 # Market Regime Detection
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # True parameters
 true_A = np.array([[0.9, 0.1], [0.1, 0.9]])
@@ -285,12 +334,15 @@ accuracy = np.mean(np.array(decoded_path) == np.array(true_states))
 print(f"Decoding accuracy: {accuracy:.1%}")
 ```
 
+</div>
+
 <!-- Speaker notes: This practical example shows Viterbi applied to synthetic market data. The accuracy metric compares decoded states to true states, giving a concrete measure of how well the algorithm recovers the hidden regime sequence. -->
 ---
 
 # Regime Detection Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     R["Raw Returns<br>+2%, -1%, +3%..."] --> GHMM["Gaussian HMM<br>Parameters"]
     GHMM --> VIT["Viterbi<br>Algorithm"]

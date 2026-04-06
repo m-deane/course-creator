@@ -19,6 +19,7 @@ math: mathjax
 # HMM Variant Landscape
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     STD[\"Standard HMM\"] --> STICKY[\"Sticky HMM\"]
     STD --> MSAR[\"Markov-Switching AR\"]
@@ -29,6 +30,12 @@ flowchart TD
     MSAR -->|\"Autocorrelated data\"| FIN
     HHMM -->|\"Multi-scale structure\"| FIN
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: This overview diagram shows the five variants covered in this deck, each addressing a specific limitation of the standard HMM. The financial applications column shows which variants are most relevant. -->
 ---
@@ -99,12 +106,19 @@ class StickyGaussianHMM:
         return self
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: The implementation is a simple post-processing step after standard HMM fitting. Self-transition probabilities are boosted by kappa, and off-diagonal probabilities are scaled down. Rows are renormalized to maintain row-stochasticity. -->
 ---
 
 # Stickiness Effect
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Standard[\"Standard HMM\"]
         S0A[\"Bull\"] -->|\"0.95\"| S0A
@@ -119,6 +133,12 @@ flowchart LR
         S1B -->|\"0.95\"| S1B
     end
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 > Stickiness parameter $\kappa$ controls the trade-off between responsiveness and stability.
 
@@ -167,6 +187,12 @@ results = fit_markov_switching_ar(y, k_regimes=2, order=1)
 smoothed_probs = results.smoothed_marginal_probabilities
 ```
 
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
+
 <!-- Speaker notes: The statsmodels implementation provides a production-ready MS-AR model. The switching_ar and switching_variance parameters control which coefficients change between regimes. -->
 ---
 
@@ -203,6 +229,7 @@ def regime_forecast(results, y, horizon=5):
 # MS-AR Forecasting Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA[\"Time Series\"] --> FIT[\"Fit MS-AR Model\"]
     FIT --> CP[\"Current Regime<br>Probabilities\"]
@@ -235,6 +262,7 @@ Observations                   e.g., Returns, Volatility
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Super[\"Super-States\"]
         EXP[\"Expansion\"]
@@ -280,6 +308,12 @@ class HierarchicalHMM:
 
 # Full Transition Matrix Construction
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">build_full_transition_matrix.py</span>
+</div>
+
 ```python
 def build_full_transition_matrix(self):
     A_full = np.zeros((self.n_total, self.n_total))
@@ -304,6 +338,8 @@ def build_full_transition_matrix(self):
     return A_full
 ```
 
+</div>
+
 <!-- Speaker notes: The full transition matrix combines super-state transitions with sub-state transitions. Within a super-state, sub-state transitions are governed by the sub-state transition matrix. Cross-super-state transitions reset the sub-state uniformly. -->
 ---
 
@@ -320,6 +356,12 @@ Include external information that affects emissions:
 
 $$P(o_t | s_t, x_t) = \mathcal{N}(\mu_{s_t} + W_{s_t} x_t, \sigma_{s_t}^2)$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">inputoutputhmm.py</span>
+</div>
+
 ```python
 class InputOutputHMM:
     def __init__(self, n_states, n_inputs):
@@ -331,6 +373,8 @@ class InputOutputHMM:
                                            inputs)
         return stats.norm.pdf(observation, mean, self.stds[state])
 ```
+
+</div>
 
 > Use cases: macro indicators, sentiment scores, or sector signals as inputs.
 
@@ -347,6 +391,12 @@ class InputOutputHMM:
 # Beyond Geometric Durations
 
 Standard HMMs have **geometric** state duration distributions. Explicit duration models allow **arbitrary** distributions:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">explicitdurationhmm.py</span>
+</div>
 
 ```python
 class ExplicitDurationHMM:
@@ -366,12 +416,15 @@ class ExplicitDurationHMM:
                 self.duration_probs[state].sum()
 ```
 
+</div>
+
 <!-- Speaker notes: Standard HMMs have geometric state duration distributions, which means the most likely duration is always 1. Duration-dependent HMMs allow arbitrary duration distributions like Poisson, which have a mode at lambda. -->
 ---
 
 # Duration Distribution Comparison
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Geometric[\"Standard HMM\"]
         G[\"P(d) = (1-p)^(d-1) * p\"]
@@ -410,6 +463,7 @@ flowchart LR
 # Choosing the Right Variant
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     Q1{\"States switch<br>too often?\"} -->|Yes| STICKY[\"Sticky HMM\"]
     Q1 -->|No| Q2{\"Data is<br>autocorrelated?\"}
@@ -444,6 +498,7 @@ flowchart TD
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     STD[\"Standard<br>HMM\"] --> EXT[\"Extensions\"]
     EXT --> STICKY[\"Sticky\"]

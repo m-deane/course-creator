@@ -29,6 +29,7 @@ Given an HMM $\lambda$ and observations $O = o_1, ..., o_T$, compute $P(O | \lam
 # Why Naive Enumeration Fails
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["All possible state sequences"] --> B["K^T sequences"]
     B --> C["K=2, T=100"]
@@ -39,6 +40,12 @@ flowchart TD
     G --> H["100 x 4 = 400 operations"]
     H --> I["Trivial computation"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: The numbers are stark: 2 to the power of 100 is astronomical, but 100 times 4 equals 400. This factor of 10 to the 27 reduction comes entirely from the dynamic programming structure enabled by the Markov property. -->
 ---
@@ -69,6 +76,7 @@ $$P(O | \lambda) = \sum_{i=1}^{K} \alpha_T(i)$$
 # Forward Algorithm Trellis
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph "t=1"
         S0_1["State 0<br>alpha_1(0)"]
@@ -91,6 +99,12 @@ flowchart LR
     S1_2 -->|a_10| S0_3
     S1_2 -->|a_11| S1_3
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 Each node sums **all incoming paths** weighted by transition and emission probabilities.
 
@@ -119,6 +133,12 @@ def forward(observations, pi, A, B):
     return alpha, np.log(likelihood)
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 <!-- Speaker notes: This is the core Forward algorithm in about 10 lines of code. The key line is the induction: alpha[t,j] sums alpha[t-1] times A[:,j] (all transitions into state j) and multiplies by the emission probability B[j, o_t]. -->
 ---
 
@@ -145,6 +165,12 @@ def forward_scaled(observations, pi, A, B):
     log_likelihood = np.sum(np.log(scaling))
     return alpha, scaling, log_likelihood
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: Scaling prevents numerical underflow by normalizing alpha at each time step. The scaling factors are saved for later use in the Backward algorithm and for computing the log-likelihood as the sum of log scaling factors. -->
 ---
@@ -173,6 +199,7 @@ $$\beta_t(i) = \sum_{j=1}^{K} a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)$$
 # Forward vs Backward Direction
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph Forward["Forward (alpha): Past -> Present"]
         direction LR
@@ -193,6 +220,12 @@ flowchart LR
 
 # Backward Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">backward.py</span>
+</div>
+
 ```python
 def backward(observations, A, B):
     T, K = len(observations), A.shape[0]
@@ -209,6 +242,8 @@ def backward(observations, A, B):
             )
     return beta
 ```
+
+</div>
 
 <!-- Speaker notes: The backward algorithm mirrors the forward algorithm but runs in reverse. Starting from beta_T equals 1, each step incorporates the next observation's emission probability and the transition matrix. -->
 ---
@@ -242,6 +277,12 @@ $$\xi_t(i, j) = \frac{\alpha_t(i) \cdot a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t
 
 # Computing Posteriors
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">compute_posteriors.py</span>
+</div>
+
 ```python
 def compute_posteriors(observations, pi, A, B):
     T, K = len(observations), len(pi)
@@ -264,6 +305,8 @@ def compute_posteriors(observations, pi, A, B):
 
     return gamma, xi
 ```
+
+</div>
 
 <!-- Speaker notes: This implementation computes both gamma and xi from the scaled forward and backward variables. The normalization ensures that gamma sums to 1 across states at each time step, and xi sums to 1 across state pairs. -->
 ---
@@ -296,6 +339,12 @@ def compute_posteriors(observations, pi, A, B):
 
 # Log-Space Vectorized Implementation
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">forward_vectorized.py</span>
+</div>
+
 ```python
 def forward_vectorized(observations, pi, A, B):
     T, K = len(observations), len(pi)
@@ -316,12 +365,15 @@ def forward_vectorized(observations, pi, A, B):
     return np.exp(log_alpha), log_likelihood
 ```
 
+</div>
+
 <!-- Speaker notes: The log-space implementation uses logsumexp for numerical stability. This avoids the need for scaling factors but requires careful implementation. The logsumexp function computes log(sum(exp(x))) without overflow. -->
 ---
 
 # Forward-Backward in the EM Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A["Observations O"] --> F["Forward Pass<br>Compute alpha"]
     A --> B["Backward Pass<br>Compute beta"]

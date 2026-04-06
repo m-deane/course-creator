@@ -21,6 +21,7 @@ math: mathjax
 Market regimes have **distinct risk-return characteristics**. Static allocation ignores this:
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Static[\"Static Allocation\"]
         SA[\"60/40 stocks/bonds<br>Always the same\"]
@@ -34,6 +35,12 @@ flowchart TD
     end
     Dynamic -->|\"Better risk-adjusted<br>returns\"| RESULT[\"Improved Sharpe\"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Static 60/40 allocation ignores the fact that expected returns and risks change dramatically between regimes. Dynamic allocation adapts to the current regime, improving risk-adjusted returns. -->
 ---
@@ -61,6 +68,12 @@ class RegimeAwarePortfolio:
         return self
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: This class combines regime detection with portfolio optimization. The regime model is fit on a reference asset (typically the equity index), and regime-specific parameters are estimated for all assets. -->
 ---
 
@@ -83,6 +96,12 @@ def estimate_regime_parameters(self):
     return self
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 > Annualize parameters: multiply mean by 252, covariance by 252, std by $\sqrt{252}$.
 
 <!-- Speaker notes: For each regime, we compute annualized means and covariances from the observations assigned to that regime. The annualization factors are 252 for mean and 252 for covariance. -->
@@ -91,6 +110,7 @@ def estimate_regime_parameters(self):
 # Portfolio Optimization Pipeline
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     DATA[\"Multi-Asset Returns\"] --> FIT[\"Fit HMM<br>(reference asset)\"]
     FIT --> REGIMES[\"Identify Regimes\"]
@@ -102,6 +122,12 @@ flowchart TD
     BEAR_W --> BLEND
     BLEND --> ALLOC[\"Current Allocation\"]
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: This flow diagram shows the complete workflow: fit HMM, identify regimes, estimate per-regime parameters, optimize portfolios per regime, blend by probability, and get the final allocation. -->
 ---
@@ -235,6 +261,7 @@ class DynamicRegimeAllocator:
 # Dynamic Allocation Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     T0[\"t=0\"] --> FIT[\"Fit HMM\"]
     FIT --> LOOP{\"Each Rebalance<br>Period\"}
@@ -297,6 +324,12 @@ def backtest(self, min_history=100, rebalance_freq=5):
 
 # Regime-Conditional VaR
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">regimeawareriskmanager.py</span>
+</div>
+
 ```python
 class RegimeAwareRiskManager:
     def regime_conditional_var(self, weights, confidence=0.95):
@@ -312,12 +345,15 @@ class RegimeAwareRiskManager:
         return var_by_regime
 ```
 
+</div>
+
 <!-- Speaker notes: VaR conditioned on the current regime provides more accurate risk estimates than unconditional VaR. In bear regimes, the VaR is significantly larger, reflecting the higher risk environment. -->
 ---
 
 # Risk Management Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     WEIGHTS[\"Portfolio Weights\"] --> RVAR[\"Regime-Conditional VaR\"]
     PROBS[\"Regime Probabilities\"] --> EVAR[\"Expected VaR\"]
@@ -338,6 +374,12 @@ flowchart TD
 ---
 
 # Stress Testing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">stress_test.py</span>
+</div>
 
 ```python
 def stress_test(self, weights, scenario='bear_regime'):
@@ -360,10 +402,18 @@ def stress_test(self, weights, scenario='bear_regime'):
     }
 ```
 
+</div>
+
 <!-- Speaker notes: Stress tests use bear regime parameters to simulate worst-case scenarios. The 1, 2, and 3-sigma scenarios correspond to approximately 68, 95, and 99.7 percent of outcomes under the bear regime. -->
 ---
 
 # Conservative Position Sizing
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">position_sizing.py</span>
+</div>
 
 ```python
 def position_sizing(self, weights, max_var=0.02, confidence=0.95):
@@ -380,6 +430,8 @@ def position_sizing(self, weights, max_var=0.02, confidence=0.95):
     scale = max_var / (z_score * port_vol)
     return min(scale, 1.0)  # Cap at 100%
 ```
+
+</div>
 
 > Use the **highest-volatility regime** for conservative position sizing.
 
@@ -405,6 +457,7 @@ def position_sizing(self, weights, max_var=0.02, confidence=0.95):
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     RD[\"Regime<br>Detection\"] --> RP[\"Regime<br>Parameters\"]
     RP --> MVO[\"Mean-Variance<br>Optimization\"]

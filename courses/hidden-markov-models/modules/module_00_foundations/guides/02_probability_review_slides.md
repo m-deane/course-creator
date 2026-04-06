@@ -43,12 +43,19 @@ $$P(\text{observation}|\text{state}) \xrightarrow{\text{Bayes'}} P(\text{state}|
 # Bayes' Theorem Flow in HMMs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["P(observation | state)<br><b>Emission Model</b>"] --> B["Bayes' Theorem"]
     C["P(state)<br><b>Prior / Transition</b>"] --> B
     D["P(observation)<br><b>Marginal</b>"] --> B
     B --> E["P(state | observation)<br><b>Posterior</b>"]
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: Walk through each arrow in the diagram. The emission model gives us P(observation given state), the transition model gives P(state), and Bayes' theorem combines them to give P(state given observation). This is exactly what the Forward-Backward algorithm computes. -->
 ---
@@ -130,6 +137,7 @@ Answer:   P(S1,S2,S3 | O1,O2,O3) <-- Bayes' theorem!
 # Probability Flow in an HMM
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     subgraph Hidden["Hidden Layer"]
         S1["State 1"] -->|"P(S2|S1)"| S2["State 2"]
@@ -144,6 +152,12 @@ flowchart TD
     S2 -->|"P(O2|S2)"| O2
     S3 -->|"P(O3|S3)"| O3
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: This Mermaid diagram formalizes the HMM graphical model. Horizontal arrows are transition probabilities P(S2 given S1), vertical arrows are emission probabilities P(O1 given S1). The conditional independence structure enables efficient dynamic programming. -->
 ---
@@ -188,6 +202,12 @@ def conditional_probability(
     return joint_prob / condition_prob
 ```
 
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
+
 ```python
 def bayes_theorem(
     likelihood, prior, marginal
@@ -214,6 +234,12 @@ def total_probability(conditional_probs, partition_probs):
     """
     return np.dot(conditional_probs, partition_probs)
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: The total probability function is a simple dot product, which is exactly what the Forward algorithm computes at each time step: sum over states of alpha times transition times emission. -->
 ---
@@ -285,6 +311,12 @@ class DiscreteProbDist:
 
 # Continuous Distributions — Gaussian
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">gaussiandistribution.py</span>
+</div>
+
 ```python
 from scipy import stats
 
@@ -304,6 +336,8 @@ class GaussianDistribution:
 bull_returns = GaussianDistribution(mean=0.05, variance=0.01)
 bear_returns = GaussianDistribution(mean=-0.03, variance=0.04)
 ```
+
+</div>
 
 <!-- Speaker notes: The Gaussian distribution is the emission model for continuous HMMs, which we will use extensively in Module 03. The log_likelihood method is critical for numerical stability when evaluating long observation sequences. -->
 ---
@@ -330,6 +364,7 @@ Always use **Bayes' theorem** to flip conditional probabilities.
 - Rare events need **strong evidence** to become probable
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A["Strong Likelihood<br>P(evidence|rare event) = high"] --> C{Posterior?}
     B["Low Prior<br>P(rare event) = low"] --> C
@@ -345,12 +380,26 @@ Multiplying many small probabilities leads to **zero** (underflow).
 
 <div class="columns">
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # BAD: underflow
 probs = [0.01] * 100
 product = np.prod(probs)
 # --> 0.0 (underflow!)
 ```
+
+</div>
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
 
 ```python
 # GOOD: log-space
@@ -359,6 +408,8 @@ log_product = np.sum(log_probs)
 product = np.exp(log_product)
 # --> accurate result
 ```
+
+</div>
 
 </div>
 
@@ -397,6 +448,7 @@ $$P(\text{Bull}|\text{+return}) = \frac{0.7 \times 0.6}{0.54} \approx 77.8\%$$
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     CP["Conditional Probability"] --> BT["Bayes' Theorem"]
     LTP["Law of Total Probability"] --> BT

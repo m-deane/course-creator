@@ -18,6 +18,7 @@ math: mathjax
 # From Markov Chains to HMMs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     subgraph MC["Standard Markov Chain"]
         S1a["State 1"] --> S2a["State 2"] --> S3a["State 3"]
@@ -30,6 +31,12 @@ flowchart LR
         S3b -.->|emit| O3["Obs 3"]
     end
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 In an HMM, states are **hidden** and we only observe **emissions**.
 
@@ -67,6 +74,7 @@ An HMM $\lambda = (A, B, \pi)$ consists of:
 # Three Problems Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     D["Data: Observations O"] --> E{Which Problem?}
     E -->|Evaluation| F["P(O|lambda)<br>Forward Algorithm"]
@@ -76,6 +84,12 @@ flowchart TD
     G --> RI["Regime Identification"]
     H --> MT["Model Training"]
 ```
+
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
 
 <!-- Speaker notes: The decision flowchart shows when to use each algorithm. Start with the data and the question you want to answer. This helps practitioners select the right tool for their specific task. -->
 ---
@@ -96,6 +110,12 @@ class HMMParams:
     def n_states(self) -> int:
         return len(self.pi)
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 <!-- Speaker notes: The dataclass provides a clean container for HMM parameters. The property n_states is derived from pi, avoiding redundant specification. This pattern is used throughout the codebase. -->
 ---
@@ -121,6 +141,12 @@ class DiscreteHMM:
         self.B = np.random.dirichlet(np.ones(self.n_symbols),
                                       size=self.n_states)
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: The Dirichlet distribution generates random probability vectors (each sums to 1), making it ideal for initializing pi, A, and B. Random initialization is the starting point for Baum-Welch training. -->
 ---
@@ -151,6 +177,12 @@ def generate(self, length):
 
 # Example — Weather HMM
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">example.py</span>
+</div>
+
 ```python
 # Hidden states: Sunny (0), Rainy (1)
 # Observations: Walk (0), Shop (1), Clean (2)
@@ -167,12 +199,15 @@ params = HMMParams(pi=pi, A=A, B=B)
 hmm = DiscreteHMM(n_states=2, n_symbols=3, params=params)
 ```
 
+</div>
+
 <!-- Speaker notes: The weather HMM is the classic textbook example. Two states (Sunny, Rainy) with three observation symbols (Walk, Shop, Clean). The parameters are chosen to make the example intuitive: sunny days favor walking, rainy days favor cleaning. -->
 ---
 
 # Weather HMM State Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> Sunny: pi=0.6
     [*] --> Rainy: pi=0.4
@@ -209,6 +244,12 @@ For state sequence $Q$ and observations $O$:
 
 $$P(O, Q | \lambda) = \pi_{q_1} \cdot b_{q_1}(o_1) \cdot \prod_{t=2}^{T} a_{q_{t-1}, q_t} \cdot b_{q_t}(o_t)$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">joint_probability.py</span>
+</div>
+
 ```python
 def joint_probability(hmm, states, observations):
     """Compute joint probability P(O, Q | lambda)."""
@@ -219,10 +260,18 @@ def joint_probability(hmm, states, observations):
     return prob
 ```
 
+</div>
+
 <!-- Speaker notes: The joint probability formula factorizes using the Markov and output independence assumptions. This is the quantity that all three algorithms ultimately compute or optimize. Understanding this factorization is essential for understanding the algorithms. -->
 ---
 
 # Log Probability for Numerical Stability
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">log_joint_probability.py</span>
+</div>
 
 ```python
 def log_joint_probability(hmm, states, observations):
@@ -236,6 +285,8 @@ def log_joint_probability(hmm, states, observations):
 
     return log_prob
 ```
+
+</div>
 
 > Always use **log probabilities** for sequences longer than ~20 steps.
 
@@ -271,6 +322,7 @@ $$P(o_t | q_T, ..., q_1, o_{t-1}, ..., o_1) = P(o_t | q_t)$$
 # Graphical Model Representation
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     q1["q1"] --> q2["q2"] --> q3["q3"] --> q4["q4"]
     q1 --> o1["o1"]
@@ -343,6 +395,7 @@ Arrows indicate conditional dependencies. Blue = hidden, Green = observed.
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     MC["Markov Chains<br>(Module 00)"] --> HMM["HMM Definition"]
     PR["Probability Review<br>(Module 00)"] --> HMM

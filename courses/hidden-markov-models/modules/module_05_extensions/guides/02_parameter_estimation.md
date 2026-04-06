@@ -1,10 +1,24 @@
 # HMM Parameter Estimation: The Baum-Welch Algorithm
 
+> **Reading time:** ~7 min | **Module:** Module 5: Extensions | **Prerequisites:** Modules 0-4
+
+<div class="callout-key">
+
+**Key Concept Summary:** Given observations, how do we learn the HMM parameters $\lambda = (\pi, A, B)$?
+
+</div>
+
 ## Introduction
 
 Given observations, how do we learn the HMM parameters $\lambda = (\pi, A, B)$?
 
 The **Baum-Welch algorithm** (Expectation-Maximization for HMMs) iteratively improves parameters to maximize likelihood.
+
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## The Learning Problem
 
@@ -27,6 +41,12 @@ Given current parameters, compute:
 ### M-Step: Update Parameters
 
 Update parameters using expected statistics.
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">baumwelchtrainer.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -358,7 +378,15 @@ plt.tight_layout()
 plt.show()
 ```
 
+</div>
+
 ## Multiple Random Restarts
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">fit_with_restarts.py</span>
+</div>
 
 ```python
 def fit_with_restarts(observations, n_states, n_restarts=10):
@@ -395,9 +423,17 @@ def fit_with_restarts(observations, n_states, n_restarts=10):
 best_model, best_ll = fit_with_restarts(observations, n_states=2, n_restarts=5)
 ```
 
+</div>
+
 ## Practical Considerations
 
 ### Avoiding Local Minima
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">discuss_training_issues.py</span>
+</div>
 
 ```python
 def discuss_training_issues():
@@ -449,7 +485,15 @@ PRACTICAL TIPS:
 discuss_training_issues()
 ```
 
+</div>
+
 ### Using hmmlearn
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">train_with_hmmlearn.py</span>
+</div>
 
 ```python
 from hmmlearn import hmm
@@ -485,6 +529,14 @@ def train_with_hmmlearn(observations, n_states=2):
 hmmlearn_model = train_with_hmmlearn(observations)
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding hmm parameter estimation is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Baum-Welch is EM for HMMs** - E-step computes state probabilities, M-step updates parameters
@@ -498,3 +550,37 @@ hmmlearn_model = train_with_hmmlearn(observations)
 5. **hmmlearn** provides robust, production-ready implementation
 
 6. **Initialization matters** - use k-means or domain knowledge
+
+---
+
+## Conceptual Practice Questions
+
+1. What are the three parameter matrices in a Gaussian HMM and what does each control?
+
+2. Why is the number of hidden states a hyperparameter rather than a learned parameter?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./02_parameter_estimation_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_hhmm_implementation.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./01_advanced_hmms.md">
+  <div class="link-card-title">01 Advanced Hmms</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

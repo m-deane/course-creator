@@ -1,5 +1,13 @@
 # Markov Chains Foundations
 
+> **Reading time:** ~6 min | **Module:** Module 0: Foundations | **Prerequisites:** Basic linear algebra, Python
+
+<div class="callout-key">
+
+**Key Concept Summary:** A Markov chain is a stochastic process where future states depend only on the current state—not the past.
+
+</div>
+
 ## What is a Markov Chain?
 
 A Markov chain is a stochastic process where future states depend only on the current state—not the past.
@@ -8,11 +16,31 @@ A Markov chain is a stochastic process where future states depend only on the cu
 
 $$P(X_{t+1} | X_t, X_{t-1}, ..., X_1) = P(X_{t+1} | X_t)$$
 
-> 💡 **Key Insight:** "The future is independent of the past, given the present." This memorylessness property is what makes Markov chains tractable — you only need to track the current state, not the entire history.
+<div class="callout-insight">
+
+**Insight:** "The future is independent of the past, given the present." This memorylessness property is what makes Markov chains tractable — you only need to track the current state, not the entire history.
+
+</div>
+<div class="callout-warning">
+
+**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
+
+</div>
 
 ## Formal Definition
 
 A discrete-time Markov chain consists of:
+
+<div class="flow">
+<div class="flow-step mint">1. State space</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step blue">2. Transition matrix</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step amber">3. Initial distribution</div>
+<div class="flow-arrow">&#8594;</div>
+<div class="flow-step lavender">4. Ergodicity</div>
+</div>
+
 
 1. **State space** $S = \{s_1, s_2, ..., s_K\}$
 2. **Transition matrix** $A$ where $a_{ij} = P(X_{t+1} = s_j | X_t = s_i)$
@@ -176,6 +204,12 @@ The rate of convergence to the stationary distribution depends on the **second l
 
 $$\|\pi_t - \pi^*\| \leq C \cdot |\lambda_2|^t$$
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">convergence_rate.py</span>
+</div>
+
 ```python
 def convergence_rate(mc: MarkovChain) -> float:
     """Compute convergence rate (second largest eigenvalue magnitude)."""
@@ -188,9 +222,17 @@ print(f"Convergence rate: {rate:.4f}")
 print(f"Half-life: {np.log(2) / np.log(1/rate):.1f} steps")
 ```
 
+</div>
+
 ## Expected Hitting Times
 
 The expected number of steps to reach state $j$ starting from state $i$:
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">expected_hitting_time.py</span>
+</div>
 
 ```python
 def expected_hitting_time(mc: MarkovChain, target_state: int) -> np.ndarray:
@@ -224,9 +266,17 @@ hitting = expected_hitting_time(mc, target_state=1)
 print(f"Expected steps to Bear from Bull: {hitting[0]:.1f}")
 ```
 
+</div>
+
 ## Estimating Transition Probabilities
 
 ### Maximum Likelihood Estimation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">estimate_transitions.py</span>
+</div>
 
 ```python
 def estimate_transitions(states: List[int], n_states: int) -> np.ndarray:
@@ -253,7 +303,15 @@ print("\nTrue transition matrix:")
 print(mc.A)
 ```
 
+</div>
+
 ### Bayesian Estimation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bayesian_transitions.py</span>
+</div>
 
 ```python
 def bayesian_transitions(
@@ -291,7 +349,15 @@ def bayesian_transitions(
     return mean, ci_lower, ci_upper
 ```
 
+</div>
+
 ## Visualization
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">plot_markov_chain.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -334,6 +400,14 @@ def plot_markov_chain(mc: MarkovChain, simulation: List[int] = None):
 plot_markov_chain(mc, states[:100])
 ```
 
+</div>
+
+<div class="callout-insight">
+
+**Insight:** Understanding markov chains foundations is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
+
+</div>
+
 ## Key Takeaways
 
 1. **Markov property** enables tractable analysis of sequential data
@@ -345,3 +419,42 @@ plot_markov_chain(mc, states[:100])
 4. **Ergodicity** ensures convergence to unique equilibrium
 
 5. **MLE estimation** is straightforward from observed sequences
+
+---
+
+## Conceptual Practice Questions
+
+1. Explain the Markov property in your own words. Why does it make sequential modeling tractable?
+
+2. If a transition matrix has rows [0.9, 0.1] and [0.3, 0.7], what is the expected duration of each state?
+
+<div class="callout-info">
+
+**Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
+
+</div>
+
+---
+
+## Cross-References
+
+<a class="link-card" href="./01_markov_chains_slides.md">
+  <div class="link-card-title">Companion Slides</div>
+  <div class="link-card-description">Slide deck covering the same material in presentation format with visual diagrams.</div>
+</a>
+
+<a class="link-card" href="../notebooks/01_markov_chain_basics.ipynb">
+  <div class="link-card-title">Hands-on Notebook</div>
+  <div class="link-card-description">Interactive Jupyter notebook with working implementations and exercises.</div>
+</a>
+
+<a class="link-card" href="./02_probability_review.md">
+  <div class="link-card-title">02 Probability Review</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+
+<a class="link-card" href="./02_transition_matrices.md">
+  <div class="link-card-title">02 Transition Matrices</div>
+  <div class="link-card-description">Related guide in this module.</div>
+</a>
+

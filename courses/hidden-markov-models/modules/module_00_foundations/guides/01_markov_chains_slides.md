@@ -33,6 +33,7 @@ $$P(X_{t+1} | X_t, X_{t-1}, ..., X_1) = P(X_{t+1} | X_t)$$
 # Markov Chain State Diagram
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 stateDiagram-v2
     [*] --> Bull
     Bull --> Bull: 0.95
@@ -40,6 +41,12 @@ stateDiagram-v2
     Bear --> Bull: 0.15
     Bear --> Bear: 0.85
 ```
+
+<div class="callout-key">
+
+Key implementation detail -- study this pattern carefully.
+
+</div>
 
 <!-- Speaker notes: This state diagram shows a two-state market regime model. Bull markets are highly persistent with a 95 percent self-transition probability, meaning they last on average 20 days. Bear markets are less persistent at 85 percent, lasting about 6.7 days on average. The asymmetry reflects the empirical observation that bull markets tend to be longer than bear markets. -->
 
@@ -94,6 +101,12 @@ class MarkovChain:
         assert np.all(self.A >= 0), "Probabilities must be non-negative"
 ```
 
+<div class="callout-insight">
+
+This pattern recurs throughout the course. Understanding it deeply pays dividends later.
+
+</div>
+
 <!-- Speaker notes: The constructor validates the three constraints on the transition matrix: square shape, row-stochastic, and non-negative entries. These assertions catch common errors like accidentally transposing the matrix or providing un-normalized probabilities. The state_names parameter makes output human-readable. -->
 
 ---
@@ -117,6 +130,12 @@ def simulate(self, n_steps, initial_state=None,
             self.n_states, p=self.A[states[-1]]))
     return states
 ```
+
+<div class="callout-warning">
+
+Watch for edge cases with this implementation in production use.
+
+</div>
 
 **Analysis:**
 ```python
@@ -149,6 +168,12 @@ print(f"Simulated states: {states[:20]}...")
 pi = mc.stationary_distribution()
 print(f"Stationary distribution: Bull={pi[0]:.2%}, Bear={pi[1]:.2%}")
 ```
+
+<div class="callout-info">
+
+This approach follows established best practices in the field.
+
+</div>
 
 <!-- Speaker notes: With these parameters, the stationary distribution gives about 75 percent time in bull and 25 percent in bear, computed as pi_bull equals 0.15 divided by 0.05 plus 0.15. This matches the intuition: bear markets transition to bull three times faster than bull transitions to bear, so the chain spends more time in bull. -->
 
@@ -186,6 +211,7 @@ def verify_stationary(mc: MarkovChain):
 # Stationary Distribution Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     A[Start with any<br>initial distribution] --> B[Multiply by A<br>repeatedly]
     B --> C[Distribution<br>converges]
@@ -270,6 +296,12 @@ print(f"Half-life: {np.log(2) / np.log(1/rate):.1f} steps")
 
 The expected number of steps to reach state $j$ from state $i$:
 
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">expected_hitting_time.py</span>
+</div>
+
 ```python
 def expected_hitting_time(mc, target_state):
     n = mc.n_states
@@ -284,6 +316,8 @@ def expected_hitting_time(mc, target_state):
     return result
 ```
 
+</div>
+
 <!-- Speaker notes: The expected hitting time from state i to state j is found by solving a system of linear equations derived from the first-step analysis. We remove the target state from the system and solve for the expected number of steps from each remaining state. This is useful in finance for answering questions like: if we are in a bear market, how long on average until we return to a bull market? -->
 
 ---
@@ -297,6 +331,12 @@ def expected_hitting_time(mc, target_state):
 ---
 
 # Maximum Likelihood Estimation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">estimate_transitions.py</span>
+</div>
 
 ```python
 def estimate_transitions(states: List[int], n_states: int) -> np.ndarray:
@@ -313,11 +353,19 @@ print("Estimated transition matrix:")
 print(estimated_A)
 ```
 
+</div>
+
 <!-- Speaker notes: MLE for Markov chains simply counts the number of times each transition i to j occurs and divides by the total number of transitions from state i. This is the maximum likelihood estimator under the multinomial model. The guard against zero row sums prevents division by zero for states never visited, which can happen with short sequences or many states. -->
 
 ---
 
 # Bayesian Estimation
+
+<div class="code-window">
+<div class="code-header">
+<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+<span class="filename">bayesian_transitions.py</span>
+</div>
 
 ```python
 def bayesian_transitions(states, n_states, prior_alpha=1.0):
@@ -340,6 +388,8 @@ def bayesian_transitions(states, n_states, prior_alpha=1.0):
     return mean, ci_lower, ci_upper
 ```
 
+</div>
+
 <!-- Speaker notes: Bayesian estimation adds a Dirichlet prior with parameter alpha to the transition counts. With alpha equals 1, this is equivalent to Laplace smoothing and produces the posterior mean. The credible intervals quantify uncertainty in each transition probability. This is particularly useful with small samples where MLE may be unreliable. The Dirichlet is the conjugate prior for the multinomial, making the posterior analytically tractable. -->
 
 ---
@@ -347,6 +397,7 @@ def bayesian_transitions(states, n_states, prior_alpha=1.0):
 # MLE vs Bayesian Estimation Flow
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart TD
     A[Observed State Sequence] --> B[Count Transitions]
     B --> C{Method?}
@@ -380,6 +431,7 @@ flowchart TD
 # Connections
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     MC[Markov Chains] --> TM[Transition Matrices]
     MC --> SD[Stationary Distributions]

@@ -71,6 +71,7 @@ DEAP's toolbox pattern is what makes it powerful for research and prototyping. W
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -97,6 +98,7 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">setup_toolbox.py</span>
+</div>
 
 ```python
 def setup_toolbox(n_features: int, X: np.ndarray, y: np.ndarray):
@@ -242,6 +244,7 @@ print(f"Best fitness: {result['fitness']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">custom_ga.py</span>
+</div>
 
 ```python
 def custom_ga(
@@ -349,13 +352,11 @@ def custom_ga(
 
 <strong>Danger:</strong> DEAP's creator.create() modifies global state. Calling it twice with the same name (e.g., "FitnessMin") raises an error. In notebooks, restart the kernel or add a guard: if not hasattr(creator, "FitnessMin").
 
-</div>
 
 <div class="callout-warning">
 
 ⚠️ **Warning:** Never use standard `cross_val_score` with default `KFold` for time series data. Always pass a `TimeSeriesSplit` splitter to prevent look-ahead bias, which produces unrealistically optimistic fitness estimates.
 
-</div>
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit
@@ -502,7 +503,6 @@ plot_evolution(result['history'])
 
 6. **Parameter choices matter** -- pop_size, mutation_rate, crossover_prob, and tournament_size interact as a system, not independently
 
-</div>
 
 ## Practice Problems
 

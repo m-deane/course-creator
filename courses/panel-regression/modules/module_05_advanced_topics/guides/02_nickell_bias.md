@@ -42,6 +42,7 @@ The problem: $\tilde{y}_{i,t-1}$ is correlated with $\tilde{\epsilon}_{it}$ beca
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -171,6 +172,7 @@ Key insights:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_bias_magnitude():
@@ -243,6 +245,7 @@ Use deeper lags as instruments for the differenced equation.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -320,8 +323,6 @@ ah_est, ah_model = anderson_hsiao(df_dyn, 'entity', 'time', 'y')
 ```
 
 
-</div>
-</div>
 
 ### 2. Arellano-Bond GMM Estimator
 
@@ -510,7 +511,6 @@ compare_dynamic_panel_methods(true_rho=0.6, N=100, T=10)
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 | Scenario | Concern Level | Action |

@@ -121,6 +121,7 @@ You should be able to explain why the feature might matter.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_volatility_regime(prices, window=20):
@@ -145,6 +146,7 @@ def compute_volatility_regime(prices, window=20):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_term_structure(front_price, back_price):
@@ -167,6 +169,7 @@ def compute_term_structure(front_price, back_price):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_seasonality(date):
@@ -179,8 +182,6 @@ def compute_seasonality(date):
     return np.array([is_harvest, is_winter])
 ```
 
-</div>
-</div>
 
 **Why:** Seasonal patterns are strong in agriculture (harvest pressure) and energy (heating demand).
 
@@ -342,7 +343,6 @@ features = features.fillna(0)
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ### Check Feature Quality

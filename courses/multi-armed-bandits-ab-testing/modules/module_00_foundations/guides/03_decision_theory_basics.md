@@ -338,6 +338,7 @@ Implement a bandit algorithm that chooses arms based on **expected utility** ins
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -386,7 +387,6 @@ arm_stds = [5, 2]
 # Compare risk-neutral vs risk-averse preferences
 ```
 
-</div>
 </div>
 
 **Expected behavior:**

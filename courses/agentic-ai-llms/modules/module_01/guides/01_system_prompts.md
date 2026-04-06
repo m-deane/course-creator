@@ -178,6 +178,7 @@ You can:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -255,6 +256,7 @@ CURRENT_VERSION = "research_agent_v3"
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def test_system_prompt(system_prompt: str, test_cases: list[dict]) -> dict:
@@ -331,6 +333,7 @@ research_agent_tests = [
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -354,8 +357,6 @@ Your role is strictly limited to:
 """
 ```
 
-</div>
-</div>
 
 ### 2. Over-Constraining
 
@@ -436,7 +437,6 @@ Assistant: [ideal output]
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

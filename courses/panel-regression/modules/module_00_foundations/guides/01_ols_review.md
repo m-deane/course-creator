@@ -124,6 +124,7 @@ $$\hat{\sigma}^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n - k} = \frac{(y - X\ha
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -310,6 +311,7 @@ Implication: $\text{Cov}(X_j, \hat{\epsilon}) = 0$ for all predictors $X_j$. Thi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -339,8 +341,6 @@ print("P and M are orthogonal:", np.allclose(P @ M, np.zeros((n, n))))
 ```
 
 
-</div>
-</div>
 </details>
 
 ### 3. Extension: Partitioned Regression

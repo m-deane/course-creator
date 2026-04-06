@@ -25,6 +25,7 @@ CausalPy is a wrapper around PyMC that adds causal inference semantics: it knows
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -50,6 +51,7 @@ import matplotlib.pyplot as plt
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 print(f"CausalPy: {cp.__version__}")
@@ -79,6 +81,7 @@ The function `treatment_time` accepts an integer index (row number in the DataFr
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -148,6 +151,7 @@ def prepare_its_dataframe(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 cp.InterruptedTimeSeries(
@@ -170,6 +174,7 @@ The formula follows the standard Python formula language (Wilkinson notation, vi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -212,6 +217,7 @@ Standard Gaussian linear regression with weakly informative default priors.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 model = cp.pymc_models.LinearRegression(
@@ -248,6 +254,7 @@ model = cp.pymc_models.LinearRegression(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -293,6 +300,7 @@ CausalPy will:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -319,6 +327,7 @@ print(summary)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -345,6 +354,7 @@ beta_slope_samples = posterior["t_post"].values.flatten()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -371,6 +381,7 @@ if "mu_cf" in result.idata.posterior:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -432,8 +443,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-</div>
-</div>
 
 ---
 
@@ -470,8 +479,6 @@ if n_divergences > 10:
     print("WARNING: High divergences. Consider increasing target_accept or reparameterizing.")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -534,8 +541,6 @@ def compute_cumulative_impact(
     }
 ```
 
-</div>
-</div>
 
 ---
 
@@ -583,8 +588,6 @@ class InformativeITSModel(cp.pymc_models.LinearRegression):
             y_hat = pm.Normal("y_hat", mu=mu, sigma=sigma, observed=y_, dims=["obs"])
 ```
 
-</div>
-</div>
 
 ---
 
@@ -639,8 +642,6 @@ print(f"\nLevel change: {level_change.mean():.2f} (94% HDI: {az.hdi(level_change
 print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -672,7 +673,6 @@ print(f"P(positive effect): {(level_change > 0).mean():.1%}")
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** ITS Introduction (Guide 1), Segmented Regression (Guide 2)
 - **Leads to:** Notebooks 1–3 in this module, Bayesian ITS internals (Module 02)

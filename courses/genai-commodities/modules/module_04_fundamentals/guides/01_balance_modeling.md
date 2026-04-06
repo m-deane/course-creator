@@ -166,6 +166,7 @@ Report:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">extract_wasde_balance.py</span>
+</div>
 
 ```python
 def extract_wasde_balance(wasde_text: str, commodity: str) -> dict:
@@ -232,6 +233,7 @@ Report:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">balancetracker.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -284,6 +286,7 @@ class BalanceTracker:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">analyze_balance_surprise.py</span>
+</div>
 
 ```python
 def analyze_balance_surprise(
@@ -347,6 +350,7 @@ Return JSON:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">generate_balance_forecast.py</span>
+</div>
 
 ```python
 def generate_balance_forecast(
@@ -482,14 +486,11 @@ Return JSON:
     return response.content[0].text
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding supply/demand balance modeling with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -515,7 +516,6 @@ Return JSON:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

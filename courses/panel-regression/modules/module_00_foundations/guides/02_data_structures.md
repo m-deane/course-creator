@@ -75,6 +75,7 @@ Long format "slices" this cube horizontally (by time) and stacks the slices on t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -406,7 +407,6 @@ if __name__ == "__main__":
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ### 1. Conceptual: Balanced vs Unbalanced Panels

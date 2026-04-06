@@ -139,6 +139,7 @@ The architecture follows a **middleware pattern** where the mesh intercepts all 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -379,6 +380,7 @@ class LLMMesh:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -435,6 +437,7 @@ llm = LLM("claude-production")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -456,6 +459,7 @@ llm = LLM(connection_name)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -473,6 +477,7 @@ for text in large_dataset:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -510,6 +515,7 @@ data = json.loads(response.text)  # What if not valid JSON?
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 try:
@@ -540,6 +546,7 @@ except Exception as e:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -548,7 +555,6 @@ for row in df.iterrows():
     llm.complete(row['long_text'])  # Could be expensive!
 ```
 
-</div>
 </div>
 
 **Solution:**
@@ -580,8 +586,6 @@ for row in df.iterrows():
 print(f"Total cost today: ${tracker.daily_total:.2f}")
 ```
 
-</div>
-</div>
 
 ## Connections to Other Topics
 
@@ -743,8 +747,6 @@ class ResilientLLMRouter:
         )
 ```
 
-</div>
-</div>
 </details>
 
 ### Problem 3: Cost Optimization
@@ -874,8 +876,6 @@ def optimize_batch_processing(reviews, budget=50.0):
 # - Average cost: ~$0.005-0.006 per review
 ```
 
-</div>
-</div>
 </details>
 
 ## Further Reading

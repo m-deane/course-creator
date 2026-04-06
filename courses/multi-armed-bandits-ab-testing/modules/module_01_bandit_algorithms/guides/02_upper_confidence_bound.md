@@ -209,6 +209,7 @@ Where uncertainty bonus = "how wrong could I be, given how little I've traded th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -249,6 +250,7 @@ class UCB1:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 ucb = UCB1(k_arms=5)
@@ -304,6 +306,7 @@ ucb_values = q + c * np.sqrt(np.log(t) / (counts + 1e-10))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -314,8 +317,6 @@ ucb = q + c * np.sqrt(np.log(counts) / counts)
 ucb = q + c * np.sqrt(np.log(t) / counts)
 ```
 
-</div>
-</div>
 
 **Why it matters:** The ln(t) term ensures the bonus grows (slowly) with total time, encouraging continuous exploration. Using ln(N(a)) would make the bonus shrink too fast.
 
@@ -378,7 +379,6 @@ But note: This breaks UCB1's theoretical guarantees.
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ### Builds On

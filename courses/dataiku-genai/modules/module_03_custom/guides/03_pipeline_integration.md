@@ -79,6 +79,7 @@ Think of a manufacturing assembly line: raw materials enter, pass through variou
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -167,6 +168,7 @@ print(f"Total cost: ${results['cost_usd'].sum():.2f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -320,6 +322,7 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -456,6 +459,7 @@ dataiku.Dataset("processed_long_reports").write_with_schema(output_df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -637,7 +641,6 @@ summary = pipeline.process_dataset(
 ```
 
 </div>
-</div>
 
 ### Incremental Processing Pattern
 
@@ -727,8 +730,6 @@ incremental_llm_processing(
 )
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -763,7 +764,6 @@ incremental_llm_processing(
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - LLM Mesh Python integration (Module 0, Module 3.1)

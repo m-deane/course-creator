@@ -25,6 +25,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class Supervisor:
@@ -245,6 +246,7 @@ class AgentTeam:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -266,8 +268,6 @@ for round in range(max_rounds):
         break  # Converged or stuck
 ```
 
-</div>
-</div>
 
 ### Problem: Race conditions in shared memory
 **Symptom:** Agents overwrite each other's updates or read stale data

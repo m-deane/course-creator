@@ -91,6 +91,7 @@ This is a **Student's t-distribution** with interpretable parameters, giving nat
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -137,6 +138,7 @@ print(az.hdi(trace, hdi_prob=0.95))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -203,6 +205,7 @@ As prior gets weaker, posterior → MLE
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -219,6 +222,7 @@ beta = pm.Normal('beta', mu=0, sigma=0.1)  # σ=0.1 very tight!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -283,7 +287,6 @@ c) `Normal(+5, 2)` - Positive effect, moderate uncertainty
 
 <strong>Key Concept Summary:</strong> Bayesian regression treats regression coefficients as random variables with distributions, rather than fixed unknown values.
 
-</div>
 
 ---
 
@@ -311,8 +314,6 @@ with pm.Model() as gas_model:
     pass
 ```
 
-</div>
-</div>
 
 ---
 
@@ -350,7 +351,6 @@ c) Investigate why prior and data differ
 
 2. Given a real-world scenario involving bayesian regression, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

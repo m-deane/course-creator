@@ -89,6 +89,7 @@ The following implementation builds on the approach above:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -141,6 +142,7 @@ The gate values at inference time tell you which series are most informative:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -173,7 +175,6 @@ XLinear supports three types of exogenous features, matching the NeuralForecast 
 ### Historical Exogenous (`hist_exog_list`)
 Known only up to the forecast origin — cannot be projected into the fu...
 
-</div>
 
 
 ### Historical Exogenous (`hist_exog_list`)
@@ -245,7 +246,6 @@ XLinear has five hyperparameters that materially affect accuracy. Tune them in t
 
 <strong>Insight:</strong> XLinear has five hyperparameters that materially affect accuracy.
 
-</div>
 
 
 ### Step 1: Fix Architecture to Baseline

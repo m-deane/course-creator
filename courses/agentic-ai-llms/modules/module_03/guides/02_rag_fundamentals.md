@@ -42,6 +42,7 @@ Response: "According to our policy doc..."
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -137,6 +138,7 @@ Breaking documents into retrieval-friendly pieces:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from typing import Generator
@@ -289,6 +291,7 @@ def process_document(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from openai import OpenAI
@@ -342,6 +345,7 @@ def embed_in_batches(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def semantic_search(
@@ -484,6 +488,7 @@ Variations (one per line):"""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 RAG_PROMPT = """Answer the question based on the provided context.
@@ -497,8 +502,6 @@ Question: {question}
 Answer:"""
 ```
 
-</div>
-</div>
 
 ### Citation-Aware Prompt
 
@@ -592,8 +595,6 @@ def evaluate_retrieval(
     }
 ```
 
-</div>
-</div>
 
 ### End-to-End Evaluation
 
@@ -643,7 +644,6 @@ Score (just the number):"""
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

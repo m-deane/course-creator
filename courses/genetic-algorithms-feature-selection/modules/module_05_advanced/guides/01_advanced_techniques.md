@@ -86,6 +86,7 @@ NSGA-II (Non-dominated Sorting Genetic Algorithm II) solves feature selection as
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">setup_nsga2_toolbox.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -556,7 +557,6 @@ class SurrogateFitness:
 
 5. **Surrogate models** reduce computational cost by predicting fitness cheaply and only computing exact fitness when uncertain
 
-</div>
 
 ## Practice Problems
 

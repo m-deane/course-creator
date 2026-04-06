@@ -238,6 +238,7 @@ We can never simultaneously observe both potential outcomes for the same unit. T
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -295,7 +296,6 @@ The naive model overstates the benefit of exercise because healthier people exer
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Basic statistics, regression, probability
 - **Leads to:** Potential outcomes framework (next guide), DAGs (third guide), all ITS methods

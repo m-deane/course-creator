@@ -26,6 +26,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class InputGuardrails:
@@ -364,6 +365,7 @@ def evaluate_rag_system(rag_agent, test_dataset):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -381,8 +383,6 @@ else:
     return process(input)
 ```
 
-</div>
-</div>
 
 ### Problem: Evaluation doesn't match production performance
 **Symptom:** Agent passes benchmarks but fails in real use

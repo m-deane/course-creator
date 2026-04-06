@@ -89,6 +89,7 @@ $$\Delta y_t = \phi \cdot \Delta y_{t-1} + \varepsilon_t, \quad \varepsilon_t \s
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import pearsonr
@@ -402,7 +403,6 @@ A well-generated set of paths should satisfy three properties:
 <div class="flow-step amber">2. Correct correlation:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step blue">3. Plausible range:</div>
-</div>
 
 
 ```python

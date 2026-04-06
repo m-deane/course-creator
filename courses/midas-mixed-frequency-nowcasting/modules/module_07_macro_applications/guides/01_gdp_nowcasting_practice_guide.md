@@ -118,6 +118,7 @@ Economic data is subject to revision. The value published in month $t+1$ for var
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas_datareader.data as web
@@ -164,6 +165,7 @@ GDP Advance      |     |     |      | available Apr 28
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def handle_ragged_edge(df, target_date, method='last'):
@@ -256,6 +258,7 @@ A practical MIDAS-based GDP nowcast uses 5-8 monthly indicators:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 NOWCAST_VARIABLES = {
@@ -268,8 +271,6 @@ NOWCAST_VARIABLES = {
 }
 ```
 
-</div>
-</div>
 
 For each quarterly observation, construct the MIDAS design matrix by stacking monthly lags.
 
@@ -380,7 +381,6 @@ A common pitfall: evaluating nowcasts against revised GDP rather than advance GD
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - Giannone, D., Reichlin, L., & Small, D. (2008). Nowcasting: The real-time informational content of macroeconomic data. *Journal of Monetary Economics*, 55(4), 665–676.

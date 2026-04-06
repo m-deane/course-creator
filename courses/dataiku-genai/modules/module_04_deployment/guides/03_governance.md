@@ -89,6 +89,7 @@ The `DeploymentConfig` dataclass centralizes all environment-specific settings â
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">deployment_config.py</span>
+</div>
 
 ```python
 
@@ -208,6 +209,7 @@ def get_config(env: Environment) -> DeploymentConfig:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">deployment_pipeline.py</span>
+</div>
 
 ```python
 
@@ -424,6 +426,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">monitoring.py</span>
+</div>
 
 ```python
 
@@ -689,8 +692,6 @@ monitor = ProductionMonitor(config)
 monitor.run_monitoring_cycle()
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -725,7 +726,6 @@ monitor.run_monitoring_cycle()
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - LLM Mesh governance (Module 0.3)

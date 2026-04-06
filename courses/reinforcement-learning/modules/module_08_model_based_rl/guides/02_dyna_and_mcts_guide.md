@@ -130,7 +130,6 @@ where $\tau(S, A)$ is the number of real time steps since $(S, A)$ was last exec
 
 <div class="callout-insight">
 
-<strong>Insight:</strong> example.py
 The following implementation builds on the approach above:
 ---
 </div>

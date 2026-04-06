@@ -59,6 +59,7 @@ Include examples that cover the range of expected inputs:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -126,6 +127,7 @@ examples = [
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def create_few_shot_prompt(examples: list[tuple], task: str) -> str:
@@ -233,6 +235,7 @@ Choose examples most similar to the input:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -331,6 +334,7 @@ def select_diverse_examples(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 json_examples = """Examples of entity extraction:
@@ -421,6 +425,7 @@ Description: {function_description}
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -529,8 +534,6 @@ Message: "{customer_message}"
 Category:"""
 ```
 
-</div>
-</div>
 
 ### Few-Shot + Chain-of-Thought
 
@@ -591,14 +594,11 @@ def evaluate_few_shot(
     }
 ```
 
-</div>
-</div>
 
 <div class="callout-key">
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

@@ -75,6 +75,7 @@ The most interpretable stability metric for prose outputs:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def jaccard_similarity(text_a: str, text_b: str) -> float:
@@ -148,6 +149,7 @@ Length variance is a fast, cheap diagnostic to run before committing to a full s
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statistics
@@ -196,6 +198,7 @@ This metric requires you to specify the key entities in advance — which terms 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def entity_consistency(outputs: list[str], key_entities: list[str]) -> float:
@@ -242,6 +245,7 @@ Structure consistency is the fastest metric to compute and the most diagnostic f
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import re
@@ -276,7 +280,6 @@ def structure_consistency(outputs: list[str]) -> dict:
 ```
 
 </div>
-</div>
 
 ---
 
@@ -289,7 +292,6 @@ Condition sensitivity measures how much the output stability changes when you re
 
 <strong>Key Point:</strong> Condition sensitivity measures how much the output stability changes when you remove or alter one condition at a time. It answers: which conditions are actually doing work?
 
-</div>
 
 
 ### The Procedure
@@ -413,7 +415,6 @@ One run tells you nothing about stability. The minimum for any meaningful stabil
 
 <strong>Insight:</strong> **Pitfall 1: Running N=1 and declaring the prompt stable.**
 
-</div>
 
 
 **Pitfall 2: Measuring stability on different inputs.**
@@ -458,4 +459,3 @@ With fewer than 20 inputs, input variance dominates the comparison. You are meas
 
 2. Given a real-world scenario involving how to test and measure prompt quality, what would be your first three steps to apply the techniques from this guide?
 
-</div>

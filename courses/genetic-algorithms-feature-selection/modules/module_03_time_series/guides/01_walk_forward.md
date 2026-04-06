@@ -131,6 +131,7 @@ Imagine predicting stock prices. In reality, you can only use data up to today t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -399,6 +400,7 @@ def walk_forward_feature_selection(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">advanced_walk_forward.py</span>
+</div>
 
 ```python
 class AdaptiveWalkForward:
@@ -777,7 +779,6 @@ validator = WalkForwardValidator(gap=10)  # Skip 10 samples
 
 <strong>Warning:</strong> A gap of 0 between train and test sets allows autocorrelation to leak information. For financial data with daily frequency, use a gap of at least 5-10 trading days.
 
-</div>
 
 ### 3. Not Enough Test Samples
 
@@ -811,7 +812,6 @@ validator = WalkForwardValidator(expanding=False)
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Prerequisites
 - Time series basics (stationarity, autocorrelation)

@@ -133,6 +133,7 @@ This ensures you optimize for the right thing while preventing catastrophic fail
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def task_completion_score(query, response):
@@ -170,6 +171,7 @@ def task_completion_score(query, response):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def extraction_accuracy(response, ground_truth):
@@ -206,6 +208,7 @@ def extraction_accuracy(response, ground_truth):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def signal_quality(response, actual_price_change):
@@ -234,8 +237,6 @@ def signal_quality(response, actual_price_change):
     return max(reward, 0.0)
 ```
 
-</div>
-</div>
 
 ### Metric 4: Research Completeness
 **Question:** Did it cover all relevant dimensions of the analysis?
@@ -536,7 +537,6 @@ A reward designed for data extraction will fail for trading signal generation.
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 **Builds on:**

@@ -93,6 +93,7 @@ A solution is represented as a variable-length vector $\mathbf{v} = [i_1, i_2, .
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">__post_init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -278,6 +279,7 @@ def demo_binary_encoding():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">integer_encoding.py</span>
+</div>
 
 ```python
 @dataclass
@@ -562,7 +564,6 @@ def good_integer_mutation(individual):
 
 <strong>Warning:</strong> Always validate uniqueness after integer crossover or mutation. Two parents with overlapping feature indices can produce children with duplicate entries, violating the encoding constraint.
 
-</div>
 
 ### 3. Inefficient Binary Operations
 
@@ -599,7 +600,6 @@ def fast_crossover(parent1, parent2):
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Prerequisites
 - Basic understanding of genetic algorithms

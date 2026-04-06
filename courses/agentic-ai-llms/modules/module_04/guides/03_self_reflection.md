@@ -21,6 +21,7 @@ Self-reflection enables agents to critique their own outputs, identify errors, a
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def reflect_and_revise(task: str, max_iterations: int = 3) -> str:
@@ -155,6 +156,7 @@ Reflection (be specific about what went wrong and how to fix it):"""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def check_consistency(task: str, response: str, n_checks: int = 3) -> dict:
@@ -256,6 +258,7 @@ Claims:"""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 QUALITY_CRITIQUE = """Evaluate this response on these dimensions:
@@ -351,8 +354,6 @@ class CriticAgent:
         }
 ```
 
-</div>
-</div>
 
 ### Debate-Based Reflection
 
@@ -414,7 +415,6 @@ Synthesize the best response considering both perspectives:"""
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

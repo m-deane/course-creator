@@ -70,6 +70,7 @@ Think of custom model wrappers like middleware in web development. Just as middl
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -153,6 +154,7 @@ class BaseLLMWrapper:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class JSONExtractorLLM(BaseLLMWrapper):
@@ -254,6 +256,7 @@ print(result)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import logging
@@ -351,6 +354,7 @@ result = resilient_llm.complete("Summarize this report...")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class CostOptimizedLLM(BaseLLMWrapper):
@@ -494,6 +498,7 @@ result3 = cost_optimized.complete("...", force_tier='high')
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class CommodityAnalysisLLM(BaseLLMWrapper):
@@ -632,8 +637,6 @@ comparison = commodity_llm.compare_reports(
 print(f"Consensus: {comparison['consensus']}")
 ```
 
-</div>
-</div>
 
 ### Wrapper with Caching
 
@@ -712,8 +715,6 @@ result1 = cached_llm.complete("Analyze this report...")
 result2 = cached_llm.complete("Analyze this report...")  # Free!
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -748,7 +749,6 @@ result2 = cached_llm.complete("Analyze this report...")  # Free!
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - LLM Mesh setup and Python integration (Module 0)

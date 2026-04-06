@@ -100,6 +100,7 @@ where $s_t = S_t \nabla_\theta \log p(X_t | F_t, \theta_t)$ is scaled score, $S_
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">tvpdynamicfactormodel.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -499,6 +500,7 @@ $$\hat{\tau} = \arg\min_{\tau} \left[ SSR_1(\tau) + SSR_2(\tau) \right]$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">detect_loading_breaks.py</span>
+</div>
 
 ```python
 def detect_loading_breaks(X, F, max_breaks=3, min_segment=20):
@@ -619,7 +621,6 @@ if len(regimes) >= 2:
     print(f"  Change: {regimes[1][0, 0] - regimes[0][0, 0]:.3f}")
 ```
 
-</div>
 </div>
 
 ---
@@ -806,7 +807,6 @@ The next guide explores non-Gaussian factor models—relaxing normality to handl
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

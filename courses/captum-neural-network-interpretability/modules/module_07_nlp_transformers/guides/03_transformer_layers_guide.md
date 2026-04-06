@@ -61,6 +61,7 @@ Apply IG at each encoder layer independently:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -138,6 +139,7 @@ This is the chain-rule application of IG at each layer — it measures how much 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import LayerConductance
@@ -182,6 +184,7 @@ def layer_conductance_all_layers(model, tokenizer, text, target_class):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -265,6 +268,7 @@ A comprehensive visualization shows how token importance varies across layers:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_token_layer_heatmap(
@@ -313,6 +317,7 @@ GPT-2 uses causal (left-to-right) attention, unlike BERT's bidirectional attenti
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
@@ -333,9 +338,7 @@ for block_idx, block in enumerate(gpt2_model.transformer.h):
     # ... same as BERT
 ```
 
-</div>
 
-</div>
 
 GPT-2's layer attribution pattern differs: since attention is causal, early layers process local context while later layers integrate longer-range dependencies.
 
@@ -379,9 +382,7 @@ for layer_idx, encoder_layer in enumerate(model.bert.encoder.layer):
     torch.cuda.empty_cache() if torch.cuda.is_available() else None
 ```
 
-</div>
 
-</div>
 
 ### Normalization
 When comparing layer importance across texts of different length, normalize by sequence length or use the mean attribution per token rather than the sum.
@@ -401,7 +402,6 @@ When comparing layer importance across texts of different length, normalize by s
 
 2. Given a real-world scenario involving layer-wise attribution in transformers, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

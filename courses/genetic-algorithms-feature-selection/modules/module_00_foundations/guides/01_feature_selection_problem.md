@@ -125,6 +125,7 @@ This creates a Pareto frontier: improving one objective may worsen others.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">exhaustive_feature_selection.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -210,6 +211,7 @@ print(f"Best score: {best_score:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">time_series_features.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -279,6 +281,7 @@ print(f"Need intelligent search strategy!")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">proper_cv_selection.py</span>
+</div>
 
 ```python
 
@@ -302,8 +305,6 @@ for train_idx, test_idx in tscv.split(X):
     scores.append(score)
 ```
 
-</div>
-</div>
 
 ### Pitfall 2: Ignoring Feature Redundancy
 
@@ -366,7 +367,6 @@ def fitness_with_cost(features, X, y, feature_names):
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Builds On
 - **Linear algebra**: Understanding feature spaces and dimensionality

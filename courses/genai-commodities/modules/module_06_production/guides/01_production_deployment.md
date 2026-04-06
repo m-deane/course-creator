@@ -141,6 +141,7 @@ def call_llm_api(prompt: str) -> str:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -238,6 +239,7 @@ def call_llm_with_circuit_breaker(prompt: str) -> str:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -327,6 +329,7 @@ def budgeted_llm_call(prompt: str, estimated_tokens: int) -> str:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">llmcache.py</span>
+</div>
 
 ```python
 import hashlib
@@ -412,6 +415,7 @@ def cached_llm_call(prompt: str, model: str = "claude-sonnet-4-20250514") -> str
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -560,14 +564,11 @@ alert_manager.add_rule(AlertRule(
 ))
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding production deployment for commodity gen ai is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -593,7 +594,6 @@ alert_manager.add_rule(AlertRule(
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

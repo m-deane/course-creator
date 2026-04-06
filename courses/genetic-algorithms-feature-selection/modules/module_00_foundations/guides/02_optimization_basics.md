@@ -53,6 +53,7 @@ This combinatorial explosion makes exhaustive search infeasible.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">exhaustive_search.py</span>
+</div>
 
 ```python
 from itertools import combinations
@@ -96,6 +97,7 @@ def evaluate_model(model_fn, X, y, cv_folds=5):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">forward_selection.py</span>
+</div>
 
 ```python
 def forward_selection(X, y, model_fn, max_features=None):
@@ -346,7 +348,6 @@ Where $G$ = generations, $N$ = population size, $T_{eval}$ = fitness evaluation 
 
 <strong>Practical rule:</strong> If you have 20-100 features and suspect feature interactions matter (they usually do in time series), start with a GA. If you have > 100, filter first to ~50-100, then apply a GA. If you have < 20, exhaustive search gives you the guaranteed-best answer.
 
-</div>
 
 ## Mathematical Framework
 
@@ -401,7 +402,6 @@ Prediction Error
 
 5. **No free lunch** - algorithm choice depends on problem structure
 
-</div>
 
 ## Practice Problems
 

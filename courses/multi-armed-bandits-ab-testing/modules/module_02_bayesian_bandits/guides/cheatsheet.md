@@ -18,6 +18,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -45,6 +46,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -72,6 +74,7 @@ sigma[arm] = np.sqrt(1 / tau_post)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -97,7 +100,6 @@ beta[arm] += 1
 
 **Insight:** The core insight of bandit algorithms is that learning and earning are not separate phases. Every observation contributes to both understanding which option is best and generating value from the best option.
 
-</div>
 
 
 | Likelihood | Parameter | Conjugate Prior | Posterior Update |
@@ -116,7 +118,6 @@ beta[arm] += 1
 
 **Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
 
-</div>
 
 
 ### Beta-Bernoulli
@@ -317,7 +318,6 @@ import arviz as az
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 1. **Plot posteriors every N rounds** — See if they're concentrating

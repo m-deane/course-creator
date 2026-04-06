@@ -144,6 +144,7 @@ This is the **local linear regression** estimator. It:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -194,6 +195,7 @@ The IK bandwidth minimises the asymptotic mean squared error of the local linear
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -227,6 +229,7 @@ If units can precisely control their running variable value and prefer to be tre
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from rdrobust import rddensity
@@ -253,6 +256,7 @@ If another variable also jumps discontinuously at the cutoff, you cannot separat
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 for covariate in ['age', 'income', 'prior_score']:
@@ -262,7 +266,6 @@ for covariate in ['age', 'income', 'prior_score']:
 # All should have p >> 0.05 (no jump in covariates)
 ```
 
-</div>
 </div>
 
 ### Sorting Near the Cutoff
@@ -319,8 +322,6 @@ result.plot()
 print(result.summary())
 ```
 
-</div>
-</div>
 
 The `epsilon` parameter defines the neighbourhood of the cutoff used for the treatment effect estimate. The plot shows both sides of the regression and the estimated jump.
 
@@ -363,7 +364,6 @@ The `epsilon` parameter defines the neighbourhood of the cutoff used for the tre
 - Cattaneo, Idrobo & Titiunik (2019-2020), *A Practical Introduction to Regression Discontinuity Designs* (Cambridge Elements)
 - Gelman & Imbe...
 
-</div>
 
 
 ---

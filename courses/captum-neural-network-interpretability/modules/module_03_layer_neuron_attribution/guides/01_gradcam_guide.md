@@ -111,6 +111,7 @@ Captum implements GradCAM as `LayerGradCam`, which can target any convolutional 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import LayerGradCam, LayerAttribution
@@ -153,6 +154,7 @@ The raw output has shape `(1, channels, 7, 7)`. To get a single 2D heatmap:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -183,6 +185,7 @@ One powerful feature of Captum's `LayerGradCam` is the ability to target interme
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -219,6 +222,7 @@ A key advantage of GradCAM over class-agnostic methods is that it can produce di
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -256,6 +260,7 @@ Beyond visual inspection, GradCAM can be evaluated quantitatively using the **In
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def deletion_score(model, image, heatmap, n_steps=100, target_class=None):
@@ -286,9 +291,7 @@ def deletion_score(model, image, heatmap, n_steps=100, target_class=None):
     return np.trapz(scores) / n_steps  # AUC — lower is better
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -338,9 +341,7 @@ positive_map = torch.relu(heatmap_signed)
 negative_map = torch.relu(-heatmap_signed)
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -357,7 +358,6 @@ negative_map = torch.relu(-heatmap_signed)
 
 2. Given a real-world scenario involving guide 01: gradcam, guided gradcam, and layergradcam, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

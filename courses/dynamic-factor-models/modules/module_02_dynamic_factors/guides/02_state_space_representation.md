@@ -260,6 +260,7 @@ print(T)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">simulate_statespace.py</span>
+</div>
 
 ```python
 def simulate_statespace(Z, H, T, R, Q, T_periods, alpha_0=None, P_0=None):
@@ -398,6 +399,7 @@ State-space representation handles missing data elegantly:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -677,7 +679,6 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 
 **Insight:** Understanding state-space representation of dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -718,7 +719,6 @@ R[:r, :] = np.eye(r)  # Innovations only enter first r states
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

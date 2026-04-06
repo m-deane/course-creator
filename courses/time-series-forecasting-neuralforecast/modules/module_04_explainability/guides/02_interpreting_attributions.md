@@ -199,6 +199,7 @@ A heatmap with forecast steps on the y-axis and lag positions on the x-axis reve
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -325,7 +326,6 @@ A summary bar chart aggregates attributions across all forecast steps and shows 
 
 <strong>Insight:</strong> A summary bar chart aggregates attributions across all forecast steps and shows net impact per feature.
 
-</div>
 
 
 ```python

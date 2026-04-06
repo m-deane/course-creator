@@ -51,6 +51,7 @@ In commodity markets, consider estimating the effect of carbon tax increases on 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -98,6 +99,7 @@ After Lasso selection, running OLS on the selected variables ignores the uncerta
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -135,6 +137,7 @@ Run a Monte Carlo simulation to check actual coverage:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def coverage_simulation(n_sims=500, n=1000, p=200, true_theta=1.5):
@@ -193,6 +196,7 @@ This ensures confounders of $D$ are not dropped, even if they are weak predictor
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -217,7 +221,6 @@ print(f"True effect:         {true_effect:.2f}")
 ```
 
 </div>
-</div>
 
 Double selection improves over single Lasso, but DML goes further — it replaces the linear Lasso with any ML model and adds orthogonal scores for robustness.
 
@@ -227,7 +230,6 @@ Double selection improves over single Lasso, but DML goes further — it replace
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 00: The causal inference problem and FWL theorem
@@ -267,8 +269,6 @@ def compare_coverage(n_sims=200, n=1000, p=200, true_theta=1.5):
     pass
 ```
 
-</div>
-</div>
 
 
 ## Resources

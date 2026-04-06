@@ -47,6 +47,7 @@ The gradient is the direction of steepest ascent in the output surface. Features
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -79,6 +80,7 @@ Understanding what Captum does internally:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -138,6 +140,7 @@ This approximation is exact for linear models and approximate for non-linear mod
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import InputXGradient
@@ -189,6 +192,7 @@ This modification produces cleaner, sharper visualizations by removing gradient 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import GuidedBackprop
@@ -251,6 +255,7 @@ Like Guided Backprop, deconvolution fails implementation invariance and is not a
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import Deconvolution
@@ -272,7 +277,6 @@ attributions = deconv.attribute(input_tensor, target=class_idx)
 
 <strong>Warning:</strong> None of these methods satisfies both axioms. This motivates Integrated Gradients.
 
-</div>
 
 
 | Method | Formula | Key Property |
@@ -309,7 +313,6 @@ Gradients of deep networks are notoriously noisy. The gradient at a specific inp
 
 <strong>Key Point:</strong> Gradients of deep networks are notoriously noisy. The gradient at a specific input is highly sensitive to local perturbations, producing "salt and pepper" noise in saliency maps.
 
-</div>
 
 
 ### Illustration
@@ -349,9 +352,7 @@ smooth_attr = nt.attribute(
 )
 ```
 
-</div>
 
-</div>
 
 SmoothGrad is covered in depth in Module 02 (Notebook 03).
 
@@ -387,7 +388,6 @@ SmoothGrad is covered in depth in Module 02 (Notebook 03).
 
 2. Given a real-world scenario involving gradient-based attribution methods: theory, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

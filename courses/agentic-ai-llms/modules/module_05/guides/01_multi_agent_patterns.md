@@ -21,6 +21,7 @@ One orchestrator delegates to specialized workers:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -150,6 +151,7 @@ Agents work together without central control:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import asyncio
@@ -278,6 +280,7 @@ Nested management for complex organizational tasks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 @dataclass
@@ -372,6 +375,7 @@ Agents form a processing chain:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class PipelineStage:
@@ -432,7 +436,6 @@ writer = PipelineStage(
 result = writer.process({"topic": "Introduction to AI Agents"})
 ```
 
-</div>
 </div>
 
 ---
@@ -548,8 +551,6 @@ moderator = DebateModerator([optimist, pessimist, pragmatist])
 debate_result = moderator.run_debate("The impact of AI on employment")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -568,7 +569,6 @@ debate_result = moderator.run_debate("The impact of AI on employment")
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

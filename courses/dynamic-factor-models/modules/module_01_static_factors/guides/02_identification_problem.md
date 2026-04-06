@@ -197,6 +197,7 @@ With normalization:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -276,6 +277,7 @@ print("\nFactors are completely different, but X is identical!")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">pca_normalization.py</span>
+</div>
 
 ```python
 def pca_normalization(X, r):
@@ -345,6 +347,7 @@ print(Lambda_hat.round(3))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sign_normalize.py</span>
+</div>
 
 ```python
 def sign_normalize(F, Lambda, reference_variables):
@@ -413,6 +416,7 @@ print(Lambda_signed[:3, :].round(3))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -442,8 +446,6 @@ for j in range(r):
 # Factor 2: CPI, PPI, Wages → "Inflation"
 ```
 
-</div>
-</div>
 
 ---
 
@@ -515,7 +517,6 @@ for j in range(r):
 
 **Insight:** Understanding the factor model identification problem is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -554,7 +555,6 @@ for j in range(r):
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -93,6 +93,7 @@ Under H0: $H \sim \chi^2(K)$ where $K$ is the number of time-varying regressors.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -202,6 +203,7 @@ Low power when:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def hausman_power_simulation(N, T, correlation, n_sims=500):
@@ -272,6 +274,7 @@ Test: $H_0: \gamma = 0$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -297,8 +300,6 @@ else:
 ```
 
 
-</div>
-</div>
 
 ## Practical Decision Framework
 
@@ -331,7 +332,6 @@ else:
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ### Information Criteria

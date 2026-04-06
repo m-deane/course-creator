@@ -47,6 +47,7 @@ Update parameters using expected statistics.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">baumwelchtrainer.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -388,6 +389,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">fit_with_restarts.py</span>
+</div>
 
 ```python
 def fit_with_restarts(observations, n_states, n_restarts=10):
@@ -436,6 +438,7 @@ best_model, best_ll = fit_with_restarts(observations, n_states=2, n_restarts=5)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">discuss_training_issues.py</span>
+</div>
 
 ```python
 def discuss_training_issues():
@@ -497,6 +500,7 @@ discuss_training_issues()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">train_with_hmmlearn.py</span>
+</div>
 
 ```python
 from hmmlearn import hmm
@@ -532,14 +536,11 @@ def train_with_hmmlearn(observations, n_states=2):
 hmmlearn_model = train_with_hmmlearn(observations)
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding hmm parameter estimation is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -567,7 +568,6 @@ hmmlearn_model = train_with_hmmlearn(observations)
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

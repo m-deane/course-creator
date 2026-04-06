@@ -227,6 +227,7 @@ Provide examples for complex extractions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 FEW_SHOT_PROMPT = """
@@ -268,6 +269,7 @@ For complex reasoning:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 REASONING_PROMPT = """
@@ -327,6 +329,7 @@ API costs accumulate quickly with long documents:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">get_cache_key.py</span>
+</div>
 
 ```python
 import hashlib
@@ -359,6 +362,7 @@ Always validate LLM outputs:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">inventoryreport.py</span>
+</div>
 
 ```python
 from pydantic import BaseModel, validator
@@ -421,14 +425,11 @@ Text: {text}
 """
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding llm fundamentals for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -454,7 +455,6 @@ Text: {text}
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

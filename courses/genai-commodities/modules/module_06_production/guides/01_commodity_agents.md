@@ -59,6 +59,7 @@ Commodity trading agents autonomously gather data, analyze markets, and generate
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">class.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -204,6 +205,7 @@ Return JSON:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">create_eia_agent.py</span>
+</div>
 
 ```python
 import requests
@@ -287,6 +289,7 @@ Focus on surprises vs expectations and their price implications."""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agentorchestrator.py</span>
+</div>
 
 ```python
 class AgentOrchestrator:
@@ -357,6 +360,7 @@ Provide:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">create_commodity_analysis_system.py</span>
+</div>
 
 ```python
 def create_commodity_analysis_system():
@@ -446,14 +450,11 @@ class AgentScheduler:
             time.sleep(60)
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding building commodity trading agents is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -479,7 +480,6 @@ class AgentScheduler:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

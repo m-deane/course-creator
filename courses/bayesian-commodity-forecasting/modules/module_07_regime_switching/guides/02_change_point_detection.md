@@ -99,6 +99,7 @@ Each era has distinct characteristics (mean price, volatility). Change point det
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -155,6 +156,7 @@ Change point detection identifies when this shift occurred and uncertainty aroun
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -254,6 +256,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as multiple_changepoints:
@@ -311,6 +314,7 @@ Useful for identifying risk regime shifts (e.g., pre/post-crisis volatility).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as variance_changepoint:
@@ -372,6 +376,7 @@ $$p(r_t | y_{1:t}) \propto \sum_{r_{t-1}} p(r_t | r_{t-1}) p(y_t | r_t, y_{1:t-1
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -479,6 +484,7 @@ print(f"Detected change points: {detected_changepoints}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -508,8 +514,6 @@ print(comparison)
 # - If similar LOO → insufficient evidence
 ```
 
-</div>
-</div>
 
 ---
 
@@ -520,7 +524,6 @@ print(comparison)
 
 <strong>Warning:</strong> with pm.Model() as inventory_changepoint:
 
-</div>
 
 
 <div class="code-window">
@@ -566,8 +569,6 @@ with pm.Model() as inventory_changepoint:
 # Example: Shale revolution weakened inventory signal (more flexible supply)
 ```
 
-</div>
-</div>
 
 ---
 
@@ -665,7 +666,6 @@ Design a "gradual transition" change point model for the introduction of biofuel
 
 2. Given a real-world scenario involving bayesian change point detection, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

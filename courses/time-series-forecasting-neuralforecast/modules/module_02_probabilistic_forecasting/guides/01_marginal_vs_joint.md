@@ -149,6 +149,7 @@ This is what NHITS produces for each day. It is correct and useful. For a single
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -213,6 +214,7 @@ A natural (wrong) answer: sum up the 80th percentile for each day.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -567,7 +569,6 @@ Marginal quantiles (what MQLoss produces) sit at step 3. They are necessary — 
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 ### Builds on
 - Module 1: Point forecasting with NHITS — understanding what the model produces
@@ -599,7 +600,6 @@ Marginal quantiles (what MQLoss produces) sit at step 3. They are necessary — 
 <div class="flow-step lavender">4. Three failure modes:</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step rose">5. Sample paths are the solution</div>
-</div>
 
 ---
 

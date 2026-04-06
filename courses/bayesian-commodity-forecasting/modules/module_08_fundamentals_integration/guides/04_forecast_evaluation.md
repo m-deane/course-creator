@@ -136,6 +136,7 @@ For commodity forecasts:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -455,6 +456,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compare_forecasts(y_true, forecasts_dict):
@@ -620,7 +622,6 @@ plt.show()
 
 2. Given a real-world scenario involving forecast evaluation for bayesian models, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -650,7 +651,6 @@ plt.show()
 
 <strong>Key Concept Summary:</strong> Forecast evaluation assesses prediction quality using both point forecast accuracy (MAE, RMSE) and probabilistic calibration (coverage, sharpness, proper scoring rules).
 
-</div>
 
 ---
 

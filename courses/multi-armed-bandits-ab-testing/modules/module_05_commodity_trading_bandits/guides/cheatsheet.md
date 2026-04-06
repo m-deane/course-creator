@@ -110,6 +110,7 @@ Total allocation = 0.8 * core + 0.2 * bandit
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 arms = ['Energy', 'Metals', 'Grains', 'Softs', 'Livestock']
@@ -132,6 +133,7 @@ sector_mapping = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 arms = [
@@ -170,6 +172,7 @@ arms = [
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -194,8 +197,6 @@ seasonal = seasonal_patterns[commodity][date.month]
 inv_pct = percentileofscore(historical_inv, current_inv)
 ```
 
-</div>
-</div>
 
 ### Simple Regime Classifier
 
@@ -480,7 +481,6 @@ def backtest_bandit(data, bandit, reward_func, rebalance_freq='W'):
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 - [Accumulator Bandit Playbook](01_accumulator_bandit_playbook.md) - Full system overview

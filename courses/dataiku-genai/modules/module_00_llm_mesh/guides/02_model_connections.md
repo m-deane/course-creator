@@ -41,6 +41,7 @@ Administration → Connections → LLM Mesh
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -69,6 +70,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 model_settings = {
@@ -94,6 +96,7 @@ model_settings = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -132,6 +135,7 @@ openai_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -161,6 +165,7 @@ azure_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -197,6 +202,7 @@ bedrock_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -238,6 +244,7 @@ print(f"Connection status: {result['status']}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -284,6 +291,7 @@ def benchmark_connection(connection_name, n_requests=10):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -307,7 +315,6 @@ connection_group = {
 }
 ```
 
-</div>
 </div>
 
 ### Automatic Failover
@@ -354,8 +361,6 @@ class LLMConnectionManager:
         return status
 ```
 
-</div>
-</div>
 
 ## Cost Tracking
 
@@ -413,8 +418,6 @@ class TokenUsageTracker:
         }
 ```
 
-</div>
-</div>
 
 ## Security Best Practices
 
@@ -446,8 +449,6 @@ api_key = project.get_variable("OPENAI_API_KEY")  # From project variables
 llm = dataiku.LLMConnection("openai-production")
 ```
 
-</div>
-</div>
 
 ### Access Control
 
@@ -480,7 +481,6 @@ Connection Security Settings:
 
 <strong>Key Concept:</strong> 6. **Test connections** thoroughly before production deployment
 
-</div>
 
 
 ## Resources

@@ -23,6 +23,7 @@ $$y_{it} = \beta_0 + x_{it}'\beta + \epsilon_{it}$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -139,6 +140,7 @@ This measures the proportion of variance due to entity effects.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def estimate_intraclass_correlation(data, y_col, entity_col):
@@ -186,6 +188,7 @@ Cluster standard errors at the entity level to account for within-entity correla
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -207,8 +210,6 @@ print(f"Clustered SE: {pooled_clustered.std_errors['x']:.4f}")
 ```
 
 
-</div>
-</div>
 
 ### The Sandwich Estimator
 
@@ -275,7 +276,6 @@ if result['p_value'] < 0.05:
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 | Issue | Consequence | Solution |

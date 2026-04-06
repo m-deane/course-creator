@@ -45,6 +45,7 @@ flowchart TB
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">interpret.py</span>
+</div>
 
 ```python
 def interpret_goal(user_message: str, context: list) -> str:
@@ -72,6 +73,7 @@ The LLM chooses whether to call a tool, and if so, which one.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">decide.py</span>
+</div>
 
 ```python
 import anthropic
@@ -108,6 +110,7 @@ def decide_action(messages: list, tools: list) -> dict:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">execute.py</span>
+</div>
 
 ```python
 import json
@@ -141,6 +144,7 @@ def execute_tool(tool_name: str, tool_input: dict, tool_registry: dict) -> str:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">observe.py</span>
+</div>
 
 ```python
 def observe_result(tool_use_id: str, result: str) -> dict:
@@ -167,6 +171,7 @@ def observe_result(tool_use_id: str, result: str) -> dict:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -247,6 +252,7 @@ The agent loop should terminate when:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">loop_controller.py</span>
+</div>
 
 ```python
 class LoopController:
@@ -274,8 +280,6 @@ class LoopController:
         return True, "continue"
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -283,25 +287,21 @@ class LoopController:
 
 <strong>Pitfall 1 — No termination condition:</strong> Agent loops forever. Always set max_iterations and implement explicit exit conditions.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 2 — Lost context:</strong> Model forgets earlier tool results. Maintain full message history; consider summarization for long conversations.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 3 — Tool description mismatch:</strong> Model calls tools incorrectly because descriptions are vague. Write clear, specific tool descriptions with examples.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 4 — No error handling:</strong> Single tool failure crashes the agent. Wrap tool execution in try/catch, provide error feedback to model.
 
-</div>
 
 ## Practice Questions
 

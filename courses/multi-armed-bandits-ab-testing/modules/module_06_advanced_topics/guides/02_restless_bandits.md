@@ -140,6 +140,7 @@ Whittle index balances these: "Friend B's life is changing rapidly (high volatil
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -219,6 +220,7 @@ Combine recency penalty with exponential discounting:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class DiscountedRestlessBandit:
@@ -394,8 +396,6 @@ for day in trading_days:
     # force us to check back.
 ```
 
-</div>
-</div>
 
 **Key insight:** The recency penalty `λ=0.02` means that after ~50 days without observing a commodity, the staleness penalty (0.02 × 50 = 1.0) becomes very large, forcing re-observation even if it was historically bad. This prevents the "ignore and forget" problem where an improving commodity is never reconsidered.
 

@@ -72,6 +72,7 @@ A commodity retrieval strategy is a function **R: (Q, KB, F) → C** where:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -592,6 +593,7 @@ Examples:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">hybridretrieval.py</span>
+</div>
 
 ```python
 class HybridRetrieval:
@@ -757,7 +759,6 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
 
 **Insight:** Understanding retrieval strategies for commodity analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -797,7 +798,6 @@ Return JSON array of chunk indices in order of relevance (most relevant first):
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

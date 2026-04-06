@@ -71,6 +71,7 @@ After each GDP release, compare the terminal nowcast (the last estimate before t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -153,6 +154,7 @@ Systematic bias is detected with a simple t-test on the mean forecast error.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -220,6 +222,7 @@ where $k$ is the number of parameters, $n$ is total observations, and $R$, $U1$,
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def chow_test(
@@ -272,8 +275,6 @@ def chow_test(
     }
 ```
 
-</div>
-</div>
 
 ### CUSUM Test
 
@@ -785,7 +786,6 @@ def emit_alert(
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 Monitoring a nowcasting system requires three parallel tracks:

@@ -114,6 +114,7 @@ Each regime $s_t$ has its own intercept, AR coefficient, and volatility.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">fit_markov_switching_ar.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -185,6 +186,7 @@ smoothed_probs = results.smoothed_marginal_probabilities
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regime_forecast.py</span>
+</div>
 
 ```python
 def regime_forecast(
@@ -253,6 +255,7 @@ Observations
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">hierarchicalhmm.py</span>
+</div>
 
 ```python
 class HierarchicalHMM:
@@ -329,6 +332,7 @@ Include exogenous variables that affect transitions or emissions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">inputoutputhmm.py</span>
+</div>
 
 ```python
 class InputOutputHMM:
@@ -403,8 +407,6 @@ class ExplicitDurationHMM:
         return np.dot(durations, self.duration_probs[state])
 ```
 
-</div>
-</div>
 
 ## Comparison of HMM Variants
 
@@ -421,7 +423,6 @@ class ExplicitDurationHMM:
 
 **Insight:** Understanding advanced hmm variants is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -447,7 +448,6 @@ class ExplicitDurationHMM:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

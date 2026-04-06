@@ -43,6 +43,7 @@ Just as a car has multiple safety systems (seatbelts, airbags, ABS, stability co
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import re
@@ -454,6 +455,7 @@ class SafeAgent:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -466,7 +468,6 @@ if is_asking_for_medical_diagnosis(input) and not user_is_doctor(user_id):
     return "Cannot provide medical diagnosis. Please consult a doctor."
 ```
 
-</div>
 </div>
 
 ### 2. Single Layer of Defense
@@ -570,7 +571,6 @@ Build a test suite for output filtering:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ## Further Reading
 

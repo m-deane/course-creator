@@ -71,6 +71,7 @@ If you use the same prompt for all four:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def classify_task_type(query):
@@ -115,6 +116,7 @@ Different sectors have different:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def classify_commodity_sector(query):
@@ -150,6 +152,7 @@ When retrieval is sparse (0-1 documents), evidence-only prompts will just say "n
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def assess_data_availability(retrieved_docs, query):
@@ -169,8 +172,6 @@ def assess_data_availability(retrieved_docs, query):
         return 'low'
 ```
 
-</div>
-</div>
 
 ### Feature 4: User Preference
 
@@ -558,7 +559,6 @@ The math is identical. The application is different.
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 **Builds on:**

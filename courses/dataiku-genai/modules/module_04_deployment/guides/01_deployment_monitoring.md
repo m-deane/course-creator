@@ -33,6 +33,7 @@ Deploy LLM applications as REST APIs:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -144,6 +145,7 @@ Dataiku automatically tracks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -205,6 +207,7 @@ Create monitoring dashboard in Dataiku:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">dashboard_config.py</span>
+</div>
 
 ```python
 
@@ -305,6 +308,7 @@ alerts:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.monitoring import AlertManager
@@ -355,6 +359,7 @@ def check_llm_health():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -416,8 +421,6 @@ class CostTracker:
         }
 ```
 
-</div>
-</div>
 
 ### Budget Enforcement
 
@@ -461,8 +464,6 @@ class BudgetEnforcedLLM:
         return response
 ```
 
-</div>
-</div>
 
 ## Production Checklist
 
@@ -502,7 +503,6 @@ class BudgetEnforcedLLM:
 
 <strong>Key Concept:</strong> 5. **Production checklist** ensures nothing is missed before go-live
 
-</div>
 
 
 ## Resources

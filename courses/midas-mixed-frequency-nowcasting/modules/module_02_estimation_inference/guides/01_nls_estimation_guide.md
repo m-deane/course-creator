@@ -81,6 +81,7 @@ This reduces the problem from optimizing over 4 parameters to optimizing over 2 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -221,6 +222,7 @@ where $\hat{\mathbf{S}}$ is the Newey-West estimator of the long-run variance of
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -311,6 +313,7 @@ Common causes and remedies:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def check_convergence(result, theta_hat, Y, X, objective_fn):
@@ -369,8 +372,6 @@ def check_convergence(result, theta_hat, Y, X, objective_fn):
     return diagnostics
 ```
 
-</div>
-</div>
 
 ---
 
@@ -461,7 +462,6 @@ def test_aggregation_restriction(Y, X, beta_weights_fn, midas_result):
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. Show that when the weight function is flat ($w_j = 1/K$ for all $j$), the MIDAS NLS estimator reduces to OLS on the equal-weight aggregate. In particular, show that $\nabla_\theta Q = 0$ at $\theta_1 = \theta_2 = 1$ is not generally satisfied.

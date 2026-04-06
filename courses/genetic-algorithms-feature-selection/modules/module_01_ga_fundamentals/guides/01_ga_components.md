@@ -109,6 +109,7 @@ Every operator in Modules 1-5 takes and returns `Individual` or `Population` obj
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">selected_features.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -181,6 +182,7 @@ class Population:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">tournament_selection.py</span>
+</div>
 
 ```python
 def tournament_selection(
@@ -441,6 +443,7 @@ def swap_mutation(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">replacement_strategies.py</span>
+</div>
 
 ```python
 def generational_replacement(
@@ -467,8 +470,6 @@ def generational_replacement(
     return Population(new_pop)
 ```
 
-</div>
-</div>
 
 ### Steady-State Replacement
 
@@ -509,7 +510,6 @@ def steady_state_replacement(
 
 5. **Elitism** preserves best solutions across generations
 
-</div>
 
 ## Practice Problems
 

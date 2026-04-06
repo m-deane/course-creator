@@ -48,6 +48,7 @@ flowchart LR
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">ingest.py</span>
+</div>
 
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -105,6 +106,7 @@ collection.add(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">retrieve.py</span>
+</div>
 
 ```python
 def retrieve(query: str, k: int = 5) -> list:
@@ -135,6 +137,7 @@ def retrieve(query: str, k: int = 5) -> list:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">rerank.py</span>
+</div>
 
 ```python
 from sentence_transformers import CrossEncoder
@@ -166,6 +169,7 @@ def rerank(query: str, documents: list, top_k: int = 3) -> list:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">generate.py</span>
+</div>
 
 ```python
 import anthropic
@@ -227,6 +231,7 @@ Answer:"""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">hybrid_search.py</span>
+</div>
 
 ```python
 def hybrid_search(query: str, k: int = 5, alpha: float = 0.5) -> list:
@@ -252,7 +257,6 @@ def hybrid_search(query: str, k: int = 5, alpha: float = 0.5) -> list:
 
 <strong>Info:</strong> Improve retrieval by using an LLM to generate alternative phrasings of the user's query before searching.
 
-</div>
 
 ### Contextual Compression
 
@@ -264,25 +268,21 @@ Extract only query-relevant portions from retrieved chunks to reduce context win
 
 <strong>Pitfall 1 — Wrong chunk size:</strong> Too large pollutes context with irrelevant content. Too small loses context. Start with 200-500 tokens and test with your data.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 2 — No overlap between chunks:</strong> Information at chunk boundaries gets lost. Use 10-20% overlap.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 3 — Ignoring metadata:</strong> Without metadata, you can't filter by source, date, or other attributes. Store rich metadata.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 4 — Retrieving too much:</strong> Context window pollution, slower generation, higher cost. Retrieve more, rerank to less. Quality over quantity.
 
-</div>
 
 ## Evaluation Metrics
 

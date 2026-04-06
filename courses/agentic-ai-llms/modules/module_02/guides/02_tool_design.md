@@ -23,6 +23,7 @@ Each tool should do one thing well:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -222,6 +223,7 @@ Use enums and ranges to limit possible values:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 {
@@ -380,6 +382,7 @@ Use `anyOf` or `oneOf` for mutually exclusive options:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -446,6 +449,7 @@ More tools = more tokens + more confusion:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def create_tool_description(
@@ -508,6 +512,7 @@ Build validation into your tool execution:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def execute_book_flight(origin: str, destination: str, departure_date: str, **kwargs):
@@ -542,8 +547,6 @@ def execute_book_flight(origin: str, destination: str, departure_date: str, **kw
     # Proceed with booking...
 ```
 
-</div>
-</div>
 
 ### Helpful Error Messages
 
@@ -630,8 +633,6 @@ def validate_tool_schema(tool: dict) -> list[str]:
     return issues
 ```
 
-</div>
-</div>
 
 ### Tool Behavior Testing
 
@@ -676,7 +677,6 @@ def test_tool_behavior(tool_name: str, test_cases: list[dict]) -> dict:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

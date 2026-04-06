@@ -68,6 +68,7 @@ Attribution methods make these shortcuts visible before deployment.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -95,6 +96,7 @@ ig = IntegratedGradients(lambda x: model(x))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def attribution_for_prediction(model, inputs, target_class, n_steps=50):
@@ -130,6 +132,7 @@ def attribution_for_prediction(model, inputs, target_class, n_steps=50):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -184,6 +187,7 @@ def debug_attribution_plot(image_tensor, attrs_unsigned, title=""):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def class_attribution_statistics(
@@ -226,6 +230,7 @@ def class_attribution_statistics(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compare_class_attributions(model, dataloader, class_names, n_steps=30):
@@ -268,6 +273,7 @@ def compare_class_attributions(model, dataloader, class_names, n_steps=30):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
@@ -308,6 +314,7 @@ def measure_object_vs_background_attribution(attrs_map, segmentation_mask):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def measure_border_attribution(attrs_map, border_fraction=0.1):
@@ -372,6 +379,7 @@ def screen_for_border_artifacts(model, dataloader, threshold=0.20, n_steps=30):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def texture_vs_shape_score(attrs_map, edge_mask):
@@ -400,6 +408,7 @@ def texture_vs_shape_score(attrs_map, edge_mask):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
@@ -422,9 +431,7 @@ def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
     }
 ```
 
-</div>
 
-</div>
 
 **Interpretation:**
 - `attrs_toward_true`: Features present in the image that support the correct class but were insufficient
@@ -439,7 +446,6 @@ def debug_misclassification(model, image, true_label, pred_label, n_steps=50):
 
 <strong>Insight:</strong> For high-stakes models (credit, hiring, medical), regulators may require:
 
-</div>
 
 
 For high-stakes models (credit, hiring, medical), regulators may require:
@@ -545,9 +551,7 @@ def generate_attribution_report(
     )
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -558,7 +562,6 @@ Attribution patterns shift when the data distribution shifts. Monitoring attribu
 
 <strong>Warning:</strong> Attribution patterns shift when the data distribution shifts. Monitoring attribution statistics over time detects distribution drift before accuracy degrades.
 
-</div>
 
 
 <div class="code-window">
@@ -622,9 +625,7 @@ class AttributionDriftMonitor:
                 "drift_detected": w_dist > 0.1}
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -641,7 +642,6 @@ class AttributionDriftMonitor:
 
 2. Given a real-world scenario involving model debugging with attribution methods, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

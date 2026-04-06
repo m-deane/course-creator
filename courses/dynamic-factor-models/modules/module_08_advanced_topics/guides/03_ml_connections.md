@@ -77,6 +77,7 @@ This is the eigenvalue problem! Columns of $W_1$ are eigenvectors of $\Sigma_X$.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">linearautoencoder.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -374,6 +375,7 @@ where $R(W)$ is regularization (L2, dropout).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">deepautoencoder.py</span>
+</div>
 
 ```python
 class DeepAutoencoder(nn.Module):
@@ -650,6 +652,7 @@ $$\log p(X) \geq \mathbb{E}_{q(F|X)}[\log p(X|F)] - D_{KL}(q(F|X) \| p(F))$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">variationalautoencoder.py</span>
+</div>
 
 ```python
 class VariationalAutoencoder(nn.Module):
@@ -843,7 +846,6 @@ plt.show()
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Linear relationships...</div>
 
-</div>
 
 
 1. **Interpretation matters** (policy analysis, structural models)
@@ -956,7 +958,6 @@ plt.show()
 
 **Insight:** Understanding machine learning connections to factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Summary
 
@@ -1005,7 +1006,6 @@ You've now completed a comprehensive journey through factor models:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

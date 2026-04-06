@@ -99,6 +99,7 @@ $$\text{Maximize: } Q(\text{Model}) - \lambda \times C(\text{Model})$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -118,6 +119,7 @@ for news in news_feed:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -176,6 +178,7 @@ Total: 110ms (acceptable for trading)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 import hashlib
@@ -721,7 +724,6 @@ for model, count in model_counts.items():
 
 **Insight:** Understanding llm cost optimization, latency reduction, and caching is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -734,7 +736,6 @@ for model, count in model_counts.items():
 <div class="flow-step amber">3. "Prompt Engineering ...</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. "Semantic Caching fo...</div>
-</div>
 
 
 1. **"LLM Economics" by Anthropic** - Cost structure and optimization
@@ -770,7 +771,6 @@ for model, count in model_counts.items():
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

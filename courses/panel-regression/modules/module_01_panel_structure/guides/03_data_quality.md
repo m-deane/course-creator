@@ -167,6 +167,7 @@ One bad year affects all years for that entity.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -260,6 +261,7 @@ print("\nMissing patterns visualization saved to missing_patterns.png")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -324,6 +326,7 @@ for data_miss, name in [(data_mcar, 'MCAR'), (data_mar, 'MAR'), (data_mnar, 'MNA
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -380,8 +383,6 @@ print(f"  True value: 1.500")
 ```
 
 
-</div>
-</div>
 
 ### Outlier Detection and Treatment
 
@@ -532,7 +533,6 @@ print(f"  SE: {model_wins.std_errors['x']:.4f}")
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 1. **Missing Pattern Diagnosis**

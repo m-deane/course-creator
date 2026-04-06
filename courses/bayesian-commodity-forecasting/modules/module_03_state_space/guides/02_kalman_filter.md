@@ -132,6 +132,7 @@ $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -233,6 +234,7 @@ print(f"Mean squared error: {np.mean((np.array(kf.filtered_states) - alpha_true)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -317,6 +319,7 @@ Uncertainty Evolution:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -376,6 +379,7 @@ kf = KalmanFilter(H=0.01, Q=100, ...)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 innovations = y - predictions
@@ -385,7 +389,6 @@ from statsmodels.graphics.tsaplots import plot_acf
 plot_acf(innovations)  # Should show no significant lags
 ```
 
-</div>
 </div>
 
 ## Connections
@@ -419,7 +422,6 @@ $$K_t = P_{t|t-1} Z_t^T (Z_t P_{t|t-1} Z_t^T + H_t)^{-1}$$
 
 <strong>Key Concept Summary:</strong> The Kalman filter is a recursive algorithm that optimally estimates the hidden state of a linear dynamical system from noisy observations.
 
-</div>
 
 ---
 
@@ -469,7 +471,6 @@ Apply Kalman filter to:
 
 2. Given a real-world scenario involving the kalman filter: optimal bayesian updating for linear-gaussian systems, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -480,7 +481,6 @@ Apply Kalman filter to:
 
 <strong>Warning:</strong> - **Kalman (1960):** "A New Approach to Linear Filtering and Prediction Problems" - Original paper
 
-</div>
 
 
 ### Applied Econometrics

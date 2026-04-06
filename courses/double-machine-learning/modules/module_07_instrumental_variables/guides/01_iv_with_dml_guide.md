@@ -52,6 +52,7 @@ where $Z$ is the instrument, $g_0(X)$ captures control effects on $Y$, and $r_0(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -95,6 +96,7 @@ print(f"Corr(Z, U): {np.corrcoef(Z, U)[0,1]:.3f} (instrument exogenous)")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 df = pd.DataFrame(X, columns=col_names)
@@ -135,6 +137,7 @@ print(f"\nTrue effect: {true_theta}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.metrics import r2_score
@@ -155,8 +158,6 @@ print(f"Partial R² of Z: {partial_r2:.3f}")
 print(f"Instrument is {'STRONG' if partial_r2 > 0.05 else 'WEAK'}")
 ```
 
-</div>
-</div>
 
 The partial $R^2$ measures how much additional predictive power the instrument adds beyond the controls. Values below 0.05 suggest a weak instrument.
 
@@ -166,7 +167,6 @@ The partial $R^2$ measures how much additional predictive power the instrument a
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 05: PLR with `doubleml`

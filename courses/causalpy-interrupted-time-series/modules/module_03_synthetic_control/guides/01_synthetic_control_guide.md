@@ -112,6 +112,7 @@ The synthetic control estimate is credible only if the pre-intervention fit is g
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -170,6 +171,7 @@ Not all available units should be included in the donor pool. Exclude units that
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -198,6 +200,7 @@ a Dirichlet prior on the weights and estimating the posterior distribution of th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -268,8 +271,6 @@ print(f"Immediate post-intervention gap: {gap_mean[0]:.1f} "
       f"[{gap_hdi[0, 0]:.1f}, {gap_hdi[0, 1]:.1f}]")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -337,7 +338,6 @@ distinguish the treated unit from its donors.
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Module 00 (potential outcomes, SUTVA), Module 01 (ITS fundamentals)
 - **Extension of:** Difference-in-differences (SC is a generalization with unit-specific weights)

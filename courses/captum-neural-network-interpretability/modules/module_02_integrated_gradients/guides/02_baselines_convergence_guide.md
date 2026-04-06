@@ -45,6 +45,7 @@ Different baselines give different but equally valid answers to different questi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 baseline = torch.zeros_like(input_tensor)
@@ -69,6 +70,7 @@ baseline = torch.zeros_like(input_tensor)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from torchvision.transforms.functional import gaussian_blur
@@ -98,6 +100,7 @@ def create_blurred_baseline(input_tensor, kernel_size=41, sigma=15.0):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def random_noise_baseline(input_tensor, n_samples=50):
@@ -126,6 +129,7 @@ def random_noise_baseline(input_tensor, n_samples=50):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
@@ -149,6 +153,7 @@ baseline_mean = torch.tensor(X_train.mean(axis=0, keepdims=True))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -171,6 +176,7 @@ baseline_ids = tokenizer(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -205,6 +211,7 @@ The right way to choose a baseline: run attribution with multiple baselines and 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import IntegratedGradients
@@ -255,6 +262,7 @@ If attributions are robust to baseline choice, the rankings should agree:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import scipy.stats
@@ -298,6 +306,7 @@ In Captum:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 attr, delta = ig.attribute(
@@ -335,6 +344,7 @@ Large convergence delta usually means:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -352,7 +362,6 @@ for n_steps in [50, 100, 200, 300, 500]:
 
 </div>
 
-</div>
 
 ---
 
@@ -363,7 +372,6 @@ Applying SmoothGrad to IG produces smooth, high-quality attributions:
 
 <strong>Warning:</strong> Applying SmoothGrad to IG produces smooth, high-quality attributions:
 
-</div>
 
 
 <div class="code-window">
@@ -389,9 +397,7 @@ smooth_ig_attr = nt.attribute(
 )
 ```
 
-</div>
 
-</div>
 
 **Cost:** `nt_samples × n_steps` total passes. With `nt_samples=10, n_steps=50`: 500 passes.
 
@@ -422,7 +428,6 @@ For transformer models, token-level attribution requires `LayerIntegratedGradien
 
 <strong>Key Point:</strong> For transformer models, token-level attribution requires `LayerIntegratedGradients`:
 
-</div>
 
 
 <div class="code-window">
@@ -473,9 +478,7 @@ def attribute_text(text, tokenizer, lig_method, target_class=1):
     return tokens, token_attr
 ```
 
-</div>
 
-</div>
 
 ### Visualizing Token Attributions
 
@@ -518,9 +521,7 @@ def visualize_token_attribution(tokens, attributions, title=""):
     plt.show()
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -554,7 +555,6 @@ def visualize_token_attribution(tokens, attributions, title=""):
 
 2. Given a real-world scenario involving baselines, convergence, and noisetunnel, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

@@ -103,6 +103,7 @@ Consider quarterly GDP growth regressed on quarterly-averaged industrial product
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -233,7 +234,6 @@ Quarter end: GDP release (30 days later)
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. The Conference Board Leading Economic Index is released monthly. It is used to predict business cycle turning points, which are designated quarterly. Describe how you would structure a mixed-frequency analysis to predict NBER recession dates using the LEI.

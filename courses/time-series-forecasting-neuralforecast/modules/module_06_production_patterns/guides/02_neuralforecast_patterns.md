@@ -155,6 +155,7 @@ NeuralForecast uses PyTorch Lightning, which auto-detects GPU. Override if neede
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast.models import NHITS
@@ -255,7 +256,6 @@ model = NHITS(
 
 NeuralForecast trains a single global model across all series identified by `unique_id`.
 
-</div>
 
 
 NeuralForecast trains a single global model across all series identified by `unique_id`. This is the key scaling mechanism: one model call trains on thousands of products simultaneously.

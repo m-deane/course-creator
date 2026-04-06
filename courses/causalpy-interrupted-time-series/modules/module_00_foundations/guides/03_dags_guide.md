@@ -229,6 +229,7 @@ For a given DAG, there may be multiple valid adjustment sets. The **minimal adju
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -297,6 +298,7 @@ A step-by-step process:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import networkx as nx
@@ -381,7 +383,6 @@ draw_dag(
 ```
 
 </div>
-</div>
 
 ---
 
@@ -391,7 +392,6 @@ draw_dag(
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Causal vs predictive thinking (Guide 1), Potential outcomes (Guide 2)
 - **Leads to:** ITS model specification (Module 01), Bayesian model building (Module 02)

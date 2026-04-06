@@ -129,6 +129,7 @@ The gap between these two quantities depends on the inter-step correlation. For 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -169,7 +170,6 @@ Sample paths give direct answers to probability questions that have no clean clo
 
 <strong>Warning:</strong> Sample paths give direct answers to probability questions that have no clean closed form under marginal distributions.
 
-</div>
 
 
 **Probability that weekly total exceeds a threshold $c$:**

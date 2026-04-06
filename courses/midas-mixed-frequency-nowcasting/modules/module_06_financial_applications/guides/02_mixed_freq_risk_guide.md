@@ -68,6 +68,7 @@ A simpler but equivalent two-step approach:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -154,6 +155,7 @@ Beyond unconditional coverage, violations should be **serially independent** —
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def christoffersen_test(violations):
@@ -234,6 +236,7 @@ Then apply MIDAS to each factor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -288,8 +291,6 @@ def midas_term_structure(factors_monthly, factors_daily, K_daily=22):
     return np.column_stack(nowcasts)
 ```
 
-</div>
-</div>
 
 ### 2.3 MIDAS Spread Nowcasting
 
@@ -479,7 +480,6 @@ For daily RV computed from intraday data:
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - Andreou, E., Ghysels, E., & Kourtellos, A. (2010). Regression models with mixed sampling frequencies. *Journal of Econometrics*, 158(2), 246–261.

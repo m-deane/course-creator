@@ -23,6 +23,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 tools = [
@@ -225,6 +226,7 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -288,13 +290,13 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
   from jsonschema import validate
   validate(instance=tool_input, schema=tool_schema)
   ```
 
-</div>
 </div>
 
 - [ ] **Parameter sanitization** - Clean potentially dangerous inputs
@@ -373,8 +375,6 @@ if len(tool_calls) > 1 and tools_are_independent(tool_calls):
   "description": "Gets user profile data including name, email, and preferences. Use when user asks about their account or settings."
   ```
 
-</div>
-</div>
 
 - **Too many tools** - LLM performance degrades with >20 tools
   ```python

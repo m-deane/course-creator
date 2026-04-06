@@ -25,6 +25,7 @@ The most common format for panel data analysis. Each row represents one observat
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -76,6 +77,7 @@ Variables spread across columns by time period. Common in downloaded datasets bu
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -169,6 +171,7 @@ print(long_converted)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -183,8 +186,6 @@ print(f"Index levels: {panel_data.index.nlevels}")
 ```
 
 
-</div>
-</div>
 
 ### Accessing Data in Panel Structure
 
@@ -454,7 +455,6 @@ print("As DataFrame:\n", panel.dataframe.head())
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ```python

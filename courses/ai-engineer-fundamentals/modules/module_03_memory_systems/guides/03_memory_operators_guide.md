@@ -55,6 +55,7 @@ flowchart LR
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">memory_formation.py</span>
+</div>
 
 ```python
 import hashlib
@@ -133,6 +134,7 @@ class MemoryFormation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">memory_retrieval.py</span>
+</div>
 
 ```python
 import math
@@ -193,6 +195,7 @@ class MemoryRetrieval:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">memory_evolution.py</span>
+</div>
 
 ```python
 class MemoryEvolution:
@@ -249,6 +252,7 @@ class MemoryEvolution:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent_memory.py</span>
+</div>
 
 ```python
 class AgentMemory:
@@ -275,7 +279,6 @@ class AgentMemory:
 ```
 
 </div>
-</div>
 
 ## Common Pitfalls
 
@@ -283,19 +286,16 @@ class AgentMemory:
 
 <strong>Pitfall 1 — No formation filtering:</strong> Everything becomes a memory, causing bloat. Apply importance scoring and deduplication.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 2 — Static retrieval:</strong> Always retrieving the same way regardless of context. Use adaptive retrieval with multiple strategies.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 3 — No evolution:</strong> Memories become stale and contradictory. Implement decay, consolidation, and pruning.
 
-</div>
 
 ## Practice Questions
 

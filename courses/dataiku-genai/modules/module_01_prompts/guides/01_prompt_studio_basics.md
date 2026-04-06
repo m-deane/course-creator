@@ -80,6 +80,7 @@ Think of Prompt Studios like a specialized IDE for prompt engineering. Just as y
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -119,6 +120,7 @@ print(f"Cost: ${test_result['cost']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def create_prompt_studio(
@@ -203,6 +205,7 @@ Format as structured markdown.''',
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def add_test_case(
@@ -277,6 +280,7 @@ well above the five-year average of 72% for this time of year.'''
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def run_all_tests(studio: PromptStudio) -> pd.DataFrame:
@@ -332,6 +336,7 @@ print(test_results)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def create_version(
@@ -425,8 +430,6 @@ print(f"Token difference: {comparison['token_diff']}")
 print(f"Cost difference: ${comparison['cost_diff']:.4f}")
 ```
 
-</div>
-</div>
 
 ### Deploying to Production
 
@@ -497,8 +500,6 @@ deployment = deploy_to_recipe(
 print(f"Deployed to recipe: {deployment['recipe_name']}")
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -533,7 +534,6 @@ print(f"Deployed to recipe: {deployment['recipe_name']}")
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - LLM Mesh setup and connections (Module 0)

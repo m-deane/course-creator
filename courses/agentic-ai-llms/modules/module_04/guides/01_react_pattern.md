@@ -41,6 +41,7 @@ Final Answer: [Response to user]
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -171,6 +172,7 @@ Leveraging native tool calling for cleaner implementation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -292,6 +294,7 @@ result = agent.run("Calculate 15% of 847.50 and tell me if it's more than 100")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass, field
@@ -415,6 +418,7 @@ class TracingReActAgent(ReActAgent):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class ReActWithMemory(ReActAgent):
@@ -495,6 +499,7 @@ If the answer is correct, confirm it."""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 DETAILED_REACT_SYSTEM = """You are an AI assistant that solves problems systematically.
@@ -513,8 +518,6 @@ Rules:
 - Verify your final answer before stating it"""
 ```
 
-</div>
-</div>
 
 ### Few-Shot ReAct Examples
 
@@ -603,14 +606,11 @@ class RobustReActAgent(ReActAgent):
         return "Max steps reached"
 ```
 
-</div>
-</div>
 
 <div class="callout-key">
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

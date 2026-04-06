@@ -142,6 +142,7 @@ TracIn requires model checkpoints saved during training:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -177,6 +178,7 @@ for epoch in range(50):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.influence import TracInCPFast
@@ -222,6 +224,7 @@ Captum also provides `SimilarityInfluence`, which finds training examples most s
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.influence import SimilarityInfluence
@@ -268,6 +271,7 @@ The most useful TracIn analysis finds:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -290,7 +294,6 @@ for i, (idx, inf_val) in enumerate(zip(train_indices[0], influences[0])):
 
 </div>
 
-</div>
 
 ---
 
@@ -329,9 +332,7 @@ self_influences = tracin.self_influence(
 high_si_indices = self_influences.argsort(descending=True)[:20]
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -377,7 +378,6 @@ For most practical use cases, **TracInCPFast** (when checkpoints exist) or **Sim
 
 2. Given a real-world scenario involving influence functions, tracin, and tracincpfast, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

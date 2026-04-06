@@ -58,6 +58,7 @@ Fixed Effects      Random Effects
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -303,6 +304,7 @@ print(results.summary.tables[1])
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def consider_research_question():
@@ -354,6 +356,7 @@ consider_research_question()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def assess_data_characteristics(df, entity_col, time_col, x_cols):
@@ -403,8 +406,6 @@ assess_data_characteristics(df, 'entity', 'time', ['x1', 'x2'])
 ```
 
 
-</div>
-</div>
 
 ### 3. Sample Selection Considerations
 
@@ -453,7 +454,6 @@ discuss_sample_issues()
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ```python

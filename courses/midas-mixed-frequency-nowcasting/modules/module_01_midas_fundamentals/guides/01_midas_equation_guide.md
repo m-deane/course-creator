@@ -147,6 +147,7 @@ with $K = 9$ (3 quarterly lags × 3 months) and Beta polynomial weights.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -296,6 +297,7 @@ After estimation, plot the weights $w_j(\hat{\theta})$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -337,7 +339,6 @@ def plot_midas_weights(weights, freq_ratio=3, title="Estimated MIDAS Weights"):
     plt.show()
 ```
 
-</div>
 </div>
 
 A declining weight pattern (high weight on lag 0, lower on older lags) indicates the most recent month of the quarter is most informative. A hump-shaped pattern would suggest an intermediate lag matters most.
@@ -387,7 +388,6 @@ The gain is larger when:
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. Show that the standard OLS regression of $y_t$ on $\bar{x}_t = (1/m)\sum_j x_{mt-j}$ is a special case of MIDAS with fixed weights $w_j = 1/m$.

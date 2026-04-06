@@ -23,6 +23,7 @@ Temporary failures that may succeed on retry:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 TRANSIENT_ERRORS = {
@@ -120,6 +121,7 @@ FATAL_ERRORS = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import time
@@ -257,6 +259,7 @@ def safe_api_call(endpoint: str):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -362,6 +365,7 @@ def handle_api_error(e: Exception, context: dict) -> str:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class RobustToolAgent:
@@ -471,6 +475,7 @@ def execute_with_recovery(self, tool_name: str, arguments: dict) -> dict:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 system_prompt = """You are a helpful assistant with access to tools.
@@ -491,8 +496,6 @@ Example bad response:
 """
 ```
 
-</div>
-</div>
 
 ### Error-Aware Agent Loop
 
@@ -600,8 +603,6 @@ class ToolLogger:
         }))
 ```
 
-</div>
-</div>
 
 ### Metrics Collection
 
@@ -652,7 +653,6 @@ class ToolMetrics:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

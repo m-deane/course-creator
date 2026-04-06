@@ -520,6 +520,7 @@ def validate_wasde_changes(current: WASDEData, previous: WASDEData) -> dict:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">consensus_parsing.py</span>
+</div>
 
 ```python
 def consensus_parsing(table_text: str, commodity: str, n_runs: int = 3) -> dict:
@@ -560,6 +561,7 @@ def all_agree(results: List[dict], tolerance: float = 0.01) -> bool:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">robust_table_extract.py</span>
+</div>
 
 ```python
 import pdfplumber
@@ -586,6 +588,7 @@ def robust_table_extract(pdf_path: str) -> str:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 UNIT_CONVERSIONS = {
@@ -606,6 +609,7 @@ UNIT_CONVERSIONS = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 MARKETING_YEARS = {
@@ -637,8 +641,6 @@ class WASDERevision:
     revision_direction: str  # 'upward' or 'downward'
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -675,7 +677,6 @@ class WASDERevision:
 
 **Insight:** Understanding parsing usda agricultural reports is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -711,7 +712,6 @@ class WASDERevision:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

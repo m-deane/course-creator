@@ -89,6 +89,7 @@ For the course, we use a simplified two-step approach that avoids full Kalman fi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def extract_monthly_factors(monthly_panel, n_factors):
@@ -115,6 +116,7 @@ def extract_monthly_factors(monthly_panel, n_factors):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
@@ -147,6 +149,7 @@ def monthly_to_quarterly_factors(F_monthly, quarterly_dates, monthly_dates):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def factor_augmented_midas(Y, F_monthly, K, n_factors=1):
@@ -162,8 +165,6 @@ def factor_augmented_midas(Y, F_monthly, K, n_factors=1):
     return estimate_midas(Y_aligned, X_factor)
 ```
 
-</div>
-</div>
 
 ---
 
@@ -235,7 +236,6 @@ Each release contributes "news" proportional to:
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Guide 01 (factor models theory, PCA extraction)

@@ -129,6 +129,7 @@ These disagree on negation, adversarial inputs, and compositional sentences. Use
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -168,6 +169,7 @@ baseline = torch.randint_like(input_ids, 0, tokenizer.vocab_size)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -252,6 +254,7 @@ background = train_features[torch.randperm(len(train_features))[:100]]
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -328,9 +331,7 @@ attrs, delta = grad_shap.attribute(
 )
 ```
 
-</div>
 
-</div>
 
 Multiple baselines reduce sensitivity to the choice of reference point.
 
@@ -426,7 +427,6 @@ Attribution methods frequently produce different outputs on the same input. This
 
 2. Given a real-world scenario involving attribution method selection: a comprehensive decision framework, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

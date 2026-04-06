@@ -114,6 +114,7 @@ This is a direct probability statement about the parameter. The HDI contains the
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import arviz as az
@@ -164,6 +165,7 @@ Before fitting the model to data, check that the prior is reasonable by sampling
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -221,7 +223,6 @@ def prior_predictive_check_its(y_scale, n_obs):
 ```
 
 </div>
-</div>
 
 ---
 
@@ -277,7 +278,6 @@ CausalPy uses PyMC, which uses the **No-U-Turn Sampler (NUTS)** by default. NUTS
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Potential outcomes (Module 00), ITS fundamentals (Module 01)
 - **Leads to:** PyMC internals (Guide 2), Prior specification (Guide 3)

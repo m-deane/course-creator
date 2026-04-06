@@ -85,6 +85,7 @@ Sentiment = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -316,6 +317,7 @@ Examples:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">aspectsentimentextractor.py</span>
+</div>
 
 ```python
 class AspectSentimentExtractor:
@@ -400,6 +402,7 @@ For each aspect:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sentimentaggregator.py</span>
+</div>
 
 ```python
 from collections import defaultdict
@@ -528,6 +531,7 @@ class SentimentAggregator:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -590,8 +594,6 @@ print(f"Confidence: {aggregate['confidence']:.2f}")
 print(f"Trend: {aggregate['trend']}")
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -683,7 +685,6 @@ print(f"Trend: {aggregate['trend']}")
 
 **Insight:** Understanding extracting sentiment from commodity text is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -719,7 +720,6 @@ print(f"Trend: {aggregate['trend']}")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

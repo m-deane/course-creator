@@ -13,6 +13,7 @@ Dataiku Python recipes provide full flexibility for custom LLM applications.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -79,6 +80,7 @@ output_dataset.write_with_schema(output_df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -138,6 +140,7 @@ dataiku.Dataset("analyzed_reports").write_with_schema(output_df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -197,6 +200,7 @@ process_in_chunks("large_reports", "summarized_reports")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">api_endpoint.py</span>
+</div>
 
 ```python
 
@@ -255,6 +259,7 @@ def api_handler(request):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">webapp_backend.py</span>
+</div>
 
 ```python
 
@@ -409,8 +414,6 @@ output_df = pd.DataFrame(results)
 dataiku.Dataset("trading_signals").write_with_schema(output_df)
 ```
 
-</div>
-</div>
 
 ## Error Handling
 
@@ -473,8 +476,6 @@ class RobustLLMProcessor:
         }
 ```
 
-</div>
-</div>
 
 ## Key Takeaways
 
@@ -492,7 +493,6 @@ class RobustLLMProcessor:
 
 <strong>Key Concept:</strong> 5. **Error handling** is essential for production reliability
 
-</div>
 
 
 ## Resources

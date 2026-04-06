@@ -26,6 +26,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import structlog
@@ -475,6 +476,7 @@ def protected_endpoint(user_id, query):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -486,8 +488,6 @@ if random.random() < 0.01 or error:  # 1% sampling
     logger.info("request_details", prompt_length=len(prompt), tokens=tokens)
 ```
 
-</div>
-</div>
 
 ### Problem: Distributed tracing adds latency
 **Symptom:** Tracing overhead slows down requests significantly

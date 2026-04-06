@@ -24,6 +24,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class ConversationBuffer:
@@ -285,6 +286,7 @@ def manage_context_window(messages, max_tokens=180000, model="claude-3-5-sonnet-
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -389,8 +391,6 @@ EMBEDDING_MODEL = "text-embedding-3-small"
 # Use everywhere
 ```
 
-</div>
-</div>
 
 - **Chunk size too large** - Dilutes relevant information
 

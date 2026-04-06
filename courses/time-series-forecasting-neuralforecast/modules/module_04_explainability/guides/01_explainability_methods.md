@@ -176,6 +176,7 @@ $$\sum_{i=1}^{n} \phi_i = f(x) - E[f(x)]$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSampling")
@@ -233,7 +234,6 @@ Follow this decision tree:
 
 For most time series forecasting use cases, **Integrated Gradients is the right default**.
 
-</div>
 
 
 ```mermaid

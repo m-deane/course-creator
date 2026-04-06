@@ -118,6 +118,7 @@ $$\boxed{\mathbf{w} \leftarrow \mathbf{w} + \alpha \, \delta_t \, \mathbf{x}(S_t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class TileCoder:
@@ -205,7 +206,6 @@ class TileCoder:
 - Debugging a conceptual algorithm (tabular = transparent)
 - Environment: Grid...
 
-</div>
 
 
 - State space is small and discrete (less than ~$10^6$ states)

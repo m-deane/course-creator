@@ -228,6 +228,7 @@ Standard Factors (r=5)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">targetedpredictors.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -509,6 +510,7 @@ class TargetedPredictors:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -611,6 +613,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">select_threshold_cv.py</span>
+</div>
 
 ```python
 def select_threshold_cv(X, y, n_factors=5, thresholds=None,
@@ -748,6 +751,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -800,8 +804,6 @@ corr = pearsonr(X[:, j], y)[0]
 corr = pearsonr(X[:-h, j], y[h:])[0]
 ```
 
-</div>
-</div>
 
 ---
 
@@ -868,7 +870,6 @@ corr = pearsonr(X[:-h, j], y[h:])[0]
 
 **Insight:** Understanding targeted predictors is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## 9. Further Reading
 
@@ -913,7 +914,6 @@ corr = pearsonr(X[:-h, j], y[h:])[0]
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

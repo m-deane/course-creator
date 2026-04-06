@@ -51,6 +51,7 @@ In the commodity example: sanctions impact on shipping freight rates. Treatment 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -92,6 +93,7 @@ print(f"Treatment prevalence: {D.mean():.1%}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 df = pd.DataFrame(X, columns=col_names)
@@ -136,6 +138,7 @@ print(irm_atte.summary)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -162,8 +165,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-</div>
-</div>
 
 Good overlap between treated and untreated propensity distributions is essential for IRM.
 
@@ -173,7 +174,6 @@ Good overlap between treated and untreated propensity distributions is essential
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 05: PLR with `doubleml`

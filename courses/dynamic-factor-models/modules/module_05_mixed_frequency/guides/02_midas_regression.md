@@ -89,6 +89,7 @@ and $B(\theta_1, \theta_2) = \frac{\Gamma(\theta_1)\Gamma(\theta_2)}{\Gamma(\the
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">midas_beta_weights.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -182,6 +183,7 @@ Typically use polynomial of degree 1 or 2.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">midas_almon_weights.py</span>
+</div>
 
 ```python
 def midas_almon_weights(K, theta, normalize=True):
@@ -274,6 +276,7 @@ The MIDAS regression is **nonlinear** in $\theta$ (but linear in $\beta_0, \beta
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">midasregression.py</span>
+</div>
 
 ```python
 from scipy.optimize import minimize
@@ -461,7 +464,6 @@ print(f"\nOut-of-sample RMSE: {np.sqrt(mean_squared_error(Y_test, Y_pred[-len(Y_
 ```
 
 </div>
-</div>
 
 ---
 
@@ -571,7 +573,6 @@ where $\hat{F}_t$ are factors extracted from many high-frequency predictors.
 
 **Insight:** Understanding midas regression is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Summary
 
@@ -596,7 +597,6 @@ The next guide integrates MIDAS concepts into state-space DFMs, showing how to e
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

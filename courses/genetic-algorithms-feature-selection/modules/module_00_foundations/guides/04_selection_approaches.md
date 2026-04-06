@@ -149,6 +149,7 @@ The **regularization path** shows which features are eliminated at each $\lambda
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">filter_selection_mi.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -228,6 +229,7 @@ Now that we have seen how filters evaluate features independently using statisti
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">forward_selection_wrapper.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import LinearRegression
@@ -321,6 +323,7 @@ Wrapper methods give us interaction-aware selection, but they require explicitly
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">lasso_selection.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import LassoCV, Lasso
@@ -538,7 +541,6 @@ print(f"Corr(x2, y): {np.corrcoef(X[:, 1], y)[0, 1]:.4f}")
 
 <strong>Danger:</strong> Evaluating thousands of feature subsets on the same validation set is a form of data leakage. The "best" subset is partially optimized to the validation set, not the true data distribution. Always use nested cross-validation for wrapper methods.
 
-</div>
 
 ### Pitfall 2: Overfitting with Wrapper Methods
 
@@ -583,7 +585,6 @@ for train_idx, test_idx in KFold(5).split(X):
 
 <strong>Warning:</strong> Wrapper methods can require thousands of model evaluations. For expensive models (deep learning, large ensembles), use filters for initial screening, then wrappers for final refinement.
 
-</div>
 
 ### Pitfall 3: Embedded Methods with Non-Linear Models
 
@@ -621,7 +622,6 @@ print(f"Combined: {len(combined)}")
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Builds On
 - **01_feature_selection_problem.md**: Understanding why selection is necessary

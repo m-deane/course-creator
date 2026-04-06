@@ -100,6 +100,7 @@ resource_name: your-resource-name
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -126,6 +127,7 @@ print(response.text)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM, ChatSession
@@ -162,6 +164,7 @@ for message in chat.messages:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -200,6 +203,7 @@ print(data)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -227,6 +231,7 @@ for conn in llm_connections:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def test_llm_connection(connection_name: str) -> dict:
@@ -267,6 +272,7 @@ for conn_name in ['anthropic-claude', 'openai-gpt4']:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -293,7 +299,6 @@ router = LLMRouter("anthropic-claude", "openai-gpt4")
 result = router.complete("Summarize recent OPEC decisions")
 ```
 
-</div>
 </div>
 
 ### Cost-Based Routing
@@ -337,8 +342,6 @@ def select_model_by_budget(
     return viable_models[0][0]
 ```
 
-</div>
-</div>
 
 ## Access Control
 
@@ -387,8 +390,6 @@ print(f"Tokens used: {tracker.total_tokens}")
 print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 ```
 
-</div>
-</div>
 
 ## Key Takeaways
 
@@ -406,7 +407,6 @@ print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
 
 <strong>Key Concept:</strong> 5. **Failover routing** improves reliability across providers
 
-</div>
 
 
 ## Resources

@@ -33,6 +33,7 @@ where $g$ indexes clusters (entities).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -135,6 +136,7 @@ The most common approach for panel data.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def entity_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -169,6 +171,7 @@ For cross-sectional correlation across entities.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def time_clustering(df, y_col, x_cols, entity_col, time_col):
@@ -189,8 +192,6 @@ def time_clustering(df, y_col, x_cols, entity_col, time_col):
 ```
 
 
-</div>
-</div>
 
 ### 3. Two-Way Clustering
 
@@ -482,7 +483,6 @@ boot_se, boot_ests = cluster_bootstrap(df, 'y', ['x'], 'entity')
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ```python

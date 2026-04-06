@@ -203,6 +203,7 @@ Information criteria approximate leave-one-out cross-validation error. For facto
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">factornumberselector.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -816,7 +817,6 @@ Selecting the number of factors is a model selection problem requiring trade-off
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

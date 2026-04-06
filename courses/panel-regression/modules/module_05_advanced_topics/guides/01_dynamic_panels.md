@@ -74,6 +74,7 @@ $$\text{Bias} \approx -\frac{1.5}{4} = -0.375$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -165,6 +166,7 @@ Use $y_{i,t-2}$ as an instrument for $\Delta y_{i,t-1}$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.iv import IV2SLS
@@ -244,6 +246,7 @@ $$E[y_{i,s} \cdot \Delta\epsilon_{it}] = 0 \quad \text{for } s \leq t-2$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import PanelOLS
@@ -291,8 +294,6 @@ print(f"  True rho: {rho_true}")
 ```
 
 
-</div>
-</div>
 
 ## System GMM (Blundell-Bond)
 
@@ -366,7 +367,6 @@ Rejection suggests some instruments are invalid.
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ### Choosing the Estimator

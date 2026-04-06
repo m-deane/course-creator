@@ -109,6 +109,7 @@ What kind of information?
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">formation_ops.py</span>
+</div>
 
 ```python
 extract()      # Identify memory candidates
@@ -128,6 +129,7 @@ store()        # Write to appropriate store
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">retrieval_ops.py</span>
+</div>
 
 ```python
 search()       # Vector similarity search
@@ -146,6 +148,7 @@ inject()       # Format for prompt
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">evolution_ops.py</span>
+</div>
 
 ```python
 decay()        # Reduce unused memory importance
@@ -176,12 +179,9 @@ reinforce()    # Boost accessed memories
   <div class="compare-card">
     <div class="header before">Don't</div>
     <div class="body">Store everything. Never update memories. Single retrieval strategy. Ignore metadata. Same embedding for all content. Retrieve once, use forever.</div>
-  </div>
   <div class="compare-card">
     <div class="header after">Do Instead</div>
     <div class="body">Filter by importance. Implement evolution. Adaptive retrieval. Use metadata for filtering. Domain-specific when beneficial. Re-retrieve on context change.</div>
-  </div>
-</div>
 
 ---
 

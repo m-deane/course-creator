@@ -43,6 +43,7 @@ The factor acts as a noise-reduced aggregate of all available monthly indicators
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -86,6 +87,7 @@ def load_monthly_panel(series_dict):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def extract_factors(panel_std, n_factors=1, verbose=True):
@@ -141,6 +143,7 @@ def normalize_factor_sign(factors, loadings, reference_indicator):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def build_midas_matrix_from_factor(Y_quarterly, F_monthly, K, m=3):
@@ -184,8 +187,6 @@ def build_midas_matrix_from_factor(Y_quarterly, F_monthly, K, m=3):
     return np.array(rows_Y), np.array(rows_X)
 ```
 
-</div>
-</div>
 
 ### Step 4: Estimate FA-MIDAS
 
@@ -341,7 +342,6 @@ def compare_midas_fa_midas(Y_quarterly, ip_monthly, monthly_panel,
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Guide 01 (PCA factor extraction), Guide 02 (mixed-frequency DFM)

@@ -46,6 +46,7 @@ Tool calling (also called function calling) lets LLMs decide when to invoke exte
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -168,6 +169,7 @@ Tools use JSON Schema to define their parameters:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 tool = {
@@ -261,6 +263,7 @@ tool = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 tools = [
@@ -332,6 +335,7 @@ Some models can request multiple tools at once:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def run_agent_parallel(user_message: str) -> str:
@@ -427,6 +431,7 @@ async def execute_tools_parallel(tool_calls: list) -> list:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -476,6 +481,7 @@ response = client.messages.create(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 response = client.messages.create(...)
@@ -506,6 +512,7 @@ elif response.stop_reason == "stop_sequence":
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def stream_with_tools(user_message: str):
@@ -532,8 +539,6 @@ def stream_with_tools(user_message: str):
         pass
 ```
 
-</div>
-</div>
 
 ---
 
@@ -560,8 +565,6 @@ tool_results.append({
 })
 ```
 
-</div>
-</div>
 
 ### Error Results
 
@@ -674,14 +677,11 @@ agent.register_handler("calculate", lambda expression: {
 result = agent.run("What's the weather in London and what's 15% of 85?")
 ```
 
-</div>
-</div>
 
 <div class="callout-key">
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

@@ -182,6 +182,7 @@ The following demonstrates how a model can achieve good accuracy while learning 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -248,7 +249,6 @@ This is the foundation for everything in this course: the ability to move from *
 
 2. Given a real-world scenario involving why interpretability matters, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

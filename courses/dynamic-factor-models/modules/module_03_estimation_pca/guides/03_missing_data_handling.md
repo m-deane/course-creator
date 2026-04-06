@@ -216,6 +216,7 @@ Same rate as complete-data PCA! The key requirement: missingness proportion does
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">empca.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -932,7 +933,6 @@ Missing data is pervasive in economic applications. EM-PCA provides a principled
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

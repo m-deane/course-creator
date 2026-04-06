@@ -177,6 +177,7 @@ For $\tau \to 1$, $V(s)$ approaches $\max_{a \in \mathcal{D}(s)} Q(s, a)$ — th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def iql_value_loss(q_net, v_net, batch: dict, tau: float = 0.7) -> torch.Tensor:
@@ -282,7 +283,6 @@ You cannot evaluate a policy by running it in the environment (offline setting).
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** Q-learning and temporal difference (Module 3), function approximation (Module 4), policy gradient (Module 6)
 - **Leads to:** Safe RL and RLHF (Guide 03) — RLHF uses offline learning from human preference data

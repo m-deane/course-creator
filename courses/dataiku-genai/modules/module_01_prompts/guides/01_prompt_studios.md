@@ -193,6 +193,7 @@ expected:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def evaluate_prompt_output(output: str, test_case: dict) -> dict:
@@ -259,6 +260,7 @@ Version History:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -302,6 +304,7 @@ def compare_prompt_versions(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -337,8 +340,6 @@ output_dataset = dataiku.Dataset("analyzed_reports")
 output_dataset.write_with_schema(pd.DataFrame(results))
 ```
 
-</div>
-</div>
 
 ### LLM Recipe
 
@@ -366,7 +367,6 @@ Use the visual LLM Recipe for simpler cases:
 
 <strong>Key Concept:</strong> 5. **Direct deployment** moves prompts to production recipes
 
-</div>
 
 
 ## Resources

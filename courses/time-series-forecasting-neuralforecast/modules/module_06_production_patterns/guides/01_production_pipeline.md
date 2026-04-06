@@ -41,7 +41,6 @@ Each stage is a method on `ForecastPipeline`. This makes unit testing trivial an
 
 <div class="callout-info">
 
-<strong>Info:</strong> example.py
 The following implementation builds on the approach above:
 ---
 </div>
@@ -287,6 +286,7 @@ The choice of model depends on three factors: series length, available features,
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def select_model(series_length: int, n_features: int, needs_explanation: bool) -> str:
@@ -326,7 +326,6 @@ See detailed comparison in the table above.
 
 See detailed comparison in the table above.
 
-</div>
 </div>
 </div>
 

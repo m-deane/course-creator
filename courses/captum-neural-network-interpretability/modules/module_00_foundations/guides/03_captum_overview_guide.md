@@ -50,6 +50,7 @@ Every Captum method follows this pattern:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import IntegratedGradients
@@ -97,6 +98,7 @@ Captum requires inputs to have gradients enabled. The standard pattern:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -138,6 +140,7 @@ input_tensor = input_tensor.requires_grad_(True)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -184,6 +187,7 @@ from captum.attr import TCAV                  # Testing with concept activation 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import IntegratedGradients, NoiseTunnel
@@ -232,6 +236,7 @@ Captum includes `captum.attr.visualization` for common attribution visualization
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import visualization as viz
@@ -287,6 +292,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -325,6 +331,7 @@ shap.image_plot(shap_values, input_data)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -405,6 +412,7 @@ Captum works with any pretrained PyTorch model out of the box:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -432,6 +440,7 @@ ig = IntegratedGradients(resnet50.eval())
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -462,6 +471,7 @@ For layer-based attribution, you need to specify which layer to attribute to:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -480,7 +490,6 @@ lgc = LayerGradCam(resnet50.eval(), target_layer)
 
 </div>
 
-</div>
 
 ---
 
@@ -491,7 +500,6 @@ lgc = LayerGradCam(resnet50.eval(), target_layer)
 
 <strong>Insight:</strong> Attribution computation creates a full backward pass (for gradient methods). For large batches or high-resolution images, this can exceed GPU memory:
 
-</div>
 
 
 Attribution computation creates a full backward pass (for gradient methods). For large batches or high-resolution images, this can exceed GPU memory:
@@ -518,9 +526,7 @@ for i in range(batch_size):
 attributions = torch.cat(results, dim=0)
 ```
 
-</div>
 
-</div>
 
 ### Evaluation Mode
 
@@ -544,9 +550,7 @@ attributions = ig.attribute(inputs, baselines=baseline, target=class_idx)
 # Captum handles gradient computation internally
 ```
 
-</div>
 
-</div>
 
 ### Internal Batching
 
@@ -568,9 +572,7 @@ attributions = ig.attribute(
 )
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -621,9 +623,7 @@ attr_random = ig_random.attribute(inputs, baselines=baseline, target=class_idx)
 # This should look like noise, not structured attribution
 ```
 
-</div>
 
-</div>
 
 ---
 

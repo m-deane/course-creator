@@ -198,6 +198,7 @@ Modifies the values in an existing row, identified by its **row ID** (a zero-bas
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -529,7 +530,6 @@ See detailed comparison in the table above.
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** Guide 01 (SharePoint Integration) — OData filter syntax is identical
 - **Leads to:** Module 06 — Approval flows that update Excel-based tracking sheets

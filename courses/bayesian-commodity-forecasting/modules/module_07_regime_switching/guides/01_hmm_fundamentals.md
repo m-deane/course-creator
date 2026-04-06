@@ -170,6 +170,7 @@ $$P(S_t = k | Y_{1:T}) = \frac{\alpha_t(k) \cdot \beta_t(k)}{\sum_j \alpha_t(j) 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -350,7 +351,6 @@ Point estimates of regimes ignore classification uncertainty.
 
 2. Given a real-world scenario involving hidden markov model fundamentals, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

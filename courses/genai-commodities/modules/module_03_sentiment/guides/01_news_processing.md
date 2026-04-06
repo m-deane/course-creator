@@ -95,6 +95,7 @@ Event = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 import feedparser
@@ -339,6 +340,7 @@ class CommodityNewsAcquisition:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">relevancefilter.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -433,6 +435,7 @@ Consider NOT relevant if:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">class.py</span>
+</div>
 
 ```python
 @dataclass
@@ -529,6 +532,7 @@ Extract specific numbers where mentioned. Use standard units:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">class.py</span>
+</div>
 
 ```python
 @dataclass
@@ -677,8 +681,6 @@ class CommodityNewsProcessor:
         return min(1.0, score)
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -771,7 +773,6 @@ class CommodityNewsProcessor:
 
 **Insight:** Understanding processing commodity news for sentiment analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -810,7 +811,6 @@ class CommodityNewsProcessor:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

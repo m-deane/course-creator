@@ -81,6 +81,7 @@ With artificially small $\tilde{D}_i$ in the denominator, $\hat{\theta}$ is infl
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -128,6 +129,7 @@ Then concatenate all out-of-sample residuals and estimate $\theta$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -177,6 +179,7 @@ DML2 is generally preferred — it is more stable and recommended by the `double
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -223,8 +226,6 @@ for K in [2, 3, 5, 10, 20]:
     print(f"K={K:2d}: theta = {theta_k:.4f}")
 ```
 
-</div>
-</div>
 
 $K = 5$ is the default in most implementations and works well in practice. Larger $K$ uses more training data per fold but increases computation.
 
@@ -234,7 +235,6 @@ $K = 5$ is the default in most implementations and works well in practice. Large
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 02: The orthogonalisation trick

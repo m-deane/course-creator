@@ -184,6 +184,7 @@ for k, v in results.items():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">volatilityregimemodel.py</span>
+</div>
 
 ```python
 class VolatilityRegimeModel:
@@ -253,6 +254,7 @@ class VolatilityRegimeModel:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regimeawareallocator.py</span>
+</div>
 
 ```python
 class RegimeAwareAllocator:
@@ -317,6 +319,7 @@ class RegimeAwareAllocator:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regimeswitchingvar.py</span>
+</div>
 
 ```python
 class RegimeSwitchingVaR:
@@ -393,6 +396,7 @@ class RegimeSwitchingVaR:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">expanding_window_regime.py</span>
+</div>
 
 ```python
 def expanding_window_regime(
@@ -457,14 +461,11 @@ def fit_with_multiple_starts(
     return best_model
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding financial applications of hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -490,7 +491,6 @@ def fit_with_multiple_starts(
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

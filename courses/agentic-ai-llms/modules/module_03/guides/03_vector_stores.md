@@ -54,6 +54,7 @@ Best for: Development, small-medium datasets, serverless
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import chromadb
@@ -225,6 +226,7 @@ Most common index for vector search:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -293,6 +295,7 @@ distances, indices = index.search(query_embedding, k=5)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -365,6 +368,7 @@ metadata = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -434,7 +438,6 @@ def ingest_to_vector_store(
         print(f"Ingested {min(i + batch_size, len(chunks))}/{len(chunks)}")
 ```
 
-</div>
 </div>
 
 ### Incremental Updates
@@ -545,8 +548,6 @@ class CachedEmbedder:
         return results
 ```
 
-</div>
-</div>
 
 ### Query Optimization
 
@@ -604,7 +605,6 @@ def optimized_query(
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

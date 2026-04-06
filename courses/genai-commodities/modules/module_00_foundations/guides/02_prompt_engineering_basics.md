@@ -189,6 +189,7 @@ def analyze_with_cot(report_text, llm_client):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">extract_eia_data.py</span>
+</div>
 
 ```python
 json_extraction_prompt = """
@@ -254,6 +255,7 @@ def extract_eia_data(report_excerpt, llm_client):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 oil_analysis_prompt = """
@@ -312,6 +314,7 @@ Analyze:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 uncertainty_aware_prompt = """
@@ -353,6 +356,7 @@ DATA GAPS:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">create_grounded_prompt.py</span>
+</div>
 
 ```python
 def create_grounded_prompt(data, question):
@@ -430,14 +434,11 @@ test_cases = [
 ]
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding prompt engineering for commodity analysis is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -465,7 +466,6 @@ test_cases = [
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

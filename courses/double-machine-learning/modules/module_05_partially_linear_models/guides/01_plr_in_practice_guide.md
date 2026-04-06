@@ -41,6 +41,7 @@ The commodity example: estimating the causal effect of carbon price policy chang
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -93,6 +94,7 @@ The two nuisance models predict $E[Y|X]$ and $E[D|X]$. These are pure prediction
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -129,6 +131,7 @@ ml_m_lasso = LassoCV(cv=5, random_state=42)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -160,6 +163,7 @@ The `summary` output includes the coefficient, standard error, t-statistic, and 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 results = {}
@@ -179,7 +183,6 @@ for name, ml_l, ml_m in [
     print(f"{name:<20} theta={dml.coef[0]:.4f}  SE={dml.se[0]:.4f}")
 ```
 
-</div>
 </div>
 
 If all nuisance models give similar treatment effects, the result is robust. If they differ substantially, the nonlinearity of confounding matters and you should prefer the most flexible model.
@@ -215,8 +218,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -224,7 +225,6 @@ plt.show()
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Modules 02-04: Orthogonalisation, scores, cross-fitting

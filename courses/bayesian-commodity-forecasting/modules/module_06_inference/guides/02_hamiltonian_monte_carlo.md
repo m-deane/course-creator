@@ -127,6 +127,7 @@ Energy complex hierarchy: global factor → product factors → individual marke
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -221,6 +222,7 @@ Where $\theta_-, \theta_+$ are endpoints of trajectory, $p_-, p_+$ are momenta.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 trace = pm.sample(
@@ -255,6 +257,7 @@ trace = pm.sample(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 trace = pm.sample(
@@ -301,6 +304,7 @@ trace_dense = pm.sample(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 h[t] = mu + phi * (h[t-1] - mu) + sigma_eta * eta[t]
@@ -317,6 +321,7 @@ When $\sigma_\eta \to 0$, posterior becomes funnel-shaped (hard for HMC).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 h_raw[t] = phi * h_raw[t-1] + eta[t]  # eta ~ N(0, 1)
@@ -332,6 +337,7 @@ h[t] = mu + sigma_eta * h_raw[t]
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as sv_noncentered:
@@ -389,6 +395,7 @@ with pm.Model() as sv_noncentered:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
    trace = pm.sample(1000, tune=2000, target_accept=0.95)
@@ -415,14 +422,13 @@ with pm.Model() as sv_noncentered:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 ess = az.ess(trace)
 print(ess['sigma_level'])  # Should be > 400 for 1000 samples
 ```
 
-</div>
-</div>
 
 **Fixes:**
 1. Longer chains
@@ -463,8 +469,6 @@ bfmi = az.bfmi(trace)
 print(f"E-BFMI: {bfmi}")
 ```
 
-</div>
-</div>
 
 **Low E-BFMI → Poor exploration** (likely funnel geometry)
 
@@ -536,8 +540,6 @@ if divergences > 0:
     print("  3. Inspect posterior geometry with az.plot_pair()")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -615,7 +617,6 @@ A crude oil state space model has 200 latent states. Estimate the number of grad
 
 <strong>Key Point:</strong> A crude oil state space model has 200 latent states. Estimate the number of gradient evaluations HMC performs per iteration if $L=50$ leapfrog steps. Compare to Metropolis (no gradients).
 
-</div>
 
 
 ### Problem 2
@@ -654,7 +655,6 @@ You're forecasting copper prices with a GP model (100 inducing points, 5 kernel 
 
 2. Given a real-world scenario involving hamiltonian monte carlo for bayesian inference, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

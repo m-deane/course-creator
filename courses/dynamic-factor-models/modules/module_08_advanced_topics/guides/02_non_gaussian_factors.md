@@ -103,6 +103,7 @@ Example: $\nu = 5 \implies \kappa = 9$ (much heavier than Gaussian)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">test_gaussianity.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -317,6 +318,7 @@ This is weighted least squares with weights $w_t$!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">studenttfactormodel.py</span>
+</div>
 
 ```python
 from scipy.special import digamma, logsumexp
@@ -738,7 +740,6 @@ k|u| - \frac{1}{2}k^2 & |u| > k
 
 **Insight:** Understanding non-gaussian factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Summary
 
@@ -766,7 +767,6 @@ The final guide explores connections between factor models and machine learningâ
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

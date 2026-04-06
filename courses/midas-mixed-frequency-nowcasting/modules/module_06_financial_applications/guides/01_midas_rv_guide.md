@@ -122,6 +122,7 @@ The MIDAS-RV model captures that **not all lags of daily RV are equally informat
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -179,6 +180,7 @@ def plot_beta_weights(ax, K=22):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.optimize import minimize
@@ -302,6 +304,7 @@ where $RV^{(w)}_t = \frac{1}{5}\sum_{j=0}^{4} RV^{(d)}_{t-j}$ (weekly average) a
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def fit_har_rv(rv_daily):
@@ -326,8 +329,6 @@ def fit_har_rv(rv_daily):
     return beta, fitted, residuals, rmse
 ```
 
-</div>
-</div>
 
 ---
 
@@ -486,7 +487,6 @@ Alternatively, for a historical simulation approach, MIDAS-RV provides the volat
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - Ghysels, E., Santa-Clara, P., & Valkanov, R. (2005). There is a risk-return trade-off after all. *Journal of Financial Economics*, 76(3), 509–548.

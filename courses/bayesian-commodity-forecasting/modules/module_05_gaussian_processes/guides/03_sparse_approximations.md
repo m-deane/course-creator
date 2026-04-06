@@ -98,6 +98,7 @@ For commodity prices with 10 years of daily data (2,500 points), we might use:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -311,6 +312,7 @@ print(inducing_points.flatten()[:10], "...")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -384,6 +386,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -430,7 +433,6 @@ y = np.sin(X[:, 0]) + np.random.normal(0, 0.1, n)
 model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 ```
 
-</div>
 </div>
 
 ## Common Pitfalls
@@ -525,7 +527,6 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 
 2. Given a real-world scenario involving sparse approximations for gaussian processes, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -552,7 +553,6 @@ model, trace = sparse_gp_pymc(X, y, num_inducing=50)
 
 <strong>Key Concept Summary:</strong> Sparse approximations reduce the computational cost of Gaussian Process inference from O(n^3) to O(nm^2), where m << n is the number of inducing points.
 
-</div>
 
 ---
 

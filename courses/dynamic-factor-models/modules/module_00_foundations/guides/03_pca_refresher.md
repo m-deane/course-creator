@@ -223,6 +223,7 @@ Plot eigenvalues in descending order; look for "elbow" where decline levels off.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">scree_plot.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -273,6 +274,7 @@ Specialized criteria balancing fit and complexity for large panels (covered in M
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">variance_explained.py</span>
+</div>
 
 ```python
 def variance_explained(eigenvalues, threshold=0.9):
@@ -304,6 +306,7 @@ Each loading $v_{jk}$ tells us how variable $j$ loads on component $k$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">interpret_loadings.py</span>
+</div>
 
 ```python
 def interpret_loadings(loadings, variable_names, n_top=5):
@@ -352,6 +355,7 @@ PC loadings can be rotated for easier interpretation without changing fit:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">varimax_rotation.py</span>
+</div>
 
 ```python
 from scipy.stats import special_ortho_group
@@ -448,8 +452,6 @@ print(f"PCA variance explained: {pca.explained_variance_ratio_.sum():.3f}")
 print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -503,7 +505,6 @@ print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 
 **Insight:** Understanding principal component analysis refresher is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -523,7 +524,6 @@ print(f"FA noise variance: {fa.noise_variance_.mean():.3f}")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

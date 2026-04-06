@@ -203,6 +203,7 @@ Naive priority updates are $O(N)$ per step. A **sum tree** data structure reduce
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class SumTree:
@@ -341,7 +342,6 @@ Debugging a combined agent is much harder than debugging each component independ
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** DQN (Guide 01), Bellman equations (Module 00), replay buffers, target networks
 - **Leads to:** distributional RL (C51, QR-DQN), policy gradient methods (Module 06), actor-critic algorithms (Module 07)

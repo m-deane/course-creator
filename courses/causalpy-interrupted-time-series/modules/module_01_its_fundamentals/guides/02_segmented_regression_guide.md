@@ -59,6 +59,7 @@ Note: at $t = t^*$, the `t_post` variable is 0 (the level change applies but no 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -168,6 +169,7 @@ where $\hat{\rho}$ is the estimated first-order autocorrelation. Values close to
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from statsmodels.stats.stattools import durbin_watson
@@ -215,6 +217,7 @@ The Newey-West (HAC) estimator produces consistent standard errors under autocor
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -247,6 +250,7 @@ The cleanest approach: include an AR(1) process in the PyMC model definition. Th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -314,6 +318,7 @@ For flexible non-linear pre-trends, natural cubic splines provide a smooth non-p
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from patsy import dmatrix
@@ -360,6 +365,7 @@ Use **Leave-One-Out Cross-Validation (LOO)** via ArviZ:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import arviz as az
@@ -385,7 +391,6 @@ comparison = az.compare({"full": full_model_result.idata, "level_only": level_on
 print(comparison)
 ```
 
-</div>
 </div>
 
 The model with higher LOO ELPD (expected log pointwise predictive density) is preferred.
@@ -415,8 +420,6 @@ df["month"] = df["date"].dt.month
 formula = "y ~ 1 + t + treated + t_post + C(month)"
 ```
 
-</div>
-</div>
 
 This controls for monthly seasonal patterns without assuming a functional form.
 
@@ -459,8 +462,6 @@ df_seasonal = add_fourier_terms(df, period=12, n_terms=2)
 formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 ```
 
-</div>
-</div>
 
 ---
 
@@ -470,7 +471,6 @@ formula = "y ~ 1 + t + treated + t_post + sin_1 + cos_1 + sin_2 + cos_2"
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** ITS Introduction (Guide 1)
 - **Leads to:** CausalPy ITS API (Guide 3), Bayesian ITS (Module 02)

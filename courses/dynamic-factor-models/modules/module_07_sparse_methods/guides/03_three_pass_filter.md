@@ -206,6 +206,7 @@ Pass 3: Forecast Aggregation
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">threepassregressionfilter.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -548,6 +549,7 @@ class ThreePassRegressionFilter:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -635,6 +637,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compare_methods.py</span>
+</div>
 
 ```python
 def compare_methods(X_train, y_train, X_test, y_test, n_factors=5, horizon=1):
@@ -744,6 +747,7 @@ for method, rmse in comparison.items():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -754,8 +758,6 @@ y_ahead = y[:-h]  # Off by one!
 y_ahead = y[h:T_eff + h]  # Properly aligned
 ```
 
-</div>
-</div>
 
 ### 3. Not Including AR Terms
 
@@ -834,7 +836,6 @@ y_ahead = y[h:T_eff + h]  # Properly aligned
 
 **Insight:** Understanding three-pass regression filter is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## 9. Further Reading
 
@@ -887,7 +888,6 @@ y_ahead = y[h:T_eff + h]  # Properly aligned
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

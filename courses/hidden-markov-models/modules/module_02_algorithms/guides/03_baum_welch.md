@@ -467,6 +467,7 @@ print(f"\nState prediction accuracy: {accuracy:.2%}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -523,6 +524,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">fit_with_multiple_initializations.py</span>
+</div>
 
 ```python
 def fit_with_multiple_initializations(observations, n_states, n_inits=10):
@@ -556,6 +558,7 @@ def fit_with_multiple_initializations(observations, n_states, n_inits=10):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">forward_scaled.py</span>
+</div>
 
 ```python
 def forward_scaled(self, observations):
@@ -595,6 +598,7 @@ def forward_scaled(self, observations):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compute_bic.py</span>
+</div>
 
 ```python
 def compute_bic(log_likelihood, n_params, n_observations):
@@ -674,8 +678,6 @@ def initialize_with_kmeans(observations, n_states):
     return hmm
 ```
 
-</div>
-</div>
 
 5. **Ignoring Convergence Criteria**
    - Stopping too early: Parameters haven't stabilized
@@ -774,7 +776,6 @@ def initialize_with_kmeans(observations, n_states):
 
 **Insight:** Understanding baum-welch algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -828,7 +829,6 @@ def initialize_with_kmeans(observations, n_states):
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

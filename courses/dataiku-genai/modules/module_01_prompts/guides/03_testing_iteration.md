@@ -98,6 +98,7 @@ Think of prompt iteration like recipe development. You don't create the perfect 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from typing import Dict, List, Callable
@@ -235,6 +236,7 @@ def estimate_tokens(text: str) -> int:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -351,6 +353,7 @@ baseline_results = test_suite.run_all_tests()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku import PromptStudio
@@ -439,6 +442,7 @@ print(comparison)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class PromptIterator:
@@ -606,7 +610,6 @@ best = iterator.get_best_version()
 ```
 
 </div>
-</div>
 
 ### Regression Testing
 
@@ -686,8 +689,6 @@ else:
     print("Regressions detected - do not deploy")
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -722,7 +723,6 @@ else:
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Prompt Studio basics (Module 1.1)

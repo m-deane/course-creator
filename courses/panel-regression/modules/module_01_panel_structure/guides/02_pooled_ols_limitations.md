@@ -49,6 +49,7 @@ This ignores:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -117,6 +118,7 @@ When $Cov(X_{it}, \alpha_i) \neq 0$, the estimate is biased.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -166,6 +168,7 @@ Even without endogeneity, pooled OLS ignores within-entity correlation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def demonstrate_serial_correlation(df, entity_col, time_col, y_col, x_cols):
@@ -211,8 +214,6 @@ demonstrate_serial_correlation(df, 'entity', 'time', 'y', ['x'])
 ```
 
 
-</div>
-</div>
 
 ## Consequences for Inference
 
@@ -378,7 +379,6 @@ test_endogeneity_hausman(df, 'y', ['x'], 'entity', 'time')
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 Before using pooled OLS on panel data:

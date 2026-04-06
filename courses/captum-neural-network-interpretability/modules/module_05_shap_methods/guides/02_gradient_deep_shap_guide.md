@@ -73,6 +73,7 @@ In practice, GradientSHAP:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -174,6 +175,7 @@ Consider a sigmoid activation with:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -201,6 +203,7 @@ DeepLIFT correctly attributes the large change in output to the input difference
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -253,6 +256,7 @@ This runs DeepLIFT once per background sample, then averages. For $n_{bg} = 50$ 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import DeepLiftShap
@@ -297,6 +301,7 @@ Residual connections in ResNets/Transformers require the `DeepLiftShap` variant 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -341,6 +346,7 @@ attrs = DeepLiftShap(model).attribute(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -366,7 +372,6 @@ plt.savefig("gradient_vs_deeplift_attributions.png", dpi=150, bbox_inches="tight
 
 </div>
 
-</div>
 
 ### For Images
 
@@ -395,9 +400,7 @@ fig, _ = viz.visualize_image_attr_multiple(
 )
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -429,9 +432,7 @@ corr_gs_dl, _ = spearmanr(attrs_gs_norm.flatten(), attrs_dl_norm.flatten())
 print(f"GradientSHAP vs DeepLIFT SHAP (Spearman r): {corr_gs_dl:.3f}")
 ```
 
-</div>
 
-</div>
 
 High correlation ($r > 0.9$) between methods on the same input indicates robust, model-supported attributions.
 
@@ -450,7 +451,6 @@ High correlation ($r > 0.9$) between methods on the same input indicates robust,
 
 2. Given a real-world scenario involving gradientshap and deeplift shap, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

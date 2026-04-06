@@ -122,6 +122,7 @@ $$\psi_t(j) = \arg\max_i [\delta_{t-1}(i) \cdot a_{ij}]$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">viterbi_algorithm.py</span>
+</div>
 
 ```python
 def viterbi_algorithm(observations, pi, A, B):
@@ -217,6 +218,7 @@ For numerical stability with long sequences:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">viterbi_log.py</span>
+</div>
 
 ```python
 def viterbi_log(observations, log_pi, log_A, log_B):
@@ -275,6 +277,7 @@ print(f"Prob:      {np.exp(log_prob):.6e}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">viterbi_gaussian.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -402,6 +405,7 @@ print(f"\nDecoding accuracy: {accuracy:.1%}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compare_viterbi_forward_backward.py</span>
+</div>
 
 ```python
 def compare_viterbi_forward_backward(observations, pi, A, B):
@@ -561,14 +565,11 @@ def regime_detection_with_viterbi():
 regime_detection_with_viterbi()
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding the viterbi algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -596,7 +597,6 @@ regime_detection_with_viterbi()
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

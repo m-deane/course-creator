@@ -141,6 +141,7 @@ The following implementation builds on the approach above:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.json</span>
+</div>
 
 ```json
 {
@@ -597,7 +598,6 @@ Include a summary of both stages: who approved, when, and any comments.
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** Guide 01 — Approvals connector basics; Module 04 — Conditions and parallel branches
 - **Leads to:** Module 07 — Desktop flows for document processing in approval pipelines

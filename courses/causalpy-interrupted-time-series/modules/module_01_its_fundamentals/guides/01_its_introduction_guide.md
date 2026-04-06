@@ -275,6 +275,7 @@ A **controlled ITS** (also called ITS with a comparison group) adds a comparison
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -351,7 +352,6 @@ def fit_its_model(df, outcome, formula=None):
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Potential outcomes (Module 00), DAGs and confounding (Module 00)
 - **Leads to:** Segmented regression details (Guide 2), CausalPy API (Guide 3)

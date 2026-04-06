@@ -47,6 +47,7 @@ FRED is the primary source for macroeconomic data. The St. Louis Fed maintains o
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -71,6 +72,7 @@ fred = Fred(api_key=os.environ.get('FRED_API_KEY'))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -103,6 +105,7 @@ ip = pd.read_csv('resources/industrial_production_monthly.csv', index_col=0, par
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -120,8 +123,6 @@ print(f"Date range: {gdp_growth.index[0]} to {gdp_growth.index[-1]}")
 print(f"Last value: {gdp_growth.iloc[-1]:.3f}%")
 ```
 
-</div>
-</div>
 
 ### Monthly Series (Primary Regressors)
 
@@ -416,7 +417,6 @@ ip_quarterly_periods = ip_monthly.index.to_period('Q')
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. Download the INDPRO series from FRED (or load from CSV). Convert to monthly growth rates. Resample to quarterly frequency using three different aggregation methods (last, mean, sum). Plot all three. In which quarter does the choice of aggregation method matter most?

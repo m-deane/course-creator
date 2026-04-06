@@ -23,6 +23,7 @@ Does the agent give correct answers?
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def evaluate_accuracy(
@@ -280,6 +281,7 @@ def evaluate_safety(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -463,6 +465,7 @@ class RegressionTracker:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def compare_responses(
@@ -500,8 +503,6 @@ Reply with JSON:
     return json.loads(response.content[0].text)
 ```
 
-</div>
-</div>
 
 ### Rubric-Based Scoring
 
@@ -582,7 +583,6 @@ def generate_evaluation_report(results: dict) -> str:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

@@ -45,6 +45,7 @@ Understanding these operators is essential for effective GA design.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">tournament_selection.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -96,6 +97,7 @@ print(f"Fitness: {sum(selected)}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">roulette_wheel.py</span>
+</div>
 
 ```python
 def roulette_wheel_selection(population, fitness_scores):
@@ -370,6 +372,7 @@ For feature selection, chromosomes are binary vectors where 1 = feature selected
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">feature_selection_operators.py</span>
+</div>
 
 ```python
 class FeatureSelectionOperators:
@@ -436,7 +439,6 @@ print(f"Child 1 features: {sum(child1)}")
 print(f"Mutated features: {sum(mutated)}")
 ```
 
-</div>
 </div>
 
 ## Adaptive Operators
@@ -532,7 +534,6 @@ The introduction stated that removing any operator "breaks the system." Here is 
 
 <strong>Danger:</strong> Premature convergence (the "no mutation" failure) is the most common and least obvious GA problem. The GA appears to be working -- fitness improves, the best solution looks good -- but it stopped exploring too early. Always monitor population diversity alongside fitness.
 
-</div>
 
 The three-operator system works because selection provides direction, crossover provides speed (via building block combination), and mutation provides insurance (against diversity loss). The balance between them -- controlled by tournament size, crossover probability, and mutation rate -- determines whether the GA converges quickly to a good solution or gets stuck.
 
@@ -556,7 +557,6 @@ The three-operator system works because selection provides direction, crossover 
 
 7. **All three operators are necessary** -- removing any one causes a specific, predictable failure mode
 
-</div>
 
 ## Practice Problems
 

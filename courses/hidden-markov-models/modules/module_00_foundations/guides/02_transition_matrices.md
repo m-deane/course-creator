@@ -171,6 +171,7 @@ Or equivalently, $\pi$ is a left eigenvector of $A$ with eigenvalue 1.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compute_stationary_distribution.py</span>
+</div>
 
 ```python
 def compute_stationary_distribution(A, method='eigenvalue'):
@@ -236,6 +237,7 @@ Expected steps to reach state $j$ starting from state $i$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compute_hitting_times.py</span>
+</div>
 
 ```python
 def compute_hitting_times(A, target_state):
@@ -301,6 +303,7 @@ States $i$ and $j$ communicate if you can get from $i$ to $j$ and from $j$ to $i
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">if.py</span>
+</div>
 
 ```python
 def find_communicating_classes(A, max_power=100):
@@ -366,6 +369,7 @@ print(f"(This chain has {len(classes)} communicating classes - it's reducible)")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compute_period.py</span>
+</div>
 
 ```python
 def compute_period(A, state=0, max_steps=100):
@@ -507,14 +511,11 @@ A = np.array([
 visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding transition matrices and state dynamics is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -540,7 +541,6 @@ visualize_transition_matrix(A, ['Bull', 'Neutral', 'Bear'])
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

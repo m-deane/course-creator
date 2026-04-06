@@ -24,6 +24,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def react_loop(query, tools, max_steps=10):
@@ -147,6 +148,7 @@ def adaptive_plan_execute(goal, tools):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -166,8 +168,6 @@ while not done and steps < MAX_STEPS:
     seen_observations.add(observation)
 ```
 
-</div>
-</div>
 
 ### Problem: Overly complex plans fail
 **Symptom:** Agent creates detailed 10+ step plans that break on first unexpected result

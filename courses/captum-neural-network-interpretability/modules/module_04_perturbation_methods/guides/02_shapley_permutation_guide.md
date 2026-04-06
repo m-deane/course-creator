@@ -82,6 +82,7 @@ Estimate Shapley values by sampling random orderings:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -158,6 +159,7 @@ Captum does not provide variance estimates directly, but you can estimate via bo
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import sem
@@ -214,6 +216,7 @@ Captum's `ShapleyValueSampling` is equivalent to the Monte Carlo version of Kern
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -259,6 +262,7 @@ While Occlusion and Shapley values explain individual predictions (local), **Per
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def permutation_importance(model, X_val, y_val, n_repeats=5):
@@ -315,6 +319,7 @@ Captum also provides `KernelShap` as a specific implementation following the ori
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import KernelShap
@@ -330,9 +335,7 @@ attr = ks.attribute(
 )
 ```
 
-</div>
 
-</div>
 
 `KernelShap` vs `ShapleyValueSampling`:
 - Both approximate Shapley values
@@ -397,9 +400,7 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
     return attr
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -416,7 +417,6 @@ def shapley_with_convergence_check(model, input_x, baseline, target,
 
 2. Given a real-world scenario involving guide 02: shapley values and permutation feature importance, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

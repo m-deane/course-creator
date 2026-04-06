@@ -127,6 +127,7 @@ Over 5000 evaluations with 20% cache hit rate → 1000 evaluations saved!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -712,7 +713,6 @@ print(f"  Test accuracy: {test_score:.4f}")
 
 <strong>Key Takeaway:</strong> Fitness caching alone can provide 30-50% speedup for typical GA runs. Combined with parallelization (4-8 cores), you can achieve 5-10x wall-clock reduction, making GA feature selection feasible for production ML pipelines.
 
-</div>
 
 ## Practice Problems
 

@@ -23,6 +23,7 @@ Before running panel regressions, thorough exploratory analysis helps you unders
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -97,6 +98,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_within_between(df, entity_col, x_col, y_col):
@@ -201,6 +203,7 @@ for name, value in slopes.items():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_entity_effects(df, entity_col, y_col):
@@ -267,8 +270,6 @@ f_stat, p_value = plot_entity_effects(df, 'entity', 'y')
 ```
 
 
-</div>
-</div>
 
 ### Testing for Time Effects
 
@@ -517,7 +518,6 @@ analyze_missing_patterns(df, 'entity', 'time', ['x', 'y'])
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ```python

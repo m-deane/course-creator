@@ -415,6 +415,7 @@ Transcript:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -569,6 +570,7 @@ Format as concise bullet points.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">chunk_transcript.py</span>
+</div>
 
 ```python
 def chunk_transcript(transcript: str) -> dict:
@@ -592,6 +594,7 @@ def chunk_transcript(transcript: str) -> dict:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 INDUSTRY_GLOSSARY = """
@@ -614,6 +617,7 @@ Term definitions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 prompt = """
@@ -646,8 +650,6 @@ def normalize_guidance(raw_value: str) -> dict:
     pass
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -686,7 +688,6 @@ def normalize_guidance(raw_value: str) -> dict:
 
 **Insight:** Understanding processing earnings call transcripts for commodity mentions is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -726,7 +727,6 @@ def normalize_guidance(raw_value: str) -> dict:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

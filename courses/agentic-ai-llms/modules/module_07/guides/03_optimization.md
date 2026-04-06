@@ -61,6 +61,7 @@ Both get you there, but optimization saves time and money.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -504,6 +505,7 @@ print(f"Cost: ${metrics['cost']:.4f}, Latency: {metrics['latency_ms']:.0f}ms")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -516,7 +518,6 @@ identify_bottlenecks()  # 90% of cost is in one place
 optimize_that_bottleneck()
 ```
 
-</div>
 </div>
 
 ### 2. Over-Caching
@@ -635,7 +636,6 @@ For a customer service agent handling 1M requests/month:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ## Further Reading
 

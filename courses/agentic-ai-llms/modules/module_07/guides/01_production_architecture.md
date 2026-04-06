@@ -59,6 +59,7 @@ Production agents face challenges prototypes never see: high load, network failu
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -171,6 +172,7 @@ Prevent cascading failures:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from datetime import datetime, timedelta
@@ -313,6 +315,7 @@ class BulkheadAgent:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from collections import defaultdict
@@ -403,6 +406,7 @@ class PriorityQueue:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -446,7 +450,6 @@ async def health_check():
     return {"status": "healthy", "version": "1.0.0"}
 ```
 
-</div>
 </div>
 
 ### Docker Deployment
@@ -585,14 +588,11 @@ def handle_llm_error(error: Exception) -> AgentError:
     )
 ```
 
-</div>
-</div>
 
 <div class="callout-key">
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

@@ -117,6 +117,7 @@ Observations (Clothing):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -193,6 +194,7 @@ The hidden state layer provides continuity even when observations are missing.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">observablemarkovchain.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -333,6 +335,7 @@ print(f"True state changes: {sum(1 for i in range(1, len(hidden_states)) if hidd
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">demonstrate_hidden_ambiguity.py</span>
+</div>
 
 ```python
 def demonstrate_hidden_ambiguity(hmm, observations):
@@ -376,6 +379,7 @@ P(return=0.0 | state=Bear) = 19.9471
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">hmmquestions.py</span>
+</div>
 
 ```python
 class HMMQuestions:
@@ -435,8 +439,6 @@ problems.decoding(observations)
 problems.learning(observations)
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -571,7 +573,6 @@ problems.learning(observations)
 
 **Insight:** Understanding hidden states is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -632,7 +633,6 @@ problems.learning(observations)
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

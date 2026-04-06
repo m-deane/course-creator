@@ -30,6 +30,7 @@ For feature selection, fitness must evaluate how well selected features predict 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -231,6 +232,7 @@ For financial applications, use time-aware CV:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">timeseries_fitness.py</span>
+</div>
 
 ```python
 class TimeSeriesFitnessEvaluator(CVFitnessEvaluator):
@@ -425,7 +427,6 @@ for ind, obj in zip(pareto_front[:5], pareto_objectives[:5]):
 
 <strong>Warning:</strong> Multi-objective fitness returns a tuple, not a scalar. Ensure your GA is configured for multi-objective optimization (e.g., NSGA-II) before using Pareto fitness. Passing a tuple to a single-objective GA will crash or silently produce wrong results.
 
-</div>
 
 ## Regularized Fitness
 
@@ -627,7 +628,6 @@ for k, v in stats.items():
 
 6. **Regularization** can be incorporated into fitness for smoother landscapes
 
-</div>
 
 ## Practice Problems
 

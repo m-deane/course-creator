@@ -121,6 +121,7 @@ Generate 5 signals for the same context:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">confidencecalibrator.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -510,6 +511,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">calibratedpositionsizer.py</span>
+</div>
 
 ```python
 class CalibratedPositionSizer:
@@ -712,7 +714,6 @@ for scenario in scenarios:
 <div class="flow-step amber">3. "Verified Uncertaint...</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. "Dropout as a Bayesi...</div>
-</div>
 
 
 1. **"On Calibration of Modern Neural Networks"** by Guo et al. (2017) - Temperature scaling, ECE
@@ -748,7 +749,6 @@ for scenario in scenarios:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

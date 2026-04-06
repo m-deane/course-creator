@@ -115,6 +115,7 @@ In commodity trading: You have two crude oil trading strategies. A/B testing kee
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -241,6 +242,7 @@ Implement a function that calculates cumulative regret for any allocation strate
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def calculate_regret(arm_means, choices, rewards=None):
@@ -273,8 +275,6 @@ print(f"Total regret: {regret[-1]:.2f}")
 # Should show regret accumulating linearly
 ```
 
-</div>
-</div>
 
 **Expected behavior:** For round-robin allocation across K arms, regret should grow as T · (μ* - μ_avg) where μ* is the best arm mean and μ_avg is the average arm mean.
 

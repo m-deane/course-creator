@@ -72,6 +72,7 @@ flowchart TB
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">track_a_skills.py</span>
+</div>
 
 ```python
 
@@ -131,6 +132,7 @@ tokens_needed = 20 * num_parameters  # Chinchilla optimal
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">track_b_skills.py</span>
+</div>
 
 ```python
 
@@ -204,6 +206,7 @@ def regression_test(model_v1, model_v2, test_cases):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">track_c_skills.py</span>
+</div>
 
 ```python
 
@@ -294,7 +297,6 @@ def run_agent(goal: str):
   <div class="flow-step amber">Week 4: Alignment + Eval</div>
   <div class="flow-arrow">&#8594;</div>
   <div class="flow-step mint">Week 5-6: Transformer + Efficiency</div>
-</div>
 
 **Rationale:** Get building quickly, then understand why things work.
 
@@ -308,7 +310,6 @@ def run_agent(goal: str):
   <div class="flow-step blue">Week 4-5: Memory + Tools</div>
   <div class="flow-arrow">&#8594;</div>
   <div class="flow-step lavender">Week 6: MCP + Production</div>
-</div>
 
 **Rationale:** Understand the engine deeply, then apply to systems.
 
@@ -322,7 +323,6 @@ def run_agent(goal: str):
   <div class="flow-step blue">Week 4: Alignment</div>
   <div class="flow-arrow">&#8594;</div>
   <div class="flow-step lavender">Week 5-6: Production</div>
-</div>
 
 **Rationale:** Get to production fast, fill gaps as needed.
 

@@ -149,6 +149,7 @@ Complete simulation of the Creator Bandit Playbook over 52 weeks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -307,6 +308,7 @@ Implement the retirement logic from the playbook:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def should_retire(arm_idx, avg_rewards, pulls, week):
@@ -322,8 +324,6 @@ def should_retire(arm_idx, avg_rewards, pulls, week):
 # should_retire(3, avg_rewards, pulls, 12) → True
 ```
 
-</div>
-</div>
 
 **Self-check:** Did you verify minimum pulls before retiring? (Don't retire arms you haven't given a fair shot.)
 

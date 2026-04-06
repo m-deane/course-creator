@@ -113,6 +113,7 @@ The context vector encodes the current market state. The bandit learns which all
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -234,6 +235,7 @@ arm = bandit.choose_arm(context)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import Ridge
@@ -248,8 +250,6 @@ def predict(self, context, arm):
     return model.predict([context])[0]
 ```
 
-</div>
-</div>
 
 ### 4. Regret Analysis
 **Question:** In a contextual bandit with 3 arms and 2-dimensional context, you always choose the greedy arm (no exploration). Why might this be worse than a standard bandit with proper exploration?

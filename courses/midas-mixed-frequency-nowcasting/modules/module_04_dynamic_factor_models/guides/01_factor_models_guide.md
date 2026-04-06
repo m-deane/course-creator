@@ -70,6 +70,7 @@ The factors are estimated as the first $q$ principal components of the data matr
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -144,6 +145,7 @@ For US quarterly macro data (N=15–30 indicators): typically $q = 2$ or $q = 3$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def select_n_factors_bai_ng(X, max_factors=10):
@@ -169,7 +171,6 @@ def select_n_factors_bai_ng(X, max_factors=10):
     return np.argmin(ic_values) + 1, np.array(ic_values)
 ```
 
-</div>
 </div>
 
 ---
@@ -229,7 +230,6 @@ The single factor $f_t$ captures the common business cycle component. By constru
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Module 01 (MIDAS), Module 03 (nowcasting)

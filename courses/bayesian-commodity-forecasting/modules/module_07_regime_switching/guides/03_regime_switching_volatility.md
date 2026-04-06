@@ -95,6 +95,7 @@ This enables:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -363,6 +364,7 @@ print(az.summary(trace, var_names=['sigma', 'mu', 'p_transition']))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from hmmlearn import hmm
@@ -424,6 +426,7 @@ hmm_model, hmm_states = fit_gaussian_hmm(returns, n_components=2)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def forecast_volatility(trace, returns, horizon=20):
@@ -480,7 +483,6 @@ plt.savefig('volatility_forecast.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
-</div>
 </div>
 
 ## Common Pitfalls
@@ -581,7 +583,6 @@ plt.show()
 
 2. Given a real-world scenario involving regime-switching volatility models, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -610,7 +611,6 @@ plt.show()
 
 <strong>Key Concept Summary:</strong> Regime-switching volatility models capture the observation that market volatility changes dramatically across different states—calm periods with low volatility versus crisis periods with high volatility.
 
-</div>
 
 ---
 

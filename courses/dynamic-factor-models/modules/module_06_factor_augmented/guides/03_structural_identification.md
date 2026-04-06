@@ -244,6 +244,7 @@ Structural Shock              State Variables              All Variables
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">structuralfavar.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -696,6 +697,7 @@ class StructuralFAVAR:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -897,7 +899,6 @@ print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 
 **Insight:** Understanding structural identification in factor-augmented models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## 9. Further Reading
 
@@ -953,7 +954,6 @@ print(f"\nTrue impact matrix (last column):\n{B_true[:, -1]}")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

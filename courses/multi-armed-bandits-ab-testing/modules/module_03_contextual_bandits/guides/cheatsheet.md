@@ -61,6 +61,7 @@ At each round t:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -141,6 +142,7 @@ month_cos = np.cos(2 * np.pi * month / 12)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 ma_short = prices.rolling(20).mean()
@@ -157,6 +159,7 @@ trend = (ma_short - ma_long) / ma_long
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -166,8 +169,6 @@ vix_z = (vix - vix.mean()) / vix.std()
 macro = 0.5 * dollar_z + 0.5 * vix_z
 ```
 
-</div>
-</div>
 
 ## Parameter Selection Guide
 
@@ -339,7 +340,6 @@ relative = (bandit_reward - random_reward) / (best_reward - random_reward)
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 **Ridge regression solution:**

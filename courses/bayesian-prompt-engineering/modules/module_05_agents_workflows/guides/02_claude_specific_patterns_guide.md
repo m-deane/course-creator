@@ -37,6 +37,7 @@ Every Claude API call has this structure:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 client.messages.create(
@@ -80,6 +81,7 @@ This matters for agents because:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 SYSTEM_PROMPT = """You are a legal contract analyst operating under these persistent conditions:
@@ -125,6 +127,7 @@ This is a direct manipulation of the posterior over outputs. Instead of asking C
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 response = client.messages.create(
@@ -160,6 +163,7 @@ Prefilling is especially powerful in multi-agent systems where output format mus
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -201,6 +205,7 @@ Weak tool description (facts only):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 {
@@ -224,6 +229,7 @@ Strong tool description (constraints embedded):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 {
@@ -274,6 +280,7 @@ The pattern: require every agent to return a JSON object that includes both its 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 AGENT_OUTPUT_SCHEMA = {
@@ -320,6 +327,7 @@ AGENT_OUTPUT_SCHEMA = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import anthropic
@@ -367,7 +375,6 @@ ACTIVE CONDITIONS (apply to all reasoning):
 ```
 
 </div>
-</div>
 
 ---
 
@@ -378,7 +385,6 @@ The complete pattern for passing switch variables between two Claude agents.
 
 <strong>Key Point:</strong> The complete pattern for passing switch variables between two Claude agents.
 
-</div>
 
 
 ### Agent 1: Condition Extractor
@@ -446,8 +452,6 @@ def extract_conditions(question: str, client: anthropic.Anthropic) -> dict:
     raise ValueError("Extractor did not return structured output")
 ```
 
-</div>
-</div>
 
 ### Agent 2: Conditional Answerer
 
@@ -527,8 +531,6 @@ Answer the question with full awareness of these conditions. If a variable has m
     raise ValueError("Answerer did not return structured output")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -557,7 +559,6 @@ The `system` parameter exists because some conditions should have persistent hig
 
 <strong>Warning:</strong> **Pitfall 1: Putting everything in user messages**
 
-</div>
 
 
 **Pitfall 2: Not using `tool_choice: forced`**
@@ -603,7 +604,6 @@ If you pass switch variables as prose ("keep in mind the user is a corporation")
 
 2. Given a real-world scenario involving claude-specific conditioning patterns, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

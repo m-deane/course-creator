@@ -117,6 +117,7 @@ What kind of information?
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">react_pattern.txt</span>
+</div>
 
 ```
 Thought: [reasoning about the task]
@@ -230,6 +231,7 @@ Action: finish(answer)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">quick_commands.sh</span>
+</div>
 
 ```bash
 
@@ -244,8 +246,6 @@ mcp run server.py
 lm_eval --model hf --model_args pretrained=your_model --tasks mmlu
 ```
 
-</div>
-</div>
 
 ---
 

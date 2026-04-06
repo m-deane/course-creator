@@ -185,6 +185,7 @@ Softs:        exp(0.2/0.5) / Z = $2K   (2%)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -224,6 +225,7 @@ class SoftmaxBandit:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 bandit = SoftmaxBandit(k_arms=5, tau=0.5)
@@ -262,6 +264,7 @@ class DecayingSoftmax(SoftmaxBandit):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class GradientBandit(SoftmaxBandit):
@@ -293,8 +296,6 @@ class GradientBandit(SoftmaxBandit):
                 self.preferences[a] -= self.alpha * (reward - self.avg_reward) * self.probs[a]
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -428,7 +429,6 @@ Don't mix the two.
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ### Builds On

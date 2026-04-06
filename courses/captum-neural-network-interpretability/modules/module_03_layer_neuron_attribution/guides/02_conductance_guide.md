@@ -83,6 +83,7 @@ Summing over neurons $j$ in layer $l$ and applying the FTC to the layer activati
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import LayerConductance
@@ -123,6 +124,7 @@ For a convolutional layer (e.g., `model.layer3[-1]`):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -151,6 +153,7 @@ The completeness property allows fair comparison across layers:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 layers_to_examine = {
@@ -255,6 +258,7 @@ Neuron Conductance returns the *input attribution* for a single intermediate neu
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def top_neurons_for_prediction(model, layer, input_tensor, baseline,
@@ -302,6 +306,7 @@ Before computing conductance, it is useful to understand the distribution of act
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -330,9 +335,7 @@ for name, act in activations.items():
           f"mean={act.mean():.3f}, std={act.std():.3f}")
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -381,9 +384,7 @@ attr = ii.attribute(
 # Gradient of output w.r.t. layer activations
 ```
 
-</div>
 
-</div>
 
 `InternalInfluence` is faster than `LayerConductance` (no integration) but does not satisfy completeness. Use it for rapid exploration; use `LayerConductance` for rigorous analysis.
 
@@ -416,7 +417,6 @@ All three share the same mathematical foundation (IG integral), completeness pro
 
 2. Given a real-world scenario involving guide 02: layer conductance, neuron conductance, and internal influence, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

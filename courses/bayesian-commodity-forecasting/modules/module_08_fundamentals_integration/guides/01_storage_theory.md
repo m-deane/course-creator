@@ -179,6 +179,7 @@ Storage theory suggests:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -252,6 +253,7 @@ Forecast components separately, aggregate to forecast inventory.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -322,7 +324,6 @@ else:
 ```
 
 </div>
-</div>
 
 ---
 
@@ -385,7 +386,6 @@ The inventory-price relationship varies:
 
 2. Given a real-world scenario involving storage theory: economic foundations of commodity pricing, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

@@ -108,6 +108,7 @@ Every entity observed in every period:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -141,6 +142,7 @@ Some entity-period combinations missing:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -195,6 +197,7 @@ $$u_{it} = \alpha_i + \lambda_t + \epsilon_{it}$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -223,8 +226,6 @@ print(panel.xs(5, level='time').head())  # Period 5 for all entities
 ```
 
 
-</div>
-</div>
 
 ### Using linearmodels PanelData
 
@@ -246,7 +247,6 @@ print(f"Balanced: {panel_data.balanced}")
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ```python

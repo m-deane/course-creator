@@ -262,6 +262,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import chromadb
@@ -333,6 +334,7 @@ genai-commodities/
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">retry_with_backoff.py</span>
+</div>
 
 ```python
 import time
@@ -374,6 +376,7 @@ load_dotenv()  # Must be called before os.getenv()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import chromadb
@@ -393,6 +396,7 @@ client = chromadb.PersistentClient(path="./chroma_db")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 response = client.messages.create(
@@ -434,8 +438,6 @@ def safe_json_parse(text):
         raise ValueError("No valid JSON found in response")
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -475,7 +477,6 @@ def safe_json_parse(text):
 
 **Insight:** Understanding environment setup for genai commodities trading is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -510,7 +511,6 @@ def safe_json_parse(text):
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

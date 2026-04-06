@@ -248,6 +248,7 @@ Return JSON:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">analyze_government_report_surprise.py</span>
+</div>
 
 ```python
 def analyze_government_report_surprise(
@@ -308,6 +309,7 @@ Return JSON:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">create_sentiment_signal.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -368,6 +370,7 @@ def combine_with_price_momentum(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backtest_sentiment_strategy.py</span>
+</div>
 
 ```python
 def backtest_sentiment_strategy(
@@ -416,6 +419,7 @@ def backtest_sentiment_strategy(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">confidence_weighted_sentiment.py</span>
+</div>
 
 ```python
 def confidence_weighted_sentiment(
@@ -488,14 +492,11 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
     return weighted_sum / total_weight if total_weight > 0 else 0.0
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding news sentiment analysis for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -521,7 +522,6 @@ def source_weighted_sentiment(scored_news: List[ScoredNews]) -> float:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -88,6 +88,7 @@ Output: Narrative assessment with conviction
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 {
@@ -130,6 +131,7 @@ If $|D_{\text{agg}}| < \theta$ (threshold), signals conflict → reduce position
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -471,6 +473,7 @@ print(f"\nReasoning:\n{aggregate.reasoning}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">positionsizer.py</span>
+</div>
 
 ```python
 class PositionSizer:
@@ -556,7 +559,6 @@ print(f"  Contracts: {position2['contracts']}")
 print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 ```
 
-</div>
 </div>
 
 ## Common Pitfalls
@@ -647,7 +649,6 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 
 **Insight:** Understanding signal generation frameworks with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -685,7 +686,6 @@ print(f"  Dollar Size: ${position2['dollar_size']:,.0f}")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

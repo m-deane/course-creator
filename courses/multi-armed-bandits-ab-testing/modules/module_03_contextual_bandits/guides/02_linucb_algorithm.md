@@ -180,6 +180,7 @@ LinUCB learns the linear relationship: "Energy performs well when VIX is low and
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -308,6 +309,7 @@ Use neural network for feature representation, LinUCB on final layer embeddings.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def get_uncertainty(self, arm, context):
@@ -316,8 +318,6 @@ def get_uncertainty(self, arm, context):
     return np.sqrt(context @ A_inv @ context)
 ```
 
-</div>
-</div>
 
 ### 4. Diagnostic Question
 **Scenario:** Your LinUCB always chooses arm 0, even after 1000 rounds with varying contexts. What might be wrong?

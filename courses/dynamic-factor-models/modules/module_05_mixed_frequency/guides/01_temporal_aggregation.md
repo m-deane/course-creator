@@ -69,6 +69,7 @@ where superscript $(H)$ denotes high frequency, $(L)$ denotes low frequency.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">aggregate_flow.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -207,6 +208,7 @@ Each row selects the last month of each quarter.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">create_aggregation_matrix.py</span>
+</div>
 
 ```python
 def create_aggregation_matrix(n_high, n_low, m, agg_type='flow'):
@@ -316,6 +318,7 @@ With constraints:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">constrainedmixedfrequencydfm.py</span>
+</div>
 
 ```python
 class ConstrainedMixedFrequencyDFM:
@@ -418,7 +421,6 @@ print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 ```
 
 </div>
-</div>
 
 ---
 
@@ -505,7 +507,6 @@ print(f"Low-freq loadings shape: {loadings['low_freq'].shape}")
 
 **Insight:** Understanding temporal aggregation in mixed-frequency models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Summary
 
@@ -530,7 +531,6 @@ The next guide introduces MIDAS regression, which provides flexible weighting sc
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

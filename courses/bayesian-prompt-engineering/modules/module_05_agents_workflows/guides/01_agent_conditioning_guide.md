@@ -173,6 +173,7 @@ The fix is to treat the condition stack as a first-class data object — not as 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 condition_payload = {
@@ -201,6 +202,7 @@ Every agent's output schema includes the condition payload:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 agent_output = {
@@ -220,6 +222,7 @@ agent_output = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def build_agent_prompt(task: str, condition_stack: dict) -> str:
@@ -262,6 +265,7 @@ Include only conditions that:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 CONDITION_SUMMARY_PROMPT = """
@@ -276,7 +280,6 @@ Condition summary:
 """
 ```
 
-</div>
 </div>
 
 ### Trade-off table
@@ -313,8 +316,6 @@ switch_variables = {
 }
 ```
 
-</div>
-</div>
 
 Pass these at minimum. They are the conditions whose absence causes the largest posterior shift.
 
@@ -383,7 +384,6 @@ Not every condition is relevant at every step. Over-stuffing contexts degrades a
 
 2. Given a real-world scenario involving agent conditioning: how bayesian conditions flow through multi-step workflows, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

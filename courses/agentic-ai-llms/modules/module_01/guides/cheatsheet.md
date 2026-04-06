@@ -23,6 +23,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 system_prompt = """You are a [IDENTITY/ROLE].
@@ -133,6 +134,7 @@ prompt = template.substitute(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
   # Vague
@@ -187,8 +189,6 @@ prompt = template.substitute(
   # Good: 200-500 token system prompt with clear priorities
   ```
 
-</div>
-</div>
 
 - **Few-shot example quality** - Bad examples teach bad behavior
   ```python

@@ -81,6 +81,7 @@ knowledge_bank:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -119,6 +120,7 @@ print(f"Knowledge bank created with {kb.document_count} documents")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -140,6 +142,7 @@ chunking_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -162,6 +165,7 @@ chunking_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -204,6 +208,7 @@ def custom_chunker(document: dict) -> list:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.knowledge_bank import KnowledgeBank
@@ -233,6 +238,7 @@ for result in results:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -260,6 +266,7 @@ results = kb.search(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -285,6 +292,7 @@ results = kb.search(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku.llm import LLM
@@ -362,8 +370,6 @@ print(f"Answer: {result['answer']}")
 print(f"\nSources used: {len(result['sources'])}")
 ```
 
-</div>
-</div>
 
 ### Evaluation
 
@@ -417,8 +423,6 @@ Return just a number 1-5."""
     }
 ```
 
-</div>
-</div>
 
 ## Maintaining Knowledge Banks
 
@@ -449,8 +453,6 @@ def update_knowledge_bank(kb_name: str, new_documents: list):
     return kb.document_count
 ```
 
-</div>
-</div>
 
 ### Scheduled Refresh
 
@@ -493,8 +495,6 @@ def refresh_kb():
     print(f"KB now has {kb.document_count} documents")
 ```
 
-</div>
-</div>
 
 ## Key Takeaways
 

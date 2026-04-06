@@ -58,6 +58,7 @@ This scales as $n^{-1/5}$ — bandwidth shrinks as sample size grows.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -112,6 +113,7 @@ The goal of sensitivity analysis is to show that your treatment effect estimate 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -193,6 +195,7 @@ Use **local linear** (order 1) or at most **local quadratic** (order 2). Higher-
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -232,6 +235,7 @@ The triangular kernel is optimal for the boundary regression problem in RDD — 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -282,6 +286,7 @@ The "donut" removes observations very close to the cutoff, testing whether resul
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def donut_rdd(df, outcome, running_var, cutoff, bandwidth, donut_width):
@@ -305,8 +310,6 @@ for donut in [0.01, 0.02, 0.05, 0.10]:
     print(f"Donut width = {donut:.2f}: τ = {tau:.3f}, p = {pval:.3f}")
 ```
 
-</div>
-</div>
 
 If estimates are stable across donut widths, manipulation of the running variable is unlikely to be driving results.
 
@@ -364,8 +367,6 @@ ax.legend()
 plt.show()
 ```
 
-</div>
-</div>
 
 ---
 
@@ -409,7 +410,6 @@ plt.show()
 <strong>Key Concept:</strong> **Previous:** [01 — RDD Fundamentals](01_rdd_fundamentals_guide.md)
 **Next:** [Module 05 Notebooks](../notebooks/)
 
-</div>
 
 
 ## Resources

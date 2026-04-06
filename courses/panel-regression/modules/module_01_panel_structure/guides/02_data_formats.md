@@ -116,6 +116,7 @@ $$\text{melt}(\text{df}_{\text{wide}}, \text{id\_vars}=i, \text{var\_name}=t, \t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 person_id | year | wage | education | experience
@@ -136,6 +137,7 @@ person_id | year | wage | education | experience
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 person_id | wage_2019 | wage_2020 | wage_2021
@@ -169,6 +171,7 @@ person_id | wage_2019 | wage_2020 | wage_2021
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -229,8 +232,6 @@ print(f"\nData preserved: {data_long_restored.shape == (N*T, 3)}")
 ```
 
 
-</div>
-</div>
 
 ### Multi-Index DataFrames
 
@@ -511,7 +512,6 @@ print(f"\nSpeedup (wide vs long for lags): {time_long_lag/time_wide_lag:.1f}x")
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 1. **Format Detection**

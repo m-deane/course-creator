@@ -138,6 +138,7 @@ $$S_t = \sum_{k=1}^K \left[ a_k \sin\left(\frac{2\pi k t}{m}\right) + b_k \cos\l
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -174,6 +175,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -206,6 +208,7 @@ seasonal_pattern = decomposition.seasonal
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.api as sm
@@ -238,6 +241,7 @@ print(seasonal_effects)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def fourier_terms(t, period, K):
@@ -280,6 +284,7 @@ seasonal_fourier = fourier_model.predict(X)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -374,6 +379,7 @@ Dec   │ +$2.00 │ Heating demand rises
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -402,6 +408,7 @@ seasonal_avg = df.groupby('month')['price'].mean()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -435,14 +442,13 @@ print(f"ADF p-value: {adf_result[1]:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 df['trading_days'] = df.groupby('month')['date'].transform('count')
 df['price_per_day'] = df['price'] / df['trading_days']
 ```
 
-</div>
-</div>
 
 ### 5. Using Wrong Decomposition Type
 
@@ -468,8 +474,6 @@ plt.plot(df.groupby('year')['price'].mean(), df.groupby('year')['seasonal_var'].
 # If positive slope → multiplicative
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -506,7 +510,6 @@ c) Holiday effects
 
 <strong>Key Concept Summary:</strong> Seasonality refers to predictable, recurring patterns in commodity prices tied to calendar periods (months, quarters, seasons).
 
-</div>
 
 ---
 
@@ -553,8 +556,6 @@ seasonal_year[year, month] ~ Normal(seasonal_mean[month], tau)
 seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 ```
 
-</div>
-</div>
 
 
 ---
@@ -569,7 +570,6 @@ seasonal_mean[month] ~ Normal(0, sigma_seasonal)
 
 2. Given a real-world scenario involving seasonality analysis in commodity markets, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

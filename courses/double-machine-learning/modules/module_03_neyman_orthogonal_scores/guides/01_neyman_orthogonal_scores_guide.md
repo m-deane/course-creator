@@ -60,6 +60,7 @@ Consider estimating the effect of OPEC production announcements on crude oil cal
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -125,6 +126,7 @@ Compare the orthogonal score to a naive plug-in that only residualises $Y$ (not 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def naive_plugin(Y, D, X, noise_level=0.0):
@@ -161,7 +163,6 @@ The naive plug-in diverges as noise increases, while DML stays close to the true
 
 <strong>Warning:</strong> The orthogonal score requires residualising BOTH $Y$ and $D$. Residualising only one gives a non-orthogonal moment condition that is sensitive to first-stage errors. This is why the method is called "Double" ML — both nuisance functions must be estimated.
 
-</div>
 
 ## How to Interpret the Score Function
 
@@ -181,7 +182,6 @@ This is the familiar residual-on-residual formula, but the score function reveal
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 02: The orthogonalisation trick and residual-on-residual regression

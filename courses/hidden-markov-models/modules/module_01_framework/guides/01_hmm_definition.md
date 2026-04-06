@@ -139,6 +139,7 @@ class DiscreteHMM:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -186,6 +187,7 @@ $$P(O, Q | \lambda) = \pi_{q_1} \cdot b_{q_1}(o_1) \cdot \prod_{t=2}^{T} a_{q_{t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">joint_probability.py</span>
+</div>
 
 ```python
 def joint_probability(
@@ -221,6 +223,7 @@ print(f"Joint probability: {jp:.2e}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">log_joint_probability.py</span>
+</div>
 
 ```python
 def log_joint_probability(
@@ -298,6 +301,7 @@ Arrows indicate conditional dependencies.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -336,14 +340,11 @@ Arrows indicate conditional dependencies.
 # State 1: High volatility regime
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding hmm framework and definition is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -369,7 +370,6 @@ Arrows indicate conditional dependencies.
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

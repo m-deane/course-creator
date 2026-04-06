@@ -192,6 +192,7 @@ neuralforecast's `.predict()` method generates out-of-sample forecasts for the n
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -395,7 +396,6 @@ plt.show()
 
 <strong>Key Point:</strong> `NeuralForecast.explain()` uses SHAP-based attribution to quantify how much each lagged input contributes to the forecast.
 
-</div>
 
 
 ```python

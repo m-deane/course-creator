@@ -52,6 +52,7 @@ Compute the standard deviation and range of the pre-intervention outcome:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 pre_std = df.loc[df["treated"] == 0, "outcome"].std()
@@ -84,6 +85,7 @@ Before fitting, sample from the prior and generate hypothetical outcomes. Ask: "
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -226,6 +228,7 @@ If all three give similar posteriors, the result is prior-robust. If they differ
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -276,8 +279,6 @@ def its_with_custom_beta2_prior(df, t_star, beta2_sigma, y_pre_std):
     )
 ```
 
-</div>
-</div>
 
 ---
 
@@ -301,7 +302,6 @@ In this example, all three priors give essentially the same conclusion. The data
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Bayesian ITS (Guide 1), CausalPy internals (Guide 2)
 - **Leads to:** Notebook 2 (prior sensitivity analysis)

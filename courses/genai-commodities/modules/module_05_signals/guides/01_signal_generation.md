@@ -48,6 +48,7 @@ Transcripts  Classification  Timeseries     Ranking       Correlation   Slippage
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -150,6 +151,7 @@ class InventorySurpriseSignal:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">productionforecastsignal.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -244,6 +246,7 @@ Report:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">newssentimentsignal.py</span>
+</div>
 
 ```python
 class NewsSentimentSignal:
@@ -338,6 +341,7 @@ class NewsSentimentSignal:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">commoditysignalaggregator.py</span>
+</div>
 
 ```python
 class CommoditySignalAggregator:
@@ -470,14 +474,11 @@ class PositionSizer:
         }
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding trading signal generation with llms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -503,7 +504,6 @@ class PositionSizer:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -78,6 +78,7 @@ where $f_{\text{Beta}}(x; \theta_1, \theta_2) = \frac{x^{\theta_1-1}(1-x)^{\thet
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -203,6 +204,7 @@ Parameters $\theta_1, \theta_2 \in \mathbb{R}$ (no positivity constraint — eas
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def almon_weights(n_lags, theta1, theta2):
@@ -276,6 +278,7 @@ where groups $s = 1, 2, \ldots, S$ partition $\{0, 1, \ldots, K-1\}$ and $\delta
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def step_weights(n_lags, deltas, group_size=None):
@@ -313,8 +316,6 @@ def step_weights(n_lags, deltas, group_size=None):
     return weights
 ```
 
-</div>
-</div>
 
 ### When to Use Step Functions
 
@@ -452,7 +453,6 @@ Do you need quarterly groupings?
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. Compute the Beta polynomial weights for $K=6$, $\theta_1 = 1.0$, $\theta_2 = 3.0$ using the midpoint formula. Verify they sum to 1.

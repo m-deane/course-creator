@@ -86,6 +86,7 @@ where $d_j$ are singular values of $X$. As $\lambda \to 0$, df approaches rank($
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -188,6 +189,7 @@ where $r_{-j} = y - X_{-j}\hat{\beta}_{-j}$ is the partial residual and $\mathca
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import Lasso, LassoCV
@@ -253,6 +255,7 @@ $$\hat{\beta}^{\text{EN}} = \arg\min_{\beta} \left\{ \frac{1}{T}\|y - X\beta\|_2
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.linear_model import ElasticNetCV, ElasticNet
@@ -289,8 +292,6 @@ for name, model in models.items():
     print(f"{name}: RMSE={rmse:.4f}, Selected={nonzero}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -487,7 +488,6 @@ where $\hat{k}(\lambda)$ is the effective degrees of freedom (number of nonzero 
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - Tibshirani, R. (1996). Regression shrinkage and selection via the Lasso. *JRSS-B*, 58(1), 267–288.

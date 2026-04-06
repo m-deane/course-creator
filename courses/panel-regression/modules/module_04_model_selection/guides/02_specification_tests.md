@@ -31,6 +31,7 @@ $$H_0: \alpha_1 = \alpha_2 = ... = \alpha_N$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -137,6 +138,7 @@ $$H_0: \sigma_u^2 = 0$$ (No random effects)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def breusch_pagan_lm(df, y_col, x_cols, entity_col, time_col):
@@ -209,6 +211,7 @@ The standard Hausman test can have size distortions with heteroskedasticity. A r
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from linearmodels.panel import RandomEffects
@@ -263,8 +266,6 @@ robust_hausman_test(df, 'y', ['x1', 'x2'], 'entity', 'time')
 ```
 
 
-</div>
-</div>
 
 ## Serial Correlation Tests
 
@@ -392,7 +393,6 @@ modified_wald_test(df, 'y', ['x1', 'x2'], 'entity', 'time')
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ```python

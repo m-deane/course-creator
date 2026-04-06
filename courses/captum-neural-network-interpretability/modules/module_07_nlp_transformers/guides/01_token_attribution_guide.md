@@ -81,6 +81,7 @@ Captum's `LayerIntegratedGradients` applies IG at a specific layer — the embed
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import LayerIntegratedGradients
@@ -118,6 +119,7 @@ lig = LayerIntegratedGradients(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def create_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
@@ -155,6 +157,7 @@ def create_mask_baselines(input_ids: torch.Tensor, tokenizer) -> torch.Tensor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -230,6 +233,7 @@ The standard visualization uses colored text: green for positive attributions, r
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -315,6 +319,7 @@ After computing per-embedding-dimension attributions, several aggregation method
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -328,9 +333,7 @@ token_attrs_l2 = attributions.norm(dim=-1)
 token_attrs_mean = attributions.mean(dim=-1)
 ```
 
-</div>
 
-</div>
 
 **Sum:** Best for understanding direction (positive = toward target class, negative = away from target class).
 
@@ -393,9 +396,7 @@ def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
     return word_tokens, word_attrs
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -412,7 +413,6 @@ def aggregate_subword_attributions(tokens, token_attrs, tokenizer):
 
 2. Given a real-world scenario involving token-level attribution for nlp models, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

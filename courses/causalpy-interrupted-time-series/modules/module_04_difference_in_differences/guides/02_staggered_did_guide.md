@@ -84,6 +84,7 @@ These are the fundamental building blocks. Any aggregate estimand (overall ATT, 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -174,6 +175,7 @@ Test $H_0: \beta_{-5} = \beta_{-4} = \ldots = \beta_{-2} = 0$ (excluding $\beta_
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import chi2
@@ -243,6 +245,7 @@ $$\theta^{cal}(t) = \sum_{g \leq t} w_g \cdot ATT(g, t)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -318,8 +321,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-</div>
-</div>
 
 ---
 
@@ -377,7 +378,6 @@ plt.show()
 <strong>Key Concept:</strong> **Previous:** [01 — DiD Fundamentals](01_did_fundamentals_guide.md)
 **Next:** [03 — CausalPy DiD API](03_causalpy_did_api_guide.md)
 
-</div>
 
 
 ## Resources

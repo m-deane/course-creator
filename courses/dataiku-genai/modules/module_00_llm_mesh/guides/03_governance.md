@@ -67,6 +67,7 @@ Think of LLM Mesh governance like corporate credit card management. Each employe
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import dataiku
@@ -130,6 +131,7 @@ configure_connection_access(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def set_project_llm_quota(
@@ -187,6 +189,7 @@ set_project_llm_quota(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from datetime import datetime, timedelta
@@ -275,6 +278,7 @@ print(user_usage.head(10))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def query_audit_logs(
@@ -338,7 +342,6 @@ error_logs = [log for log in recent_errors if log['status'] != 'success']
 print(f"Errors in last 24h: {len(error_logs)}")
 ```
 
-</div>
 </div>
 
 ### Rate Limiting Implementation
@@ -443,8 +446,6 @@ for prompt in batch_prompts:
         time.sleep(60)  # Wait before retrying
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -479,7 +480,6 @@ for prompt in batch_prompts:
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - LLM Mesh architecture and setup (Module 0.1)

@@ -113,6 +113,7 @@ Portfolio VaR requires correlation structure. Hierarchical models provide:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -215,6 +216,7 @@ Refining adds value to crude oil. Model the spread hierarchically.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as crack_spread_model:
@@ -275,6 +277,7 @@ This ensures gasoline and crude forecasts are consistent (no arbitrage opportuni
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -351,6 +354,7 @@ During crises, crude grades converge (arbitrage opportunities shrink).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as dynamic_correlation:
@@ -404,6 +408,7 @@ with pm.Model() as dynamic_correlation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -433,8 +438,6 @@ comparison = az.compare({
 print(comparison)
 ```
 
-</div>
-</div>
 
 **Typically:** Hierarchical model wins (best of both worlds).
 
@@ -463,8 +466,6 @@ spread = pm.Deterministic('spread', brent_price - wti_price)
 pm.Potential('arbitrage_bound', pm.math.switch(spread > 7, -np.inf, 0))
 ```
 
-</div>
-</div>
 
 ### 3. Static Loadings During Regime Shifts
 
@@ -526,7 +527,6 @@ You're forecasting diesel and jet fuel prices. Both are distillates refined from
 
 2. Given a real-world scenario involving hierarchical models for energy commodities, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

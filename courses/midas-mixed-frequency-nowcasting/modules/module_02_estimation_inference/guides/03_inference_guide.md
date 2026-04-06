@@ -77,6 +77,7 @@ where $Z_t = (1, \tilde{x}_t(\hat{\theta}))$.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -200,6 +201,7 @@ $$F = \frac{(SSE_R - SSE_U) / 2}{SSE_U / (T-4)} \sim F_{2, T-4}$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def test_equal_weights(Y, X, midas_result, beta_weights_fn):
@@ -247,6 +249,7 @@ For small samples or when asymptotic theory is unreliable, bootstrap inference:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def bootstrap_midas(Y, X, beta_weights_fn, n_bootstrap=499, seed=42):
@@ -331,8 +334,6 @@ def bootstrap_se(boot_dist, param_names=None):
         print(f"{name:<12} {vals.mean():>10.4f} {vals.std():>10.4f} {ci[0]:>10.4f} {ci[1]:>10.4f}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -352,7 +353,6 @@ def bootstrap_se(boot_dist, param_names=None):
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Guide 01 (NLS estimation), Guide 02 (model selection)

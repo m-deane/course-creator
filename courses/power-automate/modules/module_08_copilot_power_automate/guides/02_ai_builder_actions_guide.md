@@ -337,13 +337,13 @@ with the attachment name and the error message instead of failing the flow
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```text
 Change the SharePoint list to also record the email subject line and the
 date the email was received
 ```
 
-</div>
 </div>
 
 You can also add conditional logic using natural language:

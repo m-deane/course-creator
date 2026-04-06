@@ -70,6 +70,7 @@ flowchart TB
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">context_manager.py</span>
+</div>
 
 ```python
 class ContextManager:
@@ -110,6 +111,7 @@ class ContextManager:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">basic_rag.py</span>
+</div>
 
 ```python
 from chromadb import Client
@@ -159,6 +161,7 @@ def retrieve(query: str, k: int = 5) -> list:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">long_term_memory.py</span>
+</div>
 
 ```python
 class LongTermMemory:
@@ -248,19 +251,16 @@ Use this to design your memory system:
 
 <strong>Pitfall 2 — Storing everything:</strong> Memory bloats, retrieval quality degrades. Apply importance scoring and periodic pruning.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 3 — No memory evolution:</strong> Stale, redundant, or contradictory memories accumulate. Implement consolidation, decay, and conflict resolution.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 4 — Wrong form for the function:</strong> Using RAG for rapidly-changing task state, or context for static knowledge. Match memory form to function using the matrix above.
 
-</div>
 
 ## Practice Questions
 

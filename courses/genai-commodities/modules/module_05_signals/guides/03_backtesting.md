@@ -105,6 +105,7 @@ For 1000 signals, $0.01 per call, 10 variants → $100/backtest
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -127,6 +128,7 @@ Time: Seconds for thousands of tests
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -147,6 +149,7 @@ Time: Hours for single test
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -193,6 +196,7 @@ Report: Average of out-of-sample test periods
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -656,8 +660,6 @@ print(f"Average Win Rate: {np.mean([r.win_rate for r in wf_results])*100:.1f}%")
 print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -734,7 +736,6 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 
 **Insight:** Understanding backtesting llm-generated signals is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -774,7 +775,6 @@ print(f"Worst Drawdown: {min([r.max_drawdown for r in wf_results])*100:.2f}%")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

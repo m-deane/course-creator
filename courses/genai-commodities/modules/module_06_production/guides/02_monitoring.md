@@ -148,6 +148,7 @@ $$\text{drift} = ||\text{avg}(\text{embed}_{\text{recent}}) - \text{avg}(\text{e
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">class.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -785,7 +786,6 @@ if final_status['drift']:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

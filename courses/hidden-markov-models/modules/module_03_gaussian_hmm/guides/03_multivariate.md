@@ -39,6 +39,7 @@ $$b_k(\mathbf{o}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}_k|^{1/2}} \exp\lef
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">multivariategaussianhmm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -185,6 +186,7 @@ Different covariance structures trade off flexibility vs. parameters:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compare_covariance_types.py</span>
+</div>
 
 ```python
 def compare_covariance_types():
@@ -284,6 +286,7 @@ compare_covariance_types()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">fit_multivariate_hmm_hmmlearn.py</span>
+</div>
 
 ```python
 def fit_multivariate_hmm_hmmlearn():
@@ -403,6 +406,7 @@ model, obs, true_states = fit_multivariate_hmm_hmmlearn()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">prepare_features_for_hmm.py</span>
+</div>
 
 ```python
 def prepare_features_for_hmm(prices, window=20):
@@ -516,14 +520,11 @@ import pandas as pd
 selection_results = select_multivariate_hmm(obs, max_states=4)
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding multivariate gaussian hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -551,7 +552,6 @@ selection_results = select_multivariate_hmm(obs, max_states=4)
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -171,6 +171,7 @@ $$R_i^2 = \frac{\hat{\lambda}_i' \hat{\lambda}_i}{\text{Var}(X_i)} = \frac{\sum_
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">stockwatsonestimator.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -568,6 +569,7 @@ First forecast:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -769,7 +771,6 @@ Step 2 (VAR OLS) can parallelize across equations (estimate each factor separate
 
 **Insight:** Understanding stock-watson two-step estimator is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Summary
 
@@ -803,7 +804,6 @@ The Stock-Watson two-step estimator provides a simple, fast, and asymptotically 
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

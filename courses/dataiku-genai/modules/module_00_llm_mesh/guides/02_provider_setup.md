@@ -79,6 +79,7 @@ Similarly, LLM Mesh provider setup centralizes all LLM infrastructure management
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -151,6 +152,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 connection_config = {
@@ -202,6 +204,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 connection_config = {
@@ -256,6 +259,7 @@ connection_config = {
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -313,6 +317,7 @@ result = generate_with_fallback("Summarize this report: ...")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -330,6 +335,7 @@ client = anthropic.Anthropic(api_key="sk-ant-api03-...")  # Exposed!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -349,6 +355,7 @@ llm = LLM("claude-production")  # API key in secure storage
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -369,6 +376,7 @@ response = llm.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -391,6 +399,7 @@ response = llm.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -408,6 +417,7 @@ for i in range(1000):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -437,6 +447,7 @@ for i in range(1000):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -446,7 +457,6 @@ llm = LLM("new-connection")
 # Hope it works in production!
 ```
 
-</div>
 </div>
 
 **Solution:**
@@ -488,8 +498,6 @@ for conn in ["claude-production", "openai-gpt4", "azure-openai-prod"]:
     print(f"{conn}: {result['status']}")
 ```
 
-</div>
-</div>
 
 ### 5. Mixed Provider Assumptions
 
@@ -510,8 +518,6 @@ response = llm.complete(
 )
 ```
 
-</div>
-</div>
 
 **Solution:**
 
@@ -536,8 +542,6 @@ elif provider == "openai":
     response = llm.complete(prompt, user="user123")  # OpenAI format
 ```
 
-</div>
-</div>
 
 ## Connections to Other Topics
 
@@ -668,8 +672,6 @@ connection_name = get_appropriate_connection()
 llm = LLM(connection_name)
 ```
 
-</div>
-</div>
 </details>
 
 ### Problem 2: Azure-Specific Configuration
@@ -805,8 +807,6 @@ response = router.generate_with_failover(
 )
 ```
 
-</div>
-</div>
 </details>
 
 ## Further Reading

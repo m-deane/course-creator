@@ -147,6 +147,7 @@ Farmers choose what to plant based on relative profitability.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -260,6 +261,7 @@ for c, crop in enumerate(crop_names):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -332,6 +334,7 @@ with pm.Model() as corn_soy_competition:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as regional_soy:
@@ -419,6 +422,7 @@ with pm.Model() as regional_soy:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as stocks_to_use:
@@ -478,6 +482,7 @@ Economic theory: Corn/Soy price ratio should stay in reasonable range.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as ratio_constrained:
@@ -510,7 +515,6 @@ with pm.Model() as ratio_constrained:
                                   return_inferencedata=True)
 ```
 
-</div>
 </div>
 
 **Result:** Forecasts respect economic equilibrium (no arbitrage opportunities).
@@ -580,8 +584,6 @@ print(comparison)
 # Hierarchical should win (borrows strength across crops)
 ```
 
-</div>
-</div>
 
 ---
 
@@ -610,7 +612,6 @@ Design a hierarchical model for wheat prices with three classes: Hard Red Winter
 
 <strong>Warning:</strong> Design a hierarchical model for wheat prices with three classes: Hard Red Winter (HRW), Soft Red Winter (SRW), and Spring Wheat. What determines the hierarchy structure?
 
-</div>
 
 
 ### Problem 2
@@ -640,7 +641,6 @@ USDA forecasts ending stocks at 1.2 billion bushels (stocks-to-use = 8%, very ti
 
 2. Given a real-world scenario involving hierarchical models for agricultural commodities, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

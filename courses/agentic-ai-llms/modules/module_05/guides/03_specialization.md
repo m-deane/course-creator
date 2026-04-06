@@ -62,6 +62,7 @@ The orchestrator routes work to the right specialist. Each specialist has:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from anthropic import Anthropic
@@ -310,6 +311,7 @@ legal_agent = factory.create_specialist(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -330,7 +332,6 @@ agents = [
 ]
 ```
 
-</div>
 </div>
 
 ### 2. Unclear Boundaries
@@ -424,7 +425,6 @@ Design an experiment to measure whether specialized agents outperform general-pu
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ## Further Reading
 

@@ -29,6 +29,7 @@ Every gradient attribution in this module follows this setup:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -82,6 +83,7 @@ with torch.no_grad():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import Saliency
@@ -119,6 +121,7 @@ attributions = saliency.attribute(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import visualization as viz
@@ -152,6 +155,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import InputXGradient
@@ -183,6 +187,7 @@ For visualization, you can show all, only positive, or absolute value:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -211,6 +216,7 @@ fig, axes = viz.visualize_image_attr_multiple(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import GuidedBackprop
@@ -236,6 +242,7 @@ GuidedBackprop registers **hooks** on the model's ReLU layers to modify the back
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -259,6 +266,7 @@ This is the critical validation that reveals Guided Backprop's failure mode:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import copy
@@ -306,6 +314,7 @@ print(f"Correlation between trained and random model attributions: {correlation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import Deconvolution
@@ -340,6 +349,7 @@ The canonical comparison pattern for all four methods:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import Saliency, InputXGradient, GuidedBackprop, Deconvolution
@@ -451,6 +461,7 @@ Beyond visual inspection, quantitative metrics help compare attribution quality:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def attribution_statistics(attributions, image_np):
@@ -515,9 +526,7 @@ input_tensor = preprocess(image).unsqueeze(0).requires_grad_(True)
 attr = saliency.attribute(input_tensor, target=0)
 ```
 
-</div>
 
-</div>
 
 ### Mistake 2: Model in Training Mode
 
@@ -540,9 +549,7 @@ model.eval()  # Call eval() before any attribution
 attr = saliency.attribute(input_tensor, target=0)  # Deterministic
 ```
 
-</div>
 
-</div>
 
 ### Mistake 3: Wrong Target Type
 
@@ -563,9 +570,7 @@ attr = saliency.attribute(input_tensor, target=0)      # Class index 0
 attr = saliency.attribute(input_tensor, target=281)    # Class index 281
 ```
 
-</div>
 
-</div>
 
 ### Mistake 4: Batch Target Mismatch
 
@@ -587,9 +592,7 @@ attr = saliency.attribute(inputs, target=0)  # Explains class 0 for ALL images
 attr = saliency.attribute(inputs, target=[0, 281, 483])  # Different class per image
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -632,9 +635,7 @@ def normalize_attribution(attr_np, percentile=99):
     return attr_clipped / (vmax + 1e-8)
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -667,7 +668,6 @@ def normalize_attribution(attr_np, percentile=99):
 
 2. Given a real-world scenario involving captum gradient api: practical usage, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

@@ -75,6 +75,7 @@ Monthly industrial production growth $x_\tau^M$ aggregated to quarterly:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -137,6 +138,7 @@ The GLS solution provides minimum-variance interpolated values consistent with t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -241,6 +243,7 @@ Then aggregate the forecasted monthly values to form $\hat{\tilde{x}}_t^Q$ and p
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -297,8 +300,6 @@ def bridge_equation_nowcast(y_quarterly, x_monthly, current_quarter_obs):
     return nowcast, bridge.coef_[0], bridge.intercept_
 ```
 
-</div>
-</div>
 
 ### Error Compounding in Bridge Equations
 
@@ -374,7 +375,6 @@ The bias is zero only if the true weight function happens to equal the imposed a
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. Write out the aggregation matrix $C$ for the case $m=3$ (monthly to quarterly), $T_L = 4$ quarters. What are its dimensions? What does each row sum to?

@@ -114,6 +114,7 @@ Just like you wouldn't let a portfolio manager bypass risk limits, your policy e
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass
@@ -181,6 +182,7 @@ class ProductionBanditSystem:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -294,8 +296,6 @@ When a commodity allocation performs poorly, you need to know: Was the arm enabl
            return arm
    ```
 
-</div>
-</div>
 
    List at least 3 architectural problems and how to fix them.
 

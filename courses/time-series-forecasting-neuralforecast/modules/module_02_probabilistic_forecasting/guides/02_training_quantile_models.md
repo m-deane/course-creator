@@ -28,6 +28,7 @@ NeuralForecast produces probabilistic forecasts by training with a loss function
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -119,6 +120,7 @@ $$\rho_q(u) = u \cdot (q - \mathbf{1}[u < 0])$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -207,6 +209,7 @@ where $Q$ is the set of quantile levels and $H$ is the forecast horizon.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -257,6 +260,7 @@ NeuralForecast uses a consistent naming convention for quantile output columns:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -528,8 +532,6 @@ See detailed comparison in the table above.
 See detailed comparison in the table above.
 
 </div>
-</div>
-</div>
 
 ## Why This Is Necessary But Not Sufficient
 
@@ -570,7 +572,6 @@ print("Module 3: Generating sample paths with NeuralForecast ConformalIntervals.
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 ### Builds on
 - Guide 01: Marginal vs joint distributions — the conceptual foundation
@@ -602,7 +603,6 @@ print("Module 3: Generating sample paths with NeuralForecast ConformalIntervals.
 <div class="flow-step lavender">4. More levels</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step rose">5. MQLoss vs DistributionLoss:</div>
-</div>
 
 
 ---

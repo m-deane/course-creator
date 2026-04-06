@@ -70,6 +70,7 @@ where $k(K) = 4$ for restricted Beta MIDAS (regardless of $K$!) or $k(K) = K + 1
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -193,6 +194,7 @@ $$y_t = \alpha + \sum_{p=1}^{P_y} \rho_p y_{t-p} + \beta \sum_{j=0}^{K-1} w_j(\t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import chi2
@@ -236,6 +238,7 @@ The most reliable model selection method for forecasting: evaluate out-of-sample
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def expanding_window_cv(Y, X_dict, weight_fn_dict, min_train=30, horizon=1):
@@ -316,8 +319,6 @@ def expanding_window_cv(Y, X_dict, weight_fn_dict, min_train=30, horizon=1):
     return rmse_dict
 ```
 
-</div>
-</div>
 
 ---
 
@@ -357,7 +358,6 @@ Recommendation: Beta MIDAS with K=12 lags (P=4 quarterly lags).
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Guide 01 (NLS estimation)

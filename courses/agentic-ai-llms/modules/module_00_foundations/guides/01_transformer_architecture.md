@@ -77,6 +77,7 @@ Each layer refines the representation, building from tokens → syntax → seman
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def generate(prompt, max_tokens):
@@ -150,6 +151,7 @@ Attention is O(n²) in sequence length—each token attends to every other:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def manage_context(messages, max_tokens=100000):
@@ -180,6 +182,7 @@ Put critical instructions at the **beginning** and **end** of prompts—these po
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 system_prompt = """
@@ -285,8 +288,6 @@ for text in examples:
     print(f"'{text[:50]}...' -> {tokens} tokens ({ratio:.2f} words/token)")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -294,7 +295,6 @@ for text in examples:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ## Further Reading
 

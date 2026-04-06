@@ -46,6 +46,7 @@ This means the entity effect is uncorrelated with all regressors across all time
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -152,6 +153,7 @@ $$Cov(v_{it}, v_{jt}) = 0 \quad (i \neq j)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def visualize_error_structure():
@@ -232,6 +234,7 @@ OLS ignores the error correlation structure, leading to inefficient (though stil
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compare_ols_gls_efficiency():
@@ -291,8 +294,6 @@ compare_ols_gls_efficiency()
 ```
 
 
-</div>
-</div>
 
 ### The GLS Transformation
 
@@ -507,7 +508,6 @@ breusch_pagan_lm_test(df_example, 'entity', 'y', ['x'])
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 | Condition | Use RE? |

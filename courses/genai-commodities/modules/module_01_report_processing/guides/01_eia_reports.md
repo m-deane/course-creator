@@ -155,6 +155,7 @@ Report text:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 sample_text = """
@@ -193,6 +194,7 @@ EIA reports contain data tables. Extract with specific prompts:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">parse_eia_table.py</span>
+</div>
 
 ```python
 def parse_eia_table(table_text, table_type='inventory'):
@@ -245,6 +247,7 @@ Return JSON array with entries:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">from.py</span>
+</div>
 
 ```python
 import json
@@ -346,6 +349,7 @@ Keep it concise (3-4 sentences total)."""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">validate_wpsr_extraction.py</span>
+</div>
 
 ```python
 def validate_wpsr_extraction(extracted: dict, api_data: dict) -> dict:
@@ -400,14 +404,11 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
     return abs(change) <= max_changes.get(commodity, 10)
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding parsing eia petroleum reports is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -433,7 +434,6 @@ def check_reasonable_change(current: float, change: float, commodity: str) -> bo
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -97,6 +97,7 @@ This accounts for the fact that token representations at layer $l$ are mixtures 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def attention_rollout(attentions_list: list[torch.Tensor]) -> torch.Tensor:
@@ -139,6 +140,7 @@ This is analogous to Saliency × Input for regular inputs and has better empiric
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import LayerGradientXActivation
@@ -231,6 +233,7 @@ While individual heads don't explain predictions, analyzing which heads speciali
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -253,9 +256,7 @@ plt.colorbar(im)
 plt.title("BERT Layer 0, Head 0 Attention Pattern")
 ```
 
-</div>
 
-</div>
 
 Some heads specialize in: next-token attention, previous-token attention, [CLS]-to-all, coreference, syntactic dependencies.
 
@@ -274,7 +275,6 @@ Some heads specialize in: next-token attention, previous-token attention, [CLS]-
 
 2. Given a real-world scenario involving attention weights vs. integrated gradients: why they disagree, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

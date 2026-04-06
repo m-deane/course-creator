@@ -161,6 +161,7 @@ The key is **actionable alerts**. Don't just track 50 metrics — identify the 5
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import json
@@ -261,6 +262,7 @@ class BanditMonitor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -381,8 +383,6 @@ Setting thresholds too sensitive creates noise. Too loose and you miss real prob
        return arm
    ```
 
-</div>
-</div>
 
    Rewrite it with proper structured logging that would support debugging 6 months later.
 

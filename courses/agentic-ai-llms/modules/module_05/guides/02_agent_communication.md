@@ -21,6 +21,7 @@ Multi-agent systems require structured communication. This guide covers message 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from dataclasses import dataclass, field
@@ -103,6 +104,7 @@ class QueryMessage:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class RequestResponseProtocol:
@@ -255,6 +257,7 @@ Agents bid on tasks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class ContractNetManager:
@@ -428,14 +431,11 @@ class MessageRouter:
         return [m for m in self.message_log if m.conversation_id == conversation_id]
 ```
 
-</div>
-</div>
 
 <div class="callout-key">
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

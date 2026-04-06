@@ -60,6 +60,7 @@ where $D_{ij} = 1$ if $i = j$, else 0.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -115,6 +116,7 @@ print(f"  Number of parameters: {len(lsdv_model.params)}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -161,6 +163,7 @@ Then estimate: $\tilde{y}_{it} = \tilde{X}_{it}\beta + \tilde{\epsilon}_{it}$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -180,8 +183,6 @@ print(f"  x std error (unadjusted): {within_manual.bse['x_demean']:.4f}")
 ```
 
 
-</div>
-</div>
 
 ### Using linearmodels
 
@@ -356,7 +357,6 @@ print(entity_effects_recovered.head())
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 1. **For most panel analysis**: Use `linearmodels.PanelOLS` with `entity_effects=True`

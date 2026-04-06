@@ -83,6 +83,7 @@ This is the residual-on-residual regression. The treatment effect $\theta$ is th
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -147,6 +148,7 @@ This function implements the full DML algorithm with cross-fitting. Each fold tr
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 np.random.seed(42)
@@ -188,7 +190,6 @@ DML handles the nonlinear relationships (sin, squared terms, interactions) that 
 
 <strong>Warning:</strong> The residualisation must be done out-of-sample (cross-fitting). Using in-sample ML predictions creates overfitting bias that contaminates the treatment effect. Module 04 covers why this matters and how cross-fitting fixes it.
 
-</div>
 
 ## Why This Works: The Orthogonality Intuition
 
@@ -210,7 +211,6 @@ Point 3 is the orthogonality property that gives DML its name. Module 03 formali
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 00: FWL theorem and the residual-on-residual idea

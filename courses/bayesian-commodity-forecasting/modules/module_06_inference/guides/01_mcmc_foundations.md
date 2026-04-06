@@ -99,6 +99,7 @@ Optimal: ~25-50% acceptance rate for high dimensions
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -298,7 +299,6 @@ Run several chains from different starting points:
 
 2. Given a real-world scenario involving mcmc foundations: from metropolis to modern samplers, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

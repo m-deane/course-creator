@@ -78,6 +78,7 @@ This visibility makes debugging and optimization possible.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import logging
@@ -482,6 +483,7 @@ class OTelAgentObservability:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -501,7 +503,6 @@ logger.log_event(
 )
 ```
 
-</div>
 </div>
 
 ### 2. Logging Too Much
@@ -614,7 +615,6 @@ What optimizations would you suggest? How would you measure improvement?
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ## Further Reading
 

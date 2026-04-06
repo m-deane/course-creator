@@ -92,6 +92,7 @@ Content-Type: application/json
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from fastapi import FastAPI, HTTPException
@@ -120,6 +121,7 @@ logger = logging.getLogger(__name__)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from typing import List, Optional, Literal
@@ -155,6 +157,7 @@ class AttributionRequest(BaseModel):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import threading
@@ -209,6 +212,7 @@ registry = ModelRegistry()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def build_baseline(
@@ -249,6 +253,7 @@ def build_baseline(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_attribution(
@@ -323,6 +328,7 @@ def compute_attribution(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import hashlib
@@ -385,6 +391,7 @@ attribution_cache = AttributionCache(max_size=512)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 @app.post("/attribute")
@@ -486,6 +493,7 @@ async def attribute(request: AttributionRequest):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 @app.get("/health")
@@ -520,6 +528,7 @@ async def clear_cache():
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from contextlib import asynccontextmanager
@@ -551,9 +560,7 @@ app = FastAPI(title="Captum Interpretability Service",
               version="1.0.0", lifespan=lifespan)
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -582,9 +589,7 @@ docker run -p 8080:8080 \
     interpretability-service:latest
 ```
 
-</div>
 
-</div>
 
 ### Test with curl
 
@@ -607,9 +612,7 @@ curl -X POST http://localhost:8080/attribute \
   }'
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -655,9 +658,7 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
     }
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -674,7 +675,6 @@ async def attribute_batch(batch_request: BatchAttributionRequest):
 
 2. Given a real-world scenario involving building an interpretability api with fastapi and captum, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

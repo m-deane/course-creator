@@ -29,6 +29,7 @@ CausalPy uses `formulaic` (a Python port of R's formula parser) to build the des
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import formulaic
@@ -64,6 +65,7 @@ The `LinearRegression` model object builds the PyMC model. The actual PyMC code 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -123,6 +125,7 @@ After sampling, CausalPy computes the counterfactual predictions by:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -160,6 +163,7 @@ After fitting, the PyMC model is accessible at `result.model`:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -202,6 +206,7 @@ CausalPy stores all results in an ArviZ `InferenceData` object at `result.idata`
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -254,6 +259,7 @@ PyMC can visualize the model as a Bayesian network:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -295,6 +301,7 @@ ITS models for count data (hospital admissions, crime counts, accident numbers) 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -346,8 +353,6 @@ class PoissonITSModel(cp.pymc_models.LinearRegression):
 # )
 ```
 
-</div>
-</div>
 
 ### Example: AR(1) Error Structure
 
@@ -397,8 +402,6 @@ class AR1ITS(cp.pymc_models.LinearRegression):
         return self.model
 ```
 
-</div>
-</div>
 
 ---
 
@@ -441,8 +444,6 @@ plt.title("Prior Predictive Check")
 plt.show()
 ```
 
-</div>
-</div>
 
 ---
 
@@ -469,7 +470,6 @@ The source is available at: https://github.com/pymc-labs/CausalPy
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Bayesian ITS motivation (Guide 1)
 - **Leads to:** Prior specification (Guide 3), from-scratch PyMC notebook (Notebook 1)

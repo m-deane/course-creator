@@ -47,6 +47,7 @@ Without time FE, these confound the X-Y relationship.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -141,6 +142,7 @@ where:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def double_demean(df, entity_col, time_col, variables):
@@ -186,6 +188,7 @@ print(f"  Investment coefficient: {manual_twfe.params['investment_dd']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def plot_time_effects(model_results, year_range):
@@ -229,8 +232,6 @@ plot_time_effects(fe_twoway, range(2010, 2025))
 ```
 
 
-</div>
-</div>
 
 ## When to Use Two-Way FE
 
@@ -390,7 +391,6 @@ illustrate_twfe_problem()
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 ### Recommended Specification

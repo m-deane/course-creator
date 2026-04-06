@@ -112,6 +112,7 @@ This is crucial for time series: we update beliefs as each new observation arriv
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -164,6 +165,7 @@ print(f"95% credible interval: [{post_dist.ppf(0.025):.3f}, {post_dist.ppf(0.975
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -184,7 +186,6 @@ with pm.Model() as coin_model:
 az.summary(trace, var_names=['theta'])
 ```
 
-</div>
 </div>
 
 ---
@@ -256,7 +257,6 @@ Starting with Beta(1,1) prior, you observe: success, success, failure, success. 
 
 2. Given a real-world scenario involving bayes' theorem: the foundation of bayesian inference, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

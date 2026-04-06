@@ -209,6 +209,7 @@ $$\|\pi_t - \pi^*\| \leq C \cdot |\lambda_2|^t$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">convergence_rate.py</span>
+</div>
 
 ```python
 def convergence_rate(mc: MarkovChain) -> float:
@@ -234,6 +235,7 @@ The expected number of steps to reach state $j$ starting from state $i$:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">expected_hitting_time.py</span>
+</div>
 
 ```python
 def expected_hitting_time(mc: MarkovChain, target_state: int) -> np.ndarray:
@@ -279,6 +281,7 @@ print(f"Expected steps to Bear from Bull: {hitting[0]:.1f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">estimate_transitions.py</span>
+</div>
 
 ```python
 def estimate_transitions(states: List[int], n_states: int) -> np.ndarray:
@@ -315,6 +318,7 @@ print(mc.A)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">bayesian_transitions.py</span>
+</div>
 
 ```python
 def bayesian_transitions(
@@ -404,14 +408,11 @@ def plot_markov_chain(mc: MarkovChain, simulation: List[int] = None):
 plot_markov_chain(mc, states[:100])
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding markov chains foundations is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -437,7 +438,6 @@ plot_markov_chain(mc, states[:100])
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

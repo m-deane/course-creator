@@ -236,6 +236,7 @@ $$\text{IR}_{IP}(s) = \lambda_{IP}^f \cdot \text{SIR}_F(s) + \lambda_{IP}^y \cdo
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">favar.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -588,6 +589,7 @@ class FAVAR:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -773,7 +775,6 @@ print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 
 **Insight:** Understanding factor-augmented vector autoregression (favar) is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## 9. Further Reading
 
@@ -818,7 +819,6 @@ print(f"\nVAR residual covariance:\n{favar.Sigma_v_}")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -124,6 +124,7 @@ Solutions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -456,7 +457,6 @@ def save_checkpoint(agent, step: int, checkpoint_dir: str):
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** DQN (Guide 01), DQN improvements (Guide 02), gradient descent fundamentals
 - **Leads to:** policy gradient methods (Module 06), actor-critic algorithms (Module 07), distributed RL

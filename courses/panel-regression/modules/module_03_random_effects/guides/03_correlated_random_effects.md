@@ -47,6 +47,7 @@ This:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -158,6 +159,7 @@ Including $\bar{X}_i$ in the model:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def visualize_cre_mechanics(df):
@@ -241,6 +243,7 @@ visualize_cre_mechanics(df)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def cre_ols(df, y_col, x_cols, z_cols, entity_col):
@@ -275,8 +278,6 @@ print(cre_ols_model.summary().tables[1])
 ```
 
 
-</div>
-</div>
 
 ### 2. Mixed Effects (Random Intercepts)
 
@@ -448,7 +449,6 @@ df_full, cre_full = full_cre_example()
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 | Feature | FE | RE | CRE |

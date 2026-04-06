@@ -73,6 +73,7 @@ Think of selection as choosing participants for a breeding program:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">copy.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -176,6 +177,7 @@ def adaptive_tournament_selection(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">roulette_wheel_selection.py</span>
+</div>
 
 ```python
 def roulette_wheel_selection(
@@ -294,6 +296,7 @@ def stochastic_universal_sampling(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">rank_selection.py</span>
+</div>
 
 ```python
 def rank_selection(
@@ -557,7 +560,6 @@ After seeing all three operators and understanding selection pressure, here is a
 
 <strong>Danger:</strong> Using raw fitness values with roulette wheel selection in a minimization problem inverts the selection logic -- the worst individual gets the highest selection probability. This silently produces terrible results with no error message.
 
-</div>
 
 ### 1. Wrong Fitness Transformation for Minimization
 
@@ -634,7 +636,6 @@ def good_roulette_negative(population):
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Prerequisites
 - Basic probability and statistics
@@ -657,7 +658,6 @@ def good_roulette_negative(population):
 
 <strong>Key Takeaway:</strong> Tournament selection is the safest default. It works for both minimization and maximization, is insensitive to fitness scaling, and provides easily tunable selection pressure via tournament size.
 
-</div>
 
 ## Practice Problems
 

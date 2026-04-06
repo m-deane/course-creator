@@ -68,6 +68,7 @@ Here is what happens when you run OLS with too few controls:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -107,6 +108,7 @@ Now add all controls. With 5 controls this works fine, but watch what happens wh
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -155,6 +157,7 @@ In commodity terms: strip out everything that global demand, inventories, and ot
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -195,6 +198,7 @@ The critical addition: cross-fitting and Neyman orthogonal scores ensure that ML
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.ensemble import RandomForestRegressor
@@ -218,7 +222,6 @@ print(f"True effect:                {true_effect:.2f}")
 ```
 
 </div>
-</div>
 
 This preview shows DML recovering the treatment effect even with 200 controls. The full DML procedure (Modules 02-04) adds cross-fitting and orthogonal scores to make this rigorous.
 
@@ -228,7 +231,6 @@ This preview shows DML recovering the treatment effect even with 200 controls. T
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - OLS regression and the omitted variables bias formula
@@ -286,8 +288,6 @@ def verify_fwl_equivalence(Y, D, X):
     pass
 ```
 
-</div>
-</div>
 
 **3. Dimension Scaling:**
 Run the OLS-with-controls estimator for $p \in \{10, 50, 100, 200, 500\}$ with $n=1000$ fixed. Plot the standard error of $\hat{\theta}$ against $p$. At what ratio $p/n$ does OLS become unreliable?

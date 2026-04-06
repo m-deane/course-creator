@@ -31,6 +31,7 @@ Prompt engineering is the practice of crafting inputs that reliably produce desi
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 prompt = """You are a helpful assistant.
@@ -92,6 +93,7 @@ Changelog entry:"""
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -183,6 +185,7 @@ A systematic approach to prompt construction:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def build_prompt(context, limits, examples, action, result, input_data):
@@ -239,6 +242,7 @@ Assign a specific persona to shape responses:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 roles = {
@@ -321,6 +325,7 @@ Do:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 prompt = """Process the user request below.
@@ -401,8 +406,6 @@ Only output the translation, nothing else.
 French translation:"""
 ```
 
-</div>
-</div>
 
 ### 2. Instruction Overload
 
@@ -499,8 +502,6 @@ test_cases = [
 ]
 ```
 
-</div>
-</div>
 
 ---
 
@@ -519,7 +520,6 @@ test_cases = [
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

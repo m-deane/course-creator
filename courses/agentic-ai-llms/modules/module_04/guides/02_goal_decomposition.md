@@ -23,6 +23,7 @@ Start with the goal, recursively break into subtasks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -259,6 +260,7 @@ Return as JSON array:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class SequentialExecutor:
@@ -395,6 +397,7 @@ class ParallelExecutor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class PlanAndExecuteAgent:
@@ -589,8 +592,6 @@ What remains to be done? Express as a new goal."""
         return response.content[0].text
 ```
 
-</div>
-</div>
 
 ---
 
@@ -608,7 +609,6 @@ What remains to be done? Express as a new goal."""
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

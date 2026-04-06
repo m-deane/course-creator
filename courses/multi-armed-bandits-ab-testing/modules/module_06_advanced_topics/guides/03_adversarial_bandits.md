@@ -158,6 +158,7 @@ Dividing by `p` corrects this bias (importance sampling).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -246,6 +247,7 @@ The above assumes rewards in `[0, 1]`. For arbitrary ranges `[r_min, r_max]`:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def normalize_reward(reward, r_min, r_max):
@@ -416,8 +418,6 @@ for t in range(1000):
     # can't specifically widen spreads against you
 ```
 
-</div>
-</div>
 
 **Result:** Randomization prevents market makers from learning your pattern. They must quote competitive spreads on all exchanges, not just the ones you're likely to avoid.
 

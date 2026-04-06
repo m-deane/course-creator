@@ -85,6 +85,7 @@ The reward function isn't just a metric. It's the objective your system optimize
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def naive_reward(returns):
@@ -115,6 +116,7 @@ def naive_reward(returns):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def sharpe_only_reward(returns, volatility):
@@ -144,6 +146,7 @@ def sharpe_only_reward(returns, volatility):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def win_rate_reward(returns):
@@ -151,8 +154,6 @@ def win_rate_reward(returns):
     return 1.0 if returns > 0 else 0.0
 ```
 
-</div>
-</div>
 
 **What it trains:**
 - Take tiny gains quickly
@@ -491,7 +492,6 @@ When designing a reward for your commodity bandit:
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ### Builds On

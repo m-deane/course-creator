@@ -193,6 +193,7 @@ Complete arm management system with retirement and introduction:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -380,6 +381,7 @@ for week in range(52):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def should_retire(arm_stats, arm_id, min_pulls=50):
@@ -411,8 +413,6 @@ assert should_retire(stats, 'B', min_pulls=50) == True  # B is worst and signifi
 assert should_retire(stats, 'C', min_pulls=50) == False  # C is competitive
 ```
 
-</div>
-</div>
 
 ### Problem 2: Design an Introduction Protocol (Conceptual)
 You're adding a new trading strategy (arm) to a portfolio bandit with 6 existing strategies.

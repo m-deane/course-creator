@@ -49,6 +49,7 @@ Effective retrieval is critical for RAG performance. This guide covers strategie
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -96,6 +97,7 @@ class VectorRetriever:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -137,6 +139,7 @@ Combine vector search with keyword matching:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class HybridRetriever:
@@ -234,6 +237,7 @@ Improve retrieval by expanding the original query:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class QueryExpander:
@@ -306,6 +310,7 @@ Reduce retrieved content to most relevant portions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class ContextualCompressor:
@@ -358,6 +363,7 @@ Search across multiple knowledge banks:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class MultiIndexRetriever:
@@ -450,8 +456,6 @@ multi_index_config = {
 }
 ```
 
-</div>
-</div>
 
 ## Reranking
 
@@ -540,8 +544,6 @@ rerank_config = {
 }
 ```
 
-</div>
-</div>
 
 ## Performance Optimization
 
@@ -588,8 +590,6 @@ class CachedRetriever:
         return results
 ```
 
-</div>
-</div>
 
 ## Key Takeaways
 

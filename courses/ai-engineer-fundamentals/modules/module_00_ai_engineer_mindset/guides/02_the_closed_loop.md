@@ -54,6 +54,7 @@ flowchart TB
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">goal_interpretation.txt</span>
+</div>
 
 ```
 Input:  "Book me a table for 4 at an Italian restaurant tomorrow at 7pm"
@@ -81,6 +82,7 @@ What the system must understand:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">context_builder.py</span>
+</div>
 
 ```python
 def build_context(goal, memory, retriever):
@@ -131,6 +133,7 @@ The model uses context to decide what to do:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">react_trace.txt</span>
+</div>
 
 ```
 Thought: I need to find Italian restaurants with availability tomorrow at 7pm.
@@ -155,6 +158,7 @@ Thought: Task complete. I'll summarize for the user.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">tool_executor.py</span>
+</div>
 
 ```python
 class ToolExecutor:
@@ -188,6 +192,7 @@ class ToolExecutor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">observer.py</span>
+</div>
 
 ```python
 def observe(action_result, expected_outcome):
@@ -212,6 +217,7 @@ def observe(action_result, expected_outcome):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">evaluator.py</span>
+</div>
 
 ```python
 def evaluate(goal, observations, constraints):
@@ -235,6 +241,7 @@ def evaluate(goal, observations, constraints):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">memory_update.py</span>
+</div>
 
 ```python
 def update_memory(memory, interaction):
@@ -287,6 +294,7 @@ Main agent: Coordinate overall task
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">bounded_loop.py</span>
+</div>
 
 ```python
 MAX_ITERATIONS = 10
@@ -329,9 +337,6 @@ return graceful_failure("Max iterations reached")
     <div class="header after">Closed Loop (System)</div>
     <div class="body">
       Iterative refinement. Verifies results. Learns from interactions. Detects and recovers. Improves over time.
-    </div>
-  </div>
-</div>
 
 ## Common Pitfalls
 
@@ -339,19 +344,16 @@ return graceful_failure("Max iterations reached")
 
 <strong>Pitfall 1 — Infinite Loops:</strong> Agent keeps trying the same failing approach. Track attempted strategies and force alternatives after N failures.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 2 — Goal Drift:</strong> Agent solves a different problem than requested. Periodically re-check alignment with the original goal.
 
-</div>
 
 <div class="callout-warning">
 
 <strong>Pitfall 3 — Memory Bloat:</strong> Storing everything fills context and slows retrieval. Use selective storage, summarization, and decay policies.
 
-</div>
 
 ## Implementation Skeleton
 
@@ -391,8 +393,6 @@ class ClosedLoopAgent:
         return Result(success=False, error="Max iterations reached")
 ```
 
-</div>
-</div>
 
 ## Practice Questions
 

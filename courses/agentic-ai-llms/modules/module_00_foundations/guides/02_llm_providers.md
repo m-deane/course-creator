@@ -37,6 +37,7 @@ Different LLM providers offer distinct trade-offs in capability, cost, latency, 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -171,6 +172,7 @@ print(response.json()["response"])
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 from abc import ABC, abstractmethod
@@ -311,6 +313,7 @@ Use cheaper models for simple tasks, expensive models for complex ones:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def route_to_model(query: str, complexity: str = "auto") -> LLMProvider:
@@ -378,6 +381,7 @@ OPENAI_API_KEY=sk-...
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import os
@@ -390,7 +394,6 @@ anthropic_client = anthropic.Anthropic()  # Uses ANTHROPIC_API_KEY
 openai_client = OpenAI()  # Uses OPENAI_API_KEY
 ```
 
-</div>
 </div>
 
 ### Secrets Management (Production)
@@ -454,8 +457,6 @@ class RateLimitedProvider(LLMProvider):
         return self.provider.chat(messages, temperature, max_tokens)
 ```
 
-</div>
-</div>
 
 ---
 
@@ -475,7 +476,6 @@ class RateLimitedProvider(LLMProvider):
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

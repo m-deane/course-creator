@@ -65,6 +65,7 @@ This is **computationally much simpler** than nonlinear least squares — no opt
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -164,6 +165,7 @@ The right side is zero when the restriction is correctly specified, and nonzero 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
@@ -200,6 +202,7 @@ def choose_midas_type(n_lags, n_obs, threshold_low=0.05, threshold_high=0.10):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -253,8 +256,6 @@ def compare_midas_specifications(Y, X, labels=None):
     return results
 ```
 
-</div>
-</div>
 
 ### The Formal Comparison: AIC and BIC
 
@@ -380,7 +381,6 @@ def estimate_regularized_umidas(Y, X, method='ridge'):
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 1. With $K = 6$ lags (2 quarterly lags × 3 months) and $T = 80$ observations, compute the ratio $K/T$. Based on the heuristic in this guide, should you use U-MIDAS or restricted MIDAS?

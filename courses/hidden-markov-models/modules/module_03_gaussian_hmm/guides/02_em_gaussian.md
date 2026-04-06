@@ -143,6 +143,7 @@ This is the maximum likelihood estimate given soft assignments!
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">gaussianhmm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -608,6 +609,7 @@ model = GaussianHMM(n_states=2, covariance_type='diag')
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">identify_states.py</span>
+</div>
 
 ```python
 def identify_states(model):
@@ -633,6 +635,7 @@ def identify_states(model):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">initialize_from_kmeans.py</span>
+</div>
 
 ```python
 from sklearn.cluster import KMeans
@@ -652,7 +655,6 @@ def initialize_from_kmeans(model, observations):
     return model
 ```
 
-</div>
 </div>
 
 ## Connections
@@ -756,7 +758,6 @@ def initialize_from_kmeans(model, observations):
 
 **Insight:** Understanding em for gaussian hmms is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -804,7 +805,6 @@ def initialize_from_kmeans(model, observations):
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

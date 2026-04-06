@@ -41,6 +41,7 @@ Example:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -70,6 +71,7 @@ The 95% CI means: "If we repeated this experiment many times, 95% of the CIs con
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -108,6 +110,7 @@ Useful when the outcome is not on an interpretable scale:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -134,6 +137,7 @@ For outcomes on a ratio scale:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 baseline_mean = df[df['post']==0]['outcome'].mean()
@@ -154,6 +158,7 @@ For binary outcomes and policy evaluation:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -179,6 +184,7 @@ Robustness checks should be concise and structured. Present them in a table rath
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -226,6 +232,7 @@ For technical presentations, a forest plot showing the primary estimate with rob
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -309,8 +316,6 @@ def posterior_summary_plot(samples, true_value=None, title='Posterior Distributi
     return fig, ax
 ```
 
-</div>
-</div>
 
 ---
 
@@ -343,8 +348,6 @@ def roth_sensitivity_table(estimate, se, pre_trend_range):
         print(f"{violation:>12.3f} {adjusted:>18.3f} {sig:>14}")
 ```
 
-</div>
-</div>
 
 ### For RDD: Bandwidth Sensitivity Table
 
@@ -365,8 +368,6 @@ def bandwidth_sensitivity_table(rdd_results_by_bandwidth):
         print(f"  h={h:.2f}: τ = {est:+.3f} [{lo:+.3f}, {hi:+.3f}]{marker}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -394,7 +395,6 @@ Before finalising a causal analysis report:
 <strong>Key Concept:</strong> **Previous:** [01 — Model Selection](01_model_selection_guide.md)
 **Next:** [03 — Deployment Guide](03_deployment_guide.md)
 
-</div>
 
 
 ## Resources

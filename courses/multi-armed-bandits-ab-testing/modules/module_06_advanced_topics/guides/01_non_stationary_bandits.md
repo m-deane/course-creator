@@ -124,6 +124,7 @@ Imagine driving with GPS directions. If the GPS uses traffic data from last week
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -176,6 +177,7 @@ for t in range(1000):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from collections import deque
@@ -342,8 +344,6 @@ for date in trading_dates:
     allocate(commodity, capital)
 ```
 
-</div>
-</div>
 
 **Key insight:** Discount factor becomes a tunable parameter for regime sensitivity. Backtest with historical regime changes to calibrate.
 

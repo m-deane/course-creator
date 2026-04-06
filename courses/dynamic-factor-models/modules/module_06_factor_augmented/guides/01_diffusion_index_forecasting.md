@@ -220,6 +220,7 @@ Factors represent these common shocks. Forecasting with factors means forecastin
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">diffusionindexforecaster.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -442,6 +443,7 @@ class DiffusionIndexForecaster:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -499,6 +501,7 @@ for i, var_ratio in enumerate(di_model.explained_variance_ratio(), 1):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">load_fredmd_example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -616,6 +619,7 @@ print(f"Best out-of-sample RMSE: {results_df['RMSE'].min():.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -628,8 +632,6 @@ factors_train = pca.transform(X_train)
 factors_test = pca.transform(X_test)  # Uses only training loadings
 ```
 
-</div>
-</div>
 
 ### 2. Ignoring Forecast Horizon
 
@@ -721,7 +723,6 @@ factors_test = pca.transform(X_test)  # Uses only training loadings
 
 **Insight:** Understanding diffusion index forecasting is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## 10. Further Reading
 
@@ -766,7 +767,6 @@ factors_test = pca.transform(X_test)  # Uses only training loadings
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -408,6 +408,7 @@ Backtesting on only companies that exist today, excluding those that were delist
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -523,7 +524,6 @@ A policy trained in a bull market may fail catastrophically in a bear market. Re
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** Offline RL (Guide 02) — financial data is effectively a fixed dataset; RLHF and Safe RL (Guide 03) — reward shaping and risk constraints apply directly
 - **Builds on:** Model-based RL (Module 8) — learned market models for planning

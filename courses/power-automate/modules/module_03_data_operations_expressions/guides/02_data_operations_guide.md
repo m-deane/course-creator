@@ -194,6 +194,7 @@ Example: collect email subjects into a summary string:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```text
 Initialize variable
@@ -540,7 +541,6 @@ This walkthrough produces a CSV file listing only approved purchase requests fro
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** Guide 01 — Dynamic Content and Expressions (expressions used in Filter array, Select)
 - **Leads to:** Module 04 — Branching, Loops and Error Handling (variables used inside Apply to each)

@@ -97,6 +97,7 @@ reward = primary_metric + Σ(guardrail_penalties)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def commodity_llm_reward(query, response, docs, ground_truth=None):
@@ -135,6 +136,7 @@ def commodity_llm_reward(query, response, docs, ground_truth=None):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 context = [
@@ -178,6 +180,7 @@ context = [
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class PromptRouter:
@@ -196,8 +199,6 @@ class PromptRouter:
             self.beta[idx] += 1
 ```
 
-</div>
-</div>
 
 ### LinUCB (With Context)
 
@@ -351,7 +352,6 @@ class ContextualPromptRouter:
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ```python

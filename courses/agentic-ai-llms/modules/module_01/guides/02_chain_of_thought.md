@@ -55,6 +55,7 @@ The simplest form—just add "Let's think step by step":
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 prompt = """A bat and ball cost $1.10 in total. The bat costs $1.00 more than the ball.
@@ -282,6 +283,7 @@ Ask for abstract principles before specific solutions:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 prompt = """Before solving this problem, let's step back.
@@ -329,6 +331,7 @@ Sub-question 1: ...
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def with_cot(prompt: str, cot_trigger: str = "Let's think step by step.") -> str:
@@ -484,8 +487,6 @@ def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:
         return response.content[0].text
 ```
 
-</div>
-</div>
 
 ---
 
@@ -501,7 +502,6 @@ def adaptive_cot(problem: str, complexity_threshold: float = 0.5) -> str:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

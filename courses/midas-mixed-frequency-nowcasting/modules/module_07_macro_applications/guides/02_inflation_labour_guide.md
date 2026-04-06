@@ -66,6 +66,7 @@ Typical $R^2$ for the energy component nowcast: 0.6–0.8 (daily energy prices a
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def build_inflation_midas_features(
@@ -147,6 +148,7 @@ Core services (the "super-core") are the hardest to nowcast because:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def core_services_ar_forecast(core_cpi_monthly, h=1):
@@ -216,6 +218,7 @@ A MIDAS-X model can incorporate several of these simultaneously.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def build_labour_midas_features(
@@ -277,8 +280,6 @@ def build_labour_midas_features(
     return X
 ```
 
-</div>
-</div>
 
 ### 2.4 Relationship: Claims → Unemployment → Payrolls
 
@@ -379,7 +380,6 @@ where $x$ contains the common predictors. The key benefit: if payrolls surprise 
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - Brave, S., & Butters, R. A. (2010). Chicago Fed National Activity Index trends and cycles. *Economic Perspectives*, 34(Q1), 13–23.

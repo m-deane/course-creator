@@ -140,6 +140,7 @@ Autocovariance measures how much knowing today's value tells you about values $h
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sample_autocovariance.py</span>
+</div>
 
 ```python
 def sample_autocovariance(y, max_lag=20):
@@ -196,6 +197,7 @@ print("Theoretical ACF for AR(1):", [phi**h for h in range(6)])
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">plot_acf_pacf.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -248,6 +250,7 @@ $$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + ... + \phi_p y_{t-p} + \varepsilon
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">simulate_ar.py</span>
+</div>
 
 ```python
 def simulate_ar(phi, c=0, sigma=1, T=100, burn=100, seed=None):
@@ -311,6 +314,7 @@ y_ar2 = simulate_ar(phi, T=200, seed=42)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">estimate_ar.py</span>
+</div>
 
 ```python
 from statsmodels.tsa.ar_model import AutoReg
@@ -438,8 +442,6 @@ print(f"Selected lag order: {var_results.k_ar}")
 print(f"Estimated Phi:\n{var_results.coefs[0].round(3)}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -521,7 +523,6 @@ This enables:
 
 **Insight:** Understanding time series basics for factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -541,7 +542,6 @@ This enables:
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

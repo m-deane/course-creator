@@ -48,6 +48,7 @@ of donors from their own synthetic counterparts.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -163,6 +164,7 @@ pre-period fit quality*.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def placebo_p_value(gaps, rmspe_pre, n_pre, treated_idx=0):
@@ -230,6 +232,7 @@ unit's gap. The treated unit should stand out — its gap should be clearly larg
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import matplotlib.pyplot as plt
@@ -296,6 +299,7 @@ chosen.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
@@ -333,7 +337,6 @@ def in_time_placebo(Y_all, true_t0, placebo_t0, treated_idx=0):
     return gap, rmspe_pre
 ```
 
-</div>
 </div>
 
 **Interpretation:**
@@ -405,8 +408,6 @@ def confidence_set_sc(Y_all, n_pre, treated_idx=0, alpha=0.1, alpha0_grid=None):
     return in_set
 ```
 
-</div>
-</div>
 
 ---
 
@@ -450,7 +451,6 @@ A complete synthetic control report includes:
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Guide 01 (synthetic control basics), Module 00 (potential outcomes)
 - **Leads to:** Notebook 02 (placebo tests in code), Notebook 03 (CausalPy SC API)

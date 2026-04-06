@@ -96,6 +96,7 @@ print(f"Variances: {np.sqrt(model.covars_).flatten()}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regimedetector.py</span>
+</div>
 
 ```python
 class RegimeDetector:
@@ -180,6 +181,7 @@ Use information criteria to select optimal number of states:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">select_n_states.py</span>
+</div>
 
 ```python
 def select_n_states(returns: np.ndarray, max_states: int = 5) -> dict:
@@ -240,6 +242,7 @@ print(f"\nBest number of states (BIC): {best_n}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compare_covariance_types.py</span>
+</div>
 
 ```python
 def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
@@ -279,6 +282,7 @@ def compare_covariance_types(returns: np.ndarray, n_states: int = 2) -> dict:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">plot_regime_detection.py</span>
+</div>
 
 ```python
 def plot_regime_detection(returns, predicted_states, state_probs, dates=None):
@@ -385,14 +389,11 @@ result = regime_analysis('SPY', '2020-01-01', '2024-01-01')
 print(result['regime_stats'])
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding gaussian hmms for continuous observations is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -418,7 +419,6 @@ print(result['regime_stats'])
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

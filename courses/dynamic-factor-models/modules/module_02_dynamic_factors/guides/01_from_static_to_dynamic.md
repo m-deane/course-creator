@@ -272,6 +272,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -341,6 +342,7 @@ So: $\frac{\partial F_{t+h}}{\partial \eta_t} = \Phi^h$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compute_irf.py</span>
+</div>
 
 ```python
 def compute_irf(Phi, horizons=20):
@@ -565,7 +567,6 @@ print(cum_irf[-1])
 
 **Insight:** Understanding from static to dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -606,7 +607,6 @@ print(cum_irf[-1])
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

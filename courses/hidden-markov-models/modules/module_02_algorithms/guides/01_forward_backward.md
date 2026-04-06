@@ -48,6 +48,7 @@ $$P(O | \lambda) = \sum_{i=1}^{K} \alpha_T(i)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">forward.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -115,6 +116,7 @@ For long sequences, $\alpha_t(i)$ underflows. Use scaling factors:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">forward_scaled.py</span>
+</div>
 
 ```python
 def forward_scaled(
@@ -176,6 +178,7 @@ $$\beta_t(i) = \sum_{j=1}^{K} a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backward.py</span>
+</div>
 
 ```python
 def backward(
@@ -254,6 +257,7 @@ $$= \frac{\alpha_t(i) \cdot a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)}{P(O 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">compute_posteriors.py</span>
+</div>
 
 ```python
 def compute_posteriors(
@@ -366,14 +370,11 @@ def forward_vectorized(
     return np.exp(log_alpha), log_likelihood
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding forward-backward algorithm is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -399,7 +400,6 @@ def forward_vectorized(
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

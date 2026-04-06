@@ -123,6 +123,7 @@ Options pricing, VaR calculation, and position sizing require volatility forecas
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -246,6 +247,7 @@ Negative returns increase volatility more than positive returns (especially in e
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as sv_leverage:
@@ -284,6 +286,7 @@ Natural gas volatility peaks in summer (cooling) and winter (heating).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as sv_seasonal:
@@ -313,6 +316,7 @@ Commodity returns have fatter tails than normal.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as sv_student:
@@ -363,6 +367,7 @@ As $k \to \infty$, this converges to the stationary distribution.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -418,6 +423,7 @@ Compare SV specifications using LOO-CV:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as sv_basic:
@@ -438,8 +444,6 @@ comparison = az.compare({
 print(comparison)
 ```
 
-</div>
-</div>
 
 Lower LOO = better out-of-sample predictive performance.
 
@@ -467,8 +471,6 @@ h_raw[t] = phi * h_raw[t-1] + eta[t]
 h[t] = mu + sigma_eta / sqrt(1 - phi^2) * h_raw[t]
 ```
 
-</div>
-</div>
 
 ### 2. Initialization Sensitivity
 
@@ -513,7 +515,6 @@ A crude oil SV model estimates $\phi = 0.96$ and $\sigma_\eta = 0.15$. If curren
 
 <strong>Insight:</strong> A crude oil SV model estimates $\phi = 0.96$ and $\sigma_\eta = 0.15$. If current log-volatility is $h_t = 0.5$:
 
-</div>
 
 
 ### Problem 2
@@ -550,7 +551,6 @@ Which provides uncertainty estimates? Which adapts fastest to regime changes?
 
 2. Given a real-world scenario involving stochastic volatility models for commodities, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

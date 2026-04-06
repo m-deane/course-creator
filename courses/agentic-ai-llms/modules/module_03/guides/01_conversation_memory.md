@@ -21,6 +21,7 @@ LLMs process each request independently—they don't remember previous conversat
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -74,6 +75,7 @@ Keep all messages in order:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class BufferMemory:
@@ -243,6 +245,7 @@ class TokenLimitedMemory:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 class HybridMemory:
@@ -329,6 +332,7 @@ class HybridMemory:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def estimate_tokens(text: str) -> int:
@@ -427,6 +431,7 @@ class DynamicContextManager:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 def build_conversation(
@@ -456,8 +461,6 @@ response = client.messages.create(
 )
 ```
 
-</div>
-</div>
 
 ### Injecting Context
 
@@ -525,8 +528,6 @@ class PersistentMemory(BufferMemory):
         self._save()
 ```
 
-</div>
-</div>
 
 ### Session-Based Memory
 
@@ -574,7 +575,6 @@ class SessionManager:
 
 **Key Concept Summary:** This guide covered the core concepts. Review the companion slides for visual summaries and the hands-on notebook for practice implementations.
 
-</div>
 
 ---
 

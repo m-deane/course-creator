@@ -170,6 +170,7 @@ By convention, $\beta_{-1} = 0$ (the period immediately before treatment is the 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -245,6 +246,7 @@ Before running a DiD analysis, verify:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import causalpy as cp
@@ -281,8 +283,6 @@ result = cp.DifferenceInDifferences(
 print(result.summary())
 ```
 
-</div>
-</div>
 
 The key coefficient is the interaction `period:treated`, which estimates the DiD treatment effect.
 

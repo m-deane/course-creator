@@ -113,6 +113,7 @@ A production system maintains a **publication calendar** — a table of `(series
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import datetime
@@ -198,6 +199,7 @@ The table below gives typical lags from the end of the reference period to the f
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import time
@@ -265,6 +267,7 @@ The minimal viable schema stores one row per `(series_id, observation_date, vint
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import sqlite3
@@ -352,8 +355,6 @@ class VintageDatabase:
         self.conn.commit()
 ```
 
-</div>
-</div>
 
 ### Data Acquisition Layer
 
@@ -978,7 +979,6 @@ Expose a `/health` endpoint if the pipeline runs as a service. Return the timest
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 A production nowcasting pipeline has five distinct layers, each with a single responsibility:

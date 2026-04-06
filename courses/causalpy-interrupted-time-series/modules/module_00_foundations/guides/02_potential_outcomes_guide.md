@@ -216,6 +216,7 @@ $$P(\tau_t > 0 | \text{data}) = P(Y_t(1) > Y_t(0) | \text{data})$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -309,7 +310,6 @@ For policy evaluation, the ATT is often more relevant. If we implemented a job t
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 - **Builds on:** Causal vs predictive thinking (Guide 1)
 - **Leads to:** DAGs for reasoning about confounding (Guide 3), ITS specification (Module 01)

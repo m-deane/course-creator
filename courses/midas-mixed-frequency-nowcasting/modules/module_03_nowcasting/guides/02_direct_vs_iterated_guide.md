@@ -104,6 +104,7 @@ Estimation: Profile NLS over $(θ_1, θ_2)$ with $(α, ρ, β)$ solved by regres
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def profile_sse_ar(theta, Y, X):
@@ -172,6 +173,7 @@ For a $h$-period horizon nowcast using the direct MIDAS approach:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -304,6 +306,7 @@ For a complete nowcasting exercise, estimate one model per horizon ($h = 0, 1, 2
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def nowcast_panel(Y_train, Y_test, X_train_dict, X_test_dict):
@@ -330,8 +333,6 @@ def nowcast_panel(Y_train, Y_test, X_train_dict, X_test_dict):
     return nowcasts
 ```
 
-</div>
-</div>
 
 ---
 
@@ -369,7 +370,6 @@ Always check all three conditions before adding AR terms.
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Guide 01 (nowcasting problem, ragged edge)

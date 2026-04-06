@@ -7,7 +7,6 @@
 
 <div class="callout-insight">
 
-<strong>Insight:</strong> example.py
 The following implementation builds on the approach above:
 Run this first.
 </div>
@@ -203,6 +202,7 @@ The loss function determines what the model minimizes during training, which dir
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from neuralforecast.losses.pytorch import MAE, MSE, MQLoss, HuberLoss
@@ -274,7 +274,6 @@ See detailed comparison in the table above.
 
 `max_steps` is the number of gradient descent steps during training.
 
-</div>
 
 
 `max_steps` is the number of gradient descent steps during training. NeuralForecast uses the full dataset (with windowing) at each step.

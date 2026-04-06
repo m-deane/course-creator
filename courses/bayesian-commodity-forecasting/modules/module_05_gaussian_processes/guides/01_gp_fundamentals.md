@@ -183,6 +183,7 @@ $$k(x, x') = \sigma^2 \exp\left(-\frac{2\sin^2(\pi|x - x'|/p)}{\ell^2}\right)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -259,6 +260,7 @@ For crude oil prices, we might combine:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -271,7 +273,6 @@ k_noise = pm.gp.cov.WhiteNoise(sigma=0.1)
 k_total = k_trend + k_seasonal * k_short + k_noise
 ```
 
-</div>
 </div>
 
 ---
@@ -327,7 +328,6 @@ GP uncertainty may not increase fast enough outside training range.
 
 2. Given a real-world scenario involving gaussian process fundamentals, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

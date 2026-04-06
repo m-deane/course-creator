@@ -307,6 +307,7 @@ n tilings: Resolution = tile_width / n
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def rbf_features(state, centers, sigma=1.0):
@@ -612,7 +613,6 @@ Semi-gradient TD does not follow the gradient of any objective function. This me
 
 <strong>Info:</strong> This section maps how this guide connects to the broader course. Use these links to navigate related material.
 
-</div>
 
 - **Builds on:** Guide 01 (function approximation motivation and feature vectors), Module 03 (tabular TD(0) — linear methods are the same algorithm with generalization added)
 - **Leads to:** Guide 03 (the deadly triad — off-policy + FA breaks convergence), Module 05 (DQN uses neural networks in place of linear FA with the same semi-gradient idea)

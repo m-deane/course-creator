@@ -80,6 +80,7 @@ The simplest approach: for each high-frequency predictor, include lags $x_{t-1},
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -141,6 +142,7 @@ Aggregate the lag window into economically meaningful statistics:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def summary_features(series_lags):
@@ -183,6 +185,7 @@ For large daily datasets (e.g., 65 trading days per quarter), embeddings via PCA
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from sklearn.decomposition import PCA
@@ -208,8 +211,6 @@ def pca_embedding(lag_matrix, n_components=3):
     return embedding, pca
 ```
 
-</div>
-</div>
 
 For daily financial data, the first 3 principal components typically capture 80–95% of variance.
 
@@ -683,7 +684,6 @@ def midas_features_for_ml(beta_weights, x_high_lags):
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.

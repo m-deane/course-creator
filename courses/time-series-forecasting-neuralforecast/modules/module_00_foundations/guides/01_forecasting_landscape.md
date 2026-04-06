@@ -165,6 +165,7 @@ This format handles thousands of series uniformly — a single `NeuralForecast` 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -185,7 +186,6 @@ print(f"Series count: {train['unique_id'].nunique()}")
 print(f"Rows: {len(train):,}")
 ```
 
-</div>
 </div>
 
 ---

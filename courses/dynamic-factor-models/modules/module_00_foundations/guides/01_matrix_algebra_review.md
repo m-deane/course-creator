@@ -55,6 +55,7 @@ where:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">eigendecomposition_symmetric.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -150,6 +151,7 @@ SVD decomposes a data matrix into three parts:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">svd_decomposition.py</span>
+</div>
 
 ```python
 def svd_decomposition(X, n_components=None):
@@ -233,6 +235,7 @@ Covariance matrices must be PSD (and typically PD in practice):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">check_positive_definite.py</span>
+</div>
 
 ```python
 def check_positive_definite(A, tol=1e-10):
@@ -270,8 +273,6 @@ is_pd, min_eig = check_positive_definite(A)
 print(f"Is PD: {is_pd}, min eigenvalue: {min_eig:.4f}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -359,7 +360,6 @@ This simplifies expected value calculations in factor models.
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

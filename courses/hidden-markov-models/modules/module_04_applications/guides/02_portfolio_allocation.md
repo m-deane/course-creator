@@ -32,6 +32,7 @@ This guide covers:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regimeawareportfolio.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -264,6 +265,7 @@ for r in range(2):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">dynamicregimeallocator.py</span>
+</div>
 
 ```python
 class DynamicRegimeAllocator:
@@ -407,6 +409,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regimeawareriskmanager.py</span>
+</div>
 
 ```python
 class RegimeAwareRiskManager:
@@ -540,13 +543,11 @@ print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 ```
 
 </div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding regime-based portfolio allocation is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -574,7 +575,6 @@ print(f"\nPosition Size for 2% Daily VaR limit: {scale*100:.1f}%")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

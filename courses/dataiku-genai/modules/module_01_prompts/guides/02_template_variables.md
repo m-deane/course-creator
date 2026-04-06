@@ -68,6 +68,7 @@ Template variables work like mail merge in email—you write one template letter
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from dataiku import PromptStudio
@@ -134,6 +135,7 @@ print(result.text)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import json
@@ -221,6 +223,7 @@ result = studio.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def create_conditional_prompt():
@@ -301,6 +304,7 @@ full_result = studio.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def create_multi_source_analyzer():
@@ -386,6 +390,7 @@ result = studio.complete(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from typing import Any, Dict
@@ -495,8 +500,6 @@ except ValueError as e:
     print(f"Validation error: {e}")
 ```
 
-</div>
-</div>
 
 ### Batch Processing with Variables
 
@@ -597,8 +600,6 @@ results = batch_process_with_variables(
 print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -633,7 +634,6 @@ print(results[['report_id', 'commodity_type', 'llm_status', 'llm_cost']])
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Prompt Studio basics (Module 1.1)

@@ -154,6 +154,7 @@ Partial pooling minimizes total prediction error.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -286,7 +287,6 @@ Always examine how much shrinkage occurred—extreme shrinkage may indicate mode
 
 2. Given a real-world scenario involving partial pooling: the logic of hierarchical models, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

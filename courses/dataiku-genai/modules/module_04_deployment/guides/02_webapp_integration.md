@@ -79,6 +79,7 @@ Think of Dataiku webapps like building a custom dashboard in Tableau or PowerBI,
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backend.py</span>
+</div>
 
 ```python
 
@@ -160,6 +161,7 @@ The frontend HTML connects to the backend endpoints and renders the analysis res
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">frontend.html</span>
+</div>
 
 ```html
 <!-- frontend.html - Dataiku Webapp Frontend -->
@@ -395,6 +397,7 @@ The frontend HTML connects to the backend endpoints and renders the analysis res
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backend.py</span>
+</div>
 
 ```python
 
@@ -491,6 +494,7 @@ The chatbot frontend manages conversation state and renders the message history:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">frontend.html</span>
+</div>
 
 ```html
 <!-- frontend.html - Chatbot UI -->
@@ -656,6 +660,7 @@ The chatbot frontend manages conversation state and renders the message history:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">backend.py</span>
+</div>
 
 ```python
 
@@ -695,8 +700,6 @@ def stream_analysis():
     )
 ```
 
-</div>
-</div>
 
 The frontend JavaScript reads from the event stream and updates the UI incrementally:
 
@@ -744,8 +747,6 @@ async function streamAnalysis() {
 }
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -780,7 +781,6 @@ async function streamAnalysis() {
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - LLM Mesh configuration (Module 0)

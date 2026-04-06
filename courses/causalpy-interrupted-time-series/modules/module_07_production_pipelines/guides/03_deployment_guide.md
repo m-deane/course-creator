@@ -76,6 +76,7 @@ Stage 6: Output and Logging
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 """
@@ -293,6 +294,7 @@ Once a causal model is deployed and producing regular estimates, monitor:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class CausalMonitor:
@@ -350,6 +352,7 @@ Unlike predictive models, causal models don't "degrade" in accuracy — they can
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def run_monthly_causal_update(data_path: Path, results_dir: Path):
@@ -423,8 +426,6 @@ def create_run_manifest(df: pd.DataFrame, config: Dict, result: CausalPipelineRe
     return manifest
 ```
 
-</div>
-</div>
 
 ---
 
@@ -451,7 +452,6 @@ Before deploying a causal pipeline:
 <strong>Key Concept:</strong> **Previous:** [02 — Reporting Guide](02_reporting_guide.md)
 **Next:** [Module 07 Notebooks](../notebooks/)
 
-</div>
 
 
 ## Resources

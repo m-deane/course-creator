@@ -118,6 +118,7 @@ Positive in backwardation (near contract more expensive), negative in contango.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">termstructureanalyzer.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -415,6 +416,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">analyze_curve_evolution.py</span>
+</div>
 
 ```python
 def analyze_curve_evolution(futures_data, dates):
@@ -587,7 +589,6 @@ def analyze_curve_evolution(futures_data, dates):
 <div class="flow-step amber">3. Pindyck (2001)</div>
 <div class="flow-arrow">&#8594;</div>
 <div class="flow-step lavender">4. Szymanowska et al. (...</div>
-</div>
 
 
 1. **Fama & French (1987)** - "Commodity Futures Prices" - Theory of storage
@@ -623,7 +624,6 @@ def analyze_curve_evolution(futures_data, dates):
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

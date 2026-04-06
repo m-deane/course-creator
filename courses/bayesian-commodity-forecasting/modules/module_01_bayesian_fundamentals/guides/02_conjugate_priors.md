@@ -57,6 +57,7 @@ yields a posterior $p(\theta|y)$ in the same distributional family as $p(\theta)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -105,6 +106,7 @@ where $\tau = 1/\sigma^2$ is precision.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -153,6 +155,7 @@ print(f"Posterior 95% CI: [{mu_post - 1.96*sigma_post:.2f}, {mu_post + 1.96*sigm
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -236,6 +239,7 @@ For online learning, conjugate priors allow instant updates:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class BayesianMeanEstimator:
@@ -302,6 +306,7 @@ When you have little prior knowledge:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -311,8 +316,6 @@ When you have little prior knowledge:
 mu_0, sigma_0 = 2.5, 3.75
 ```
 
-</div>
-</div>
 
 ### Prior Predictive Checks
 
@@ -334,8 +337,6 @@ print(f"Prior 95% interval: [{np.percentile(prior_samples, 2.5):.1f}, "
       f"{np.percentile(prior_samples, 97.5):.1f}] million barrels")
 ```
 
-</div>
-</div>
 
 If this range doesn't match domain knowledge, adjust the prior.
 
@@ -396,7 +397,6 @@ Derive the posterior for the Normal-Normal case from scratch using Bayes' theore
 
 2. Given a real-world scenario involving conjugate priors: analytical bayesian updates, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

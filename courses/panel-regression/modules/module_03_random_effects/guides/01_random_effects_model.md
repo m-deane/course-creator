@@ -96,6 +96,7 @@ As $\sigma_\alpha^2 \to \infty$ or $T \to \infty$, $\theta \to 1$ (RE approaches
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -149,6 +150,7 @@ print(f"\nTheta (quasi-demeaning parameter): {re_results.theta.iloc[0]:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def estimate_variance_components(data, y_col, x_cols, entity_col, time_col):
@@ -221,6 +223,7 @@ A key advantage of RE: estimating effects of time-invariant variables.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -243,8 +246,6 @@ print(re_with_invariant.summary.tables[1])
 ```
 
 
-</div>
-</div>
 
 ## The Mundlak Approach
 
@@ -296,7 +297,6 @@ print(f"FE beta (x): {fe_results.params['x']:.4f}")
 
 **Danger:** Never include a lagged dependent variable in a fixed effects model without using an appropriate estimator (e.g., Arellano-Bond GMM). The within-transformation creates mechanical correlation between the transformed lagged variable and the transformed error, biasing all coefficients.
 
-</div>
 
 
 | Advantage | Explanation |

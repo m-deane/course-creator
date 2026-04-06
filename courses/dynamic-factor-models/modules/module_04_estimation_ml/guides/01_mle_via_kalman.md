@@ -173,6 +173,7 @@ Usually computed numerically via finite differences.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">kalman_filter_likelihood.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -646,7 +647,6 @@ if __name__ == '__main__':
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

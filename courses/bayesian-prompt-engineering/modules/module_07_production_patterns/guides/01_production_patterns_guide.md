@@ -62,6 +62,7 @@ A parameterized template separates **structure** from **values**. The structure 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 template = ConditionStack(
@@ -151,6 +152,7 @@ Dynamic condition injection means the system automatically pulls conditions from
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 class ConditionInjector:
@@ -258,7 +260,6 @@ It tests: does one condition stack produce a more constrained, consistent poster
 
 <strong>Warning:</strong> Without a metric, prompt improvement is subjective. "This feels better" is not actionable at scale. You need a number — even a rough one — to know whether a change helped.
 
-</div>
 
 
 Without a metric, prompt improvement is subjective. "This feels better" is not actionable at scale. You need a number — even a rough one — to know whether a change helped.
@@ -439,4 +440,3 @@ Layer 5 (facts) should come from the user. Injecting pre-defined facts overrides
 
 2. Given a real-world scenario involving production patterns: bayesian prompting at scale, what would be your first three steps to apply the techniques from this guide?
 
-</div>

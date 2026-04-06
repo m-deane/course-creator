@@ -113,6 +113,7 @@ The offspring inherits all three building blocks and outperforms both parents. T
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">copy.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -369,6 +370,7 @@ This is why adaptive mutation rates (higher later in the run) can be effective: 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">mutation_operators.py</span>
+</div>
 
 ```python
 def bit_flip_mutation(
@@ -552,6 +554,7 @@ def inversion_mutation(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">combined_operators.py</span>
+</div>
 
 ```python
 def apply_genetic_operators(
@@ -782,7 +785,6 @@ if __name__ == "__main__":
 
 <strong>Danger:</strong> A mutation rate of 0.5 means half of all bits flip each generation -- this is random search, not evolution. The GA loses all memory of good solutions. Always verify that the Hamming distance between parent and child is small (1-2 bits).
 
-</div>
 
 ### 1. Mutation Rate Too High
 
@@ -819,7 +821,6 @@ child1, child2 = uniform_crossover(p1, p2, crossover_prob=0.8)
 
 <strong>Warning:</strong> Single-point crossover introduces positional bias -- features near each other in the chromosome tend to stay together. For feature selection, features have no natural ordering, so this bias is harmful. Use uniform crossover as the default.
 
-</div>
 
 ### 3. Wrong Crossover for Problem Structure
 
@@ -859,7 +860,6 @@ def good_mutation(individual, min_features=1):
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Prerequisites
 - Encoding strategies (binary, integer)

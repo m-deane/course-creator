@@ -133,6 +133,7 @@ Imagine you're a new portfolio manager (policy $\pi_1$) and you want to prove yo
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -226,6 +227,7 @@ class OfflineEvaluator:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -348,8 +350,6 @@ If new policy is very different from old policy, replay method discards most dat
        return total / len(data)
    ```
 
-</div>
-</div>
    Fix it to correctly implement IPS.
 
 

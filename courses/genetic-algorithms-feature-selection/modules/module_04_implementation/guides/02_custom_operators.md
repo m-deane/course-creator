@@ -159,6 +159,7 @@ Child:    [0, 1, 0, 1, 1]  ✓ (LA, income, age)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -745,7 +746,6 @@ print(f"  Fitness-only: {div_fitness:.2f}")
 
 <strong>Key Takeaway:</strong> Custom operators that respect feature group structure (e.g., keeping all one-hot encoded columns together) converge 2-5x faster than standard operators. The investment in operator design pays off quickly for domain-specific problems.
 
-</div>
 
 ## Practice Problems
 

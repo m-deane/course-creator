@@ -163,6 +163,7 @@ Then averaged across entities
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -203,6 +204,7 @@ print(results_twfe)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -301,8 +303,6 @@ results = model.fit()
 ```
 
 
-</div>
-</div>
 
 ### 2. Misinterpreting R²
 

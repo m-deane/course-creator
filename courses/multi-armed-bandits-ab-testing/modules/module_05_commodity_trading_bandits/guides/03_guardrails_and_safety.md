@@ -104,6 +104,7 @@ Guardrails force the bandit to:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def apply_position_limits(weights, max_weight=0.40):
@@ -133,6 +134,7 @@ def apply_position_limits(weights, max_weight=0.40):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -167,6 +169,7 @@ safe_weights = apply_position_limits(weights, max_weight=0.40)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def apply_minimum_allocation(weights, min_weight=0.05):
@@ -183,8 +186,6 @@ def apply_minimum_allocation(weights, min_weight=0.05):
     return weights / weights.sum()
 ```
 
-</div>
-</div>
 
 **Typical values:**
 - Conservative: 10% min per arm (forces near-equal weight)
@@ -667,7 +668,6 @@ Guardrails should be tight by default, but can be loosened in specific scenarios
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ### Builds On

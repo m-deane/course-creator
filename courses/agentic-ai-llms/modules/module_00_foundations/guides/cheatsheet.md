@@ -23,6 +23,7 @@
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 import anthropic
@@ -84,6 +85,7 @@ with client.messages.stream(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">agent.py</span>
+</div>
 
 ```python
 
@@ -121,8 +123,6 @@ if token_count > max_context:
     # Truncate or summarize
 ```
 
-</div>
-</div>
 
 - **Output token limits** - Set `max_tokens` explicitly; models won't complete responses without it
 

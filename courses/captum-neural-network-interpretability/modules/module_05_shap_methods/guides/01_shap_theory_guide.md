@@ -172,6 +172,7 @@ This marginalizes over the distribution of missing features, matching the theore
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -266,7 +267,6 @@ This unification is one of SHAP's major theoretical contributions.
 
 2. Given a real-world scenario involving shap theory: shapley values and kernelshap, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

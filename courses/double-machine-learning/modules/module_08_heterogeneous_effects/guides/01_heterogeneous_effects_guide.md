@@ -52,6 +52,7 @@ Commodity example: heterogeneous effects of inventory surprises on commodity fut
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -97,6 +98,7 @@ print(f"  Overall ATE: {np.mean(tau):.2f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -131,6 +133,7 @@ Best Linear Projection (BLP) tests whether CATE varies with observable character
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -162,6 +165,7 @@ Group Average Treatment Effects (GATES) sorts observations by estimated CATE and
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -195,7 +199,6 @@ GATES provides a simple visual test: if the group averages are flat, there is no
 
 <strong>Warning:</strong> CATE estimation requires large samples. With small samples, the CATE function overfits and the BLP/GATES tests are underpowered. A sample of 5,000+ is a reasonable starting point for reliable CATE estimation.
 
-</div>
 
 ## How to Visualise Treatment Effect Heterogeneity
 
@@ -235,8 +238,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -244,7 +245,6 @@ plt.show()
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - Module 05: PLR for average effects

@@ -282,6 +282,7 @@ LASSO says: "Include all variables, but penalize complexity."
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">highdimensionalregression.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -545,6 +546,7 @@ class HighDimensionalRegression:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -625,6 +627,7 @@ print("=" * 60)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -701,6 +704,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -753,8 +757,6 @@ model.fit(X_train, y_train)
 score = model.score(X_test, y_test)  # Honest estimate
 ```
 
-</div>
-</div>
 
 ### 4. Interpreting Selected Variables as "Causal"
 
@@ -838,7 +840,6 @@ score = model.score(X_test, y_test)  # Honest estimate
 
 **Insight:** Understanding high-dimensional regression is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## 11. Further Reading
 
@@ -888,7 +889,6 @@ score = model.score(X_test, y_test)  # Honest estimate
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

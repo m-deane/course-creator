@@ -108,6 +108,7 @@ $$P(q_{t+1}, q_{t+2}, ... | q_t) = P(q_{t+1} | q_t) \cdot P(q_{t+2} | q_{t+1}) \
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">regimeinference.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -245,6 +246,7 @@ print(f"  P(Bull | -return) = {regime_model.posterior_bull_given_negative():.2%}
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">discreteprobdist.py</span>
+</div>
 
 ```python
 class DiscreteProbDist:
@@ -310,6 +312,7 @@ print(f"  Sample sequence: {samples}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">gaussiandistribution.py</span>
+</div>
 
 ```python
 from scipy import stats
@@ -399,6 +402,7 @@ print(f"P(return > 0 | Bear) = {1 - bear_returns.cdf(0):.2%}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -415,8 +419,6 @@ print(f"Direct product: {np.prod(probs)}")
 print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 ```
 
-</div>
-</div>
 
 ## Connections
 
@@ -502,7 +504,6 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 
 **Insight:** Understanding probability review for hidden markov models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -559,7 +560,6 @@ print(f"Log-space product: {np.exp(np.sum(np.log(probs)))}")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

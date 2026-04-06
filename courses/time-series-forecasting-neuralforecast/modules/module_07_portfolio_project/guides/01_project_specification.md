@@ -169,6 +169,7 @@ Run `.explain()` on your trained model and report:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 explanations = nf.models[0].explain(df=df_test, level=90)
@@ -264,7 +265,6 @@ The following outline shows what a complete project looks like for the French Ba
 
 <strong>Insight:</strong> The following outline shows what a complete project looks like for the French Bakery dataset with an inventory stocking question.
 
-</div>
 
 
 ```

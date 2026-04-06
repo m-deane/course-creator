@@ -83,6 +83,7 @@ Consider nowcasting Q1 2024 GDP on March 15, 2024:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">vintagedatamanager.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -243,6 +244,7 @@ GDP             Quarterly    Q4 2023
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">raggededgedataset.py</span>
+</div>
 
 ```python
 class RaggedEdgeDataset:
@@ -394,6 +396,7 @@ $$\text{RMSFE}_j = \sqrt{\frac{1}{T} \sum_{t=1}^{T} \left(Y_t - \hat{Y}_{t|t+j}\
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">realtimebacktest.py</span>
+</div>
 
 ```python
 class RealTimeBacktest:
@@ -633,6 +636,7 @@ else:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">nowcasttracker.py</span>
+</div>
 
 ```python
 class NowcastTracker:
@@ -875,7 +879,6 @@ The next module explores Factor-Augmented models (FAR, FAVAR), which use extract
 
 **Insight:** Understanding nowcasting practice is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Appendix: Code Integration Example
 
@@ -952,8 +955,6 @@ plt.savefig('backtest_results.png', dpi=150)
 print("\nBacktest results saved to backtest_results.png")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -967,7 +968,6 @@ print("\nBacktest results saved to backtest_results.png")
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -164,6 +164,7 @@ This allows winter peaks to change magnitude year-to-year.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -212,6 +213,7 @@ with pm.Model() as crude_model:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as gas_model:
@@ -252,6 +254,7 @@ with pm.Model() as gas_model:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as corn_model:
@@ -299,6 +302,7 @@ Model price as function of time *and* fundamentals (inventory, production).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with pm.Model() as covariate_model:
@@ -335,6 +339,7 @@ with pm.Model() as covariate_model:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -417,6 +422,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -444,6 +450,7 @@ print(f"Interpretation: Trend changes over ~{ell_trend_post.mean():.0f} week hor
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 with model:
@@ -476,6 +483,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -494,7 +502,6 @@ plt.show()
 ```
 
 </div>
-</div>
 
 **Patterns:**
 - Block diagonal: Independent segments (regime change?)
@@ -510,7 +517,6 @@ plt.show()
 
 <strong>Insight:</strong> Using SE kernel for volatile commodities smooths over real shocks.
 
-</div>
 
 
 Using SE kernel for volatile commodities smooths over real shocks.
@@ -535,8 +541,6 @@ period = pm.Gamma('period', alpha=20, beta=20)  # Prior around 1 year
 cov_seasonal = sigma**2 * pm.gp.cov.Periodic(1, period=period, ls=ell)
 ```
 
-</div>
-</div>
 
 ---
 
@@ -557,8 +561,6 @@ loo_complex = az.loo(trace_complex)
 print(az.compare({'Simple': loo_simple, 'Complex': loo_complex}))
 ```
 
-</div>
-</div>
 
 ---
 
@@ -600,7 +602,6 @@ Design a kernel for electricity prices with:
 
 <strong>Key Point:</strong> Design a kernel for electricity prices with:
 
-</div>
 
 
 Write the kernel as a sum/product of base kernels.
@@ -634,7 +635,6 @@ You want to forecast copper prices using time + inventory + Chinese PMI. What ke
 
 2. Given a real-world scenario involving kernel design for commodity time series, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

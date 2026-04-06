@@ -291,6 +291,7 @@ $$\tilde{S} = S_0 + \sum_{t=p+1}^T (F_t - \Phi F_{t-1})(F_t - \Phi F_{t-1})'$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">bayesiandfm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -731,7 +732,6 @@ if __name__ == '__main__':
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

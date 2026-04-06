@@ -122,6 +122,7 @@ Bayesian model learns:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -276,6 +277,7 @@ fundamentals.summary()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def fit_fundamental_model(prices, fundamentals):
@@ -377,6 +379,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def fit_nonlinear_fundamental_model(prices, fundamentals):
@@ -472,6 +475,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_variable_importance(trace, X, var_names):
@@ -520,8 +524,6 @@ for i, idx in enumerate(sorted_idx):
     print(f"{i+1}. {names[idx]}: {importance[idx]:.3f}")
 ```
 
-</div>
-</div>
 
 ## Common Pitfalls
 
@@ -616,7 +618,6 @@ for i, idx in enumerate(sorted_idx):
 
 2. Given a real-world scenario involving fundamental variables in commodity forecasting, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -643,7 +644,6 @@ for i, idx in enumerate(sorted_idx):
 
 <strong>Key Concept Summary:</strong> Fundamental variables are economic, physical, and market factors that drive commodity prices through supply and demand mechanisms.
 
-</div>
 
 ---
 

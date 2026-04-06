@@ -131,6 +131,7 @@ The quality of TCAV results depends heavily on the concept dataset.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -187,6 +188,7 @@ scores = tcav.interpret(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -225,6 +227,7 @@ Running TCAV on multiple layers reveals at which depth the concept is encoded:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 tcav = TCAV(
@@ -235,9 +238,7 @@ tcav = TCAV(
 )
 ```
 
-</div>
 
-</div>
 
 Typical findings:
 - **Early layers** (layer1, layer2): Encode low-level concepts (edges, colors, textures)
@@ -293,7 +294,6 @@ TCAV and attribution methods are **complementary**:
 
 2. Given a real-world scenario involving tcav: testing with concept activation vectors, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

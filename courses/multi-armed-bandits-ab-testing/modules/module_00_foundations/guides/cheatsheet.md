@@ -239,6 +239,7 @@ START: Do you need to choose between options?
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.stats import norm
@@ -266,6 +267,7 @@ print(f"Need {n} per variant, {2*n} total")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def cumulative_regret(arm_means, choices):
@@ -291,6 +293,7 @@ print(f"Total regret: {regret[-1]:.3f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def epsilon_greedy(Q, epsilon=0.1):
@@ -306,8 +309,6 @@ arm = epsilon_greedy(Q, epsilon=0.1)
 print(f"Chose arm {arm}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -317,7 +318,6 @@ print(f"Chose arm {arm}")
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 **Textbooks:**

@@ -42,6 +42,7 @@ The pipeline below is designed for commodity market causal analysis — estimati
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -275,7 +276,6 @@ This pipeline class encapsulates the full DML workflow. Each method handles one 
 
 <strong>How this connects to the rest of the course:</strong>
 
-</div>
 
 **Builds on:**
 - All prior modules (00-08)

@@ -105,6 +105,7 @@ For commodity forecasting:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -367,6 +368,7 @@ plt.show()
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compare_forecast_performance(y_true, X_test, bma):
@@ -443,6 +445,7 @@ print(f"  BMA Coverage: {results['coverage']:.2%}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def pseudo_bma_stacking(traces, y_holdout):
@@ -527,7 +530,6 @@ for i, name in enumerate(bma.model_names):
 
 <strong>Key Point:</strong> **1. Misspecified Prior Model Probabilities**
 
-</div>
 
 
 **2. Overlapping Model Space**
@@ -623,7 +625,6 @@ for i, name in enumerate(bma.model_names):
 
 2. Given a real-world scenario involving bayesian model averaging for commodity forecasting, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -652,7 +653,6 @@ for i, name in enumerate(bma.model_names):
 
 <strong>Key Concept Summary:</strong> Bayesian Model Averaging (BMA) combines predictions from multiple models weighted by their posterior model probabilities.
 
-</div>
 
 ---
 

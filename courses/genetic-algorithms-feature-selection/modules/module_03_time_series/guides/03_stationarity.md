@@ -135,6 +135,7 @@ Test:                                            [first test]─────
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">__str__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -354,6 +355,7 @@ def test_stationarity_multiple_series(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">stationarity_transforms.py</span>
+</div>
 
 ```python
 def make_stationary(
@@ -595,6 +597,7 @@ def auto_make_stationary(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">stationary_fitness.py</span>
+</div>
 
 ```python
 def stationary_feature_selection_fitness(
@@ -869,7 +872,6 @@ if __name__ == "__main__":
 
 <strong>Danger:</strong> Regression on non-stationary data produces spurious correlations. Two unrelated random walks will show a correlation of 0.5-0.9 purely by chance. If your GA selects non-stationary features, you are likely finding artifacts, not real predictive relationships.
 
-</div>
 
 ### 1. Ignoring Non-Stationarity
 
@@ -901,7 +903,6 @@ X_stat, info = auto_make_stationary(X)
 
 <strong>Warning:</strong> Over-differencing a stationary series introduces artificial negative autocorrelation at lag 1. Always test stationarity before differencing -- if the ADF test already rejects the unit root null, do not difference.
 
-</div>
 
 ### 3. Mixing Stationary and Non-Stationary Features
 
@@ -937,7 +938,6 @@ def rolling_stationarity_test(series, window=100):
 
 ℹ️ **How this connects to the rest of the course:**
 
-</div>
 
 ### Prerequisites
 - Time series basics

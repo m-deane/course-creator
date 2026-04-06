@@ -32,6 +32,7 @@ For multiple instruments, use the **Angrist-Pischke** (AP) F-statistic for each 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -69,6 +70,7 @@ for var in ['college_nearby', 'mother_educ']:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -100,6 +102,7 @@ ar_ci = KClass(k=1).fit_regularized(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -158,6 +161,7 @@ With two instruments and one endogenous variable (overidentified), test whether 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 
@@ -199,6 +203,7 @@ where $f(t)$ allows different pre-period trends for the treated group.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import statsmodels.formula.api as smf
@@ -265,8 +270,6 @@ print(f"  Reduced form jump: {jump_reduced_form:.3f}")
 print(f"  First stage jump: {jump_first_stage:.3f}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -310,8 +313,6 @@ tau_rddid = model_rddid.params['above_cutoff:post']
 print(f"RD-DiD estimate: {tau_rddid:.3f}")
 ```
 
-</div>
-</div>
 
 ---
 
@@ -377,7 +378,6 @@ graph TD
 <strong>Key Concept:</strong> **Previous:** [01 — IV Fundamentals](01_iv_fundamentals_guide.md)
 **Next:** [Module 06 Notebooks](../notebooks/)
 
-</div>
 
 
 ## Resources

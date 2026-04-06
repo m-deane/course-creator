@@ -53,6 +53,7 @@ The most market-moving energy report in the world.
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pandas as pd
@@ -134,6 +135,7 @@ World Agricultural Supply and Demand Estimates - the most important agricultural
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import requests
@@ -239,6 +241,7 @@ def get_usda_nass(commodity, year, api_key):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import yfinance as yf
@@ -265,6 +268,7 @@ zs = yf.download('ZS=F', start='2020-01-01')  # Soybeans
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from fredapi import Fred
@@ -280,7 +284,6 @@ dxy = fred.get_series('DTWEXBGS')  # Dollar index
 fedfunds = fred.get_series('FEDFUNDS')  # Fed funds rate
 ```
 
-</div>
 </div>
 
 ---
@@ -324,8 +327,6 @@ def get_available_data(date, release_schedule):
     pass
 ```
 
-</div>
-</div>
 
 ---
 
@@ -380,7 +381,6 @@ data/
 
 2. Given a real-world scenario involving commodity data sources guide, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 

@@ -106,6 +106,7 @@ Even "long context" models have finite windows. You cannot fit entire databases 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">fragile_approach.py</span>
+</div>
 
 ```python
 
@@ -129,6 +130,7 @@ print(response.content[0].text)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">robust_system.py</span>
+</div>
 
 ```python
 
@@ -206,7 +208,6 @@ You're not building a model. You're building a system that:
 
 <strong>Warning:</strong> "It seems to work in my tests..." — Anecdotal testing misses edge cases, regressions, and distribution shift. You need systematic evaluation.
 
-</div>
 
 ### Pitfall 3: Underestimating Memory
 
@@ -214,7 +215,6 @@ You're not building a model. You're building a system that:
 
 <strong>Warning:</strong> "I'll just use a long context window..." — Long context is expensive and doesn't scale. You need hierarchical memory with intelligent retrieval.
 
-</div>
 
 ## Practice Questions
 

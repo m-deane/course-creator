@@ -127,6 +127,7 @@ For commodity price models:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -337,6 +338,7 @@ print(az.summary(trace, hdi_prob=0.95))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def diagnose_convergence_issues(trace):
@@ -444,6 +446,7 @@ for rec in issues['recommendations']:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def sample_until_converged(model, max_attempts=3, initial_draws=1000):
@@ -517,7 +520,6 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 
 <strong>Key Point:</strong> **1. Ignoring R-hat for Individual Parameters**
 
-</div>
 
 
 **2. Accepting Low ESS**
@@ -614,7 +616,6 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 
 2. Given a real-world scenario involving convergence diagnostics for mcmc, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -641,7 +642,6 @@ trace = sample_until_converged(difficult_model, max_attempts=3, initial_draws=50
 
 <strong>Key Concept Summary:</strong> Convergence diagnostics assess whether MCMC chains have reached their stationary distribution (the true posterior).
 
-</div>
 
 ---
 

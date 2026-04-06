@@ -204,6 +204,7 @@ $$\hat{r} = \arg\min_k IC_p(k)$$
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">simulate_approximate_factor_model.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -286,6 +287,7 @@ print(idio_corr[:5, :5].round(3))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">analyze_eigenvalue_spectrum.py</span>
+</div>
 
 ```python
 def analyze_eigenvalue_spectrum(X, true_r=None):
@@ -359,6 +361,7 @@ analyze_eigenvalue_spectrum(X, true_r=r)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">bai_ng_ic.py</span>
+</div>
 
 ```python
 def bai_ng_ic(X, k_max=10):
@@ -471,6 +474,7 @@ ic_results = bai_ng_ic(X, k_max=10)
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">check_weak_dependence.py</span>
+</div>
 
 ```python
 def check_weak_dependence(X, threshold=0.3):
@@ -553,8 +557,6 @@ def check_weak_dependence(X, threshold=0.3):
 diagnostics = check_weak_dependence(X, threshold=0.3)
 ```
 
-</div>
-</div>
 
 ---
 
@@ -653,7 +655,6 @@ diagnostics = check_weak_dependence(X, threshold=0.3)
 
 **Insight:** Understanding approximate factor models and large-n theory is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Further Reading
 
@@ -705,7 +706,6 @@ diagnostics = check_weak_dependence(X, threshold=0.3)
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

@@ -114,6 +114,7 @@ where $h$ is the number of missing months at the "ragged edge". This re-weights 
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def midas_nowcast_ragged(alpha, beta, theta1, theta2, X_current, h_missing, K):
@@ -216,7 +217,6 @@ For this course, we use the current final vintage (as downloaded from FRED) and 
 
 **Danger:** Never use future information when constructing the high-frequency regressor matrix. In a real-time nowcasting context, you only have data up to the current date -- using the full quarter of monthly data when nowcasting mid-quarter is a look-ahead bias that invalidates your results.
 
-</div>
 
 
 - **Builds on:** Module 01 (MIDAS fundamentals), Module 02 (estimation and inference)

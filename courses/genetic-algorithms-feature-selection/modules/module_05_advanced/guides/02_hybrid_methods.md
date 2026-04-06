@@ -203,6 +203,7 @@ Benefit: Selection pressure toward "improvable" genotypes, not just locally opti
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">__init__.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -646,7 +647,6 @@ class HybridGA(MemeticAlgorithm, GAGreedyHybrid):
 
 <strong>Key Takeaway:</strong> Memetic algorithms (GA + local search) are the practical gold standard for feature selection. The GA finds promising regions, local search polishes each candidate to its local optimum. This combination typically finds solutions in 2-5x fewer evaluations than either method alone.
 
-</div>
 
 ## Practice Problems
 

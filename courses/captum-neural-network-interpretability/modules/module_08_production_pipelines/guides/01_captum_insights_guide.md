@@ -49,6 +49,7 @@ Captum Insights requires Flask and additional dependencies:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.sh</span>
+</div>
 
 ```bash
 pip install captum[insights]
@@ -72,6 +73,7 @@ The main class is `AttributionVisualizer`, which wraps your model and attributio
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.insights import AttributionVisualizer, Batch
@@ -100,6 +102,7 @@ visualizer = AttributionVisualizer(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -159,6 +162,7 @@ Captum Insights expects an iterable of `Batch` objects:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.insights import Batch
@@ -190,6 +194,7 @@ For a quick demo with synthetic images:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -223,6 +228,7 @@ def synthetic_image_dataset(n_batches=10, n_classes=10):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 visualizer = AttributionVisualizer(
@@ -240,7 +246,6 @@ visualizer.serve(debug=False, port=5001)
 
 </div>
 
-</div>
 
 Navigate to `http://localhost:5001` in your browser to access the Insights dashboard.
 
@@ -260,9 +265,7 @@ widget = CaptumInsightsWidget(visualizer)
 widget.render()
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -320,9 +323,7 @@ text_visualizer = AttributionVisualizer(
 )
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -358,7 +359,6 @@ Captum Insights is designed for local development and exploration, not productio
 
 2. Given a real-world scenario involving captum insights: interactive web-based visualization, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

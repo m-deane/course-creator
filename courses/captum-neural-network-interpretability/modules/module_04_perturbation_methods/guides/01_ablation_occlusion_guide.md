@@ -75,6 +75,7 @@ For a 224×224 image with window size 15×15 and stride 8: approximately $28 \ti
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import Occlusion
@@ -113,6 +114,7 @@ attributions = occ.attribute(
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -169,6 +171,7 @@ Feature Ablation is the most general perturbation method in Captum:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from captum.attr import FeatureAblation
@@ -216,6 +219,7 @@ For images, superpixel segmentation provides semantically meaningful feature gro
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from skimage.segmentation import slic
@@ -267,6 +271,7 @@ For tabular models, Feature Ablation is the standard perturbation attribution me
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -304,9 +309,7 @@ plt.barh([feature_names[i] for i in sorted_idx], importances[sorted_idx])
 plt.title('Feature Ablation Importances — Wine Quality Prediction')
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -387,9 +390,7 @@ attr_meta = fa.attribute(
 )
 ```
 
-</div>
 
-</div>
 
 ---
 
@@ -406,7 +407,6 @@ attr_meta = fa.attribute(
 
 2. Given a real-world scenario involving guide 01: occlusion and feature ablation, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Summary
 

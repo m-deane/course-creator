@@ -99,6 +99,7 @@ Recent sentiment matters more:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">timeweightedsentiment.py</span>
+</div>
 
 ```python
 class TimeWeightedSentiment:
@@ -154,6 +155,7 @@ print(f"Unweighted sentiment: {result['unweighted_sentiment']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sourceweightedsentiment.py</span>
+</div>
 
 ```python
 class SourceWeightedSentiment:
@@ -211,6 +213,7 @@ print(f"Source-weighted sentiment: {result['weighted_sentiment']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">commoditysentimentindex.py</span>
+</div>
 
 ```python
 class CommoditySentimentIndex:
@@ -304,6 +307,7 @@ print(f"\nComposite Index: {index_results['composite_index']:.4f}")
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">sentimentregimedetector.py</span>
+</div>
 
 ```python
 class SentimentRegimeDetector:
@@ -440,14 +444,11 @@ def plot_sentiment_dashboard(sentiment_df, commodity, lookback=30):
 plot_sentiment_dashboard(multi_df, 'oil')
 ```
 
-</div>
-</div>
 
 <div class="callout-insight">
 
 **Insight:** Understanding aggregating sentiment signals for commodities is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Key Takeaways
 
@@ -475,7 +476,6 @@ plot_sentiment_dashboard(multi_df, 'oil')
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

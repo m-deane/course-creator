@@ -93,6 +93,7 @@ VI trades accuracy for speed. How much accuracy? Depends on:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import pymc as pm
@@ -185,6 +186,7 @@ print(az.summary(trace_mcmc))
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 from scipy.optimize import minimize
@@ -291,6 +293,7 @@ print(f"\nTrue values: alpha={true_alpha}, beta={true_beta}, log_sigma={np.log(t
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 import torch
@@ -427,7 +430,6 @@ with torch.no_grad():
 ```
 
 </div>
-</div>
 
 ## Common Pitfalls
 
@@ -529,7 +531,6 @@ with torch.no_grad():
 
 2. Given a real-world scenario involving variational inference for bayesian models, what would be your first three steps to apply the techniques from this guide?
 
-</div>
 
 ## Further Reading
 
@@ -558,7 +559,6 @@ with torch.no_grad():
 
 <strong>Key Concept Summary:</strong> Variational Inference (VI) approximates intractable posterior distributions by transforming Bayesian inference into an optimization problem.
 
-</div>
 
 ---
 

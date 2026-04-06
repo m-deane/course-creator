@@ -137,6 +137,7 @@ Note the third row sums factors (flow aggregation).
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">mixedfrequencydfm.py</span>
+</div>
 
 ```python
 import numpy as np
@@ -418,6 +419,7 @@ Aggregation constraint $\Lambda^{(Q)} = C \Lambda^{(H)}$ can be:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">em_algorithm_mixed_freq.py</span>
+</div>
 
 ```python
 def em_algorithm_mixed_freq(data_monthly, data_quarterly, quarterly_periods,
@@ -499,6 +501,7 @@ The Kalman filter automatically weights new information based on its signal-to-n
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">nowcast_with_ragged_edge.py</span>
+</div>
 
 ```python
 def nowcast_with_ragged_edge(model, historical_monthly, historical_quarterly,
@@ -584,7 +587,6 @@ for n_months in [1, 2, 3]:
 ```
 
 </div>
-</div>
 
 ---
 
@@ -666,7 +668,6 @@ for n_months in [1, 2, 3]:
 
 **Insight:** Understanding state-space mixed-frequency dynamic factor models is essential for building robust models. The concepts here connect directly to the implementation patterns in the companion notebook.
 
-</div>
 
 ## Summary
 
@@ -691,7 +692,6 @@ The final guide covers nowcasting practice, including ragged-edge evaluation, re
 
 **Info:** These questions test conceptual understanding. Try answering them in your own words before checking the companion slides or notebook.
 
-</div>
 
 ---
 

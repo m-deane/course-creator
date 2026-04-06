@@ -168,6 +168,7 @@ The contextual bandit is the same idea, but:
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_realized_volatility(returns, window=20):
@@ -202,6 +203,7 @@ def compute_realized_volatility(returns, window=20):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_term_structure_slope(front_month, back_month):
@@ -236,6 +238,7 @@ def compute_term_structure_slope(front_month, back_month):
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 <span class="filename">example.py</span>
+</div>
 
 ```python
 def compute_trend_strength(prices, short_window=20, long_window=50):
@@ -252,8 +255,6 @@ def compute_trend_strength(prices, short_window=20, long_window=50):
     return (fast_ma - slow_ma) / slow_ma
 ```
 
-</div>
-</div>
 
 **Regime classification:**
 - Strong uptrend: > +10%
@@ -661,7 +662,6 @@ See **Hidden Markov Models course** in this repo for full HMM implementation.
 
 **Danger:** Never deploy a bandit system without a kill switch and maximum allocation limits. An unconstrained bandit can allocate 100% of traffic/capital to a single arm, which creates catastrophic risk if the reward signal is noisy or delayed.
 
-</div>
 
 
 ### Builds On

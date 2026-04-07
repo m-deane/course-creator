@@ -42,10 +42,10 @@ The following implementation builds on the approach above:
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DATA["Real Dataset\n(your choice)"] --> EDA["EDA\n& Preprocessing"]
-    EDA --> MODEL["Train NHITS or XLinear\nwith MQLoss"]
+    EDA --> MODEL["Train NHITS or DLinear\nwith MQLoss"]
     MODEL --> PATHS["Generate Sample Paths\n.simulate()"]
     PATHS --> DECISION["Answer Business\nQuestion numerically"]
-    MODEL --> EXPLAIN[".explain()\nAttribution Report"]
+    MODEL --> EXPLAIN["Captum Attribution\nReport"]
     DECISION --> SUMMARY["Stakeholder Summary\nwith Visualizations"]
     EXPLAIN --> SUMMARY
 ```
@@ -84,7 +84,7 @@ You may bring your own dataset if it meets the requirements above.
 
 ### Requirement 2: Train a Neural Model with Probabilistic Output
 
-Train either NHITS or XLinear using `MQLoss`. Your trained model must:
+Train either NHITS or DLinear using `MQLoss`. Your trained model must:
 - Achieve lower CRPS than a naive seasonal baseline
 - Be calibrated: 80% intervals should cover actuals 80% of the time (±5%)
 - Produce quantile forecasts at minimum levels [10, 50, 90]
@@ -159,11 +159,12 @@ Document your answer as: `[numeric result] [units] with [confidence level]% conf
 
 ### Requirement 5: Produce an Explainability Report
 
-Run `.explain()` on your trained model and report:
+Use Captum on the underlying PyTorch model to compute feature attributions and report:
 - The top 5 input features by mean absolute attribution across all series
 - A bar chart of attributions ordered by magnitude
 - One sentence interpreting the most important feature in business terms
 
+> **Note:** NeuralForecast does not have a native `.explain()` method. Use Captum directly with the underlying PyTorch model.
 
 <div class="code-window">
 <div class="code-header">
@@ -172,9 +173,11 @@ Run `.explain()` on your trained model and report:
 </div>
 
 ```python
-explanations = nf.models[0].explain(df=df_test, level=90)
+from captum.attr import IntegratedGradients
 
-# explanations: dict with keys 'attributions', 'feature_names'
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
 ```
 
 </div>
@@ -186,7 +189,7 @@ Produce a single document (markdown or notebook) containing:
 - **One paragraph** executive summary: the business question, the answer, and the confidence level
 - **Fan chart** showing median forecast and 80% prediction band
 - **Sample paths plot** showing 50 individual trajectories
-- **Attribution bar chart** from `.explain()`
+- **Attribution bar chart** from Captum attribution analysis
 - **Calibration check**: table of actual coverage at 50%, 80%, 90% levels
 
 The summary must be readable by a non-technical stakeholder — no model internals, no loss function discussion.
@@ -251,7 +254,7 @@ The project is organized into four weekly milestones. These are checkpoints for 
 - Executive summary paragraph
 
 **Self-check:**
-- [ ] `.explain()` returns attribution dict without errors
+- [ ] Captum attribution returns results without errors
 - [ ] Top-5 features identified and plotted
 - [ ] Executive summary passes the "non-technical reader" test
 
@@ -358,8 +361,8 @@ The difference between adequate and strong is always interpretation. Numbers wit
 | Module 01 | NHITS architecture, `.fit()` / `.predict()` API |
 | Module 02 | MQLoss, calibration check, CRPS evaluation |
 | Module 03 | `.simulate()`, Monte Carlo framework, joint distribution |
-| Module 04 | `.explain()`, attribution interpretation |
-| Module 05 | XLinear as an alternative model choice |
+| Module 04 | Captum attribution, interpretation |
+| Module 05 | DLinear as an alternative model choice |
 | Module 06 | Production patterns for the final deployment |
 
 ---

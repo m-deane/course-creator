@@ -7,7 +7,7 @@ This module ties together everything from the course — point forecasting, prob
 By the end of this module you will be able to:
 
 1. Build a `ForecastPipeline` class that wraps NeuralForecast from data ingestion through business decision output
-2. Choose between NHITS and XLinear based on series length, feature richness, and interpretability requirements
+2. Choose between NHITS and DLinear based on series length, feature richness, and interpretability requirements
 3. Select a retraining strategy (sliding window vs expanding window) based on demand stability
 4. Scale forecasting across hundreds of products using the global model pattern
 5. Use `cross_validation` to make a defensible model selection decision
@@ -48,7 +48,7 @@ This module answers that question through the full pipeline: load data, train NH
 ```
 Raw Data
     → ingest()       — convert to nixtla format, validate duplicates and length
-    → train()        — fit NHITS or XLinear with MQLoss
+    → train()        — fit NHITS or DLinear with MQLoss
     → predict()      — quantile forecasts (H steps ahead)
     → simulate()     — sample paths for distributional analysis
     → explain()      — feature importances for stakeholder reporting
@@ -59,7 +59,7 @@ Raw Data
 
 **Model selection:**
 - NHITS: series length > 200, many exogenous features, non-linear seasonal patterns
-- XLinear: series length < 100, interpretability required, near-linear demand
+- DLinear: series length < 100, interpretability required, near-linear demand
 
 **Retraining strategy:**
 - Sliding window: demand shifts seasonally or with promotions (e.g., fashion, specialty items)
@@ -70,7 +70,7 @@ Raw Data
 - Module 2: Probabilistic Forecasting (MQLoss, quantile interpretation)
 - Module 3: Sample Paths (simulate API)
 - Module 4: Explainability (explain API)
-- Module 5: XLinear (model selection context)
+- Module 5: DLinear (model selection context)
 
 ## Running the Exercises
 

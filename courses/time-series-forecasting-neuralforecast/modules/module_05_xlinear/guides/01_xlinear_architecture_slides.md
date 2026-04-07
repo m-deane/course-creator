@@ -7,12 +7,12 @@ math: mathjax
 
 <!-- _class: lead -->
 
-# XLinear: State-of-the-Art Architecture
+# DLinear: State-of-the-Art Architecture
 
 ## Module 5: Multivariate Long-Horizon Forecasting
 ### Modern Time Series Forecasting with NeuralForecast
 
-<!-- Speaker notes: This deck introduces XLinear, a linear architecture that achieves transformer-competitive accuracy on multivariate long-horizon benchmarks while requiring far less compute. The key message: attention is not required for state-of-the-art forecasting accuracy. -->
+<!-- Speaker notes: This deck introduces DLinear, a linear architecture that achieves transformer-competitive accuracy on multivariate long-horizon benchmarks while requiring far less compute. The key message: attention is not required for state-of-the-art forecasting accuracy. -->
 
 ---
 
@@ -34,31 +34,31 @@ math: mathjax
 <strong>Insight:</strong> This is a key takeaway from this section that connects to the broader course themes.
 </div>
 
-<!-- Speaker notes: ETTm1 is the standard long-horizon benchmark. 7 variables = 7 correlated electrical load measurements and oil temperature. The key insight is that these variables have meaningful cross-correlations: high load drives temperature up. The question XLinear answers is how to exploit those correlations without the cost of attention. -->
+<!-- Speaker notes: ETTm1 is the standard long-horizon benchmark. 7 variables = 7 correlated electrical load measurements and oil temperature. The key insight is that these variables have meaningful cross-correlations: high load drives temperature up. The question DLinear answers is how to exploit those correlations without the cost of attention. -->
 
 ---
 
-## XLinear vs. Transformers: The Efficiency Case
+## DLinear vs. Transformers: The Efficiency Case
 
 **ETTm1 h=96 benchmark (MSE, lower is better):**
 
 | Model | MSE | Architecture |
 |---|---|---|
-| **XLinear** | **0.316** | Gated MLP |
+| **DLinear** | **0.316** | Gated MLP |
 | PatchTST | 0.329 | Patch Transformer |
 | TimeMixer | 0.338 | MLP-Mixer |
 | NHITS | 0.345 | Hierarchical MLP |
 | TSMixer | 0.351 | MLP-Mixer |
 | TiDE | 0.364 | Encoder-Decoder MLP |
 
-XLinear wins on accuracy **and** on compute — no quadratic attention required.
+DLinear wins on accuracy **and** on compute — no quadratic attention required.
 
 
 <div class="callout-key">
 <strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
 </div>
 
-<!-- Speaker notes: This table will likely surprise students who assume transformers always win. XLinear outperforms PatchTST (a strong patch-based transformer) on ETTm1 h=96 while using linear complexity in sequence length. The takeaway: the inductive biases in XLinear's gating design are better suited to multivariate structured time series than general-purpose attention. -->
+<!-- Speaker notes: This table will likely surprise students who assume transformers always win. DLinear outperforms PatchTST (a strong patch-based transformer) on ETTm1 h=96 while using linear complexity in sequence length. The takeaway: the inductive biases in DLinear's gating design are better suited to multivariate structured time series than general-purpose attention. -->
 
 ---
 
@@ -113,7 +113,7 @@ Context tokens carry no time-step information — they aggregate global sequence
 <strong>Info:</strong> This detail is useful context but not required to memorize.
 </div>
 
-<!-- Speaker notes: The global context token is the most novel element in XLinear's embedding. Unlike BERT's single [CLS] token, XLinear uses K learnable vectors initialized with small random values. These tokens are updated during the forward pass through both TGM and VGM, acting as a "summary" that each gating module can consult. This is what allows linear-time gating to approximate attention-style global aggregation. -->
+<!-- Speaker notes: The global context token is the most novel element in DLinear's embedding. Unlike BERT's single [CLS] token, DLinear uses K learnable vectors initialized with small random values. These tokens are updated during the forward pass through both TGM and VGM, acting as a "summary" that each gating module can consult. This is what allows linear-time gating to approximate attention-style global aggregation. -->
 
 <div class="flow">
 <div class="flow-step mint">Linear projection</div>
@@ -167,7 +167,7 @@ $$\mathbf{h}_{VGM} = \mathbf{G}_{var} \odot \mathbf{h}_{TGM}$$
 
 `channel_ff` = hidden size of channel MLP. Set $\geq$ `n_series` to avoid lossy compression.
 
-> XLinear treats every series as both target and exogenous input simultaneously.
+> DLinear treats every series as both target and exogenous input simultaneously.
 
 <!-- Speaker notes: VGM is the cross-variable learning component. In ETTm1, the physical relationship between load and temperature is real: high electrical load generates heat that raises oil temperature. VGM learns this association from data. Note that channel_ff=21 in the reference implementation — not 7. This is because with lags and date features, the effective channel count is larger. Always set channel_ff >= n_series. -->
 
@@ -232,7 +232,7 @@ RevIN is applied identically at training and inference — no distributional mis
 
 ---
 
-## Training XLinear: Full Code
+## Training DLinear: Full Code
 
 <div class="code-window">
 <div class="code-header">
@@ -242,12 +242,12 @@ RevIN is applied identically at training and inference — no distributional mis
 
 ```python
 from neuralforecast import NeuralForecast
-from neuralforecast.models import XLinear
+from neuralforecast.models import DLinear
 from datasetsforecast.long_horizon import LongHorizon
 
 Y_df, _, _ = LongHorizon.load(directory="data", group="ETTm1")
 
-models = [XLinear(
+models = [DLinear(
     h=96, input_size=96, n_series=7,
     hidden_size=512, temporal_ff=256, channel_ff=21,
     head_dropout=0.5, embed_dropout=0.2,
@@ -287,7 +287,7 @@ Five hyperparameters matter most: `hidden_size`, `temporal_ff`, `channel_ff`, `h
 
 ## Architecture Comparison
 
-| Feature | XLinear | NHITS | PatchTST |
+| Feature | DLinear | NHITS | PatchTST |
 |---|---|---|---|
 | Complexity | $O(L \cdot N)$ | $O(L)$ | $O(L^2/P^2)$ |
 | Multivariate | Native (VGM) | Per-series | Variant |
@@ -297,15 +297,15 @@ Five hyperparameters matter most: `hidden_size`, `temporal_ff`, `channel_ff`, `h
 | ETTm1 h=96 MSE | **0.316** | 0.345 | 0.329 |
 
 **Decision rule:**
-- Multiple correlated variables → **XLinear**
+- Multiple correlated variables → **DLinear**
 - Single series with strong seasonality → **NHITS**
 - Very long sequences, GPU-rich → **PatchTST**
 
-<!-- Speaker notes: Students often ask when to use which model. Give them this decision rule and explain it with an example: a retail demand forecasting problem with 500 SKUs and no exogenous data is a NHITS problem. A power grid forecasting problem with 20 correlated sensors is an XLinear problem. A financial time series with 10 years of daily data is a PatchTST problem if you have the GPU budget. -->
+<!-- Speaker notes: Students often ask when to use which model. Give them this decision rule and explain it with an example: a retail demand forecasting problem with 500 SKUs and no exogenous data is a NHITS problem. A power grid forecasting problem with 20 correlated sensors is an DLinear problem. A financial time series with 10 years of daily data is a PatchTST problem if you have the GPU budget. -->
 
 ---
 
-## What Makes XLinear State-of-the-Art
+## What Makes DLinear State-of-the-Art
 
 **Four design choices, each justified:**
 
@@ -318,15 +318,15 @@ Five hyperparameters matter most: `hidden_size`, `temporal_ff`, `channel_ff`, `h
 
 **The lesson:** Inductive biases that match the data structure outperform general-purpose architectures.
 
-<!-- Speaker notes: Close this deck with the key insight: XLinear wins not by being more complex, but by making better architectural choices for structured multivariate time series. Each design choice targets a specific failure mode of simpler models. Global context tokens solve the O(L^2) problem. TGM and VGM solve the "all cross-correlations equally" problem. RevIN solves the distributional shift problem. When the architecture matches the data structure, you beat general-purpose models that don't. -->
+<!-- Speaker notes: Close this deck with the key insight: DLinear wins not by being more complex, but by making better architectural choices for structured multivariate time series. Each design choice targets a specific failure mode of simpler models. Global context tokens solve the O(L^2) problem. TGM and VGM solve the "all cross-correlations equally" problem. RevIN solves the distributional shift problem. When the architecture matches the data structure, you beat general-purpose models that don't. -->
 
 ---
 
 ## What's Next
 
-**Notebook:** `01_training_xlinear.ipynb`
+**Notebook:** `01_training_dlinear.ipynb`
 - Load ETTm1 with datasetsforecast
-- Train XLinear and evaluate with utilsforecast
+- Train DLinear and evaluate with utilsforecast
 - Plot multi-variable forecasts
 
 **Guide:** `02_multivariate_forecasting.md`
@@ -335,8 +335,8 @@ Five hyperparameters matter most: `hidden_size`, `temporal_ff`, `channel_ff`, `h
 - Hyperparameter tuning workflow
 
 **Notebook:** `02_benchmarking.ipynb`
-- XLinear vs. NHITS head-to-head
+- DLinear vs. NHITS head-to-head
 - Cross-validation comparison
 - When to switch models
 
-<!-- Speaker notes: Direct students to the notebook as the immediate next step. The notebook is designed to complete in under 15 minutes and produces real benchmark numbers they can compare to the table shown in this deck. The guide on multivariate forecasting goes deeper on n_series and exogenous features, which is where XLinear really differentiates itself from univariate alternatives. -->
+<!-- Speaker notes: Direct students to the notebook as the immediate next step. The notebook is designed to complete in under 15 minutes and produces real benchmark numbers they can compare to the table shown in this deck. The guide on multivariate forecasting goes deeper on n_series and exogenous features, which is where DLinear really differentiates itself from univariate alternatives. -->

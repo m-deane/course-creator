@@ -301,7 +301,7 @@ panel_data = PanelData(panel)
 
 <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Entities: <span class="hljs-subst">{panel_data.nentity}</span>&quot;</span>)
 <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Time periods: <span class="hljs-subst">{panel_data.nobs / panel_data.nentity}</span>&quot;</span>)
-<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Balanced: <span class="hljs-subst">{panel_data.balanced}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Balanced: <span class="hljs-subst">{panel_data.dataframe.groupby(level=<span class="hljs-number">0</span>).size().nunique() == <span class="hljs-number">1</span>}</span>&quot;</span>)
 </code></pre>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-theme="course" lang="en-US" data-marpit-pagination="22" style="--paginate:true;--theme:course;" data-marpit-pagination-total="24">

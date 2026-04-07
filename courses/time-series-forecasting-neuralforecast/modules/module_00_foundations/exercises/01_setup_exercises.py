@@ -280,7 +280,7 @@ section("Exercise 7: instantiate NeuralForecast")
 
 try:
     from neuralforecast import NeuralForecast
-    from neuralforecast.models import NHITS, XLinear
+    from neuralforecast.models import NHITS, DLinear
     from neuralforecast.losses.pytorch import MAE, MQLoss
 
     # Point forecast model
@@ -305,9 +305,9 @@ try:
     )
 
     # Linear baseline
-    linear_model = XLinear(h=HORIZON, input_size=2 * HORIZON)
+    linear_model = DLinear(h=HORIZON, input_size=2 * HORIZON)
     check(
-        "XLinear instantiated",
+        "DLinear instantiated",
         hasattr(linear_model, "fit"),
     )
 

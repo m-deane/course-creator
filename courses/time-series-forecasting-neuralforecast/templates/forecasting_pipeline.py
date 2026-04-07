@@ -93,14 +93,30 @@ class ForecastingPipeline:
     def explain(self, futr_df: pd.DataFrame | None = None, method: str = "IntegratedGradients"):
         """Generate feature attributions for the forecast.
 
+        NOTE: NeuralForecast does not natively support model explainability.
+        Use Captum directly with the underlying PyTorch model for attributions.
+
         Args:
             futr_df: Future exogenous features (if model uses them).
             method: One of "IntegratedGradients", "InputXGradient", "ShapleyValueSampling".
 
         Returns:
-            Tuple of (forecasts_df, explanations_dict).
+            Captum attributions tensor.
         """
-        return self.nf.explain(futr_df=futr_df, explainer=method)
+        from captum.attr import IntegratedGradients, InputXGradient, ShapleyValueSampling
+
+        pytorch_model = self.nf.models[0]
+        methods = {
+            "IntegratedGradients": IntegratedGradients,
+            "InputXGradient": InputXGradient,
+            "ShapleyValueSampling": ShapleyValueSampling,
+        }
+        attr_class = methods.get(method, IntegratedGradients)
+        explainer = attr_class(pytorch_model)
+        raise NotImplementedError(
+            "Explainability requires preparing model-specific input tensors. "
+            "See Captum docs: https://captum.ai/"
+        )
 
     def answer_cumulative_question(
         self, paths: np.ndarray, quantile: float = 0.8

@@ -2,11 +2,13 @@
 
 ## Overview
 
-Neural forecasting models like NHITS produce accurate forecasts but provide no built-in explanation of which inputs drove each prediction. This module covers three attribution methods — Integrated Gradients, Input × Gradient, and Shapley Value Sampling — that answer the question "Why did the model forecast this value?"
+Neural forecasting models like NHITS produce accurate forecasts but provide no built-in explanation of which inputs drove each prediction. This module covers three attribution methods — Integrated Gradients, Input x Gradient, and Shapley Value Sampling — that answer the question "Why did the model forecast this value?"
+
+> **Note:** NeuralForecast does not natively support model explainability. There is no `.explain()` method in the NeuralForecast API. For interpretability, use [Captum](https://captum.ai/) with the underlying PyTorch models, or use inherently interpretable models like NHITS which provide basis function decompositions.
 
 By the end of this module, you can:
-- Call `.explain()` on any trained NeuralForecast model and parse the attribution tensors
-- Decode insample and futr_exog tensor shapes and extract lag and feature attributions
+- Use Captum to compute attributions on trained NeuralForecast models' underlying PyTorch networks
+- Interpret attribution tensors to extract lag and feature importance
 - Visualize attributions as heatmaps, waterfall plots, and bar charts
 - Validate whether a model's learned attributions match business expectations
 - Translate attribution numbers into a stakeholder-ready narrative
@@ -54,6 +56,7 @@ By the end of this module, you can:
 from neuralforecast import NeuralForecast
 from neuralforecast.models import NHITS
 from neuralforecast.losses.pytorch import MSE, MAE
+from captum.attr import IntegratedGradients
 
 models = [NHITS(
     h=28, input_size=56,
@@ -63,11 +66,11 @@ models = [NHITS(
 nf = NeuralForecast(models=models, freq="D")
 nf.fit(df=train, val_size=28)
 
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
-
-insample      = explanations["insample"]           # shape: (1, 28, 1, 1, 56, 2)
-futr_exog     = explanations["futr_exog"]          # shape: (1, 28, 1, 1, 84, 2)
-baseline_pred = explanations["baseline_predictions"]  # shape: (1, 28, 1, 1)
+# Access underlying PyTorch model for explainability
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
+# See Captum docs for full usage: https://captum.ai/
 ```
 
 ## Suggested Learning Path
@@ -80,4 +83,4 @@ baseline_pred = explanations["baseline_predictions"]  # shape: (1, 28, 1, 1)
 
 ## Next Module
 
-Module 05: XLinear Models — linear models with neural feature extraction for interpretable forecasting baselines.
+Module 05: DLinear Models — linear models with neural feature extraction for interpretable forecasting baselines.

@@ -197,7 +197,7 @@ Desktop flows run in two modes:
 
 ### 5. Business Process Flow
 
-A structured, stage-based workflow that guides users through a defined process via a UI embedded in a Dataiku or model-driven Power App. Unlike other flow types, Business Process Flows are user-facing rather than background processes.
+A structured, stage-based workflow that guides users through a defined process via a UI embedded in a Dataverse or model-driven Power App. Unlike other flow types, Business Process Flows are user-facing rather than background processes.
 
 **Example:** A multi-stage sales opportunity process with required fields at each stage (Qualify → Develop → Propose → Close).
 

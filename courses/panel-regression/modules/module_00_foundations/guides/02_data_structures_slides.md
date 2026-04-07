@@ -449,7 +449,7 @@ print(f"Entities: {panel.nentity}")
 print(f"Time periods: {panel.nobs / panel.nentity:.0f}")
 print(f"Total observations: {panel.nobs}")
 print(f"Variables: {list(panel.vars)}")
-print(f"Balanced: {panel.balanced}")
+print(f"Balanced: {panel.dataframe.groupby(level=0).size().nunique() == 1}")
 ```
 
 <!-- Speaker notes: linearmodels' PanelData wrapper automates many checks and transformations. It requires the MultiIndex to be set correctly first. -->

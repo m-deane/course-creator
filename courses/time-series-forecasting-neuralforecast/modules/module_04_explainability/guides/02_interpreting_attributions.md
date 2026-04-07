@@ -4,21 +4,30 @@
 
 ## In Brief
 
-Running `.explain()` returns an `explanations` dictionary with attribution tensors. Raw tensors are not interpretable until you know what each dimension means. This guide maps every dimension, shows how to slice the tensors into business-relevant views, and covers three visualization techniques: heatmaps, waterfall plots, and bar charts.
+<div class="callout-danger">
 
-Start by parsing the dictionary:
+<strong>Important:</strong> NeuralForecast does not natively support model explainability. There is no <code>.explain()</code> method in the NeuralForecast API. For interpretability, use <a href="https://captum.ai/">Captum</a> with the underlying PyTorch models, or use inherently interpretable models like NHITS which provide basis function decompositions.
+
+</div>
+
+Attribution methods produce tensors that assign a score to each input feature. Raw tensors are not interpretable until you know what each dimension means. This guide maps every dimension, shows how to slice the tensors into business-relevant views, and covers three visualization techniques: heatmaps, waterfall plots, and bar charts.
+
+Start by computing attributions using Captum:
 
 
-The following implementation builds on the approach above:
+The following implementation shows how to use Captum directly:
 
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+from captum.attr import IntegratedGradients
 
-# After fitting and calling .explain()
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
+# After fitting the NeuralForecast model, extract the PyTorch model
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
 
 insample      = explanations["insample"]           # past lag attributions
 futr_exog     = explanations["futr_exog"]          # exogenous feature attributions

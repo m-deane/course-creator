@@ -23,10 +23,10 @@ Build a complete forecasting pipeline. Ship something real.
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
     DATA["Real Dataset"] --> EDA["EDA"]
-    EDA --> MODEL["NHITS or XLinear\nwith MQLoss"]
+    EDA --> MODEL["NHITS or DLinear\nwith MQLoss"]
     MODEL --> PATHS[".simulate()\n200 paths"]
     PATHS --> DECISION["Business Answer\nnumeric + confidence"]
-    MODEL --> EXPLAIN[".explain()\nAttribution Report"]
+    MODEL --> EXPLAIN["Captum Attribution\nReport"]
     DECISION --> SUMMARY["Stakeholder Summary"]
     EXPLAIN --> SUMMARY
 ```
@@ -271,28 +271,23 @@ The result is a **single actionable number** the business can act on.
 
 ---
 
-## What .explain() Returns
+## Explainability with Captum
+
+> **Note:** NeuralForecast does not have a `.explain()` method. Use Captum directly.
 
 ```python
-explanations = nf.models[0].explain(df=df_test, level=90)
+from captum.attr import IntegratedGradients
 
-# explanations is a dict:
-# {
-#   'attributions': np.ndarray of shape (n_series, input_size),
-#   'feature_names': list of lag labels ['lag_1', 'lag_2', ..., 'lag_28']
-# }
-
-# Top 5 features by mean absolute attribution
-mean_attr = np.abs(explanations['attributions']).mean(axis=0)
-top5_idx = np.argsort(mean_attr)[-5:][::-1]
-for i in top5_idx:
-    print(f"  {explanations['feature_names'][i]}: {mean_attr[i]:.4f}")
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
+# See Captum docs: https://captum.ai/
 ```
 
 Turn the top feature into plain English:
 > "Last week's same-day sales (lag_7) explains 42% of forecast variance — weekly regulars drive volume."
 
-<!-- Speaker notes: The explain output is a matrix of Shapley-like attributions, one row per series, one column per input lag. The mean absolute attribution across series tells you which lags are most informative on average. The interpretation step is the one learners most often skip — push them to translate lag indices into business language. lag_7 in daily data means "one week ago today," which often maps to a recognizable business pattern like "weekly regulars." -->
+<!-- Speaker notes: NeuralForecast does not have a native .explain() method. Use Captum's IntegratedGradients on the underlying PyTorch model. The interpretation step is the one learners most often skip — push them to translate lag indices into business language. lag_7 in daily data means "one week ago today," which often maps to a recognizable business pattern like "weekly regulars." -->
 
 ---
 
@@ -303,7 +298,7 @@ Turn the top feature into plain English:
 | Executive summary paragraph | Answer + confidence, one paragraph |
 | Fan chart | Median forecast + 80% band |
 | Spaghetti plot | 50 individual sample paths |
-| Attribution bar chart | Top features from `.explain()` |
+| Attribution bar chart | Top features from Captum attribution |
 | Calibration table | Actual coverage at 50%, 80%, 90% |
 | Business answer box | The number, in large type |
 
@@ -348,8 +343,8 @@ Everything else is supporting material. If a non-technical reader cannot underst
 You have everything you need:
 - **Module 01–02**: Train neural models, evaluate with CRPS, verify calibration
 - **Module 03**: Generate sample paths, answer probability questions
-- **Module 04**: Run `.explain()`, interpret attributions
-- **Module 05**: XLinear as a fast, strong alternative model
+- **Module 04**: Run Captum attribution, interpret results
+- **Module 05**: DLinear as a fast, strong alternative model
 - **Module 06**: Production patterns for the final system
 
 The project starter notebook at `notebooks/01_project_starter.ipynb` has working skeleton code for every section.

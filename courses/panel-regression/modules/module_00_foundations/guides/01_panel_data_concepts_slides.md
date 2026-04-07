@@ -337,7 +337,7 @@ panel_data = PanelData(panel)
 
 print(f"Entities: {panel_data.nentity}")
 print(f"Time periods: {panel_data.nobs / panel_data.nentity}")
-print(f"Balanced: {panel_data.balanced}")
+print(f"Balanced: {panel_data.dataframe.groupby(level=0).size().nunique() == 1}")
 ```
 
 <!-- Speaker notes: Walk through the code step by step. Highlight the key function calls and explain what each does. -->

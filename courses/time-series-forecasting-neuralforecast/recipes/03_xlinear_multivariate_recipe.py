@@ -1,10 +1,10 @@
 """
-Recipe: Multivariate Forecasting with XLinear
+Recipe: Multivariate Forecasting with DLinear
 
-Copy-paste pattern for training XLinear on multivariate time series
+Copy-paste pattern for training DLinear on multivariate time series
 where cross-variable associations improve forecasts.
 
-XLinear architecture:
+DLinear architecture:
 1. Embedding layer with global context tokens
 2. Time-wise Gating Module (TGM) — temporal patterns
 3. Variate-wise Gating Module (VGM) — cross-variable associations
@@ -13,7 +13,7 @@ XLinear architecture:
 
 import pandas as pd
 from neuralforecast import NeuralForecast
-from neuralforecast.models import XLinear
+from neuralforecast.models import DLinear
 from utilsforecast.losses import mae, mse
 
 # ---------------------------------------------------------------------------
@@ -24,10 +24,10 @@ from utilsforecast.losses import mae, mse
 # n_series = Y_df["unique_id"].nunique()  # 7 for ETTm1
 
 # ---------------------------------------------------------------------------
-# Step 2: Train XLinear
+# Step 2: Train DLinear
 # ---------------------------------------------------------------------------
 # horizon = 96
-# models = [XLinear(
+# models = [DLinear(
 #     h=horizon,
 #     input_size=horizon,           # Match input to horizon
 #     n_series=n_series,            # Number of variables
@@ -58,7 +58,7 @@ from utilsforecast.losses import mae, mse
 # ---------------------------------------------------------------------------
 # Step 4: Evaluate
 # ---------------------------------------------------------------------------
-# mae_score = mae(preds["y"], preds["XLinear"])
-# mse_score = mse(preds["y"], preds["XLinear"])
+# mae_score = mae(preds["y"], preds["DLinear"])
+# mse_score = mse(preds["y"], preds["DLinear"])
 # print(f"MAE: {mae_score:.4f}")
 # print(f"MSE: {mse_score:.4f}")

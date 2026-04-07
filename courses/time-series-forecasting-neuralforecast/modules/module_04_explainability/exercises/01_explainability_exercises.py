@@ -2,8 +2,14 @@
 Module 04: Explainability for Neural Forecasting Models
 Self-Check Exercises
 
-These exercises verify that you can run the .explain() API, parse the
-attribution tensors, and extract meaningful insights from the results.
+IMPORTANT: NeuralForecast does not natively support model explainability.
+There is no .explain() method in the NeuralForecast API.
+For interpretability, use Captum with the underlying PyTorch models,
+or use inherently interpretable models like NHITS which provide
+basis function decompositions.
+
+These exercises are currently non-functional and need to be rewritten
+to use Captum directly.
 
 Run with: python 01_explainability_exercises.py
 

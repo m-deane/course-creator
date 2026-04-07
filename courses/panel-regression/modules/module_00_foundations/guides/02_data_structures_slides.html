@@ -416,7 +416,7 @@ panel = PanelData(panel_data)
 <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Time periods: <span class="hljs-subst">{panel.nobs / panel.nentity:<span class="hljs-number">.0</span>f}</span>&quot;</span>)
 <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Total observations: <span class="hljs-subst">{panel.nobs}</span>&quot;</span>)
 <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Variables: <span class="hljs-subst">{<span class="hljs-built_in">list</span>(panel.<span class="hljs-built_in">vars</span>)}</span>&quot;</span>)
-<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Balanced: <span class="hljs-subst">{panel.balanced}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Balanced: <span class="hljs-subst">{panel.dataframe.groupby(level=<span class="hljs-number">0</span>).size().nunique() == <span class="hljs-number">1</span>}</span>&quot;</span>)
 </code></pre>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-class="lead" data-theme="course" lang="en-US" class="lead" data-marpit-pagination="25" style="--paginate:true;--class:lead;--theme:course;" data-marpit-pagination-total="32">

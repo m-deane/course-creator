@@ -7,12 +7,12 @@ math: mathjax
 
 <!-- _class: lead -->
 
-# Multivariate Forecasting with XLinear
+# Multivariate Forecasting with DLinear
 
 ## Module 5: n_series, Exogenous Features, and Hyperparameter Tuning
 ### Modern Time Series Forecasting with NeuralForecast
 
-<!-- Speaker notes: This deck goes deeper on the multivariate aspects of XLinear. The previous deck covered architecture. This deck covers the practical questions: when does multivariate beat univariate, how does n_series work, how do you add exogenous features, and how do you tune the key hyperparameters? -->
+<!-- Speaker notes: This deck goes deeper on the multivariate aspects of DLinear. The previous deck covered architecture. This deck covers the practical questions: when does multivariate beat univariate, how does n_series work, how do you add exogenous features, and how do you tune the key hyperparameters? -->
 
 ---
 
@@ -26,13 +26,13 @@ flowchart TD
     Q1["Correlated\nco-variables exist?"]
     Q1 -->|No| UV["Univariate\nNHITS / NBEATS"]
     Q1 -->|Yes| Q2["Physical or causal\nreason for correlation?"]
-    Q2 -->|Yes| MV["Multivariate\nXLinear / TiDE"]
+    Q2 -->|Yes| MV["Multivariate\nDLinear / TiDE"]
     Q2 -->|No| Q3["Large training\ndataset?"]
     Q3 -->|Yes| MV
     Q3 -->|No| UV2["Univariate\n(avoid spurious correlation)"]
 ```
 
-**ETTm1:** Electrical load drives transformer temperature → physical reason exists → XLinear.
+**ETTm1:** Electrical load drives transformer temperature → physical reason exists → DLinear.
 
 
 <div class="callout-insight">
@@ -57,7 +57,7 @@ High electrical load (HUFL)
 
 HUFL predicts OT because of **physical causality**, not coincidence.
 
-XLinear's VGM learns to assign high gate values to load variables when forecasting OT.
+DLinear's VGM learns to assign high gate values to load variables when forecasting OT.
 
 > Multivariate wins when correlation has a mechanism, not just a statistic.
 
@@ -66,11 +66,11 @@ XLinear's VGM learns to assign high gate values to load variables when forecasti
 <strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
 </div>
 
-<!-- Speaker notes: This physical story makes the ETTm1 benchmark meaningful beyond just numbers. Students should be able to describe why HUFL -> OT is a real predictive relationship. When they see XLinear outperform NHITS on this dataset, they can attribute it specifically to the VGM learning these cross-series relationships. This is much more satisfying than "the model found a pattern in the data." -->
+<!-- Speaker notes: This physical story makes the ETTm1 benchmark meaningful beyond just numbers. Students should be able to describe why HUFL -> OT is a real predictive relationship. When they see DLinear outperform NHITS on this dataset, they can attribute it specifically to the VGM learning these cross-series relationships. This is much more satisfying than "the model found a pattern in the data." -->
 
 ---
 
-## Univariate NHITS vs. Multivariate XLinear: Code
+## Univariate NHITS vs. Multivariate DLinear: Code
 
 <div class="code-window">
 <div class="code-header">
@@ -79,13 +79,13 @@ XLinear's VGM learns to assign high gate values to load variables when forecasti
 </div>
 
 ```python
-from neuralforecast.models import NHITS, XLinear
+from neuralforecast.models import NHITS, DLinear
 
 # Univariate: NHITS trains 7 independent models
 nhits = NHITS(h=96, input_size=192, max_steps=1000)
 
-# Multivariate: XLinear trains one joint model
-xlinear = XLinear(
+# Multivariate: DLinear trains one joint model
+dlinear = DLinear(
     h=96, input_size=96, n_series=7,
     hidden_size=512, temporal_ff=256, channel_ff=21,
     head_dropout=0.5, embed_dropout=0.2,
@@ -93,7 +93,7 @@ xlinear = XLinear(
 )
 
 # Both use identical NeuralForecast API
-nf = NeuralForecast(models=[nhits, xlinear], freq="15min")
+nf = NeuralForecast(models=[nhits, dlinear], freq="15min")
 cv_df = nf.cross_validation(
     df=Y_df, val_size=11520, test_size=11520
 )
@@ -107,7 +107,7 @@ Same API. Fundamentally different architectures. The benchmark tells the story.
 <strong>Warning:</strong> This is a common source of confusion. Pay close attention to the distinction here.
 </div>
 
-<!-- Speaker notes: One of NeuralForecast's great strengths is that you can benchmark radically different architectures with identical code — just change the models list. NHITS internally loops over each unique_id and trains a separate model. XLinear receives all 7 series simultaneously and shares parameters across them. The API hides this complexity, which is why n_series is the key parameter to get right when using XLinear. -->
+<!-- Speaker notes: One of NeuralForecast's great strengths is that you can benchmark radically different architectures with identical code — just change the models list. NHITS internally loops over each unique_id and trains a separate model. DLinear receives all 7 series simultaneously and shares parameters across them. The API hides this complexity, which is why n_series is the key parameter to get right when using DLinear. -->
 
 ---
 
@@ -187,7 +187,7 @@ stat_exog_list=["transformer_capacity"]  # one value per series
 
 All exogenous features flow through the **Embedding Layer** and are gated by **VGM** — uninformative features receive near-zero gate values automatically.
 
-<!-- Speaker notes: The three types correspond to different information availability patterns. Future-known features (calendar, scheduled events) are the most common and most valuable — the model can see them for the full forecast horizon. Historical exogenous are useful for lag-style features. Static exogenous are useful for multi-site or multi-product settings where each series has metadata. The key point is that XLinear does not require special handling — all feature types enter through the same embedding layer, and VGM learns their relative importance. -->
+<!-- Speaker notes: The three types correspond to different information availability patterns. Future-known features (calendar, scheduled events) are the most common and most valuable — the model can see them for the full forecast horizon. Historical exogenous are useful for lag-style features. Static exogenous are useful for multi-site or multi-product settings where each series has metadata. The key point is that DLinear does not require special handling — all feature types enter through the same embedding layer, and VGM learns their relative importance. -->
 
 ---
 
@@ -205,7 +205,7 @@ Y_df["hour_cos"] = np.cos(2 * np.pi * Y_df["ds"].dt.hour / 24)
 Y_df["dow_sin"]  = np.sin(2 * np.pi * Y_df["ds"].dt.dayofweek / 7)
 Y_df["dow_cos"]  = np.cos(2 * np.pi * Y_df["ds"].dt.dayofweek / 7)
 
-model = XLinear(
+model = DLinear(
     h=96, input_size=96, n_series=7,
     futr_exog_list=["hour_sin", "hour_cos", "dow_sin", "dow_cos"],
     hidden_size=512, temporal_ff=256, channel_ff=21,
@@ -238,7 +238,7 @@ model = XLinear(
 
 **Time budget:** Each step takes 1–2 training runs. Steps 4–5 typically add < 0.5% improvement.
 
-<!-- Speaker notes: This priority ordering is based on empirical results across XLinear benchmarks. hidden_size is the biggest lever — it controls the capacity of every component simultaneously. head_dropout is the primary regularization control — if val loss diverges, this is the first thing to increase. input_size is dataset-specific — longer context helps for datasets with weekly or monthly seasonality. temporal_ff and channel_ff are fine-tuning parameters; the defaults are well-chosen for ETTm1-scale data. -->
+<!-- Speaker notes: This priority ordering is based on empirical results across DLinear benchmarks. hidden_size is the biggest lever — it controls the capacity of every component simultaneously. head_dropout is the primary regularization control — if val loss diverges, this is the first thing to increase. input_size is dataset-specific — longer context helps for datasets with weekly or monthly seasonality. temporal_ff and channel_ff are fine-tuning parameters; the defaults are well-chosen for ETTm1-scale data. -->
 
 ---
 
@@ -250,7 +250,7 @@ from utilsforecast.evaluation import evaluate
 
 results = {}
 for hs in [256, 512, 1024]:
-    model = XLinear(
+    model = DLinear(
         h=96, input_size=96, n_series=7,
         hidden_size=hs,        # vary this
         temporal_ff=hs // 2,   # scale proportionally
@@ -261,8 +261,8 @@ for hs in [256, 512, 1024]:
     nf = NeuralForecast(models=[model], freq="15min")
     cv = nf.cross_validation(df=Y_df, val_size=11520, test_size=11520)
     test_df = cv[cv["cutoff"] == cv["cutoff"].max()]
-    eval_df = evaluate(test_df, metrics=[mae, mse], models=["XLinear"])
-    results[hs] = eval_df["XLinear"].mean()
+    eval_df = evaluate(test_df, metrics=[mae, mse], models=["DLinear"])
+    results[hs] = eval_df["DLinear"].mean()
 
 for hs, val in results.items():
     print(f"hidden_size={hs:4d}: MAE={val:.4f}")
@@ -270,7 +270,7 @@ for hs, val in results.items():
 
 Rule: `temporal_ff ≈ hidden_size // 2` keeps proportions balanced.
 
-<!-- Speaker notes: The proportional scaling rule (temporal_ff = hidden_size / 2) comes from the original XLinear paper's ablation studies. When you increase hidden_size, the TGM MLP should scale proportionally to maintain the same information bottleneck ratio. For ETTm1, hidden_size=512 is typically optimal. You may see hidden_size=1024 giving marginal improvement at significantly higher compute cost. -->
+<!-- Speaker notes: The proportional scaling rule (temporal_ff = hidden_size / 2) comes from the original DLinear paper's ablation studies. When you increase hidden_size, the TGM MLP should scale proportionally to maintain the same information bottleneck ratio. For ETTm1, hidden_size=512 is typically optimal. You may see hidden_size=1024 giving marginal improvement at significantly higher compute cost. -->
 
 ---
 
@@ -299,13 +299,13 @@ nf.fit(df=Y_df, val_size=11520)
 # Training logs show train_loss and val_loss per step
 ```
 
-<!-- Speaker notes: Students often skip diagnostic steps and jump to grid search. Emphasize that two training runs — one with default dropout, one observing the loss curves — tells you exactly which direction to move. Case 2 and Case 3 are most common with XLinear at max_steps=2000. Case 4 is rare but happens if head_dropout is set too high for the dataset size. Reading loss curves is a more efficient tuning strategy than blind grid search. -->
+<!-- Speaker notes: Students often skip diagnostic steps and jump to grid search. Emphasize that two training runs — one with default dropout, one observing the loss curves — tells you exactly which direction to move. Case 2 and Case 3 are most common with DLinear at max_steps=2000. Case 4 is rare but happens if head_dropout is set too high for the dataset size. Reading loss curves is a more efficient tuning strategy than blind grid search. -->
 
 ---
 
 ## Dataset Alignment: The Critical Check
 
-XLinear requires all `n_series` series to have identical timestamps.
+DLinear requires all `n_series` series to have identical timestamps.
 
 ```python
 from datasetsforecast.long_horizon import LongHorizon
@@ -329,7 +329,7 @@ print("Alignment check passed.")
 
 **If the check fails:** fill missing timestamps with forward-fill or interpolation before training.
 
-<!-- Speaker notes: This check is cheap and saves debugging time. The most common cause of XLinear failures in practice is misaligned series — one series has a missing observation or starts at a different timestamp. datasetsforecast.long_horizon returns clean aligned data for benchmark datasets, so this is not an issue for ETTm1. But students working with their own data will encounter this frequently. A utility function that runs this check and raises a descriptive error is worth building into any production pipeline. -->
+<!-- Speaker notes: This check is cheap and saves debugging time. The most common cause of DLinear failures in practice is misaligned series — one series has a missing observation or starts at a different timestamp. datasetsforecast.long_horizon returns clean aligned data for benchmark datasets, so this is not an issue for ETTm1. But students working with their own data will encounter this frequently. A utility function that runs this check and raises a descriptive error is worth building into any production pipeline. -->
 
 ---
 
@@ -340,21 +340,21 @@ from utilsforecast.evaluation import evaluate
 from utilsforecast.losses import mae, mse
 
 test_df = cv_df[cv_df["cutoff"] == cv_df["cutoff"].max()]
-eval_df = evaluate(test_df, metrics=[mae, mse], models=["XLinear"])
+eval_df = evaluate(test_df, metrics=[mae, mse], models=["DLinear"])
 
 # Per-series breakdown
-per_series = eval_df.pivot(index="unique_id", columns="metric", values="XLinear")
+per_series = eval_df.pivot(index="unique_id", columns="metric", values="DLinear")
 print(per_series.sort_values("mae"))
 ```
 
 **Expected pattern in ETTm1:**
 - OT: lowest MAE (oil temperature is smooth, physically bounded)
 - HUFL/HULL: higher MAE (load spikes are harder to predict)
-- Cross-series: XLinear improves OT most (physical causality)
+- Cross-series: DLinear improves OT most (physical causality)
 
-> If XLinear does not outperform NHITS on OT specifically, check that `n_series=7` is set and that all 7 series are present in training data.
+> If DLinear does not outperform NHITS on OT specifically, check that `n_series=7` is set and that all 7 series are present in training data.
 
-<!-- Speaker notes: The per-series breakdown is diagnostic. If XLinear is beating NHITS on load variables but not on OT, that is a sign that the VGM cross-variable learning is not working as expected. Common causes: n_series mismatch, missing series in training data, or channel_ff set too small. OT benefits most from multivariate modeling because it is physically downstream of the load variables — the causal chain should manifest as the largest accuracy gain on OT specifically. -->
+<!-- Speaker notes: The per-series breakdown is diagnostic. If DLinear is beating NHITS on load variables but not on OT, that is a sign that the VGM cross-variable learning is not working as expected. Common causes: n_series mismatch, missing series in training data, or channel_ff set too small. OT benefits most from multivariate modeling because it is physically downstream of the load variables — the causal chain should manifest as the largest accuracy gain on OT specifically. -->
 
 ---
 
@@ -371,7 +371,7 @@ print(per_series.sort_values("mae"))
 
 **The most common issue:** `n_series` not matching the actual series count. Check this first.
 
-<!-- Speaker notes: Post this table in the course resources. Students will hit these issues in their own projects. The n_series mismatch diagnosis rule deserves emphasis — it is the XLinear-specific issue that does not apply to NHITS or other univariate models. Training oscillation from high learning rate is universal across all neural forecasting models, not XLinear-specific. -->
+<!-- Speaker notes: Post this table in the course resources. Students will hit these issues in their own projects. The n_series mismatch diagnosis rule deserves emphasis — it is the DLinear-specific issue that does not apply to NHITS or other univariate models. Training oscillation from high learning rate is universal across all neural forecasting models, not DLinear-specific. -->
 
 ---
 
@@ -385,7 +385,7 @@ print(per_series.sort_values("mae"))
 
 4. **Tune in order:** `hidden_size` → `head_dropout` → `input_size` → `temporal_ff`
 
-5. **Alignment is required:** all series must have identical timestamps before XLinear training
+5. **Alignment is required:** all series must have identical timestamps before DLinear training
 
 <!-- Speaker notes: End with these five takeaways. Ask students to recall one ETTm1 example for each point: (1) load -> temperature causality, (2) n_series=7 for ETTm1, (3) VGM gating of HUFL for OT prediction, (4) hidden_size=512 as starting point, (5) 69680 timestamps per series alignment check. Connecting abstract principles to concrete ETTm1 examples helps retention. -->
 
@@ -406,12 +406,12 @@ print(per_series.sort_values("mae"))
 ## What's Next
 
 **Notebook:** `02_benchmarking.ipynb`
-- XLinear vs. NHITS head-to-head using `.cross_validation()`
+- DLinear vs. NHITS head-to-head using `.cross_validation()`
 - MAE and MSE reported for all 7 ETTm1 series
 - Side-by-side forecast plots
 - Decision framework: when to use which model
 
-**Exercises:** `01_xlinear_exercises.py`
+**Exercises:** `01_dlinear_exercises.py`
 - Verify prediction tensor shapes
 - Reproduce the MAE comparison
 - Ablate `hidden_size` values

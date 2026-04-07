@@ -1,10 +1,14 @@
 """
 Recipe: Explain a Neural Forecast with Feature Attributions
 
-Copy-paste pattern for producing explainability reports using
-neuralforecast's .explain() API backed by captum.
+IMPORTANT: NeuralForecast does not natively support model explainability.
+There is no .explain() method in the NeuralForecast API.
 
-Three methods available:
+For interpretability, use Captum with the underlying PyTorch models,
+or use inherently interpretable models like NHITS which provide
+basis function decompositions.
+
+Three Captum methods available:
 - IntegratedGradients: Best balance of speed and accuracy (recommended)
 - InputXGradient: Fastest, but biased with ReLU activations
 - ShapleyValueSampling: Most theoretically sound, but slowest
@@ -35,40 +39,37 @@ from neuralforecast.losses.pytorch import MSE, MAE
 # nf.fit(df=train_df, val_size=28)
 
 # ---------------------------------------------------------------------------
-# Step 2: Generate attributions
+# Step 2: Generate attributions using Captum
 # ---------------------------------------------------------------------------
-# futr_df = ...  # DataFrame with future exogenous feature values
+# NeuralForecast does NOT have a .explain() method.
+# Use Captum directly with the underlying PyTorch model.
 
-# fcsts_df, explanations = nf.explain(
-#     futr_df=futr_df,
-#     explainer="IntegratedGradients"
-# )
-
-# ---------------------------------------------------------------------------
-# Step 3: Parse attribution tensors
-# ---------------------------------------------------------------------------
-# insample_attr = explanations["insample"]
-# Shape: [batch, horizon, series, output, input_size, 2]
-# The last dim [0] = y values, [1] = attributions
-
-# futr_exog_attr = explanations["futr_exog"]
-# Shape: [batch, horizon, series, output, input_size+horizon, features]
+# from captum.attr import IntegratedGradients
+#
+# pytorch_model = nf.models[0]  # Extract the trained PyTorch model
+# ig = IntegratedGradients(pytorch_model)
+#
+# # You need to prepare model-specific input tensors.
+# # See Captum docs for full usage: https://captum.ai/
+# # attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
 
 # ---------------------------------------------------------------------------
-# Step 4: Visualize
+# Step 3: Visualize attributions
 # ---------------------------------------------------------------------------
-def plot_lag_importance(insample_attr: np.ndarray, horizon_step: int = 0):
-    """Plot the importance of each lag for a specific forecast step."""
-    # Extract attributions for the first series, first output
-    attr = insample_attr[0, horizon_step, 0, 0, :, 1]  # shape: (input_size,)
+def plot_feature_importance(attributions: np.ndarray, feature_names: list[str]):
+    """Plot the importance of each feature based on Captum attributions."""
+    # Average absolute attributions across samples
+    mean_attr = np.abs(attributions).mean(axis=0)
 
     fig, ax = plt.subplots(figsize=(12, 4))
-    ax.bar(range(len(attr)), np.abs(attr), color="steelblue")
-    ax.set_xlabel("Lag Position (most recent = rightmost)")
+    ax.bar(range(len(mean_attr)), mean_attr, color="steelblue")
+    if feature_names:
+        ax.set_xticks(range(len(feature_names)))
+        ax.set_xticklabels(feature_names, rotation=45, ha="right")
     ax.set_ylabel("|Attribution|")
-    ax.set_title(f"Lag Importance for Forecast Step {horizon_step + 1}")
+    ax.set_title("Feature Importance (Captum Attributions)")
     plt.tight_layout()
     plt.show()
 
 
-# plot_lag_importance(insample_attr, horizon_step=0)
+# plot_feature_importance(attributions, feature_names=["feature_1", "feature_2"])

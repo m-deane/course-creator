@@ -97,7 +97,7 @@ class ForecastPipeline:
         """Convert to nixtla format, validate, store."""
 
     def train(self) -> ForecastPipeline:
-        """Fit NHITS or XLinear on stored data."""
+        """Fit NHITS or DLinear on stored data."""
 
     def predict(self) -> pd.DataFrame:
         """Return quantile forecast DataFrame."""
@@ -175,7 +175,7 @@ def train(self):
             loss=MQLoss(quantiles=self.quantiles),
             max_steps=self.max_steps,
         )
-    elif self.model_type == "xlinear":
+    elif self.model_type == "dlinear":
         model = LinearRegressor(
             h=self.horizon,
             input_size=3 * self.horizon,
@@ -218,11 +218,11 @@ sim = pipeline.simulate(n_samples=200)
 </div>
 <div>
 
-**Explain**: feature importances
+**Explain**: feature importances (via Captum)
 
 ```python
-expl = pipeline.explain()
-# Returns dict: feature → importance
+# NOTE: Use Captum directly for explainability
+# expl = pipeline.explain()  # Not natively supported
 
 # Top 3 features driving the forecast
 top = sorted(expl.items(),
@@ -266,7 +266,7 @@ Stocking to this level achieves an 80% fill rate.
 <!-- _class: lead -->
 
 # Model Selection
-## NHITS vs XLinear
+## NHITS vs DLinear
 
 <!-- Speaker notes: One of the most common questions in production is which model to use. The answer depends on series length, feature richness, and interpretability requirements. The next slide gives a concrete decision rule. -->
 
@@ -274,7 +274,7 @@ Stocking to this level achieves an 80% fill rate.
 
 ## When to Use Each Model
 
-| Factor | NHITS | XLinear |
+| Factor | NHITS | DLinear |
 |---|---|---|
 | Series length | > 200 obs | < 100 obs |
 | Features | Many exogenous | Few or none |
@@ -285,15 +285,15 @@ Stocking to this level achieves an 80% fill rate.
 ```python
 def select_model(series_length, n_features, needs_explanation):
     if needs_explanation and series_length < 500:
-        return "xlinear"
+        return "dlinear"
     if series_length < 100:
-        return "xlinear"
+        return "dlinear"
     if n_features > 10 and series_length > 200:
         return "nhits"
     return "nhits"
 ```
 
-<!-- Speaker notes: This heuristic is conservative — it prefers XLinear when interpretability matters. In practice, NHITS often beats XLinear even on short series, but the interpretability advantage of XLinear matters for stakeholder trust. Use cross-validation to validate the choice on your specific data. -->
+<!-- Speaker notes: This heuristic is conservative — it prefers DLinear when interpretability matters. In practice, NHITS often beats DLinear even on short series, but the interpretability advantage of DLinear matters for stakeholder trust. Use cross-validation to validate the choice on your specific data. -->
 
 ---
 
@@ -369,7 +369,7 @@ Five lines. Reproducible. Schedulable. Testable.
 
 1. A `ForecastPipeline` class enforces stage order and fails loudly on bad data.
 2. Method chaining (`.ingest().train().predict()`) makes pipelines readable and schedulable.
-3. NHITS for long series with many features; XLinear for short series or required interpretability.
+3. NHITS for long series with many features; DLinear for short series or required interpretability.
 4. Sliding window retraining for shifting demand; expanding window for stable demand.
 5. The final output is always a business decision — not a model output.
 

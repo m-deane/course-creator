@@ -55,7 +55,7 @@ nf = NeuralForecast(models=models, freq=<span class="hljs-string">&quot;D&quot;<
 nf.fit(df=train, val_size=<span class="hljs-number">28</span>)
 
 <span class="hljs-comment"># One call returns predictions AND attributions</span>
-fcsts_df, explanations = nf.explain(
+fcsts_df, explanations = # nf.explain() does not exist. Use Captum. # nf.explain(
     futr_df=futr_df,
     explainer=<span class="hljs-string">&quot;IntegratedGradients&quot;</span>   <span class="hljs-comment"># or InputXGradient or ShapleyValueSampling</span>
 )
@@ -231,7 +231,7 @@ flowchart TD
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-theme="course" lang="en-US" data-marpit-pagination="15" style="--paginate:true;--theme:course;" data-marpit-pagination-total="16">
 <h1 id="the-explanations-dictionary">The <code>explanations</code> Dictionary</h1>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python">fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer=<span class="hljs-string">&quot;IntegratedGradients&quot;</span>)
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python">fcsts_df, explanations = # nf.explain() does not exist. Use Captum. # nf.explain(futr_df=futr_df, explainer=<span class="hljs-string">&quot;IntegratedGradients&quot;</span>)
 
 explanations.keys()
 <span class="hljs-comment"># dict_keys([&#x27;insample&#x27;, &#x27;futr_exog&#x27;, &#x27;baseline_predictions&#x27;])</span>

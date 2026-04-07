@@ -125,9 +125,9 @@ Always split **before** fitting. neuralforecast respects temporal order — it n
 
 <!-- _class: lead -->
 
-# 2. Models: NHITS and XLinear
+# 2. Models: NHITS and DLinear
 
-<!-- Speaker notes: Two models cover 90% of use cases in this module. NHITS is the neural workhorse. XLinear is the baseline that must always be beaten before claiming a neural model adds value. -->
+<!-- Speaker notes: Two models cover 90% of use cases in this module. NHITS is the neural workhorse. DLinear is the baseline that must always be beaten before claiming a neural model adds value. -->
 
 ---
 
@@ -167,17 +167,17 @@ Each stack $k$ processes a **different temporal resolution** via hierarchical in
 
 ---
 
-## XLinear: Your Baseline
+## DLinear: Your Baseline
 
 ```python
-from neuralforecast.models import NHITS, XLinear
+from neuralforecast.models import NHITS, DLinear
 from neuralforecast.losses.pytorch import MQLoss
 from neuralforecast import NeuralForecast
 
 nf = NeuralForecast(
     models=[
         # Baseline: always run this first
-        XLinear(h=7, input_size=28),
+        DLinear(h=7, input_size=28),
 
         # Neural model: must beat the baseline to be worth using
         NHITS(
@@ -194,7 +194,7 @@ nf = NeuralForecast(
 
 Running both at once produces side-by-side output columns.
 
-<!-- Speaker notes: The discipline of always running XLinear first before NHITS is a professional habit. Many datasets that look complex are well-served by linear models. If XLinear achieves similar CRPS to NHITS, use XLinear — it is faster, more interpretable, and less likely to overfit on small datasets. -->
+<!-- Speaker notes: The discipline of always running DLinear first before NHITS is a professional habit. Many datasets that look complex are well-served by linear models. If DLinear achieves similar CRPS to NHITS, use DLinear — it is faster, more interpretable, and less likely to overfit on small datasets. -->
 
 ---
 
@@ -232,16 +232,16 @@ nf.fit(df=train)
 forecasts = nf.predict()
 
 print(forecasts.columns.tolist())
-# ['unique_id', 'ds', 'XLinear', 'NHITS-q-0.1', 'NHITS-q-0.5', 'NHITS-q-0.9']
+# ['unique_id', 'ds', 'DLinear', 'NHITS-q-0.1', 'NHITS-q-0.5', 'NHITS-q-0.9']
 
 print(forecasts.head())
-#   unique_id          ds  XLinear  NHITS-q-0.1  NHITS-q-0.5  NHITS-q-0.9
+#   unique_id          ds  DLinear  NHITS-q-0.1  NHITS-q-0.5  NHITS-q-0.9
 # 0  baguette  2022-11-14    128.3        96.2       131.5       166.8
 ```
 
 Forecasts start at the day **after the last observed date** in the training data.
 
-<!-- Speaker notes: The column naming convention encodes both the model name and the quantile. This makes it unambiguous when you are working with multiple models and multiple quantiles simultaneously. The XLinear column has no quantile suffix because it was trained with the default MAE loss, producing a point forecast. -->
+<!-- Speaker notes: The column naming convention encodes both the model name and the quantile. This makes it unambiguous when you are working with multiple models and multiple quantiles simultaneously. The DLinear column has no quantile suffix because it was trained with the default MAE loss, producing a point forecast. -->
 
 ---
 
@@ -274,15 +274,15 @@ from utilsforecast.evaluation import evaluate
 scores = evaluate(
     df=cv,
     metrics=[mqloss],
-    models=['XLinear', 'NHITS'],
+    models=['DLinear', 'NHITS'],
     target_col='y',
 )
 print(scores)
-#    metric      XLinear     NHITS
+#    metric      DLinear     NHITS
 # 0  mqloss       18.43     14.21
 ```
 
-Lower is better. If NHITS does not beat XLinear, examine whether the data has learnable nonlinear patterns.
+Lower is better. If NHITS does not beat DLinear, examine whether the data has learnable nonlinear patterns.
 
 <!-- Speaker notes: The evaluate function from utilsforecast handles the aggregation across series and windows automatically. It returns one row per metric, making it easy to add additional metrics like MASE or scaled CRPS later. -->
 
@@ -326,31 +326,25 @@ Each line is a plausible future trajectory — the **spread** is the uncertainty
 
 ---
 
-## `.explain()`: SHAP-Based Lag Attribution
+## Explainability: Captum Attribution
+
+> **Note:** NeuralForecast does not have a `.explain()` method. Use Captum with the underlying PyTorch model.
 
 ```python
-explanations = nf.explain(df=train)
-nhits_shap = explanations['NHITS']
+from captum.attr import IntegratedGradients
 
-# Average importance across all series and forecast steps
-importance = (nhits_shap
-              .drop(columns=['unique_id', 'ds'])
-              .abs()
-              .mean()
-              .sort_values(ascending=False))
+# Extract trained PyTorch model
+pytorch_model = nf.models[0]
 
-fig, ax = plt.subplots(figsize=(10, 4))
-importance.head(14).plot(kind='bar', ax=ax, color='steelblue')
-ax.set_title('NHITS: Feature Importance by Lag (SHAP)')
-ax.set_xlabel('Lag')
-ax.set_ylabel('Mean |SHAP value|')
-plt.tight_layout()
-plt.show()
+# Apply Integrated Gradients
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
+# See Captum docs: https://captum.ai/
 ```
 
-High importance at lag 7 and lag 14 confirms the model learned weekly seasonality.
+NHITS also provides inherently interpretable basis function decompositions for understanding which temporal scales drive the forecast.
 
-<!-- Speaker notes: The explain method is a model sanity check as much as a feature importance tool. If lag 7 has low SHAP value for bakery data, something is wrong — the model should be exploiting weekly seasonality. Conversely, if random lags like lag 13 have high SHAP, the model may be overfitting to noise. -->
+<!-- Speaker notes: NeuralForecast does not have a native .explain() method. For post-hoc feature attribution, use Captum directly on the underlying PyTorch model. NHITS provides some built-in interpretability via its multi-rate signal decomposition — you can inspect which temporal basis functions contribute most to the forecast at each horizon. -->
 
 ---
 
@@ -398,13 +392,13 @@ model = NHITS(h=7, input_size=28, loss=loss, max_steps=300)
 - `.predict()` — out-of-sample forecasts
 - `.cross_validation(df, n_windows, step_size)` — rolling evaluation
 - `.predict(n_samples=N)` — Monte Carlo paths
-- `.explain(df)` — SHAP attribution
+- Captum — feature attribution (external)
 
 </div>
 <div>
 
 ### The Principles
-- XLinear is always the baseline
+- DLinear is always the baseline
 - Loss = forecast type (one argument)
 - Cutoff column proves no data leakage
 - SHAP sanity-checks learned patterns

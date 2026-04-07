@@ -18,7 +18,7 @@ Data scientists, ML engineers, and quantitative analysts who have basic Python a
 - Probabilistic forecasting with neural models
 - Uncertainty quantification via sample paths
 - Model explainability for stakeholder communication
-- State-of-the-art architectures (XLinear)
+- State-of-the-art architectures (DLinear)
 
 ## Course Structure
 
@@ -29,7 +29,7 @@ Data scientists, ML engineers, and quantitative analysts who have basic Python a
 | 2 | Probabilistic Forecasting | Why quantiles aren't enough |
 | 3 | **Sample Paths** | The correct uncertainty framework |
 | 4 | Explainability | Attribution methods for neural forecasts |
-| 5 | XLinear | State-of-the-art MLP architecture |
+| 5 | DLinear | State-of-the-art MLP architecture |
 | 6 | Production Patterns | End-to-end pipelines |
 | 7 | Portfolio Project | Build your own forecasting system |
 
@@ -39,7 +39,7 @@ See `quick-starts/01_first_forecast.ipynb` — install neuralforecast and produc
 
 ## Key Libraries
 
-- **neuralforecast** (v3.1.6+) — neural forecasting models, `.simulate()`, `.explain()`
+- **neuralforecast** (v1.7+) — neural forecasting models, `.fit()`, `.predict()`, `.cross_validation()`
 - **datasetsforecast** — benchmark dataset loading (ETTm1, etc.)
 - **utilsforecast** — evaluation metrics (MAE, MSE)
 - **captum** — PyTorch interpretability backend
@@ -59,7 +59,7 @@ This course is based on:
 1. "Use Sample Paths Instead of Quantiles" — minimizeregret.com
 2. "Sample Paths for Uncertainty Quantification in Time Series Forecasting" — datasciencewithmarco.com
 3. "Explainability for Deep Learning Models in Time Series Forecasting" — datasciencewithmarco.com
-4. "Discover XLinear for State-of-the-Art Forecasting Performance" — datasciencewithmarco.com
+4. "Discover DLinear for State-of-the-Art Forecasting Performance" — datasciencewithmarco.com
 
 ## Directory Structure
 
@@ -71,7 +71,7 @@ time-series-forecasting-neuralforecast/
 │   ├── module_02_probabilistic_forecasting/
 │   ├── module_03_sample_paths/
 │   ├── module_04_explainability/
-│   ├── module_05_xlinear/
+│   ├── module_05_dlinear/
 │   ├── module_06_production_patterns/
 │   └── module_07_portfolio_project/
 ├── quick-starts/          # <2 min entry-point notebooks

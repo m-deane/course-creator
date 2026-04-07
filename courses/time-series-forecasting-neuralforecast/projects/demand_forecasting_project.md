@@ -16,7 +16,7 @@ Choose a real time series dataset with at least 365 daily observations. Suggeste
 - **French Bakery** — daily product sales (used in course)
 
 ### 2. Model Training
-- Train NHITS or XLinear with MQLoss for probabilistic output
+- Train NHITS or DLinear with MQLoss for probabilistic output
 - Use cross_validation for honest evaluation
 - Report MAE and MSE against a simple baseline
 
@@ -29,7 +29,7 @@ Choose a real time series dataset with at least 365 daily observations. Suggeste
 - Show that marginal quantiles give a different (wrong) answer
 
 ### 4. Explainability Report
-- Use .explain() with IntegratedGradients
+- Use Captum (IntegratedGradients) on the underlying PyTorch model for feature attribution
 - Identify which features/lags drive the forecast
 - Create visualizations: lag importance heatmap, feature attribution bar chart
 - Write a 1-page stakeholder summary in plain language
@@ -65,7 +65,8 @@ paths = nf.simulate(n_paths=100)
 weekly_total_80 = np.quantile(paths.sum(axis=1), 0.8)
 print(f"Stock {weekly_total_80:.0f} units for 80% service level")
 
-# 5. Explain the forecast
-fcsts, explanations = nf.explain(explainer="IntegratedGradients")
-plot_attributions(explanations)
+# 5. Explain the forecast (use Captum — NeuralForecast has no .explain())
+from captum.attr import IntegratedGradients
+ig = IntegratedGradients(nf.models[0])
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
 ```

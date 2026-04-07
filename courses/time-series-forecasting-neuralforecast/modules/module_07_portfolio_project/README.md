@@ -13,10 +13,10 @@ There are no grades, quizzes, or submission requirements. The output is yours.
 A complete demand forecasting system with six components:
 
 1. A real time series dataset loaded in nixtla format
-2. A trained NHITS or XLinear model with probabilistic output (MQLoss)
+2. A trained NHITS or DLinear model with probabilistic output (MQLoss)
 3. 200+ sample paths from the joint forecast distribution
 4. A quantitative answer to a business decision question
-5. An explainability report from `.explain()`
+5. An explainability report using Captum attribution on the underlying PyTorch model
 6. A stakeholder-facing summary with visualizations
 
 ---
@@ -131,8 +131,8 @@ Every module in this course feeds directly into this project:
 | 01 Point Forecasting | NHITS architecture, `.fit()` / `.predict()` API |
 | 02 Probabilistic Forecasting | MQLoss, CRPS, calibration verification |
 | 03 Sample Paths | `.simulate()`, Monte Carlo business framework |
-| 04 Explainability | `.explain()`, attribution interpretation |
-| 05 XLinear | Alternative model — faster, often competitive |
+| 04 Explainability | Captum attribution, interpretation |
+| 05 DLinear | Alternative model — faster, often competitive |
 | 06 Production Patterns | Deployment patterns for the finished system |
 
 ---

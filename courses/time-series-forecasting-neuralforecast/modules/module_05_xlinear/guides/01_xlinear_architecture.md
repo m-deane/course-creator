@@ -1,12 +1,12 @@
-# XLinear: State-of-the-Art Multivariate Forecasting Architecture
+# DLinear: A Simple Linear Baseline That Beats Transformers
 
-> **Reading time:** ~11 min | **Module:** 5 — xLinear | **Prerequisites:** Module 1
+> **Reading time:** ~11 min | **Module:** 5 — DLinear | **Prerequisites:** Module 1
 
 ## In Brief
 
-XLinear achieves transformer-competitive accuracy on long-horizon multivariate forecasting benchmarks while requiring a fraction of the compute. The architecture combines learned embeddings, two gating modules for temporal and cross-variable dependencies, and reversible instance normalization — all without attention mechanisms.
+DLinear (Zeng et al., 2023) demonstrates that a simple linear model can match or outperform many Transformer-based architectures on long-horizon forecasting benchmarks. The key idea: decompose the input into trend and remainder components using a moving average, then apply separate linear layers to each. No attention, no embeddings, no gating — just two linear maps.
 
-Start here: the code below trains XLinear on the ETTm1 dataset in under five minutes.
+Start here: the code below trains DLinear on the AirPassengers dataset in under a minute.
 
 
 The following implementation builds on the approach above:
@@ -14,222 +14,147 @@ The following implementation builds on the approach above:
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8f5e9", "primaryBorderColor": "#4caf50", "primaryTextColor": "#212121", "secondaryColor": "#e3f2fd", "tertiaryColor": "#fff8e1", "lineColor": "#757575", "fontFamily": "Inter, sans-serif", "fontSize": "14px"}}}%%
 flowchart LR
-    Input["Input Window\n(B × L × N)"] --> RevIN_fwd["RevIN\n(normalize)"]
-    RevIN_fwd --> Embed["Embedding Layer\n+ Global Context Tokens"]
-    Embed --> TGM["Time-wise Gating\nModule (TGM)"]
-    TGM --> VGM["Variate-wise Gating\nModule (VGM)"]
-    VGM --> Head["Prediction Head\n(FC Layer)"]
-    Head --> RevIN_inv["RevIN\n(denormalize)"]
-    RevIN_inv --> Output["Forecasts\n(B × H × N)"]
+    Input["Input Window\n(B × L)"] --> MA["Moving Average\nKernel"]
+    MA --> Trend["Trend Component"]
+    MA --> Remainder["Remainder Component\n(Input − Trend)"]
+    Trend --> Linear_T["Linear Layer\n(Trend)"]
+    Remainder --> Linear_R["Linear Layer\n(Remainder)"]
+    Linear_T --> Sum["Sum"]
+    Linear_R --> Sum
+    Sum --> Output["Forecast\n(B × H)"]
 
-    class RevIN_inv cls_RevIN_inv
-    class Head cls_Head
-    class VGM cls_VGM
-    class TGM cls_TGM
-    class Embed cls_Embed
-    class RevIN_fwd cls_RevIN_fwd
-    classDef cls_RevIN_inv fill:#e8f4f8,stroke:#2196f3
-    classDef cls_Head fill:#f3e5f5,stroke:#9c27b0
-    classDef cls_VGM fill:#fce4ec,stroke:#e91e63
-    classDef cls_TGM fill:#e8f5e9,stroke:#4caf50
-    classDef cls_Embed fill:#fff3e0,stroke:#ff9800
-    classDef cls_RevIN_fwd fill:#e8f4f8,stroke:#2196f3
+    classDef cls_MA fill:#e8f5e9,stroke:#4caf50
+    classDef cls_Linear fill:#e3f2fd,stroke:#2196f3
+    classDef cls_Sum fill:#f3e5f5,stroke:#9c27b0
+    class MA cls_MA
+    class Linear_T,Linear_R cls_Linear
+    class Sum cls_Sum
 ```
 
-The four architectural components each solve a distinct subproblem:
+The architecture has two components:
 
-1. **Embedding Layer** — scales inputs and creates a rich token representation including global context
-2. **Time-wise Gating Module (TGM)** — learns which temporal patterns matter and gates them
-3. **Variate-wise Gating Module (VGM)** — learns cross-variable associations between exogenous inputs and targets
-4. **Prediction Head** — maps the gated representation to the forecast horizon via a fully connected layer
+1. **Decomposition** — a moving average kernel separates trend from remainder
+2. **Two linear layers** — one maps trend to forecast, the other maps remainder to forecast; outputs are summed
 
 
 <div class="flow">
-<div class="flow-step mint">1. Embedding Layer</div>
+<div class="flow-step mint">1. Moving Average Decomposition</div>
 <div class="flow-arrow">&#8594;</div>
-<div class="flow-step amber">2. Time-wise Gating Module (TGM)</div>
+<div class="flow-step blue">2. Two Linear Projections</div>
 <div class="flow-arrow">&#8594;</div>
-<div class="flow-step blue">3. Variate-wise Gating Module (VG...</div>
-<div class="flow-arrow">&#8594;</div>
-<div class="flow-step lavender">4. Prediction Head</div>
+<div class="flow-step lavender">3. Sum</div>
 </div>
 
-RevIN bookends the architecture, handling distributional shift between training and inference.
+The simplicity is the point. DLinear serves as the baseline that any more complex model must beat.
 
 ---
 
-## 4. Component 1: Embedding Layer
+## 4. Component 1: Series Decomposition
 
-The embedding layer transforms the raw input window into a richer representation. It performs three operations:
-
-<div class="callout-warning">
-
-<strong>Warning:</strong> The embedding layer transforms the raw input window into a richer representation.
-
-</div>
-
-
-**Input scaling.** The raw window `(B, L, N)` — batch size × lookback length × number of series — is projected to hidden dimension `d_model` via a learnable linear map:
-
-$$\mathbf{E} = \mathbf{X} \mathbf{W}_e + \mathbf{b}_e, \quad \mathbf{W}_e \in \mathbb{R}^{N \times d_{model}}$$
-
-**Dropout regularization.** `embed_dropout` is applied immediately after projection to prevent co-adaptation of features.
-
-**Global context tokens.** This is the key innovation borrowed from vision transformers: a small set of learnable vectors (`[CLS]`-style tokens) are concatenated to the sequence. These tokens are not tied to any time step — they aggregate global information across the entire window and act as a summary representation that both TGM and VGM can attend to.
-
-
-The following implementation builds on the approach above:
-
-<div class="code-window">
-<div class="code-header">
-<div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-
-```python
-
-# Conceptual illustration of global context token injection
-
-# In XLinear, these are learned parameters initialized from N(0, 0.02)
-global_ctx = nn.Parameter(torch.randn(1, n_ctx_tokens, d_model) * 0.02)
-x_with_ctx = torch.cat([x_embedded, global_ctx.expand(B, -1, -1)], dim=1)
-```
-
-</div>
-</div>
-
-The embedding layer effectively creates a unified token space where time steps and global context tokens coexist — the subsequent gating modules operate over this combined representation.
-
----
-
-## 5. Component 2: Time-wise Gating Module (TGM)
-
-The TGM learns **which temporal positions matter** for each forecast, then uses that signal to gate the input.
-
-<div class="callout-insight">
-
-<strong>Insight:</strong> The TGM learns **which temporal positions matter** for each forecast, then uses that signal to gate the input.
-
-</div>
-
-
-The module is an MLP applied over the time dimension:
-
-$$\mathbf{G}_{time} = \sigma\left(\mathbf{W}_2 \cdot \text{ReLU}\left(\mathbf{W}_1 \cdot \mathbf{h}_{ctx} + \mathbf{b}_1\right) + \mathbf{b}_2\right)$$
-
-where $\mathbf{h}_{ctx}$ is the global context token representation and $\sigma$ is the sigmoid function.
-
-The gate $\mathbf{G}_{time} \in [0, 1]^{L+n_{ctx}}$ is multiplied element-wise with the embedded sequence:
-
-$$\mathbf{h}_{TGM} = \mathbf{G}_{time} \odot \mathbf{E}_{ctx}$$
-
-**Why gating instead of attention?** Attention computes pairwise similarity between every pair of positions — O(L²) work. The TGM routes global context through an MLP (O(L)) to produce a gate, then applies it in a single broadcast multiply. The global context token ensures the gate has access to the full sequence summary without explicit pairwise comparison.
-
-`temporal_ff` is the hidden size of this MLP — a key hyperparameter controlling how much capacity the model has to learn temporal patterns.
-
----
-
-## 6. Component 3: Variate-wise Gating Module (VGM)
-
-Where TGM operates over time, VGM operates **over variables**. It learns cross-series associations: which exogenous variables inform the target variable's future.
+DLinear uses a moving average kernel to separate the input window into trend and remainder:
 
 <div class="callout-key">
 
-<strong>Key Point:</strong> Where TGM operates over time, VGM operates **over variables**.
+<strong>Key Concept:</strong> The decomposition block applies a moving average to extract trend, then subtracts it from the input to get the remainder. This is the same idea as classical STL decomposition, but learned end-to-end.
 
 </div>
 
+Given an input window $\mathbf{x} \in \mathbb{R}^L$:
 
-The VGM follows the same gating pattern but transposes the operation:
+$$\mathbf{x}_{trend} = \text{AvgPool}(\text{Padding}(\mathbf{x}))$$
 
-$$\mathbf{G}_{var} = \sigma\left(\text{MLP}_{channel}\left(\mathbf{h}_{TGM}^T\right)\right)$$
+$$\mathbf{x}_{remainder} = \mathbf{x} - \mathbf{x}_{trend}$$
 
-$$\mathbf{h}_{VGM} = \mathbf{G}_{var} \odot \mathbf{h}_{TGM}$$
+The moving average kernel size controls how much smoothing is applied. A larger kernel captures slower-moving trends; a smaller kernel preserves more detail in the trend component.
 
-In ETTm1 terms: the VGM learns that HUFL (high useful load) at time t is informative about OT (oil temperature) at time t+96, and gates that information appropriately.
-
-`channel_ff` is the hidden size of the channel MLP. Note that in the reference implementation `channel_ff=21` — matching the number of channels in the full ETTm1 setup (including lags and date features). Setting `channel_ff` too small can bottleneck cross-variable information flow.
-
-**XLinear treats each series as both target and exogenous.** At inference time, every variable in the window feeds into VGM regardless of which series you are forecasting. This is what `n_series=7` controls: it tells the model how many channels to expect and allocates the correct parameter shapes.
+In the neuralforecast implementation, the kernel size defaults to 25 (appropriate for many common frequencies).
 
 ---
 
-## 7. Component 4: Prediction Head
+## 5. Component 2: Linear Projection Layers
 
-The prediction head is a straightforward fully connected layer that maps the gated representation to the forecast horizon:
+Each component gets its own linear layer that maps from lookback length L to forecast horizon H:
 
-$$\hat{\mathbf{Y}} = \mathbf{h}_{VGM} \mathbf{W}_{head} + \mathbf{b}_{head}, \quad \mathbf{W}_{head} \in \mathbb{R}^{d_{model} \times (H \times N)}$$
+<div class="callout-insight">
 
-The output is reshaped from `(B, d_model)` to `(B, H, N)` — batch × horizon × series.
+<strong>Insight:</strong> Each linear layer learns a direct mapping from L input time steps to H output time steps. There are no hidden layers, no nonlinearities, no attention. The model's capacity comes entirely from the trend/remainder decomposition.
 
-`head_dropout` is applied before this layer. With `head_dropout=0.5`, the model must learn robust representations that do not depend on any single feature — particularly important when `max_steps` is large and overfitting is a risk.
+</div>
 
-The head is the only layer that is truly "aware" of the forecast horizon H. The earlier components learn representations that are horizon-agnostic; the head performs the horizon-specific projection.
+$$\hat{\mathbf{y}}_{trend} = \mathbf{W}_{trend} \cdot \mathbf{x}_{trend} + \mathbf{b}_{trend}, \quad \mathbf{W}_{trend} \in \mathbb{R}^{H \times L}$$
 
----
+$$\hat{\mathbf{y}}_{remainder} = \mathbf{W}_{remainder} \cdot \mathbf{x}_{remainder} + \mathbf{b}_{remainder}, \quad \mathbf{W}_{remainder} \in \mathbb{R}^{H \times L}$$
 
-## 8. RevIN: Reversible Instance Normalization
+The final forecast is the sum:
 
-RevIN solves a fundamental problem in time series forecasting: **distributional shift between training windows and test windows**.
+$$\hat{\mathbf{y}} = \hat{\mathbf{y}}_{trend} + \hat{\mathbf{y}}_{remainder}$$
 
-Consider oil temperature in ETTm1: it might average 20°C in winter training data and 35°C in summer test data. A model trained on the 20°C distribution will systematically underforecast summer values.
+**Why two separate layers?** The trend and remainder have different statistical properties. Trend is smooth and low-frequency; remainder is noisy and high-frequency. Separate linear layers allow the model to learn different temporal patterns for each component without interference.
 
-RevIN applies instance normalization (per-sample, not per-batch) at the input:
-
-$$\tilde{\mathbf{x}}_t = \frac{\mathbf{x}_t - \mu_x}{\sigma_x + \varepsilon}$$
-
-where $\mu_x$ and $\sigma_x$ are computed from the input window $\mathbf{x}_{1:L}$ at inference time.
-
-After forecasting, the normalization is reversed:
-
-$$\hat{\mathbf{y}}_t = \hat{\tilde{\mathbf{y}}}_t \cdot \sigma_x + \mu_x$$
-
-The key insight: the model learns to forecast **relative patterns** (deviations from the window mean), while RevIN handles the level. This makes XLinear robust to:
-
-- Trend shifts (level changes between train and test)
-- Seasonal distributional shift (summer vs. winter)
-- Non-stationary series with changing variance
-
-RevIN adds learnable affine parameters $\gamma$ and $\beta$ so the model can partially undo normalization if it is harmful for certain series — these are learned during training.
+**Parameter count.** For a single series with L=96 and H=96, DLinear has only $2 \times (96 \times 96 + 96) = 18,624$ parameters — orders of magnitude fewer than Transformer-based models.
 
 ---
 
-## 9. Hyperparameter Reference
+## 6. Why DLinear Matters
 
-| Parameter | Role | Typical Range | ETTm1 Default |
+Zeng et al. (2023) published "Are Transformers Effective for Time Series Forecasting?" at AAAI 2023, showing that DLinear and NLinear (an even simpler variant) match or outperform many Transformer architectures on standard benchmarks.
+
+<div class="callout-key">
+
+<strong>Key Point:</strong> DLinear's strong performance suggests that many time series benchmarks are dominated by linear temporal patterns, and that the inductive biases of Transformers (attention over positions) may not align well with time series structure.
+
+</div>
+
+This has important practical implications:
+
+- **Always run DLinear as a baseline.** If your complex model does not beat DLinear, the dataset likely has predominantly linear dynamics.
+- **DLinear trains fast.** Minutes vs. hours for Transformer models — making it ideal for rapid iteration.
+- **DLinear is interpretable.** The learned linear weights directly show which input positions influence which output positions.
+
+---
+
+## 7. NLinear: The Even Simpler Variant
+
+NLinear (also from Zeng et al., 2023) is a single linear layer with a normalization trick: subtract the last value of the input window before the linear projection, then add it back after.
+
+$$\hat{\mathbf{y}} = \mathbf{W} \cdot (\mathbf{x} - x_L) + x_L$$
+
+NLinear handles distributional shift similarly to RevIN but with zero learned normalization parameters. On some datasets, NLinear outperforms DLinear. Both are available in neuralforecast as `DLinear` and `NLinear`.
+
+---
+
+## 8. Hyperparameter Reference
+
+| Parameter | Role | Typical Range | Default |
 |---|---|---|---|
-| `h` | Forecast horizon | 96–720 | 96 |
-| `input_size` | Lookback window | 96–512 | 96 |
-| `n_series` | Number of variables | matches data | 7 |
-| `hidden_size` | Embedding dimension d_model | 256–1024 | 512 |
-| `temporal_ff` | TGM MLP hidden size | 64–512 | 256 |
-| `channel_ff` | VGM MLP hidden size | n_series–64 | 21 |
-| `head_dropout` | Dropout before prediction head | 0.2–0.7 | 0.5 |
-| `embed_dropout` | Dropout after embedding | 0.0–0.3 | 0.2 |
-| `learning_rate` | Adam LR | 1e-5–1e-3 | 1e-4 |
+| `h` | Forecast horizon | 1–720 | required |
+| `input_size` | Lookback window | 1–512 | required |
+| `learning_rate` | Adam LR | 1e-4–1e-2 | 1e-3 |
 | `batch_size` | Training batch size | 16–128 | 32 |
-| `max_steps` | Training iterations | 500–5000 | 2000 |
+| `max_steps` | Training iterations | 100–2000 | 1000 |
+| `scaler_type` | Input normalization | "standard", "robust", None | "standard" |
+| `loss` | Training loss function | MAE, MSE, MQLoss | MAE |
 
 **Tuning guidance:**
-- `hidden_size` has the largest effect on capacity. Start with 512 for ETTm1-scale datasets.
-- `channel_ff` should be at least as large as `n_series` — setting it smaller forces lossy compression of cross-variable information.
-- High `head_dropout` (0.5) is appropriate when `max_steps > 1000`. Reduce to 0.3 for shorter training runs.
-- `input_size = h` (same as horizon) is the standard benchmark setting and a good starting point. Longer context windows sometimes help on datasets with strong seasonality.
+- DLinear has very few hyperparameters. The main choices are `input_size` and `loss`.
+- `input_size = h` (same as horizon) is the standard benchmark setting and a good starting point.
+- Longer context windows sometimes help on datasets with strong seasonality.
+- DLinear trains quickly enough that grid search over `input_size` values (e.g., h, 2h, 4h) is practical.
 
 ---
 
-## 10. Model Comparison
+## 9. Model Comparison
 
-| Feature | XLinear | NHITS | TiDE | TSMixer | PatchTST |
+| Feature | DLinear | NHITS | TiDE | TSMixer | PatchTST |
 |---|---|---|---|---|---|
-| Architecture | Gated MLP | Hierarchical MLP | Encoder-Decoder MLP | MLP-Mixer | Patch Transformer |
-| Multivariate native | Yes | No (per-series) | Yes | Yes | Variant |
-| Cross-variable learning | VGM gating | None | Projection | Channel mixing | iTransformer variant |
-| Complexity | O(L·N) | O(L) | O(L·N) | O(L·N) | O(L²/P²) |
-| RevIN | Yes | Yes | Yes | Yes | Yes |
-| Global context | Yes | No | No | No | No |
-| ETTm1 h=96 MSE | **0.316** | 0.345 | 0.364 | 0.351 | 0.329 |
-| Best use case | Multivariate, structured | Univariate, seasonal | Multivariate + exogenous | Multivariate | Long sequences |
+| Architecture | Decomposition + Linear | Hierarchical MLP | Encoder-Decoder MLP | MLP-Mixer | Patch Transformer |
+| Nonlinearity | None | ReLU stacks | ReLU | GELU | Attention + FFN |
+| Decomposition | Moving average | Multi-rate pooling | None | None | None |
+| Parameter count (L=96, H=96) | ~19K | ~800K | ~2M | ~1M | ~5M |
+| Training speed | Very fast | Fast | Moderate | Moderate | Slow |
+| Best use case | Baseline, linear dynamics | Univariate, seasonal | Multivariate + exogenous | Multivariate | Long sequences |
 
-**Choose XLinear when:** you have multiple correlated variables and want the best accuracy-to-compute tradeoff.
+**Choose DLinear when:** you need a fast, strong baseline or suspect your data has predominantly linear temporal patterns.
 
 **Choose NHITS when:** you are forecasting a single series with strong seasonality and want interpretable hierarchical decomposition.
 
@@ -239,9 +164,9 @@ RevIN adds learnable affine parameters $\gamma$ and $\beta$ so the model can par
 
 ## Next Steps
 
-- **Notebook:** `notebooks/01_training_xlinear.ipynb` — train XLinear on ETTm1, evaluate with utilsforecast metrics
+- **Notebook:** `notebooks/01_training_dlinear.ipynb` — train DLinear on ETTm1, evaluate with utilsforecast metrics
 - **Guide:** `02_multivariate_forecasting.md` — deep dive into n_series, exogenous features, and hyperparameter tuning
-- **Notebook:** `notebooks/02_benchmarking.ipynb` — head-to-head XLinear vs. NHITS comparison with cross-validation
+- **Notebook:** `notebooks/02_benchmarking.ipynb` — head-to-head DLinear vs. NHITS comparison with cross-validation
 
 
 ## Practice Questions
@@ -255,12 +180,12 @@ RevIN adds learnable affine parameters $\gamma$ and $\beta$ so the model can par
 
 ## Cross-References
 
-<a class="link-card" href="./01_xlinear_architecture.md">
+<a class="link-card" href="./01_dlinear_architecture.md">
   <div class="link-card-title">Companion Slides</div>
   <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
 </a>
 
-<a class="link-card" href="../notebooks/01_training_xlinear.ipynb">
+<a class="link-card" href="../notebooks/01_training_dlinear.ipynb">
   <div class="link-card-title">Hands-on Notebook</div>
   <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
 </a>

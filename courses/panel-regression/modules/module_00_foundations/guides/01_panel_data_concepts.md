@@ -238,7 +238,7 @@ panel_data = PanelData(panel)
 # Properties
 print(f"Entities: {panel_data.nentity}")
 print(f"Time periods: {panel_data.nobs / panel_data.nentity}")
-print(f"Balanced: {panel_data.balanced}")
+print(f"Balanced: {panel_data.dataframe.groupby(level=0).size().nunique() == 1}")
 ```
 
 ## Computing Panel Variation

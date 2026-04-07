@@ -43,7 +43,9 @@ Three problems that un-explainable models create:
 
 ---
 
-# The .explain() API in One Slide
+# Explainability with Captum
+
+> **Note:** NeuralForecast does not have a `.explain()` method. Use Captum with the underlying PyTorch model.
 
 <div class="code-window">
 <div class="code-header">
@@ -55,6 +57,7 @@ Three problems that un-explainable models create:
 from neuralforecast import NeuralForecast
 from neuralforecast.models import NHITS
 from neuralforecast.losses.pytorch import MSE, MAE
+from captum.attr import IntegratedGradients
 
 models = [NHITS(
     h=28, input_size=56,
@@ -64,22 +67,20 @@ models = [NHITS(
 nf = NeuralForecast(models=models, freq="D")
 nf.fit(df=train, val_size=28)
 
-# One call returns predictions AND attributions
-fcsts_df, explanations = nf.explain(
-    futr_df=futr_df,
-    explainer="IntegratedGradients"   # or InputXGradient or ShapleyValueSampling
-)
+# Use Captum for attributions on the PyTorch model
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
 ```
 </div>
 
-**`explanations`** is a dict with keys: `insample`, `futr_exog`, `baseline_predictions`
+Use `IntegratedGradients`, `InputXGradient`, or `ShapleyValueSampling` from **captum.attr**
 
 
 <div class="callout-key">
-<strong>Key Point:</strong> Remember this concept — it appears repeatedly in later modules.
+<strong>Key Point:</strong> NeuralForecast trains the model; Captum explains it. Extract the PyTorch model and apply attribution methods.
 </div>
 
-<!-- Speaker notes: Show this slide twice if needed. The key point is that .explain() is a drop-in complement to .predict(). No architectural changes required. -->
+<!-- Speaker notes: NeuralForecast does not have a native .explain() method. Use Captum directly on the underlying PyTorch model. Captum provides IntegratedGradients, InputXGradient, and ShapleyValueSampling among other methods. -->
 
 ---
 
@@ -276,35 +277,32 @@ flowchart TD
 
 ---
 
-# The `explanations` Dictionary
+# Captum Attribution Output
 
 ```python
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
+from captum.attr import IntegratedGradients
 
-explanations.keys()
-# dict_keys(['insample', 'futr_exog', 'baseline_predictions'])
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
+attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
+# attributions has the same shape as input_tensor
 ```
 
 <div class="columns">
 
-**`insample`**
-Past lag attributions
-Shape: `[batch, horizon, series, output, input_size, 2]`
-Last dim: `[lag_value, attribution_score]`
+**Captum output**
+Attribution tensor with same shape as input
+Each value = contribution of that feature to output
 
-**`futr_exog`**
-Exogenous feature attributions
-Shape: `[batch, horizon, series, output, input_size+horizon, n_features]`
-
-**`baseline_predictions`**
-Model output at baseline input
-Shape: `[batch, horizon, series, output]`
+**Interpretation**
+For time series: which lags and exogenous features drove the forecast
+Positive = increased forecast, negative = decreased
 
 </div>
 
-Full tensor parsing in `02_interpreting_attributions.md`.
+Full tensor interpretation in `02_interpreting_attributions.md`.
 
-<!-- Speaker notes: The shape notation will feel dense. Tell students not to memorize it now — the next guide and notebooks walk through each dimension with real code. -->
+<!-- Speaker notes: Captum attributions have the same shape as the model input. For a time series model with input_size=56, you get 56 attribution values showing which lags mattered most. -->
 
 ---
 
@@ -319,7 +317,7 @@ Three methods, one API, clear trade-offs:
 | Safe with ReLU | Yes | No | Yes |
 | Default choice | Yes | No | No |
 
-**Key takeaway:** `.explain()` is a drop-in call. IntegratedGradients is the right default. Attributions turn "the model predicted X" into "feature Y contributed Z to the forecast."
+**Key takeaway:** Use Captum's IntegratedGradients as the default. Attributions turn "the model predicted X" into "feature Y contributed Z to the forecast."
 
 **Next:** `02_interpreting_attributions.md` -- tensor shapes, heatmaps, waterfall plots, business narratives
 

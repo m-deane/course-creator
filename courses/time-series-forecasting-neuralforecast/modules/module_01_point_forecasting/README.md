@@ -87,4 +87,4 @@ NHITS (Neural Hierarchical Interpolation for Time Series) uses a stack of MLP bl
 - **Module 00 (Foundations)**: NeuralForecast API, data format, environment setup
 - **Module 02 (Probabilistic Forecasting)**: Replace point forecasts with prediction intervals using `MQLoss()`
 - **Module 03 (Sample Paths)**: Generate Monte Carlo trajectories from neural models
-- **Module 05 (XLinear)**: When linear models outperform neural models and why
+- **Module 05 (DLinear)**: When linear models outperform neural models and why

@@ -25,7 +25,7 @@ notebook to completion, then run this script in the same environment.
     nf          : NeuralForecast — fitted NeuralForecast instance
     forecasts   : pd.DataFrame — output of nf.predict()
     paths_df    : pd.DataFrame — output of nf.models[0].simulate()
-    explanations: dict — output of nf.models[0].explain()
+    explanations: dict — output of Captum attribution (NeuralForecast has no .explain())
     business_answer : float — numeric answer to your business question
     business_units  : str   — units for the answer, e.g. "units/week"
 
@@ -91,7 +91,7 @@ business_answer = None  # float: numeric answer (e.g. 148.0)
 business_units  = None  # str: units of the answer (e.g. "units/week")
 
 # -- Milestone 4 artifacts ---------------------------------------------------
-explanations = None  # dict from nf.models[0].explain()
+explanations = None  # dict from Captum attribution (NeuralForecast has no .explain())
 '''
 
 
@@ -318,7 +318,7 @@ def check_milestone_4(art) -> int:
     if explanations is None:
         _fail(
             "explanations produced",
-            "art.explanations must be the dict returned by nf.models[0].explain()"
+            "art.explanations must be a dict of Captum attribution results"
         )
         failures += 1
         return failures

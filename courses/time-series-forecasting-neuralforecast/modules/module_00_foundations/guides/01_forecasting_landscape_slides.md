@@ -378,7 +378,7 @@ print(f"Total rows: {len(df):,}")
 **Guide 02:** NeuralForecast Ecosystem Deep Dive
 - `.fit()` → `.predict()` → `.cross_validation()` workflow
 - The `.simulate()` method for sample paths
-- The `.explain()` method for explainability
+- Captum for feature attribution (external library)
 - Key hyperparameters: `input_size`, `h`, `max_steps`, `scaler_type`
 
 **Notebook 01:** QuickStart — train NHITS on French Bakery in 10 minutes

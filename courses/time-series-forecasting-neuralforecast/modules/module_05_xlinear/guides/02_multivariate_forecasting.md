@@ -1,12 +1,12 @@
-# Multivariate Forecasting with XLinear
+# Multivariate Forecasting with DLinear
 
 > **Reading time:** ~17 min | **Module:** 5 — xLinear | **Prerequisites:** Module 1
 
 ## In Brief
 
-Multivariate forecasting feeds all correlated series simultaneously into a single model, letting the model learn cross-variable patterns. XLinear is purpose-built for this: its Variate-wise Gating Module (VGM) learns which series inform which targets, and the `n_series` parameter controls the entire cross-variable pathway. This guide shows when multivariate beats univariate, how to configure XLinear for different feature types, and how to tune the key hyperparameters.
+Multivariate forecasting feeds all correlated series simultaneously into a single model, letting the model learn cross-variable patterns. DLinear is purpose-built for this: its Variate-wise Gating Module (VGM) learns which series inform which targets, and the `n_series` parameter controls the entire cross-variable pathway. This guide shows when multivariate beats univariate, how to configure DLinear for different feature types, and how to tune the key hyperparameters.
 
-Start here: the code below trains univariate NHITS and multivariate XLinear on ETTm1 and compares their accuracy.
+Start here: the code below trains univariate NHITS and multivariate DLinear on ETTm1 and compares their accuracy.
 
 
 The following implementation builds on the approach above:
@@ -18,7 +18,7 @@ flowchart TD
     Q1 -->|No| UV["Use univariate\n(NHITS, NBEATS)"]
     Q1 -->|Yes| Q2["Do cross-correlations\nchange over time?"]
     Q2 -->|No| Q3["Is correlation\nphysically meaningful?"]
-    Q2 -->|Yes| MV["Use multivariate\n(XLinear, TiDE)"]
+    Q2 -->|Yes| MV["Use multivariate\n(DLinear, TiDE)"]
     Q3 -->|Yes| MV
     Q3 -->|No| UV2["Univariate often\nsufficient"]
 ```
@@ -58,13 +58,13 @@ See detailed comparison in the table above.
 </div>
 </div>
 
-## 2. The n_series Parameter: XLinear's Cross-Variable Pathway
+## 2. The n_series Parameter: DLinear's Cross-Variable Pathway
 
-`n_series` is the most important parameter for multivariate XLinear. It controls three things simultaneously:
+`n_series` is the most important parameter for multivariate DLinear. It controls three things simultaneously:
 
 <div class="callout-key">
 
-<strong>Key Point:</strong> `n_series` is the most important parameter for multivariate XLinear.
+<strong>Key Point:</strong> `n_series` is the most important parameter for multivariate DLinear.
 
 </div>
 
@@ -97,7 +97,7 @@ The following implementation builds on the approach above:
 n_unique = Y_df["unique_id"].nunique()
 print(f"Dataset has {n_unique} series — set n_series={n_unique}")
 
-model = XLinear(
+model = DLinear(
     h=96,
     input_size=96,
     n_series=n_unique,   # must match data
@@ -110,7 +110,7 @@ model = XLinear(
 </div>
 
 **Mismatch consequences:**
-- `n_series < actual`: XLinear sees only a subset of variables; cross-variable learning is incomplete
+- `n_series < actual`: DLinear sees only a subset of variables; cross-variable learning is incomplete
 - `n_series > actual`: runtime error — shape mismatch in VGM weight matrices
 
 When in doubt, count unique series in your DataFrame before setting `n_series`.
@@ -164,13 +164,13 @@ The `channel_ff` parameter controls the MLP hidden size. Setting `channel_ff < n
 
 ---
 
-## 4. Exogenous Features in XLinear
+## 4. Exogenous Features in DLinear
 
-XLinear supports three types of exogenous features, matching the NeuralForecast API:
+DLinear supports three types of exogenous features, matching the NeuralForecast API:
 
 <div class="callout-warning">
 
-<strong>Warning:</strong> XLinear supports three types of exogenous features, matching the NeuralForecast API:
+<strong>Warning:</strong> DLinear supports three types of exogenous features, matching the NeuralForecast API:
 
 ### Historical Exogenous (`hist_exog_list`)
 Known only up to the forecast origin — cannot be projected into the fu...
@@ -183,7 +183,7 @@ Known only up to the forecast origin — cannot be projected into the future.
 ```python
 
 # Example: yesterday's spot price (known, but not known for tomorrow)
-model = XLinear(
+model = DLinear(
     h=96, input_size=96, n_series=7,
     hist_exog_list=["spot_price", "grid_load"],   # available in lookback, not forecast
     hidden_size=512, ...
@@ -196,7 +196,7 @@ Known for both the lookback window and the forecast horizon — calendar feature
 ```python
 
 # Example: hour of day, day of week, holiday flag
-model = XLinear(
+model = DLinear(
     h=96, input_size=96, n_series=7,
     futr_exog_list=["hour_sin", "hour_cos", "is_holiday"],
     hidden_size=512, ...
@@ -209,14 +209,14 @@ Time-invariant features — series metadata like station ID, product category, g
 ```python
 
 # Example: transformer capacity rating (constant per series)
-model = XLinear(
+model = DLinear(
     h=96, input_size=96, n_series=7,
     stat_exog_list=["transformer_capacity"],
     hidden_size=512, ...
 )
 ```
 
-**How XLinear incorporates exogenous features:** All exogenous features are projected through the embedding layer alongside the endogenous variables. The VGM then gates all channels — both endogenous and exogenous — jointly. This means exogenous features that are not informative for forecasting will receive low VGM gate values and contribute minimally to predictions.
+**How DLinear incorporates exogenous features:** All exogenous features are projected through the embedding layer alongside the endogenous variables. The VGM then gates all channels — both endogenous and exogenous — jointly. This means exogenous features that are not informative for forecasting will receive low VGM gate values and contribute minimally to predictions.
 
 ```python
 
@@ -227,7 +227,7 @@ Y_df["ds"] = pd.to_datetime(Y_df["ds"])
 Y_df["hour_sin"] = (2 * 3.14159 * Y_df["ds"].dt.hour / 24).apply(pd.np.sin)
 Y_df["hour_cos"] = (2 * 3.14159 * Y_df["ds"].dt.hour / 24).apply(pd.np.cos)
 
-model = XLinear(
+model = DLinear(
     h=96, input_size=96, n_series=7,
     futr_exog_list=["hour_sin", "hour_cos"],
     hidden_size=512, temporal_ff=256, channel_ff=21,
@@ -242,11 +242,11 @@ model = XLinear(
 
 ## 5. Hyperparameter Tuning Workflow
 
-XLinear has five hyperparameters that materially affect accuracy. Tune them in this order:
+DLinear has five hyperparameters that materially affect accuracy. Tune them in this order:
 
 <div class="callout-insight">
 
-<strong>Insight:</strong> XLinear has five hyperparameters that materially affect accuracy.
+<strong>Insight:</strong> DLinear has five hyperparameters that materially affect accuracy.
 
 
 
@@ -255,7 +255,7 @@ XLinear has five hyperparameters that materially affect accuracy. Tune them in t
 Start with the reference ETTm1 configuration and verify it trains without errors:
 
 ```python
-baseline = XLinear(
+baseline = DLinear(
     h=96, input_size=96, n_series=7,
     hidden_size=512, temporal_ff=256, channel_ff=21,
     head_dropout=0.5, embed_dropout=0.2,
@@ -271,7 +271,7 @@ baseline = XLinear(
 
 # Compare three settings
 for hs in [256, 512, 1024]:
-    model = XLinear(h=96, input_size=96, n_series=7,
+    model = DLinear(h=96, input_size=96, n_series=7,
                     hidden_size=hs, temporal_ff=256, channel_ff=21,
                     head_dropout=0.5, embed_dropout=0.2,
                     learning_rate=1e-4, batch_size=32, max_steps=1000)
@@ -288,7 +288,7 @@ If validation loss diverges from training loss after step 2, increase `head_drop
 
 # Typical search
 for hd in [0.2, 0.3, 0.5, 0.7]:
-    model = XLinear(..., head_dropout=hd, max_steps=2000)
+    model = DLinear(..., head_dropout=hd, max_steps=2000)
 ```
 
 Guideline: 0.5 is appropriate for `max_steps >= 1500`. Reduce to 0.3 for shorter training.
@@ -299,7 +299,7 @@ Longer context windows capture longer-range dependencies but increase memory:
 
 ```python
 for inp in [96, 192, 336]:
-    model = XLinear(h=96, input_size=inp, n_series=7, ...)
+    model = DLinear(h=96, input_size=inp, n_series=7, ...)
 ```
 
 Guideline: `input_size = h` (same as horizon) is the benchmark standard. Increase for datasets with strong weekly or monthly seasonality.
@@ -313,7 +313,7 @@ Only tune these after steps 2–4 are fixed. They have smaller effect than `hidd
 # Proportional scaling: temporal_ff ≈ hidden_size // 2
 
 # channel_ff ≥ n_series (never set lower)
-model = XLinear(h=96, input_size=96, n_series=7,
+model = DLinear(h=96, input_size=96, n_series=7,
                 hidden_size=512, temporal_ff=256, channel_ff=21, ...)
 ```
 
@@ -321,7 +321,7 @@ model = XLinear(h=96, input_size=96, n_series=7,
 
 
 
-## 6. Dataset Preparation for XLinear
+## 6. Dataset Preparation for DLinear
 
 NeuralForecast requires the long (nixtla) format:
 
@@ -336,7 +336,7 @@ HUFL      | 2016-07-01 00:15  | 5.761
 ...
 ```
 
-XLinear's multivariate mode requires that all `n_series` series have **identical timestamps** — every unique_id must appear at every time step. Missing timestamps break batch construction.
+DLinear's multivariate mode requires that all `n_series` series have **identical timestamps** — every unique_id must appear at every time step. Missing timestamps break batch construction.
 
 ```python
 
@@ -353,7 +353,7 @@ print(timestamps_per_series)
 
 # Check: no missing timestamps
 assert Y_df.groupby("unique_id")["ds"].count().nunique() == 1, \
-    "Series have different numbers of timestamps — XLinear will fail"
+    "Series have different numbers of timestamps — DLinear will fail"
 
 print(f"Dataset: {Y_df['unique_id'].nunique()} series × {timestamps_per_series.iloc[0]} timesteps")
 ```
@@ -366,10 +366,10 @@ The `.cross_validation()` output contains columns for each model's forecasts:
 
 ```python
 
-# cv_df columns: unique_id, ds, cutoff, y, XLinear, NHITS (if both trained)
+# cv_df columns: unique_id, ds, cutoff, y, DLinear, NHITS (if both trained)
 print(cv_df.columns.tolist())
 
-# ['unique_id', 'ds', 'cutoff', 'y', 'XLinear']
+# ['unique_id', 'ds', 'cutoff', 'y', 'DLinear']
 
 # Compute metrics per series using utilsforecast
 from utilsforecast.losses import mae, mse
@@ -378,13 +378,13 @@ from utilsforecast.evaluation import evaluate
 # Filter to test set (last cutoff)
 test_df = cv_df[cv_df["cutoff"] == cv_df["cutoff"].max()]
 
-eval_df = evaluate(test_df, metrics=[mae, mse], models=["XLinear"])
+eval_df = evaluate(test_df, metrics=[mae, mse], models=["DLinear"])
 print(eval_df)
 
-# Rows: metric × unique_id, Col: XLinear value
+# Rows: metric × unique_id, Col: DLinear value
 
 # Per-series breakdown
-print(eval_df.groupby("unique_id")["XLinear"].mean())
+print(eval_df.groupby("unique_id")["DLinear"].mean())
 ```
 
 **What to look for:**
@@ -394,7 +394,7 @@ print(eval_df.groupby("unique_id")["XLinear"].mean())
 
 ---
 
-## 8. When XLinear Underperforms — Troubleshooting
+## 8. When DLinear Underperforms — Troubleshooting
 
 | Symptom | Likely Cause | Fix |
 |---|---|---|
@@ -409,8 +409,8 @@ print(eval_df.groupby("unique_id")["XLinear"].mean())
 
 ## Next Steps
 
-- **Notebook:** `notebooks/02_benchmarking.ipynb` — full XLinear vs. NHITS comparison with cross-validation, MAE/MSE reporting, and forecast plots
-- **Exercises:** `exercises/01_xlinear_exercises.py` — self-check problems on prediction shapes, benchmark comparison, and hidden_size ablation
+- **Notebook:** `notebooks/02_benchmarking.ipynb` — full DLinear vs. NHITS comparison with cross-validation, MAE/MSE reporting, and forecast plots
+- **Exercises:** `exercises/01_dlinear_exercises.py` — self-check problems on prediction shapes, benchmark comparison, and hidden_size ablation
 
 
 ## Practice Questions
@@ -429,7 +429,7 @@ print(eval_df.groupby("unique_id")["XLinear"].mean())
   <div class="link-card-description">Interactive slide deck covering the key concepts with visual examples.</div>
 </a>
 
-<a class="link-card" href="../notebooks/01_training_xlinear.ipynb">
+<a class="link-card" href="../notebooks/01_training_dlinear.ipynb">
   <div class="link-card-title">Hands-on Notebook</div>
   <div class="link-card-description">15-minute micro-notebook with guided exercises and real data.</div>
 </a>

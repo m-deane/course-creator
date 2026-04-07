@@ -433,7 +433,7 @@ print(f"  Entities: {panel.nentity}")
 print(f"  Time periods: {panel.nobs / panel.nentity:.0f}")
 print(f"  Total observations: {panel.nobs}")
 print(f"  Variables: {list(panel.vars)}")
-print(f"  Is balanced: {panel.balanced}")
+print(f"  Is balanced: {panel.dataframe.groupby(level=0).size().nunique() == 1}")
 ```
 
 ### Accessing Panel Properties

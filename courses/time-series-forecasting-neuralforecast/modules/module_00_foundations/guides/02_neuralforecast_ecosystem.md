@@ -144,7 +144,7 @@ NHITS decomposes a time series into multiple frequency components using hierarch
 | `n_freq_downsample` | `[2, 1, 1]` | Downsampling per stack |
 | `learning_rate` | `1e-3` | Adam optimizer LR |
 
-### XLinear (Cross-Learning Linear)
+### DLinear (Cross-Learning Linear)
 
 A linear model trained across all series simultaneously. Extremely fast and interpretable. Use it as a baseline before any neural model.
 
@@ -156,10 +156,10 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
-from neuralforecast.models import NHITS, XLinear
+from neuralforecast.models import NHITS, DLinear
 
 models = [
-    XLinear(h=7, input_size=28),     # baseline
+    DLinear(h=7, input_size=28),     # baseline
     NHITS(h=7, input_size=28, max_steps=300),  # neural model
 ]
 nf = NeuralForecast(models=models, freq='D')
@@ -388,46 +388,35 @@ plt.show()
 
 ---
 
-## 7. The `.explain()` Method: Feature Importance
+## 7. Explainability: Feature Importance
 
-`NeuralForecast.explain()` uses SHAP-based attribution to quantify how much each lagged input contributes to the forecast. This works with NHITS and NBEATS.
+<div class="callout-danger">
+
+<strong>Important:</strong> NeuralForecast does not natively support model explainability. There is no <code>.explain()</code> method in the NeuralForecast API. For interpretability, use <a href="https://captum.ai/">Captum</a> with the underlying PyTorch models, or use inherently interpretable models like NHITS which provide basis function decompositions.
+
+</div>
+
+For post-hoc feature attribution, use Captum directly with the underlying PyTorch model:
 
 <div class="callout-key">
 
-<strong>Key Point:</strong> `NeuralForecast.explain()` uses SHAP-based attribution to quantify how much each lagged input contributes to the forecast.
+<strong>Key Point:</strong> Use Captum's IntegratedGradients or other attribution methods on the PyTorch model extracted from a trained NeuralForecast instance.
 
 
 
 ```python
+from captum.attr import IntegratedGradients
 
-# Compute SHAP-based explanations
-explanations = nf.explain(df=train)
+# Extract the trained PyTorch model
+pytorch_model = nf.models[0]
 
-# explanations is a dict: {model_name: DataFrame}
-
-# Columns: unique_id, ds, lag_1, lag_2, ..., lag_{input_size}
-nhits_shap = explanations['NHITS']
-print(nhits_shap.head())
-
-# Aggregate importance across series
-mean_importance = (
-    nhits_shap
-    .drop(columns=['unique_id', 'ds'])
-    .abs()
-    .mean()
-    .sort_values(ascending=False)
-)
-
-fig, ax = plt.subplots(figsize=(10, 4))
-mean_importance.head(14).plot(kind='bar', ax=ax)
-ax.set_title('NHITS: Mean Absolute SHAP Value by Lag')
-ax.set_xlabel('Lag')
-ax.set_ylabel('Mean |SHAP|')
-plt.tight_layout()
-plt.show()
+# Apply Integrated Gradients via Captum
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
+# See Captum docs for full usage: https://captum.ai/
 ```
 
-High SHAP values at lag 7 and lag 14 confirm that the model has learned weekly seasonality.
+NHITS also provides inherently interpretable basis function decompositions that can be inspected directly for understanding model behavior.
 
 ---
 
@@ -467,7 +456,7 @@ robust_model = NHITS(
 ```python
 import pandas as pd
 from neuralforecast import NeuralForecast
-from neuralforecast.models import NHITS, XLinear
+from neuralforecast.models import NHITS, DLinear
 from neuralforecast.losses.pytorch import MQLoss
 from utilsforecast.losses import mqloss
 from utilsforecast.evaluation import evaluate
@@ -482,7 +471,7 @@ df = pd.read_csv(url, parse_dates=['ds'])
 # Instantiate models
 nf = NeuralForecast(
     models=[
-        XLinear(h=7, input_size=28),
+        DLinear(h=7, input_size=28),
         NHITS(h=7, input_size=28,
               loss=MQLoss(quantiles=[0.1, 0.5, 0.9]),
               max_steps=300, scaler_type='standard'),
@@ -495,7 +484,7 @@ cv = nf.cross_validation(df=df, n_windows=3, step_size=7)
 
 # Score
 scores = evaluate(df=cv, metrics=[mqloss],
-                  models=['XLinear', 'NHITS'], target_col='y')
+                  models=['DLinear', 'NHITS'], target_col='y')
 print(scores)
 ```
 
@@ -507,10 +496,10 @@ This 30-line pipeline trains two models, runs time-series cross-validation acros
 
 - **NeuralForecast wraps models in a unified API.** `.fit()`, `.predict()`, and `.cross_validation()` work identically regardless of which model is inside.
 - **NHITS is the default workhorse.** Multi-resolution decomposition, fast training, and stable defaults make it the right starting point.
-- **XLinear is always your baseline.** Never report neural model results without first checking whether a linear model does the job.
+- **DLinear is always your baseline.** Never report neural model results without first checking whether a linear model does the job.
 - **The loss is the forecast type.** `MAE` → point forecast. `MQLoss` → probabilistic forecast. One argument changes.
 - **`.simulate()` produces sample paths.** These are essential for supply chain simulation and scenario analysis.
-- **`.explain()` surfaces lag importance.** Use it to verify that the model has learned expected patterns (weekly seasonality, trend) rather than noise.
+- **Captum surfaces feature importance.** Use Captum's attribution methods on the underlying PyTorch model to verify that the model has learned expected patterns (weekly seasonality, trend) rather than noise.
 
 ---
 

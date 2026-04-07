@@ -499,7 +499,7 @@ def log_training_run(
 
 Production systems must not fail silently. Two patterns work well: a try/except fallback to a simpler model, and a validation step that checks forecast reasonableness before serving.
 
-### 5a. Fallback to XLinear on NHITS Failure
+### 5a. Fallback to DLinear on NHITS Failure
 
 ```python
 from neuralforecast import NeuralForecast

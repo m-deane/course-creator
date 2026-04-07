@@ -40,7 +40,7 @@ flowchart TD
 
 ### Why NHITS Is the Default Choice
 
-1. **Accuracy**: +20% average improvement over Transformer-based models on long-horizon benchmarks (Challu et al. 2022).
+1. **Accuracy**: +20% average improvement over Transformer-based models on long-horizon benchmarks (Challu et al. 2023).
 2. **Speed**: 50x faster than the Informer Transformer.
 3. **Parameter efficiency**: ~800K parameters vs 5M+ for PatchTST.
 4. **Stability**: The multi-rate decomposition prevents the model from overfitting to spurious high-frequency noise.

@@ -398,11 +398,11 @@ One line per run. Readable by `pandas.read_json(path, lines=True)`.
 
 # Pattern 5: Error Handling & Fallbacks
 
-<!-- Speaker notes: Production systems fail. NHITS may fail on very short series, on series with too many NaNs, or due to GPU memory issues. A fallback to XLinear ensures the pipeline always produces an output, even when the primary model fails. -->
+<!-- Speaker notes: Production systems fail. NHITS may fail on very short series, on series with too many NaNs, or due to GPU memory issues. A fallback to DLinear ensures the pipeline always produces an output, even when the primary model fails. -->
 
 ---
 
-## Fallback to XLinear
+## Fallback to DLinear
 
 ```python
 def train_with_fallback(df, horizon=7, freq="D"):

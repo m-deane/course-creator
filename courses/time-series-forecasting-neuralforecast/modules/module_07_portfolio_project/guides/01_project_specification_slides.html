@@ -18,7 +18,7 @@
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-mermaid">%%{init: {&quot;theme&quot;: &quot;base&quot;, &quot;themeVariables&quot;: {&quot;primaryColor&quot;: &quot;#e8f5e9&quot;, &quot;primaryBorderColor&quot;: &quot;#4caf50&quot;, &quot;primaryTextColor&quot;: &quot;#212121&quot;, &quot;secondaryColor&quot;: &quot;#e3f2fd&quot;, &quot;tertiaryColor&quot;: &quot;#fff8e1&quot;, &quot;lineColor&quot;: &quot;#757575&quot;, &quot;fontFamily&quot;: &quot;Inter, sans-serif&quot;, &quot;fontSize&quot;: &quot;14px&quot;}}}%%
 flowchart LR
     DATA[&quot;Real Dataset&quot;] --&gt; EDA[&quot;EDA&quot;]
-    EDA --&gt; MODEL[&quot;NHITS or XLinear\nwith MQLoss&quot;]
+    EDA --&gt; MODEL[&quot;NHITS or DLinear\nwith MQLoss&quot;]
     MODEL --&gt; PATHS[&quot;.simulate()\n200 paths&quot;]
     PATHS --&gt; DECISION[&quot;Business Answer\nnumeric + confidence&quot;]
     MODEL --&gt; EXPLAIN[&quot;.explain()\nAttribution Report&quot;]
@@ -333,7 +333,7 @@ top5_idx = np.argsort(mean_attr)[-<span class="hljs-number">5</span>:][::-<span 
 <li><strong>Module 01–02</strong>: Train neural models, evaluate with CRPS, verify calibration</li>
 <li><strong>Module 03</strong>: Generate sample paths, answer probability questions</li>
 <li><strong>Module 04</strong>: Run <code>.explain()</code>, interpret attributions</li>
-<li><strong>Module 05</strong>: XLinear as a fast, strong alternative model</li>
+<li><strong>Module 05</strong>: DLinear as a fast, strong alternative model</li>
 <li><strong>Module 06</strong>: Production patterns for the final system</li>
 </ul>
 <p>The project starter notebook at <code>notebooks/01_project_starter.ipynb</code> has working skeleton code for every section.</p>

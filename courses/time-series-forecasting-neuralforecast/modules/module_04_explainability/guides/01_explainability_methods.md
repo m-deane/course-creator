@@ -2,12 +2,18 @@
 
 > **Reading time:** ~11 min | **Module:** 4 — Explainability | **Prerequisites:** Module 1
 
+<div class="callout-danger">
+
+<strong>Important:</strong> NeuralForecast does not natively support model explainability. There is no <code>.explain()</code> method in the NeuralForecast API. For interpretability, use <a href="https://captum.ai/">Captum</a> with the underlying PyTorch models, or use inherently interpretable models like NHITS which provide basis function decompositions. The attribution theory covered in this guide is correct — apply it using Captum directly on the PyTorch model extracted from a trained NeuralForecast instance.
+
+</div>
+
 ## In Brief
 
-Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" Start with the working API call below, then dig into the theory behind each method.
+Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" These methods are implemented via the Captum library applied to the underlying PyTorch models.
 
 
-The following implementation builds on the approach above:
+The following implementation shows how to use Captum directly with a trained NeuralForecast model:
 
 <div class="code-window">
 <div class="code-header">
@@ -17,6 +23,7 @@ The following implementation builds on the approach above:
 from neuralforecast import NeuralForecast
 from neuralforecast.models import NHITS
 from neuralforecast.losses.pytorch import MSE, MAE
+from captum.attr import IntegratedGradients
 
 # Train model with exogenous features
 models = [NHITS(
@@ -30,13 +37,12 @@ models = [NHITS(
 nf = NeuralForecast(models=models, freq="D")
 nf.fit(df=train, val_size=28)
 
-# Explain forecasts — returns predictions AND attributions
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
+# Access the underlying PyTorch model for explainability
+pytorch_model = nf.models[0]
 
-# Inspect what came back
-print(explanations.keys())
-
-# dict_keys(['insample', 'futr_exog', 'baseline_predictions'])
+# Use Captum's IntegratedGradients on the PyTorch model
+ig = IntegratedGradients(pytorch_model)
+# See Captum documentation for full usage: https://captum.ai/
 ```
 
 </div>
@@ -44,7 +50,7 @@ print(explanations.keys())
 
 <div class="callout-key">
 
-<strong>Key Concept:</strong> Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. This guide covers three attribution methods that answer the question: "Why did the model forecast this value?" Start with the working API call below, then dig into the theory behind each method.
+<strong>Key Concept:</strong> Neural forecasting models like NHITS produce accurate forecasts but offer no built-in explanation of which inputs drove each prediction. Use Captum (a PyTorch model interpretability library) to compute attributions on the underlying PyTorch models. Inherently interpretable models like NHITS also provide basis function decompositions that can be inspected directly.
 
 </div>
 
@@ -103,19 +109,24 @@ $$\sum_{i=1}^{n} \text{IG}_i(x) = f(x) - f(x')$$
 
 The attributions sum to the difference between the prediction and the baseline prediction. This is what makes IG trustworthy: the attributions fully account for the prediction.
 
-**Implementation note.** NeuralForecast uses the `captum` library under the hood, which implements IG via `IntegratedGradients` from `captum.attr`.
+**Implementation note.** Use the `captum` library directly, which implements IG via `IntegratedGradients` from `captum.attr`. Extract the PyTorch model from the trained NeuralForecast instance and pass it to Captum.
 
 
-The following implementation builds on the approach above:
+The following implementation shows how to use Captum directly:
 
 <div class="code-window">
 <div class="code-header">
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
+from captum.attr import IntegratedGradients
 
-# IG is the default explainer and the recommended starting point
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
+# Extract the trained PyTorch model
+pytorch_model = nf.models[0]
+
+# Apply Integrated Gradients via Captum
+ig = IntegratedGradients(pytorch_model)
+# attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
 ```
 
 </div>
@@ -141,7 +152,10 @@ The following implementation builds on the approach above:
 <div class="dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
 
 ```python
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="InputXGradient")
+from captum.attr import InputXGradient
+
+ixg = InputXGradient(pytorch_model)
+# attributions = ixg.attribute(input_tensor)
 ```
 
 </div>
@@ -179,7 +193,10 @@ $$\sum_{i=1}^{n} \phi_i = f(x) - E[f(x)]$$
 </div>
 
 ```python
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSampling")
+from captum.attr import ShapleyValueSampling
+
+svs = ShapleyValueSampling(pytorch_model)
+# attributions = svs.attribute(input_tensor)
 ```
 
 </div>
@@ -197,7 +214,7 @@ fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="ShapleyValueSamp
 | **Baseline required** | Yes | No | Yes (expected value) |
 | **ReLU bias** | Handles correctly | Susceptible | Handles correctly |
 | **Implementation** | captum | captum | shap / captum |
-| **NeuralForecast key** | `"IntegratedGradients"` | `"InputXGradient"` | `"ShapleyValueSampling"` |
+| **Captum class** | `IntegratedGradients` | `InputXGradient` | `ShapleyValueSampling` |
 | **When to use** | Default; balance of speed and correctness | Real-time production; first-pass diagnosis | Offline analysis; highest rigor |
 
 ---
@@ -255,28 +272,28 @@ For most time series forecasting use cases, **Integrated Gradients is the right 
 
 
 
-## 6. What the `explanations` Dict Contains
+## 6. Working with Captum Attributions
 
-After calling `.explain()`, the returned dictionary has three keys:
+When using Captum directly with the underlying PyTorch model, the attribution output depends on the Captum method used. The general pattern:
 
 ```python
-fcsts_df, explanations = nf.explain(futr_df=futr_df, explainer="IntegratedGradients")
+from captum.attr import IntegratedGradients
 
-# Keys
-explanations.keys()
+# Extract trained PyTorch model from NeuralForecast
+pytorch_model = nf.models[0]
 
-# dict_keys(['insample', 'futr_exog', 'baseline_predictions'])
+ig = IntegratedGradients(pytorch_model)
+attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
+
+# attributions has the same shape as input_tensor
+# Each value represents the attribution of that input feature to the output
 ```
 
-| Key | What it contains | Tensor shape |
-|---|---|---|
-| `insample` | Attribution of each past lag to each forecast step | `[batch, horizon, series, output, input_size, 2]` |
-| `futr_exog` | Attribution of each exogenous feature to each forecast step | `[batch, horizon, series, output, input_size+horizon, n_features]` |
-| `baseline_predictions` | Model output at baseline input | `[batch, horizon, series, output]` |
+The attributions tensor has the same shape as the input tensor. Each value represents how much that input feature contributed to the model's output. For time series models, this lets you identify which lags and which exogenous features drove the forecast.
 
-The `insample` tensor's last dimension of size 2 contains `[value, attribution]` pairs — each lag's actual value and its attribution score. The `futr_exog` tensor similarly encodes attribution scores for each exogenous feature at each position in the lookback window plus the forecast horizon.
+For NHITS specifically, you can also inspect the basis function decompositions directly, since NHITS decomposes the forecast into contributions from different temporal scales — this provides a form of built-in interpretability without needing external attribution methods.
 
-Full tensor shape interpretation is covered in `02_interpreting_attributions.md`.
+Full interpretation guidance is covered in `02_interpreting_attributions.md`.
 
 ---
 

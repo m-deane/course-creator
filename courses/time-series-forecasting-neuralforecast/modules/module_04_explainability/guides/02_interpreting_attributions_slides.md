@@ -25,17 +25,15 @@ math: mathjax
 </div>
 
 ```python
-fcsts_df, explanations = nf.explain(
-    futr_df=futr_df, explainer="IntegratedGradients"
-)
+# NOTE: NeuralForecast has no .explain() method.
+# Use Captum with the underlying PyTorch model.
+from captum.attr import IntegratedGradients
 
-insample      = explanations["insample"]
-futr_exog     = explanations["futr_exog"]
-baseline_pred = explanations["baseline_predictions"]
+pytorch_model = nf.models[0]
+ig = IntegratedGradients(pytorch_model)
+attributions = ig.attribute(input_tensor, baselines=baseline_tensor)
 
-print(insample.shape)      # (1, 28, 1, 1, 56, 2)
-print(futr_exog.shape)     # (1, 28, 1, 1, 84, 2)
-print(baseline_pred.shape) # (1, 28, 1, 1)
+print(attributions.shape)  # Same shape as input_tensor
 ```
 </div>
 

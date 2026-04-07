@@ -1,5 +1,5 @@
 """
-Module 5 — XLinear Self-Check Exercises
+Module 5 — DLinear Self-Check Exercises
 Modern Time Series Forecasting with NeuralForecast
 
 Run each exercise function in order. Each one has an assertion that passes
@@ -9,8 +9,8 @@ Prerequisites:
     pip install neuralforecast datasetsforecast utilsforecast
 
 Usage:
-    python 01_xlinear_exercises.py          # run all exercises
-    python 01_xlinear_exercises.py --ex 1   # run one exercise
+    python 01_dlinear_exercises.py          # run all exercises
+    python 01_dlinear_exercises.py --ex 1   # run one exercise
 
 Expected runtime: 8–12 minutes (training runs included)
 """
@@ -30,21 +30,21 @@ import numpy as np
 
 def exercise_1_prediction_shape():
     """
-    Train XLinear on ETTm1 with h=96 and verify the output tensor shape.
+    Train DLinear on ETTm1 with h=96 and verify the output tensor shape.
 
-    XLinear forecasts ALL n_series variables simultaneously.
+    DLinear forecasts ALL n_series variables simultaneously.
     The cross_validation() output should contain one row per
     (unique_id, cutoff, ds) combination.
 
     Expected shape check:
-        - cv_df has column "XLinear" (the forecast values)
+        - cv_df has column "DLinear" (the forecast values)
         - Number of unique unique_ids == 7 (all ETTm1 series)
         - Number of forecast steps per series per cutoff == h (96)
     """
     print("Exercise 1: Verifying prediction shape...")
 
     from neuralforecast import NeuralForecast
-    from neuralforecast.models import XLinear
+    from neuralforecast.models import DLinear
     from datasetsforecast.long_horizon import LongHorizon
 
     Y_df, _, _ = LongHorizon.load(directory="./data", group="ETTm1")
@@ -53,7 +53,7 @@ def exercise_1_prediction_shape():
     H = 96
     N_SERIES = 7
 
-    model = XLinear(
+    model = DLinear(
         h=H,
         input_size=H,
         n_series=N_SERIES,
@@ -73,28 +73,28 @@ def exercise_1_prediction_shape():
     # ── Shape assertions ──────────────────────────────────────────────────────
 
     # 1. Forecast column exists
-    assert "XLinear" in cv_df.columns, (
-        f"Expected 'XLinear' column in cv_df. Got columns: {cv_df.columns.tolist()}"
+    assert "DLinear" in cv_df.columns, (
+        f"Expected 'DLinear' column in cv_df. Got columns: {cv_df.columns.tolist()}"
     )
 
     # 2. All 7 series present
     n_series_in_output = cv_df["unique_id"].nunique()
     assert n_series_in_output == N_SERIES, (
         f"Expected {N_SERIES} series in output. Got {n_series_in_output}.\n"
-        f"Check that n_series={N_SERIES} in XLinear and that all series are in Y_df."
+        f"Check that n_series={N_SERIES} in DLinear and that all series are in Y_df."
     )
 
     # 3. Forecast values are not all NaN
-    nan_fraction = cv_df["XLinear"].isna().mean()
+    nan_fraction = cv_df["DLinear"].isna().mean()
     assert nan_fraction < 0.01, (
-        f"More than 1% of XLinear forecasts are NaN ({nan_fraction:.1%}).\n"
+        f"More than 1% of DLinear forecasts are NaN ({nan_fraction:.1%}).\n"
         f"This may indicate a training failure. Check max_steps and learning_rate."
     )
 
     # 4. Forecast values are finite (no inf)
-    inf_count = np.isinf(cv_df["XLinear"].values).sum()
+    inf_count = np.isinf(cv_df["DLinear"].values).sum()
     assert inf_count == 0, (
-        f"Found {inf_count} infinite values in XLinear forecasts.\n"
+        f"Found {inf_count} infinite values in DLinear forecasts.\n"
         f"This indicates numerical instability — reduce learning_rate."
     )
 
@@ -113,26 +113,26 @@ def exercise_1_prediction_shape():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Exercise 2: Compare MAE of XLinear vs. NHITS
+# Exercise 2: Compare MAE of DLinear vs. NHITS
 # ─────────────────────────────────────────────────────────────────────────────
 
 def exercise_2_mae_comparison():
     """
-    Train both XLinear (multivariate) and NHITS (univariate) on ETTm1 h=96.
+    Train both DLinear (multivariate) and NHITS (univariate) on ETTm1 h=96.
     Compute mean MAE for each model on the test set.
-    Verify that XLinear achieves lower MAE than NHITS.
+    Verify that DLinear achieves lower MAE than NHITS.
 
     This exercise confirms the architectural advantage of cross-variable learning
     on a dataset with known physical correlations.
 
     Note: With max_steps=300, both models are undertrained relative to the
-    published benchmark. XLinear should still outperform NHITS due to its
+    published benchmark. DLinear should still outperform NHITS due to its
     multivariate inductive bias, but the margin may be smaller than reported.
     """
-    print("Exercise 2: Comparing XLinear MAE vs. NHITS MAE...")
+    print("Exercise 2: Comparing DLinear MAE vs. NHITS MAE...")
 
     from neuralforecast import NeuralForecast
-    from neuralforecast.models import XLinear, NHITS
+    from neuralforecast.models import DLinear, NHITS
     from datasetsforecast.long_horizon import LongHorizon
     from utilsforecast.losses import mae
     from utilsforecast.evaluation import evaluate
@@ -154,7 +154,7 @@ def exercise_2_mae_comparison():
         max_steps=300,
     )
 
-    xlinear_model = XLinear(
+    dlinear_model = DLinear(
         h=H,
         input_size=H,
         n_series=7,
@@ -175,32 +175,32 @@ def exercise_2_mae_comparison():
     eval_nhits = evaluate(df=test_nhits, metrics=[mae], models=["NHITS"])
     nhits_mae = eval_nhits[eval_nhits["metric"] == "mae"]["NHITS"].mean()
 
-    # Train and evaluate XLinear
-    nf_xlinear = NeuralForecast(models=[xlinear_model], freq=FREQ)
-    cv_xlinear = nf_xlinear.cross_validation(df=Y_df, val_size=VAL_SIZE, test_size=TEST_SIZE)
-    test_xlinear = cv_xlinear[cv_xlinear["cutoff"] == cv_xlinear["cutoff"].max()].copy()
-    eval_xlinear = evaluate(df=test_xlinear, metrics=[mae], models=["XLinear"])
-    xlinear_mae = eval_xlinear[eval_xlinear["metric"] == "mae"]["XLinear"].mean()
+    # Train and evaluate DLinear
+    nf_dlinear = NeuralForecast(models=[dlinear_model], freq=FREQ)
+    cv_dlinear = nf_dlinear.cross_validation(df=Y_df, val_size=VAL_SIZE, test_size=TEST_SIZE)
+    test_dlinear = cv_dlinear[cv_dlinear["cutoff"] == cv_dlinear["cutoff"].max()].copy()
+    eval_dlinear = evaluate(df=test_dlinear, metrics=[mae], models=["DLinear"])
+    dlinear_mae = eval_dlinear[eval_dlinear["metric"] == "mae"]["DLinear"].mean()
 
     print(f"  NHITS  mean MAE: {nhits_mae:.4f}")
-    print(f"  XLinear mean MAE: {xlinear_mae:.4f}")
-    print(f"  Difference (NHITS - XLinear): {nhits_mae - xlinear_mae:.4f}")
+    print(f"  DLinear mean MAE: {dlinear_mae:.4f}")
+    print(f"  Difference (NHITS - DLinear): {nhits_mae - dlinear_mae:.4f}")
 
     # ── MAE assertion ─────────────────────────────────────────────────────────
-    # With 300 steps, XLinear should achieve comparable or better MAE.
+    # With 300 steps, DLinear should achieve comparable or better MAE.
     # A strict better-than assertion is relaxed slightly for short training runs.
-    assert xlinear_mae <= nhits_mae * 1.05, (
-        f"XLinear MAE ({xlinear_mae:.4f}) is more than 5% worse than NHITS MAE ({nhits_mae:.4f}).\n"
+    assert dlinear_mae <= nhits_mae * 1.05, (
+        f"DLinear MAE ({dlinear_mae:.4f}) is more than 5% worse than NHITS MAE ({nhits_mae:.4f}).\n"
         f"This is unexpected for ETTm1 which has strong cross-series correlations.\n"
         f"Possible causes: n_series mismatch, learning rate too high, or training instability.\n"
         f"Try: increase max_steps to 1000, reduce learning_rate to 1e-4, verify n_series=7."
     )
 
-    improvement = (nhits_mae - xlinear_mae) / nhits_mae * 100
-    print(f"  XLinear improvement over NHITS: {improvement:.1f}%")
-    print("  PASSED: XLinear achieves comparable or better MAE than NHITS.\n")
+    improvement = (nhits_mae - dlinear_mae) / nhits_mae * 100
+    print(f"  DLinear improvement over NHITS: {improvement:.1f}%")
+    print("  PASSED: DLinear achieves comparable or better MAE than NHITS.\n")
 
-    return nhits_mae, xlinear_mae
+    return nhits_mae, dlinear_mae
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ def exercise_2_mae_comparison():
 
 def exercise_3_hidden_size_ablation():
     """
-    Train XLinear with three different hidden_size values: 128, 256, 512.
+    Train DLinear with three different hidden_size values: 128, 256, 512.
     Compare mean MAE on the ETTm1 test set.
 
     Expected behavior:
@@ -223,7 +223,7 @@ def exercise_3_hidden_size_ablation():
     print("Exercise 3: hidden_size ablation (128, 256, 512)...")
 
     from neuralforecast import NeuralForecast
-    from neuralforecast.models import XLinear
+    from neuralforecast.models import DLinear
     from datasetsforecast.long_horizon import LongHorizon
     from utilsforecast.losses import mae
     from utilsforecast.evaluation import evaluate
@@ -240,9 +240,9 @@ def exercise_3_hidden_size_ablation():
     results = {}
 
     for hs in HIDDEN_SIZES:
-        print(f"  Training XLinear with hidden_size={hs}...")
+        print(f"  Training DLinear with hidden_size={hs}...")
 
-        model = XLinear(
+        model = DLinear(
             h=H,
             input_size=H,
             n_series=7,
@@ -259,8 +259,8 @@ def exercise_3_hidden_size_ablation():
         nf = NeuralForecast(models=[model], freq=FREQ)
         cv = nf.cross_validation(df=Y_df, val_size=VAL_SIZE, test_size=TEST_SIZE)
         test_df = cv[cv["cutoff"] == cv["cutoff"].max()].copy()
-        eval_df = evaluate(df=test_df, metrics=[mae], models=["XLinear"])
-        mean_mae = eval_df[eval_df["metric"] == "mae"]["XLinear"].mean()
+        eval_df = evaluate(df=test_df, metrics=[mae], models=["DLinear"])
+        mean_mae = eval_df[eval_df["metric"] == "mae"]["DLinear"].mean()
         results[hs] = mean_mae
         print(f"    hidden_size={hs}: MAE={mean_mae:.4f}")
 
@@ -308,7 +308,7 @@ def exercise_3_hidden_size_ablation():
 
 def main(run_exercise=None):
     print("=" * 65)
-    print("Module 5 — XLinear Self-Check Exercises")
+    print("Module 5 — DLinear Self-Check Exercises")
     print("=" * 65)
     print()
 
@@ -336,7 +336,7 @@ def main(run_exercise=None):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="XLinear self-check exercises")
+    parser = argparse.ArgumentParser(description="DLinear self-check exercises")
     parser.add_argument(
         "--ex", type=int, default=None,
         help="Run a single exercise by number (1, 2, or 3). Omit to run all."

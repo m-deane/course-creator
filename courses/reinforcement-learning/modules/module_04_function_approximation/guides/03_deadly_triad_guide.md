@@ -15,7 +15,7 @@ The deadly triad refers to the three conditions whose simultaneous combination c
 
 ## Key Insight
 
-The triad is not a limitation of specific algorithms — it is a fundamental property of the problem structure. Sutton & Barto Chapter 11.3 proves this via Baird's counterexample: a 7-state MDP where a linear approximator trained with semi-gradient Q-learning diverges to infinity despite a perfect representation and a simple problem.
+The triad is not a limitation of specific algorithms — it is a fundamental property of the problem structure. Sutton & Barto Chapter 11.2 proves this via Baird's counterexample: a 7-state MDP where a linear approximator trained with semi-gradient Q-learning diverges to infinity despite a perfect representation and a simple problem.
 
 ---
 
@@ -415,7 +415,7 @@ Large rewards amplify the TD error, which amplifies the weight update. Combined 
 
 ## Further Reading
 
-- Sutton & Barto (2018), Chapter 11 — the primary reference for the deadly triad (Section 11.3 is Baird's counterexample)
+- Sutton & Barto (2018), Chapter 11 — the primary reference for the deadly triad (Section 11.2 is Baird's counterexample)
 - Baird (1995), "Residual algorithms: Reinforcement learning with function approximation" — the original counterexample paper
 - Tsitsiklis & Van Roy (1997), "An analysis of temporal-difference learning with function approximation" — proves convergence for on-policy linear TD and identifies what breaks off-policy
 - Sutton et al. (2009), "Fast gradient-descent methods for temporal-difference learning with linear function approximation" — GTD and GTD2 convergent off-policy methods

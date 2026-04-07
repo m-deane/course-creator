@@ -79,11 +79,11 @@ No prior time series or deep learning experience is required. Module 0 builds fr
 | nixtla `(unique_id, ds, y)` format | Guide 01, Notebook 02 |
 | `NeuralForecast` wrapper class | Guide 02, Notebook 01 |
 | NHITS architecture (high-level) | Guide 02, Notebook 01 |
-| XLinear baseline model | Guide 02, Notebook 01 |
+| DLinear baseline model | Guide 02, Notebook 01 |
 | `MQLoss` vs `MAE` — the loss-as-forecast-type pattern | Guide 02 |
 | `.fit()` / `.predict()` / `.cross_validation()` | Guide 02, Notebook 01 |
 | `.simulate()` for sample paths | Guide 02 |
-| `.explain()` for SHAP-based attribution | Guide 02 |
+| Captum for feature attribution (external) | Guide 02 |
 
 ---
 

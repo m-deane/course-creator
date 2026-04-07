@@ -18,7 +18,7 @@ flowchart LR
     B --> C[Preprocess\nnixtla format]
     C --> D{Model Selector}
     D -->|long series\nmany features| E[NHITS + MQLoss]
-    D -->|short series\ninterpretable| F[XLinear]
+    D -->|short series\ninterpretable| F[DLinear]
     E --> G[train / fit]
     F --> G
     G --> H[predict\nquantile forecasts]
@@ -71,10 +71,10 @@ class ForecastPipeline:
         Pandas-compatible frequency string ('D', 'W', 'H', etc.).
     quantiles : list[float]
         Quantiles to estimate. Default covers 10th, 50th, 80th, 90th.
-    model_type : {'nhits', 'xlinear'}
+    model_type : {'nhits', 'dlinear'}
         Which model to train. Choose based on series length and feature richness.
     max_steps : int
-        Training iterations for NHITS. Ignored for XLinear (closed-form).
+        Training iterations for NHITS. Ignored for DLinear (closed-form).
     random_seed : int
         Reproducibility seed.
     """
@@ -84,7 +84,7 @@ class ForecastPipeline:
         horizon: int = 7,
         freq: str = "D",
         quantiles: list[float] | None = None,
-        model_type: Literal["nhits", "xlinear"] = "nhits",
+        model_type: Literal["nhits", "dlinear"] = "nhits",
         max_steps: int = 500,
         random_seed: int = 42,
     ):
@@ -148,7 +148,7 @@ class ForecastPipeline:
                 max_steps=self.max_steps,
                 random_seed=self.random_seed,
             )
-        elif self.model_type == "xlinear":
+        elif self.model_type == "dlinear":
             model = LinearRegressor(
                 h=self.horizon,
                 input_size=3 * self.horizon,
@@ -156,7 +156,7 @@ class ForecastPipeline:
                 random_seed=self.random_seed,
             )
         else:
-            raise ValueError(f"Unknown model_type '{self.model_type}'. Use 'nhits' or 'xlinear'.")
+            raise ValueError(f"Unknown model_type '{self.model_type}'. Use 'nhits' or 'dlinear'.")
 
         self._nf = NeuralForecast(models=[model], freq=self.freq)
         self._nf.fit(self._train_df)
@@ -195,13 +195,21 @@ class ForecastPipeline:
     # ── Stage 5: Explain ───────────────────────────────────────────────────────
     def explain(self) -> dict:
         """
-        Compute SHAP-style feature importances for the last forecast.
+        Compute feature importances for the last forecast.
+
+        NOTE: NeuralForecast does not have a native .explain() method.
+        Use Captum with the underlying PyTorch model for attributions.
 
         Returns a dict mapping feature names to importance scores.
         """
         self._require_trained()
-        explanation = self._nf.explain(self._train_df)
-        return explanation
+        # NeuralForecast does not support .explain(). Use Captum directly:
+        # from captum.attr import IntegratedGradients
+        # pytorch_model = self._nf.models[0]
+        # ig = IntegratedGradients(pytorch_model)
+        raise NotImplementedError(
+            "Explainability requires Captum. See https://captum.ai/"
+        )
 
     # ── Stage 6: Decide ────────────────────────────────────────────────────────
     def service_level_order(
@@ -260,7 +268,7 @@ class ForecastPipeline:
 
 ---
 
-## 4. Model Selection: NHITS vs XLinear
+## 4. Model Selection: NHITS vs DLinear
 
 The choice of model depends on three factors: series length, available features, and interpretability requirements.
 
@@ -271,7 +279,7 @@ The choice of model depends on three factors: series length, available features,
 </div>
 
 
-| Factor | Prefer NHITS | Prefer XLinear |
+| Factor | Prefer NHITS | Prefer DLinear |
 |---|---|---|
 | Series length | > 200 observations | < 100 observations |
 | Exogenous features | Many (weather, calendar, promotions) | Few or none |
@@ -293,13 +301,13 @@ def select_model(series_length: int, n_features: int, needs_explanation: bool) -
     """
     Return the recommended model type given series characteristics.
 
-    Uses a conservative heuristic: prefer XLinear when interpretability
+    Uses a conservative heuristic: prefer DLinear when interpretability
     is required or when series are too short for NHITS to generalize.
     """
     if needs_explanation and series_length < 500:
-        return "xlinear"
+        return "dlinear"
     if series_length < 100:
-        return "xlinear"
+        return "dlinear"
     if n_features > 10 and series_length > 200:
         return "nhits"
     return "nhits"  # default for long, feature-rich series
@@ -321,7 +329,7 @@ See detailed comparison in the table above.
 </div>
 </div>
 <div class="compare-card">
-<div class="header after">XLinear</div>
+<div class="header after">DLinear</div>
 <div class="body">
 
 See detailed comparison in the table above.
@@ -432,7 +440,7 @@ print(f"Daily breakdown     : {decision['daily_breakdown']}")
 ## 7. Key Takeaways
 
 1. A `ForecastPipeline` class enforces stage order, fails loudly on bad data, and is callable by any scheduler.
-2. NHITS excels on long, feature-rich series; XLinear excels when interpretability is non-negotiable or training data is sparse.
+2. NHITS excels on long, feature-rich series; DLinear excels when interpretability is non-negotiable or training data is sparse.
 3. Sliding window retraining is appropriate for products with changing demand profiles; expanding window is appropriate for stable products.
 4. Every stage — ingest, train, predict, simulate, explain — should be independently testable.
 5. The business decision (service level order quantity) is the final output, not the quantile forecast. The pipeline exists to produce that number reliably.

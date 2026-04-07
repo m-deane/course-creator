@@ -17,12 +17,6 @@ Retrieval strategies for commodity analysis combine semantic search with tempora
 **Insight:** Standard RAG retrieval fails for commodities because semantic similarity alone can't distinguish between "crude oil storage was high in January 2024" and "crude oil storage was high in January 2020"—both are semantically identical but lead to opposite trading conclusions. Effective commodity retrieval requires **multi-dimensional filtering** that respects time, space, and domain boundaries.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of retrieval like asking a specialized librarian for commodity research:

@@ -17,12 +17,6 @@ Sentiment extraction for commodities uses LLMs to classify market direction (bul
 **Insight:** Standard financial sentiment models fail for commodities because "increased production" is bearish for prices (more supply) but bullish for producer stocks, and context matters enormously—"low inventory" is bearish in agriculture (crop shortage) but can be bullish in energy (strong demand). LLMs excel at this contextual reasoning that simpler models miss.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of commodity sentiment extraction like translating news into trading signals:

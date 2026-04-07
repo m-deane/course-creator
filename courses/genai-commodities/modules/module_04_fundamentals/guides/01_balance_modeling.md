@@ -20,12 +20,6 @@ LLMs help by:
 2. Identifying revisions and surprises
 3. Generating balance sheet projections
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Balance Sheet Structure
 
 ### Energy Commodities

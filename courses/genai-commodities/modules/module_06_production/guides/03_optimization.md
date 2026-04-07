@@ -17,12 +17,6 @@ Production LLM systems face the triple constraint of cost, latency, and quality.
 **Insight:** LLM costs follow a power law: 80% of queries are repetitive (cacheable), 15% can use smaller/faster models, and only 5% require the full frontier model. Latency has three components—network (100-200ms), inference (1-2s), and processing (0.5s)—each optimizable independently. The optimization strategy: cache aggressively, route intelligently, compress ruthlessly, and parallelize everything.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 ## Formal Definition

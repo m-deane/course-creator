@@ -727,8 +727,11 @@ class SparseBinaryIndividual:
 ## Further Reading
 
 ### Academic Papers
-- Holland, J.H. (1992). "Genetic Algorithms". Scientific American, 267(1), 66-72.
+- Holland, J.H. (1975). "Adaptation in Natural and Artificial Systems". University of Michigan Press.
   - Original formulation of binary encoding in GAs
+
+- Holland, J.H. (1992). "Genetic Algorithms". Scientific American, 267(1), 66-72.
+  - Accessible overview of GA concepts for a general audience
 
 - Cervantes, L., et al. (2020). "A comprehensive survey on support vector machine classification: Applications, challenges and trends". Neurocomputing, 408, 189-215.
   - Section on encoding strategies for feature selection

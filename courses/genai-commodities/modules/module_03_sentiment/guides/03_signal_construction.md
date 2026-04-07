@@ -17,12 +17,6 @@ Signal construction transforms sentiment analysis into actionable trading recomm
 **Insight:** Sentiment is not a signal—it's a signal ingredient. "Bullish sentiment" alone doesn't tell you whether to buy now, how much to buy, or when to exit. Effective signal construction requires combining sentiment with price action confirmation, position sizing based on confidence, and historical backtesting to validate that sentiment actually predicts price moves.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of building trading signals like a pilot's pre-flight checklist:

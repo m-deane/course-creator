@@ -69,13 +69,6 @@ EXP3 solution: Randomize buy times, sometimes skip days, mix in other commoditie
 
 ## Formal Definition
 
-<div class="callout-warning">
-
-**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
-
-</div>
-
-
 ### Adversarial Bandit Setup
 
 **Each round `t = 1, 2, ..., T`:**

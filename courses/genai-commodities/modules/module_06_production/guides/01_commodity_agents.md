@@ -12,12 +12,6 @@
 
 Commodity trading agents autonomously gather data, analyze markets, and generate recommendations. This guide covers building agents that handle the full research-to-signal pipeline.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Agent Architecture
 
 ### Components

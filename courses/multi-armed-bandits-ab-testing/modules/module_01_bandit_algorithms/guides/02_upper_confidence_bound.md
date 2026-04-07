@@ -476,7 +476,7 @@ Implement UCB-Tuned, which uses variance estimates to shrink confidence bounds:
 ```
 UCB-Tuned: a_t = argmax_a [Q̂(a) + √(ln(t)/N(a) · min(1/4, V_a(t)))]
 
-where V_a(t) = (1/N_a)·Σ(r² - Q̂²) + √(2ln(t)/N_a)
+where V_a(t) = (1/N_a)·Σ(r²) - Q̂² + √(2ln(t)/N_a)
 ```
 
 This exploits the fact that arms with low variance need smaller confidence bounds.

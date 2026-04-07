@@ -12,12 +12,6 @@
 
 Individual news sentiment scores must be aggregated into actionable market signals. This guide covers techniques for combining multiple sentiment sources into coherent market views.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Sentiment Score Normalization
 
 ### Handling Different Scales

@@ -12,12 +12,6 @@
 
 This guide covers converting LLM-extracted insights into quantitative trading signals.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Signal Architecture
 
 ### The Signal Pipeline

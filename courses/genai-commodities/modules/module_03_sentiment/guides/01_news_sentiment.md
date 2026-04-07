@@ -12,12 +12,6 @@
 
 News sentiment analysis extracts directional signals from commodity market news. Unlike general sentiment analysis, commodity sentiment requires domain expertise to interpret supply/demand implications.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Commodity-Specific Sentiment
 
 ### Why General Sentiment Fails

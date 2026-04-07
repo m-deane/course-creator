@@ -17,12 +17,6 @@ Commodity document processing transforms heterogeneous reports (PDFs, HTML table
 **Insight:** The value of commodity documents isn't just in the text—it's in the structured data they contain. A crude oil inventory number without its date, unit, and geography is meaningless. Processing pipelines must extract, validate, and enrich data while maintaining traceability to source documents.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of processing commodity documents like preparing ingredients for cooking:

@@ -12,12 +12,6 @@
 
 The Energy Information Administration (EIA) publishes critical petroleum market data. This guide covers automated extraction from their most important reports.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Key EIA Reports
 
 ### Weekly Petroleum Status Report (WPSR)

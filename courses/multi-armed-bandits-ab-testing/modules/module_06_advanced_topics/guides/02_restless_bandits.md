@@ -34,13 +34,6 @@ Restless bandits are arms that evolve over time *even when you don't select them
 
 ## Visual Explanation
 
-<div class="callout-warning">
-
-**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
-
-</div>
-
-
 ```
 Standard Bandit (arms freeze when not selected):
            ┌─ Selected ─┐

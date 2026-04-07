@@ -17,12 +17,6 @@ The US Department of Agriculture publishes critical supply/demand data for agric
 **Insight:** USDA reports drive agricultural commodity markets but are published as PDFs with inconsistent table formats. LLMs excel at flexible table parsing and context extraction where traditional parsers fail, enabling automated processing of monthly WASDE updates and weekly crop reports.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of USDA reports as market scorecards updated monthly (WASDE) or weekly (Crop Progress). The LLM acts as an experienced analyst who can:

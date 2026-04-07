@@ -17,12 +17,6 @@ Supply/demand modeling with LLMs combines traditional fundamental analysis (prod
 **Insight:** Traditional supply/demand models rely on structured data (EIA inventories, USDA production estimates) but miss critical context from unstructured sources—a surprise OPEC announcement, drought in the Midwest, or refinery outage. LLMs excel at extracting and reasoning over this unstructured information, allowing quantitative models to incorporate qualitative factors that actually move markets.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of supply/demand modeling like forecasting your home heating costs:

@@ -17,12 +17,6 @@ Confidence scoring quantifies the reliability of LLM-generated signals by measur
 **Insight:** LLMs are notoriously overconfident—claiming 90% certainty on predictions that are correct only 60% of the time. Calibration transforms subjective LLM confidence into objective probability estimates through empirical validation. A calibrated confidence score of 0.75 means "historically, signals with this confidence were correct 75% of the time," enabling quantitative risk assessment and Kelly-optimal position sizing.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 ## Formal Definition

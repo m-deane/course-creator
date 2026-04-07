@@ -12,12 +12,6 @@
 
 Large Language Models are neural networks trained to predict text that can be repurposed as general-purpose document understanding engines. For commodity trading, this means a single model can read EIA inventory reports, parse earnings call transcripts, and extract price signals from news — tasks that previously required separate, hand-built parsers for each document type.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Key Insight
 
 <div class="callout-info">

@@ -17,12 +17,6 @@ Knowledge base design for commodity markets involves structuring unstructured co
 **Insight:** Commodity data requires time-aware chunking strategies because the same concept (e.g., "crude oil inventory") has drastically different interpretations based on date, location, and market context. A knowledge base that loses temporal ordering produces hallucinated or outdated analysis.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of a commodity knowledge base like a specialized library where:

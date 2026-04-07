@@ -68,7 +68,7 @@ Beyond simple RV, several refinements exist:
 | Measure | Formula | Property |
 |---------|---------|----------|
 | RV | $\sum r_i^2$ | Baseline |
-| BPV | $\sum \|r_i\| \cdot \|r_{i-1}\|$ | Robust to jumps |
+| BPV | $\frac{\pi}{2} \sum \|r_i\| \cdot \|r_{i-1}\|$ | Robust to jumps (Barndorff-Nielsen & Shephard, 2004) |
 | RQ | $\sum r_i^4$ | Related to variance of variance |
 | MinRV, MedRV | Truncated versions | Jump-robust |
 
@@ -92,7 +92,9 @@ where:
 
 The Beta weights are normalised to sum to 1:
 
-$$B(j; \theta_1, \theta_2) = \frac{(j/K)^{\theta_1-1}(1-j/K)^{\theta_2-1}}{\sum_{k=0}^{K-1}(k/K)^{\theta_1-1}(1-k/K)^{\theta_2-1}}$$
+$$B(j; \theta_1, \theta_2) = \frac{((j+0.5)/K)^{\theta_1-1}(1-(j+0.5)/K)^{\theta_2-1}}{\sum_{k=0}^{K-1}((k+0.5)/K)^{\theta_1-1}(1-(k+0.5)/K)^{\theta_2-1}}$$
+
+> **Note:** The midpoint evaluation $(j+0.5)/K$ avoids boundary singularities when $\theta_1 < 1$ or $\theta_2 < 1$, following Ghysels, Sinko, & Valkanov (2007).
 
 ### 3.2 Equivalent Formulation in Logs
 
@@ -142,8 +144,8 @@ def beta_weights(K, theta1, theta2):
     -------
     weights : array, shape (K,) — normalised weights summing to 1
     """
-    # Evaluation points: uniform grid on [0, 1]
-    x = np.linspace(0.001, 0.999, K)
+    # Midpoint evaluation points on (0, 1) to avoid boundary singularities
+    x = (np.arange(K) + 0.5) / K
     # Un-normalised beta density
     unnorm = x**(theta1 - 1) * (1 - x)**(theta2 - 1)
     # Normalise

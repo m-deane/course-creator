@@ -17,12 +17,6 @@ Storage analysis uses LLM-augmented interpretation of inventory data to understa
 **Insight:** Storage levels are meaningless without context—3,500 Bcf of natural gas storage is comfortable in October (injection season ending) but dangerously low in February (withdrawal season peak). LLMs excel at providing this contextual interpretation, understanding that "above 5-year average" can still be bullish if a polar vortex is forecasted or refineries are running at record rates.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of commodity storage like your phone battery:

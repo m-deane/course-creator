@@ -17,12 +17,6 @@ Term structure analysis examines the relationship between futures contracts of d
 **Insight:** The futures curve shape tells a story: contango suggests plentiful supply (willing to pay storage), backwardation signals scarcity (immediate need outweighs future value). LLMs read this story in reverse—analyzing news, inventories, and market commentary to predict whether the curve will steepen, flatten, or invert. This combines quantitative curve modeling with qualitative fundamental understanding.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of airline ticket pricing:

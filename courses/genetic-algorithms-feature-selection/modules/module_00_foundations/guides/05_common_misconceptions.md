@@ -110,7 +110,7 @@ A population that is too small (< 20) lacks diversity and converges prematurely.
 
 ### Why It Matters
 
-The standard heuristic is **population size = 2 to 5 times the number of features**. For 50 features, that means 100-250 individuals. Going much beyond that rarely improves results but always increases cost.
+A commonly used practitioner heuristic is **population size = 2 to 5 times the number of features**, though this is not formally established in GA theory. Eiben & Smith (2003) suggest population sizes of 50-200 work well for many problems, and optimal sizing depends on problem structure. For 50 features, 100-250 individuals is a reasonable starting point. Going much beyond that rarely improves results but always increases cost.
 
 ### Example
 

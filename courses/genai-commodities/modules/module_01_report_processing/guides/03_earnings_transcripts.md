@@ -17,12 +17,6 @@ Corporate earnings calls contain valuable forward-looking commodity information 
 **Insight:** Companies directly involved in commodity production or consumption often discuss supply/demand factors weeks or months before they appear in official statistics. An oil major's capex guidance signals future production; a chemical company's margin commentary reveals refining economics. LLMs can extract these signals from unstructured transcripts at scale.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Imagine earnings calls as real-time market research interviews. The CEO and CFO are revealing:

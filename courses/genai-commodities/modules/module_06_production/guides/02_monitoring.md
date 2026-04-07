@@ -17,12 +17,6 @@ Production monitoring tracks LLM performance in real-time to detect when model b
 **Insight:** LLMs fail silently—they always return plausible-sounding text even when wrong. Unlike traditional ML where accuracy metrics drop visibly, LLM degradation manifests as subtle shifts: slightly lower conviction, different reasoning patterns, or increased uncertainty. Production monitoring must measure semantic drift (meaning changes), performance drift (accuracy decline), and input drift (market regime changes) across multiple timescales to catch failures early.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 ## Formal Definition

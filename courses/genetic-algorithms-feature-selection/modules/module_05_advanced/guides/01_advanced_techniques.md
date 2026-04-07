@@ -12,7 +12,7 @@
 
 <div class="callout-danger">
 
-<strong>Danger:</strong> Running NSGA-II with insufficient population size (e.g., 20 individuals for a 100-feature problem) produces a sparse, unreliable Pareto front. Use at least 2-3x the number of features as population size for meaningful multi-objective results.
+<strong>Danger:</strong> Running NSGA-II with insufficient population size (e.g., 20 individuals for a 100-feature problem) produces a sparse, unreliable Pareto front. A common practitioner heuristic is 2-3x the number of features as population size, though optimal sizing depends on the number of objectives and expected Pareto front size (Deb et al., 2002). Eiben & Smith (2003) suggest 50-200 individuals as a general starting range.
 
 </div>
 

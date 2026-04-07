@@ -12,12 +12,6 @@
 
 Effective prompt engineering is crucial for extracting accurate, actionable insights from LLMs when analyzing commodity markets. This guide covers foundational techniques tailored to financial applications.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## The Anatomy of a Good Prompt
 
 ### Structure

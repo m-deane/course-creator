@@ -60,13 +60,6 @@ Only use last W=200 observations:
 
 ## Formal Definition
 
-<div class="callout-warning">
-
-**Warning:** Bandit algorithms assume the reward distributions are stationary (or slowly changing). In commodity markets, regime shifts can make a historically optimal arm suddenly suboptimal. Always implement change detection alongside your bandit.
-
-</div>
-
-
 ### Discounted Thompson Sampling
 
 For each arm `i`, maintain discounted success/failure counts:

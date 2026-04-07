@@ -160,7 +160,7 @@ The `setup_toolbox` function above uses specific values for `pop_size`, `indpb`,
 
 | Parameter | Recommended Range | Heuristic | Reasoning |
 |---|---|---|---|
-| **pop_size** | 2-5x `n_features` | For 50 features, use 100-250 | Need diversity proportional to search space size ($2^n$). Too small and the GA converges prematurely; too large and each generation is expensive. |
+| **pop_size** | 2-5x `n_features` (practitioner heuristic, not formally established; Eiben & Smith 2003 suggest 50-200 for many problems) | For 50 features, use 100-250 | Need diversity proportional to search space size ($2^n$). Too small and the GA converges prematurely; too large and each generation is expensive. |
 | **mutation_rate** (`indpb` for `mutFlipBit`) | `1/n_features` | For 50 features, use 0.02 | On average, one feature flips per individual. This is the minimal perturbation that still explores -- like a small learning rate in gradient descent. |
 | **crossover_prob** (`cxpb`) | 0.6-0.9 | Default: 0.8 | Crossover is the primary search operator that combines building blocks from parents. Below 0.6, the GA relies too heavily on mutation alone. |
 | **tournament_size** (`tournsize`) | 3-7 | Default: 3 | Balances selection pressure and diversity. Size 3 means the best of 3 random individuals becomes a parent -- moderate pressure. Size 7 is aggressive, suitable for large populations. |

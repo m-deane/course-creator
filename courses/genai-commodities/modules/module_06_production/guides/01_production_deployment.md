@@ -12,12 +12,6 @@
 
 Moving from prototype to production requires addressing reliability, cost, latency, and monitoring. This guide covers production deployment patterns for commodity trading Gen AI systems.
 
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Architecture Patterns
 
 ### Production Architecture

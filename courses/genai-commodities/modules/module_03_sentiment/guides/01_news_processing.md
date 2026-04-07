@@ -17,12 +17,6 @@ Commodity news processing involves acquiring real-time news from multiple source
 **Insight:** Commodity news is fundamentally different from general financial news—a single word change ("higher" vs "lower" production forecast) can move markets billions of dollars. Processing must be low-latency (sub-minute for algorithmic trading), handle domain-specific jargon ("contango", "crack spread"), and distinguish between analysis and reporting of facts.
 
 </div>
-<div class="callout-warning">
-
-**Warning:** Common implementation pitfalls include numerical instability with poorly conditioned matrices and convergence issues with iterative algorithms. Always validate results against known benchmarks.
-
-</div>
-
 ## Intuitive Explanation
 
 Think of processing commodity news like being a trader's research assistant who reads thousands of articles per day:

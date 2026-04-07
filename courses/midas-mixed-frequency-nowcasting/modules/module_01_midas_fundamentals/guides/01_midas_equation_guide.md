@@ -353,7 +353,7 @@ $$\text{Gain} = R^2_{\text{MIDAS}} - R^2_{\text{OLS-aggregate}}$$
 
 In empirical studies of GDP nowcasting:
 - Monthly IP to quarterly GDP: MIDAS gains ~0.05–0.10 R² units
-- Daily returns to quarterly stock returns: MIDAS gains ~0.15–0.20 R² units (Ghysels, Santa-Clara, Valkanov 2006)
+- Daily returns to quarterly stock returns: MIDAS gains ~0.15–0.20 R² units in favorable specifications (Ghysels, Santa-Clara, Valkanov 2006). These are illustrative; actual improvements depend heavily on the specific application, sample period, and data frequency ratio.
 
 The gain is larger when:
 1. The frequency ratio $m$ is large (more within-period information available)

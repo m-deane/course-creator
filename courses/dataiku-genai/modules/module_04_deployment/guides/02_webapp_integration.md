@@ -402,10 +402,12 @@ The frontend HTML connects to the backend endpoints and renders the analysis res
 ```python
 
 # backend.py - Chatbot Backend
-from dataiku.llm import ChatSession
+# Pseudocode — ChatSession is not a real Dataiku import.
+# Multi-turn conversations require manual history management.
+import dataiku
 
-# Store chat sessions by user
-chat_sessions = {}
+# Store conversation histories by user
+chat_histories = {}
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -423,27 +425,32 @@ def chat():
                 'message': 'Message is required'
             }), 400
 
-        # Get or create chat session for user
-        if user_id not in chat_sessions:
-            llm = LLM("anthropic-claude")
-            session = ChatSession(llm)
-            session.set_system_message(
-                "You are a commodity market analyst assistant. "
-                "Provide concise, data-driven insights."
-            )
-            chat_sessions[user_id] = session
+        # Get or create history for user
+        if user_id not in chat_histories:
+            chat_histories[user_id] = [
+                {"role": "system", "content":
+                 "You are a commodity market analyst assistant. "
+                 "Provide concise, data-driven insights."}
+            ]
 
-        session = chat_sessions[user_id]
+        history = chat_histories[user_id]
+        history.append({"role": "user", "content": message})
 
-        # Send message and get response
-        response = session.send(message)
+        # Send via Dataiku LLM API
+        client = dataiku.api_client()
+        project = client.get_default_project()
+        llm = project.get_llm("anthropic-claude")
+        completion = llm.new_completion()
+        for msg in history:
+            completion.with_message(msg["content"], role=msg["role"])
+        response = completion.execute()
+
+        history.append({"role": "assistant", "content": response.text})
 
         # Return response
         return jsonify({
             'status': 'success',
             'response': response.text,
-            'tokens_used': response.usage.total_tokens,
-            'cost_usd': response.cost
         })
 
     except Exception as e:
@@ -458,8 +465,8 @@ def reset_chat():
     data = request.get_json()
     user_id = data.get('user_id', 'default')
 
-    if user_id in chat_sessions:
-        del chat_sessions[user_id]
+    if user_id in chat_histories:
+        del chat_histories[user_id]
 
     return jsonify({'status': 'success'})
 

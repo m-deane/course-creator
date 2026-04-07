@@ -294,7 +294,7 @@ Captum raises `TorchFunctionalAPIError` for operations like `torch.einsum`, `F.g
 BatchNorm statistics differ between training and eval mode. Always ensure `model.eval()` before running DeepLIFT.
 
 ### Residual Connections
-Residual connections in ResNets/Transformers require the `DeepLiftShap` variant which handles skip connections more robustly.
+Both DeepLIFT and DeepLiftShap have known limitations with residual/skip connections, which can produce incorrect attributions. For architectures with residual connections (ResNets, Transformers), **GradientShap is the recommended alternative** since it uses standard autograd and does not require custom propagation rules.
 
 
 <div class="code-window">
@@ -305,11 +305,11 @@ Residual connections in ResNets/Transformers require the `DeepLiftShap` variant 
 
 ```python
 
-# For models with residual connections
-from captum.attr import DeepLiftShap
+# For models with residual connections, prefer GradientShap
+from captum.attr import GradientShap
 
-# DeepLiftShap handles more complex architectures
-attrs = DeepLiftShap(model).attribute(
+# GradientShap works reliably with skip connections
+attrs = GradientShap(model).attribute(
     x, baselines=background, target=target
 )
 ```

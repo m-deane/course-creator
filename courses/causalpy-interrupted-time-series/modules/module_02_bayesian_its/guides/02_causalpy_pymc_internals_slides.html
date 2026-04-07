@@ -175,7 +175,7 @@ Insight: Understanding how CausalPy constructs the PyMC model lets you extend it
         <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.model
 
 <span class="hljs-comment"># Use like any other model</span>
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, treatment_time=t_star,
     formula=<span class="hljs-string">&quot;count ~ 1 + t + treated + t_post&quot;</span>,
     model=PoissonITS(sample_kwargs={...}),

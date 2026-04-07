@@ -268,7 +268,7 @@ plt.axvline(x=<span class="hljs-number">0</span>, color=<span class="hljs-string
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> causalpy <span class="hljs-keyword">as</span> cp
 <span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
 
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=df,
     formula=<span class="hljs-string">&quot;outcome ~ 1 + period + treated + period:treated&quot;</span>,
     time_variable_name=<span class="hljs-string">&quot;period&quot;</span>,

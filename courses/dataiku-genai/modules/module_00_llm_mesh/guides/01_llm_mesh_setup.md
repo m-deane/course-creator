@@ -130,28 +130,31 @@ print(response.text)
 </div>
 
 ```python
-from dataiku.llm import LLM, ChatSession
+# Pseudocode — ChatSession is a conceptual pattern, not a real Dataiku import.
+# Verify the multi-turn conversation API against your Dataiku version's docs.
+# The real API uses project.get_llm() or dataiku.api_client() methods.
 
-llm = LLM("anthropic-claude")
+import dataiku
 
-# Create chat session
-chat = ChatSession(llm)
+client = dataiku.api_client()
+project = client.get_default_project()
+llm = project.get_llm("anthropic-claude")
 
-# Add system message
-chat.set_system_message(
-    "You are a commodity market analyst specializing in energy markets."
-)
+# Multi-turn conversation (conceptual pattern)
+messages = [
+    {"role": "system", "content": "You are a commodity market analyst specializing in energy markets."},
+    {"role": "user", "content": "What drove oil prices this week?"}
+]
 
-# Have a conversation
-response1 = chat.send("What drove oil prices this week?")
-print(response1.text)
+completion = llm.new_completion()
+for msg in messages:
+    if msg["role"] == "system":
+        completion.with_message(msg["content"], role="system")
+    else:
+        completion.with_message(msg["content"], role="user")
 
-response2 = chat.send("How does that compare to last month?")
-print(response2.text)
-
-# Access conversation history
-for message in chat.messages:
-    print(f"{message.role}: {message.content[:100]}...")
+response = completion.execute()
+print(response.text)
 ```
 
 </div>
@@ -375,19 +378,24 @@ llm_permissions:
 <span class="filename">example.py</span>
 
 ```python
-from dataiku.llm import LLM, UsageTracker
+# Pseudocode — UsageTracker is not a real Dataiku import.
+# Token usage is tracked automatically by the LLM Mesh and visible
+# in the Dataiku admin console. For programmatic tracking, build
+# a custom wrapper around LLM calls.
 
-# Track usage in a recipe
-tracker = UsageTracker()
+import dataiku
 
-llm = LLM("anthropic-claude")
+client = dataiku.api_client()
+project = client.get_default_project()
+llm = project.get_llm("anthropic-claude")
 
-# Make request
-response = llm.complete("...", tracker=tracker)
+completion = llm.new_completion()
+completion.with_message("Summarize the key factors affecting oil prices.")
+response = completion.execute()
 
-# Check usage
-print(f"Tokens used: {tracker.total_tokens}")
-print(f"Estimated cost: ${tracker.estimated_cost:.4f}")
+# Token usage is available in the response metadata
+print(f"Response: {response.text}")
+# Check the Dataiku admin console for detailed cost/usage tracking
 ```
 
 

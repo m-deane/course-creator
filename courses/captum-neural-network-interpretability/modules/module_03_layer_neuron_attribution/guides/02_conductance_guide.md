@@ -363,7 +363,7 @@ Activation patching is popular in mechanistic interpretability research (circuit
 
 ## 10. InternalInfluence in Captum
 
-Captum also provides `InternalInfluence`, which is the simpler gradient-based internal attribution (no integration):
+Captum provides `InternalInfluence`, which applies path-integrated attribution to internal layers — similar to Integrated Gradients but targeting hidden activations rather than inputs:
 
 
 <div class="code-window">
@@ -378,15 +378,17 @@ ii = InternalInfluence(model, target_layer)
 
 attr = ii.attribute(
     input_tensor,
-    target=class_idx
+    baselines=baseline,
+    target=class_idx,
+    n_steps=50
 )
 
-# Gradient of output w.r.t. layer activations
+# Path-integrated attribution at the target layer
 ```
 
 
 
-`InternalInfluence` is faster than `LayerConductance` (no integration) but does not satisfy completeness. Use it for rapid exploration; use `LayerConductance` for rigorous analysis.
+`InternalInfluence` and `LayerConductance` both use path integration at hidden layers. The key difference is in how they decompose the attribution: Conductance factors through both the activation change and the integrated gradient, providing the completeness guarantee. Use `LayerConductance` when you need the completeness property ($\sum_i \text{Cond}_i^l = f(x) - f(x')$).
 
 ---
 
@@ -422,7 +424,7 @@ All three share the same mathematical foundation (IG integral), completeness pro
 
 ## Summary
 
-1. **Internal Influence** = gradient of output w.r.t. hidden activations (fast, no integration)
+1. **Internal Influence** = path-integrated attribution at hidden layers (similar to IG applied at intermediate activations)
 2. **Layer Conductance** = IG applied at intermediate layers, satisfies completeness for every layer
 3. **Neuron Conductance** = conductance for a single neuron, returns input attribution for that neuron
 4. **Completeness:** $\sum_i \text{Cond}_i^l = f(x) - f(x')$ for any layer $l$

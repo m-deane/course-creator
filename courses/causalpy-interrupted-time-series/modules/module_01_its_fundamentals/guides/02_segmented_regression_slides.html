@@ -233,13 +233,13 @@ Warning: Approach 1: Month Dummy Variables
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> arviz <span class="hljs-keyword">as</span> az
 
 <span class="hljs-comment"># Fit models with different specifications</span>
-model_full = cp.InterruptedTimeSeries(
+model_full = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, formula=<span class="hljs-string">&quot;y ~ 1 + t + treated + t_post&quot;</span>, ...
 )
-model_level = cp.InterruptedTimeSeries(
+model_level = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, formula=<span class="hljs-string">&quot;y ~ 1 + t + treated&quot;</span>, ...
 )
-model_slope = cp.InterruptedTimeSeries(
+model_slope = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, formula=<span class="hljs-string">&quot;y ~ 1 + t + t_post&quot;</span>, ...
 )
 

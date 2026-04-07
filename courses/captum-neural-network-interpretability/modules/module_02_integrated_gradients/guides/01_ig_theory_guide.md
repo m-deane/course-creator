@@ -154,9 +154,9 @@ $$\text{IG}_i^{\text{approx}}(x) \approx (x_i - x'_i) \cdot \frac{1}{m} \sum_{k=
 
 The approximation error is:
 
-$$\left| \text{IG}_i(x) - \text{IG}_i^{\text{approx}}(x) \right| \leq O(1/m^2)$$
+$$\left| \text{IG}_i(x) - \text{IG}_i^{\text{approx}}(x) \right| \leq O(1/m)$$
 
-The error decreases quadratically with $m$. In practice:
+The error decreases with $m$ (linearly for a standard Riemann sum; quadratically if using the trapezoidal rule). In practice:
 - $m = 20$: fast, adequate for visual inspection
 - $m = 50$: standard quality (Captum default)
 - $m = 300$: high quality, recommended for validation
@@ -268,7 +268,7 @@ For tabular data with independent features, SHAP provides stronger game-theoreti
 
 - Sundararajan, Taly & Yan (2017). Axiomatic Attribution for Deep Networks. *ICML 2017* — The foundational paper. Required reading.
 - Shrikumar et al. (2017). Learning Important Features Through Propagating Activation Differences. *ICML 2017* — DeepLIFT, closely related to IG.
-- Erion et al. (2019). Learning Explainability with Output-Weighted Active Sampling. *arXiv* — Expected Gradients (SHAP connection to IG).
+- Erion et al. (2021). Improving Performance of Deep Learning Models with Axiomatic Attribution Priors and Expected Gradients. *Nature Machine Intelligence* — Expected Gradients (SHAP connection to IG).
 - Kapishnikov et al. (2021). Guided Integrated Gradients. *CVPR 2021* — Path choice and guided variants.
 
 ---

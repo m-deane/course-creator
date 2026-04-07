@@ -160,7 +160,7 @@ print("Pre-fit OK" if rmspe_value < threshold else "Poor pre-fit — reconsider 
 ```python
 import causalpy as cp
 
-sc_model = cp.SyntheticControl(
+sc_model = cp.pymc_experiments.SyntheticControl(
     data=panel_df,
     treatment_time=1989,
     formula="cigsale ~ 1",

@@ -98,7 +98,7 @@ print(f"\nGroup counts:\n{nj_data.groupby(['state', 'period']).size()}")
 ```python
 import causalpy as cp
 
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=nj_data,
     formula="fte_employment ~ 1 + post + treated + post:treated",
     time_variable_name="post",
@@ -132,7 +132,7 @@ You can add covariates to control for observed differences:
 ```python
 
 # With covariates
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=nj_data,
     formula="fte_employment ~ 1 + post + treated + post:treated + C(chain)",
     time_variable_name="post",
@@ -156,7 +156,7 @@ result = cp.DifferenceInDifferences(
 ```python
 from sklearn.linear_model import LinearRegression as SKLinReg
 
-result_freq = cp.DifferenceInDifferences(
+result_freq = cp.pymc_experiments.DifferenceInDifferences(
     data=nj_data,
     formula="fte_employment ~ 1 + post + treated + post:treated",
     time_variable_name="post",
@@ -318,7 +318,7 @@ By default, CausalPy uses weakly informative priors:
 # Suppose we believe the treatment effect is small and positive
 
 # based on economic theory (min wage increases employment slightly or is neutral)
-result_informative = cp.DifferenceInDifferences(
+result_informative = cp.pymc_experiments.DifferenceInDifferences(
     data=nj_data,
     formula="fte_employment ~ 1 + post + treated + post:treated",
     time_variable_name="post",
@@ -356,7 +356,7 @@ prior_configs = [
 
 estimates = []
 for priors in prior_configs:
-    r = cp.DifferenceInDifferences(
+    r = cp.pymc_experiments.DifferenceInDifferences(
         data=nj_data,
         formula="fte_employment ~ 1 + post + treated + post:treated",
         time_variable_name="post",
@@ -457,7 +457,7 @@ data = pd.DataFrame({
 })
 
 # Fit Bayesian DiD
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=data,
     formula="fte ~ 1 + post + treated + post:treated",
     time_variable_name="post",

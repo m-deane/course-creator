@@ -207,7 +207,9 @@ process_in_chunks("large_reports", "summarized_reports")
 # api_endpoint.py - Deploy as API endpoint
 import json
 from dataiku.llm import LLM
-from dataiku.knowledge_bank import KnowledgeBank
+# Pseudocode — KnowledgeBank is not a real Dataiku Python import.
+# Verify the Knowledge Bank API against your Dataiku version's docs.
+# from dataiku.knowledge_bank import KnowledgeBank  # not a real import
 
 def api_handler(request):
     """Handle API request for commodity Q&A."""
@@ -264,24 +266,24 @@ def api_handler(request):
 ```python
 
 # webapp_backend.py - For Dataiku Webapp
+# Pseudocode — ChatSession is not a real Dataiku import.
+# Multi-turn conversations are managed by maintaining message history
+# and passing it to the LLM completion API.
 import dataiku
-from dataiku.llm import LLM, ChatSession
 from flask import request, jsonify
 
-# Store chat sessions
-chat_sessions = {}
+# Store conversation histories per session
+chat_histories = {}
 
-def get_or_create_session(session_id: str) -> ChatSession:
-    """Get existing or create new chat session."""
-    if session_id not in chat_sessions:
-        llm = LLM("anthropic-claude")
-        session = ChatSession(llm)
-        session.set_system_message(
-            "You are a commodity market analyst. "
-            "Provide accurate, data-driven analysis."
-        )
-        chat_sessions[session_id] = session
-    return chat_sessions[session_id]
+def get_or_create_history(session_id: str) -> list:
+    """Get existing or create new conversation history."""
+    if session_id not in chat_histories:
+        chat_histories[session_id] = [
+            {"role": "system", "content":
+             "You are a commodity market analyst. "
+             "Provide accurate, data-driven analysis."}
+        ]
+    return chat_histories[session_id]
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -290,8 +292,18 @@ def chat():
     session_id = data.get('session_id', 'default')
     message = data.get('message', '')
 
-    session = get_or_create_session(session_id)
-    response = session.send(message)
+    history = get_or_create_history(session_id)
+    history.append({"role": "user", "content": message})
+
+    client = dataiku.api_client()
+    project = client.get_default_project()
+    llm = project.get_llm("anthropic-claude")
+    completion = llm.new_completion()
+    for msg in history:
+        completion.with_message(msg["content"], role=msg["role"])
+    response = completion.execute()
+
+    history.append({"role": "assistant", "content": response.text})
 
     return jsonify({
         'response': response.text,
@@ -303,14 +315,10 @@ def get_history():
     """Get chat history."""
     session_id = request.args.get('session_id', 'default')
 
-    if session_id not in chat_sessions:
+    if session_id not in chat_histories:
         return jsonify({'messages': []})
 
-    session = chat_sessions[session_id]
-    messages = [
-        {'role': m.role, 'content': m.content}
-        for m in session.messages
-    ]
+    messages = chat_histories[session_id]
 
     return jsonify({'messages': messages})
 ```

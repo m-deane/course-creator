@@ -324,7 +324,7 @@ def fit_its_model(df, outcome, formula=None):
     if formula is None:
         formula = f"{outcome} ~ 1 + t_numeric + treated + time_since_intervention"
 
-    model = cp.InterruptedTimeSeries(
+    model = cp.pymc_experiments.InterruptedTimeSeries(
         data=df,
         treatment_time=int(df["treated"].idxmax()),
         formula=formula,

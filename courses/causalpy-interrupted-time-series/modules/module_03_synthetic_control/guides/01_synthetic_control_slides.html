@@ -138,7 +138,7 @@ threshold = <span class="hljs-number">0.20</span> * y_california_pre.std()
 <h1 id="the-california-tobacco-example">The California Tobacco Example</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> causalpy <span class="hljs-keyword">as</span> cp
 
-sc_model = cp.SyntheticControl(
+sc_model = cp.pymc_experiments.SyntheticControl(
     data=panel_df,
     treatment_time=<span class="hljs-number">1989</span>,
     formula=<span class="hljs-string">&quot;cigsale ~ 1&quot;</span>,

@@ -259,7 +259,7 @@ flowchart TD
 ```python
 import causalpy as cp
 
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=t_star,
     formula="y ~ 1 + t + treated + t_post",

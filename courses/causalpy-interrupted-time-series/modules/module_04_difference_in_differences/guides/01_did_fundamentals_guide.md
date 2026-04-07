@@ -273,7 +273,7 @@ data["outcome"] = (
 )
 
 # Run DiD using CausalPy
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=data,
     formula="outcome ~ 1 + period + treated + period:treated",
     time_variable_name="period",

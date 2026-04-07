@@ -154,7 +154,7 @@ def prepare_its_dataframe(
 </div>
 
 ```python
-cp.InterruptedTimeSeries(
+cp.pymc_experiments.InterruptedTimeSeries(
     data,              # pd.DataFrame — must contain all variables in formula
     treatment_time,    # int — index of the first treated observation
     formula,           # str — Wilkinson formula string
@@ -264,7 +264,7 @@ df = prepare_its_dataframe(dates, outcome, intervention_date="2023-01-01")
 t_star = df.attrs["intervention_index"]
 
 # Fit the ITS model
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=t_star,
     formula="y ~ 1 + t + treated + t_post",
@@ -616,7 +616,7 @@ df["treated"] = (df["t"] >= intervention_idx).astype(float)
 df["t_post"] = np.maximum(df["t"] - intervention_idx, 0).astype(float)
 
 # 3. Fit the model
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=int(intervention_idx),
     formula="outcome ~ 1 + t + treated + t_post",

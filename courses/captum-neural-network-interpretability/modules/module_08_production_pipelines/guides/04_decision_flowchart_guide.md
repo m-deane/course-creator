@@ -357,7 +357,7 @@ START: What is your model architecture?
 ├── Text Transformer (BERT, RoBERTa, GPT, T5)
 │   ├── Token attribution? → LayerIntegratedGradients (embedding layer)
 │   ├── Layer importance? → LayerConductance over encoder/decoder layers
-│   └── Neuron attribution? → NeuronIntegratedGradients on attention heads
+│   └── Neuron attribution? → NeuronConductance on attention heads
 │
 └── Tabular / MLP
     ├── Need speed + exact? → DeepLIFT (baseline: training mean)

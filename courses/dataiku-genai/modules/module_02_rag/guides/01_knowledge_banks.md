@@ -2,6 +2,12 @@
 
 > **Reading time:** ~5 min | **Module:** 2 — Rag | **Prerequisites:** Module 1 — Prompt Studios
 
+<div class="callout-warning">
+
+<strong>API Note:</strong> The Python code examples in this guide use pseudocode patterns (e.g., `KnowledgeBank`, `kb.search()`) to illustrate the conceptual workflow. Knowledge Banks in Dataiku are primarily managed through the UI. Verify the exact programmatic API against your Dataiku version's documentation, as the Python SDK for Knowledge Banks differs across releases.
+
+</div>
+
 <div class="callout-key">
 
 <strong>Key Concept:</strong> Knowledge Banks are Dataiku's managed RAG pipeline -- they handle document ingestion, chunking, embedding, and vector retrieval so you can ground LLM outputs in your organisation's actual data without building infrastructure from scratch.
@@ -85,7 +91,9 @@ knowledge_bank:
 
 ```python
 import dataiku
-from dataiku.knowledge_bank import KnowledgeBank
+# Pseudocode — verify against your Dataiku version's API docs
+# Knowledge Banks are managed via the Dataiku UI or REST API
+# from dataiku.knowledge_bank import KnowledgeBank  # not a real import
 
 # Create knowledge bank
 kb = KnowledgeBank.create(
@@ -211,7 +219,9 @@ def custom_chunker(document: dict) -> list:
 </div>
 
 ```python
-from dataiku.knowledge_bank import KnowledgeBank
+# Pseudocode — verify against your Dataiku version's API docs
+# Knowledge Banks are managed via the Dataiku UI or REST API
+# from dataiku.knowledge_bank import KnowledgeBank  # not a real import
 
 kb = KnowledgeBank("commodity_reports_kb")
 
@@ -296,7 +306,9 @@ results = kb.search(
 
 ```python
 from dataiku.llm import LLM
-from dataiku.knowledge_bank import KnowledgeBank
+# Pseudocode — verify against your Dataiku version's API docs
+# Knowledge Banks are managed via the Dataiku UI or REST API
+# from dataiku.knowledge_bank import KnowledgeBank  # not a real import
 
 class CommodityRAG:
     """RAG system for commodity market questions."""
@@ -466,7 +478,9 @@ def update_knowledge_bank(kb_name: str, new_documents: list):
 
 # In a Dataiku scenario
 import dataiku
-from dataiku.knowledge_bank import KnowledgeBank
+# Pseudocode — verify against your Dataiku version's API docs
+# Knowledge Banks are managed via the Dataiku UI or REST API
+# from dataiku.knowledge_bank import KnowledgeBank  # not a real import
 
 def refresh_kb():
     """Daily knowledge bank refresh."""

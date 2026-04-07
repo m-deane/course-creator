@@ -148,7 +148,7 @@ $$\phi_l: \mathbb{R}^d \rightarrow \mathbb{R}^{|h_l|}$$
 
 where $h_l$ is the activation at layer $l$.
 
-**Methods:** GradCAM, Layer Conductance, Internal Influence
+**Methods:** GradCAM, Layer Conductance, Internal Influence, Layer Activation
 
 **Output:** One importance score per unit in the target layer.
 
@@ -160,7 +160,7 @@ $$\phi_n: \mathbb{R}^d \rightarrow \mathbb{R}^d$$
 
 where the target is maximizing neuron $n$'s activation rather than the model output.
 
-**Methods:** Neuron Conductance, Neuron Integrated Gradients
+**Methods:** Neuron Conductance, Neuron Gradient, Neuron DeepLift
 
 **Output:** Input-space attribution map explaining what makes a neuron activate.
 
@@ -329,7 +329,8 @@ Captum (PyTorch's interpretability library) provides implementations spanning th
 
 **Neuron-based:**
 - `NeuronConductance` — conductance to a specific neuron
-- `NeuronIntegratedGradients` — IG targeting a neuron
+- `NeuronGradient` — gradient of output w.r.t. neuron activation
+- `NeuronDeepLift` — DeepLIFT attribution for a specific neuron
 
 **Perturbation-based:**
 - `FeatureAblation` — systematic feature removal

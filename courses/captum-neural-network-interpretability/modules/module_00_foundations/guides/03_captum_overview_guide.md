@@ -162,7 +162,8 @@ from captum.attr import InternalInfluence     # Attribution to internal state
 
 # Neuron-based
 from captum.attr import NeuronConductance     # Attribution to specific neuron
-from captum.attr import NeuronIntegratedGradients  # IG for a neuron
+from captum.attr import NeuronGradient             # Gradient for a neuron
+from captum.attr import NeuronDeepLift             # DeepLIFT for a neuron
 
 # Perturbation-based
 from captum.attr import FeatureAblation       # Systematic feature removal

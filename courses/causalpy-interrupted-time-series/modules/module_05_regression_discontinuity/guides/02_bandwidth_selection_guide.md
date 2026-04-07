@@ -331,7 +331,7 @@ bandwidths_to_test = [0.1, 0.2, 0.3, 0.4, 0.5]
 results_cp = []
 
 for bw in bandwidths_to_test:
-    result = cp.RegressionDiscontinuity(
+    result = cp.pymc_experiments.RegressionDiscontinuity(
         data=df,
         formula='y ~ 1 + x',
         running_variable_name='x',

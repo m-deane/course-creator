@@ -565,17 +565,31 @@ for row in df.iterrows():
 <span class="filename">example.py</span>
 
 ```python
-from dataiku.monitoring import CostTracker
+# Pseudocode — dataiku.monitoring.CostTracker is not a real Dataiku import.
+# Cost tracking is handled by the LLM Mesh admin console.
+# Below is a conceptual pattern for custom budget enforcement.
 
-tracker = CostTracker()
+class CostTracker:
+    """Custom cost tracker — not a Dataiku built-in class."""
+    def __init__(self, daily_budget: float = 100.0):
+        self.daily_total = 0.0
+        self.daily_budget = daily_budget
+
+    def estimate_cost(self, text: str, model: str) -> float:
+        # Rough estimate based on token count
+        tokens = len(text.split()) * 1.3
+        return tokens * 0.00001  # Adjust per model pricing
+
+    def record(self, usage: dict, cost: float):
+        self.daily_total += cost
+
+tracker = CostTracker(daily_budget=50.0)
 
 for row in df.iterrows():
-    # Estimate before calling
     estimated_cost = tracker.estimate_cost(
         text=row['long_text'],
         model="claude-sonnet-4-20250514"
     )
-
     if tracker.daily_total + estimated_cost > tracker.daily_budget:
         logger.warning("Approaching daily budget, stopping")
         break

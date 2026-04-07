@@ -78,7 +78,7 @@ import causalpy as cp
 import arviz as az
 import numpy as np
 
-result = cp.DifferenceInDifferences(...)
+result = cp.pymc_experiments.DifferenceInDifferences(...)
 tau_samples = result.idata.posterior['post:treated'].values.flatten()
 
 posterior_mean = tau_samples.mean()

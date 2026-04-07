@@ -323,7 +323,8 @@ Properties:
 
 **Neuron-based**
 - `NeuronConductance`
-- `NeuronIntegratedGradients`
+- `NeuronGradient`
+- `NeuronDeepLift`
 
 **Perturbation-based**
 - `FeatureAblation`

@@ -207,7 +207,7 @@ import causalpy as cp
 import pandas as pd
 
 # Data format: long form with columns [unit, time, outcome, predictor_columns]
-sc_model = cp.SyntheticControl(
+sc_model = cp.pymc_experiments.SyntheticControl(
     data=panel_df,
     treatment_time=1988,          # First post-intervention period
     formula="cigsale ~ 1",        # Outcome and predictors

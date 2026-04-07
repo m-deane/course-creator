@@ -334,23 +334,22 @@ print(f"Cost: ${response.estimated_cost:.4f}")
 ## Chat Interface
 
 ```python
-from dataiku.llm import LLM, ChatSession
+# Pseudocode — multi-turn pattern (verify against your Dataiku version)
+import dataiku
 
-llm = LLM("anthropic-claude")
-chat = ChatSession(llm)
+client = dataiku.api_client()
+project = client.get_default_project()
+llm = project.get_llm("anthropic-claude")
 
-chat.set_system_message(
-    "You are a commodity market analyst specializing in energy."
-)
-
-response1 = chat.send("What drove oil prices this week?")
-print(response1.text)
-
-response2 = chat.send("How does that compare to last month?")
-print(response2.text)  # Maintains conversation context
+# Build a multi-turn conversation via completion API
+completion = llm.new_completion()
+completion.with_message("You are a commodity market analyst.", role="system")
+completion.with_message("What drove oil prices this week?", role="user")
+response = completion.execute()
+print(response.text)
 ```
 
-<!-- Speaker notes: ChatSession manages the conversation history automatically. Each send() appends to the history and sends the full context. This is the pattern for building chatbots in Module 4. -->
+<!-- Speaker notes: Multi-turn conversations are built by appending messages to completion requests. The exact API depends on your Dataiku version. Check your instance's documentation for the current LLM completion interface. -->
 
 ---
 
@@ -484,20 +483,24 @@ with ThreadPoolExecutor(5) as ex:
 ## Pitfall 3: Not Monitoring Costs
 
 ```python
-from dataiku.monitoring import CostTracker
+# Pseudocode — CostTracker is not a real Dataiku import.
+# Cost monitoring is built into the LLM Mesh admin console.
+# Custom budget enforcement pattern:
 
-tracker = CostTracker()
+class CostTracker:
+    """User-defined tracker — not a Dataiku built-in."""
+    def __init__(self, daily_budget=100.0):
+        self.daily_total = 0.0
+        self.daily_budget = daily_budget
+
+tracker = CostTracker(daily_budget=50.0)
 
 for row in df.iterrows():
-    estimated = tracker.estimate_cost(
-        text=row['long_text'], model="claude-sonnet-4-20250514"
-    )
-    if tracker.daily_total + estimated > tracker.daily_budget:
+    if tracker.daily_total > tracker.daily_budget:
         logger.warning("Approaching daily budget, stopping")
         break
-
     response = llm.complete(row['long_text'])
-    tracker.record(response.usage, response.estimated_cost)
+    tracker.daily_total += response.estimated_cost
 ```
 
 > Always estimate before calling and track cumulative costs.

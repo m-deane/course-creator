@@ -17,7 +17,7 @@
 <h2 id="causalpy-did-at-a-glance">CausalPy DiD at a Glance</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> causalpy <span class="hljs-keyword">as</span> cp
 
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=df,
     formula=<span class="hljs-string">&quot;outcome ~ 1 + post + treated + post:treated&quot;</span>,
     time_variable_name=<span class="hljs-string">&quot;post&quot;</span>,
@@ -268,7 +268,7 @@ Warning: Always check before interpreting:
 
 results = {}
 <span class="hljs-keyword">for</span> name, priors <span class="hljs-keyword">in</span> priors_list:
-    r = cp.DifferenceInDifferences(
+    r = cp.pymc_experiments.DifferenceInDifferences(
         data=df, formula=<span class="hljs-string">&quot;y ~ 1 + post + treated + post:treated&quot;</span>,
         time_variable_name=<span class="hljs-string">&quot;post&quot;</span>, group_variable_name=<span class="hljs-string">&quot;treated&quot;</span>,
         model=cp.pymc_models.LinearRegression(priors=priors)
@@ -319,7 +319,7 @@ df = prepare_panel_data(raw_df)
 plot_pretrends(df, group=<span class="hljs-string">&quot;treated&quot;</span>, time=<span class="hljs-string">&quot;period&quot;</span>, outcome=<span class="hljs-string">&quot;y&quot;</span>)
 
 <span class="hljs-comment"># 3. Fit model</span>
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=df, formula=<span class="hljs-string">&quot;y ~ 1 + post + treated + post:treated&quot;</span>,
     time_variable_name=<span class="hljs-string">&quot;post&quot;</span>, group_variable_name=<span class="hljs-string">&quot;treated&quot;</span>,
     model=cp.pymc_models.LinearRegression()

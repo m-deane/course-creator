@@ -240,7 +240,7 @@ In CausalPy, the potential outcomes are implemented as:
 ```python
 import causalpy as cp
 
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=intervention_date,  # This is t*
     formula="y ~ 1 + t + treated + t:treated"

@@ -309,7 +309,7 @@ This local nature is both a strength (high internal validity) and a weakness (li
 ```python
 import causalpy as cp
 
-result = cp.RegressionDiscontinuity(
+result = cp.pymc_experiments.RegressionDiscontinuity(
     data=df,
     formula='outcome ~ 1 + x_centered',
     running_variable_name='x_centered',

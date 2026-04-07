@@ -42,12 +42,14 @@ Deploy LLM applications as REST APIs:
 # 1. Create endpoint function
 def process_commodity_query(query: str, commodity: str = None) -> dict:
     """Process commodity market query."""
-    from dataiku.llm import LLM
-    from dataiku.knowledge_bank import KnowledgeBank
+    # Pseudocode — KnowledgeBank is not a real Dataiku Python import.
+    # Knowledge Banks are managed via the UI; verify API against your version.
+    import dataiku
 
-    # Initialize
-    kb = KnowledgeBank("commodity_reports_kb")
-    llm = LLM("anthropic-claude")
+    client = dataiku.api_client()
+    project = client.get_default_project()
+    llm = project.get_llm("anthropic-claude")
+    # kb = project.get_knowledge_bank("commodity_reports_kb")  # verify API
 
     # Retrieve context
     filters = {"commodity": commodity} if commodity else None
@@ -148,17 +150,21 @@ Dataiku automatically tracks:
 </div>
 
 ```python
+# Pseudocode — dataiku.monitoring.MetricsClient is not a real Dataiku import.
+# Use your preferred logging/metrics system for custom monitoring.
 import dataiku
-from dataiku.llm import LLM
-from dataiku.monitoring import MetricsClient
 import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 class MonitoredLLM:
-    """LLM wrapper with custom metrics."""
+    """User-defined LLM wrapper with custom metrics — not a Dataiku built-in."""
 
     def __init__(self, connection: str):
-        self.llm = LLM(connection)
-        self.metrics = MetricsClient()
+        client = dataiku.api_client()
+        project = client.get_default_project()
+        self.llm = project.get_llm(connection)
 
     def complete(self, prompt: str, **kwargs) -> dict:
         """Complete with metrics tracking."""
@@ -311,9 +317,12 @@ alerts:
 </div>
 
 ```python
-from dataiku.monitoring import AlertManager
+# Pseudocode — dataiku.monitoring.AlertManager is not a real Dataiku import.
+# Alerting in Dataiku is configured through the UI (Scenarios > Reporters).
+# Below is a conceptual pattern for custom alert logic.
+import logging
 
-alert_manager = AlertManager()
+logger = logging.getLogger(__name__)
 
 def check_llm_health():
     """Check LLM system health and raise alerts."""
@@ -362,14 +371,17 @@ def check_llm_health():
 </div>
 
 ```python
-from dataiku.llm import LLM
-from dataiku.monitoring import MetricsClient
+# Pseudocode — dataiku.monitoring.MetricsClient is not a real Dataiku import.
+# Cost tracking is handled by the LLM Mesh admin console.
+# Below is a user-defined pattern for custom budget tracking.
+import dataiku
 from datetime import datetime, timedelta
 
 class CostTracker:
-    """Track and manage LLM costs."""
+    """User-defined cost tracker — not a Dataiku built-in class.
+    Verify current model pricing before deploying."""
 
-    # Cost per 1M tokens by model
+    # Cost per 1M tokens by model (check current pricing!)
     COSTS = {
         "claude-sonnet-4-20250514": {"input": 3.0, "output": 15.0},
         "gpt-4o": {"input": 2.5, "output": 10.0},
@@ -377,7 +389,6 @@ class CostTracker:
     }
 
     def __init__(self):
-        self.metrics = MetricsClient()
         self.daily_costs = {}
 
     def record_usage(self, model: str, input_tokens: int, output_tokens: int):
@@ -389,10 +400,8 @@ class CostTracker:
             output_tokens * costs["output"] / 1_000_000
         )
 
-        # Track in metrics
-        self.metrics.increment("llm_cost_usd", value=cost, tags={
-            "model": model
-        })
+        # Log cost (use your preferred logging/metrics system)
+        print(f"LLM cost: ${cost:.6f} ({model})")
 
         # Track daily
         today = datetime.now().strftime("%Y-%m-%d")

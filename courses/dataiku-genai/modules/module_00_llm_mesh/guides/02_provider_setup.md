@@ -421,19 +421,27 @@ for i in range(1000):
 
 ```python
 import time
-from dataiku.llm import LLM, RateLimitError
+import dataiku
 
-llm = LLM("claude-production")
+# Note: RateLimitError may not be importable from dataiku.llm.
+# Handle rate limits with generic exception handling.
+client = dataiku.api_client()
+project = client.get_default_project()
+llm = project.get_llm("claude-production")
 
 for i in range(1000):
     try:
-        response = llm.complete("...")
+        completion = llm.new_completion()
+        completion.with_message("...", role="user")
+        response = completion.execute()
         process_response(response)
-    except RateLimitError as e:
-        # Respect rate limits
-        wait_time = e.retry_after or 60
-        print(f"Rate limited, waiting {wait_time}s")
-        time.sleep(wait_time)
+    except Exception as e:
+        if "rate" in str(e).lower():
+            wait_time = 60  # Default backoff
+            print(f"Rate limited, waiting {wait_time}s")
+            time.sleep(wait_time)
+        else:
+            raise
 ```
 
 </div>

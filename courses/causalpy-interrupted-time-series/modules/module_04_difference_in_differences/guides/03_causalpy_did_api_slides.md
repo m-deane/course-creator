@@ -22,7 +22,7 @@ Module 04.3 | Causal Inference with CausalPy
 ```python
 import causalpy as cp
 
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=df,
     formula="outcome ~ 1 + post + treated + post:treated",
     time_variable_name="post",
@@ -271,7 +271,7 @@ priors_list = [
 
 results = {}
 for name, priors in priors_list:
-    r = cp.DifferenceInDifferences(
+    r = cp.pymc_experiments.DifferenceInDifferences(
         data=df, formula="y ~ 1 + post + treated + post:treated",
         time_variable_name="post", group_variable_name="treated",
         model=cp.pymc_models.LinearRegression(priors=priors)
@@ -345,7 +345,7 @@ df = prepare_panel_data(raw_df)
 plot_pretrends(df, group="treated", time="period", outcome="y")
 
 # 3. Fit model
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=df, formula="y ~ 1 + post + treated + post:treated",
     time_variable_name="post", group_variable_name="treated",
     model=cp.pymc_models.LinearRegression()

@@ -289,7 +289,7 @@ $$\tau_{ATT} = E[Y_{it}(1) - Y_{it}(0) \mid D_i = 1, t = \text{Post}]$$
 import causalpy as cp
 import pandas as pd
 
-result = cp.DifferenceInDifferences(
+result = cp.pymc_experiments.DifferenceInDifferences(
     data=df,
     formula="outcome ~ 1 + period + treated + period:treated",
     time_variable_name="period",

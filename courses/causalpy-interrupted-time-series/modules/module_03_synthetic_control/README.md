@@ -22,7 +22,7 @@ After completing this module you will be able to:
 4. Run in-space placebo tests and compute the permutation p-value
 5. Run in-time placebo tests to validate the pre-period
 6. Interpret donor weights (sparsity, posterior uncertainty with CausalPy)
-7. Compute the counterfactual gap with Bayesian uncertainty using `cp.SyntheticControl`
+7. Compute the counterfactual gap with Bayesian uncertainty using `cp.pymc_experiments.SyntheticControl`
 8. Combine Bayesian uncertainty quantification with permutation inference for a complete report
 
 ---

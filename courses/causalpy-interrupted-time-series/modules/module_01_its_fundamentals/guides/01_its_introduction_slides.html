@@ -188,7 +188,7 @@ flowchart TD
 <h1 id="what-causalpy-gives-you">What CausalPy Gives You</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> causalpy <span class="hljs-keyword">as</span> cp
 
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=t_star,
     formula=<span class="hljs-string">&quot;y ~ 1 + t + treated + t_post&quot;</span>,

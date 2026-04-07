@@ -171,7 +171,7 @@ import pandas as pd
 import numpy as np
 
 # Fit model
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=24,
     formula="y ~ 1 + t + treated + t_post",
@@ -340,7 +340,7 @@ class PoissonITSModel(cp.pymc_models.LinearRegression):
 
 # Usage
 
-# result = cp.InterruptedTimeSeries(
+# result = cp.pymc_experiments.InterruptedTimeSeries(
 
 #     data=df,
 
@@ -454,7 +454,7 @@ Key classes and methods (CausalPy >= 0.4):
 | Location | Class/Method | Purpose |
 |----------|-------------|---------|
 | `causalpy.pymc_models` | `LinearRegression` | Default Gaussian ITS model |
-| `causalpy.experiment_classes` | `InterruptedTimeSeries` | Main ITS interface |
+| `causalpy.pymc_experiments` | `InterruptedTimeSeries` | Main ITS interface |
 | `InterruptedTimeSeries.plot()` | Method | Two-panel visualization |
 | `InterruptedTimeSeries.summary()` | Method | Posterior summary table |
 | `InterruptedTimeSeries.model` | Attribute | The underlying PyMC model |

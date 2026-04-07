@@ -95,7 +95,7 @@ DEFAULT_PRIOR_CODE = '''
 
 import causalpy as cp
 
-result_default = cp.InterruptedTimeSeries(
+result_default = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=30,
     formula="outcome ~ 1 + period + post + time_since_post",
@@ -163,7 +163,7 @@ class InformativeITSModel(cp.pymc_models.LinearRegression):
         return self.model
 
 
-result_informative = cp.InterruptedTimeSeries(
+result_informative = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=30,
     formula="outcome ~ 1 + period + post + time_since_post",

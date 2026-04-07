@@ -269,7 +269,7 @@ def its_with_custom_beta2_prior(df, t_star, beta2_sigma, y_pre_std):
                 y_hat = pm.Normal("y_hat", mu=mu, sigma=sigma, observed=y_, dims=["obs"])
             return self.model
 
-    return cp.InterruptedTimeSeries(
+    return cp.pymc_experiments.InterruptedTimeSeries(
         data=df,
         treatment_time=t_star,
         formula="outcome ~ 1 + t + treated + t_post",

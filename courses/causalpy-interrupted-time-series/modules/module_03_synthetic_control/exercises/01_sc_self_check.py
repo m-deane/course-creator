@@ -377,7 +377,7 @@ SC_BUGS = {
             donor_pool = [s for s in all_states if s != \"California\"]
 
             # Fit synthetic control using all other states as donors
-            sc = cp.SyntheticControl(
+            sc = cp.pymc_experiments.SyntheticControl(
                 data=panel_df,
                 treatment_time=1989,
                 formula=\"cigsale ~ 1\",
@@ -446,7 +446,7 @@ SC_BUGS = {
             "The bootstrap should resample over units (donors), not over time periods.\n"
             "The valid inference approach for SC is permutation tests, not time-period bootstrap.\n"
             "Use test inversion (permutation confidence sets) or the Bayesian posterior HDI\n"
-            "from cp.SyntheticControl for valid uncertainty quantification."
+            "from cp.pymc_experiments.SyntheticControl for valid uncertainty quantification."
         ),
         "explanation": (
             "Bootstrapping over time periods treats each post-period observation as an independent\n"

@@ -325,7 +325,7 @@ flowchart TD
 - Compute and interpret the permutation p-value
 
 **Notebook 03:** CausalPy Synthetic Control API
-- Full analysis using cp.SyntheticControl
+- Full analysis using cp.pymc_experiments.SyntheticControl
 - Bayesian weight estimation and counterfactual HDI
 - Combining CausalPy output with placebo inference
 

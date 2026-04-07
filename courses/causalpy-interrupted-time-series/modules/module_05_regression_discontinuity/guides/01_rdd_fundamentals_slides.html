@@ -179,7 +179,7 @@ Warning: IK/MSE-optimal bandwidth:
 <span class="hljs-comment"># Prepare data: centre running variable around cutoff</span>
 df[<span class="hljs-string">&#x27;x_centered&#x27;</span>] = df[<span class="hljs-string">&#x27;score&#x27;</span>] - cutoff
 
-result = cp.RegressionDiscontinuity(
+result = cp.pymc_experiments.RegressionDiscontinuity(
     data=df,
     formula=<span class="hljs-string">&#x27;outcome ~ 1 + x_centered&#x27;</span>,
     running_variable_name=<span class="hljs-string">&#x27;x_centered&#x27;</span>,

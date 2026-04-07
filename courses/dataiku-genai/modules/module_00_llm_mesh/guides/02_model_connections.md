@@ -445,8 +445,10 @@ import dataiku
 project = dataiku.api_client().get_project(dataiku.default_project_key())
 api_key = project.get_variable("OPENAI_API_KEY")  # From project variables
 
-# Or use connection directly (key handled internally)
-llm = dataiku.LLMConnection("openai-production")
+# Or use connection directly (key handled internally by LLM Mesh)
+client = dataiku.api_client()
+project = client.get_default_project()
+llm = project.get_llm("openai-production")
 ```
 
 

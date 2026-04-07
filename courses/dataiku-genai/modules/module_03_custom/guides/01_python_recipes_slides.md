@@ -272,22 +272,23 @@ graph TB
 ## Webapp Backend (Flask)
 
 ```python
+# Pseudocode — ChatSession is not a real Dataiku import.
+# Manage conversation history manually.
 from flask import request, jsonify
-from dataiku.llm import LLM, ChatSession
+import dataiku
 
-chat_sessions = {}
+chat_histories = {}  # session_id -> list of messages
 
-def get_or_create_session(session_id):
-    if session_id not in chat_sessions:
-        llm = LLM("anthropic-claude")
-        session = ChatSession(llm)
-        session.set_system_message(
-            "You are a commodity market analyst.")
-        chat_sessions[session_id] = session
-    return chat_sessions[session_id]
+def get_or_create_history(session_id):
+    if session_id not in chat_histories:
+        chat_histories[session_id] = [
+            {"role": "system",
+             "content": "You are a commodity market analyst."}
+        ]
+    return chat_histories[session_id]
 ```
 
-<!-- Speaker notes: Code continues on the next slide. -->
+<!-- Speaker notes: We manage conversation state manually rather than using a ChatSession class. The real Dataiku API uses project.get_llm() with completion objects. -->
 
 ---
 

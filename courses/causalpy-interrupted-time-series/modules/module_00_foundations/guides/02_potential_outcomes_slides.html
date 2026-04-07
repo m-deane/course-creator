@@ -181,7 +181,7 @@ flowchart LR
 <p>In CausalPy, the potential outcomes are implemented as:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> causalpy <span class="hljs-keyword">as</span> cp
 
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=intervention_date,  <span class="hljs-comment"># This is t*</span>
     formula=<span class="hljs-string">&quot;y ~ 1 + t + treated + t:treated&quot;</span>

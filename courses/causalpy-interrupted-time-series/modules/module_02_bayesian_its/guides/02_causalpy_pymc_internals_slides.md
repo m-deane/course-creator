@@ -219,7 +219,7 @@ class PoissonITS(cp.pymc_models.LinearRegression):
         return self.model
 
 # Use like any other model
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, treatment_time=t_star,
     formula="count ~ 1 + t + treated + t_post",
     model=PoissonITS(sample_kwargs={...}),

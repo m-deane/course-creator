@@ -264,7 +264,7 @@ import causalpy as cp
 # Prepare data: centre running variable around cutoff
 df['x_centered'] = df['score'] - cutoff
 
-result = cp.RegressionDiscontinuity(
+result = cp.pymc_experiments.RegressionDiscontinuity(
     data=df,
     formula='outcome ~ 1 + x_centered',
     running_variable_name='x_centered',

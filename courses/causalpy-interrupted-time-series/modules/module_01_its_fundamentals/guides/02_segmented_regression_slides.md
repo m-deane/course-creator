@@ -215,13 +215,13 @@ Warning: Approach 1: Month Dummy Variables
 import arviz as az
 
 # Fit models with different specifications
-model_full = cp.InterruptedTimeSeries(
+model_full = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, formula="y ~ 1 + t + treated + t_post", ...
 )
-model_level = cp.InterruptedTimeSeries(
+model_level = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, formula="y ~ 1 + t + treated", ...
 )
-model_slope = cp.InterruptedTimeSeries(
+model_slope = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, formula="y ~ 1 + t + t_post", ...
 )
 

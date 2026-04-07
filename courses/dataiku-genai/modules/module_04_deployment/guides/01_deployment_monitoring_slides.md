@@ -274,10 +274,13 @@ flowchart TD
 <!-- Speaker notes: Transition to the Cost Management section. -->
 ---
 
-## CostTracker
+## CostTracker (User-Defined)
 
 ```python
+# User-defined class — not a Dataiku built-in.
+# Cost tracking is built into the LLM Mesh admin console.
 class CostTracker:
+    # Check current pricing before deploying!
     COSTS = {
         "claude-sonnet-4": {"input": 3.0, "output": 15.0},
         "gpt-4o": {"input": 2.5, "output": 10.0},
@@ -297,18 +300,17 @@ class CostTracker:
         costs = self.COSTS.get(model, {"input": 5.0, "output": 15.0})
         cost = (input_tokens * costs["input"] / 1_000_000 +
                 output_tokens * costs["output"] / 1_000_000)
-        self.metrics.increment("llm_cost_usd", value=cost,
-                               tags={"model": model})
+        self.daily_total += cost
         return cost
 
     def check_budget(self, daily_limit):
-        current = self.daily_costs.get(today, 0)
-        return {"current_cost": current, "remaining": daily_limit - current,
-                "percent_used": (current / daily_limit) * 100,
-                "within_budget": current < daily_limit}
+        return {"current_cost": self.daily_total,
+                "remaining": daily_limit - self.daily_total,
+                "percent_used": (self.daily_total / daily_limit) * 100,
+                "within_budget": self.daily_total < daily_limit}
 ```
 
-<!-- Speaker notes: CostTracker with per-model pricing. Note: these prices will change -- add a 'verify current pricing' step to your deployment checklist. -->
+<!-- Speaker notes: User-defined CostTracker with per-model pricing. These prices will change — add a 'verify current pricing' step to your deployment checklist. The LLM Mesh admin console provides built-in cost tracking. -->
 
 <div class="callout-danger">
 Danger: Production LLM endpoints without rate limiting and cost caps can generate unbounded charges from automated or adversarial usage.
@@ -396,7 +398,7 @@ Warning: LLM outputs can degrade silently over time as provider models are updat
 2. **Comprehensive monitoring** tracks requests, latency, errors, tokens, and costs
 3. **Custom metrics** via MonitoredLLM wrapper enable fine-grained observability
 4. **Alerting** with configurable thresholds enables proactive issue detection
-5. **Cost management** with CostTracker and BudgetEnforcedLLM prevents overruns
+5. **Cost management** with custom CostTracker and BudgetEnforcedLLM patterns prevents overruns
 6. **Production checklist** ensures nothing is missed before and after go-live
 
 > Production LLM applications need monitoring from day one -- not as an afterthought.

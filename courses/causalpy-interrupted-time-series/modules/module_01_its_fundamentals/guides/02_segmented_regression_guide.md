@@ -371,13 +371,13 @@ Use **Leave-One-Out Cross-Validation (LOO)** via ArviZ:
 import arviz as az
 
 # Fit both models
-full_model_result = cp.InterruptedTimeSeries(
+full_model_result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, treatment_time=t_star,
     formula="y ~ 1 + t + treated + t_post",
     model=cp.pymc_models.LinearRegression(sample_kwargs={"draws": 1000, ...})
 )
 
-level_only_result = cp.InterruptedTimeSeries(
+level_only_result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df, treatment_time=t_star,
     formula="y ~ 1 + t + treated",
     model=cp.pymc_models.LinearRegression(sample_kwargs={"draws": 1000, ...})

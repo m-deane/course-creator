@@ -59,7 +59,7 @@ Info:  — what you are measuring
 <h1 id="fitting-the-model">Fitting the Model</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> causalpy <span class="hljs-keyword">as</span> cp
 
-result = cp.InterruptedTimeSeries(
+result = cp.pymc_experiments.InterruptedTimeSeries(
     data=df,
     treatment_time=<span class="hljs-number">24</span>,         <span class="hljs-comment"># Integer index of first treated row</span>
     formula=<span class="hljs-string">&quot;y ~ 1 + t + treated + t_post&quot;</span>,

@@ -49,13 +49,13 @@ Just the gradient of the output w.r.t. the hidden unit's activation.
 from captum.attr import InternalInfluence
 
 ii = InternalInfluence(model, model.layer3[-1])
-attr = ii.attribute(input_tensor, target=class_idx)
-# attr: (1, 1024, 14, 14) — gradient at each neuron
+attr = ii.attribute(input_tensor, baselines=baseline, target=class_idx, n_steps=50)
+# attr: (1, 1024, 14, 14) — path-integrated attribution at each neuron
 ```
 
-**Problem:** same as saliency — ignores how much the neuron actually *changed*.
+**Difference from Conductance:** Both use path integration, but Conductance factors through activation change and integrated gradient separately, guaranteeing completeness.
 
-<!-- Speaker notes: Internal Influence is the simplest form of layer attribution. It's essentially saliency computed at an intermediate layer rather than the input. Just as saliency can saturate (zero gradient at a ReLU boundary even though the neuron was crucial), Internal Influence has the same saturation problem. A neuron with a very large activation change from baseline to input, but with zero gradient at the input point, would get zero internal influence even though it clearly contributed to the prediction. Layer Conductance solves this with integration. -->
+<!-- Speaker notes: Internal Influence in Captum applies path-integrated attribution at intermediate layers, similar to how Integrated Gradients works at the input level. Both InternalInfluence and LayerConductance use integration along the path from baseline to input, but they decompose the attribution differently. LayerConductance satisfies the completeness property — the sum across all neurons equals f(x) - f(x'). Use LayerConductance when you need this completeness guarantee. -->
 
 <div class="callout-key">
 This is the key takeaway from this section.

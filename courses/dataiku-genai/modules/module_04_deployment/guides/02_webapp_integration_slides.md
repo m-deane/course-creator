@@ -199,16 +199,17 @@ async function analyzeReport() {
 ## Chat Backend with Session Management
 
 ```python
-from dataiku.llm import ChatSession
+# Pseudocode — ChatSession is not a real Dataiku import.
+# Manage conversation history manually.
+import dataiku
 
-chat_sessions = {}
+chat_histories = {}  # user_id -> list of messages
 
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.get_json()
     user_id = data.get('user_id', 'default')
     message = data.get('message', '')
-
 ```
 
 <!-- Speaker notes: Code continues on the next slide. -->
@@ -218,22 +219,29 @@ def chat():
 ## (continued)
 
 ```python
-    # Get or create session
-    if user_id not in chat_sessions:
-        llm = LLM("anthropic-claude")
-        session = ChatSession(llm)
-        session.set_system_message(
-            "You are a commodity market analyst assistant.")
-        chat_sessions[user_id] = session
+    # Get or create history
+    if user_id not in chat_histories:
+        chat_histories[user_id] = [
+            {"role": "system",
+             "content": "You are a commodity market analyst assistant."}
+        ]
 
-    session = chat_sessions[user_id]
-    response = session.send(message)
+    history = chat_histories[user_id]
+    history.append({"role": "user", "content": message})
 
-    return jsonify({'status': 'success', 'response': response.text,
-                    'tokens_used': response.usage.total_tokens})
+    client = dataiku.api_client()
+    project = client.get_default_project()
+    llm = project.get_llm("anthropic-claude")
+    completion = llm.new_completion()
+    for msg in history:
+        completion.with_message(msg["content"], role=msg["role"])
+    response = completion.execute()
+    history.append({"role": "assistant", "content": response.text})
+
+    return jsonify({'status': 'success', 'response': response.text})
 ```
 
-<!-- Speaker notes: Chat backend with per-user sessions. The ChatSession object manages conversation history automatically. Note: in-memory dict is for development only. -->
+<!-- Speaker notes: Chat backend with per-user conversation histories. We manage message history manually and pass it to the LLM completion API. Note: in-memory dict is for development only. -->
 ---
 
 ## Chatbot Architecture
@@ -244,22 +252,21 @@ sequenceDiagram
     participant User
     participant Frontend
     participant Backend
-    participant ChatSession
+    participant LLM Mesh
     participant LLM
 
     User->>Frontend: Type message
     Frontend->>Backend: POST /chat {user_id, message}
-    Backend->>Backend: Get/create session
-    Backend->>ChatSession: session.send(message)
-    ChatSession->>ChatSession: Append to history
-    ChatSession->>LLM: Full conversation context
-    LLM-->>ChatSession: Response
-    ChatSession-->>Backend: Response + usage
-    Backend-->>Frontend: JSON {response, tokens}
+    Backend->>Backend: Append to history
+    Backend->>LLM Mesh: completion.execute()
+    LLM Mesh->>LLM: Full conversation context
+    LLM-->>LLM Mesh: Response
+    LLM Mesh-->>Backend: Response + usage
+    Backend-->>Frontend: JSON {response}
     Frontend-->>User: Display message
 ```
 
-<!-- Speaker notes: Sequence diagram showing the full chat lifecycle. Key point: ChatSession appends messages and sends full history to the LLM for context. -->
+<!-- Speaker notes: Sequence diagram showing the full chat lifecycle. The backend manages conversation history and sends it to the LLM via the Mesh completion API. -->
 ---
 
 ## Chat Session Management
@@ -494,7 +501,7 @@ Info: Dataiku webapps can embed LLM-powered features using the standard API endp
 
 1. **Flask backends** handle LLM calls, input validation, and response formatting
 2. **Frontend patterns** use async/await with loading states for responsive UX
-3. **ChatSession** manages multi-turn conversations with automatic history
+3. **Conversation history** is managed manually for multi-turn conversations
 4. **Session management** per user enables personalized, persistent interactions
 5. **Streaming via SSE** delivers token-by-token output for real-time feedback
 6. **Error handling** on both frontend and backend is essential for production

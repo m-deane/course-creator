@@ -107,8 +107,8 @@ graph TD
     A --> D[Neuron Attribution<br/>φ per input for target neuron]
 
     B --> B1[Saliency, InputXGradient<br/>GuidedBackprop, IG<br/>Occlusion, FeatureAblation]
-    C --> C1[LayerGradCam, LayerConductance<br/>InternalInfluence]
-    D --> D1[NeuronConductance<br/>NeuronIntegratedGradients]
+    C --> C1[LayerGradCam, LayerConductance<br/>InternalInfluence, LayerActivation]
+    D --> D1[NeuronConductance<br/>NeuronGradient, NeuronDeepLift]
 ```
 
 <!-- Speaker notes: The three families produce attributions at different levels of the network. Input attribution answers "which input features mattered?" — the output is a heatmap overlaid on the input. Layer attribution answers "which neurons in this specific layer mattered?" — useful for understanding intermediate representations. Neuron attribution answers "given this neuron is active, what in the input caused it?" — useful for understanding what individual neurons detect. -->

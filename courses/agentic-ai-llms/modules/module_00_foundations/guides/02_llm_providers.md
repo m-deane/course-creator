@@ -465,9 +465,9 @@ class RateLimitedProvider(LLMProvider):
 | Feature | Claude | GPT-4 | Llama 3 |
 |---------|--------|-------|---------|
 | Tool/Function Calling | ✅ | ✅ | ✅ (with prompting) |
-| Vision | ✅ | ✅ | ❌ |
+| Vision | ✅ | ✅ | ✅ (Llama 3.2 11B/90B) |
 | Streaming | ✅ | ✅ | ✅ |
-| Fine-tuning | ❌ | ✅ | ✅ |
+| Fine-tuning | Enterprise only | ✅ | ✅ |
 | JSON Mode | ✅ | ✅ | ❌ |
 | System Prompts | ✅ | ✅ | ✅ |
 | Batch API | ✅ | ✅ | N/A |

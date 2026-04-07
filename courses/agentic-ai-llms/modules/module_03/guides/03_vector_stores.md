@@ -144,33 +144,37 @@ for match in results["matches"]:
 Best for: GraphQL queries, hybrid search, multimodal
 
 ```python
+# Weaviate v4 client API (weaviate-client >= 4.0)
 import weaviate
+import weaviate.classes.config as wc
 
 
-client = weaviate.Client("http://localhost:8080")
+client = weaviate.connect_to_local()  # connects to localhost:8080
 
-# Create schema
-class_obj = {
-    "class": "Document",
-    "vectorizer": "text2vec-transformers",
-    "properties": [
-        {"name": "content", "dataType": ["text"]},
-        {"name": "source", "dataType": ["string"]}
+# Create collection (replaces v3 schema.create_class)
+documents = client.collections.create(
+    name="Document",
+    vectorizer_config=wc.Configure.Vectorizer.text2vec_transformers(),
+    properties=[
+        wc.Property(name="content", data_type=wc.DataType.TEXT),
+        wc.Property(name="source", data_type=wc.DataType.TEXT),
     ]
-}
-client.schema.create_class(class_obj)
-
-# Add data
-client.data_object.create(
-    data_object={"content": "Electric cars are efficient", "source": "article1"},
-    class_name="Document"
 )
 
-# Query with GraphQL
-result = client.query.get("Document", ["content", "source"])\
-    .with_near_text({"concepts": ["green energy"]})\
-    .with_limit(5)\
-    .do()
+# Add data
+documents.data.insert(
+    properties={"content": "Electric cars are efficient", "source": "article1"}
+)
+
+# Query with near_text
+response = documents.query.near_text(
+    query="green energy",
+    limit=5
+)
+for obj in response.objects:
+    print(obj.properties)
+
+client.close()  # Always close the v4 client when done
 ```
 
 ### Qdrant (Self-hosted or Cloud)

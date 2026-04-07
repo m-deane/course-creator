@@ -671,7 +671,9 @@ agent.register_handler("get_weather", lambda city, units="celsius": {
     "conditions": "sunny"
 })
 agent.register_handler("calculate", lambda expression: {
-    "result": eval(expression)  # Note: eval is dangerous! Use a safe parser
+    # SECURITY: Never use eval() on LLM-generated input — it allows arbitrary code execution.
+    # Use ast.literal_eval() for simple Python literals, or a safe math library like simpleeval.
+    "result": __import__("ast").literal_eval(expression)
 })
 
 result = agent.run("What's the weather in London and what's 15% of 85?")

@@ -117,8 +117,12 @@ temperature=1.0
 
 ```python
 
-# Count tokens before sending
-token_count = client.count_tokens(text)
+# Count tokens before sending (Anthropic Messages API)
+response = client.messages.count_tokens(
+    model="claude-sonnet-4-20250514",
+    messages=[{"role": "user", "content": text}]
+)
+token_count = response.input_tokens
 if token_count > max_context:
     # Truncate or summarize
 ```

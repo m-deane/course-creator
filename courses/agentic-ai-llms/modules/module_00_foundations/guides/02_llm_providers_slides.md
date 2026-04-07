@@ -768,9 +768,9 @@ Speaker notes: Key talking points for this slide
 | Feature | Claude | GPT-4 | Llama 3 |
 |---------|--------|-------|---------|
 | Tool/Function Calling | ✅ | ✅ | ✅ (with prompting) |
-| Vision | ✅ | ✅ | ❌ |
+| Vision | ✅ | ✅ | ✅ (Llama 3.2 11B/90B) |
 | Streaming | ✅ | ✅ | ✅ |
-| Fine-tuning | ❌ | ✅ | ✅ |
+| Fine-tuning | Enterprise only | ✅ | ✅ |
 | JSON Mode | ✅ | ✅ | ❌ |
 | System Prompts | ✅ | ✅ | ✅ |
 | Batch API | ✅ | ✅ | N/A |
@@ -779,8 +779,8 @@ Speaker notes: Key talking points for this slide
 Speaker notes: Key talking points for this slide
 - This table helps you choose based on specific feature requirements
 - Tool calling: all providers support it, but Claude and GPT-4 have native support vs. prompt-based for Llama
-- Fine-tuning: a key differentiator -- if you need to customize model behavior, GPT-4 or open-source
-- Vision: both Claude and GPT-4 support image input -- useful for document processing agents
+- Fine-tuning: GPT-4 has self-serve fine-tuning; Claude offers enterprise fine-tuning; open-source models are fully customizable
+- Vision: Claude, GPT-4, and Llama 3.2 (11B/90B) all support image input -- useful for document processing agents
 - JSON mode: native structured output support -- reduces parsing errors
 -->
 

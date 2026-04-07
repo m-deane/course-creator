@@ -60,8 +60,10 @@ Modern LLMs stack many transformer layers:
 
 | Model | Layers | Parameters |
 |-------|--------|------------|
-| GPT-4 | ~120 | ~1.7T |
-| Claude 3 | ~80-100 | Undisclosed |
+| GPT-4 | Undisclosed | Undisclosed* |
+| Claude 3 | Undisclosed | Undisclosed |
+
+*Unverified estimates (e.g., ~1.7T parameters) circulate online, but OpenAI has not disclosed GPT-4's architecture.*
 | Llama 3 70B | 80 | 70B |
 
 Each layer refines the representation, building from tokens → syntax → semantics → reasoning.

@@ -107,9 +107,12 @@ def execute_tool(tool_name: str, params: dict) -> str:
 
     elif tool_name == "calculate":
         try:
-            result = eval(params.get("expression", "0"))
+            # SECURITY: Never use eval() on LLM-generated input.
+            # ast.literal_eval safely evaluates simple Python literals only.
+            import ast
+            result = ast.literal_eval(params.get("expression", "0"))
             return f"Result: {result}"
-        except Exception as e:
+        except (ValueError, SyntaxError) as e:
             return f"Calculation error: {e}"
 
     elif tool_name == "get_weather":
@@ -228,8 +231,10 @@ class ReActAgent:
             return f"Search results for '{params['query']}': ..."
         elif name == "calculate":
             try:
-                return str(eval(params["expression"]))
-            except Exception as e:
+                # SECURITY: Never use eval() on LLM-generated input.
+                import ast
+                return str(ast.literal_eval(params["expression"]))
+            except (ValueError, SyntaxError) as e:
                 return f"Error: {e}"
         return f"Unknown tool: {name}"
 

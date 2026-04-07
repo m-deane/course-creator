@@ -73,7 +73,7 @@ This runs **before** any queries. It prepares your knowledge base for retrieval.
 Scenario: Build a RAG system for a SaaS company's 500-page product documentation.
 
 ```python
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 import chromadb
 
